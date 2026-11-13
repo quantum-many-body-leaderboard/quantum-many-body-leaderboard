@@ -1,0 +1,613 @@
+   Basis-free neural-network geminal and Jastrow factors for variational Monte Carlo
+
+                                                                   Jan  Kessler
+                            Dynamics  of  Condensed  Matter  and  Center  for  Sustainable  Systems  Design,
+                                       Chair  of  Theoretical  Chemistry,  University  of  Paderborn,
+                                          Warburger  Str.   100,  D-33098  Paderborn,  Germany
+
+                                                             Thomas  D.  K¨uhne∗
+                Center for Advanced Systems Understanding (CASUS), Conrad-Schiedt-Straße 20,  02826 G¨orlitz
+                Helmholtz Zentrum Dresden-Rossendorf,  Bautzner Landstraße 400,  01328 Dresden,  Germany and
+       Institute of Artificial Intelligence, Technische Universit¨at Dresden, Helmholtzstraße 10, 01069 Dresden, Germany
+
+                  Neural-network quantum states offer a flexible route to compact many-electron wave functions,
+                but their practical accuracy depends strongly on how fermionic antisymmetry, electron correlation,
+                and optimization noise are treated.  Here we combine an antisymmetrized geminal power (AGP)
+                determinant  with  feed-forward  neural  networks  that  replace  conventional  basis-set  expansions  in
+                the geminal and in two Jastrow-factor constructions.  The resulting basis-free Jastrow–AGP ansatz
+                is  optimized  by  variational  Monte  Carlo  and  is  designed  to  separate  two  tasks:   the  AGP  part
+                defines the nodal surface,  while the neural-network Jastrow factor recovers dynamical correlation
+                at fixed nodes.  This separation makes it possible to distinguish errors associated with dynamical
+                correlation from those caused by static,  multireference correlation.  Applications to the hydrogen
+                molecule  and  the  rectangular  hydrogen  tetramer  show  sub-millihartree  accuracy  when  the  AGP
+                nodes are adequate, and expose the residual nodal limitation near the large-radius square geometry
+                of the hydrogen tetramer.  These results clarify where neural-network building blocks can improve
+                a compact geminal ansatz and where additional nodal flexibility is required.
+
+
+                    I.    INTRODUCTION                                       (RVB)  picture,  which  originates  in  Pauling’s  chemical
+                                                                             resonance  concept  and  was  later  reformulated  by  An-
+  The quantum mechanical description of realistic molec-                     derson for strongly correlated lattice systems [6, 7].  In
+ular  systems  by  accurate  electronic  ground-state  wave                  that  context,  an  RVB  state  is  often  represented  as  a
+functions remains a central challenge in chemical physics.                   Gutzwiller-projected  BCS  wave  function,   ˆPG |BCS⟩,  in
+The difficulty arises not only from fermionic antisymme-                     which the BCS pairing state supplies singlet bonds and
+try,  but  also  from  the  need  to  describe  dynamical  and               the Gutzwiller projector enforces strong local correlation
+static electron correlation on an equal footing.  Determi-                   [8]. In the present continuum molecular setting, the AGP
+nantal wave functions provide the required antisymme-                        determinant can be viewed as a number-projected BCS-
+try, yet a systematically improvable treatment of correla-                   like singlet-pairing state, while the Jastrow factor plays
+tion often requires a rapidly growing expansion of deter-                    the  role  of  a  flexible  positive  correlation  factor.   This
+minants, leading to high-order polynomial or exponential                     RVB/JAGP viewpoint has also been used in TurboRVB-
+scaling of the computational effort and making larger sys-                   based QMC studies,  including our previous application
+tems inaccessible.                                                           to  the  ozone  molecule  and  more  recent  work  on  corre-
+  A  particularly  useful  compromise  is  offered  by  com-                 lated kagome materials, where replacing a Slater determi-
+pact  wave-function  forms  that  retain  a  single  determi-                nant by an AGP form explicitly exposes static correlation
+nantal object while augmenting it with explicit correla-                     and pairing effects [9–12].  Related QMC benchmarks on
+tion.   A  common  choice  is  a  Slater  determinant  [1]  of               dense  hydrogen  further  illustrate  why  compact,  explic-
+one-particle orbitals, expanded in a finite basis set, mul-                  itly  correlated  many-body  wave  functions  remain  valu-
+tiplied by a Jastrow correlation factor [2].  Here we in-                    able beyond small molecular test cases [13, 14].
+stead  use  a  determinant  of  two-particle  functions,  the                   Computing observables from Jastrow-correlated wave
+antisymmetrized geminal power (AGP), originally intro-                       functions  entails  the  evaluation  of  high-dimensional  in-
+duced in Refs. 3 and later combined with a Jastrow fac-                      tegrals,  which  requires  a  scalable  integration  method
+tor in Ref. 4.  The resulting Jastrow–AGP (JAGP) wave                        for  systems  with  many  electrons.   The  standard  choice
+function retains the computational simplicity of a single                    is  importance-sampled  Monte  Carlo  (MC)  integration
+determinant while carrying a multiconfigurational char-                      [15,  16],  a  stochastic  approach  that  is  naturally  suited
+acter, and can be more accurate than a Jastrow–Slater                        to massively parallel execution.  Variational Monte Carlo
+ansatz for strongly correlated geometries [5].  This con-                    (VMC) combines this integration strategy with system-
+struction is closely related to the resonating-valence-bond                  atic  optimization  of  trial-wave-function  parameters  ac-
+                                                                             cording  to  the  Rayleigh–Ritz  variational  principle  [17];
+                                                                             it forms one of the central branches of quantum Monte
+                                                                             Carlo (QMC) methods [18, 19], for which broad overviews
+∗ tkuehne@cp2k.org
+                                                                             and chemical applications are available in Refs. 20 and
+                                                                                                                                                      2
+
+21.  A complementary stochastic route to correlated elec-                     quired exchange antisymmetry:
+tronic  structure  is  full  configuration  interaction  quan-                      |Ψ JAGP⟩= Ψ  JF(1, . . . , N) Ψ        AGP(1, . . . , N)           (1)
+tum Monte Carlo (FCIQMC), introduced by Alavi and
+coworkers,  which  samples  signed  walker  populations  in                                               ΨG(1,     N2  + 1). . .  Ψ     G(1, N)
+Slater-determinant space and can reach finite-basis FCI-                                       = ΨJF              ...             ...          ...
+quality  energies  without  storing  the  complete  CI  vec-
+tor  [22].    Its  initiator  extension  further  reduced  the                                           ΨG( N2 , N2  + 1). . . Ψ     G( N2 , N)
+walker populations required for large determinant spaces                      Typically, the geminal function ΨG is expanded in prod-
+[23].    Both  determinant-space  projector  methods  and                     ucts of atomic basis functions.  Here, by contrast, we em-
+fixed-node  real-space  QMC  reflect  the  same  underly-                     ploy a feed-forward neural network directly as the gem-
+ing fermion-sign problem:  amplitudes can often be im-                        inal.   For  a  single  hidden  layer,  such  an  FFNN  can  be
+proved efficiently,  but the antisymmetric sign structure                     written as
+or, equivalently for real wave functions, the nodal hyper-
+surface remains the central obstruction to systematically                     FNN(r) =                                                                    (2)
+exact simulations.  In contrast to that determinant-space                                                                                      
+projection philosophy, the present work asks how much of                                            NhX                        NdX
+the same correlation problem can be captured by a com-                              ao  ωo,0   +       ωo,iah,i  ωh,i,0     +     ωh,i,jdj(r)   ,
+pact, explicitly interpretable real-space VMC ansatz.                                              i=1                         j=1
+  The quality of a JAGP–VMC calculation still depends                         whered           j(r) are theN         d  electron–electron and electron–
+on the form of the Jastrow factor and on the basis used                       nucleus distances for the electronic coordinatesr, theω
+to represent the geminal.  These choices affect both ac-                      are variational connection weights,a(x) denotes the ac-
+curacy and cost, and optimal parameterizations are sys-                       tivation function, andN       h is the number of hidden units.
+tem dependent.  In this work we explore artificial neural                     Since FFNNs possess universal approximation capabili-
+networks  (ANNs),  specifically  feed-forward  neural  net-                   ties [24], they can in principle approximate a broad class
+works  (FFNNs),  as  basis-free  building  blocks  for  both                  of  geminal  functions.   They  do  not,  however,  automat-
+the  Jastrow  factor  and  the  geminal  determinant.   This                  ically  obey  the  pair-exchange  symmetry  required  in  an
+idea is motivated by the universal approximation prop-                        AGP.  Because  the  geminal  depends  only  on  two  parti-
+erties  of  FFNNs  [24]  and  by  the  rapid  development  of                 cle positions, this symmetry can be imposed by forming
+neural-network QMC simulations for continuous systems,                        either a sum,
+including model systems, atoms, and molecules [25–28],
+PauliNet  extensions  to  excited  states  [29],  transition-                            ΨG(r  1,r 2) =F   NN(r  1,r 2) +F   NN(r  2,r 1)        (3)
+metal  compounds  [30],  molecular  excitations  [31],  and
+periodic systems [32–34].  While some of these architec-                      or a product,
+tures can reach a higher ultimate accuracy than the com-
+pact wave functions considered here, our goal is to assess                                ΨG(r  1,r 2) =F   NN(r  1,r 2)F  NN(r  2,r 1).         (4)
+whether neural-network components can improve a trans-                        Following preliminary tests, the product form was used
+parent JAGP form while keeping the nodal and correla-                         for all results reported here.  All FFNNs contained two
+tion contributions physically interpretable.   This places                    hidden  layers,  with  the  number  of  hidden  units  varied
+the present work between two active lines of development.                     as described below.  We denote the neural-network-based
+On the one hand, highly expressive neural wave functions                      ΨAGP by NNAGP.
+such as PauliNet and FermiNet seek near-black-box vari-                          For  the  Jastrow  part  ΨJF  we  consider  two  options,
+ational  flexibility  [27,  29].   On  the  other  hand,  JAGP                both again utilizing a FFNN. The first variant
+and TurboRVB-type wave-function forms retain a chem-                                                                                        
+ically interpretable pairing structure [4, 9, 10].  Our aim
+is  closer  to  the  latter:  we  trade  some  ultimate  flexibil-                     ΨJF,P    (r) = Ψ    cusp(r) exp X     PNN(r  i,r j)      (5)
+ity for a decomposition in which changes in the Jastrow                                                                  i<j
+factor can be interpreted separately from changes in the
+nodal surface carried by the AGP part.                                        which   we   call   the   pairing   Jastrow   factor.       Here
+                                                                              PNN(r  i,r j)  is  a  symmetrized  FFNN  of  the  same  type
+                                                                              as the geminal, and Ψcusp(r) is a simple cusp-correction
+                                                                              factor,
+
+    II.    NEURAL-NETWORK JASTROW–AGP                                                        Ψcusp(r) = exp [U     ee(r) +U       en(r)],             (6)
+ ANSATZ AND VARIATIONAL OPTIMIZATION                                          where
+
+  For the wave functions in this work, we use the AGP                                         Uee(r) =   X            |r j −r   i|
+determinant  to  provide  the  nodal  surface  and  the  re-                                               i<j  2(1 +b   ee|r j −r   i|)                (7)
+                                                                                                                                                      3
+
+and                                                                           andE       AB  =E   A +E   B  in the  dissociation  limit.   In  the
+                        NeX  NnX                                              AGP–Jastrow  form  this  amounts  to  a  block-separable
+        Uen(r) =−                1−exp(−b                en|R j −r   i|)      geminal  together  with  Jastrow  terms  whose  interfrag-
+                         i    j               ben               ,     (8)     ment contributions vanish.  The pairing Jastrow can rep-
+                                                                              resent such a cluster decomposition by suppressing cross
+with  nuclear  coordinatesRand  variational  parameters                       terms, whereas a single global all-body NNJF does not
+bee andb       en.  The factor Ψcusp helps satisfy the electron–              enforce it by construction.  Thus, size consistency should
+electron and electron–nucleus cusp conditions.  In com-                       be regarded here as a property to test and, if needed, im-
+bination with the NNAGP, this wave-function form mir-                         pose architecturally in larger applications, rather than as
+rors the JAGP structure used in Ref. 5, but replaces the                      a theorem of the present finite-system implementation.
+basis-set expansions in the geminal and pairing functions                        In the following we denote ΨJF,P     and ΨJF,A    as pairing-
+by single FFNNs.  This makes it possible to compare di-                       NNJF and all-body-NNJF, respectively, and refer to the
+rectly  with  the  conventional  basis-set  construction  and                 full NNAGP–NNJF product as the neural-network wave
+to isolate the effect of the neural-network representation.                   function (NNWF).
+  Going  beyond  simple  substitutions,  we  also  consider                      For  applications,  the  NNWFs  are  used  as  trial  wave
+an NN-based all-body Jastrow factor that inherits ideas                       functions ΨT (r) for the ground state Ψ    0(r) of the nonrel-
+from our previous work:                                                       ativistic, time-independent electronic Schr¨odinger equa-
+                  ΨJF,A   (r) = Ψ    cusp(r)J     NN(r),                (9)   tion,
+                                                                                                   ˆH|Ψ     T (r)⟩=E          T |Ψ T (r)⟩,                 (10)
+whereJ           NN(r) is again an FFNN of the form in Eq. (2).
+Unlike the geminal and pairing functions, it uses all elec-                   for a given Hamiltonian  ˆH.  The variational parameters
+tronic coordinates simultaneously.  In principle, the flex-                   are optimized by minimizingE                    T toward the ground-state
+ibility  of  the  FFNN  allows  this  all-body  NNJF  to  re-                 energyE             0.  This approach is justified by the Rayleigh–
+cover  all  correlation  that  is  accessible  without  chang-                Ritz variational principle,
+ing  the  nodal  surface  fixed  by  the  determinantal  part.
+As  for  the  geminal,  an  unconstrained  all-body  FFNN
+is  not  strictly  exchange  symmetric.   Following  the  rea-                                     E0 ≤E   T  = ⟨Ψ  T| ˆH|Ψ     T⟩⟨Ψ  T|Ψ T⟩  .                 (11)
+soning  of  our  previous  work  [28],  we  rely  on  the  ap-
+proximate  exchange  symmetry  that  emerges  under  en-                         For  larger  systems,  evaluatingE               T  and  other  observ-
+ergy minimization when the FFNN output is constrained                         ables requires numerical integration of high-dimensional
+to  be  strictly  positive  by  the  output  activation  func-                integrals.  We perform these integrations by importance-
+tion.  In that case the Jastrow factor does not alter the                     sampled MC sampling in the Metropolis–Hastings frame-
+nodes imposed by the AGP determinant.  This division                          work, which is well suited to massively parallel execution.
+of labor between an antisymmetric nodal carrier and a                         The price of this favorable scaling is statistical noise in
+flexible  positive  correlation  factor  is  also  connected  to              the sampled observables and gradients.
+our  earlier  fermionic  and  antisymmetric  shadow-wave-                        Energy minimization is carried out by minimizing the
+function work, where auxiliary degrees of freedom were                        regularized cost function
+used  to  incorporate  high-order  many-body  correlations
+while  making  the  nodal/sign  structure  explicit  [35–37].                                                            NωX
+The same observation gives a useful theoretical diagnos-                                             C=E      T +  λrNω      ω2i                      (12)
+tic.  For a real wave function, multiplying by a positive                                                                i=1
+Jastrow factor can change amplitudes, local correlations,
+and cusp behavior, but it leaves the nodal hypersurface                       with  respect  to  theN      ω  parametersωof  the  trial  wave
+unchanged.  Energy improvements obtained by enlarging                         function, which are mainly neural-network weights.  The
+the all-body NNJF at fixed NNAGP therefore measure                            L2  regularization  with small  prefactorλ                r  stabilizes  the
+correlation recovery within a fixed-node manifold, in the                     optimization.
+same sense in which fixed-node errors are separated from                         To optimize thousands of parameters in the presence
+projection errors in diffusion Monte Carlo [19, 20].  By                      of  stochastic  error,  we  use  the  Adam  algorithm  [38].
+contrast,  residual  errors  that  remain  insensitive  to  the               The optimized weights are obtained from the exponen-
+NNJF size point to missing nodal flexibility and require                      tial  moving  average  recommended  by  Kingma  and  Ba
+changes in the antisymmetric part, for example a richer                       (Sec. 7.2 of Ref. 38), reducing the influence of sampling
+geminal,  additional  determinants,  backflow-like  coordi-                   noise  on  the  final  parameters.   We  use  an  analytically
+nate transformations, or more expressive neural antisym-                      derived expression for the energy gradient [28], evaluate
+metrization.  A separate formal issue is size consistency.                    the resulting integrals by MC sampling, and obtain the
+The present ansatz is variational, but it is not automat-                     neural-network derivatives,  e.g.,∂       ωiFNN, ∂ ωiPNN,  and
+ically  size  consistent  or  size  extensive  in  the  quantum-              ∂ωiJNN, by reverse-mode differentiation.
+chemical sense.  For two noninteracting fragmentsAand                            Because  successive  samples  in  the  MC  walk  are  cor-
+B, strict size consistency would require Ψ   AB →Ψ    AΨB                     related,  statistical  uncertainties  were  estimated  with  a
+                                                                                                                                                       4
+
+                                                                               lowest upper energy confidence bound,
+
+                                                                                                        Eub =E   T + 2σ  T ,                       (14)
+
+                                                                               was selected for the final energy evaluation.
+                                                                                  The cyclic minimization consisted of 600 Adam cycles
+                                                                               with  250  iterations  each.   The  Adam  parameters  were
+                                                                               α= 0.0005,β                 1 = 0.8,β       2 = 0.95, andϵ= 10          −8  , using the
+                                                                               notation of Ref. 38;  the regularization factor wasλ    r  =
+                                                                               0.05.
+                                                                                  The total number of MC sampling steps for energy and
+                                                                               gradient evaluation in each Adam iteration was initially
+                                                                               40×2        10, distributed over 40 threads.  This number was
+FIG.  1.   Optimization  protocol  used  for  the  neural-network              doubled after cycles 224, 374, 474, and 549, allowing fast
+wave functions.                                                                early  optimization  and  more  accurate  late-stage  refine-
+                                                                               ment.  Final energy evaluations used 40×2        26 MC steps,
+blocking analysis [39].  We used the efficient implementa-                     i.e., approximately 2.7×10         9 steps, so that statistical er-
+tion of Ref. 40, which supports large per-thread sample                        ror bars are smaller than the graphical resolution of the
+counts with negligible overhead, provided that the num-                        plots.  The MC walkers used Gaussian all-particle moves;
+ber of samples is a power of two.                                              the  step  size  was  adjusted  periodically  to  maintain  an
+                                                                               acceptance probability of approximately 50%.  Energies
+                                                                               and gradients were sampled every fourth step after burn-
+                                                                               in  periods  of  500  steps  per  thread  during  optimization
+          III.    COMPUTATIONAL DETAILS                                        and 2000 steps per thread for final energy evaluation.
+                                                                                  All hidden units used the Softplus activation function
+  To  assess  the  NNWF  ansatz,  we  applied  it  to  two                     [43],a(x) = log(1 +e                 x).  The output activation was ex-
+hydrogen  systems.   The  first  is  the  hydrogen  molecule,                  ponential,  except  for  the  FFNNs  in  the  pairing-NNJF,
+H2, which is computationally inexpensive but still probes                      where a linear output was used.
+the transition from dynamical to static correlation along
+bond dissociation.  The second is a rectangular arrange-
+ment  of  four  hydrogen  atoms,  denotedH                4.   SquareH             4      IV.    RESULTS AND DISCUSSION
+was originally studied by QMC [41] and later established
+as  a  stringent  wave-function  benchmark  [42].    Recent                       We  organize  the  results  so  as  to  separate  the  repre-
+data from a conventional JAGP ansatz [5] and from Fer-                         sentational  accuracy  of  the  neural-network  components
+miNet [27] make this system well suited to separate basis-                     from  the  nodal  limitations  of  the  compact  AGP  car-
+representation errors, Jastrow flexibility, and nodal limi-                    rier.   In  this  discussion,  dynamical  correlation  denotes
+tations.                                                                       the  short-time  avoidance  of  electrons  within  an  other-
+  Both    systems    were    treated    within    the    Born–                 wise  qualitatively  well-defined  bonding  pattern,  includ-
+Oppenheimer approximation.  In atomic units, the elec-                         ing dispersion-like interactions between weakly interact-
+tronic Hamiltonian is                                                          ing fragments. Static correlation, in contrast, denotes the
+
+                        NeX          NeX  NnX      ZA                          near-degeneracy of several bonding patterns or determi-
+           ˆH=−       1     ∇2ri −                                             nants, as encountered when covalent bonds are stretched
+                     2 i=1          i=1  A=1   |r i −R   A|           (13)     and  a  single-reference  description  loses  its  qualitative
+
+                     NeX      1          NnX      ZAZB                         validity  [36].   TheH        2  dissociation  curve  first  provides
+                 +       |r i −r   j| +       |R A −R   B|,                    a  two-electron  validation  problem  for  which  the  exact
+                     i<j                A<B                                    nodal structure is simple and for which neural-network
+                                                                               VMC has already been shown to be highly accurate [28].
+wherer           i are electronic coordinates,R                  A are fixed nuclearThe  rectangularH                      4  benchmarks  then  probe  the  same
+coordinates, andZ       A are nuclear charges.                                 NNAGP–NNJF construction in a genuinely multielectron
+  For all calculations we used the optimization scheme                         setting where intramolecular H–H stretching and inter-
+shown in Fig. 1.  First, the geminal was preconditioned                        molecular H2–H2 separation can be used to tune dynam-
+by a least-squares fit to a localized Gaussian form.  This                     ical and static correlation separately [5, 42].  Viewed this
+was  followed  by  VMC  energy  minimization  of  the  full                    way, H 2  andH       4  are  not  merely  small  accuracy  tests,
+wave function,  as described  in Sec. II,  in  cycles with a                   but a minimal hierarchy of nodal difficulty: two electrons
+fixed  number  of  Adam  iterations.   Each  cycle  was  ini-                  test whether the basis-free geminal and Jastrow are suf-
+tialized from the final parameters of the preceding cycle.                     ficiently  flexible,  whereas  four  electrons  already  expose
+Several optimizations were run in parallel from different                      when a compact pairing determinant no longer supplies
+random  initializations,  and  the  wave  function  with  the                  the optimal nodal topology.
+                                                                                                                                                      5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                   (a)
+                                                                              FIG.  3.   Geometry  and  parametrizations  of  the  rectangular
+                                                                              H4 benchmark system.
+
+
+                                                                                 Figure 2b resolves the remaining deviations.  The rela-
+                                                                              tive error increases below 2 Bohr, i.e., around and below
+                                                                              the equilibrium distance of about 1.4 Bohr, reaching ap-
+                                                                              proximately 0.0025% or 0.025 mHa. At larger separations
+                                                                              the  error  remains  close  to  0.001%.   This  behavior  dif-
+                                                                              fers from many conventional single-reference electronic-
+                                                                              structure methods,  which are often accurate near equi-
+                                                                              librium but deteriorate for stretchedH       2 as static correla-
+                                                                              tion becomes important [19].  For a two-electron singlet,
+                                                                              however, this distinction is less severe than in larger sys-
+                                                                              tems: in a finite orbital basis, the coupled-cluster singles-
+                                                                              and-doubles excitation manifold already spans the full-CI
+                                                                              space [45], soH    2  is a useful validation problem but not
+                                  (b)                                         the decisive multireference stress test. In the two-electron
+                                                                              case, however, the AGP determinant in Eq. (1) reduces to
+FIG. 2.H    2:  VMC energies (a) and relative energy differences              a single geminal ΨG.  As discussed in our previous work
+(b) of NNAGP + all-body-NNJF for different H–H distances,                     [28],  the  resulting  NNWF  is  an  arbitrarily  flexible  ap-
+compared with reference energies [44].                                        proximator for exchange-symmetric two-particle ground
+                                                                              states.   The  remaining  error  is  therefore  dominated  by
+                                                                              the  short-range  dynamical  correlation  near  the  equilib-
+           A.    Hydrogen molecule dissociation                               rium geometry rather than by a static-correlation failure.
+                                                                              The dependence on network size is analyzed in Sec. IV C.
+
+  As  a  first  validation,  we  computed  theH  2  dissocia-
+tion  curve  using  the  two-particle  NNAGP  +  all-body-                                B.    Rectangular hydrogen tetramer
+NNJF  ansatz  with  80×80  hidden  units.   The  energies
+are  shown  in  Fig.  2a  together  with  virtually  exact  ref-
+erence  values  [44].   On  this  energy  scale  the  VMC  and                   We next consider the rectangularH          4 system in the two
+reference  curves  are  visually  indistinguishable,  showing                 parametrizations shown in Fig. 3.  In the first case, the
+that the NNWF captures nearly all correlation energy for                      separation between the two pairs of atoms in theydi-
+this two-electron system.  The equilibrium region is dom-                     rection is fixed atr    y  = 2.4 Bohr,  while the distance in
+inated by dynamical correlation on top of a single, well-                     thexdirection,r                         x, is varied.  Ref. 5 used these configu-
+defined  covalent  bond,  whereas  bond  stretching  gradu-                   rations to test a conventional JAGP wave function with
+ally turns the problem into a static-correlation test be-                     basis-set  geminal  and  pairing  terms.   Table  I  compares
+cause the covalent and ionic valence-bond structures be-                      our VMC energies with their VMC, DMC, and FCI data,
+come nearly degenerate, as also emphasized in our ear-                        and Fig. 4 shows the corresponding energy curves.  This
+lier  fermionic  shadow-wave-function  study  of  stretched                   four-electron system is a more discriminating benchmark
+H2 [36].                                                                      thanH         2  because  the  relative  importance  of  dynamical
+                                                                                                                                                             6
+
+
+TABLE  I.  Energies  in  Hartree  forH      4  at  fixedr         y  =  2.4  Bohr  and  varyingr               x.   VMC  results  from  NNAGP+pairing-NNJF
+[NNWF(P)]  and  NNAGP+all-body-NNJF  [NNWF(A)]  are  compared  with  conventional  AGP+pairing-Jastrow  results  from
+Ref. 5 at the VMC [JAGP(V)] and DMC [JAGP(D)] levels, both with a cc-pVDZ basis, and with full-CI values in a cc-pVQZ
+basis.
+rx                            NNWF(P)                       NNWF(A)                       JAGP(V)                       JAGP(D)                         FCI
+2.188                      -2.12685(1)                      -2.12932(1)                                                            -2.1307(1)                      -2.1297
+2.4                          -2.10815(1)                      -2.11052(1)                      -2.1075(4)                      -2.1125(2)                      -2.1114
+2.646                      -2.12182(1)                      -2.12477(1)                                                            -2.1257(1)                      -2.1248
+3.0                          -2.15093(1)                      -2.15327(1)                      -2.1491(3)
+
+
+                                                                                  tions [42] and the accuracy of the Jastrow–AGP form [5].
+                                                                                  When two H2-like units remain internally well bound and
+                                                                                  are brought into weak contact, the shallow stabilization
+                                                                                  is mainly dynamical and dispersion-like, a type of weak
+                                                                                  binding for which QMC has proven particularly useful in
+                                                                                  molecular benchmarks [46].  By contrast, increasing the
+                                                                                  intramolecular  H–H  distance  or  approaching  the  large-
+                                                                                  radius  square  geometry  increases  static,  multireference
+                                                                                  correlation by making several pairing patterns nearly de-
+                                                                                  generate.
+                                                                                     The all-body-NNJF gives consistently lower VMC en-
+                                                                                  ergies than the pairing-NNJF. Since the NNAGP part is
+                                                                                  identical  in  both  cases,  this  directly  demonstrates  that
+                                                                                  the all-body Jastrow factor recovers substantially more
+                                                                                  correlation energy. For the smallerH              4 rectangles, the all-
+                                                                                  body-NNJF nearly reaches the FCI reference, consistent
+FIG.  4. H    4:   VMC  energies  of  NNWFs  for  different  H–H                  with the flexibility expected from the universal approx-
+distances in thexdirection, withr                y = 2.4 Bohr.  FCI energies      imation  argument  in  Sec.  II.   The  improvement  should
+[5] are shown as reference values.                                                therefore be interpreted primarily as better recovery of
+                                                                                  dynamical correlation at a fixed nodal surface, including
+                                                                                  the dispersion-like contribution responsible for the shal-
+                                                                                  low minimum of the compact rectangular scan in Fig. 4.
+                                                                                     Table  I  also  isolates  the  effect  of  replacing  basis  ex-
+                                                                                  pansions by neural networks.  Atr  x = 2.4 and 3.0 Bohr,
+                                                                                  the  NNWF  with  pairing-NNJF  slightly  improves  over
+                                                                                  the structurally analogous basis-set JAGP VMC result.
+                                                                                  This confirms that neural-network components can im-
+                                                                                  prove the representational flexibility of a compact gem-
+                                                                                  inal  ansatz,  as  previously  observed  for  neural-network
+                                                                                  Slater–Jastrow wave functions [27]. Whether this is more
+                                                                                  efficient than increasing the conventional one-particle ba-
+                                                                                  sis, for example to cc-pVTZ in Ref. 5, remains a separate
+                                                                                  optimization question.
+                                                                                     The all-body-NNJF energies are within 1 mHa of the
+                                                                                  FCI  values  and  1–2  mHa  below  the  DMC  energies  ob-
+                                                                                  tained  with  the  conventional  JAGP  ansatz.   Thus,  for
+                                                                                  these geometries, a VMC calculation with a sufficiently
+FIG. 5.H    4:  VMC energies of the NNWF for different H–H                        flexible positive Jastrow factor can approach the accuracy
+angles at fixed radiusR= 3.2843 Bohr.  FermiNet and FCI                           expected from a fixed-node projection method.  This also
+energies from Ref. 27 are shown for comparison.                                   indicates that the AGP determinant provides an accurate
+                                                                                  nodal surface for the consideredH                     4 rectangles; the dom-
+                                                                                  inant remaining control parameter is the all-body-NNJF
+and static correlation can be varied geometrically.  This                         size, discussed in Sec. IV C.
+tunability  is  precisely  why  rectangularH                      4,  or  equiva-    The  second  parametrization,  used  in  Ref.  27  to  vali-
+lently  interacting  (H  2)2,  has  been  used  to  assess  fixed-                date FermiNet, keeps the four hydrogen atoms on a cir-
+node  errors  and  configuration  mixing  in  DMC  calcula-                       cle  of  radiusR=  3.2843  Bohr  while  varying  the  angle
+                                                                                                                                                    7
+
+θbetween neighboring atoms [47].  These geometries are                       0.32 Ms,a          G ≈0.037 Ms,b             G ≈0.00098 Ms,a             J ≈0.0054
+more stretched than those in the first benchmark.  They                      Ms, andb       J ≈0.00019 Ms.  Adding a hidden unit to the
+therefore shift the dominant error source from dynamical                     NNAGP is therefore several times more expensive than
+correlation, which a positive Jastrow factor can recover                     adding one to the NNJF, as expected because the geminal
+efficiently, toward static correlation and nodal structure.                  is evaluated repeatedly in constructing the AGP deter-
+Figure  5  compares  our  NNWF  with  all-body-NNJF  to                      minant.  Relating cost to accuracy suggests an approx-
+the  FermiNet  and  FCI  data.   Forθbetween  about  85     ◦                imately inverse relation between energy error and CPU
+and 88◦, the NNWF remains approximately 2 mHa above                          time over the range studied, with larger NNJFs becoming
+FermiNet  and  FCI,  which  are  indistinguishable  on  this                 increasingly efficient relative to smaller ones.
+scale.   The  deviation  increases  further  as  the  rectangle
+approaches  the  square  geometry  atθ=  89     ◦  and  90◦.
+Because the all-body-NNJF already displayed DMC-like                                  V.    CONCLUSIONS AND OUTLOOK
+correlation  recovery  for  the  smaller  rectangles,  this  re-
+maining  error  is  most  naturally  assigned  to  the  AGP                     We  have  introduced  basis-free  Jastrow–AGP  many-
+nodal  surface.   This  is  also  the  geometry  where  other                body  wave  functions  in  which  FFNNs  replace  conven-
+methods  can  predict  a  nonphysical  cusp  in  the  energy                 tional basis-set expansions in both the geminal and the
+curve due to a crossing of Hartree–Fock states [48], and,                    Jastrow factor.  The construction preserves the compact
+at large radius, even an incorrect energetic minimum [47].                   structure  and  interpretability  of  a  single  AGP  deter-
+The AGP-based NNWF does not introduce such quali-                            minant  while  adding  systematically  improvable  neural-
+tative artifacts, but its accuracy is limited by insufficient                network correlation factors.  In addition to reproducing
+nodal flexibility for the large-radius square.                               the pairing-Jastrow structure of conventional JAGP wave
+                                                                             functions, we introduced an all-body neural-network Jas-
+ C.    Accuracy and cost versus neural-network size                          trow factor that can recover correlation energy at fixed
+                                                                             nodes within ordinary VMC. We applied the ansatz toH    2
+  To disentangle the roles of the AGP and Jastrow parts,                     and to rectangularH                      4  benchmark geometries and com-
+Fig.  6  shows  the  energy  errors  obtained  with  different               pared the results with high-accuracy reference data.
+numbers of hidden units in the NNAGP and NNJF net-                              ForH    2, the FFNN-based wave function remains highly
+works.                                                                       accurate along the dissociation curve, including stretched
+  ForH    2,  the error decreases nonlinearly with the size                  configurations where static correlation is essential.  With
+of either the NNAGP or the NNJF, appearing approxi-                          the chosen network sizes, the relative error remains be-
+mately linear on the logarithmic scale.  The NNAGP size                      tween 0.001% and 0.0025%, corresponding to an absolute
+has a slightly stronger effect, although the distinction be-                 deviation below 0.025 mHa.  The network-size study con-
+tween geminal and Jastrow flexibility is less sharp in a                     firms systematic improvement with the number of hidden
+two-particle system.                                                         units.  Because this is a two-electron problem, however,
+  For  squareH             4  atr    x  =r   y  =  2.4  Bohr,  the  three-   the  absence  of  a  stretched-bond  failure  should  not  be
+dimensional plot shows a clearer separation.  Increasing                     overinterpreted:  the  AGP  geminal  already  has  enough
+the NNJF size substantially improves the energy nearly                       nodal  flexibility,  and  the  remaining  error  mostly  tests
+independently  of  the  NNAGP  size,  whereas  increasing                    how efficiently the neural Jastrow factor represents dy-
+the NNAGP size saturates around 18×18 hidden units.                          namical correlation.
+This supports the interpretation of Sec. IV B:  for com-                        ForH    4,  replacing  the  basis-set  geminal  and  pairing
+pactH         4  geometries,  a single AGP determinant already               functions  by  neural  networks  improves  or  matches  the
+gives  a  high-quality  nodal  surface,  so  that  the  positive             corresponding  conventional  JAGP  VMC  energies.   The
+NNJF can recover most of the remaining correlation en-                       all-body-NNJF  further  lowers  the  energy  and  reaches
+ergy.  By contrast, even the largest networks considered                     FCI-quality results for compact rectangular geometries,
+here leave an error of≳2 mHa for the large-radiusH             4             demonstrating  that  a  positive  neural-network  Jastrow
+square, indicating that additional nodal flexibility, rather                 factor  can  recover  most  of  the  missing  correlation  en-
+than a larger positive Jastrow factor alone, is required.                    ergy when the AGP nodal surface is adequate.  The scal-
+  Finally,  Fig.  7  shows  the  total  CPU  time  for  wave-                ing  analysis  shows  that,  in  this  regime,  increasing  the
+function  optimization  as  a  function  of  the  numbers  of                NNJF size is more important than further enlarging the
+hidden  units,N          G  andN       J,  in  the  NNAGP  and  NNJF.        NNAGP.  The  hydrogen  tetramer  is  therefore  the  more
+The number of optimization iterations was kept fixed, so                     informative diagnostic:  by changing the intra- and inter-
+that the timing mainly reflects network-evaluation cost.                     fragment H–H distances, it exposes when the calculation
+We fit the data to                                                           is limited by dynamical correlation recovery and when it
+                                                                             is limited by static, multireference correlation encoded in
+   T(N    G, NJ) =T    0 +a   GNG +b   GN2G +a   JNJ +b   JN2J,              the nodal surface.
+                                                                                The  large-radiusH                       4  square  reveals  the  limitation  of
+where the linear and quadratic terms reflect the growth                      the  present  compact  ansatz.     Even  with  the  largest
+in network connections.  The fitted parameters areT      0 ≈                 networks  used  here,  the  energy  remains  more  than  2
+                                                                                                                                                   8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  (a)                                                                        (b)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  (c)                                                                        (d)
+
+FIG. 6.  Energy differences to reference values [5, 44] for NNAGP + all-body-NNJF wave functions with different numbers of
+hidden units.N          G denotes the NNAGP size andN       J  the NNJF size.  Panels (a) and (b) showH    2; panels (c) and (d) showH    4
+atr    x =r   y = 2.4 Bohr.
+
+
+mHa  above  the  FermiNet  and  FCI  references.    Since                    assigned to a specific physical role.  In the present ansatz,
+the  all-body-NNJF  is already  sufficiently  flexible to  re-               the  Jastrow  network  mostly  measures  recoverable  dy-
+cover DMC-like correlation for compact rectangles, this                      namical correlation at fixed nodes, whereas the AGP net-
+residual error points to an AGP nodal limitation.  Thus,                     work and any future nodal extensions determine how far
+the  method  succeeds  as  a  compact  and  efficient  neural                the ansatz can be pushed into genuinely multireference
+JAGP ansatz, while also identifying where additional de-                     regimes.
+terminant,  backflow,  or other nodal degrees of freedom                        Overall,    the   combination   of   AGP   determinants,
+would  be  needed.    In  this  respect,  the  present  basis-               neural-network  Jastrow  factors,  and  VMC  provides  a
+free construction should be viewed as complementary to                       promising  route  toward  accurate  and  efficient  simula-
+the TurboRVB/JAGP and shadow-wave-function devel-                            tions  with  compact  wave  functions.    Future  improve-
+opments:  it  retains  the  transparent  AGP–Jastrow  sep-                   ments should focus on optimized GPU evaluation, more
+aration, but replaces fixed analytical or basis-expanded                     advanced stochastic optimization, and controlled exten-
+building blocks by neural-network representations.  The                      sions of the nodal surface while retaining the transparent
+main conceptual outcome is therefore a diagnostic one:                       separation between nodal structure and positive correla-
+neural-network flexibility is most useful when it can be                     tion factor.  For extended or weakly interacting systems,
+                                                                                                                                                            9
+
+                                                                                  an equally important direction is to build size consistency
+                                                                                  into the ansatz, for example through localized or block-
+                                                                                  separable geminals and additive logarithmic Jastrow ar-
+                                                                                  chitectures that satisfy the correct cluster decomposition
+                                                                                  by construction.
+
+
+
+                                                                                                     ACKNOWLEDGMENTS
+
+                                                                                     The  authors  gratefully  acknowledge  the  computing
+                                                                                  time  made  available  to  them  on  the  high-performance
+                                                                                  computer  [Cluster  name/s]  at  the  NHR  Center  Pader-
+                                                                                  born Center for Parallel Computing (PC2).  This center
+                                                                                  is jointly supported by the Federal Ministry of Research,
+FIG. 7.H    4 / NNAGP + all-body-NNJF: total CPU time for                         Technology  and  Space  and  the  state  governments  par-
+energy minimization as a function of the numbers of hidden                        ticipating in the National High-Performance Computing
+units in the NNAGP and NNJF. Lines show a fitted second-                          (NHR) joint funding program (www.nhr-verein.de/en/
+order polynomial model.                                                           our-partners).
+
+
+
+
+
+ [1]J. C. Slater, The theory of complex spectra, Phys. Rev.                       [12]S.  Azadi,  M.  S.  Bahramy,  and  T.  D.  K¨uhne,  Electron
+     34, 1293 (1929).                                                                  correlation  effects  and  spin-liquid  state  in  the  herbert-
+ [2]R.  Jastrow,  Many-body  problem  with  strong  forces,                            smithite kagome lattice, Phys. Rev. Research7, 013165
+     Phys. Rev.98, 1479 (1955).                                                        (2025).
+ [3]A. C. Hurley, J. E. Lennard-Jones, and J. A. Pople, The                       [13]S.  Azadi,  W.  M.  C.  Foulkes,  and  T.  D.  K¨uhne,  Quan-
+     molecular orbital theory of chemical valency xvi. a theory                        tum monte carlo study of high pressure solid molecular
+     of paired-electrons in polyatomic molecules, Proc. R. Soc.                        hydrogen, New J. Phys.15, 113005 (2013).
+     Lond. A220, 446 (1953).                                                      [14]S.  Azadi,  G.  H.  Booth,  and  T.  D.  K¨uhne,  Equation  of
+ [4]M. Casula and S. Sorella, Geminal wave functions with                              state of atomic solid hydrogen by stochastic many-body
+     jastrow  correlation:    A  first  application  to  atoms,  J.                    wave  function  methods,  J.  Chem.  Phys.153,  204107
+     Chem. Phys.119, 6500 (2003).                                                      (2020).
+ [5]C. Genovese, A. Meninno, and S. Sorella, Assessing the                        [15]N.  Metropolis,  A.  W.  Rosenbluth,  M.  N.  Rosenbluth,
+     accuracy of the jastrow antisymmetrized geminal power                             A.  H.  Teller,  and  E.  Teller,  Equation  of  state  calcula-
+     in  the  h4  model  system,  J.  Chem.  Phys. 150,  084102                        tions  by  fast  computing  machines,  J.  Chem.  Phys.21,
+     (2019).                                                                           1087 (1953).
+ [6]L. Pauling, The nature of the chemical bond. application                      [16]W. K. Hastings, Monte Carlo Sampling Methods Using
+     of results obtained from the quantum mechanics and from                           Markov Chains and Their Applications, Biometrika57,
+     a theory of paramagnetic susceptibility to the structure                          97 (1970).
+     of molecules, J. Am. Chem. Soc.53, 1367 (1931).                              [17]W. L. McMillan, Ground state of liquid he        4, Phys. Rev.
+ [7]P.  W.  Anderson,  The  resonating  valence  bond  state                           138, A442 (1965).
+     in  La2CuO4  and  superconductivity,  Science235,  1196                      [18]D. M. Ceperley and B. J. Alder, Quantum monte carlo,
+     (1987).                                                                           Science231, 555 (1986).
+ [8]P.  W.  Anderson,  P.  A.  Lee,  M.  Randeria,  T.  M.  Rice,                 [19]W.  M.  C.  Foulkes,  L.  Mitas,  R.  J.  Needs,  and  G.  Ra-
+     N. Trivedi, and F. C. Zhang, The physics behind high-                             jagopal, Quantum monte carlo simulations of solids, Rev.
+     temperature superconducting cuprates: The plain vanilla                           Mod. Phys.73, 33 (2001).
+     version  of  RVB,  J.  Phys.:   Condens.  Matter16,  R755                    [20]R.  J.  Needs,  M.  D.  Towler,  N.  D.  Drummond,  and
+     (2004).                                                                           P. Lopez Rios, Continuum variational and diffusion quan-
+ [9]K.  Nakano,  C.  Attaccalite,  M.  Barborini,  L.  Capriotti,                      tum monte carlo calculations, J. Phys.:  Condens. Matter
+     M. Casula, E. Coccia, M. Dagrada, C. Genovese, Y. Luo,                            22, 023201 (2010).
+     G. Mazzola, A. Zen, and S. Sorella, Turborvb:  A many-                       [21]B. M. Austin, D. Y. Zubarev, and J. Lester, William A.,
+     body toolkit for ab initio electronic simulations by quan-                        Quantum  monte  carlo  and  related  approaches,  Chem.
+     tum monte carlo, J. Chem. Phys.152, 204121 (2020).                                Rev.112, 263 (2012).
+[10]K.   Nakano,   O.   Kohul´ak,   A.   Raghav,   M.   Casula,                   [22]G.  H.  Booth,  A.  J.  W.  Thom,  and  A.  Alavi,  Fermion
+     and  S.  Sorella,  Turbogenius:    Python  suite  for  high-                      monte carlo without fixed nodes:  A game of life, death,
+     throughput calculations of ab initio quantum monte carlo                          and  annihilation  in  slater  determinant  space,  J.  Chem.
+     methods, J. Chem. Phys.159, 224801 (2023).                                        Phys.131, 054106 (2009).
+[11]S. Azadi, R. Singh, and T. D. K¨uhne, Resonating valence                      [23]D. Cleland, G. H. Booth, and A. Alavi, Communications:
+     bond  quantum  monte  carlo:   Application  to  the  ozone                        Survival  of  the  fittest:  Accelerating  convergence  in  full
+     molecule, Int. J. Quantum Chem.115, 1673 (2015).                                  configuration-interaction quantum monte carlo, J. Chem.
+                                                                                                                                                                10
+
+     Phys.132, 041103 (2010).                                                             tion, Phys. Rev. E90, 053304 (2014).
+[24]K. Hornik, Approximation capabilities of multilayer feed-                       [36]F. Calcavecchia and T. D. K¨uhne, On fermionic shadow
+     forward networks, Neural Netw.4, 251 (1991).                                         wave  functions  for  strongly  correlated  multi-reference
+[25]J.  Han,  L.  Zhang,  and  W.  E,  Solving  many-electron                             systems based on a single slater determinant, EPL110,
+     schr¨odinger  equation  using  deep  neural  networks,  J.                           20011 (2015).
+     Comput. Phys.399, 108929 (2019).                                               [37]F. Calcavecchia and T. D. K¨uhne, Metal-insulator transi-
+[26]K.  Choo,   A.  Mezzacapo,  and  G.  Carleo,  Fermionic                               tion of solid hydrogen by the antisymmetric shadow wave
+     neural-network  states  for  ab-initio  electronic  structure,                       function, Z. Naturforsch. A73, 845 (2018).
+     Nat. Commun.11, 2368 (2020).                                                   [38]D. P. Kingma and J. Ba, Adam: A Method for Stochastic
+[27]D.  Pfau,  J.  S.  Spencer,  A.  G.  D.  G.  Matthews,  and                           Optimization, arXiv:1412.6980 [cs]  (2014).
+     W. M. C. Foulkes, Ab initio solution of the many-electron                      [39]H. Flyvbjerg and H. G. Petersen, Error estimates on av-
+     schr¨odinger  equation  with  deep  neural  networks,  Phys.                         erages of correlated data, J. Chem. Phys.91, 461 (1989).
+     Rev. Research2, 033429 (2020).                                                 [40]M. Jonsson, Standard error estimation by an automated
+[28]J.  Kessler,  F.  Calcavecchia,  and  T.  D.  K¨uhne,  Artifi-                        blocking method, Phys. Rev. E98, 043304 (2018).
+     cial neural networks as trial wave functions for quantum                       [41]J. B. Anderson, Quantum chemistry by random walk: H4
+     monte carlo, Adv. Theory Simul.4, 2000269 (2021).                                    square, Int. J. Quantum Chem.15, 109 (1979).
+[29]M. T. Entwistle, Z. Sch¨atzle, P. A. Erdman, J. Hermann,                        [42]K. Gasperich, M. Deible, and K. D. Jordan, H4: A model
+     and F. No´e, Electronic excited states in deep variational                           system for assessing the performance of diffusion monte
+     Monte Carlo, Nat. Commun.14, 274 (2023).                                             carlo calculations using a single slater determinant trial
+[30]X.  Li,  C.  Fan,  W.  Ren,  and  J.  Chen,  Fermionic  neu-                          function, J. Chem. Phys.147, 074106 (2017).
+     ral network with effective core potential, Phys. Rev. Re-                      [43]C. Dugas, Y. Bengio, F. B´elisle, C. Nadeau, and R. Gar-
+     search4, 013021 (2022).                                                              cia, Incorporating second-order functional knowledge for
+[31]J.  S.  Spencer,   D.  Pfau,   A.  Botev,  and  W.  M.  C.                            better option pricing, inAdv. Neural Inf. Process. Syst.
+     Foulkes,   Better,    faster   fermionic   neural   networks,                        (2001) pp. 472–478.
+     arXiv:2011.07125 [physics.comp-ph]  (2020).                                    [44]K.  Pachucki,  Born-oppenheimer  potential  for  h        2,  Phys.
+[32]G.  Pescia,  J.  Han,  A.  Lovato,  J.  Lu,  and  G.  Carleo,                         Rev. A82, 032509 (2010).
+     Neural-network  quantum  states  for  periodic  systems  in                    [45]R. J. Bartlett and M. Musia l, Coupled-cluster theory in
+     continuous space, Phys. Rev. Research4, 023138 (2022).                               quantum chemistry, Rev. Mod. Phys.79, 291 (2007).
+[33]M.  Wilson,  S.  Moroni,  M.  Holzmann,  N.  Gao,  F.  Wu-                      [46]S. Sorella, M. Casula, and D. Rocca, Weak binding be-
+     darski, T. Vegge, and A. Bhowmik, Wave function ansatz                               tween  two  aromatic  rings:   Feeling  the  van  der  waals
+     (but  periodic)  networks  and  the  homogeneous  electron                           attraction by quantum monte carlo methods, J. Chem.
+     gas, arXiv:2202.04622 [physics.chem-ph]  (2022).                                     Phys.127, 014105 (2007).
+[34]X.  Li,  Z.  Li,  and  J.  Chen,  Ab  initio  calculation  of                   [47]T. Van Voorhis and M. Head-Gordon, Benchmark vari-
+     real  solids  via  neural  network  ansatz,  arXiv:2203.15472                        ational  coupled  cluster  doubles  results,  J.  Chem.  Phys.
+     [physics.chem-ph]  (2022).                                                           113, 8873 (2000).
+[35]F.  Calcavecchia,  F.  Pederiva,  M.  H.  Kalos,  and  T.  D.                   [48]H.  G.  A.  Burton  and  A.  J.  W.  Thom,  Holomorphic
+     K¨uhne, Sign problem of the fermionic shadow wave func-                              hartree–fock  theory:   An  inherently  multireference  ap-
+                                                                                          proach, J. Chem. Theory Comput.12, 167 (2016).

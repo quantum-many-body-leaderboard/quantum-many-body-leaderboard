@@ -1,0 +1,62 @@
+{
+  "model": "Molecule",
+  "lattice": "molecule",
+  "n_sites": 2,
+  "boundary": "O",
+  "n_electrons": 12,
+  "params": {
+    "formula": "C2",
+    "charge": 0,
+    "N_up": 6,
+    "N_dn": 6,
+    "basis": "none",
+    "geometry": [
+      {
+        "el": "C",
+        "r": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "el": "C",
+        "r": [
+          0,
+          0,
+          2.3491185454468284
+        ]
+      }
+    ],
+    "geometry_source": "ICML 2026 / arXiv:2603.14515 v2 Table 11: C2 bond length 1.2431 Å (converted, unrounded; one of the 10 structures of Pfau et al. 2024), singlet block"
+  },
+  "instance_id": "Molecule/C2-R2.34912_q0_s0_none",
+  "rows": [
+    {
+      "energy": -75.92326,
+      "sigma": 0.0001,
+      "energy_variance": null,
+      "dof": 12,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "Excited Pfaffian",
+      "method_detail": "one Excited Pfaffian trained jointly on 10 bond lengths and 12 states (6 singlet, 6 triplet, S+ penalty); the lowest singlet",
+      "method_as_published": "Excited Pfaffian [VMC, one Excited Pfaffian trained jointly on 10 bond lengths and 12 states (6 singlet, 6 triplet, S+ penalty); the lowest singlet]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "N. Gao, T. Grutschus, F. Noé and S. Günnemann, Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State, Proceedings of the 43rd International Conference on Machine Learning (ICML 2026), PMLR 306, arXiv:2603.14515",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2603.14515 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "-75.92326(10) (total energy, Hartree)",
+        "note": "ICML 2026 / arXiv:2603.14515 v2 Table 11 (singlet block), text line 1719 | Hartree, total energy, all-electron. Raw state energies \"before averaging over degenerate states and correcting for state swaps\"; the row is the lowest of the six columns of its spin. N_up = N_dn; the lowest singlet lies below every triplet at this bond length.",
+        "secondary_of": null
+      }
+    }
+  ]
+}

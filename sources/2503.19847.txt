@@ -1,0 +1,1569 @@
+      Ab-initio simulation of excited-state potential energy surfaces
+                      with transferable deep quantum Monte Carlo
+
+         Zeno Sch¨atzle         1† ,  P. Bern´at Szab´o          1† ,  Alice Cuzzocrea           1,  Matˇej Mezera          1,
+                                                       Frank No´e        1,2,3,4*
+
+         1Department of Mathematics and Computer Science, Freie Universit¨at Berlin, Berlin,
+                                                             Germany.
+                     2Department of Physics, Freie Universit¨at Berlin, Berlin, Germany.
+                              3Microsoft Research, AI for Science, Berlin, Germany.
+                      4Department of Chemistry, Rice University, Houston, Texas, USA.
+
+
+                          *Corresponding author(s). E-mail(s):frank.noe@fu-berlin.de;
+                                  †These authors contributed equally to this work.
+
+
+
+                                                              Abstract
+      The accurate quantum chemical calculation of excited states is a challenging task, often requiring com-
+      putationally demanding methods. When entire ground and excited potential energy surfaces (PESs) are
+      desired, for instance to predict the interaction of light excitation and structural changes, one is often forced
+      to use cheaper computational methods at the cost of reduced accuracy. Here we introduce a method for
+      the geometrically transferable optimization of neural network wave functions that leverages weight shar-
+      ing and dynamical ordering of electronic states. Our method enables the efficient prediction of ground and
+      excited-state PESs and their intersections at the highest accuracy, demonstrating up to two orders of mag-
+      nitude cost reduction compared to single-point calculations. We validate our approach on four challenging
+      excited-state PESs, namely ethylene, the carbon dimer, the methylenimmonium cation, and a rubredoxin
+      active site model containing 96 electrons, illustrating the potential of transferable deep-learning QMC as
+      a practical framework for studying electronic excitations in molecules.
+
+      Keywords:Excited States, Quantum Monte Carlo, Deep Learning, Parameter Sharing
+
+
+
+Photochemistry plays a fundamental role in biologi-                   of molecules [10]. Time-dependent density functional
+cal systems, driving essential processes such as vision,              theory is widely used for excited-state characteriza-
+photosynthesis, and molecular photoprotection [1–3].                  tion but struggles with delocalized excitations, con-
+Light-driven phenomena are also key to technologi-                    ical  intersections,  high-energy  states,  multi-electron
+cal advancements, ranging from material design and                    processes,  and  charge  transfer  [11, 12].  Similarly,
+chemical processing [4,5] to biomedical technologies                  excited-state  extensions  of  coupled  cluster  meth-
+such as molecular motors and photo-controlled drug                    ods,  which  rely  on  a  single  reference  determinant,
+delivery [6,7].                                                       become  unreliable  in  systems  with  strong  multi-
+    Despite the critical importance of these processes,               reference  character  [13].  On  the  other  hand,  most
+their  theoretical  study  is  hindered  by  the  need  for           multi-reference methods require the definition of an
+accurateab-initiodescriptions  of  electronic  excited                active  space,  a  process  that  often  relies  on  chemi-
+states. Most quantum chemistry methods have been                      cal intuition to select relevant orbitals and becomes
+developed  for  the  calculation  of  electronic  ground              increasingly challenging when considering structural
+states and their extensions to excited states are either              flexibility, for instance in dynamical simulations [14].
+limited or highly expensive and often require expert                  Even  if  sophisticated  automatic  tools  are  used  to
+knowledge [8,9]. These problems are further ampli-                    obtain appropriate active spaces [14,15], accurately
+fied when targeting a coherent description of excited                 describing   dynamic   correlation   often   necessitates
+state  potential  energy  surfaces  (PESs),  which  are               the  use  of multi-reference coupled  cluster  or  (semi-
+the key ingredient to simulating the photodynamics                    stochastic)  configuration  interaction  (CI)  methods.
+
+
+                                                                   1
+Fig. 1:Neural network architecture for the transferable excited-state wave function with orthogonality
+constraints.Diagram of the transferable wave function. Nuclear positions inform the electron representations in the
+CausalSelfAttnblock, introducing an explicit dependency on the molecular configuration. If parameters are shared
+between states, the sameElectron Encoder,Nuclei EncoderandCausalSelfAttnblock are applied for each
+batch of electron coordinates, respectively. The orthogonality of the states is implemented by ordering wave functions
+based on energy and applying a directional overlap penalty (1).
+
+
+However,  these  approaches  remain  less  established                 the  efficiency  of  computing  excited-state  PESs  is
+than their single-reference counterparts and exhibit                   increased substantially over single-point simulations,
+steep computational scaling with system size [16].                     with  a  speedup  of  close  to  two  orders  of  magni-
+    Variational quantum Monte Carlo (VMC) offers                       tude being demonstrated. Further improvements are
+a promising alternative to traditional methods, given                  attained by introducing parameter sharing between
+its  black-box  nature,  favorable  scaling  with  sys-                electronic states and a dynamic state ordering mech-
+tem  size,  and  flexibility  to  address  virtually  any              anism  for  the  orthogonalization  of  states  based  on
+electronic  structure  problem  [17–19].  Neural  net-                 the per-geometry energy. The method yields a coher-
+work based VMC has recently been shown to yield                        entab-initiodescription of excited-state PESs with
+high accuracy in challenging excited-state problems                    full access to electronic properties, which we demon-
+[20–22],  including  conical  intersections  and  double               strate on four challenging applications – the ground
+excitations.  Despite  this  success,  the  simulation  of             and singlet excited states of the ethylene torsion and
+excited-state  PESs  remains  costly  due  to  the  need               pyramidalization PESs, the eight lowest-lying states
+of performing large numbers of independent single-                     of the carbon dimer dissociation, the two-dimensional
+point calculations. At the same time, sharing neural                   excited state PESs of the three lowest singlet states
+network  wave  function  parameters  across  molecu-                   of the methylenimmonium cation, and the spin-state
+lar  geometries  (geometric  transferability)  [23, 24]                energetics of a 96-electron model of the rubredoxin
+was  shown  to  be  both  accurate  and  computation-                  active site.
+ally  efficient  in  simulating  ground  state  PESs  and
+proved  beneficial  for  generalizing  across  molecules               Results
+[25–28]  as  well  as  spin  lattice  Hamiltonians  [29].
+Extending  geometric  transferability  of  neural  net-                Transferable ab-initio optimization of
+work  wave  functions  to  excited  state  calculations                excited states
+promises a wide range of benefits, including reduced
+computational costs, improved error cancellation, as                   In    traditional    quantum    chemistry,    calculating
+well as more stable optimization processes. Such an                    excited-state  PESs  involves  the  costly  simulation
+approach could provide unparalleledab-initioaccess                     of  multiple  wave  functions  for  a  large  number  of
+to  all  electronic  properties  of  even  the  most  chal-            molecular  geometries.  Taking  advantage  of  similar-
+lenging  excited  states  at  a  systematically  refinable             ities  between  such  wave  functions  and  leveraging
+accuracy.                                                              the high expressivity of neural network ansatzes, we
+    In this work, a method for the transferable VMC                    introduce a method that generalizes across molecu-
+optimization  of  neural  network  wave  functions  for                lar configurations as well as electronic excited states,
+excited-state PESs is presented. Exploiting similar-                   achieving  a  balanced  description  of  excited-state
+ities of wave functions across molecular geometries,                   PESs at a much reduced cost.
+
+
+                                                                    2
+                                                        NsX    h                               EiR>EjXR                      i
+                                                                         i               i
+             L(θ     1, ...,θ     Ns  ,θ s)=   X                    ⟨ ˆH⟩R    +β⟨     ˆS2⟩R+            αij|⟨Ψ  i|¯Ψj⟩R |2     .          (1)
+                               |{z}         R∈ℜ|{z}      i|{z}     |  {z  }     |   {z   }    |    j        {z             }
+                               shared     geometry  electronic      energy         spin                  dynamic
+                              params       transfer   states     expectation      penalty            overlap penalty
+
+
+     The loss comprises the molecular energy expec-                          In the following, we demonstrate the benefits of
+tation value⟨       ˆH⟩, and the spin-penalty⟨       ˆS2⟩[21,30]         these methodological advancements on several chal-
+for each electronic stateiand configurationR. The                        lenging excited-state PESs. Our results are compared
+parametersθ                     i, one for each of theN      s states, are opti-to  state-of-the-art  multi-reference  quantum  chem-
+mized simultaneously across a dataset of molecular                       istry  methods  and  single-point  deep-learning  QMC
+geometriesℜ,  constituting  a  substantial  advance-                     simulations. As a quantitative measure of accuracy,
+ment  over  the  conventional  independent  treatment                    we propose the mean absolute error (MAE) of rela-
+[20, 21, 31]  in  terms  of  convergence  speed  and                     tive energies, computed between target and reference
+accuracy. We will refer to the optimization of geom-                     results after shifting the latter such that their mean
+etry  dependent  electronic  wave  functions  across  a                  energies  across  all  geometries  and  all  states  are
+dataset  of  molecular  configurations  astransferable                   aligned.
+trainingthroughout  the  manuscript.  Additionally,
+partial  sharing  of  parametersθ                     s  between  differentUnified description of excited state
+electronic states leads to enhanced error cancellation                   processes
+(see  Sec.1.5),  improving  convergence  and  increas-
+ing the accuracy in excitation energies. This sharing                    Ethylene  serves  as  a  minimal  model  system  for
+of model parameters between the wave functions of                        photoisomerization  processes  and  internal  energy
+different electronic states is referred to asparameter                   conversion and its excited-state PES has been stud-
+sharing.                                                                 ied  extensively  [33, 34].  After  photo-excitation  to
+    While  previous  penalty-based  QMC  algorithms                      the first singlet excited state, ethylene undergoes a
+enabled  the  computation  of  multiple  excited  states                 torsion around the carbon-carbon bond and a pyra-
+via  an  overlap  penalty  term  between  states  with  a                midalization  of  one  of  the  CH2  units,  leading  to  a
+fixed order, the last term of (1) orders states dynam-                   conical  intersection  from  which  the  system  relaxes
+ically based on the per-geometry energyE         R (further              back to the ground state equilibrium geometry. Com-
+details  in  Sec.1.3).  This  enhances  the  robustness                  putationally  modeling  the  non-radiative  relaxation
+of  our  method  in  the  presence  of  level  crossings                 pathway is challenging due to strong electronic corre-
+and conical intersections – crucial albeit challenging                   lation in the excited state, increasing multi-reference
+points for quantum chemistry – promoting the con-                        character upon approaching the conical intersection,
+tinuity  of  the  ansatzes  at  points  where  the  energy               and  the  existence  of  intersystem  crossings.  It  has
+ordering of the states changes. Notably, due to the                      been  shown  that  single-reference  methods  such  as
+regularization properties and improved convergence                       SR-CI qualitatively fail at describing several features
+of the transferable training, the simulation of excited                  of the ethylene PES [33–35]. Deep-learning QMC, on
+state  PESs  is  further  simplified  by  eliminating  the               the  other  hand,  does  not  suffer  from  these  limita-
+need  for  supervised  pretraining  on  external  quan-                  tions [22,36] and previous, single-point applications
+tum chemistry methods. Additionally, incorporating                       of  excited  state  deep-learning  QMC  methods  have
+an explicit parametric dependence of the ansatz on                       modeled  the  PESs  of  ethylene  with  high  accuracy
+nuclear  positions  further  increases  expressivity  and                [20,21,31].
+promotes  stable  convergence.  Concretely,  the  self-                      In this work, two transferable deep-learning QMC
+attention block SelfAttn(h        elec) of the Psiformer [32] is         optimizations  are  run  for  the  1D  PESs  along  the
+extended by considering both nuclear and electronic                      torsion   (9   geometries)   and   pyramidalization   (14
+nodes                                                                    geometries) of ethylene [33]. The spin penalty (1) is
+                                                                         utilized to target singlet states only. The results of
+          CausalSelfAttn(Concat(h                       nuc,h elec)),       (2)the  transferable  optimization  with  parameter  shar-
+                                                                         ing and dynamic state ordering displayed in Fig.2,
+with  causal  attention  preventing  information  from                   are in excellent agreement with the single-point nat-
+flowing  from  electrons  to  nuclei.  After  applyingL                  ural excited state (NES) QMC reference [31]. After
+layers of self-attention, the final electron representa-                 a total of 200k training iterations evenly split across
+tionsh         elec are projected to give many-body orbitals             all  geometries,  we  obtain  a  MAE  for  the  relative
+and  nuclei  representationsh             nuc  are  used  to  predict    energies  of  29.4(1)  meV  along  the  torsion  PES,
+parameters  of  the  orbital  envelopes.  The  architec-                 and  4.7(7)  meV  along  the  pyramidalization  PES.
+ture of the ansatz is depicted on Fig.1and further                       This improves over previously obtained, single-point,
+discussed in Sec.1.4.                                                    penalty-based DeepQMC results [21] of 33.8(3) meV
+
+
+                                                                      3
+Fig. 2:Lowest-lying singlet PESs for ethylene relaxation.Simulation of the ground and first singlet excited
+state of ethylene along the torsion around the C–C bond and pyramidalization of a CH2 group.a): Relative energy
+with respect to the equilibrium geometry. DeepQMC results for transferable optimization across molecular geometries
+with parameter sharing across electronic states and dynamic state ordering are presented alongside highly accurate
+single-point NES-VMC simulations [31] and MR-CI results [33]. Sampling errors are smaller than the marker size.
+b): Convergence of the DeepQMC MAEs to NES-VMC results in relative energy. Different variants of transferable
+DeepQMC optimization are compared to single-point calculations performed in earlier work [21]. The horizontal axis
+indicates the total cumulative iterations across all geometries of the torsion and pyramidalization PES, respectively.
+The dashed horizontal line gives the accuracy of evaluating the final single-point wave functions.c): Relative energies
+with respect toϕ= 90     ◦  around the conical intersection (top panels), intermolecular overlaps (Eq.12, center panels)
+and non-adiabatic couplings (bottom panels) for transferable DeepQMC runs with parameter sharing across electronic
+states and dynamic state ordering and without parameter sharing across electronic states and fixed ordering.
+
+
+and  13.1(3)  meV,  while  using  about  five  times                      the  crossing  and  intermolecular  overlaps  stay  close
+less  computational  resources  and  without  employ-                     to one within a state and close to zero with respect
+ing supervised pretraining with respect to CASSCF                         to  the  second  state,  runs  without  dynamic  state
+baselines. The location of the conical intersection of                    ordering display a discontinuity at the conical inter-
+the pyramidalization PES (98.5      ◦) is excellently repro-              sections, where the intermolecular overlaps indicate
+duced,  while  due  to  the  dynamic  ordering  of  the                   a  flip  of  the  states.  This  effect  also  shows  in  the
+states the ansatzes are continuous across the conical                     computation of non-adiabatic couplings (NACs) rel-
+intersection.                                                             evant  to  surface-hopping  simulations.  NACs  can
+    The  beneficial  effects  of  dynamic  state  ordering                be   obtained   by   approximating   the   overlap   gra-
+and  parameter  sharing  are  highlighted  in  Fig.2b,                    dient   along   the   pyramidalization   angleϕ using
+comparing  the  convergence  of  the  relative  energy                    finite differencesh                   ij(ϕ) =∇        ϕ′⟨ψ  i(ϕ)|ψ       j(ϕ ′)⟩|  ϕ=ϕ    ′ ≈
+MAEs during optimization with and without param-                            1
+                                                                          2∆ϕ    (⟨ψ   i(ϕ)|ψ       j(ϕ+ ∆ϕ)⟩ − ⟨ψ              i(ϕ)|ψ       j(ϕ−∆ϕ)⟩) [37]
+eter   sharing   and   dynamic   state   ordering.   First,               (here  we  used  non-uniform  finite  difference).  We
+dynamic state ordering facilitates convergence in the                     find that transferable simulations employing dynamic
+presence  of  a  conical  intersection,  reaching  lower                  state  ordering  yield  quasi-diabatic  representations.
+errors  faster,  than  other  transferable  calculations                  These are electronic states that are continuous along
+on  the  pyramidalization  PES.  Second,  sharing  the                    the  one-dimensional  cut  through  the  conical  inter-
+parameters of the main electron-nucleus transformer                       section.  Consequently,  the  NAC  remains  small  at
+across  the  two  ansatzes  leads  to  improved  conver-                  the  conical  intersection.  By  contrast,  simulations
+gence  of  the  MAE  of  relative  energies  compared                     executed  with  a  fixed  ordering  exhibit  pronounced
+to independent transferable wave functions on both                        coupling  at  the  conical  intersection,  due  to  state
+PESs.  The  effect  of  the  dynamic  state  ordering  is                 discontinuities.
+furthermore  illustrated  in  Fig.2c,  where  energies,
+intermolecular overlaps and non-adiabatic couplings
+at the conical intersection are shown. While the runs
+with  the  option  turned  on  are  continuous  through
+
+
+
+                                                                       4
+Fig.  3: Carbon  dimer  dissociation  curves  along  the  lowest-lying  eight  electronic  states.Transferable
+DeepQMC ansatzes were trained jointly across ten geometries, with bond lengths ranging from 1.0 to 1.9 ˚Aand sharing
+parameters  across  electronic  states.  Semistochastic  heat-bath  configuration  interaction  calculations  in  quintuple-ζ
+basis, extrapolated to the full configuration interaction limit are used as reference [38].a): The final relative energies
+obtained with transferable DeepQMC, for the lowest-lying four singlet and four triplet states of the carbon dimer.
+Both DeepQMC and reference curves were smoothed by cubic interpolation.b): Differences between DeepQMC and
+semistochastic  heat-bath  configuration  interaction  in  the  vertical  excitation  energies  from  the  ground  state  of  the
+respective spin sector.c): Convergence of the mean absolute error of relative energies between the eight lowest-lying
+states of the carbon dimer. Geometrically transferable optimization is compared with single-point training performed
+in earlier work [21]. The horizontal axis indicates the total cumulative iterations across all geometries. The dashed
+horizontal line marks the evaluated final accuracy of the single-point simulations.
+
+Efficiently simulating challenging                                        three  times  fewer  iterations.  This  is  all  the  more
+electronic structures                                                     remarkable  as  unlike  the  single-point  run,  transfer-
+Computing the numerous low-lying electronic states                        able  optimization  was  not  preceded  by  supervised
+of the dissociation of the carbon dimer constitutes a                     pretraining.  It’s  worth  emphasizing  that  the  above
+formidable challenge to quantum chemistry methods                         results pertain to the accuracy of relative energies, as
+[38,39]. The difficulty lies in the simultaneous pres-                    opposed to the absolute energy of each point along
+ence  of  strong  static  and  dynamic  correlation  [40],                the  PESs.  While  the  former  is  vastly  more  impor-
+giving rise to a number of exotic electronic proper-                      tant  in  practice,  we  note  that  the  model  trained
+ties  such  as  charge-transfer  type  bonding  [41],  and                jointly  for  200k  iterations  yields  on  average  170(2)
+the presence of low-lying doubly excited states [42].                     meV  higher  absolute  energies  than  the  single-point
+    The  benefits  of  optimizing  excited  state  deep-                  one. The larger absolute energy error for the trans-
+learning   QMC   ansatzes   jointly   across   molecular                  ferably trained ansatz is explained by the fact that it
+geometries  are  showcased  by  modeling  the  lowest-                    has (roughly) the same capacity as the single-point
+lying eight states of the carbon dimer simultaneously                     ansatz, but has to simultaneously represent a range
+for  ten  nuclear  separations  ranging  from  1.0  to  1.9               of  geometries,  which  necessarily  leaves  less  expres-
+˚A. Utilizing the spin penalty term in the loss func-                     sivity  for  each  geometry.  On  the  other  hand,  this
+tion (1), the four singlet and four triplet states can                    highlights  the  improved  error  cancellation  proper-
+be  treated  separately.  The  parameters  of  the  main                  ties afforded by joint optimization, which arrives at
+electron-nucleus  transformer  are  shared  across  the                   lower relative energy errors than single-point train-
+four electronic states in each simulation. The result-                    ing. At the same time, the absolute energies of the
+ing PESs are shown on Fig.3a, along with reference                        transferable  ansatz  were  still  converging  when  the
+values  obtained  with  the  semi-stochastic  heat  bath                  optimization  was  stopped,  indicating  the  possibil-
+configuration  interaction  (SHCI)  [38]  method.  It  is                 ity  of  further  reducing  the  total  energy  error  with
+clear  that  joint  DeepQMC  optimization  is  capable                    extended optimization.
+of  modeling  all  eight  states,  along  the  entire  range                  Even with dynamic state ordering and sharing of
+of  bond  lengths.  The  convergence  of  the  MAE  of                    network  parameters  across  states,  we  did  not  suc-
+relative energies during the training process is plot-                    ceed  in  keeping  the  continuity  of  theX       1Σ+g   and
+ted on Fig.3c, for single-point [21], and transferable                    A1Πu  states  at  large  bond  lengths,  where  they  are
+DeepQMC  optimizations.  The  final  MAEs  of  the                        very nearly degenerate for a large section of the PES
+two setups are similar, being 75(2) meV for single-                       (>1.6        ˚A). Increasing the value of the overlap penalty
+point, and 69(1) meV for transferable optimization.                       scaling  factor  ˜αdid  not  recover  the  correct  energy
+However, joint training offers large cost savings, con-                   ordering, while very large values could even degrade
+verging to this accuracy substantially faster, reaching                   overall performance [21]. The effect of increasing  ˜α
+the final MAE of the single-point calculation in about                    is diminished on these states by the very form of the
+                                                                          overlap  scaling  factor  (see  Section1.3),  which  was
+
+
+                                                                       5
+Fig. 4:2D singlet PESs of the methylenimmonium cation.Transferable DeepQMC simulations on CH                 2NH +2  for
+varying C     N bond lengths (1.2–1.54 ˚A) and torsion anglesτ(0–90          ◦).a): Relative energies of the three lowest-lying
+singlet  PESs  of  the  CH2NH +2    on  a  uniform  10×10  grid. b):  1D  slice  of  the  2D  PES  atτ  =   0,  compar-
+ing  transferable  DeepQMC  results  with  MR-CISD+Q/SA-9-CAS(6,4)@d-aug-cc-pVDZ  data  from  Ref.  [43]  and
+NEVPT2/CAS(10,10))@cc-pvQZ simulations obtained with PySCF [44].c): Difference between the DeepQMC and
+MRCISD results on theτ= 0      ◦ slice in vertical excitation energies from the ground state.d): Convergence of the mean
+absolute error of relative energies between the three lowest-lying singlet states evaluated at ten configurations with
+τ= 0 (C     N bond length between 1.2–1.54 ˚A), using MR-CISD [43] as a reference. Single-point and two transferable
+neural network VMC optimizations are compared. The first transferable training was carried out on the 10×10 grid
+(varying C     N andτ), while the second only on the 10-point subset atτ= 0. The horizontal axis indicates the total
+cumulative iterations across all geometries considered, re-normalized to take into account differences in the electron
+batch sizes. The dashed horizontal line marks the final accuracy of the single-point simulations.
+
+
+designed  with  conical  intersections  in  mind,  where                 ground state via torsional motion. Accurately captur-
+the  energies  of  crossing  states  approach  each  other               ing this relaxation remains a challenge for CASSCF,
+rapidly  and  are  nearly-degenerate  only  for  a  nar-                 overshooting  theππ     ∗  state  in  the  Franck–Condon
+row  range  of  geometries.  In  contrast,  the  curves  of              region  [43].  Accordingly,  the  more  computationally
+theX      1Σ+g   andA       1Πu  C2  states  run  nearly  paral-         expensive MR-CISD calculations are to date thede
+lel,  resulting  in  low  overlap  penalty  scales  for  such            factoreferences for the study of this system [43].
+a wide range of bond lengths, that our flexible neu-                         In  contrast  to  the  small  scale  study  of  ethylene
+ral  network  ansatzes  can  change  character  without                  and carbon dimer, we now turn to a two-dimensional
+incurring  substantial  penalties  in  the  loss  function.              problem, covering key molecular configurations rele-
+While finding an improved form for the overlap scal-                     vant for the relaxation of CH2NH +2  . We generate a
+ing factor certainly warrants further research, state                    10×10 grid of nuclear configurations, spanning the
+crossings  of  the  first  kind  where  the  current  form               two most relevant degrees of freedom in the problem,
+performs  excellently  are  by  far  the  more  common,                  the torsion angleτand the C             N bond length. Unlike
+therefore our proposed methodology is already widely                     in  previous  examples,  here  we  employ  ccECP-type
+applicable. Furthermore, the parameter sharing and                       pseudopotentials  [47, 48].  While  not  strictly  neces-
+dynamic  state  ordering  features  do  have  a  benefi-                 sary, this choice speeds up convergence and reduces
+cial  effect  on  the  continuity  of  thea      3Πu  andc       3Σ+u    the  memory  required  for  storing  electron  position
+states at their crossing, where continuity is preserved                  samples for each molecular configuration. We found
+consistently only with these settings active.                            that  sharing  network  parameters  across  states  did
+                                                                         not provide a clear advantage. Therefore we maintain
+Higher computational efficiency gains                                    separate parameters for each state. We believe that
+for multidimensional potential energy                                    the  use  of  pseudopotentials  diminishes  the  benefits
+surfaces                                                                 of parameter sharing, as a substantial portion of the
+                                                                         shared wave function features is lost when replacing
+We  continue  by  presenting  results  on  the  excited                  core electrons with effective potentials.
+states of the methylenimmonium cation, CH2NH +2  ,                           In   Fig.4a,   we   present   the   2D   PES  of   the
+the simplest model of protonated Schiff bases under-                     methylenimmonium  cation  on  a  uniform  grid,  the
+going isomerization. As such, it is extensively studied                  C   N bond length ranging from 1.2 to 1.54 ˚A, with
+in the context of photodynamics [43,45], and more                        torsion angles between 0◦and 90◦. First, the qualita-
+recently  became  the  target  of  neural  network  force                tive agreement across the whole grid with the MR-
+fields  for  excited  states  [46].  Following  aπ→π            ∗        CISD+Q/SA-9-CAS(6,4)@d-aug-cc-pVDZ  reference
+excitation,  the  system  can  first  relax  to  the  first              results from Ref. [43] is noted. Our model correctly
+excited state via elongation of the C              N bond com-           captures the approach of the ground and first excited
+bined with slight bi-pyramidalization, and then to the
+
+
+                                                                      6
+Fig. 5:Crossing of the lowest lying quintet and triplet states of Fe(SH)    2−4   . The molecular geometries are
+defined by the twist angle running from 9.1◦ (nearly planar) to 89.9    ◦ (almost tetrahedral).a): Validation of the use
+of the smaller Fe(SH)2−4    model compared to the original Fe(SCH3)2−4    model by comparing PBE relative spin-state
+energies in the def2-TZVP basis [49].b): Qualitative comparison of DeepQMC and reference CCSD(T)@def2-TZVP
+relative energies for the lowest-lying triplet and quintet states of the Fe(SH)2−4    model. DeepQMC calculations are
+carried out transferably across all eleven geometries, sharing parameters across electronic states and utilizing overlap
+and spin penalties (to target the triplet state). An extended discussion of the reliability of the reference simulations
+is presented in Supplementary SectionA.4.c): Spin expectation values of the DeepQMC wave functions. The spin
+contamination of about 0.001-0.002 can be considered negligible.
+
+
+states  with  increasing  torsion  angle,  as  well  as  the            but also improves accuracy. This is evident from the
+crossing of the first and second excited-state PESs at                  evaluated MAE (with respect to MR-CISD) dropping
+τ= 0  ◦. In Fig.4b we further inspect a slice of the                    from the 134(2) meV of the single-point calculation
+grid atτ= 0     ◦ and directly compare to the MR-CISD                   to  96(2)  and  97(5)  meV  for  the  10-  and  100-point
+reference.  Notably,  dynamic  state  ordering  enables                 transferable  wave  functions,  respectively.  Interest-
+each  ansatz  to  follow  the  respective  state’s  charac-             ingly,  the  close  agreement  between  the  latter  two
+ter. Our results are in good agreement with Ref. [43],                  suggests  the  robustness  of  our  approach  and  raises
+as the positions of the conical intersections coincide,                 the possibility that the discrepancy with the reference
+while the remaining small differences are comparable                    originates from its own limitations. When simulating
+to the accuracy of the reference method and equally                     larger parts of molecular configuration space another
+plausibly may reflect its own limitations.                              increasingly relevant factor is the potential for con-
+    To  assess  the  cost  savings  achieved  by  training              vergence  to  incorrect  states,  either  due  to  sections
+jointly across molecular geometries, we compare the                     that are more prone to these difficulties or simply the
+convergence  of  single-point  DeepQMC  calculations                    increasing likelihood of a few out of many single-point
+with two transferable models in Fig.4d, one trained                     simulations exhibiting erroneous convergence. Here,
+on  the  100-point  grid  described  above,  the  other                 transferable  training  can  act  as  a  regularizer.  By
+trained only on the subset of ten molecular configu-                    correctly identifying the states for a subset of molec-
+rations withτ= 0        ◦. Similar to Fig.2b and3b, we                  ular configurations, the entire transferable model is
+utilize the MAE of relative energies, computed for the                  driven towards proper convergence (more details can
+ten geometries withτ= 0        ◦, to compare the conver-                be found in Supplementary SectionA.3).
+gence of the various DeepQMC calculations. Unlike
+in  the  above  studies,  here  the  baseline  single-point             Scalability to transition metal
+optimizations too were performed without supervised                     complexes with pseudohamiltonians
+pretraining,  facilitating  a  direct  comparison.  Once
+again we observe a substantial convergence speedup,                     It has been suggested that spin-forbidden transitions
+by  roughly  one  order  of  magnitude,  when  going                    might play an important role in the biological func-
+from the single-point calculations to the transferable                  tion of the rubredoxin electron-transfer protein [49].
+setup  with  ten  molecules.  An  additional  order-of-                 dePolo and coworkers [49] used the PBE density func-
+magnitude  speedup  is  obtained  when  training  the                   tional to identify a crossing of the low-lying triplet
+transferable wave function on the larger dataset, con-                  and quintet states of the Fe(SCH3)2−4    model of the
+taining 100 molecular configurations. We emphasize                      rubredoxin  active  site,  as  it  changes  from  planar
+that the 10-point grid is a subset of the 100-point grid                to  tetrahedral  geometry,  where  non-negligible  spin-
+for a fixed torsion angle, and thus the 100-point grid                  forbidden  transition  rates  were  obtained  via  non-
+covers a substantially larger section of the full PES.                  adiabatic  transition  state  theory.  Here,  we  employ
+Finally, we highlight that transitioning to a transfer-                 the  slightly  smaller  Fe(SH)2−4    model  with  96  elec-
+able training setup not only accelerates convergence,                   trons and build a one-dimensional potential energy
+                                                                        surface analogous to the one originally investigated.
+
+
+                                                                     7
+First,  on  Fig.5a)  it  is  verified  that  the  PBE  func-           by estimating the challenging PESs of the ethylene
+tional identifies the same crossing of the triplet and                 relaxation,  the  carbon  dimer,  and  the  methylenim-
+quintet states for this smaller model as for the orig-                 monium cation using five, three and up to about a
+inal  Fe(SCH3)2−4  ,  thus  validating  the  removal  of               hundred  times  less  compute,  respectively,  than  the
+the  methyl  groups.  Then,  we  employ  our  proposed                 equivalent  single-point  deep-learning  QMC  calcula-
+methodology  to  describe  the  triplet  and  quintet                  tions. In addition to decreased computational costs,
+states  of  the  Fe(SH)2−4    model  using  deep-learning              the  transferable  training  improves  the  accuracy  of
+QMC. The fast-moving core electrons of the iron and                    relative energies, as evidenced on these three test sys-
+sulfur atoms are replaced with local pseudohamilto-                    tems. The higher accuracy and stability are in large
+nians [50,51], and the spin-penalty is applied to one                  part  due  to  the  enhanced  error  cancellation  which
+of the states to restrict it to the triplet spin sector. A             arises naturally if the same ansatz is used to describe
+single, two-state DeepQMC simulation is performed,                     all geometries in question. Lastly, the scalability of
+where the parameters of the electron-nucleus trans-                    the  proposed  method  to  larger  systems  is  demon-
+former  are  shared  between  the  two  states,  and  the              strated by modeling two spin states of a 96-electron
+spin-penalty is applied to the triplet state only. As                  model of the rubredoxin active site.
+can be seen on Fig.5b), DeepQMC converges to PESs                          An important aspect of geometrically transferable
+that are  qualitatively different from  those obtained                 deep-learning QMC is the presence of state crossings,
+with PBE, and are more similar to CCSD(T) ones,                        where the static ordering of states in the loss function
+predicting a quintet ground state for all but the most                 can lead to a quasi-discontinuity in the state repre-
+planar  geometries  under  investigation.  Indeed,  it  is             sented by a given network. To promote the continuity
+known that generalized gradient functionals such as                    of  states  and  improve  convergence,  dynamic  state
+PBE  tend  to  overly  favor  low-spin  states  [52, 53].              ordering  is  introduced,  which  constructs  the  most
+These results indicate that the molecular geometry                     appropriate  loss  function  independently  for  each
+of the triplet-quintet crossing in the twice negatively                nuclear  configuration.  Furthermore,  the  concept  of
+charged rubredoxin active site might be substantially                  sharing large parts of the neural network parameters
+different  from  what  was  previously  assumed,  with                 between models of different electronic states is intro-
+potential implications on the rate of the associated                   duced. If there are similarities between the different
+spin-forbidden transitions. Lastly, Fig.5c) shows that                 states, the shared parameters effectively receive more
+the spin contamination of the DeepQMC wave func-                       gradient  information  during  training  while  correla-
+tions is negligible (0.001-0.002), indicating that pure                tion  between  the  electron  representations  improves
+and continuous states are retained across the entire                   error cancellation, contributing to the improvement
+PES.  With  Fe(SH)2−4    being  the  largest  system  for              over single-point results on ethylene and the carbon
+which  transferable  training  and  parameter  sharing                 dimer.
+has been applied, this result underscores the poten-                       Despite  these  improvements,  several  challenges
+tial in exploiting similarities across wave functions of               remain in simulating excited-state PESs with deep-
+different molecular geometries  and electronic states                  learning QMC. First, our methodology targets fixed
+via machine learning approaches.                                       datasets of molecular geometries and, in its current
+                                                                       form,  scales  only  to  a  few  hundred  to  a  few  thou-
+Discussion                                                             sand  geometries.  Extending  it  to  high-dimensional
+                                                                       PESs will require new Monte Carlo sampling schemes
+We have developed a computational method to simul-                     that  combine  electron  and  nuclei  moves,  together
+taneously optimize the electronic wave functions and                   with  a  corresponding  replacement  of  the  exponen-
+energies for  ground and excited  states of molecules                  tial moving averages of the energies in the dynamic
+with a range of nuclear configurations, thus obtain-                   state reordering, for instance with a surrogate model.
+ingab-initioground- and excited-state PESs. This is                    Second,  simulating  larger  regions  of  configuration
+achieved by designing a neural network wave function                   space and larger molecules risks state swapping with
+that is trained with VMC across the desired nuclear                    the  highest-energy  excited  state  at  the  boundary.
+configurations  and  electronic  states.  Due  to  the                 While dynamic state reordering accounts for reorder-
+simultaneous  representation  of  multiple  geometries                 ing within the subspace of thenlowest-energy states,
+and states that is enabled by the expressivity of neu-                 excited states entering from outside this subspace can
+ral  network  wave  functions,  we  achieve  substantial               still cause discontinuities in the wavefunction, reduc-
+reductions  of  computational  cost  when  optimizing                  ing  the  efficiency  of  transferable  simulation.  Simu-
+entire PESs compared to analogous methods where                        lating a larger number of states mitigates this issue,
+each  single-point  calculation  is  done  from  scratch.              though  a  general  solution  is  still  needed.  Finally,
+At the same time, our approach maintains extremely                     applying  this  methodology  to  transferable  simula-
+high accuracy, as shown in comparison with different                   tion across chemical space will require extending the
+bespoke quantum chemistry methods that have been                       transferable ansatz to simultaneously accommodate
+carefully selected for each considered example. The                    systems with variable electron numbers.
+improved efficiency of joint training is demonstrated
+
+
+                                                                    8
+    While  the  limitations  offer  promising  directions                1.1  Variational optimization
+for future research, we have shown that transferable                     In   order   to   approximate   the   eigenstates   of   the
+deep-learning  QMC  simulation  of  molecular  PESs                      Schr¨odinger  equation  (3)  we  apply  the  variational
+can already be applied to study challenging electronic                   Monte Carlo (VMC) method. VMC is a variational
+structure  problems  as  is.  The  presented  method                     method that minimizes the Rayleigh quotient
+improves the accuracy and substantially reduces the
+cost  of  simulating  excited-state  PESs  using  deep-                                                     ⟨Ψ  θ| ˆH|Ψ     θ⟩
+learning  QMC  approaches.  Our  transferable  ansatz                                       θ′ = argmin       ⟨Ψ  θ|Ψ θ⟩                    (6)
+provides a coherent framework not only for accessing                                                  θ
+energies  but  also,  as  shown,  for  computing  inter-                 of a parameterized trial wave function Ψθ. The goal
+molecular overlaps across geometries (or time steps).                    is  to  find  the  optimal  set  of  parametersθ                 ′,  which
+These  overlaps  can  be  used  in  the  surface  hopping                can then be used to evaluate expectation values. The
+picture to approximate non-adiabatic couplings and,                      high  dimensional  integrals  in  (6)  are  approximated
+in turn, determine hopping probabilities [54]. At the                    by  Monte  Carlo  integration  with  importance  sam-
+same  time,  transferable  simulation  of  excited-state                 pling. This stochastic integration method poses very
+PESs can be a source of highly accurate solutions to                     few  restriction  on  the  functional  form  of  the  wave
+the Schr¨odinger equation to be consumed in down-                        function  ansatz,  enabling  the  inclusion  of  explicit
+stream  tasks,  such  as  parameterizing  excited-state                  electronic correlation.
+force fields.                                                                Throughout the optimization, expectation values
+1  Methods                                                               are  estimated  on  finite  batches  of  electron  samples
+                                                                         drawn from the probability density associated with
+The time-independent Schr¨odinger equation                               the  square  of  the  wave  function  via  Markov  chain
+                                                                         Monte Carlo. At each iteration, the model parame-
+                  ˆHΨ    i =E    iΨi    Ψi ∈ H− ,                (3)     ters are updated with a flavor of stochastic gradient
+                                                                         descent until convergence is reached. Details on the
+defines  the  electronic  states  of  a  molecule  as  the               VMC method and the peculiarities of optimizing neu-
+eigenstates  Ψi   of  the  molecular  Hamiltonian   ˆH,                  ral network wave functions are found in earlier works
+indexed in order of increasing energyE             i. Addition-          [17,48].
+ally,  electrons  are  subject  to  the  fermionic  anti-                    There are various extensions of the VMC method
+symmetry  constraint,  that  is  the  solutions  have                    to  target  excited  states.  The  basic  requirement  of
+to  belong  to  the  anti-symmetric  subspace  of  the                   these extensions is preventing the optimization from
+Hilbert   spaceH        −.   To   make   the   problem   com-            collapsing  to  the  ground  electronic  state  (global
+putationally  tractable,  in  quantum  chemistry,  one                   energy minimum), while ensuring convergence to the
+commonly works in the Born–Oppenheimer approx-                           excited states (local energy minima). In this work we
+imation,  neglecting  spin-orbit  coupling  and  other                   employ  a  penalty-based  excited  state  optimization
+relativistic effects. For molecules this approximation                   method [20,55,56], where the loss function of each
+is  implemented  by  the  clamped-nucleus  Coulomb                       state  is  composed  of  the  energy  of  the  given  state
+Hamiltonian, which in first quantization (and apply-                     plus a term penalizing its overlap with all lower-lying
+ing atomic units) takes the form                                         states. Additionally, a spin-penalty can be introduced
+                                                                         to target states of a specific spin sector [21], leading
+  ˆH=−      1X                    ZI                   1                 to the loss function of
+          2       ∇2i −X      |R I −r   i| +X      |r i −r   j| , (4)
+               i          iI                  i<j                             L[Ψ   θ1, ...,Ψ     θNs ] =                                          (7)
+
+                                                                                NsX h      i +β⟨     ˆS2⟩i + j<iX
+with∇         2i  denoting the Laplace operator,r            i denoting               ⟨ ˆH⟩                      αij|⟨Ψ  θi|¯Ψθj⟩|2i.
+the  positions  of  the  electrons  whileZ          I  andR       I  are         i                            j
+the nuclear charges and (fixed) nuclei positions. Due
+to  the  decoupling  of  electronic  and  nuclear  degrees               where  ˆS2 is the total spin operator and{θ         1, ..,θ    Ns}
+of freedom, the Schr¨odinger equation holds for every                    represent the parameters of the wave functions corre-
+molecular configuration independently, with a mere                       sponding to each of theN      s different states. The bar
+parametric  dependency  on  the  nuclei.  This  defines                  (in ¯Ψ) indicates that no gradient is taken with respect
+the  adiabatic  Born–Oppenheimer  potential  energy                      to the parameters of the specified wave function. The
+surfaces                                                                 factorβscales the spin penalty with respect to the
+                ˆHΨ    i(r|R) =E            i(R)Ψ     i(r|R).             (5)energy and overlap contributions and is set to a fixed
+                                                                         value (here 10). The pairwise overlap scaling param-
+                                                                         etersα         ij  are determined via the same expression as
+
+
+
+
+
+                                                                      9
+used in our earlier work [21]                                           In order to sample electrons for the estimation of the
+                                                                        expectation value of the loss function at each train-
+αij =                                                                  (8) ing  iteration,  we  employ  the  Metropolis  algorithm
+                                      q                                 and keep independent Markov chains for each geom-
+  ˜α·max       |E iR −E    jR|,ewm(      Var(E      loc,iR   )),10    −3   ,etry of the dataset in memory. To retain sufficiently
+                                                                        large electron batches (electron batch sizes) for suffi-
+where  ˜α   >1  is  the  new  free  parameter  shared                   ciently accurate estimates of the expectation values,
+between all pairs of states (set to ˜α= 4 in all exper-                 we subsample the dataset of molecules and alternate
+iments reported here), ewm(·) denotes the exponen-                      between  successive  batches  (molecule  batch  size).
+tially  weighted  mean  over  the  training  iterations,                While  we  find  the  training  to  be  fairly  insensitive
+Eloc,i                                                                  to the exact choice of molecule batch size, a round
+  R     is  the  batch  of  local  energies  in  the  current           robin approach with a molecule batch size of one [23]
+step, and Var(·) denotes taking the variance. The first                 can  lead  to  the  Markov  chains  of  other  molecules
+argument of the maximum function ensures that the                       going stale, especially for large datasets. Therefore,
+constraint  required  for  obtaining  orthogonal  states                when considering larger molecule datasets, a compro-
+[56] is fulfilled, while automatically scalingα                  ij  in amise between electron batch size and molecule batch
+system-specific way. The second argument prevents                       size  is  made  (details  can  be  found  in  Supplemen-
+the collapse of the states in the earliest stages of the                tary  SectionC).  To  account  for  the  changes  of  the
+training where our mean energy estimates cannot yet                     electron distribution due to updates of the wave func-
+give good approximations of the energy differences.                     tion parameters, we employ a decorrelation sampler
+1.2  Transferable optimization                                          that equilibrates the Markov chains before drawing
+                                                                        each batch of electron samples. While the approach
+Typically, VMC is applied in the context of single-                     of  keeping  a  stack  of  independent  Markov  chains
+point  calculations,  that  is  the  parameters  of  the                for  all  molecules  of  the  dataset  convinces  through
+trial  wave  function  are  optimized  to  minimize  the                its simplicity, scaling to datasets with thousands of
+energy  expectation  value  of  a  specific  molecular                  molecular  geometries  it  eventually  hits  its  limita-
+geometry. With the vastly increased expressivity of                     tions.  In  these  cases  the  sampling  can  be  replaced
+neural network wave functions, however, the concept                     by either updating nuclear configurations within the
+of  transferable  optimization  has  been  introduced.                  Markov chains and warping electrons alongside the
+The  idea  consists  of  sharing  a  subset  of  the  wave              nuclei [57] or initializing fresh Markov chains at every
+function parameters across multiple geometries [23]                     new molecular geometry [28].
+or  making  the  ansatz  explicitly  dependent  on  the
+nuclear geometry [24], and minimizing the energy for                    1.3  Dynamic state ordering and level
+multiple  molecular  geometries  simultaneously.  The                           crossings
+transferable optimization makes use of the fact that
+under the Born–Oppenheimer approximation (5) the                        The penalty based excited state optimization imple-
+variational  principle  of  quantum  mechanics  holds                   ments a ladder of states approach, where collapse to
+independently  for  every  nuclear  configuration  of  a                the  ground  state  is  prevented  by  orthogonalization
+molecule, that is                                                       of  excited  states  with  respect  to  lower-lying  states
+                                                                        (7). The resulting order of states is of no relevance in
+  E0(R) = minΨ      ⟨Ψ|     ˆH|Ψ⟩      R    ⟨Ψ  θ| ˆH|Ψ     θ⟩R         single-point simulation and the approach guarantees
+                      ⟨Ψ|Ψ⟩       R   ≤minθ   ⟨Ψ  θ|Ψ θ⟩R   ,  (9)      the  optimization  of  pure  states,  as  opposed  to  the
+                                                                        mixed  states  resulting  from  a  symmetric  loss  func-
+where⟨···⟩        R denotes the electronic expectation value            tion  that  penalizes  both  ansatzes.  However,  when
+at the nuclear geometryR. In this work we combine                       extending the loss to a transferable setting the order
+the  optimization  across  multiple  molecular  geome-                  of the states gains importance, as the energy order-
+tries (9) with the penalty based loss (7) and augment                   ing  might  change  at  conical  intersections  and  level
+the  wave  function  architecture  to  make  it  more                   crossings (right panel of Fig.2). Albeit not strictly
+suitable  to  the  transferable  setup.  This  yields  geo-             necessary,  a  continuous  representation  of  the  wave
+metrically  transferable  wave  functions  capable  of                  function along the geometries of the dataset is favor-
+describing  different  electronic  states  of  a  molecule              able both for model optimization in practice, and ease
+across a range of molecular geometries.                                 of interpreting the simulation results. To address this,
+    We generalize the training of the wave function                     we propose a more flexible penalty method where the
+model  by  iterating  through  a  dataset  of  molecu-                  direction  of  orthogonalization  adapts  based  on  rel-
+lar  geometriesℜ.  This  amounts  to  minimizing  the                   ative  energies  at  each  configuration.  We  generalize
+average loss (7) over the whole dataset                                 the overlap penalty term of our loss function to be
+                       X                                                dependent on the nuclear coordinates as
+       θ′ = argmin           L[Ψ   θ1, ...,Ψ     θNs ](R).       (10)            L[Ψ   θ1, ...,Ψ     θNs ](R) =
+                 θ     R∈ℜ
+
+
+                                                                     10
+                        EjR<EiXR                                            wherer ∈R                3N  elec  are  the  positions  of  theN      elec
+                 ...+             αij|⟨Ψ   θi|¯Ψθj⟩R|2          (11)        electrons,R∈R                         3N  nuc  stands  for  the  coordinates
+                            j                                               of theN      nuc  nuclei,Jis a permutation variant Jas-
+         whereE           j                                                 trow factor,ϕ            kj  are “generalized” orbitals predicted
+                     R < EiR =⇒   approx.                                   from the many-body embedding of thei’th electron
+                 ⟨Ψ  θj| ˆH|Ψ     θj⟩R <⟨Ψ     θi| ˆH|Ψ     θi⟩R ,          heleci    , andφ  kj (r  i|R) are single-electron envelope func-
+where  for  simplicity  we  omit  the  sums  on  the  con-                  tions  anchored  at  the  nuclei.  The  determinant  of
+figurationsRand  on  the  number  of  statesi.  Note                        theN      elec ×N   elec  orbital  matrix  enforces  fermionic
+that  the  re-indexing  is  applied  independently  for                     antisymmetry,  and  theN      det  such  determinants  are
+every  molecular  configurationR∈ℜ.  In  practice                           summed  to  increase  the  expressivity  of  the  ansatz.
+we  estimate  the  energy  expectation  values  of  (11)                    Following  the  standard  convention  in  variational
+by maintaining exponential walking averages of the                          Monte Carlo calculations for molecular systems, we
+training  energies  of  each  state  at  every  geometry                    employ  spin-assigned  wave  functions  in  which  the
+of  the  dataset.  If,  however,  the  ordering  of  nearly-                firstN      ↑   electrons  are  assigned  spin-up  and  the
+degenerate  states  changes  during  the  training,  the                    remainingN               ↓elec =N   elec−N   ↑elec electrons are assigned
+automatic scaling ofα   ij  ensures that no large, dis-                     spin-down. Consequently, the fixed spin configuration
+continuous  changes  are  made  to  the  loss  function.                    does not appear as an explicit argument of the wave
+By  grouping  states  based  on  their  physical  charac-                   functions but is incorporated implicitly through the
+ter,  this  allows  the  network  to  optimize  the  wave                   spin assignment.
+functions more effectively.                                                      At  the  core  of  the  wave  function  is  the  self-
+    While this loss does not strictly enforce the cor-                      attention neural network architecture, which encodes
+rect ordering, we find that the continuity of the wave                      the electron configuration in a latent space. To that
+function is typically favored due to the smoothness of                      end,  initial  per-electron  and  per-nuclei  feature  vec-
+the neural network ansatz and enhanced optimization                         tors  are  constructed  from  rescaled  electron-nuclei
+dynamics, as demonstrated on Fig.2. The continuity                          and nuclei-nuclei distances, electron spins and nuclei
+of the wave functions at level crossings can be probed                      charges, respectively
+
+by evaluating intermolecular overlaps                                        helec,0
+                                                                               i       =                                                            (14)
+       Oi,j                                                                                      NnucM
+          Rm,R n =⟨Ψ     θi(r,R     m)|Ψ   θj(r,R     n)⟩,        (12)           MLPelecembed             s(r    i −R   I),  s(|r       i −R   I|), σi,
+between  the  transferable  wave  function  of  statei                                            I=1    X
+andjat nuclear configurationsR                                   m andR       n. Fig.2chnuc,0                                                  (15)
+illustrates  how  dynamic  state  ordering  allows  the                        I      = MLPnucembed
+                                                                                                            I′  MLPedge
+transferable network to maintain a consistent char-                                   s(R    I −R   I′)⊕s(|R          I −R   I′|)⊕Z      I !
+acter  throughout  the  crossing.  The  overlap  of  the                                                                                     ,
+excited state wave function atϕ= 90     ◦ with itself at
+varyingϕremains close to one, while its overlap with
+the ground state stays near zero. In contrast, with-                        where⊕is   the   concatenation   operation,σ                            i   ∈
+out dynamic ordering, the network switches character                        {+1,−1} is  the  electron  spin,Z                         I   ∈Zare  the
+at the crossing, causing the excited-state overlap to                       nuclear charges and MLP denotes multi-layer percep-
+drop to zero atϕ= 100     ◦ while the overlap with the                      trons. The functions(·) corresponds to a logarithmic
+ground state rises to one. This effect also shows in                        rescaling of the distances and differences
+the non-adiabatic couplings between the ground state
+and the excited state.                                                                           s(R) =       log(1 +|R|)
+                                                                                                                  |R|          R,               (16)
+1.4  Transferable ansatz                                                    increasing   the   numerical   stability   of   the   model
+All reported experiments were carried out using an                          at  large  interparticle  distances.  Each  layer  then
+ansatz derived from the Psiformer architecture [32]                         updates  the  embeddings  via  multi-headed  (causal)
+that was extended to explicitly account for changes                         self-attention with residual connections
+in  the  molecular  geometry.  The  wave  function  Ψ  :                                                    "
+R3N  →Ris parametrized via the usual many-body                                  fℓ+1                   M      √1   X     softmaxj           (17)
+Slater-Jastrow form                                                              i     =h   ℓi +W    ℓo          d
+                                                                                                        h            j
+Ψ(r|R) =                                                          (13)                                                                   vℓhj #
+
+                 NdetX                                                                             (q  ℓhi  )Tkℓh1  , . . . ,(q   ℓhi  )TkℓhNelec
+                            h                                 iNelec
+   exp(J(r))           det   ϕkj (h  eleci    (r|R))φ            kj (r  i|R)
+                  k=1                                          i,j=1    ,       hℓ+1i     =f    ℓ+1i     + tanh W ℓ+1u   fℓ+1i     +b   ℓ+1  ,        (18)
+
+
+
+                                                                         11
+with keys, values and queries given by                                   states  of  a  molecule,  for  instance  due  to  the  pres-
+                                                                         ence of core orbitals, which are not involved in any
+  qℓhj   =W    ℓhq  hℓj,  k ℓhj   =W    ℓhk  hℓj,  v ℓhj   =W    ℓhv  hℓj   (19)of  the  electronic  excitations.  While  previous  works
+                                                                         employed distinct sets of model parameters for each
+and softmaxj(·) being the softmax function                               excited  state  respectively  [20, 21, 60],  we  propose
+                                                                         to  share  a  large  fraction  of  the  model  parameters
+           softmaxj(x  1, ..., xn) =    exp(Px        j)                 between the states
+
+                                            i exp(x        i) .      (20)
+                                                                            Ψθ1(R), ...,Ψ             θNs (R)
+The weight matricesW                ℓ(·)   hold the trainable param-                        →Ψ    (θ  1,θ s)(R), ...,Ψ            (θ  Ns,θ s)(R).         (23)
+eters  of  theℓ’th  layer  of  the  encoder  anddis
+the  dimension  of  the  key,  query  and  value  vectors.               The parameter sharing is implemented by averaging
+In  multi-headed  self-attention  several  independent                   a  subset  of  the  model  parameters  after  each  gra-
+heads, indexed byh, are evaluated and concatenated.                      dient  update.  Supposing  that  there  is  appreciable
+Inspired  by  the  Born–Oppenheimer  approximation,                      similarity  between  the  wave  functions  of  different
+we improve the efficiency of the Laplacian computa-                      states, parameter sharing improves error cancellation
+tion for the electronic degrees of freedom by restrict-                  on  relative  energies  by  correlating  the  latent  space
+ing nuclear message passing to nuclear–nuclear inter-                    representation of electrons in the wave functions of
+actions, while allowing nuclei to provide their states                   different states and effectively increases the number
+to  electrons.  After  several  layer  of  interactions  the             of gradient steps the shared parameters receive. It is
+final  many-body  embeddings  of  the  electrons  are                    important to note that parameter sharing across elec-
+projected  to  obtain  the  generalized  orbitalsϕ              kj   =   tronic states is considered a useful tool for reducing
+Worbheleci    . At the same time, from the final nucleus                 simulation costs. However, it is neither necessary to
+representations  the  envelope  exponent  parameters                     attain high accuracy nor guaranteed to improve con-
+ζIjkn are predicted, by passing them through a gated                     vergence, in a manner similar to related concepts such
+linear unit [58] with sigmoid activation.                                as state averaging in CASSCF or frozen-core orbitals
+    To  remedy  the  memory  bottleneck  induced  by                     in  EOM-CC.  Furthermore,  the  optimal  parameter
+the computation of the orbital envelope functionsφ                 kj    sharing  strategies  may  depend  on  the  electronic
+[27,31], we employ envelopes similar to the simpli-                      structure  of  the  system  under  investigation  and
+fied  envelopes  of  Gao  [27],  that  is  we  compute  the              could, in principle, vary across the simulated geome-
+envelopes as                                                             tries. We empirically determine that such dependence
+                                                                         is  negligible.  Based  on  our  experiences  we  recom-
+                  NnucX  3X                                              mend  sharing  the  entire  self-attention  mechanism.
+     φkj (r  i) =           exp(−ζ           Ijkn|r i −R   I|).      (21)Occasionally, sharing large fractions of the parame-
+                    I    n                                               ters and thereby reducing the per-state expressivity
+    Furthermore,   because   self-attention   does   not                 of the ansatzes can hinder convergence to the correct
+directly access pairwise electron distances, it is not                   set of states. To account for these outliers parame-
+well suited to capture the electron–electron cusp con-                   ter sharing can be turned off at any time throughout
+dition  [59].  We  therefore  augment  it  with  a  simple               the  optimization  or  the  effect  can  be  remedied  by
+two-parameter Jastrow factor that enforces the cusp                      reducing  the  fraction  of  shared  model  parameters,
+condition analytically                                                   for  instance  sharing  only  the  initial  layers  of  the
+                                                                         self-attention block.
+                                       α2par                                  Since   parameter   sharing   and   ECPs   leverage
+     J(r) =       X        −14  αpar +|r     i −r   j|                   related similarities between electronic states, the ben-
+               i<j;σ       i=σ   j                                       efits  of  sharing  parameters  may  be  reduced  when
+                                          α2anti                (22)     comparing  simulations  with  ECPs  to  their  (gener-
+               +    X         −12  αanti +|r     i −r   j| .             ally more expensive) all-electron counterpart. At the
+                   i,j;σ     i̸=σ   j                                    same  time  we  did  not  observe  a  deterioration  of
+The  cusp  parameters  are  trainable  and  initialized                  the  accuracy  in  relative  energies  when  combining
+withα        par =  1                                                    parameter  sharing  with  ECPs.  An  extended  analy-
+                 4  andα       anti =  12.                               sis of the parameter sharing across electronic states
+1.5  Sharing parameters between                                          for  the  ethylene  pyramidalization  can  be  found  in
+                                                                         Supplementary SectionB.
+       electronic states
+Parameter sharing has been demonstrated to be very                       1.6  Pseudopotentials and
+efficient when transferably simulating ground states                             pseudohamiltonians
+by  exploiting  similarities  in  the  wave  functions  of               While  core  electrons  contribute  dominantly  to  the
+different  molecular  configurations.  Analogous  simi-                  total  energy,  they  are  chemically  inert  with  most
+larities may arise when simulating multiple electronic
+
+
+                                                                      12
+chemical and bonding properties governed by valence                  as part of the NHR infrastructure. The calculations
+electrons.  By  removing  the  core  electrons  and  rep-            presented   here   were   conducted   with   computing
+resenting  their  effect  through  pseudopotentials,  the            resources under the project bem00084.
+number  of  active  electrons  is  reduced,  leading  to             Author  contributions.ZS,  PBS,  AC  and  FN
+faster convergence and improved stability. This sim-                 conceived  the  project.  ZS,  PBS  and  AC  developed
+plification also smoothens the valence wave function,                the method in full detail. ZS and PBS wrote the com-
+enhancing the efficiency of Monte Carlo sampling by                  puter code with contributions from AC and MM. The
+allowing larger step sizes, and the reduced electron                 numerical  experiments  were  conceived,  carried  out,
+count reduces the memory requirements and speeds                     and analyzed by ZS, PBS, and AC. ZS, PBS, AC and
+up convergence of the wave function.                                 MM wrote the manuscript with input from FN. FN
+    A  typical  pseudopotential,  such  as  ccECP  [47]              supervised the project. Funding was acquired by AC
+employed for the methylenimmonium cation calcula-                    and FN.
+tions, replaces the nuclear Coulomb potential (second
+term  in  Equation  (4))  with  a  non-local  operator               Competing  interests.The  authors  declare  no
+acting  on  the  angular  momentum  components  of                   competing interests.
+the  wavefunction,  see  [48, 61]  for  details.  Although
+this substitution greatly simplifies the physical prob-              References
+lem, it involves computational overhead due to the
+additional integrals introduced by the non-local oper-                 [1]Gozem, S., Luk, H.L., Schapiro, I., Olivucci, M.:
+ators, which we approximate using a 12-point quadra-                       Theory and Simulation of the Ultrafast Double-
+ture  scheme.  Recently,  local  forms  of  pseudopoten-                   Bond Isomerization of Biological Chromophores.
+tials  [50]  have  been  introduced  in  the  context  of                  Chemical Reviews117(22), 13502–13565 (2017)
+deep-learning QMC [51], and are used here to model                         https://doi.org/10.1021/acs.chemrev.7b00177
+the rubredoxin active site. Such local pseudopoten-
+tials,  also  termed  pseudohamiltonians,  circumvent                  [2]Curutchet, C., Mennucci, B.: Quantum Chem-
+the  costly  non-local  integrals  while  maintaining  a                   ical   Studies   of   Light   Harvesting.   Chemical
+comparable level of accuracy. This represents a fur-                       Reviews117(2),  294–343  (2017)https://doi.
+ther substantial improvement in computational effi-                        org/10.1021/acs.chemrev.5b00700
+ciency, thereby enabling the scaling of deep-learning                  [3]Westermayr,   J.,   Gastegger,   M.,   V¨or¨os,   D.,
+QMC calculations to systems of considerable size.                          Panzenboeck, L., Joerg, F., Gonz´alez, L., Mar-
+Declarations                                                               quetand,  P.:  Deep  learning  study  of  tyrosine
+                                                                           reveals that roaming can lead to photodamage.
+Data   availability.  All   data   used   to   generate                    Nature Chemistry14(8), 914–919 (2022)https:
+the   figures   in   this   manuscript   are   available   at              //doi.org/10.1038/s41557-022-00950-z
+https://doi.org/10.6084/m9.figshare.32935382.    For                   [4]Risko,  C.,  D.  McGehee,  M.,  Br´edas,  J.-L.:  A
+convenience,   molecular   geometries   and   energies                     quantum-chemical perspective into low optical-
+are   additionally   provided   in   the   Supplementary                   gap  polymers  for  highly-efficient  organic  solar
+Information.                                                               cells. Chemical Science2(7), 1200–1218 (2011)
+Code  availability.  The  code  used  to  run  the                         https://doi.org/10.1039/C0SC00642D
+DeepQMC   simulations   is   publicly   available   on
+GitHub  at  https://github.com/deepqmc/deepqmc,                        [5]Shaw,  M.H.,  Twilton,  J.,  MacMillan,  D.W.C.:
+released  under  the  MIT  license.  The  version  used                    Photoredox  Catalysis  in  Organic  Chemistry.
+in  this  study  corresponds  to  v1.3.0,  archived  at                    The   Journal   of   Organic   Chemistry81(16),
+https://doi.org/10.5281/zenodo.21456036.                                   6898–6926  (2016)https://doi.org/10.1021/acs.
+Acknowledgements.Funding      is      gratefully                           joc.6b01449
+
+acknowledged   from   Deutsche   Forschungsgemein-                     [6]Deng,  Y.,  Long,  G.,  Zhang,  Y.,  Zhao,  W.,
+schaft  (DFG,  German  Research  Foundation)  under                        Zhou,   G.,   Feringa,   B.L.,   Chen,   J.:   Photo-
+Germany’s Excellence Strategy – The Berlin Math-                           responsive  functional  materials  based  on  light-
+ematics  Research  Center  MATH+  (EXC-2046/1,                             driven   molecular   motors.   Light:   Science   &
+project  ID:  390685689)  projects  (AA1-6,  AA2-8,                        Applications13(1),  63  (2024)https://doi.org/
+AA2-20)    and    Deutsche    Forschungsgemeinschaft                       10.1038/s41377-024-01391-8
+(DFG,    German    Research    Foundation)    project
+NO825/3-2.   A.   Cuzzocrea   acknowledges   support                   [7]Alvarez-Lorenzo,  C.,  Bromberg,  L.,  Concheiro,
+from   the   Alexander   von   Humboldt   Foundation.                      A.:   Light-sensitive   Intelligent   Drug   Delivery
+The authors thankfully acknowledge the computing                           Systems.   Photochemistry   and   Photobiology
+time granted by the Resource Allocation Board and                          85(4), 848–860 (2009)https://doi.org/10.1111/
+provided  on  the  supercomputer  Lise  at  NHR@ZIB                        j.1751-1097.2008.00530.x
+
+
+                                                                  13
+ [8]Serrano-Andr´es,   L.,   Merch´an,   M.:   Quantum                      solids.  Chemical  Physics  Letters478(1),  1–10
+     chemistry  of  the  excited  state:  2005  overview.                   (2009)https://doi.org/10.1016/j.cplett.2009.06.
+     Journal  of  Molecular  Structure:  THEOCHEM                           095
+     729(1), 99–108 (2005)https://doi.org/10.1016/
+     j.theochem.2005.03.020                                           [19]Feldt,  J.,  Filippi,  C.:  Excited-State  Calcula-
+                                                                            tions with Quantum Monte Carlo. In: Quantum
+ [9]Gonz´alez,  L.,  Lindh,  R.:  Quantum  Chemistry                        Chemistry  and  Dynamics  of  Excited  States,
+     and Dynamics of Excited States: Methods and                            pp.  247–275  (2021).https://doi.org/10.1002/
+     Applications. John Wiley & Sons, Hoboken, NJ                           9781119417774.ch8.https://onlinelibrary.wiley.
+     (2021).https://doi.org/10.1002/9781119417774                           com/doi/10.1002/9781119417774.ch8
+     .  https://onlinelibrary.wiley.com/doi/book/10.
+     1002/9781119417774                                               [20]Entwistle,  M.T.,  Sch¨atzle,  Z.,  Erdman,  P.A.,
+                                                                            Hermann, J., No´e, F.: Electronic excited states
+[10]Westermayr, J., Marquetand, P.: Machine learn-                          in deep variational monte carlo. Nature Commu-
+     ing for electronically excited states of molecules.                    nications14(1), 274 (2023)https://doi.org/10.
+     Chemical  Reviews121(16),  9873–9926  (2021)                           1038/s41467-022-35534-5
+     https://doi.org/10.1021/acs.chemrev.0c00749
+                                                                      [21]Szab´o, P.B., Sch¨atzle, Z., Entwistle, M.T., No´e,
+[11]Casida,   M.E.,   Huix-Rotllant,   M.:   Progress                       F.:  An  improved  penalty-based  excited-state
+     in    time-dependent    density-functional    the-                     variational  monte  carlo  approach  with  deep-
+     ory.   Annual   Review   of   Physical   Chemistry                     learning  ansatzes.  Journal  of  Chemical  The-
+     63,   287–323   (2012)https://doi.org/10.1146/                         ory and Computation20(18), 7922–7935 (2024)
+     annurev-physchem-032511-143803                                         https://doi.org/10.1021/acs.jctc.4c00678
+
+[12]Herbert,     J.M.:     Density-functional     theory              [22]Pfau,  D.,  Spencer,  J.S.,  Matthews,  A.G.D.G.,
+     for   electronic   excited   states.   In:   Theoret-                  Foulkes,   W.M.C.:   Ab   initio   solution   of   the
+     ical     and     Computational     Photochemistry,                     many-electron  schr¨odinger  equation  with  deep
+     pp.   69–118   (2023).https://doi.org/10.1016/                         neural   networks.   Physical   Review   Research
+     B978-0-323-91738-4.00005-1                                             2(3),  033429  (2020)https://doi.org/10.1103/
+                                                                            PhysRevResearch.2.033429
+[13]K¨ohn,  A.,  Tajti,  A.:  Can  coupled-cluster  the-
+     ory  treat  conical  intersections?  The  Journal  of            [23]Scherbela,   M.,   Reisenhofer,   R.,   Gerard,   L.,
+     Chemical Physics127(4), 044105 (2007)https:                            Marquetand,  P.,  Grohs,  P.:  Solving  the  elec-
+     //doi.org/10.1063/1.2755681                                            tronic schr¨odinger equation for multiple nuclear
+                                                                            geometries    with    weight-sharing    deep    neu-
+[14]Stein, C.J., Reiher, M.: Automated Selection of                         ral  networks.  Nature  Computational  Science
+     Active Orbital Spaces. Journal of Chemical The-                        2(5),  331–341  (2022)https://doi.org/10.1038/
+     ory and Computation12(4), 1760–1771 (2016)                             s43588-022-00228-x
+     https://doi.org/10.1021/acs.jctc.6b00156
+                                                                      [24]Gao,  N.,  G¨unnemann,  S.:  Ab-initio  potential
+[15]Bensberg, M., Reiher, M.: Corresponding Active                          energy   surfaces   by   pairing   gnns   with   neu-
+     Orbital Spaces along Chemical Reaction Paths.                          ral   wave   functions.   In:   The   Tenth   Interna-
+     The   Journal   of   Physical   Chemistry   Letters                    tional Conference on Learning Representations,
+     14(8),   2112–2118   (2023)https://doi.org/10.                         ICLR  2022,  Virtual  Event,  April  25-29,  2022.
+     1021/acs.jpclett.2c03905                                               OpenReview.net,  Virtual  Event  (2022).https:
+[16]Lischka, H., Nachtigallov´a, D., Aquino, A.J.A.,                        //openreview.net/forum?id=apv504XsysP
+
+     Szalay,   P.G.,   Plasser,   F.,   Machado,   F.B.C.,            [25]Scherbela,  M.,  Gerard,  L.,  Grohs,  P.:  Towards
+     Barbatti,  M.:  Multireference  Approaches  for                        a    transferable    fermionic    neural    wavefunc-
+     Excited States of Molecules. Chemical Reviews                          tion   for   molecules.   Nature   Communications
+     118(15),  7293–7361  (2018)https://doi.org/10.                         15(1),    120    (2024)https://doi.org/10.1038/
+     1021/acs.chemrev.8b00244                                               s41467-023-44216-9
+
+[17]Foulkes,   W.M.C.,   Mitas,   L.,   Needs,   R.J.,                [26]Gao,  N.,  G¨unnemann,  S.:  Generalizing  Neu-
+     Rajagopal,  G.:  Quantum  monte  carlo  simu-                          ral  Wave  Functions.  In:  Proceedings  of  the
+     lations  of  solids.  Reviews  of  Modern  Physics                     40th   International   Conference   on   Machine
+     73(1),  33–83  (2001)https://doi.org/10.1103/                          Learning,  pp.  10708–10726.  PMLR,  Honolulu,
+     RevModPhys.73.33                                                       Hawaii,  USA  (2023).https://proceedings.mlr.
+[18]Lester, W.A., Mitas, L., Hammond, B.: Quan-                             press/v202/gao23c.html
+
+     tum  Monte  Carlo  for  atoms,  molecules  and
+
+
+                                                                   14
+[27]Gao,   N.,   G¨unnemann,   S.:   Neural   pfaffians:                     from first principles quantum molecular dynam-
+      Solving     many     many-electron     schr¨odinger                    ics.   The   Journal   of   Physical   Chemistry   A
+      equations.   In:   Globerson,   A.,   Mackey,   L.,                    104(22),  5161–5175  (2000)https://doi.org/10.
+      Belgrave,   D.,   Fan,   A.,   Paquet,   U.,   Tom-                    1021/jp994174i
+      czak,  J.,  Zhang,  C.  (eds.)  Advances  in  Neural
+      Information  Processing  Systems,  vol.  37,  pp.                [35]Shao,  Y.,  Head-Gordon,  M.,  Krylov,  A.I.:  The
+      125336–125369    (2024).https://proceedings.                           spin–flip  approach  within  time-dependent  den-
+      neurips.cc/paper      files/paper/2024/file/                           sity functional theory: Theory and applications
+      e2d28c3ec49945e1922943070ffd21e8-Paper-Conference.                     to diradicals. The Journal of Chemical Physics
+      pdf                                                                    118(11),  4807–4818  (2003)https://doi.org/10.
+                                                                             1063/1.1545679
+[28]Foster,  A.,  Sch¨atzle,  Z.,  Szab´o,  P.B.,  Cheng,
+      L.,   K¨ohler,   J.,   Cassella,   G.,   Gao,   N.,   Li,        [36]Hermann,   J.,   Sch¨atzle,   Z.,   No´e,   F.:   Deep-
+      J.,   No´e,   F.,   Hermann,   J.:   An   Ab   Initio                  neural-network    solution    of    the    electronic
+      Foundation   Model   of   Wavefunctions   That                         schr¨odinger     equation.     Nature     Chemistry
+      Accurately  Describes  Chemical  Bond  Break-                          12(10),    891–897    (2020)https://doi.org/10.
+      ing.  Preprint   arXiv:2506.19960,http://arxiv.                        1038/s41557-020-0544-y
+      org/abs/2506.19960(2025).https://doi.org/10.                     [37]Plasser,  F.,  Ruckenbauer,  M.,  Mai,  S.,  Oppel,
+      48550/arXiv.2506.19960.http://arxiv.org/abs/                           M., Marquetand, P., Gonz´alez, L.: Efficient and
+      2506.19960                                                             Flexible  Computation  of  Many-Electron  Wave
+
+[29]Rende,  R.,  Viteritti,  L.L.,  Becca,  F.,  Scardic-                    Function  Overlaps.  Journal  of  Chemical  The-
+      chio,   A.,   Laio,   A.,   Carleo,   G.:   Foundation                 ory and Computation12(3), 1207–1219 (2016)
+      neural-networks  quantum  states  as  a  unified                       https://doi.org/10.1021/acs.jctc.5b01148
+      Ansatz  for  multiple  hamiltonians.  Nat.  Com-                 [38]Holmes,   A.A.,   Umrigar,   C.J.,   Sharma,   S.:
+      mun.16(1),  7213  (2025)https://doi.org/10.                            Excited  states  using  semistochastic  heat-bath
+      1038/s41467-025-62098-x                                                configuration interaction. The Journal of Chem-
+
+[30]Li,  Z.,  Lu,  Z.,  Li,  R.,  Wen,  X.,  Li,  X.,  Wang,                 ical Physics147(16), 164111 (2017)https://doi.
+      L., Chen, J., Ren, W.: Spin-symmetry-enforced                          org/10.1063/1.4998614
+      solution of the many-body schr¨odinger equation                  [39]Wouters,   S.,   Poelmans,   W.,   Ayers,   P.W.,
+      with  a  deep  neural  network.  Nature  Compu-                        Van  Neck,  D.:  CheMPS2:  A  free  open-source
+      tational  Science4(12),  910–919  (2024)https:                         spin-adapted   implementation   of   the   density
+      //doi.org/10.1038/s43588-024-00730-4                                   matrix renormalization group for ab initio quan-
+
+[31]Pfau, D., Axelrod, S., Sutterud, H., von Glehn,                          tum chemistry. Computer Physics Communica-
+      I., Spencer, J.S.: Accurate computation of quan-                       tions185(6), 1501–1514 (2014)https://doi.org/
+      tum  excited  states  with  neural  networks.  Sci-                    10.1016/j.cpc.2014.01.019
+      ence385(6711), 0137 (2024)https://doi.org/10.                    [40]Mazin, I.M., Sokolov, A.Y.: Multireference alge-
+      1126/science.adn0137                                                   braic   diagrammatic   construction   theory   for
+
+[32]von  Glehn,  I.,  Spencer,  J.S.,  Pfau,  D.:  A  self-                  excited  states:  Extended  second-order  imple-
+      attention  ansatz  for  ab-initio  quantum  chem-                      mentation  and  benchmark.  Journal  of  Chem-
+      istry.  In:  The  Eleventh  International  Confer-                     ical  Theory  and  Computation17(10),  6152–
+      ence on Learning Representations, ICLR 2023,                           6165   (2021)https://doi.org/10.1021/acs.jctc.
+      Kigali,  Rwanda,  May  1-5,  2023  (2023).https:                       1c00684
+      //doi.org/10.48550/arXiv.2211.13672. Preprint                    [41]Su,  P.,  Wu,  J.,  Gu,  J.,  Wu,  W.,  Shaik,  S.,
+      first posted Nov. 2022 (arXiv:2211.13672); pub-                        Hiberty,  P.C.:  Bonding  conundrums  in  the  C2
+      lished  at  ICLR  2023.https://openreview.net/                         molecule:  A  valence  bond  study.  Journal  of
+      forum?id=xveTeHVlF7j                                                   Chemical Theory and Computation7(1), 121–
+
+[33]Barbatti,  M.,  Paier,  J.,  Lischka,  H.:  Photo-                       130 (2011)https://doi.org/10.1021/ct100577v
+      chemistry of ethylene: A multireference config-                  [42]Bruna, P.J., Wright, J.S.: Doubly excited states
+      uration interaction investigation of the excited-                      of C2, C+2 , and C2+2  . Journal of Molecular Struc-
+      state energy surfaces. The Journal of Chemical                         ture: THEOCHEM230, 213–218 (1991)https:
+      Physics121(23),  11614–11624  (2004)https://                           //doi.org/10.1016/0166-1280(91)85180-F
+      doi.org/10.1063/1.1807378
+[34]Ben-Nun,  M.,  Quenneville,  J.,  Mart´ınez,  T.J.:                [43]Barbatti,   M.,   Aquino,   A.J.A.,   Lischka,   H.:
+      Ab  initio  multiple  spawning:   photochemistry                       Ultrafast two-step process in the non-adiabatic
+
+
+
+                                                                   15
+     relaxation  of  the  CH2NH+2   molecule.  Molecu-                [50]Ichibha, T., Nikaido, Y., Bennett, M.C., Krogel,
+     lar  Physics104(5–7),  1053–1060  (2006)https:                         J.T., Hongo, K., Maezono, R., Reboredo, F.A.:
+     //doi.org/10.1080/00268970500417945                                    Locality  error  free  effective  core  potentials  for
+                                                                            3d transition metal elements developed for the
+[44]Sun, Q., Zhang, X., Banerjee, S., Bao, P., Bar-                         diffusion Monte Carlo method. The Journal of
+     bry,  M.,  Blunt,  N.S.,  Bogdanov,  N.A.,  Booth,                     Chemical Physics159(16), 164114 (2023)https:
+     G.H.,  Chen,  J.,  Cui,  Z.-H.,  Eriksen,  J.J.,  Gao,                 //doi.org/10.1063/5.0175381
+     Y., Guo, S., Hermann, J., Hermes, M.R., Koh,
+     K.,   Koval,   P.,   Lehtola,   S.,   Li,   Z.,   Liu,   J.,     [51]Fu,  W.,  Fujimaru,  R.,  Li,  R.,  Liu,  Y.,  Wen,
+     Mardirossian,  N.,  McClain,  J.D.,  Motta,  M.,                       X.,   Li,   X.,   Hongo,   K.,   Wang,   L.,   Ichibha,
+     Mussard,  B.,  Pham,  H.Q.,  Pulkin,  A.,  Pur-                        T.,  Maezono,  R.,  Chen,  J.,  Ren,  W.:  Empow-
+     wanto,  W.,  Robinson,  P.J.,  Ronca,  E.,  Say-                       ering   neural   network-based   quantum   Monte
+     futyarova,  E.R.,  Scheurer,  M.,  Schurkus,  H.F.,                    Carlo  with  local  pseudopotentials.  Nat.  Com-
+     Smith,  J.E.T.,  Sun,  C.,  Sun,  S.-N.,  Upadhyay,                    put. Sci., 1–10 (2026)https://doi.org/10.1038/
+     S., Wagner, L.K., Wang, X., White, A., Whit-                           s43588-026-01008-7
+     field, J.D., Williamson, M.J., Wouters, S., Yang,
+     J., Yu, J.M., Zhu, T., Berkelbach, T.C., Sharma,                 [52]Bowman,   D.N.,   Jakubikova,   E.:   Low-Spin
+     S., Sokolov, A.Y., Chan, G.K.-L.: Recent devel-                        versus   High-Spin   Ground   State   in   Pseudo-
+     opments  in  the  PySCF  program  package.  The                        Octahedral  Iron  Complexes.  Inorganic  Chem-
+     Journal  of  Chemical  Physics153(2),  024109                          istry51(11), 6011–6019 (2012)https://doi.org/
+     (2020)https://doi.org/10.1063/5.0006074                                10.1021/ic202344w
+
+[45]Li,  X.,  Xie,  Y.,  Hu,  D.,  Lan,  Z.:  Analysis                [53]Swart, M.: Accurate Spin-State Energies for Iron
+     of  the  Geometrical  Evolution  in  On-the-Fly                        Complexes.  Journal  of  Chemical  Theory  and
+     Surface-Hopping  Nonadiabatic  Dynamics  with                          Computation4(12), 2057–2066 (2008)https://
+     Machine   Learning   Dimensionality   Reduction                        doi.org/10.1021/ct800277a
+     Approaches:  Classical  Multidimensional  Scal-                  [54]Hammes-Schiffer, S., Tully, J.C.: Proton transfer
+     ing  and  Isometric  Feature  Mapping.  Journal                        in solution: Molecular dynamics with quantum
+     of  Chemical  Theory  and  Computation13(10),                          transitions.  The  Journal  of  Chemical  Physics
+     4611–4623  (2017)https://doi.org/10.1021/acs.                          101(6),  4657–4667  (1994)https://doi.org/10.
+     jctc.7b00394                                                           1063/1.467455
+
+[46]Westermayr,    J.,    Gastegger,    M.,    Menger,                [55]Pathak,  S.,  Busemeyer,  B.,  Rodrigues,  J.N.B.,
+     M.F.S.J.,   Mai,   S.,   Gonz´alez,   L.,   Marque-                    Wagner,   L.K.:   Excited   states   in   variational
+     tand,  P.:  Machine  learning  enables  long  time                     monte carlo using a penalty method. The Jour-
+     scale   molecular   photodynamics   simulations.                       nal of Chemical Physics154(3), 034101 (2021)
+     Chemical   Science10(35),   8100–8107   (2019)                         https://doi.org/10.1063/5.0030949
+     https://doi.org/10.1039/C9SC01742A
+[47]Bennett, M.C., Melton, C.A., Annaberdiyev, A.,                    [56]Wheeler,  W.A.,  Kleiner,  K.G.,  Wagner,  L.K.:
+     Wang,  G.,  Shulenburger,  L.,  Mitas,  L.:  A  new                    Ensemble variational Monte Carlo for optimiza-
+     generation  of  effective  core  potentials  for  cor-                 tion of correlated excited state wave functions.
+     related  calculations.  The  Journal  of  Chemical                     Electronic Structure6(2), 025001 (2024)https:
+     Physics147(22), 224106 (2017)https://doi.org/                          //doi.org/10.1088/2516-1075/ad38f8
+     10.1063/1.4995643                                                [57]Gao,  N.,  G¨unnemann,  S.:  Sampling-free  Infer-
+[48]Sch¨atzle, Z., Szab´o, P.B., Mezera, M., Hermann,                       ence for Ab-Initio Potential Energy Surface Net-
+     J.,  No´e,  F.:  DeepQMC:  An  open-source  soft-                      works.  In:  The  Eleventh  International  Confer-
+     ware suite for variational optimization of deep-                       ence on Learning Representations, ICLR 2023,
+     learning  molecular  wave  functions.  The  Jour-                      Kigali,  Rwanda,  May  1-5,  2023  (2023).https:
+     nal of Chemical Physics159(9), 094108 (2023)                           //doi.org/10.48550/arXiv.2205.14962. Preprint
+     https://doi.org/10.1063/5.0157512                                      first  posted  May  2022  (arXiv:2205.14962;  v3
+                                                                            Mar.  2023);  published  at  ICLR  2023.http://
+[49]dePolo,  G.E.,  Kaliakin,  D.S.,  Varganov,  S.A.:                      arxiv.org/abs/2205.14962
+     Spin-Forbidden  Transitions  between  Electronic                 [58]Shazeer,   N.:   GLU   Variants   Improve   Trans-
+     States  in  the  Active  Site  of  Rubredoxin.  The                    former.    Preprint    arXiv:2002.05202,http://
+     Journal of Physical Chemistry A120(43), 8691–                          arxiv.org/abs/2002.05202(2020).https://doi.
+     8698   (2016)https://doi.org/10.1021/acs.jpca.                         org/10.48550/arXiv.2002.05202. http://arxiv.
+     6b07717                                                                org/abs/2002.05202
+
+
+
+                                                                   16
+[59]Kato,   T.:   On   the   eigenfunctions   of   many-
+     particle  systems  in  quantum  mechanics.  Com-
+     munications on Pure and Applied Mathematics
+     10(2), 151–177 (1957)https://doi.org/10.1002/
+     cpa.3160100201
+
+[60]Lu,    Z.,    Fu,    W.:    Penalty    and    Auxiliary
+     Wave  Function  Methods  for  Electronic  Exci-
+     tation  in  Neural  Network  Variational  Monte
+     Carlo. Preprint arXiv:2311.17595,http://arxiv.
+     org/abs/2311.17595(2023).https://doi.org/10.
+     48550/arXiv.2311.17595.http://arxiv.org/abs/
+     2311.17595
+
+[61]Li,  X.,  Fan,  C.,  Ren,  W.,  Chen,  J.:  Fermionic
+     neural  network  with  effective  core  potential.
+     Physical  Review  Research4(1),  013021  (2022)
+     https://doi.org/10.1103/PhysRevResearch.4.
+     013021
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                   17
+A  Numerical results
+A.1  Ethylene
+Numerical  results  of  the  single-point  optimizations  can  be  found  in  the  Supplementary  information  of
+Reference [1].
+                        Torsion              A1                                    Pyramidalization                 A1
+                          angle                g                    B11u                  angle                       g                    B11u
+                            0         -78.58312(14)     -78.31030(19)                        0               -78.38210(16)     -78.47060(14)
+                           15         -78.57895(16)     -78.31041(17)                       20               -78.38481(14)     -78.46971(14)
+                           30         -78.56641(13)     -78.32932(15)                       40               -78.39163(14)     -78.46422(13)
+                           45         -78.54586(14)     -78.34926(17)                       60               -78.39816(13)     -78.45055(13)
+                           60         -78.51807(13)     -78.36443(17)                       70               -78.39932(15)     -78.43907(14)
+                           70         -78.49716(13)     -78.37132(15)                       80               -78.39787(14)     -78.42355(12)
+                           80         -78.47735(14)     -78.37566(15)                       90               -78.39280(13)     -78.40462(14)
+                           85         -78.47065(16)     -78.37693(14)                       95               -78.38907(13)     -78.39346(12)
+                           90         -78.46759(14)     -78.37736(16)                      97.5              -78.38699(14)     -78.38793(15)
+                            -                 -                         -                  100               -78.38425(13)     -78.38193(14)
+                            -                 -                         -                 102.5              -78.38152(13)     -78.37577(15)
+                            -                 -                         -                  105               -78.37848(14)     -78.36934(13)
+                            -                 -                         -                  110               -78.37141(12)     -78.35636(16)
+                            -                 -                         -                  120               -78.35455(13)     -78.32961(14)
+
+Table 1: Total energies in atomic units for the two lowest singlet states of the ethylene pyramidalization predicted
+via  transferable  DeepQMC  optimization  including  dynamic  state  reordering,  and  sharing  of  the  electron-nucleus
+transformer parameters.
+
+
+                                                       Torsion                                                Pyramidalization
+                     Atom                x                        y                        z                        x                      y               z
+                       C         -0.6750                     0.0                     0.0                    -0.6885                    0.0            0.0
+                       C          0.6750                     0.0                     0.0                     0.6885                    0.0            0.0
+                       H         -1.2429                     0.0               -0.9303     -1.3072+cosϕ·0.6187     -sinϕ·0.6187      0.9155
+                       H         -1.2429                     0.0                0.9303     -1.3072+cosϕ·0.6187     -sinϕ·0.6187     -0.9155
+                       H          1.2429     -sinτ·0.9303     -cosτ·0.9303                                   1.3072               0.9155            0.0
+                       H          1.2429      sinτ·0.9303      cosτ·0.9303                                   1.3072             -0.9155            0.0
+
+Table 2: Molecular geometries of ethylene in   ˚Angstr¨om.τdenotes the torsion angle between the CH        2 groups, while
+ϕdenotes the pyramidalization angle of one of the CH  2 groups.
+
+
+A.2  Carbon dimer
+Numerical  results  of  the  single-point  optimizations  can  be  found  in  the  Supplementary  information  of
+Reference [1].
+                                       Bond             X1Σ+
+                                       length                 g                A1Πu-             A 1Πu+            B   1∆g
+                                       0.9952      -75.76794(23)     -75.65244(24)     -75.65224(24)     -75.58232(25)
+                                       1.1196      -75.88988(22)     -75.81400(22)     -75.81446(22)     -75.75909(22)
+                                       1.1818      -75.91182(22)     -75.85150(23)     -75.85200(26)     -75.80737(21)
+                                       1.2440      -75.91711(21)     -75.87022(24)     -75.87156(22)     -75.83669(22)
+                                       1.3062      -75.91222(21)     -75.87663(22)     -75.87841(22)     -75.85244(24)
+                                       1.3684      -75.89981(23)     -75.87388(21)     -75.87556(22)     -75.85847(20)
+                                       1.4928      -75.86341(21)     -75.85390(22)     -75.85559(22)     -75.85110(24)
+                                       1.6172      -75.82856(24)              —              -75.82561(23)     -75.83087(23)
+                                       1.7416      -75.80365(23)              —              -75.79373(23)     -75.80644(23)
+                                       1.8660      -75.77953(25)              —              -75.76414(27)     -75.78143(24)
+
+Table  3:  Total  energies  in  atomic  units  of  the  singlet  states  along  the  carbon  dimer  dissociation  curve,  predicted
+via  transferable  DeepQMC  optimization  including  dynamic  state  reordering,  and  sharing  of  the  electron-nucleus
+transformer parameters. Bond lengths are given in ˚Angstr¨om.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                    18
+                                   Bond           a3Πu−            a   3Πu+                c3Σ+
+                                   length                                                      u                  b3Σ−g
+                                   0.9952     -75.69047(27)     -75.69006(26)     -75.74981(26)     -75.60561(28)
+                                   1.1196     -75.85204(23)     -75.85143(23)     -75.85860(22)     -75.79266(25)
+                                   1.1818     -75.88871(22)     -75.88807(25)     -75.87342(21)     -75.84176(22)
+                                   1.2440     -75.90741(25)     -75.90621(23)     -75.87180(24)     -75.86781(24)
+                                   1.3062     -75.91256(24)     -75.91231(23)     -75.86016(23)     -75.88178(26)
+                                   1.3684     -75.91034(23)     -75.90991(25)     -75.84132(27)     -75.88673(22)
+                                   1.4928     -75.88783(22)     -75.88824(22)     -75.79541(25)     -75.87674(21)
+                                   1.6172     -75.85593(23)     -75.85491(23)     -75.75698(26)     -75.85308(23)
+                                   1.7416     -75.82175(25)     -75.82081(24)     -75.73483(26)     -75.82495(25)
+                                   1.8660     -75.78949(25)     -75.78791(26)     -75.72195(26)     -75.79604(27)
+
+Table  4:  Total  energies  in  atomic  units  of  the  triplet  states  along  the  carbon  dimer  dissociation  curve,  predicted
+via  transferable  DeepQMC  optimization  including  dynamic  state  reordering,  and  sharing  of  the  electron-nucleus
+transformer parameters. Bond lengths are given in ˚Angstr¨om.
+
+A.3  Methylenimmonium cation
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. 6:Energy differences among DeepQMC models at evaluation.We plot the energy difference per state
+for the single-point and 10-point transferable models relative to the 2D 100-point transferable model atτ= 0. The
+data  used  are  the evaluated  energies  from  Table5(single-point)  and  Table6(10-point  transferable), with  the  2D
+transferable model atτ= 0 from Table7serving as the reference. The horizontal dashed line marks the threshold for
+chemical accuracy.
+
+    We  report  the  numerical  results  for  the  single  point,  10  and  100  point  transferable  optimizations  of
+Methylenimmonium cation on the 10 geometries obtained by varying the C-N bond atτ= 0 in Tables5–7.
+    On Fig.6, we take the 100-point transferable model as a reference and plot the energy differences of the
+single-point and 10-point models relative to it. Notably, the single-point calculation shows a 1 eV deviation for
+the second excited state at C              N = 1.2 ˚A, indicating non-convergence. In contrast, all other states, as well as all
+states at other geometries, show close agreement, with the 10-point transferable model consistently matching
+the reference (100-point model) to better than chemical accuracy (0.05 eV), confirming the robustness of the
+transferable approach.
+                                           C   N bond            1A  1                   1A  2                    2A  1
+                                             length
+                                              1.200         -17.71035(6)      -17.39825(8)       -17.27392(8)
+                                              1.238         -17.71685(6)      -17.40894(8)       -17.35095(9)
+                                              1.276         -17.71901(6)      -17.41417(8)       -17.37426(9)
+                                              1.314         -17.71625(7)      -17.41772(8)       -17.39224(8)
+                                              1.352         -17.71198(6)      -17.41396(8)      -17.40434(10)
+                                              1.390         -17.70481(6)      -17.41242(7)       -17.41811(8)
+                                              1.428         -17.69605(7)     -17.40418(10)      -17.42798(8)
+                                              1.466         -17.68604(7)     -17.39547(10)      -17.43475(8)
+                                              1.504         -17.67476(6)     -17.38802(11)      -17.43846(8)
+                                              1.542         -17.66313(7)      -17.37816(8)       -17.44214(8)
+
+Table 5: Total energies in atomic units of singlet states of methylenimmonium cation atτ= 0 and varying C-N bond
+length. We compute standard single point calculation with the Psiformer ansatz. Bond lengths are given in ˚Angstr¨om.
+
+
+
+
+
+
+
+
+
+
+
+                                                                            19
+                                            C   N bond             1A  1                    1A  2                   2A  1
+                                               length
+                                               1.200          -17.71007(7)      -17.39685(10)     -17.32185(9)
+                                               1.238          -17.71652(7)      -17.40775(10)     -17.35028(9)
+                                               1.276          -17.71838(7)      -17.41345(10)     -17.37348(9)
+                                               1.314          -17.71647(7)      -17.41522(10)     -17.39165(9)
+                                               1.352          -17.71173(7)      -17.41391(10)     -17.40638(8)
+                                               1.390          -17.70478(9)      -17.40999(10)     -17.41780(8)
+                                               1.428         -17.69579(14)     -17.40382(10)     -17.42639(8)
+                                               1.466          -17.68571(7)      -17.39639(10)     -17.43283(8)
+                                               1.504          -17.67443(7)      -17.38762(10)     -17.43760(9)
+                                               1.542          -17.66254(7)      -17.37710(10)     -17.44057(9)
+
+Table 6: Total energies in atomic units of singlet states of methylenimmonium cation atτ= 0 and varying C-N bond
+length. The energies are predicted via transferable optimization at the ten configurations atτ= 0, including dynamic
+state reordering, without sharing of the electron-nucleus transformer parameters. Bond lengths are given in ˚Angstr¨om.
+
+                                           C   N bond                   1A  1                    1A  2                    2A  1
+                                              length
+                                              1.200          -17.71021(15)       -17.39825(8)     -17.32098(21)
+                                              1.238          -17.71681(17)       -17.40894(8)     -17.34968(19)
+                                              1.276          -17.71855(15)       -17.41417(8)     -17.37286(19)
+                                              1.314          -17.71668(18)       -17.41772(8)     -17.39132(19)
+                                              1.352          -17.71186(16)       -17.41396(8)     -17.40588(19)
+                                              1.390          -17.70494(15)       -17.41242(7)     -17.41726(18)
+                                              1.428          -17.69613(20)     -17.40418(10)     -17.42602(18)
+                                              1.466          -17.68580(15)     -17.39547(10)     -17.43277(18)
+                                              1.504          -17.67462(17)     -17.38802(11)     -17.43705(24)
+                                              1.542          -17.66277(17)       -17.37816(8)     -17.43992(19)
+
+Table  7:  Total  energies  in  atomic  units  of  singlet  states  of  methylenimmonium  cation  atτ=  0  and  varying  C-N
+bond  length.  The  energies  are  predicted  via  transferable  optimization  on  the  100  point  grid  and  evaluated  on  the
+ten configurations atτ= 0, including dynamic state reordering, without sharing of the electron-nucleus transformer
+parameters. Bond lengths are given in ˚Angstr¨om.
+
+                                                Atom                   x                        y                        z
+                                                  C                  0.0                     0.0                     0.0
+                                                  N                    d                     0.0                     0.0
+                                                  H             -0.5445                     0.0                0.9431
+                                                  H             -0.5445                     0.0               -0.9431
+                                                  H        d + 0.5297     -sinτ·0.9431     -cosτ·0.9431
+                                                  H        d + 0.5297      sinτ·0.9431      cosτ·0.9431
+
+Table 8: Molecular geometries of methylenimmonium cation in    ˚Angstr¨om.ddenotes the length of the C–N bond,
+whileτdenotes the torsion angle between the CH           2 and NH2 groups.
+
+A.4  Rubredoxin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. 7:Comparison of joint transferable simulation of the rubredoxin active site model with independent
+transferable simulation in spin sectors.The total energies of Fe(SH)               2−4   simulations employing a joint optimization
+scheme with overlap penalty and parameter sharing across electronic states, and calculating each state independently
+in its respective spin sector utilizing the spin penalty, are shown.
+
+     To demonstrate all components of the methodology the results on rubredoxin in Fig. 5 have been obtained
+in a joint simulation of the quintet and triplet state, that is using the overlap penalty with dynamic state
+ordering, employing parameter sharing between the two electronic states and employing a spin penalty to
+the triplet state (the quintet state exhibits degeneracies). However, since the targeted states are the lowest
+energy states in two different spin sectors, an alternative strategy is to run two separate computations, a
+
+
+                                                                              20
+ground state calculation (withS          z  = 2) to obtain the quintet state and a spin-penalized calculation (with
+Sz = 1) to simulate the triplet state (more details in [1]). In Fig.7joint simulation is compared with inde-
+pendent runs in the two spin sectors. While both results generally agree well, it can be seen that the ground
+state simulation for the separate runs has lower energy than its counterpart from the joint simulation. This is
+a common consequence of the error cancellation due to parameter sharing, which typically slightly increases
+the absolute energy of the lower-lying states at the benefit of improved relative energies.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. 8:Multi-reference diagnostics of the CCSD(T) simulation of the rubredoxin active site model.The
+figure depicts the T1 (dashed lines) and D1 (dotted lines) diagnostics and the percentage contribution of perturbative
+triples to the total atomization energy (TAE) (solid lines) CCSD(T) reference simulations presented in Fig.5 of the
+manuscript.
+
+    Furthermore, we conducted an in-depth validation of the simulations of the Fe(SH)2−4    rubredoxin active
+site model. Firstly, in order to assess the qualitative correctness of the single-reference coupled cluster cal-
+culation, we examined the multi-reference statistics of the CCSD(T) solution. We evaluated the T1 and D1
+diagnostics, as well as the percentage contribution of perturbative triples to the total atomization energy
+(TAE), as shown in Fig.8. The maximum T1 amplitudes per geometry are approximately 0.06 for the triplet
+state and 0.04 for the quintet state, while the maximum D1 amplitudes per geometry range from 0.18 to 0.23
+for the triplet state and from 0.075 to 0.11 for the quintet state. The TAE value is approximately 0.85 for
+the triplet state and 0.7 for the quintet state across all geometries. These results suggest a moderate multi-
+reference character in the triplet state and a less pronounced multi-reference character in the quintet state.
+As  expected,  the  multi-reference  character  increases  slightly  towards  more  symmetric,  planar  geometries,
+which also exhibit the alleged intersystem crossing. Although the triplet diagnostics are somewhat elevated,
+overall the multi-reference statistics remain within the regime where CCSD(T) is expected to provide reliable
+qualitative results.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. 9:CASSCF and NEVPT2 simulations of the rubredoxin active site model as qualitative validation
+against the CCSD(T) reference and transferable deep-learning QMC results.Relative energies across the
+PES (left panel) and excitation energies (right panel) are shown.
+
+    To provide additional confirmation of the correct qualitative behavior, we simulated the PES using the
+multi-reference CASSCF method, followed by NEVPT2 treatment to model dynamic electron correlations.
+The simulations were run with PySCF[2], with the def2-TZVP Karlsruhe basis set for S, C, and H, and the
+Stuttgart RSC-1997 ECP and valence basis set for the Fe atom. To obtain suitable active spaces we have
+employed AVAS[3] on the restricted open-shell Hartree-Fock solution, selecting the Fe 3d orbitals and the S
+
+
+                                                                  21
+3p orbitals. This results in an active space comprising 28 electrons in 17 orbitals. In order to balance the
+accuracy  of  the  triplet  and  quintet  states,  both  states  were  treated  in  a  joint  simulation  employing  state
+averaging with a triplet and a quintet solver, respectively. The CASSCF computation was then followed by
+two independent NEVPT2 simulations. One of the major challenges in applying CASSCF to excited state
+PESs is maintaining a consistent description of the electronic structure across molecules and spin states. In
+order to align the orbital representation of the electronic structure and obtain a consistent active space across
+the geometries, we began our simulations from a central geometry on the PES, sequentially simulating the
+neighboring geometries by projecting the previous solutions onto the new atomic orbitals as an initial guess.
+    Fig.9shows the simulations of the Fe(SH)          2−4    rubredoxin active site model obtained with CASSCF and
+NEVPT2. The CASSCF and NEVPT2 excitation energies are in qualitative agreement with the CCSD(T) and
+DeepQMC simulations and indicate the validity of the results. CASSCF captures the overall trends observed
+in CCSD(T) and DeepQMC, removing the intersystem crossing between triplet and quintet state predicted
+by DFT. With the inclusion of NEVPT2 corrections, differences in electronic structure representations (e.g.,
+orbitals and active spaces) lead to deviations in absolute energies between the molecular geometries. However,
+when expressed as excitation energies, NEVPT2 shows substantially improved agreement with CCSD(T) and
+DeepQMC. Moreover, in regions where the electronic structure is represented more consistently, closer agree-
+ment between the CCSD(T) and DeepQMC PESs is observed. Inconsistent representations of the electronic
+structure across the PES are a well-known issue within a CASSCF-NEVPT2 workflow, that we were unable
+to fully address. Overcoming these difficulties is one of the key aspects that we intend to solve using our
+transferable DeepQMC approach.
+                                 Twist angle                 Quintet                                   Triplet
+                                                       ⟨ ˆH⟩              ⟨   ˆS2⟩              ⟨ ˆH⟩             ⟨   ˆS2⟩
+                                       9.05       -166.7068(2)     5.99859(18)     -166.7102(2)     2.00135(7)
+                                     18.04        -166.7145(2)     5.99851(17)     -166.7127(2)     2.00125(6)
+                                     26.92        -166.7219(2)     5.99840(17)     -166.7136(2)     2.00109(6)
+                                     35.64        -166.7292(2)     5.99844(16)     -166.7127(2)     2.00109(6)
+                                     44.16        -166.7365(2)     5.99824(16)     -166.7110(2)     2.00113(6)
+                                     52.46        -166.7427(2)     5.99836(16)     -166.7084(2)     2.00121(6)
+                                     60.50        -166.7478(2)     5.99821(16)     -166.7046(2)     2.00108(6)
+                                     68.26        -166.7517(2)     5.99827(15)     -166.7001(2)     2.00111(6)
+                                     75.75        -166.7540(2)     5.99831(15)     -166.6945(2)     2.00119(6)
+                                     82.96        -166.7548(2)     5.99840(16)     -166.6882(2)     2.00136(6)
+                                     89.89        -166.7533(2)     5.99818(17)     -166.6803(2)     2.00121(7)
+
+Table  9:  Total  energies  and  spin  expectation  value  in  atomic  units  of  simulations  of  the  rubredoxin  active  site
+model for varying twist angles. The energies are obtained via transferable optimization with the overlap penalty and
+parameter sharing.
+
+
+                                                  Twist angle        Quintet             Triplet
+                                                      13.79       -166.7142(2)     -166.7123(2)
+                                                     21.96        -166.7208(2)     -166.7139(2)
+                                                     30.02        -166.7282(3)     -166.7146(2)
+                                                     37.94        -166.7343(2)     -166.7133(2)
+                                                     45.68        -166.7403(2)     -166.7114(2)
+                                                     53.23        -166.7456(2)     -166.7080(2)
+                                                     60.56        -166.7502(2)     -166.7049(2)
+                                                     67.66        -166.7533(2)     -166.7009(2)
+                                                     74.53        -166.7558(3)     -166.6953(2)
+                                                     81.17        -166.7560(2)     -166.6894(2)
+                                                     87.58        -166.7552(2)     -166.6821(2)
+
+Table 10: Total energies in atomic units of simulations of the rubredoxin active site model for varying twist angles.
+The energies are obtained from two independent simulations in the quintet and triplet sector, respectively.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                        22
+                                                 Atom               Geometry (z-matrix)
+                                                   Fe       -               -                  -
+                                                    S       0 dS-Fe     -                  -
+                                                    S       0 dS-Fe     1α  S-Fe-S      -
+                                                    S       0 dS-Fe     1α  S-Fe-S      2β  S-Fe-S-S
+                                                    S       0 dS-Fe     2α  S-Fe-S      1β  S-Fe-S-S
+                                                   H        1 1.33       0α  Fe-S-H     4β  S-Fe-S-H
+                                                   H        2 1.33       0α  Fe-S-H     3 -β S-Fe-S-H
+                                                   H        3 1.33       0α  Fe-S-H     2 -β S-Fe-S-H
+                                                   H        4 1.33       0α  Fe-S-H     1β  S-Fe-S-H
+
+Table 11: Molecular geometries of the rubredoxin active site model in   ˚Angstr¨om. The values of dS-Fe ∈[2.2634,2.3534],
+αFe-S-H ∈[2.0227,1.7890] andβ                          S-Fe-S-H ∈[1.4884,1.2127] are obtained by linear interpolation (joint, 11 steps) between
+the  reference  minima  for  the  triplet  and  quintet  states,  respectively.  The  reference  quintet  and  triplet  minimum
+geometries are obtained from the work of dePolo et al. [4].α     S-Fe-S  = arccos  −cos(γ)            2 andβ       S-Fe-S-S  = arccos  −
+sin(γ)         2/(1+cos(γ)           2) are obtained from linear interpolation (joint, 11 steps) ofγ∈[1.5149,0.9562]. The “twist angle”
+is defined as the angle between the two planes S1-Fe-S2 and S3-Fe-S4.
+B  Parameter-sharing analysis
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. 10:Parameter sharing study on ethylene pyramidalization.The mean absolute error in excitation energy
+with respect to the reference for the 14 geometries of the ethylene pyramidalization PES, for all-electron simulations
+(left  panel)  and  with  effective  core  potentials  (middle  panel)  is  shown.  Each  data  point  in  the  plot  consists  of  14
+evaluation runs for a transferable wave function at various checkpoints. Different colors represent different parameter
+sharing schemes with increasingly many parameters being shared from independent ansatzes (blue) to the sharing of
+the entire transformer (red). The rightmost panel shows the ratio of parameters being shared in each configuration.
+
+    To provide more insights on the effect of parameter sharing across electronic states we investigate the
+impact  of  different  parameter  sharing-strategies  on  the  convergence  of  the  excitation  energies  along  the
+ethylene pyramidalization and assess the interaction of ECPs and parameter sharing. First, on the left panel of
+Fig.10we validate that parameter sharing across electronic states enhances error cancellation and accelerates
+optimization. We observe that the advantageous effect of parameter sharing diminishes with an increasing
+number  of  training  steps.  This  asymptotic  convergence  is  expected  since  in  the  limit  of  approaching  the
+exact  eigenstates,  all  simulations  yield  equivalent  errors.  Then,  on  the  middle  panel  of  Fig.10we  repeat
+the  experiment  with  core  electrons  replaced  by  ECPs,  demonstrating  that  ECPs  can  be  combined  with
+parameter  sharing  without  a  loss  in  accuracy,  but  that  the  efficiency  gains  may  be  smaller.  Overall  we
+compare four different parameter sharing modes, with the ratio of shared parameters shown on the right
+panel of Fig.10: no parameter sharing across states, sharing only nuclear embeddings and the nuclear readout
+(∼7%  of  parameters),  sharing  nuclear  embeddings,  nuclear  readout  and  the  first  two  self-attention  layers
+(∼51% of parameters) and sharing the entire self-attention mechanism (∼95% of parameters). All of the runs
+for  this  experiment  were  performed  transferably  across  the  fourteen  molecular  geometries  of  the  ethylene
+pyramidalization PES, respectively. To assess the convergence of the excitation energies along the PES we
+evaluate  checkpoints  of  the  transferable  wave  function  at  various  stages  of  the  training  and  compare  the
+excitation energies to the reference energies of Pfau et al. [5].
+    On average a trend of equal or enhanced convergence with an increased number of shared parameters is
+observed, albeit the stochasticity of the optimization prevents a clear point-wise ordering of the excitation
+energy error based on the fraction of parameters being shared. For the simulation of the two lowest singlet
+states of ethylene we find that sharing all of the core neural networks and having states differ only in the
+
+
+
+                                                                        23
+final projection to the orbitals gives the best performance in relative energies, but it is conceivable that larger
+systems or simulations with more excited states benefit more from a different choice.
+C  Training hyperparameters
+
+A summary of the most important training hyperparameters used for the presented single-point and trans-
+ferable DeepQMC calculations can be found in Table12. Other hyperparameters were set identically to the
+corresponding single-point calculations, as described by Szab´oet al.[1].
+                       System                     variant               pretrain       total train
+                                                                          steps            steps                  batch size
+                                                                                                         geometry     electron
+                      ethylene                single-point                 1k         450k / 700k           1              2048
+                                              transferable                  0                200k                 4               512
+                   carbon dimer            single-point                    1k               500k                 1              2048
+                                              transferable                  0                200k                 1              2048
+                                              single-point                  0                 1M                  1              2048
+                     CH2NH +2            transferable 10 conf.              0                 50k                 10             1024
+                                        transferable 100 conf.              0                100k                20              512
+                     Fe(SH) 2–4             transferable joint              0                200k                 1              4096
+                                        transferable separate               0                400k                 1              2048
+
+Table 12: Training hyperparameters used in this work. All other transferable hyperparameters are identical to the
+respective  single-point  calculations,  further  details  on  which  can  be  found  in  Reference  [1].  In  case  of  single-point
+iterations, the number of total training steps refers to the sum of the training steps performed for each of the geometries
+of the given dataset (9 geometries for ethylene torsion, 14 for pyramidalization, 10 for carbon dimer dissociation, and
+10 for the methylenimmonium cation).
+
+D  Computational setup
+
+All presented simulations are run with theDeepQMCsoftware package [6,7], which providesjax[8] imple-
+mentations of the core algorithms with GPU acceleration and multi-node parallelization. Parameter updates
+are computed using the KFAC algorithm [9,10]. For the efficient computation of the kinetic energy operator
+P
+   i ∇2i we use automatic differentiation and employ the forward Laplacian framework [11,12]. All experiments
+were run on NVIDIA-A100 graphics cards on the supercomputer Lise at NHR.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                          24
+References                                                             [8]Bradbury,  J.,  Frostig,  R.,  Hawkins,  P.,  John-
+ [1]Szab´o, P.B., Sch¨atzle, Z., Entwistle, M.T., No´e,                    son, M.J., Leary, C., Maclaurin, D., Necula, G.,
+     F.:  An  improved  penalty-based  excited-state                       Paszke, A., VanderPlas, J., Wanderman-Milne,
+     variational  monte  carlo  approach  with  deep-                      S.,  Zhang,  Q.:  JAX:  Composable  Transforma-
+     learning  ansatzes.  Journal  of  Chemical  The-                      tions   of   Python+NumPy   Programs.   Version
+     ory and Computation20(18), 7922–7935 (2024)                           0.3.13.http://github.com/jax-ml/jax(2018).
+     https://doi.org/10.1021/acs.jctc.4c00678                              http://github.com/jax-ml/jax
+
+ [2]Sun, Q., Zhang, X., Banerjee, S., Bao, P., Bar-                    [9]Martens, J., Grosse, R.: Optimizing neural net-
+     bry,  M.,  Blunt,  N.S.,  Bogdanov,  N.A.,  Booth,                    works with Kronecker-factored approximate cur-
+     G.H.,  Chen,  J.,  Cui,  Z.-H.,  Eriksen,  J.J.,  Gao,                vature.  In:  Proceedings  of  the  32nd  Interna-
+     Y., Guo, S., Hermann, J., Hermes, M.R., Koh,                          tional  Conference  on  International  Conference
+     K.,   Koval,   P.,   Lehtola,   S.,   Li,   Z.,   Liu,   J.,          on  Machine  Learning  -  Volume  37.  ICML’15,
+     Mardirossian,  N.,  McClain,  J.D.,  Motta,  M.,                      pp.  2408–2417,  Lille,  France  (2015).https://
+     Mussard,  B.,  Pham,  H.Q.,  Pulkin,  A.,  Pur-                       proceedings.mlr.press/v37/martens15.html
+
+     wanto,  W.,  Robinson,  P.J.,  Ronca,  E.,  Say-                [10]Botev,  A.,  Martens,  J.:  KFAC-JAX.  Version
+     futyarova,  E.R.,  Scheurer,  M.,  Schurkus,  H.F.,                   0.0.2.https://github.com/google-deepmind/
+     Smith,  J.E.T.,  Sun,  C.,  Sun,  S.-N.,  Upadhyay,                   kfac-jax     (2022).https://github.com/
+     S., Wagner, L.K., Wang, X., White, A., Whit-                          google-deepmind/kfac-jax
+     field, J.D., Williamson, M.J., Wouters, S., Yang,
+     J., Yu, J.M., Zhu, T., Berkelbach, T.C., Sharma,                [11]Li,  R.,  Ye,  H.,  Jiang,  D.,  Wen,  X.,  Wang,  C.,
+     S., Sokolov, A.Y., Chan, G.K.-L.: Recent devel-                       Li,  Z.,  Li,  X.,  He,  D.,  Chen,  J.,  Ren,  W.,
+     opments  in  the  PySCF  program  package.  The                       Wang, L.: A computational framework for neu-
+     Journal  of  Chemical  Physics153(2),  024109                         ral network-based variational monte carlo with
+     (2020)https://doi.org/10.1063/5.0006074                               forward laplacian. Nature Machine Intelligence
+                                                                           6(2),  209–219  (2024)https://doi.org/10.1038/
+ [3]Sayfutyarova,  E.R.,  Sun,  Q.,  Chan,  G.K.-L.,                       s42256-024-00794-x
+     Knizia, G.: Automated Construction of Molecu-
+     lar Active Spaces from Atomic Valence Orbitals.                 [12]Gao, N., K¨ohler, J., Foster, A.: Folx - Forward
+     Journal  of  Chemical  Theory  and  Computa-                          Laplacian for JAX. Version 0.2.5.http://github.
+     tion13(9),  4063–4078  (2017)https://doi.org/                         com/microsoft/folx(2023).http://github.com/
+     10.1021/acs.jctc.7b00128                                              microsoft/folx
+
+ [4]dePolo,  G.E.,  Kaliakin,  D.S.,  Varganov,  S.A.:
+     Spin-Forbidden  Transitions  between  Electronic
+     States  in  the  Active  Site  of  Rubredoxin.  The
+     Journal of Physical Chemistry A120(43), 8691–
+     8698   (2016)https://doi.org/10.1021/acs.jpca.
+     6b07717
+
+ [5]Pfau, D., Axelrod, S., Sutterud, H., von Glehn,
+     I., Spencer, J.S.: Accurate computation of quan-
+     tum  excited  states  with  neural  networks.  Sci-
+     ence385(6711), 0137 (2024)https://doi.org/10.
+     1126/science.adn0137
+
+ [6]Sch¨atzle, Z., Szab´o, P.B., Mezera, M., Hermann,
+     J.,  No´e,  F.:  DeepQMC:  An  open-source  soft-
+     ware suite for variational optimization of deep-
+     learning  molecular  wave  functions.  The  Jour-
+     nal of Chemical Physics159(9), 094108 (2023)
+     https://doi.org/10.1063/5.0157512
+
+ [7]Hermann, J., Sch¨atzle, Z., Szab´o, P.B., Mezera,
+     M., DeepQMC Contributors: DeepQMC.https:
+     //github.com/deepqmc/deepqmc(2024).https:
+     //doi.org/10.5281/zenodo.3960826.  https://
+     github.com/deepqmc/deepqmc
+
+
+
+
+                                                                  25

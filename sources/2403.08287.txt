@@ -1,0 +1,1033 @@
+Performance assessment of the effective core potentials under the
+Fermionic neural network: first and second row elements
+           Mengsa Wang,1, 2 Yuzhi Zhou,3, 4 and Han Wang2, 5
+           1)Graduate School of China Academy of Engineering Physics, Beijing 100088, China
+           2)National Laboratory of Computational Physics, Institute of Applied Physics and Computational Mathematics, Beijing 100088,
+           China
+           3)CAEP  Software  Center  for  High  Performance  Numerical  Simulation,  Beijing  100088,
+           China
+           4)Institute of Applied Physics and Computational Mathematics, Beijing 100088, China
+           5)HEDPS, CAPT, College of Engineering, Peking University, Beijing, China
+
+           (*Han Wang’s email: wang_han@iapcm.ac.cn)
+           (*Corresponding to: zhou_yuzhi@iapcm.ac.cn)
+           (*Mengsa Wang’s email: wangmengsa22@gscaep.ac.cn)
+           (Dated: 3 June 2024)
+           The rapid development of deep learning techniques has driven the emergence of a neural network-based variational
+           Monte Carlo method (referred to as FermiNet), which has manifested high accuracy and strong predictive power in the
+           electronic structure calculations of atoms, molecules as well as some periodic systems. Recently, the implementation of
+           the effective core potential (ECP) scheme in it further facilitates more efficient calculations in practice.  But there still
+           lack comprehensive assessments on the ECP’s performance under the FermiNet. In this work, we set sail to fill this gap
+           by conducting extensive tests on the first two row elements regarding their atomic spectral and molecular properties.
+           Our major finding is that in general the qualities of ECPs have been correctly reflected under the FermiNet.   Two
+           recently built ECP tables, namely ccECP and eCEPP, seem to prevail on the overall performance. Specifically, ccECP
+           performs slightly better on the spectral precision and covers more elements, while eCEPP is more systematically built
+           from both shape and energy consistency, and better treats the core polarisation.  On the other hand, the high accuracy
+           of the all-electron calculations is hindered by the absence of relativistic effects as well as the numerical instabilities in
+           some heavier elements.  Finally, with further in-depth discussions, we generate possible directions for developing and
+           improving the FermiNet in the near future.
+
+
+I.  INTRODUCTION                                                                CCSD(T)13  and Quantum Monte Carlo (QMC)14.  More re-
+                                                                                cently,  Li et.   al.   first  incorporated  the  ECP  method  in  the
+   Boosted by the exponential growth of computing power and                     FermiNet15.  Soon afterwards, similar functionality has been
+the development of effective algorithms, electronic structure                   implemented by the FermiNet team8.
+methods have been constantly evolved to help us better un-                         Even  though  Ref.15  provides  some  ECP  results  on  the
+derstand the behaviours of atoms, molecules and condensed                       3d transition metal elements under the FermiNet,  there still
+matter1,2.   More  recently,  utilizing  the  latest  deep  learning            lack comprehensive assessments on the performance of main-
+techniques, Pfau et. al. proposed a Fermionic neural network-                   stream ECPs, which would be of significant reference value
+based variational Monte Carlo method3 (dubbed as FermiNet)                      both  from  theoretical  and  practical  point  of  view.    In  this
+for the accurate simulations of many-body ground state. This                    work, based on the following ECPs, namely Stuttgart (STU)
+new ansatz is more expressive and flexible compared to the                      ECP16–19, Burkatzki-Filippi-Dolg (BFD) ECP20, energy con-
+traditional Slater-Jastrow form4, and has shown to be compa-                    sistent  correlated  electron  pseudopotential  (eCEPP)21,  and
+rable to projector Monte Carlo methods in precision.   Later                    correlation consistent ECP (ccECP)22–24, we have performed
+on,  the  original  framework  has  been  further  improved  both               extensive tests on the atomic ionization potential (IP) and elec-
+in accuracy and efficiency5,6, and modified to accommodate                      tron affinity (EA), as well as the dissociation energy (DE) of
+more scenarios including periodic systems, positronic chem-                     hydrides for the first two row elements(we adopt the conven-
+ical  processes  and  excited  states7–9.    The  above  examples               tion that H and He make up the zeroth period).  Meanwhile,
+manifest the strong potential of this novel electronic structure                we have also taken this opportunity to re-evaluate the ability
+method.                                                                         of FermiNet in terms of the all-electron calculations.
+   Despite  these  appealing  features,  FermiNet  still  has  the                 From  our  spectral  results,  we  found  that  the  qualities  of
+same scaling as the traditional VMC, i.e., Z5.5∼6.5 with respect                ECPs have been consistently reflected under the FermiNet, as
+to the nuclear charge Z. Meanwhile, the effective core poten-                   the ECPs constructed from high-accuracy correlated calcula-
+tial (ECP) scheme can alleviate this problem significantly by                   tions in general outperform those from single-particle meth-
+treating the nucleus and core electrons as an effective core,                   ods both in accuracy and transferability. Among them, ccECP
+and has been a common practice in other electronic structure                    and eCEPP give the best performance on average.  In partic-
+methods,  for  instance,  Density  Functional  Theory  (DFT)10,                 ular, ccECP achieves slightly better precisions in many sce-
+Hartree-Fock  (HF)11,12  or  some  high  level  calculations  like              narios, and covers more elements. While eCEPP incorporates
+                                                                                                                                                                 2
+
+the shape and energy consistency in a systematic manner and                         where  ¯α is ↓ if α is ↑ or vice versa, and φ kαi   (rαj ;{rα/ j};{r ¯α})
+better treats the core-valence correlation.                                         is the permutation-equivalent function implemented by a mul-
+   In addition, the all-electron results, though still being very                   tilayer perceptron.   The overall anti-symmetry is then guar-
+accurate for the light elements, start to deviate due to a lack of                  anteed by the determinants.  In FermiNet, as an unsupervised
+relativistic treatment.  Such errors can overwhelm the chemi-                       neural network, its input consists solely of features of one and
+cal accuracy(1.594 mEh) as early as we get to the second row.                       two electron positions.  The energy expectation value is min-
+Besides,  the  all-electron  calculations  are  more  prone  to  the                imized with respect to the parameters of the network by the
+numerical instabilities,  which could also lead to some extra                       routines of VMC:
+errors based on our observation.                                                                                   R dXψ∗θ(X) ˆHψθ(X)
+   Lastly, we provide further analysis on the cause of errors                                          L (θ) =       R dXψ∗θ(X)ψθ(X)  ,                    (4)
+and numerical behaviors,  and some broader perspectives on
+how to improve the FermiNet in the near future.
+   This paper is organized as follows.   We briefly introduce                       where θ  denotes the parameters of the network.   Along the
+the  FermiNet  framework  and  ECP  scheme  in  Sec.  II.  Then                     lines, deep learning techniques play a key role in improving
+major results are presented in Sec. III. More discussions and                       the  accuracy  and  efficiency.   As  a  result,  FermiNet  is  com-
+further perspectives are given in Sec. IV. In the last section, we                  petitive to the projector Monte Carlo methods, contrast to the
+briefly summarise this work. Details on the hyperparameters,                        common belief that VMC is less accurate3,5.
+efficiency, precision and extra original data are presented in
+the Appendix.                                                                       B.  Effective core potentials
+
+
+II.  METHOD                                                                            The ECP scheme is based on the idea that the core electrons
+                                                                                    remain almost unchanged in most condensed matter scenar-
+A.  Theoretical framework                                                           ios.  Hence, the bare nuclear potentials in Eq. (2) can be re-
+                                                                                    placed by the effective ones where core electrons and nucleus
+                                                                                    are packed all together:
+   The many-body stationary Schrödinger equation under the
+Born-Oppenheimer approximation25 is the starting point here                                        ˆH = −1    Nv∑        Nv∑  1     Nv∑
+and for most electronic structure methods:                                                                  2     ∇2i +      ri j +    V ECPi     (ri),              (5)
+                                                                                                               i         i> j        i
+                            ˆHψ(X) = Eψ(X),                              (1)        where Nv  denotes  the  number  of  the  valence  electrons,  im-
+where  ψ(X)   is   the   wavefunction   of   N   electrons,   X  =                  plying that fewer electrons are handled.  Other than that, the
+(x1,x2,...,xN)  denotes  the  state  of  all  electrons  and  xi =                  strong  correlations  and  relativistic  effects  near  the  core  are
+{ri,σi} represents the coordinates and spin of the i-th elec-                       also avoided.
+tron. The electronic Hamiltonian has the following form,                               All ECPs tested in this work take the semi-local form:
+
+                                                                                                                          lmax∑
+                                                                                               V ECPi     (ri) = Vloc(ri)+     Vl(ri)∑
+                   ˆH = −1       ∇2i +∑      1         ZI                                                                 l=0          m |Ylm⟩⟨Ylm|.         (6)
+                           2 ∑i         i> jri j −∑iI  riI ,                  (2)   The first one on the RHS is the local term, which reflects the
+                                                                                    Coulomb  potential  of  a  nucleus  screened  by  the  core  elec-
+where ri j denotes the distance between the i-th and  j-th elec-                    trons, plus the repulsion from core electrons seen in a longer
+tron, riI denotes the distance between the i-th electron and I-th                   distance.  The second are the non-local terms, which project
+nucleus, and ZI is the charge of the I-th nucleus. And through-                     the pseudo wavefunction into spherical harmonics Ylm in the
+out this paper we work in the atomic units.                                         vinicity  of  the  core  regions  (the Vl  is  designed  to  be  short-
+   Solving Eq. (1) for many-body systems still remains a cen-                       ranged). It can be loosely understand as the mimic of overlap-
+tral task for today’s theoretical physicists and chemists.  Suc-                    ping and interactions between the valence and core electrons
+cessful electronic structure methods have been developed, im-                       near the core. For all ECPs used in this paper, Vl is expressed
+proved  and  verified  over  time,  such  as  DFT,  CCSD(T)  and                    as a linear combination of Gaussian functions:
+QMC,  though  they  all  have  their  own  strengths  and  weak-                                                      pmax∑
+nesses. Recently, the FermiNet team proposed a novel ansatz                                                 Vl(r) =        βl,pe−αl,pr2,                         (7)
+of the many-body wavefunction, which consists Slater deter-                                                           p=1
+minants  composed  of  permutation-equivalent  functions.   In
+this work, we use the full determinant variant26,27, therefore,                     where αl,p and βl,p are the fitting parameters.
+the general form of the full wavefunction can be illustrated as                        In general, these parameters are determined from two as-
+a linear combination of k determinants:                                             pects:  energy consistency and shape consistency20.   Briefly
+                                                                                    speaking,  energy consistency demands the isospectrality (or
+    ψ(r↑1,...,r↓n↓) = Σkωk(det[φ kαi   (rαj ;{rα/ j};{r ¯α})]),         (3)         near   isospectrality)   between   the   all-electron   and   pseudo
+                                                                                                                                                                3
+
+Hamiltonians on some subspace of valence states.   The tar-                        2.    BFD ECP
+geted  spectral  properties  may  include  neutral  excitation  en-
+ergies,  IPs  and  EAs,  and  with  different  spin  configurations                   BFD ECP is a non-singular energy-consistent ECP and is
+if possible28.  This usually underpins the overall precision or                    designed  to  reproduce  the  all-electron  scalar-relativistic  HF
+qualities of the ECPs.  On the other hand, shape consistency                       energies for multiple configurations, including low-lying exci-
+requires the spacial characteristics(mostly the one-body den-                      tations, the first and second cations and ground state anions20.
+sity matrix) should be the same or close enough.  This gener-                      To eliminate the singularity at the origin, the local term takes
+ally improves the transferability of the ECPs under different                      the following form:
+chemical environments29.  Also note that when constructing
+the  ECPs  in  practice,  it  is  necessary  to  take  considerations                   Vloc(r) = −Zeff
+from both sides, and do trade-offs between the accuracy, re-                                             r   + βloc,1r    e−αloc,1r2 + βloc,2re−αloc,2r2      (9)
+producibility and transferability during the optimization21–24.                                     kmax∑
+   In  the  rest  of  this  section,  we  briefly  introduce  some  de-                           +      βloc,ke−αloc,kr2.
+tails of the STU ECP16–19,  BFD ECP20,  eCEPP21,30,31,  and                                          k=3
+ccECP22–24. For all the ECPs tested in this paper, [He] core is                    For the first row elements, lmax = 0,kmax = 3, pmax = 1, and
+applied to the first row of elements, and [Ne] core is applied                     for the second row elements, lmax = 1,kmax = 3, pmax = 1. Ad-
+to the second row of elements. It is important to mention that                     ditionally, the first derivative of the potential is zero at the ori-
+solely the ccECP offers [He] core tables for the second-row                        gin. And to ensure the potential is repulsive near the nucleus,
+elements.   Therefore,  to  fairly  compare  different  ECPs,  we                  it is further required to have a concave shape at the origin, i.e.,
+use the [Ne] core ECPs for the second row of elements in this                                        αloc,3βloc,3 + αl,pβl,p > 0,   ∀l, p.               (10)
+paper.
+
+
+                                                                                   3.    eCEPP
+
+1.    Stuttgart ECP                                                                   eCEPP is a relativistic, non-singular, shape and energy con-
+                                                                                   sistent ECP21, and is an extension of the correlated electron
+   Stuttgart (STU) ECP is a relativistic energy-consistent ECP,                    pseudopotentials (CEPP) by the same authors30,31. The shape
+offering both semi-empirical and ab initio varieties16–19.  We                     consistency is constructed based on the Multi-Configuration
+employed semi-empirical pseudopotentials for Li, Be, Na, and                       Hartree-Fock results to match the one-electron density matrix
+Mg.   For  the  remaining  elements  in  the  first  two  rows,  we                and the long-range effects of core polarisation beyond certain
+employed  ab  initio  pseudopotentials.   Although  STU  ECP                       radius.  And the energy consistency is achieved by reproduc-
+has  included  core  polarisation  potentials  (CPPs)  for  some                   ing the excitation energies, IPs and EAs, from CCSD(T) cal-
+elements16,17, considering that elements from groups 13 to 17                      culations.   The  core  polarisation  effect  has  been  effectively
+and  Ne  do  not  have  corresponding  CPP  parameters18,19,  to                   approximated by an additional term as:
+ensure fairness, the CPP term is ignored in our calculations of
+STU ECP. Meanwhile, since eCEPP has the CPPs for all ele-                                              V cpp = −1       1− e−(  rr0 )2 4 α
+ments in its table and is built upon most modern calculations,                                                      2                     r4 ,                  (11)
+we investigate the CPP effects from eCEPP.                                         where r0  is the cut-off radius, and α  is dipole polarizability
+   STU ECP is singular at the nucleus due to the bare Coulomb                      of the effective core. Now eCEPP comprises three terms: the
+potential form of the local term:                                                  local term, the non-local terms and the core polarisation term.
+                                                                                   For constraints, eCEPP is not only bounded at the origin, but
+                                                                                   also  requires  that  the  first  and  second  order  derivatives  are
+                            Vloc(r) = −Zeff                                        equal to zero.  Finally, the eCEPP table is only available for
+                                             r  ,                               (8)elements from Li to F in the first two rows of the periodic ta-
+                                                                                   ble, though it also covers some transition metal elements. For
+where Zeff = Z − Zcore  represents the effective charge.  Vl  is                   the elements from Li to F, lmax = 1,kmax = 6, pmax = 6.  The
+composed of one Gaussian function, namely, pmax = 1 for all                        local and non-local terms of eCEPP have the same form as the
+tested elements except for F, Ne, and Cl, where pmax = 2. Pa-                      BFD ECP, though more Gaussian functions are needed to take
+rameters αl,p,βl,p  ’s in Eq. (7) are adjusted to experimental                     care of the shape consistency and core polarisation effects. To
+ionization energies of the single-valence electron ions in the                     make better comparison, we also investigated the case without
+semi-empirical pseudopotentials, while the parameters in ab                        the core polarisation, denoted as eCEPP*.
+initio pseudopotentials are fitted to the total valence energy of
+a multitude of low-lying configurations of the neutral atoms or
+the singly charged ions obtained from Russell-Saunders(LS)                         4.    ccECP
+coupled  quasi-relativistic  all-electron  HF  calculations.   The
+maximum angular quantum number lmax  is 1 for Li and Be,                              ccECP   is   a   scalar-relativistic,    non-singular,    energy-
+and increases to 2 from B to Cl.                                                   consistent ECP constructed mainly based on CCSD(T)22–24.
+                                                                                                                                                                    4
+
+For B, C, N, O, their tables are parameterized mostly by min-                            The calculated and experimental ground state energies are
+imizing  the  atomic  spectral  errors,  and  occasionally  resorts                   summarized in Table I. (We also provide the ground state en-
+to  spacial  information  and  diatomic  binding  curves22.   For                     ergies  from  the  ECPs  calculations  in  Table  X,  and  the  all-
+the rest first row elements and all second row elements, the                          electron and ECPs results for hydrides in Table XI in the Ap-
+many-body energy consistencies plus the single-body norm-                             pendix for completeness.)   And the main observation is the
+conserving conditions are employed23,24.  Also the CPP has                            deviations from the experiments are generally small, with an
+been intentionally left out for simplicity.  The transferability                      average value of 0.92 mEh. However, we have also seen a sig-
+has been checked and improved by the calculations of some                             nificant growing of errors starting from Al to Cl. This should
+other molecular properties.   ccECP has the same semi-local                           largely due to:  (1) a lack of relativistic treatment in the all-
+form and constraints as the BFD ECP. For the first row ele-                           electron model, and (2) numerical instabilities in the training,
+ments, lmax = 0,kmax = 3, pmax = 1, and for the second row                            which will also show up again in other all-electron results.
+elements, lmax = 1,kmax = 3, pmax = 2.
+
+                                                                                      TABLE I. Ground state energies for the first two row atoms and CH4.
+                                                                                      ∆E  represents the differences between the results of FermiNet and
+III.  RESULTS                                                                         experimental values.  MAD represents the mean absolute errors of
+                                                                                      ∆E.   The  molecular  structure  of  CH4  is  from  Ref.3.   The  number
+   In order to better test various ECPs, we have implemented                          inside  the  curly  braces  represents  how  many  tens  of  thousands  of
+the  ECP  scheme  on  a  recent  version  of  FermiNet32.   Com-                      training iterations. If no citation is provided, the data in this work is
+pared to the FermiNet in the original paper3, this version has                        obtained from calculations of the modified FermiNet.
+undergone significant improvements both in accuracy and ef-                                             FermiNet(Eh)          Exact(Eh)34    ∆E1(mEh)
+ficiency.  They are realized through simplifying and modular-                               Li           -7.47786(2){10}           -7.47806          0.20(2)
+izing the neural network, maximizing GPU utilization, and re-                              Be          -14.66733(1){10}         -14.66736         0.03(1)
+ducing memory usage in the Jax framework. In the following,                                 B          -24.65378(2){10}         -24.65391         0.13(2)
+we refer to this version as the modified FermiNet, while the                                C          -37.84473(2){10}           -37.845           0.27(2)
+FermiNet used in the original paper3,5  as the reference Fer-                               N          -54.58891(3){10}          -54.5892          0.29(3)
+miNet.   The STU ECP, BFD ECP and ccECP are imported                                        O          -75.06683(5){10}          -75.0673          0.47(5)
+from the PYSCF package33.   The parameters of eCEPP are                                     F           -99.73333(5){10}          -99.7339          0.57(5)
+from the supplementary material of Ref.21 and eCEPP is man-                                Ne        -128.93736(6){10}        -128.9376         0.24(6)
+ually implemented.                                                                         Na        -162.25430(9){10}        -162.2546         0.30(9)
+   Except for few simple explanations,  we reserve more de-                                Mg       -200.05255(10){10}        -200.053         0.45(10)
+tailed discussions to Sec. IV. And here we focus on illustrat-                             Al        -242.34466(12){10}        -242.346         1.34(12)
+ing the numerical results.                                                                  Si        -289.35676(17){10}        -289.359         2.24(17)
+                                                                                            P         -341.25716(16){20}        -341.259         1.84(16)
+   For extra information, the details of the training process and                           S         -398.10740(17){20}         -398.11           2.6(17)
+the hyperparameters used are provided in the Appendix.  A.                                 Cl        -460.14513(22){20}        -460.148         2.87(22)
+Discussions  on  efficiency,  envelope  functions  and  precision                         CH4        -40.51410(4){10}                -                      -
+are presented in Appendices  B,  C and  D, respectively.                                 MAD                                                                         0.92
+
+                                                                                         Besides, together with the results from reference FermiNet
+A.  Ground state energy                                                               in Table XIV, we see that the accuracy of the modified Fer-
+                                                                                      miNet is somewhat improved under the same neural network
+   In this section, we briefly illustrate the results on the ground                   configurations,  but also with less iterations of training.  Ex-
+state  energies  of  atoms  and  CH4  molecule  from  the  all-                       cept for Li and Be atoms, the ground state energies from the
+electron calculations of the FermiNet.                                                modified FermiNet are also closer to the experimental values.
+   In order to improve the stability of the training process, we                      While for Cl, two FermiNets give almost equivalent results,
+pretrain the wavefunctions by 10,000 iterations to match the                          yet the training iterations in the modified FermiNet is much
+HF results on the cc-pVDZ basis set, following by a 100,000                           less than the reference FermiNet.  These justify the improve-
+iteration training process. For heavier atoms such as P, S, and                       ments in the modified FermiNet.
+Cl, we increase the iterations of training to 200,000.  And we
+reduce  the  learning  rate  parameter  lr.delay  from  10,000  to                    B.  Ionization potential
+5,000 to ensure the stability of the training for S.(More details
+on the parameter lr.delay can be found in the Appendix  A)                               Next we report the results on the IP, which is derived from
+For  Cl,  when  lr.delay  is  set  to  5,000,  there  is  still  numer-               the following formula:
+ical instability in the training process,  so we further reduce
+lr.delay  from  10,000  to  3,000  during  the  training.   Unless                                            IP(X) = E(X+)− E(X).                       (12)
+otherwise specified, all experiments use double-precision and
+adhere to the default hyperparameters outlined in Table V of                          Since the number of the valence electrons for Li+ with [He]
+Appendix  A.                                                                          core and Na+ with [Ne] core is zero, their ionization potentials
+                                                                                                                                                                                            5
+
+
+TABLE II. The IPs results from the all-electron and different ECPs calculations. ∆E denotes the deviations from the experimental values. AE
+is the abbrevation for all-electron.  † denotes the inclusion of the approximated relativistic effects in the results of the all-electron calculations.
+* indicates that the CPP term has been removed from the eCEPP calculations.  MAD1 and MAD2 represent the mean absolute deviations for
+the first and second row of elements, respectively.  And MAD has all the elements considered.  Bold figures indicate the closest results to the
+experimental IPs. Consistent notations have been employed throughout this paper.
+
+                                              Ionization potential(mEh)                                                        ∆E(mEh)
+   Element       AE        STU       BFD     eCEPP    eCEPP*    ccECP    Expt.35      AE (AE†)      STU    BFD    eCEPP    eCEPP*    ccECP
+       Li         197.91         -             -              -               -               -          198.14    -0.23 (-0.23)       -           -            -               -               -
+       Be       342.56    344.70    343.81    345.63     343.57     343.98     342.60    -0.04 (-0.03)     2.1      1.21       3.03         0.97         1.38
+        B        304.91    302.28    302.29    305.73     303.73     304.15     304.95    -0.04 (-0.07)    -2.67    -2.66      0.78        -1.22         -0.8
+        C        413.88    411.07    411.17    414.63     412.85     414.02     413.81    0.07 (-0.14)    -2.74    -2.64      0.82        -0.96        0.21
+        N        534.67    531.77    532.20    535.14     533.48     534.99     534.12    0.55 (-0.11)    -2.35    -1.92      1.02        -0.64        0.87
+        O         500.25    498.61    498.30    500.46     499.73     499.68     500.45      -0.2 (-0.2)      -1.84    -2.15     0.01        -0.72        -0.77
+        F         640.74    640.09    639.02    640.80     640.17     640.23     640.28     0.46 (-0.22)    -0.19    -1.26      0.52        -0.11       -0.05
+       Ne        794.44    792.72   792.67         -               -          793.56     792.48      1.96 (0.04)      0.24     0.19         -               -            1.08
+       Na        188.30         -             -              -               -               -          188.86    -0.56 (-0.35)       -           -            -               -               -
+       Mg       280.32    278.50    278.08         -               -          278.68     280.99    -0.67 (-0.33)    -2.49    -2.91         -               -           -2.31
+       Al        219.06    220.29    220.12         -               -         220.07     219.97    -0.91 (-0.96)    0.32     0.15         -               -           0.1
+       Si        299.38    300.09    300.21         -               -          300.25     299.57    -0.19 (-0.83)    0.52     0.64         -               -            0.68
+        P         387.12   386.45    387.17         -               -          387.60     385.38     1.74 (-0.15)     1.07     1.79         -               -            2.22
+        S        380.07    379.37    377.46         -               -          378.04     380.72    -0.65 (-0.41)    -1.35    -3.26         -               -           -2.68
+       Cl         475.05    476.18    475.09         -               -          476.32    476.55     -1.5 (-2.47)     -0.37    -1.46         -               -          -0.23
+    MAD1                                                                                                       0.44 (0.13)      1.73     1.72       1.03         0.77         0.74
+    MAD2                                                                                                       0.89 (0.79)      1.02     1.70         -               -            1.37
+     MAD                                                                                                        0.65 (0.44)      1.40     1.71       1.03         0.77         1.03
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                         FIG. 1. The plot of deviations of the IPs calculated by different ECPs and AE from the experimental IPs
+
+
+are not considered in the current context.  The experimental                                      Table VII of Appendix  E, the all-electron IPs with relativity
+values35  serve as the reference data for both the all-electron                                   effects are even closer to the experimental IPs38, with a mean
+and ECPs results.  As in the neutral atoms, to ensure a better                                    absolute error reducing from 0.65 to 0.44 mEh.
+convergence, we train 200,000 iterations for the all-electron                                         As for the ECPs results, we illustrate them row by row. For
+calculations of the P+, S+, and Cl+.  And we adjust lr.delay                                      the first row, we observe that eCEPP and ccECP outperform
+from 10,000 to 5,000 for the S+ and Cl+ to improve the sta-                                       the STU ECP and BFD ECP, and their absolute errors to ex-
+bility of the training process.                                                                   perimental values are around 0.7 ∼ 1.0 mEh.  This is consis-
+   We summarize the IP results in Table II and Fig. 1.  For all                                   tent with that eCEPP and ccECP are built from more accurate
+elements considered here, the all-electron results are on aver-                                   CCSD(T) calculations, and this character has been correctly
+age closest to the experimental values, with a mean absolute                                      reflected under the FermiNet.  Meanwhile, the minor differ-
+error of 0.65 mEh. Also note that for Ne, P and Cl, the errors                                    ence between the eCEPP and eCEPP* results indicates that
+of the all-electron become more significant, due to the rela-                                     the core polarisation term plays a less significant role in cur-
+tively large relativistic effects35–37,  similar to what we have                                  rent situation.
+seen in the ground state energies.  Furthermore, as shown in                                          For  the  second  row,  the  advantage  of  ccECP  disappears,
+                                                                                                                                                                                          6
+
+
+TABLE III. The EAs calculated by different ECPs and the all-electron.  † denotes the inclusion of the approximated relativistic effects in the
+results of the all-electron calculations. * indicates that the CPP term has been removed from the eCEPP calculations. ∆E denotes the deviations
+from the experimental EAs.
+
+                                                Eletron affinity(mEh)                                                           ∆E(mEh)
+    Element       AE        STU       BFD     eCEPP    eCEPP*    ccECP    Expt.35      AE (AE†)      STU    BFD    eCEPP    eCEPP*    ccECP
+        Li          21.49     22.70      22.63      23.08       22.68       22.62      22.71     -1.22 (-1.23)   -0.01    -0.08      0.37        -0.03        -0.09
+        B           9.59        8.94        9.56       9.91         9.73         9.49       10.28     -0.69 (-0.65)    -1.34    -0.72     -0.37        -0.55        -0.79
+        C          46.57      45.27      45.48      46.42       46.08       46.71      46.38      0.19 (-0.07)    -1.11    -0.90     0.04        -0.30        0.33
+        O          53.40      52.53      53.07      54.09      53.84       54.27      53.70     -0.30 (-0.59)    -1.17    -0.63      0.39        0.14         0.57
+        F         126.22    124.15   124.87    125.77     125.64     125.12    124.99      1.23 (0.26)     -0.84   -0.12      0.78         0.65         0.13
+       Na         20.88      19.78     20.17          -               -           19.94      20.14       0.74 (0.74)     -0.36    0.03         -               -           -0.20
+       Al         14.88      16.67      16.57          -               -          16.17      15.91     -1.03 (-1.64)    0.76     0.66         -               -           0.26
+        Si          52.97     52.03      52.04          -               -           52.23      51.06       1.91 (1.12)     0.97     0.98         -               -            1.17
+        P          24.04      25.23      25.65          -               -          26.28      27.44     -3.40 (-3.35)    -2.21    -1.79         -               -          -1.16
+        S          74.36      76.11      75.19          -               -          76.33      76.33     -1.97 (-2.67)    -0.22    -1.14         -               -           0.00
+        Cl         134.19    133.75   132.98         -               -          134.27    132.76     1.43 (-0.56)     0.99     0.22         -               -            1.51
+     MAD1                                                                                                                  0.73 (0.56)      0.89     0.49       0.39        0.33         0.38
+     MAD2                                                                                                                  1.75 (1.68)      0.92     0.80         -               -           0.72
+     MAD                                                                                                                  1.28 (1.17)      0.91     0.66       0.39         0.33        0.56
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                       FIG. 2. The plot of deviations of the EAs calculated by different ECPs and AE from the experimental EAs.
+
+
+and the results of the three ECPs are close to each other, as                                    following formula:
+better seen in Fig. 1.  For ccECP, we conjecture that it com-                                                              EA(X) = E(X)− E(X−).                      (13)
+promises the accuracy of spectral properties in order to ensure
+better transferability.  On the other hand, we explain the rela-                                 Similarly,  we train the wavefunctions by 200,000 iterations
+tively good performance of the STU ECP and BFD ECP in the                                        in the all-electron calculations of P−, S− and Cl−, and adjust
+following way.  As observed in Ref.23, the ECP’s correlation                                     lr.delay to 5,000 for S−  and Cl−.  We use the experimental
+energies are almost rigid for particular states regardless of the                                EAs35  as the reference data.  All the EA results are summa-
+construction. Consequently, the accuracy of the HF part of en-                                   rized in Table III and Fig. 2.
+ergies becomes more decisive, which underpins the accuracy                                           It is somewhat surprising that the average deviation of the
+of ECPs built from HF calculations.                                                              all-electron results is the largest, with a mean absolute error of
+                                                                                                 1.17 mEh and 1.28 mEh, with and without relativistic effects.
+                                                                                                 Specifically, for Li, Al, Si, P and S, the deviations of the all-
+                                                                                                 electron EAs with the relativistic effects (more detailed data
+C.  Electron affinity                                                                            can be found in Table VII of Appendix  E) are all over 1 mEh.
+                                                                                                 Particularly, we find that convergence of Li− is slower com-
+                                                                                                 pared to other small systems.  We further train the wavefunc-
+   The prediction of EA is another important check on the per-                                   tions of Li and its anion by additional 20,000 iterations and
+formance of the ECPs and the all-electron calculations.  The                                     the error of EA is reduced by 0.31 mEh.  And similar behav-
+EAs of Be, N, Ne, and Mg are not considered due to the in-                                       iors in Al, Si, P and S’s EAs can be expected as we increase
+stability of their anions.  The EA is calculated based on the                                    the training iterations or enlarge the neural networks.
+                                                                                                                                                                                            7
+
+
+TABLE IV. The deviations of DEs of different ECPs compared to the all-electron results. † denotes the inclusion of the approximated relativistic
+effects in the results of the all-electron calculations.* indicates that the CPP term has been removed from the eCEPP calculations. ∆E denotes
+the deviations from the all-electron results.
+
+                                                       Dissociation energy(mEh)                                               ∆E(mEh)
+             Element          AE (AE†)            STU       BFD     eCEPP    eCEPP*    ccECP    STU    BFD    eCEPP    eCEPP*    ccECP
+                LiH                 92.65               91.55      91.88     93.37       91.14       91.36     -1.10    -0.77     0.72        -1.51        -1.29
+               BeH2               236.00            236.47    235.73    237.43     233.81     236.20    0.47    -0.27      1.43        -2.19       0.20
+               BH3                447.92             446.01   448.58    450.07     446.06     447.18    -1.91    0.66       2.15        -1.86        -0.74
+               CH4                669.37             665.89    666.42    671.22     667.14    669.91    -3.48    -2.95      1.85        -2.23       0.54
+               NH3                474.46             470.64    471.31    474.87     472.56     475.24    -3.82    -3.15     0.41        -1.90        0.78
+               H2O                371.04             368.75    369.23    371.48     370.23     370.05    -2.29    -1.81     0.44        -0.81        -0.99
+                HF        225.69 (224.7339)    224.37    224.73    225.25     224.69     225.15    -1.32    -0.96     -0.44        -1.00        -0.54
+               NaH                 71.81             71.78      71.42          -               -           72.37    -0.03    -0.39         -               -            0.56
+               MgH                50.41               53.13      53.95          -               -          52.14     2.72     3.54         -               -           1.73
+                AlH                117.18             118.08    117.72         -               -         117.28    0.90     0.54         -               -           0.10
+               SiH4                514.44             517.98    517.76         -               -         516.46    3.54     3.32         -               -           2.02
+                PH3                380.84            381.02    384.19         -               -          384.75    0.18     3.35         -               -            3.91
+                H2S       287.59 (285.8840)    292.98   291.44         -               -          292.15    5.39     3.85         -               -            4.56
+                HCl       166.10 (164.1939)   170.86    171.66         -               -          170.87    4.76     5.56         -               -            4.77
+              MAD1                                                                                                                   2.06     1.51       1.06         1.64        0.73
+              MAD2                                                                                                        2.50     2.94         -               -            2.52
+              MAD                                                                                                                    2.28     2.22       1.06         1.64        1.62
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                             FIG. 3. The plot of deviations of the DEs calculated by different ECPs from the all-electron DEs.
+
+
+   In contrast, the ECPs give more accurate predictions on the                                    D.  Dissociation energy
+EA. Among them, ccECP performs the best with a mean abso-
+lute error of 0.56 mEh. While if only the first row elements is                                       Lastly,  we study the DE of hydrides from Li to Cl at the
+considered, it is the eCEPP* that has the smallest error of 0.33                                  equilibrium states. The DE is calculated as follows:
+mEh. Those from STU ECP and BFD ECP are also within the                                                        DE(XnHm) = nE(X)+ mE(X)− E(XnHm).        (14)
+chemical accuracy for all elements except for P. The slightly
+larger errors in STU ECP results should be atrributed to that                                     We set the ground state energy of the hydrogen atom to -0.5
+they fit to the IPs and do not include EAs during the construc-                                   Eh, and the molecule structures are from the CCCBDB exper-
+tion of the STU ECP. Meanwhile, the minor difference (0.06                                        imental dataset41 except for CH4. We pretrain the all-electron
+mEh) between eCEPP and eCEPP* indicates that the effect of                                        wavefunctions of SiH4, PH3, H2S and HCl by 20,000 itera-
+core polarisation can be neglected also in this scenario.                                         tions.   For  hydrides  with  heavier  elements,  some  literatures
+                                                                                                  have given the estimates of the relativistic effects using differ-
+                                                                                                  ent electronic structure methods39,40,42.  In Table IV, we also
+                                                                                                  give the DEs with the approximated relativistic effects for HF,
+   We reserve more discussions on the cause of errors in the                                      H2S and HCl. Moreover, we take the all-electron results as the
+EA in Sec. IV A and IV B for the ECP and all-electron calcu-                                      reference to calculate the deviations, which are summarized in
+lations, respectively.                                                                            Table IV and Fig. 343.
+                                                                                                                                                             8
+
+   The observations are as follows.  Firstly, the poor consis-                    papers22,23. This again suggests that FermiNet has even main-
+tency  in  the  ECP  results,  as  well  as  the  large  deviations  to           tained some subtle features of the ECPs,  whether they have
+the  all-electron  results  both  indicate  a  variation  of  transfer-           been constructed from HF or CCSD(T) calculations.  Mean-
+ability. Yet, ccECP shows relatively good agreement with the                      while, the bias over the EA might due to the specific atomic
+all-electron up to Al.  And if we assume the relativistic cor-                    valence states selected for the ECP construction, as the need
+rection is small in these hydrides, ccECP seems to prevail in                     to  take  care  some  highly  positively  charged  ions  might  un-
+this contest,  and eCEPP follows with slightly higher errors,                     dermines the precision on the first IP. Also,  a more flatness
+about 0.3 mEh on average.  This implies that either a system-                     character of the ECPs makes the EA calculations much easier
+atic treatment of shape consistency as done in eCEPP21,30,31                      than those in the all-electron’s, which will be soon discussed.
+or the incorporation of the spacial and molecular information                        Subsequently, we check the valence-only correlation ener-
+in ccECP22,24 do improve the transferability.  In addition, for                   gies in the ground state, IP and EA, and compare with those
+the second row hydrides, the results of STU ECP, BFD ECP                          from all-electron calculations using CCSD(T)44 (detail num-
+and  ccECP  are  close,  and  they  start  to  deviate  significantly             bers shown in Table XII of Appendix  F). As anticipated and
+from the all-electron results.   This could,  in part,  be due to                 pointed out by Dolg45, for the ground state energies of atoms,
+the relativistic effects in them, which are about 2 mEh in the                    ECP results generally overestimate the valence correlation en-
+cases of H2S and HCl39,40. Some other part of the errors might                    ergies in magnitude (though for N ccecp and eCEPP slighltly
+come from numerical side, caused by more complex chemical                         underestimate).  The reason is that pseudo wavefunctions are
+environments in the hydrides.                                                     more flat and with less nodes, which increases the chance for
+   Moreover, unlike the situations with IP and EA, CPP is sig-                    the like spins to overlap.   However,  we unexpectedly found
+nificant in improving the accuracy of DE. We observe a reduc-                     that ccECP does no better job than eCEPP, or even BFD in
+tion of the mean absolute error by 0.58 mEh in eCEPP results                      some scenarios, although ccECP has more lean on the corre-
+when compared to eCEPP*.  An more prominant example is                            lation energy consistency during the construction.
+LiH, which contains the most polarisable core among all hy-                          As for the spacial information, since there are difficulties
+drides considered here.  (Since the relativistic effects is neg-                  to extract the corresponding pseudo and all-electron orbitals
+ligected for LiH, the all-electron results of LiH can serve as a                  from  FermiNet’s  MLP  structure,  we  check  the  total  densi-
+good reference.)  Including CPP reduces the error from -1.51                      ties  instead.    Only  negligible  differences  in  densities  have
+mEh  to 0.72 mEh, with a net effect of 2.2 mEh.  This aligns                      been observed between different ECPs.  Also the ECP densi-
+with the conclusion in Ref.21, which suggests that CPP signif-                    ties converge to the all-electron’s beyond certain core region.
+icantly contributes to molecules containing Li. While ccECP,                      Representative density distributions of Carbon and LiH from
+though being accurate in many other scenarios, gives the worst                    ECP and all-electron calculations have been shown in Figs. 9
+predictions here.                                                                 and 10 in the appendix.  Finally, we stress that this is only a
+                                                                                  glimpse rather than a strict assessment on the shape consis-
+                                                                                  tency.
+IV.  DISCUSSION                                                                      Lastly, we make some outlooks.  Note that the ECPs tested
+                                                                                  here are all expressed as the combination of Gaussian func-
+   In this section, more in-depth discussions and analysis are                    tions, which facilitates the electronic structure calculations in
+given.   Furthermore,  we  propose  some  future  directions  for                 the similar basis sets.  On the positive side,  this form poses
+improving the FermiNet.                                                           no extra computation overhead under the FermiNet’s frame-
+                                                                                  work,  as  suggested  by  our  investigations  on  the  efficiency
+                                                                                  (more in Appendix.  B). However, for heavier elements, one
+A.  ECPs under FermiNet                                                           needs more and more Gaussians to express the more complex
+                                                                                  local part, as well as more channels in the non-local projec-
+   Firstly,  the  overall  assessment  is  that  the  qualities  of  the          tions. This leads to a much harder optimization problem with
+ECPs have been well preserved under the FermiNet.  Among                          very complicated constraint conditions. Therefore, it remains
+them, eCEPP and ccECP, which are most recently developed,                         an open question whether we can take advantage of the strong
+prevail in most scenarios.   In particular,  for IP and EA, the                   expressibility of the neural network and design ECP specifi-
+errors from these CCSD(T) based ECP tables are around the                         cally for FermiNet? This might be an interesting starting point
+1 mEh.  Meanwhile,  the errors in the HF based ECPs (STU                          for future studies.
+and  BFD)  are  also  not  too  far-off,  about  0.1∼1 mEh  larger
+on average.  In the case of DE, the gaps between the HF and
+CCSD(T) based ECPs increase to 0.5∼1.3 mEh  on average.                           B.  The all-electron results
+The DE results of hydrides also imply less consistency in the
+transferability.  The incorporation of the core-valence corre-                       First and foremost, the lack of relativistic effects is a major
+lation through CPP in eCEPP seems to have significantly im-                       issue in the all-electron calculations, and we will focus on it in
+proved the accuracy of DE, in contrast to the situations in IP                    Sec. IV C. As for now, we discuss on some other perspectives.
+and EA where CPP only presents a minor effect.                                    Contrary to the ECPs results, the IPs from the all-electron cal-
+   Other than that, the errors of EA are generally smaller than                   culations are in better agreement with the experimental data.
+those  of  IP,  which  is  also  seen  in  the  test  results  of  ccECP          While the EAs are generally worse, even with the relativistic
+                                                                                                                                                              9
+
+effects being considered.  This observation can be explained                      ular Approximation (ZORA). Though sharing a similar form
+as follows.  In anions, the added electron is loosely bounded                     with Schrödinger equation, such approximations would soon
+and has a very different form of the wavefunction compared                        become  ineffective  as  we  move  to  heavier  atoms  (remem-
+to the other strongly bounded electrons.  Describing them is                      ber our goal is sub chemical accuracy!).   Therefore,  we en-
+then a much difficult problem, which is known for the com-                        vision that a practical solution should lie somewhere in be-
+munity for some time46, and FermiNet is not an exception as                       tween.   As  done  in  many  other  relativistic  quantum  chem-
+well.  However, in cations, all electrons are strongly bounded                    istry calculations, the Dirac-Coulomb Hamiltonian seems to
+in nature, thus make the all-electron results of IP almost free                   be a good starting point,  and its relatively simple form also
+from the above issue.                                                             fits  to  VMC  calculations.   Alternatively,  we  could  resort  to
+   Furthermore, to our relief, we found that even for some re-                    some simplified 2-component Hamiltonians like X2C51  and
+cent VMC/DMC calculations47, the errors of EA are similar                         n-order Douglas–Kroll-Hess(DKHn) Hamiltonians, which are
+or sometimes even larger compared to our results. Meanwhile,                      computationally more tractable.  However, we have to point
+CCSD(T)  calculations,  when  extrapolating  to  the  complete                    out that either treatments fundamentally change the Hamilto-
+basis set (CBS) limit, give very close results to the experimen-                  nian  and  wavefunction.   As  a  result,  solving  them  calls  for
+tal data48,49.  Yet for some intermediate basis sets, they still                  a substantial reformulation and reconstruction of the current
+exhibit similar errors.  This is consistent with the belief that                  framework,  and  is  generally  much  harder  than  solving  the
+FermiNet is equivalent or superior to VMC/DMC, but slightly                       Schrödinger equation.
+lesser than the golden standard CCSD(T)3.  This also implies                         Furthermore,  if  we  do  not  restrict  ourselves  to  the  all-
+that a better starting point from pretraining or a larger-scale                   electron  calculations,  relativistic  ECPs  can  be  thought  as  a
+neural network would most likely to improve the FermiNet’s                        good choice to incorporate the relativistic effects. The benefits
+results.                                                                          of doing so come in twofold.  First, since the relativistic cal-
+   On the other hand, as mentioned previously and also in Ap-                     culations are even more demanding than the non-relativistic
+pendix  D, we have seen that the all-electron calculations are                    ones,  the  gain  in  the  computational  cost  reductions  is  even
+more prone to the numerical instabilities.  In particular, some                   more significant from these ECPs.  Second, because the rela-
+sudden rises in the energies can be observed during the train-                    tivistic ECPs generally take the form of spin-orbit coupling52,
+ing, and lead to some persistent errors at last. This can be bet-                 it is then only necessary to modify current FermiNet to ac-
+ter seen in the Cl’s case of Fig. 7.  Based on our further tests,                 commodate for variable spins. The extension in the traditional
+they can be improved by more conservative learning strate-                        VMC calculations has been discussed in Ref.  53, which should
+gies or more iterations. It is apparent that this phenomenon is                   cover most technique details, though minor modifications to
+related to the relaxation of hyperparameters into some meta-                      FermiNet ansatz should also be considered.
+stable regions during the optimization, yet more detailed stud-                      Finally,  we  believe  these  two  routes  are  of  equal  signifi-
+ies on the numerical behaviors of the FermiNet are needed to                      cance and are complementary to each other in the practical
+better understand the cause and find ways to avoid it.                            applications.  Thus both of them worth further exploration in
+                                                                                  order to better treat the relativistic effects under different cir-
+                                                                                  cumstances.
+C.  Relativity: Yes, but how?
+
+   Last  but  not  the  least,  the  relativistic  effects  show  up  as          V.  CONCLUSION
+early  as  we  move  into  the  second  row,  and  render  the  all-
+electron results deviate from the experimental values by few
+mEh.   As  discussed  in  appendix  E,  current  relativistic  cor-                  In this paper, we have extensively tested the performance
+rections are combinations of literature results, analytical and                   of  some  mainstream  ECPs  under  the  FermiNet  for  the  first
+perturbative  calculations  at  CCSD(T)  and  HF  levels,  which                  two row elements.   Based on the results,  we found that the
+is apparently unsystematic.  X2C corrections at HF level are                      qualities and features of the ECPs have been correctly main-
+also available along side.  Still this scheme is unsatisfactory                   tained under the FermiNet.  Two more recently built ECP ta-
+for  high  accuracy  calculations.   Therefore,  more  systematic                 bles,  namely ccECP and eCEPP, prevail in the contest with
+treatments of the relativistic Hamiltonians under the FermiNet                    errors on average below chemical accuracy.  And ccECP per-
+should undoubtedly be a critical issue.                                           forms slightly better on the spectral precision and covers more
+   Then  we  have  to  choose  the  technical  roadmap.   A  full,                elements, while eCEPP is more systematically built from both
+rigorous  treatment  of  many-body  system  would  require  the                   shape and energy consistency, and better treats the core polar-
+Quantum  Electrodynamics  (QED)  framework,  which  prop-                         isation effects.  Besides, even though the all-electron results
+erly describes all processes between electrons and positrons                      are still very accurate for the light elements, the errors start to
+with photons and the external potentials.  Yet even for atoms                     overwhelm due to a lack of relativistic treatment as we get to
+with few electrons, calculations taking account the low-order                     the second row. We also observe that the all-electron calcula-
+QED effects are very difficult, if not impossible50.  From the                    tions of some heavier elements are likely prone to the numeri-
+other limit, we could start from the Schrödinger side and put                     cal instabilities. Finally, based on further discussions, we have
+perturbative terms arising from expanding the Dirac equation                      generated few future directions for developing and improving
+in the low energy limit, for instance, the Zeroth-Order Reg-                      the FermiNet.
+                                                                                                                                                                    10
+
+ACKNOWLEDGMENTS                                                                       B.  Efficiency
+
+   The   work   of   Mengsa   Wang   and   Han   Wang   is   sup-                         The  ECP  scheme  inevitably  introduces  additional  costs.
+ported by the National Key R&D Program of China (Grant                                Here, we assess them in detail. The expression for calculating
+No.  2022YFA1004300)  and  the  National  Natural  Science                            the local energy with the effective core potential is as follows:
+Foundation of China (Grant No. 12122103).  Y. Zhou’s work                                                EL(r) = ψ−1(r) ˆHψ(r)+ Enl(r).               (B.1)
+is supported by National Key R & D Program of China under
+grants 2019YFA0709600 and 2019YFA0709601 and National                                 We  employed  a  12-point  icosahedral  quadrature  method  to
+Natural Science Foundation of China under grant 12004047.                             approximate  the  energy  of  the  nonlocal  term,  as  done  in
+                                                                                      Refs.14,15.  The specific form of the nonlocal energy compo-
+                                                                                      nent Enl(r) is given by:
+APPENDIX
+                                                                                                                                          l∑
+A.  Hyperparameters                                                                       Enl(r) =∑Enl,i(ri) =∑                 Vl(ri)        Ylm(Ωi)
+                                                                                                        i                 i ∑l          m=−l                     (B.2)
+                                                                                                   Z                                      ′
+   The hyperparameters used in this work are given in Table                                           Y∗lm(Ωi′ )ψ(r1,r2,...,ri−1,ri,...,rNv)
+V. The learning rate is gradually decaying with the training                                                      ψ(r1,r2,...,ri−1,ri,...,rNv)dΩi′ .
+step t:                                                                                   The number of electrons and the averaged runtime of a sin-
+                                                                                      gle training iteration for the all-electron and ECPs calculations
+                         learning rate =    lr0       ,                      (A.1)    on 8 Nvidia A100 GPUs is shown in Table XIII. We studied
+                                              1+  tt0                                 the asymptotic behavior of the extra time with respect to the
+                                                                                      number of electrons in the single-atom calculations from B to
+where lr0  is the initial learning rate and t0  is also known as                      Ne, as shown in Fig. 4.  We found that the extra runtime in-
+the hyperparameter lr.delay, which controls the scale of rate                         creases linearly with the number of electrons for fixed lmax,
+decay.  Large learning rate may induces instability in the op-                        suggesting that the time of computing single numerical inte-
+timization process,  causing the hyperparameters to fluctuate                         gration is a fixed constant, which we denote as Cint. The value
+rather than smoothly converging to the optimal solution dur-                          of lmax determines the number of integrals to be calculated for
+ing  training.   We  observed  that  for  Sulfur  and  Chlorine,  as                  one electron. The effect of the number of Gaussian functions
+well as their cations and anions, using the default learning rate                     in calculations can be neglected.  Therefore, we give a quan-
+causes numerical instabilities in the training processes, so we                       titative estimate of the additional computation brought by the
+chose to reduce the learning rate by tuning down the hyperpa-                         ECP scheme, which is O(Nv(lmax + 1)Cint).
+rameter lr.delay.
+
+
+TABLE V. The hyperparameter values used for the calculations in
+this paper.
+
+                           Parameter                        Value
+         Pretrain             basis set                      cc-pVDZiterations                        10000
+                           iterations                       100000
+        Training     initial learning rate                 0.05
+                      learning rate delay                10000
+                           optimizer                       KFAC
+                    local energy clipping                 5.0
+        Inference           iterations                        10000
+                           batch size                        4096
+         MCMC             mcmc steps                         10
+                           init width                          1.0
+                          move width                       0.02                       FIG.  4.   Extra  runtime  introduced  by  different  ECPs  for  elements
+                         hidden units                    (256,32)                     from B to Ne.
+                              layer                               4
+       Networks          determinants                        16                           We also investigated the asymptotics behavior of FermiNet
+                           precision                       double                     with ECPs.  Using quadratic, cubic and quartic polynomials,
+                           envelope                      isotropic                    respectively, to fit the curves for the computational complexity
+                            full_det                           true                   of the first row of elements, we found that the quadratic poly-
+                        ecp quadrature       12 points icosahedron                    nomials are able to fit the curves well in Fig. 5. This suggests
+                                                                                      that the complexity of FermiNet with ECPs scale as O(N2v ),
+                                                                                                                                                               11
+
+where the computation of the single-electron stream becomes                         TABLE VI. Ground state energy of Li calculated by FermiNet with
+dominant. And the computational gain starts from the second                         ccECP  using  the  full  envelope  and  the  isotropic  envelope,  respec-
+row of elements in the ECP scheme.                                                  tively.
+
+
+                                                                                                 CCSD(T)+ccECP54                     FermiNet+ccECP
+                                                                                                5Z                    CBS                Isotropic               Full
+                                                                                     Li    -0.19685279    -0.19685279(1)    -0.196844(2)    -0.1970996(1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 5. Runtime of a single training iteration for FermiNet with dif-
+ferent ECPs and AE for elements from Li to Cl.
+
+
+
+
+
+
+C.  Envelope                                                                        FIG. 6.  Learning curves of the ground state energy of Li using full
+                                                                                    and isotropic envelopes,  respectively.   Energies are smoothed over
+                                                                                    1000 iterations.
+   To ensure that the wavefunction converges to zero at infin-
+ity, FermiNet adopts different envelope functions to shape the
+function φ kαi   (rαj ;{rα/ j};{rα}):                                               D.  Precision
+
+
+                       α})                                                             In our numerical experiments,  we found the ground state
+ φ kαi   (rαj ;{rα/ j};{r                     Σkαim (rαj − Rm)                   energy  obtained  from  all-electron  calculation  using  single-
+                                                                                    precision is even lower than the exact energy for Nitrogen34.
+  = (wkαi  · hLαj   + gkαi  )∑              −                        .  (C.1)       We speculated that this weird phenomenon is caused by nu-
+                             m πkαim exp
+                                                                                    merical errors in the calculations. For the ground state energy
+When using the parameters Σkαim ∈ R3×3, we refer to it as the                       of  N,  the  effective  precision  in  single-precision  is  approxi-
+full envelope. In order to simplify the network and reduce the                      mately 5 to 6 decimal places.  As the training progresses, the
+number of parameters, FermiNet5  replaces Σkαim ∈ R3×3  with                        accumulated numerical errors might go beyond this threshold.
+σ kαim  ∈ R.  The latter can be understood as a diagonal matrix                     However, in some situations, such as the investigation of the
+with identical diagonal elements, ensuring that the wavefunc-                       fine  structure  of  atoms  and  molecules,  as  well  as  the  high-
+tion is isotropically converged in space, commonly known as                         precision quantum chemical calculations, chemical accuracy
+the isotropic envelope.                                                             may prove inadequate,  prompting the necessity for a higher
+                                                                                    level of precision.  Consequently, double-precision is used to
+   For Li, we calculated the ground state energy of FermiNet                        guarantee the accuracy.
+with  ccECP  using  the  full  envelope  and  isotropic  envelope,                     Although  double-precision  can  guarantee  the  accuracy,  it
+respectively.  In these tests, we pretrain the wavefunction by                      is observed that the training process using double-precision
+1,000 iterations and train the wavefunction with 1,000,000                          is not as stable as single-precision.   In Figure 7,  When em-
+iterations  and  single-precision.   Here,  we  utilized  the  code                 ploying  double-precision  and  setting  lr.delay  to  10,000  for
+from Ref.15  to calculate the case with the full envelope.   In                     calculating the all-electron ground state energy of Aluminum,
+Table VI and Fig. 6, the results showed that the ground state                       an instability is observed, leading to an explosion in the cal-
+energy using the full envelope is lower than the result of the                      culation around training steps of 100,000, and the same issue
+isotropic envelope and even lower than the result obtained by                       occurs during the training process for Sulphur and Chlorine
+CCSD(T)/CBS+ccECP54.   Yet considering the symmetry of                              and the corresponding cations and anions.  We solved this is-
+the atomic systems, we believe that it is more reasonable to                        sue by reducing lr.delay to 5,000 or 3,000.
+use the isotropic envelope.  Therefore, the isotropic envelope                         When computing the ground state energy of NaH with var-
+is used in this work.                                                               ious ECPs, we observed a sharp change at the beginning of
+                                                                                                                                                               12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                   FIG. 8.   Learning curves of NaH with the STU, BFD and ccECP,
+                                                                                   respectively.
+
+
+                                                                                   second row of elements,  we obtained the relativistic IP and
+                                                                                   EA  by  adding  the  sum  of  mass,  LS-non-splitting  and  fine-
+                                                                                   structure corrections.
+                                                                                       In  Table  VIII,  we  provide  the  estimation  of  relativistic
+                                                                                   correlation  calculated  from  X2C51  at  the  HF  level  using
+                                                                                   PySCF33, and compare with existing relativistic corrections.
+                                                                                   We also calculate relativistic corrections on DE for some se-
+                                                                                   lected  hydrides  in  the  same  manner,  as  shown  in  Table  IX.
+                                                                                   Specifically, we use ccpv5z-dk basis set for the X2C level cal-
+                                                                                   culations, and ccpv5z basis set for the non-relativistic calcu-
+                                                                                   lations.
+FIG. 7. Learning curves of the all-electron ground state energies for                  Finally, we note that both schemes have significant draw-
+elements from Na to Cl and NaH with single-precision and double-                   backs.  The existing one, though might be accurate for those
+precision, respectively.  In this figure, all parameters are default val-          from analytical and perturbative CCSD(T) calculations, is ap-
+ues.  That is, the parameter lr.delay is set to 10,000.  Energies are              parently unsystematic.   While X2C corrections at HF level,
+smoothed over 1000 iterations.                                                     though being  more systematic,  suffer  from the inaccuracies
+                                                                                   from HF calculations.  For instance, the HF predicted EA of
+training in Fig. 8. It might be attributed to the substantial dif-                 many  elements  differ  in  sign  with  those  from  FermiNet  or
+ference of wavefunction between HF and FermiNet, leading                           CCSD(T).  As  a  result,  one  may  also  question  the  accuracy
+to a significant deviation in sampling during the early stage                      of X2C corrections.  Yet these numbers should be correct on
+of training.  As the training proceeds, the ground state energy                    magnitude and sufficient for the purpose of giving a feeling
+gradually stabilizes and eventually converges to a reasonably                      on the scale of relativistic effects.
+value.
+                                                                                   F.  Other supporting Data
+
+E.  Estimation of relativistic effects                                                 More detail results have been placed here to better support
+                                                                                   the  arguments  in  the  main  text.   In  Fig.  9  and  Fig.  10,  we
+   In order to better compare between the all-electron results                     illustrate the radial density distributions of carbon and the ax-
+and the experimental data, we have incorporated the approx-                        ial density distributions of LiH. In Table X, we provide the
+imated relativistic effects into the all-electron results.  These                  ground state energies of atoms from the ECP calculations. In
+effects are obtained from Ref.35 and Ref.36, which are combi-                      Table XI, we provide the ground state energies of the hydrides.
+nations of literature results, analytical and perturbative calcu-                      In  Table  XII,  we  report  the  valence  correlation  energies
+lations at CCSD(T) and HF levels. The corrected all-electrons                      from different ECPs for ground state energy, IP and EA. These
+IP and EA are shown in Table VII. Specifically, for the first                      values are obtained by subtracting the HF energy from Fer-
+row of elements,  we obtained the relativistic all-electron IP                     miNet’s energy.  The all-electron valence correlation energies
+and EA by adding the sum of scalar relativistic contributions,                     are from CCSD(T) calculations and serve as reference44.  We
+the spin-orbit correction and diagonal Born-Oppenheimer cor-                       calculated  the  HF  energy  via  PySCF  package33.   For  STU
+rection, consistent with the original FermiNet paper3. For the                     ECP, we used the Stuttgart basis set. For the other three ECPs,
+                                                                                                                                                                                                         13
+
+
+TABLE VII. IP and EA from the all-electron calculations with the                                          TABLE VIII. Estimations of the relativistic effects of ionization po-
+relativistic effects for atoms from Li to Cl.                                                             tential and electron affinity from Li to Cl used by this work (obtained
+                                                                                                          from Refs.35,36) and those by X2C at the HF level.
+                 Ionization Potential(mEh)         Electron affinity(mEh)
+ Atom     FermiNet†a,b  Expt.     ∆E      FermiNet†c,d  Expt.     ∆E                                                         Ionization Potential(mEh)  Electron affinity(mEh)
+    Li           197.91a      198.14    -0.23        21.48c        22.71     -1.23                               Atom     X2Ca         this workb,c         X2Ca        this workb,c
+   Be          342.57a      342.60    -0.03            -                 -            -                            Li       0.014a          -0.005b          -0.00002a       -0.003b
+    B           304.88a      304.95    -0.07         9.53c         10.18     -0.65                                 Be       0.042a           0.010b                 -                   -
+    C           413.67a      413.81    -0.14        46.34c        46.41     -0.07                                   B       -0.088a          -0.032b            -0.058a         -0.057b
+    N           534.01a      534.12    -0.11            -                 -            -                            C       -0.156a          -0.206b            -0.123a         -0.228b
+    O           500.25a      500.45     -0.2         53.10c        53.69     -0.59                                  N       -0.255a          -0.659b                -                   -
+    F            640.06a      640.28    -0.22       125.25c      124.99     0.26                                    O       -0.372a         0.0004b           -0.305a         -0.298b
+   Ne          792.52a      792.48     0.04             -                 -                                         F       -0.535a          -0.673b            -0.467a         -0.968b
+   Na          188.51b      188.86    -0.35        20.88d        20.14      0.74                                   Ne      -0.745a          -1.926b                -                   -
+   Mg          280.66b      280.99    -0.33            -                 -            -                            Na       0.224a           0.218c             0.005a         -0.004c
+    Al           219.01b      219.97    -0.96        14.57d        16.21     -1.64                                Mg      0.355a           0.343c                 -                   -
+    Si           298.74b      299.57    -0.83        52.02d        50.90      1.12                                 Al       -0.33a           -0.054c            -0.196a         -0.317c
+    P            385.23b      385.38    -0.15        24.08d        27.43     -3.35                                 Si       -0.413a          -0.637c            -0.348a         -0.955c
+    S            380.31b      380.72    -0.41        73.66d        76.33     -2.67                                  P       -0.503a          -1.883c            -0.421a         0.035c
+    Cl           474.08b      476.55    -2.47       132.20d      132.76    -0.56                                    S        -0.58a           0.238gc           -0.546a         -0.697c
+MAD1                                         0.13                                          0.56                    Cl      -0.719a          -0.969c            -0.689a         -1.995c
+MAD2                                         0.79                                          1.68                    a  Estimation  of  relativistic  effects  on  ionization  potential  and
+ MAD                                          0.44                                          1.17                     electron  affinity,  derived  from  X2C  at  the  HF  level  using
+
+  a  Relativistic   effects   in   the   IPs   from   Li   to   Ne   are   from   Ref.36.                            ccpv5z-dk basis sets, for elements ranging from Li to Cl.
+     FermiNet†.IP = FermiNet.IP+ ERel. + ESO + EDBOC.                                                              b  Estimation  of  relativistic  effects  on  ionization  potential  and
+  b  Relativistic  effects  in  the  IPs  from  from  Na  to  Cl  are  from  Ref.35.                                 electron  affinity  for  elements  from  Li  to  Ne  from  Ref.36.
+     FermiNet†.IP = FermiNet.IP+ ELS-non-split + Efine-struc + Emass correc.                                         Relativistic Correction = ERel. + ESO + EDBOC.
+  c  Relativistic   effects   in   the   EAs   from   Li   to   Ne   are   from   Ref.36.                          c  Estimation  of  relativistic  effects  on  ionization  potential  and
+     FermiNet†.EA = FermiNet.EA+ ERel. + ESO + EDBOC.                                                                electron  affinity  for  elements  from  Na  to  Cl  from  Ref.35.
+  d  Relativistic  effects  in  the  EAs  from  from  Na  to  Cl  are  from  Ref.35.                                 Relativistic Correction = ELS-non-split + Efine-struc + Emass correc.
+     FermiNet†.EA = FermiNet.EA+ ELS-non-split + Efine-struc + Emass correc.
+
+                                                                                                          TABLE  IX.  Estimations  of  relativistic  effects  on  DE  used  by  this
+                                                                                                          work (obtained from ref.39,40) and those calculated by X2C at the
+                                                                                                          HF level using ccpv5z-dk basis sets for HF, H2S and HCl.
+
+                                                                                                                                                          Relativistic effect(mEh)
+                                                                                                                                                  HF                  H2S                  HCl
+                                                                                                                this work39,40             -0.9639             -1.7140             -1.9139
+                                                                                                                      X2C                      -0.40                -0.83                -0.52
+
+
+
+
+
+
+
+
+
+
+
+FIG. 9. The radial density distribution from the ground state Carbon
+atom.
+
+
+we used the corresponding valence basis sets and performed
+calculations with n = 5.  And to ensure fairness, we omitted
+the CPP term from the eCEPP calculations.
+    In Table XIII, we summarize the number of electrons and
+the  single  iteration  runtime  for  the  all-electron  and  various                                     FIG.  10.    The  axial  density  distributions  along  the  z-axis  of  the
+ECPs calculations on 8 Nvidia A100 GPUs.  They have been                                                  ground state wavefunctions of LiH.
+averaged over 1000 training iterations. In Table XIV, we give
+                                                                                                                                                                                            14
+
+the results of ground state energies on the atoms and CH4 from                                        tive core potentials from correlated calculations:  2nd row elements.                The
+the reference Ferminet.                                                                               Journal  of  chemical   physics, 149(10), 2018.
+                                                                                                   24Guangming Wang, Abdulgani Annaberdiyev, Cody A. Melton, M. Chan-
+                                                                                                      dler  Bennett,  Luke  Shulenburger,  and  Lubos  Mitas.    A  new  generation
+ 1Richard  M.  Martin,  Lucia  Reining,  and  David  M.  Ceperley.                                    of effective core potentials from correlated calculations:  4s and 4p main
+                                                                               Interacting            group elements and first row additions.          The   Journal  of  Chemical    Physics,
+  Electrons:   Theory    and  Computational      Approaches.  Cambridge University                    151(14):144110, 10 2019.
+  Press, 2016.                                                                                     25Max Born and W Heisenberg.  Zur quantentheorie der molekeln.                     Original
+ 2Frank Jensen.     Introduction    to Computational      Chemistry,    3rd  Edition.  Wi-
+  ley, 2017.                                                                                       26Ingrid von Glehn, James S Spencer, and David Pfau. A self-attention ansatzScientificPapersWissenschaftlicheOriginalarbeiten, pages 216–246, 1985.
+
+ 3David   Pfau,    James   S   Spencer,    Alexander   GDG   Matthews,    and
+  W   Matthew   C   Foulkes.       Ab   initio   solution   of   the   many-electron               27https://github.com/google-deepmind/ferminet.for ab-initio quantum chemistry.arXivpreprintarXiv:2211.13672, 2022.
+
+  schrödinger  equation   with   deep  neural  networks.               Physical    Review          28Michael Dolg. On the accuracy of valence correlation energies in pseudopo-
+  Research, 2(3):033429, 2020.                                                                        tential calculations.    The  Journal   of chemical    physics, 104(11):4061–4067,
+ 4Robert  Jastrow.    Many-body  problem  with  strong  forces.               Phys.   Rev.,
+  98:1479–1484, Jun 1955.                                                                          29DR Hamann, M Schlüter, and C Chiang.  Norm-conserving pseudopoten-1996.
+
+ 5James  S  Spencer,  David  Pfau,  Aleksandar  Botev,  and  W  Matthew  C
+  Foulkes.      Better,   faster  fermionic  neural  networks.            arXiv    preprint           tials. Physical   Review   Letters, 43(20):1494, 1979.
+                                                                                                   30J. R. Trail and R. J. Needs. Pseudopotentials for correlated electron systems.
+  arXiv:2011.07125, 2020.                                                                             The  Journal   of Chemical    Physics, 139(1):014101, 07 2013.
+ 6Ingrid von Glehn, James S Spencer, and David Pfau. A self-attention ansatz                       31J. R. Trail and R. J. Needs.   Correlated electron pseudopotentials for 3d-
+  for ab-initio quantum chemistry.        arXiv   preprint  arXiv:2211.13672, 2022.                   transition  metals.    The   Journal   of  Chemical     Physics,  142(6):064110,  02
+ 7Gino  Cassella,  Halvard  Sutterud,  Sam  Azadi,  N.  D.  Drummond,  David
+  Pfau, James S. Spencer, and W. M. C. Foulkes. Discovering quantum phase                          32This version of FermiNet is the one committed on May 31st, 2023 of the2015.
+
+  transitions with fermionic neural networks.           Phys.   Rev.  Lett., 130:036401,              main branch. And we believe the subsequent modifications to the lastest
+  Jan 2023.                                                                                           FermiNet would not change any major conclusions of this manuscript.
+ 8David  Pfau,  Simon  Axelrod,  Halvard  Sutterud,  Ingrid  von  Glehn,  and                      33Qiming Sun, Timothy C Berkelbach, Nick S Blunt, George H Booth, Sheng
+  James  S  Spencer.   Natural  quantum  monte  carlo  computation  of  excited                       Guo, Zhendong Li, Junzi Liu, James D McClain, Elvira R Sayfutyarova,
+  states.  arXiv  preprint  arXiv:2308.16848, 2023.                                                   Sandeep Sharma, et al.  Pyscf:  the python-based simulations of chemistry
+ 9G. Cassella,  W. M. C. Foulkes,  D. Pfau,  and J. S. Spencer.   Neural net-
+  work  variational  monte  carlo  for  positronic  chemistry.             arXiv   preprint           framework.      Wiley    Interdisciplinary    Reviews:     Computational      Molecular
+  arXiv:2310.05607, 2024.                                                                             Science, 8(1):e1340, 2018.
+                                                                                                   34Subhas  J  Chakravorty,  Steven  R  Gwaltney,  Ernest  R  Davidson,  Farid  A
+10Walter  Kohn  and  Lu  Jeu  Sham.   Self-consistent  equations  including  ex-
+  change and correlation effects.       Physical   review, 140(4A):A1133, 1965.                       Parpia, and Charlotte Froese p Fischer.  Ground-state correlation energies
+11Vladimir Fock.  Näherungsmethode zur lösung des quantenmechanischen                                 for atomic ions with 3 to 18 electrons.           Physical    Review    A, 47(5):3649,
+  mehrkörperproblems.        Zeitschrift  für  Physik, 61:126–148, 1930.                           35Toshikatsu Koga, Hidenori Aoki, JM Garcia de la Vega, and Hiroshi Tate-1993.
+
+12John C Slater. Note on hartree’s method.         Physical   Review, 35(2):210, 1930.
+13Josef  Paldus  and  Xiangzhu  Li.   A  critical  assessment  of  coupled  cluster                   waki.  Atomic ionization potentials and electron affinities with relativistic
+  method in quantum chemistry.          Advances     in Chemical    Physics, 110:1–175,            36Wim Klopper, Rafał A Bachorz, David P Tew, and Christof Hättig.  Sub-and mass corrections.TheoreticalChemistryAccounts, 96:248–255, 1997.
+
+  1999.                                                                                               mev  accuracy  in  first-principles  computations  of  the  ionization  poten-
+14WMC Foulkes,  Lubos Mitas,  RJ Needs,  and Guna Rajagopal.   Quantum
+  monte carlo simulations of solids.         Reviews    of  Modern    Physics, 73(1):33,              tials  and  electron  affinities  of  the  atoms  h  to  ne.     Physical    Review    A,
+  2001.                                                                                            37P Maldonado, A Sarsa, E Buendía, and FJ Gálvez.  Quantum monte carlo81(2):022503, 2010.
+
+15Xiang Li, Cunwei Fan, Weiluo Ren, and Ji Chen.   Fermionic neural net-
+  work with effective core potential.       Physical   ReviewResearch, 4(1):013021,                   ground state energies for the singly charged ions from li through ar.                The
+  2022.                                                                                            38Cl is an exception,  whose error becomes even larger when incorporatingJournalofchemicalphysics, 133(6), 2010.
+
+16Patricio  Fuentealba,   Heinzwerner  Preuss,   Hermann  Stoll,   and  László                        the relativistic effects. This might be caused by the numerical issues as we
+  Von Szentpály.  A proper account of core-polarization with pseudopoten-                             have seen in Cl’s training process.
+  tials: single valence-electron alkali compounds.           Chemical    Physics   Letters,        39L Visscher, J Styszynski, and WC Nieuwpoort. Relativistic and correlation
+  89(5):418–422, 1982.                                                                                effects on molecular properties. ii. the hydrogen halides hf, hcl, hbr, hi, and
+17P Fuentealba,  L Von Szentpaly,  H Preuss,  and H Stoll.   Pseudopotential
+  calculations for alkaline-earth atoms.          Journal   of  Physics   B:  Atomic    and        40Lynda R Peebles and Paul Marshall.  High-accuracy coupled-cluster com-hat.TheJournalofchemicalphysics, 105(5):1987–1994, 1996.
+
+  Molecular    Physics, 18(7):1287, 1985.                                                             putations of bond dissociation energies in sh, h 2 s, and h 2 o.            The  Journal
+18Andreas  Bergner,  Michael  Dolg,  Wolfgang  Küchle,  Hermann  Stoll,  and
+  Heinzwerner  Preuß.   Ab  initio  energy-adjusted  pseudopotentials  for  ele-                   41https://cccbdb.nist.gov/expbondlengths1.asp.ofchemicalphysics, 117(7):3132–3138, 2002.
+
+  ments of groups 13–17.        Molecular    Physics, 80(6):1431–1441, 1993.                       42György  Tarczay,  Attila  G  Császár,  Wim  Klopper,  and  Harry  M  Quiney.
+19Andreas Nicklass, Michael Dolg, Hermann Stoll, and Heinzwerner Preuss.
+  Ab initio energy-adjusted pseudopotentials for the noble gases ne through                           Anatomy  of  relativistic  energy  corrections  in  light  molecular  systems.
+  xe:   Calculation  of  atomic  dipole  and  quadrupole  polarizabilities.             The        43The experimental results on DE can be found on Argonne Active Thermo-MolecularPhysics, 99(21):1769–1794, 2001.
+  Journal   of chemical    physics, 102(22):8942–8952, 1995.                                          chemical Tables? , yet the experimental values contains many contributions
+20Mark  Burkatzki,  C  Filippi,  and  M  Dolg.    Energy-consistent  pseudopo-
+  tentials  for  quantum  monte  carlo  calculations.         The   Journal   of  chemical            from various reaction routes other than the simple one reflected in calcula-
+  physics, 126(23), 2007.                                                                             tions. This will make the comparison less meaningful. Therefore, we refrain
+21John R Trail and Richard J Needs.  Shape and energy consistent pseudopo-                            ourselves from comparing with the experimental DEs. Instead, we discuss
+  tentials for correlated electron systems.         The  Journal   of  chemical    physics,        44Duminda S Ranasinghe, Michael J Frisch, and George A Petersson.  Core-the trends between the all-electron and ECPs results here.
+
+  146(20), 2017.                                                                                      core and core-valence correlation energy atomic and molecular benchmarks
+22M Chandler Bennett,  Cody A Melton,  Abdulgani Annaberdiyev,  Guang-
+  ming Wang, Luke Shulenburger, and Lubos Mitas. A new generation of ef-                           45M. Dolg.  Valence correlation energies from pseudopotential calculations.for li through ar.TheJournalofChemicalPhysics, 143(21), 2015.
+
+  fective core potentials for correlated calculations.         The   Journal  of  chemical            Chemical    Physics   Letters, 250(1):75–79, 1996.
+  physics, 147(22), 2017.                                                                          46Rafael  Costa-Amaral,  Ana  C.  M.  Tello,  Moacyr  Comar,  and  Albérico
+23M Chandler Bennett, Guangming Wang, Abdulgani Annaberdiyev, Cody A
+  Melton, Luke Shulenburger, and Lubos Mitas.  A new generation of effec-                             Borges  Ferreira  da  Silva.   Accurate  atomic  electron  affinities  calculated
+                                                                                                                                                                                                                15
+
+
+
+                                       TABLE X. Ground state energies from Li to Cl with different ECPs.
+
+                                                                                      Ground state energy(Eh)
+                                      Element          STU              BFD            eCEPP          eCEPP*          ccECP
+                                           Li            -0.19602        -0.19631        -0.19783        -0.19585        -0.19683
+                                           Be           -1.01095        -1.00969        -1.01315        -1.00770        -1.01011
+                                           B            -2.61904        -2.62016        -2.62539        -2.61552        -2.61519
+                                           C            -5.43345        -5.43423        -5.43435        -5.41993        -5.41737
+                                           N            -9.80063        -9.80235        -9.78748        -9.76716        -9.76586
+                                           O           -15.90626      -15.90669      -15.86207      -15.84674      -15.88384
+                                            F           -24.19913      -24.20082      -24.16549      -24.14957      -24.19683
+                                          Ne          -35.03760      -35.03840             -                     -             -35.03438
+                                          Na           -0.18210        -0.18210              -                     -              -0.18618
+                                          Mg           -0.82068        -0.81974              -                     -              -0.82346
+                                           Al           -1.93931        -1.93913              -                     -              -1.93727
+                                           Si            -3.76770        -3.76843              -                     -              -3.76180
+                                            P            -6.47667        -6.47882              -                     -              -6.45953
+                                            S           -10.13308      -10.13618             -                     -             -10.09687
+                                           Cl          -14.97826      -14.97868             -                     -             -14.92612
+
+
+
+
+                 TABLE XI. Ground state energies of the hydrides from the all-electron and ECPs calculations.
+
+                                                                                      Ground state energy (Eh)
+                           Element            AE                 STU              BFD            eCEPP          eCEPP*          ccECP
+                               LiH           -8.07051         -0.78756        -0.78819        -0.79120        -0.78699        -0.78819
+                             BeH2         -15.90333        -2.24743        -2.24542        -2.25058        -2.24151        -2.24631
+                              BH3          -26.60170        -4.56505        -4.56874        -4.57546        -4.56158        -4.56237
+                              CH4          -40.51410        -8.09934        -8.10065        -8.10557        8.08707        -8.08728
+                              NH3          -56.56337       -11.77127      -11.77366      -11.76236      -11.73973      -11.74110
+                              H2O          -76.43786       -17.27501      -17.27592      -17.23355      -17.21697      -17.25388
+                               HF          -100.45902      -24.92350      -24.92554      -24.89074      -24.87425      -24.92198
+                              NaH          -162.8261        -0.75388        -0.75352              -                     -              -0.75855
+                              MgH        -200.60296       -1.37381        -1.37369              -                     -              -1.37559
+                              AlH         -242.96184       -2.55740        -2.55686              -                     -              -2.55455
+                              SiH4         -291.87121       -6.28568        -6.28620              -                     -              -6.27826
+                              PH3           -343.138         -8.35769        -8.36300              -                     -              -8.34428
+                              H2S         -399.39499      -11.42607      -11.42762             -                     -             -11.38902
+                               HCl         -460.81123      -15.64912      -15.65035             -                     -             -15.59698
+
+
+
+
+                          TABLE XII. Valence correlation energy from the all-electron and ECPs calculations.
+
+                                Ground state (mEh)                              Ionization Potential (mEh)                      Electron affinity (mEh)
+Element    AE44       STU       BFD     ccECP   eCEPP*  AE44   STU   BFD   ccECP  eCEPP*  AE44   STU   BFD   ccECP  eCEPP*
+    Be       -46.12    -48.98    -47.75    -48.22    -48.02       -          -          -           -             -            -          -          -           -             -
+    B        -72.94    -78.33    -76.17    -75.63     -75.53   11.61   5.04    9.99    10.20      9.75     19.19  47.18  23.49   23.33     19.76
+    C       -100.73  -111.12  -103.53  -101.37   -102.00   16.2   10.82  13.50   13.54     13.39    25.57  51.22  28.15   28.11     24.83
+    N       -129.04  -140.08  -129.30  -127.27  -126.99   20.8   15.57  17.12   16.94     17.15        -          -          -           -             -
+    O       -192.36  -213.81  -195.95  -191.96  -192.62  59.96  57.58  62.73   62.09     62.43    73.06  75.00  79.11   79.32     73.59
+     F        -256.96  -288.71  -262.19  -258.84   -258.49  63.32  57.15  64.43   63.93     64.42    77.88  78.40  81.92   81.48     77.49
+   Ne       -322.2   -329.69  -329.34  -325.56        -        66.37  66.69  65.80   65.32         -            -          -          -           -             -
+   Mg       -34.06    -35.09    -35.00    -35.06         -            -          -          -           -             -            -          -          -           -             -
+    Al        -58.12    -60.70    -60.31    -60.23         -        17.55  13.22  18.20   17.95         -        14.79  25.40  17.41   18.65         -
+    Si        -85.46    -90.34    -89.72    -89.22         -        18.37  14.06  18.59   18.42         -         16.9   27.32  17.93   19.31         -
+     P        -113.07  -122.25  -119.38  -118.24        -        17.83  13.22  17.34   17.07         -            -          -          -           -             -
+     S        -168.12  -181.11  -179.51  -177.06        -        45.46  42.97  47.21   46.57         -        43.42  44.83  45.82   47.53         -
+    Cl         -223    -247.70  -237.76  -235.85        -        43.66  27.54  43.58   42.96         -        41.47  36.11  42.57   44.04         -
+ MAD1                   12.91      3.41       1.83         1.6                  4.34    2.07     1.95       2.38                14.03   4.24     4.14       0.56
+ MAD2                    9.23       6.64       5.64           -                    6.37    0.64      0.6           -                    6.95    1.79     3.24          -
+ MAD                    11.21       4.9        3.59         1.6                  5.26    1.42     1.34       2.38                10.49   3.02     3.69       0.56
+                                                                                                                                                                                                                             16
+
+
+TABLE XIII. The number of electrons and averaged runtime of a single training iteration for FermiNet with different ECPs for elements from
+Li to Cl. The average runtime is calculated based on 1000 training iterations.
+
+                                                                  AE                     ccECP                    STU                      BFD                    eCEPP
+                                        Element    Nelec    time(s)    Nelec    time(s)    Nelec    time(s)    Nelec    time(s)    Nelec    time(s)
+                                            Li             3         0.035         1         0.018         1         0.020         1         0.019         1         0.021
+                                            Be            4         0.041         2         0.034         2         0.036         2         0.037         2         0.036
+                                             B             5         0.051         3         0.043         3         0.063         3         0.044         3         0.053
+                                             C             6         0.062         4         0.058         4         0.095         4         0.064         4         0.076
+                                             N             7         0.075         5         0.079         5         0.137         5         0.069         5         0.108
+                                             O             8         0.088         6         0.104         6         0.188         6         0.109         6         0.147
+                                             F             9         0.114         7         0.133         7         0.252         7         0.134         7         0.193
+                                            Ne           10        0.131         8         0.168         8         0.321         8         0.169         -             -
+                                            Na           11        0.157         1         0.021         1         0.022         1         0.032         -             -
+                                           Mg           12        0.181         2         0.037         2         0.041         2         0.047         -             -
+                                            Al            13        0.214         3         0.052         3         0.063         3         0.060         -             -
+                                            Si            14        0.247         4         0.076         4         0.095         4         0.077         -             -
+                                             P            15        0.282         5         0.108         5         0.136         5         0.108         -             -
+                                             S            16        0.310         6         0.148         6         0.188         6         0.153         -             -
+                                            Cl            17        0.364         7         0.195         7         0.252         7         0.194         -             -
+
+
+TABLE XIV. Ground state energies for the first two row atoms and CH4. ∆E represents the differences between the results of the reference
+FermiNet and the experimental values.
+
+                                                                            Reference FermiNet(Eh)3,5      Exact(Eh)34     ∆E2(mEh)
+                                                                 Li                 -7.47798(1){20}                 -7.47806           0.08(1)
+                                                                 Be                -14.66733(3){20}               -14.66736          0.03(3)
+                                                                 B                  -24.6537(3){20}                -24.65391         0.21(30)
+                                                                 C                -37.84471(5) {20}                -37.845            0.29(5)
+                                                                 N                -54.58882(6){20}                -54.5892           0.38(6)
+                                                                 O                -75.06655(7){20}                -75.0673           0.75(7)
+                                                                  F                  -99.7329(1){20}                 -99.7339            1.0(1)
+                                                                 Ne                -128.9366(1){20}               -128.9376           1.0(1)
+                                                                 Na                             -                             -162.2546               -
+                                                                Mg                             -                              -200.053                -
+                                                                 Al                              -                              -242.346                -
+                                                                 Si                              -                              -289.359                -
+                                                                  P              -341.2561(1){30-40}             -341.259            2.9(1)
+                                                                  S              -398.1049(1){30-40}              -398.11             5.1(1)
+                                                                 Cl             -460.1452(1){30-40}             -460.148            2.8(1)
+                                                               CH4              -40.51400(7){20}                      -                       -
+                                                               MAD                                                                                     1.32
+
+
+
+  by  using  anionic  gaussian  basis  sets.                Theoretical       Chemistry       Accounts,                pages 235–248. John Wiley and Sons, Ltd, 2014.
+  139(8):128, Jul 2020.                                                                                             51Daoling Peng and Markus Reiher. Exact decoupling of the relativistic fock
+47P. Maldonado,  A. Sarsa,  E. Buendía,  and F. J. Gálvez.   Quantum Monte                                             operator.     Theoretical      Chemistry      Accounts, 131:1–20, 2012.
+  Carlo ground state energies for the singly charged ions from Li through Ar.                                       52Guangming  Wang,  Benjamin  Kincaid,  Haihan  Zhou,  Abdulgani  Annab-
+  The    Journal    of  Chemical      Physics, 133(6):064102, 08 2010.                                                 erdiyev, M. Chandler Bennett, Jaron T. Krogel, and Lubos Mitas.  A new
+48Duminda S Ranasinghe and George A Petersson.  Ccsd (t)/cbs atomic and                                                generation of effective core potentials from correlated and spin–orbit cal-
+  molecular benchmarks for h through ar.                    The    Journal    of  Chemical       Physics,              culations:   Selected  heavy  elements.                 The    Journal     of  Chemical       Physics,
+  138(14), 2013.                                                                                                       157(5):054101, 08 2022.
+49Brian P. Prascher, David E. Woon, Kirk A. Peterson, Thom H. Dunning,                                              53A.  Ambrosetti,  P.  L.  Silvestrelli,  F.  Toigo,  L.  Mitas,  and  F.  Pederiva.
+  and Angela K. Wilson.  Gaussian basis sets for use in correlated molecular                                           Variational monte carlo for spin-orbit interacting systems.                           Phys.    Rev.    B,
+  calculations. vii. valence, core-valence, and scalar relativistic basis sets for                                     85:045115, Jan 2012.
+  li,  be,  na,  and  mg.        Theoretical      Chemistry       Accounts,  128(1):69–82,  Jan                     54Abdulgani Annaberdiyev,  Cody A Melton,  M Chandler Bennett,  Guang-
+  2011.                                                                                                                ming Wang, and Lubos Mitas.  Accurate atomic correlation and total ener-
+50Markus Reiher and Alexander Wolf.                    Quantum       Electrodynamics, chapter 7,                       gies for correlation consistent effective core potentials.                    Journal    of Chemical
+                                                                                                                       Theory     and   Computation, 16(3):1482–1502, 2020.

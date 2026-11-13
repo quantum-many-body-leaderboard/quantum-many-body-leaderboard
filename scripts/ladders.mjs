@@ -12,7 +12,7 @@
 //
 // Ladders sharing model and lattice are one lattice tab on the picker (an impurity problem's
 // lattice is its first two words); the ladders of a tab differ only in boundary and couplings.
-import { BOUNDARY } from "./readme_table.mjs";
+import { BOUNDARY, molParts, molGeometry, coreLabel, speciesLabel } from "./readme_table.mjs";
 import { groundStateExact } from "./units.mjs";
 
 // A coupling as labels print it: R to six figures (params.R holds the unrounded bond length since 2026-11-11).
@@ -77,6 +77,17 @@ const latticeLabel = (inst, oneBoundary) => [latticeOf(inst) + (t12Of(inst) ? ",
 export function pickerFacets(instances) {
   const shapes = rectangleShapes(instances);
   return instances.filter(i => drawnRows(i).length).map(i => {
+    // Atoms and molecules (RULES.md 13.5): one column of dots per species, geometry, sector, basis and
+    // core; a diatomic's bond lengths are the horizontal axis instead (site.mjs, the picker's x).
+    if (i.model === "Atom" || i.model === "Molecule") {
+      const m = molParts(i);
+      const dims = [["species", i.model === "Molecule" ? speciesLabel(m.species) : m.species, m.species]];
+      if (m.geometry && !/^R[\d.]+$/.test(m.geometry)) dims.push(["geometry", [i.params?.name && !/^[a-z0-9]+$/.test(i.params.name) && !/^[A-Z][A-Za-z0-9+]*$/.test(i.params.name) ? i.params.name : null, molGeometry(m.geometry, i)].filter(Boolean).join(", "), m.geometry]);
+      if (m.charge) dims.push(["charge", (m.charge > 0 ? "+" : "") + m.charge, m.charge]);
+      dims.push(["N↑ − N↓", String(m.sz), m.sz], ["basis", m.basis === "none" ? "basis-free" : String(i.params?.basis ?? m.basis), m.basis === "none" ? "" : m.basis],
+        ["core", coreLabel(m.variants), m.variants.join(", ")]);
+      return { inst: i, tab: latticeLabel(i, false), dims };
+    }
     const dims = [["boundary", BOUNDARY[i.boundary] ?? "periodic", Math.max(0, Object.keys(BOUNDARY).indexOf(i.boundary) + 1)]];
     const shape = shapes.get(i);
     if (shape) dims.push(["shape", shape.label, sidesOf(i)?.[0] ?? 0]);

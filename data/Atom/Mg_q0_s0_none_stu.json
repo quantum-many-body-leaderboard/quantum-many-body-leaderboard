@@ -1,0 +1,46 @@
+{
+  "model": "Atom",
+  "lattice": "atom",
+  "n_sites": 1,
+  "boundary": "O",
+  "n_electrons": 2,
+  "params": {
+    "element": "Mg",
+    "Z": 12,
+    "charge": 0,
+    "N_up": 1,
+    "N_dn": 1,
+    "basis": "none",
+    "variant": "Stuttgart ECP (semi-empirical for Li, Be, Na, Mg; ab initio otherwise), core-polarization term omitted, from PySCF",
+    "core_electrons": 10
+  },
+  "instance_id": "Atom/Mg_q0_s0_none_stu",
+  "rows": [
+    {
+      "energy": -0.82068,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 2,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "FermiNet",
+      "method_detail": "\"modified FermiNet\" (a recent FermiNet version, Sec. III), isotropic envelope, training iterations as in Appendix A, ECP STU",
+      "method_as_published": "FermiNet [VMC, \"modified FermiNet\" (a recent FermiNet version, Sec. III), isotropic envelope, training iterations as in Appendix A, ECP STU]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "M. Wang, Y. Zhou & H. Wang, Performance assessment of the effective core potentials under the fermionic neural network: First and second row elements, J. Chem. Phys. 160, 204109 (2024), arXiv:2403.08287, doi:10.1063/5.0207853",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2403.08287 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "−0.820 68 (Table X, column STU)",
+        "note": "J. Chem. Phys. 160, 204109 Table X (Appendix F), journal text line 1117; same digits in the arXiv text | Hartree, valence energy with STU (10 core electrons, 2 electrons treated); spin sector not printed; filed on the ground-state term N_up - N_dn = 0 (the paper compares with Chakravorty-type exact ground-state energies); no error bar printed | reader confidence medium",
+        "secondary_of": null
+      }
+    }
+  ]
+}

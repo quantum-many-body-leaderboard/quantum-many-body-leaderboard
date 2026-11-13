@@ -1,0 +1,1091 @@
+                         Electronic excited states in deep variational Monte Carlo
+
+            M. T. Entwistle        ,1,∗  Z. Sch¨atzle    ,1,∗  P. A. Erdman        ,1  J. Hermann      ,1,†  and F. No´e     2, 1, 3, 4,‡
+
+            1FU Berlin,  Department of Mathematics and Computer Science,  Arnimallee 12,  14195 Berlin,  Germany
+                                                       2Microsoft  Research  AI4Science
+                            3FU  Berlin,  Department  of  Physics,  Arnimallee  14,  14195  Berlin,  Germany
+                              4Rice  University,  Department  of  Chemistry,  Houston,  Texas  77005,  USA
+                                                          (Dated:  January 19, 2023)
+                  Obtaining accurate ground and low-lying excited states of electronic systems is crucial in a mul-
+                titude of important applications.  One ab initio  method for solving the Schr¨odinger equation that
+                scales favorably for large systems is variational quantum Monte Carlo (QMC). The recently intro-
+                duced deep QMC approach uses ansatzes represented by deep neural networks and generates nearly
+                exact ground-state solutions for molecules containing up to a few dozen electrons, with the potential
+                to scale to much larger systems where other highly accurate methods are not feasible.  In this paper,
+                we extend one such ansatz (PauliNet) to compute electronic excited states.  We demonstrate our
+                method on various small atoms and molecules and consistently achieve high accuracy for low-lying
+                states.  To highlight the method’s potential, we compute the ﬁrst excited state of the much larger
+                benzene molecule, as well as the conical intersection of ethylene, with PauliNet matching results of
+                more expensive high-level methods.
+
+
+                    I.    INTRODUCTION                                            Quantum  Monte  Carlo  (QMC)  techniques  oﬀer  a
+                                                                             route  forward  with  their  favorable  scaling  (O(N 3−4))
+     The  fundamental  challenge  of  quantum  chemistry,                    and therefore dominate high-accuracy calculations where
+solid-state physics and many areas of computational ma-                      other  methods  are  too  expensive  [14,  15].    A  state-
+terials  science  is  to  obtain  solutions  to  the  electronic             of-the-art  QMC  calculation  typically  involves  the  con-
+Schr¨odinger equation for a given system, which in prin-                     struction  of  a  multi-determinant  baseline  wavefunction
+ciple provide complete access to its chemical properties.                    through standard electronic-structure methods, which is
+The ground and low-lying excited states typically deter-                     augmented with a Jastrow factor to eﬃciently incorpo-
+mine the behavior of a system and are therefore of the                       rate  electron  correlation,  and  then  optimized  through
+most interest in many applications.  Understanding and                       variational  QMC  (VMC)  to  obtain  a  trial  wavefunc-
+being able to describe excited-state processes [1], includ-                  tion.  This is then used within ﬁxed-node diﬀusion QMC
+ing  a  wide  variety  of  important  spectroscopy  methods                  (DMC)  to  obtain  a  ﬁnal  electronic  energy.   The  ﬁxed-
+such as ﬂuorescence, photoionization and optical absorp-                     node approximation is used to avoid exponential scaling,
+tion of molecules and solids, is key to the successful design                with  the  drawback  that  the  nodal  surface  of  the  trial
+of new materials.                                                            wavefunction cannot be modiﬁed, which limits the accu-
+     Unfortunately,  the  Schr¨odinger  equation  cannot  be                 racy  of  the  DMC  result  [16].   A  more  expressive  base-
+solved exactly except in the simplest cases, such as one-                    line wavefunction can improve upon this but traditional
+dimensional toy systems or a single hydrogen atom.  Ac-                      DMC  often  needs  thousands  to  hundreds  of  thousands
+cordingly,  many  approximate  numerical  methods  have                      of determinants to reach convergence [17].  Additionally,
+been  developed  which  provide  solutions  at  varying  de-                 DMC only provides the ﬁnal energy, restricting the cal-
+grees  of  accuracy.    Time-dependent  density  functional                  culation of other electronic properties [18].  Both of these
+theory [2, 3] (TDDFT) is the most popular method due                         limitations  can,  in  principle,  be  resolved  at  the  VMC
+to its computational eﬃciency, but has well known limi-                      level, with the accuracy of VMC constrained only by the
+tations [4–9].  Higher-accuracy methods have a computa-                      ﬂexibility of the trainable wavefunction ansatz.  So far,
+tional cost that scales rapidly with system size — the well                  these techniques have mostly been developed for ground-
+established full conﬁguration interaction [10] (FCI) and                     state calculations, with diﬀerent extensions proposed to
+coupled cluster [11] (CC) techniques scale∼O(exp(N))                         address excited states [14, 19–28].
+[12]  and∼O(N 5−10)  [13]  respectively,  where N  is  the                        Recently, the new  ab  initio  approach of deep VMC
+number of electrons, thereby severely limiting their prac-                   methods has been introduced  [29–32] and subsequently
+tical use.  There is thus a huge need for ab initio methods                  further  extended  and  improved  [33–35].   In  particular,
+that scale more favorably with system size, allowing the                     PauliNet [29] and FermiNet [30] were the ﬁrst methods
+modeling of practically relevant molecules and materials.                    to demonstrate that highly accurate ground-state results
+                                                                             for  molecules  could  be  obtained  using  deep  VMC  with
+                                                                             a  lower  computational  complexity  and  using  orders  of
+                                                                             magnitude fewer Slater determinants typically employed
+∗ M. T. Entwistle and Z. Sch¨atzle contributed equally to this work.         in other methods that achieve similar accuracy.
+† science@jan.hermann.name                                                        In the same spirit as Carleo and Troyer proposed for
+‡ franknoe@microsoft.com
+                                                                             optimizing quantum states in lattice models [36], VMC
+                                                                                                                                                   2
+
+is  used  in  order  to  train  a  neural  network  model  that                                        II.    RESULTS
+represents  the  many-body  wavefunction  in  an  unsuper-
+vised fashion, i.e.  in contrast to other quantum machine                       A.    Nearly exact solutions for small atoms and
+learning approaches the only input to the method is the                                                   molecules
+Hamiltonian, and training data are generated on the ﬂy
+by  sampling  from  the  current  wavefunction  model  and                        To demonstrate our method we start by applying it
+minimizing the variational energy.  In both PauliNet and                     to a range of small atoms and molecules.  We optimize
+FermiNet deep antisymmetric neural networks are used                         the lowest-lying excited states and compute their verti-
+to represent the fermionic wavefunction in the real space                    cal  excitation  energies  for  the  ground-state  equilibrium
+of electron coordinates.                                                     geometry (see Supplementary Information Table I), with
+                                                                             each PauliNet wavefunction containing a maximum of 10
+                                                                             determinants.  In all systems, we obtain highly accurate
+                                                                             total  energies  and  estimates  of  the  ﬁrst  few  excitation
+     Recently,  there  has  been  much  interest  in  develop-               energies competitive with high-accuracy quantum chem-
+ing deep learning methods for excited states [37].  In this                  istry methods.
+paper,  we  extend  PauliNet  towards  the  ab  initio  com-
+putation of electronic excited states (see the “Methods”
+section for details).  The input is again only the Hamilto-
+nian of the quantum system.  By employing a simple en-
+ergy minimization and numerical orthogonalization pro-
+cedure,  we  are  able  to  obtain  the  lowest  excited-state
+wavefunctions of a given system.  The excited-state opti-
+mization makes use of a penalty method that minimizes
+the overlap between then-th excited state and the lower-
+lying states in the spectrum.  Optimization methods that
+introduce  additional  constraints  have  been  used  in  the
+context of VMC before [28] and provide a simple way to
+obtain orthogonal states without explicit enforcement in
+the wavefunction ansatzes.  Combining these techniques
+with the expressiveness of neural network ansatzes yields                    FIG.  1.   Deep  VMC  obtains  highly  accurate  excited
+highly accurate approximations to excited states with di-                    states  for  single  elements.   PauliNet  results  for  the  ex-
+rect  access  to  the  wavefunctions  for  the  evaluation  of               citation  energies  (with  (red)  and  without  (yellow)  variance
+electronic  observables.   Neural  network-based  methods                    matching  (see  the  “Methods”  section  for  details))  are  com-
+have targeted low-lying excited states of one-dimensional                    pared to the theoretical best estimates (TBE) taken from the
+lattice  models  [27],  but  have  not  been  applied  to  ﬁrst-             NIST database [38].  Multiple PauliNet ansatzes with identi-
+principles systems.                                                          cal energies correspond to orthogonal degenerate states.  For
+                                                                             the TBE we have depicted four excitations per atom, taking
+                                                                             account of the degeneracies.  For all atoms we ﬁnd the ﬁrst
+                                                                             excited state with high accuracy.  For B, C and O the ground
+                                                                             state is threefold degenerate.  For these systems we choose one
+     We demonstrate our method on a variety of small-                        of the three states to compute excitation energies,  resulting
+                                                                             in transitions with a relative energy of zero.  For Li and Be a
+and   medium-sized   molecules,   where   we   consistently                  further excitation energy is found.  While we obtain the sec-
+achieve highly accurate total energies, outperforming tra-                   ond excited state for Be, in Li we miss out intermediate states
+ditional quantum chemistry methods.  We also compute                         and instead ﬁnd the transition from the ground state to the
+excitation  energies,  transition  dipole  moments  and  os-                 2D state.  This can be related to the generic CASSCF initial-
+cillator strengths, the main ground-to-excited transition                    ization of the ansatzes.  (The numerical data can be found in
+properties, with the latter two known to be more sensitive                   Supplementary Information Table II.)
+to errors in the underlying wavefunctions than energies.
+In all test systems, we ﬁnd PauliNet closely matches high-                        In Fig. 1 the excitation energies of the lowest states
+order CC and experimental results.  Next, we show that                       are shown for several atoms.  For all the atoms the exci-
+our method can be applied in a straightforward manner                        tation energies are obtained within 4 mHa of the theoret-
+to much larger molecules, using the example of benzene                       ical best estimates (TBE) [38].  Due to the high degree of
+where we match signiﬁcantly more expensive high-level                        symmetry the atoms exhibit degeneracies, that is, mul-
+electronic-structure  methods.   Finally,  we  demonstrate                   tiple orthogonal states can be found with the same en-
+that PauliNet can be used to compute excited-state po-                       ergy.  Being subject to the orthogonalization constraint,
+tential  energy  surfaces  by  modeling  an  avoided  cross-                 PauliNet approximates all orthogonal states of an energy
+ing and conical intersection of ethylene, a highly multi-                    level individually, which is observed by attaining multi-
+referential problem.                                                         ple results at the same energy level.  The multiplicity of
+                                                                                                                                                    3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2. Optimizing low-lying excited states for small molecules.  Several excited states of LiH, BeH and Be are approx-
+imated.  The convergence of the total energies (upper row), excitation energies (middle row) and the pairwise overlaps between
+the wavefunctions (bottom row) are shown.  For degenerate states multiple ansatzes attain the same energy.  Dotted horizon-
+tal lines are excitation energies from FCI calculations and other highly accurate references [38–41].  Due to the initialization
+from the CASSCF baseline the wavefunctions start with a small overlap, which is retained throughout the optimization.  (The
+numerical data can be found in Supplementary Information Table II.)
+
+
+the exact solution can be obtained theoretically by con-                          B.    Highly accurate wavefunctions:  transition
+sidering the electronic conﬁgurations of the atoms and is                             dipole moments and oscillator strengths
+reproduced within our experiments.
+                                                                                  Total energies and vertical excitation energies are the
+                                                                             primary  focus  when  benchmarking  excited-state  meth-
+                                                                             ods as they are readily available from many theoretical
+     We then compute a larger number of excited states                       models and provide a good initial guess of a particular
+for LiH, BeH and Be.  In each experiment, we optimize                        method’s  accuracy.   However,  they  provide  only  a  par-
+eight ansatzes in parallel. In Fig. 2 we illustrate the train-               tial  characterization  of  the  electronic  states,  and  while
+ing process by plotting the convergence of the total en-                     a method in question may give accurate energies, other
+ergies and excitation energies.  Additionally, we plot the                   quantities of key importance may be inaccurate [42–44].
+training estimates of the pairwise overlaps of the wave-                          Transition  dipole  moments  (TDM)  and  oscillator
+functions, which remain small throughout the optimiza-                       strengths are two principal ground-to-excited transition
+tion process.  We conﬁrm that the ﬁnal overlaps are near-                    properties  and  are  of  great  interest.   TDMs  determine
+zero by exhaustively sampling the trained wavefunctions,                     how  polarized  electromagnetic  radiation  will  interact
+thereby obtaining well-converged Monte Carlo estimates                       with a system due to its distribution of charge, and there-
+(see Supplementary Information Table VI). Based on the                       fore  determine  transition  rates  and  probabilities  of  in-
+degeneracies  we  ﬁnd  a  total  of  ﬁve  (LiH),  four  (BeH)                duced  state  changes.   In  the  electric  dipole  approxima-
+and three (Be) distinct excitation energies, respectively.                   tion, the TDM between two states i and j is given by
+The excitation energies match those from reference val-
+ues, and in particular, we ﬁnd that for all systems studied                                            dij =⟨ψi|ˆµ|ψj⟩,                           (1)
+here we reliably obtain the ﬁrst excited state, and apart
+from  one  case  also  the  second  excited  state.   However,
+especially for clusters of higher-lying excited states with                  where  ˆµ =∑kqˆrk is the sum over the position operator
+similar energies, we typically do not ﬁnd all members of                     of  each  particle  weighted  by  its  charge,  with q  = −e
+the  cluster.   In  these  cases,  which  states  are  found  de-            for electronic systems.  We obtain the expectation value
+pends on the initialization of our ansatzes, as well as the                  by Monte Carlo sampling according to Eq. (15).  While
+total number of states that are being sought.  To give a                     the  TDM  is  important  for  understanding  a  number  of
+transparent picture of the capabilities of our method, in                    processes, including optical spectra, it is a complex vector
+this work we have refrained from optimizing the CASSCF                       quantity  and  not  an  experimental  observable  by  itself.
+baseline in order to ﬁnd all possible excitations.                           The closely related oscillator strength is what is inferred
+                                                                                                                                                    4
+
+through experiment and is given by
+
+                          fij = 23∆Ed2ij,                            (2)
+
+where ∆E is the excitation energy between states i and
+j,  and d2ij  is  the  dipole  strength.   It  is  known  that,  in
+addition to being more basis-set sensitive,dij andfij are
+both highly dependent on the quality of the trial wave-
+functions [45] and represent a more rigorous test for  ab
+initio methods than just energies.
+     Recently, transition energies and oscillator strengths
+for a variety of small molecules have been computed us-
+ing high-order CC calculations,  systematically extrapo-
+lating  to  the  complete  basis  set  (CBS)  limit,  and  com-
+paring  to  experimental  results  where  possible,  in  order
+to supply a comprehensive set of theoretical benchmarks
+[46, 47].  In that spirit, we now use these results to bench-
+mark the accuracy of oscillator strengths computed us-
+ing  PauliNet.   Furthermore,  we  also  compare  to  multi-
+reference CC (MR-CC) results where possible [48].  We
+compute the ﬁrst few electronic states for ﬁve molecules
+(BH, CH+, H2O, NH3, CO), such that we obtain the ﬁrst
+non-zero  oscillator strength  (within  the  dipole  approxi-
+mation) for each.  All calculations [49] are performed at
+the same ground-state equilibrium geometries as refs. 46
+and 47 (see Supplementary Information Table I) and us-
+ing the same number of determinants (≤ 10) as in Section
+II A.
+     Our results for all systems are shown in Fig 3.  First,
+we compute the amount of correlation energy recovered in
+the ground state, and ﬁnd PauliNet matches high-order
+CC methods (panel a).  Second, we compute the excita-
+tion energy for each transition and ﬁnd this to be close to
+the TBE, on par with CC and much more consistent than
+TDDFT  where  the  accuracy  depends  on  the  molecule                      FIG. 3.  Deep  VMC  obtains  highly  accurate  excited-
+and  on  the  exact  TDDFT  method  used  (panel  b).   Fi-                  state energies and wavefunctions for small molecules.
+nally, we compare the oscillator strengths (for the 0→ 2                     a  PauliNet  recovers  the  same  amount  of  correlation  energy
+transition) in panel c.  Even high-order methods such as                     as high-order CC methods [38].  (CH+:  No better reference
+CC and MR-CC can produce a spectrum of results de-                           energy to compare with.) b Lowest triplet (0→1) and singlet
+pending on the expansion and basis set used,  with this                      (0→2) excitation energies obtained using PauliNet (with (red)
+exacerbated in cheaper methods such as TDDFT (see the                        and without (yellow) variance matching),  CC and TDDFT,
+example of CO). In all systems, PauliNet compares well                       with the TBE given.  (BH and CH+  exhibit degeneracy for
+with experimental results, demonstrating the quality of                      the triplet state; CC is CCSD or higher, except for the triplet
+deep VMC wavefunctions with just a minimal number of                         state of BH which includes CC2.) c Oscillator strengths com-
+determinants.                                                                puted  for  the  0→2  transitions.   PauliNet  compares  well  to
+                                                                             experiment in all systems and matches the accuracy of (MR-
+                                                                             )CC  results,  demonstrating  the  quality  of  few-determinant
+                                                                             PauliNet  wavefunctions.   (We  have  omitted  a  factor  of  two
+           C.    Application to larger molecules                             linked to degeneracy in BH and CO.) Refs:  exact correlation
+                                                                             energies [38, 50, 51]; excitation energies from CC [46–48, 52–
+     The  previous  two  sections  showed  that  we  achieve                 56], TDDFT [55–58] and TBE [46, 47, 52, 59, 60]; oscillator
+highly accurate results across a range of small systems.                     strengths  from  (MR-)CC  [46–48,  61,  62],  TDDFT  [63]  and
+While   this   is   encouraging,   traditional   high-accuracy               experiment  [64–68].   (The  numerical  data  can  be  found  in
+methods that are better established are readily available                    Supplementary Information Table III.)
+for such small systems.  In this section, to demonstrate
+the  potential  of  excited  PauliNet,  we  show  that  it  can
+be  applied  in  a  straightforward  manner  to  signiﬁcantly
+larger molecules.  For this objective, we choose the exam-
+ple of the benzene molecule (panel a of Fig. 4).  Studies
+                                                                                                                                                     5
+
+of its electronic structure and other properties are plen-
+tiful due to its importance in bio and organic chemistry,
+and with 42 electrons all-electron calculations will be ex-
+tremely  demanding  or  even  intractable  for  a  high-level
+description of its electronic states, depending on the the-
+ory level used.
+     Using a PauliNet ansatz with just 10 determinants,
+the  same  as  in  the  much  smaller  systems,  and  slightly
+deeper neural networks (see Supplementary Information
+Table  VII)  we  obtain  very  good  total  energies  for  the
+ground state and ﬁrst excited state (upper left of Fig. 4).
+We note the better accuracy than high-level CC calcula-
+tions, with this signifying highly accurate wavefunctions
+that can be used to compute other observables, as demon-
+strated  in  the  previous  section.   The  computed  excita-
+tion energy is also shown (right of Fig. 4), with PauliNet
+compared  against  several  experimental  and  theoretical
+results.  The lower experimental result [69] (dashed black
+line)  quantiﬁes  an  adiabatic  excitation  energy,  i.e.   the
+energy diﬀerence between the ground state and the ex-
+cited state at the corresponding relaxed geometries.  This
+quantity is corrected to obtain the vertical excitation en-
+ergy  [28]  (solid  black  line),  which  omits  nuclear  relax-
+ation  and  vibrational  eﬀects.   As  our  calculations  are
+performed at the ground-state equilibrium geometry, we
+are targeting the vertical excitation energy, and therefore                   FIG. 4. Calculating the two lowest electronic states of
+consider this corrected experimental result to be closer to                   the benzene molecule.  Inset:  Benzene structure.
+the ground truth.  We ﬁnd this to be slightly underesti-                      a Convergence of the total energies of the ground state (red)
+mated by high-order methods (CC, DMC), and slightly                           and excited state (light red) with training.  Total energies of
+overestimated by PauliNet.  In other systems (panel b of                      the ground state from CCSD(T) in the frozen-core approxima-
+Fig 3) we notice a similar trend when comparing to the                        tion with the aug-cc-pVnZ basis set (n = D, T) (dashed blue),
+TBE.                                                                          and  full  CCSD(T)  at  the  CBS  limit  (solid  blue)  are  shown
+     PauliNet  formally  scales  as O(N 4)  with  the  num-                   [38].  b  Convergence  of  the  excitation  energy  with  training
+ber  of  electrons N,  and  in  practice  we  observe  a  scal-               (with (red) and without (yellow) variance matching).  c Ex-
+                                                                              citation energy computed using PauliNet, TDDFT [58], CC
+ing behaviorO(N 3) for the systems investigated so far,                       [71], DMC [28], CAS-PT ([72] and calculations in openMol-
+which is related to quadratic scaling of the neural network                   cas [73]) and Experiment [28, 69] (adiabatic (dashed black)
+with an extra factor from the evaluation of the local en-                     and vertical (solid black) excitation energies).  (The numerical
+ergy.  As PauliNet is currently implemented in a research                     data can be found in Supplementary Information Table IV.)
+code,  which  is  not  optimized  for  production  purposes,
+the computational time will have a large prefactor which
+makes it computationally unfavorable to, e.g.  CC meth-                       able cost/accuracy trade-oﬀ for molecules of the size of
+ods for small molecules.  However, its very favorable scal-                   benzene and beyond.
+ing inN  compared toO(N 5−10) of high-level electronic-
+structure  methods  dominates  for  larger  molecules,  and
+this  is  clearly  visible  in  benzene.   For  instance,  ref.  70                   D.    Multi-reference application:  conical
+used several state-of-the-art methods to obtain accurate                                                 intersections
+benzene ground-state energies, with calculations run on
+several CPU types in a highly parallel manner (see Sup-                            Molecular   conﬁgurations   that   produce   electronic
+porting Information of ref. 70 for details).  PauliNet was                    states  with  similar  energies  are  fundamental  in  photo-
+run on a single RTX 3090 GPU at a fraction of the num-                        chemical  applications.   Such  conﬁgurations  can  lead  to
+ber of node hours.  Although PauliNet is the computa-                         several states mixing, meaning they are all necessary for
+tionally cheapest method in this comparison, it provides                      an  accurate  description  of  a  particular  process.   Coni-
+a  signiﬁcantly  better  (variational)  ground-state  energy                  cal  intersections  are  produced  when  two  states  become
+than all methods (∼ 0.48 Ha lower).  As all methods com-                      degenerate and require the computation of excited-state
+pared in Fig. 4 provide similar excitation energies, these                    potential energy surfaces.  The modeling of energy sur-
+cannot be used to group the methods into more or less                         faces near degeneracies is inherently multi-reference with
+accurate,  but  overall  this  data  indicates  that  PauliNet                signiﬁcant electronic correlation and is thus a challenging
+and  deep  VMC  methods  in  general  have  a  very  favor-                   application for electronic-structure methods.
+                                                                                                                                                     6
+
+     As a ﬁnal application of excited PauliNet, we com-
+pute  ground-  and  excited-state  potential  energies  for
+ethylene  (H2C       CH2)  as  a  function  of  its  torsion  and
+pyramidalization  angles  (see  inset  of  Fig.  5).   Twisting
+around  the  C      C  bond  raises  the  energy  of  the  ground
+state while lowering that of the ﬁrst-excited singlet state,
+giving rise to an avoided crossing at a torsion angle τ  of
+90°.  From this twisted structure, the energy gap between
+the two states is further reduced through the pyramidal-
+ization  of  one  of  the  CH2  groups,  leading  to  a  conical
+intersection.  These potential energy curves, whose mod-
+eling is often too challenging for single-reference methods
+[74–76],  have  been  characterized  using  multi-reference
+conﬁguration interaction (MR-CI) methods [77] which we
+use for comparison.
+     We choose the same ground-state (planar) geometry
+as ref. 77 (optimized using a small CAS and the aug-cc-
+pVDZ basis set; see Supplementary Information Table I)
+and ﬁnd the excitation energy between the ground state
+and ﬁrst-excited singlet state to be within a few mHa of
+the MR-CI results.  As we varyτ, while keeping all other
+geometric parameters ﬁxed, we ﬁnd the energy curves to
+be well reproduced by PauliNet, with an avoided crossing
+at τ  =  90°  (panel  a  of  Fig.  5;  curves  symmetric  about
+τ = 90°).  Single-reference methods, such as TDDFT (see
+ﬁgure), often overestimate the energy of the ground state
+at τ = 90° (barrier) and produce an unphysical cusp.                          FIG.  5.  Modeling  a  conical  intersection  of  ethylene.
+     Next, we take the same twisted structure (τ  = 90°)                      Inset:  Ethylene  structure.  a  Total  energies  (relative  to  the
+as ref. 77 (optimized using a small CAS and the aug-cc-                       ground state of the planar geometry E0) of the ground state
+pVDZ  basis  set;  see  Supplementary  Information  Table                     and  ﬁrst-excited  singlet  state  as  a  function  of  torsion  angle
+I) and vary the pyramidalization angle φ, while keeping                       τ, with MR-CI [77] and TDDFT [75] results also plotted for
+all  other  geometric  parameters  ﬁxed.   While  there  is  a                comparison.  TDDFT overestimates the barrier (the ground
+small discrepancy between PauliNet and the MR-CI re-                          state at τ = 90°) and produces an unphysical cusp, while the
+sults (panel b of Fig. 5), the trend of the energy curves                     MR-CI results which predict an avoided crossing are well re-
+is well described, including the correct minimum of the                       produced  by  PauliNet.  b  Same  as  above  but  as  a  function
+excited-state curve (∼ 70°) and the conical intersection                      of pyramidalization angle φ (τ  = 90°),  with the degeneracy
+(PauliNet: φ∼  100°;  MR-CI: φ∼  96°).   We  note  that                       of  the  two  states  producing  a  conical  intersection.   The  ar-
+many single-reference methods are unable to even quali-                       rows denote the conical intersection, with PauliNet (φ∼ 100°)
+tatively describe the conical intersection, instead predict-                  closely matching the MR-CI result (φ∼ 96°).  Note:  The ge-
+                                                                              ometric  parameters  (bond  lengths  and  angles)  vary  slightly
+ing spurious features [76].                                                   between  the  torsion  and  pyramidalization  experiments  (see
+                                                                              ref. 77).  (The numerical data can be found in Supplementary
+                                                                              Information Table V.)
+                      III.    DISCUSSION
+
+     We   have   introduced   an   approach   to   compute                    up  to  42  electrons,  that  excited  PauliNet  can  reliably
+highly  accurate excited-state solutions  of  the electronic                  ﬁnd  the  ﬁrst  excitation  energies  with  an  accuracy  that
+Schr¨odinger  equation  for  molecules  by  using  deep  neu-                 is  on  par  with  high-level  electronic-structure  methods,
+ral networks that are trained in an unsupervised manner                       whereas cheaper methods such as TDDFT are less con-
+with  variational  Monte  Carlo.   We  have  employed  the                    sistent in approximating these energies.  The accuracy of
+PauliNet  architecture  [29]  to  approximate  the  ground-                   the  excited-state  wavefunctions  is  underlined  by  an  ac-
+and  excited-state  wavefunctions,  however  other  archi-                    curate  match  of  oscillator  strengths,  which  depend  on
+tectures  such  as  FermiNet  [30]  or  second  quantization                  the  transition  dipole  moment,  a  quantity  that  is  more
+approaches  [31]  could  also  be  employed,  with  suitable                  sensitive to the exact form of the wavefunction than the
+modiﬁcations.   As  our  approach  to  ﬁnd  excited  states                   energy.  For benzene (42 electrons), PauliNet already re-
+only constrains the excited-state wavefunctions, the abil-                    quires signiﬁcantly less computational time than higher-
+ity  to  compute  highly  accurate  and  variational  abso-                   order methods, and this advantage will only improve for
+lute ground-state energies is unchanged.  In addition, we                     larger molecules. Formally, a single PauliNet is anO(N 4)
+demonstrate for a number of small molecules containing                        method for N  electrons,  due to the computational cost
+                                                                                                                                                  7
+
+of  the  Hartree-Fock  or  CASSCF  baseline,  however,  in
+practice  we  empirically  observe  anO(N 3)  dependency
+for  the  system  sizes  tested,  as  discussed  above.   In  ad-
+dition, for excited-state calculations n PauliNet replicas
+are used which gives rise toO(nN 3)+O(n2N 2), with the
+latter term arising from the pairwise overlaps and having
+a much smaller prefactor than the former.
+     Notably, almost identical excited PauliNet architec-
+tures are used across the systems shown in this paper –
+up to minor modiﬁcations such as the budget of Slater
+determinants and the total number of excited states re-
+quested, and a deeper network for benzene to adapt for
+a  potentially  more  complex  wavefunction.   Whereas  a
+skilled  quantum  chemist  can  usually  tune  and  special-
+ize an existing electronic-structure method to give very
+high-accuracy results for a given molecule, our aim is the
+exact opposite:  to provide a method that, by leveraging
+machine learning tools, is as automated as possible and
+will work over a wide range of Hamiltonians provided.
+     We have demonstrated that we can compute ground-
+and excited-state potential energy surfaces with the ex-
+ample  of  ethylene  where  we  model  an  avoided  crossing
+and  conical  intersection.    Here,  where  single-reference
+methods often fail, PauliNet performs well against multi-
+reference CI results.  By combining the present approach
+with recent and ongoing extensions of PauliNet [34] and
+FermiNet  [35]  that  variationally  compute  entire  poten-
+tial  energy  surfaces,  both  highly  accurate  ground-  and
+excited-state energy surfaces are now accessible with deep
+VMC methods.  Future work will investigate the appli-
+cation  of  PauliNet  to  other  interesting  processes  where
+molecular dynamics interacts with excited states.
+     One of the limitations of the current approach is that
+it appears diﬃcult to reliably ﬁnd all excited states up to
+a given desired number, especially in cases where several
+excited  states  have  similar  energies.   This  is  a  complex
+problem  which  depends  on  the  Hartree-Fock/CASSCF
+initialization,  on  the  total  number  of  states  requested,
+on the learning algorithm, and the expressiveness of the
+architecture and will be studied in more detail elsewhere.
+However,  the ﬁrst excited state could be reliably found
+for all molecules studied here, and apart from one excep-
+tion also the second excited state.  This, in combination
+with the high numerical accuracy and the favorable com-
+putational  cost,  makes  deep  VMC  a  promising  method
+to compute both ground- and excited-state properties for
+small- and medium-sized molecules with dozens or even
+low hundreds of electrons.
+                                                                                                                                                   8
+
+                           METHODS                                           then optimize the PauliNet ansatz by minimizing the to-
+                                                                             tal electronic energy (serving directly as the loss), follow-
+                         PauliNet ansatz                                     ing the standard VMC trick of evaluating it as an expec-
+                                                                             tation value of the local energy, Eloc(r) =  ˆHψ(r)/ψ(r),
+     At the heart of our approach is the PauliNet ansatz,                    over the probability distribution|ψθ|2:
+introduced  in  ref.  29  and  further  reﬁned  in  ref.  78,                                 L(θ) = Er∼|ψθ|2[Eloc[ψθ](r)].                 (6)
+a  multi-determinant  Slater-Jastrow-backﬂow  type  trial
+wavefunction  that  is  parametrized  by  highly  expressive                 This means that, in practice, we alternate between sam-
+deep neural networks:                                                        pling  electron  positions  generated  using  a  Langevin  al-
+  ψθ(r) = eγ(r)+Jθ(r)∑                  θ,µpi(r)] det[ ˜ϕ↓θ,µpi(r)],         gorithm  with  the  probability  of  the  trial  wavefunction
+                            p cp det[ ˜ϕ↑                                    serving  as  the  target  distribution,  and  optimizing  the
+                                                                    (3)      trial wavefunction parameters using stochastic gradient
+             ˜ϕθ,µi(r) =ϕµ(ri)f (m)                                          descent.  For further details, see ref. 29.
+                                    θ,µi(r) +f (a)θ,µi(r),            (4)
+where r = (r1,..., rN) is the 3N-dimensional real space
+of electron coordinates.  The structure of our ansatz en-                                      Computing excited states
+sures that the correct physics is encoded:  the wavefunc-
+tion obeys exact asymptotic behavior through the ﬁxed                             We now introduce the central idea of this paper:  a
+electronic cusps γ, and is antisymmetric with respect to                     deep VMC method to compute the ground and low-lying
+the  exchange  of  like-spin  electrons  through  the  use  of               excited states of a given electronic system.  While we em-
+generalized Slater determinants, guaranteeing the Pauli                      ploy PauliNet to represent the individual wavefunctions,
+exclusion principle is obeyed.                                               the  method  can  also  employ  FermiNet  or  other  real-
+     The   expressiveness   of   PauliNet   is   contained   in              space  wavefunction  representations  with  suitable  modi-
+the  Jastrow  factor Jθ  and  backﬂow  fθ,  which  intro-                    ﬁcations.
+duce  many-body  correlation,  and  are  both  represented                        In a similar spirit to the ground-state optimization
+through deep neural networks (denoted by trainable pa-                       process,  we  ﬁrst  obtain  a  reasonable  baseline  for  each
+rameters  θ). Jθ  and fθ  are  constructed  in  ways  that                   state by performing a minimal state-averaged CASSCF
+preserve the antisymmetry of the fermionic wavefunction                      calculation.   This  optimizes  the  energy  average  for  all
+with respect to exchanging like-spin electrons, as well as                   states  in  question  and  yields  a  single  set  of  orbitals  to
+its  cusp  behavior.   The  Jastrow  factor  is  an  exchange-               construct each multi-determinant wavefunction, which in
+symmetric  function,  and  captures  complex  correlation                    turn  are  supplemented  by  the  analytically-known  cusp
+eﬀects through augmenting the Slater-determinant base-                       conditions.   We  ﬁx  the  number  of  determinants  in  our
+line,  but is incapable of modifying the nodal surface of                    ansatz  by  cutting  oﬀ  the  CASSCF  expansion  based  on
+the  determinant  expansion.   Changes  to  the  nodal  sur-                 the absolute values of their determinant coeﬃcients.  The
+face are possible through the backﬂow, which acts on the                     choice of the CASSCF baseline ensures that the PauliNet
+single-electron  orbitals ϕµ  directly,  transforming  them                  ansatzes for the diﬀerent excited states are close to or-
+into permutation-equivariant many-electron orbitals  ˜ϕµ.                    thogonal upon initialization.  In contrast to the ground-
+fθ is split into multiplicative (m) and additive (a) compo-                  state  calculation,  the  optimization  of  excited  states  re-
+nents (Eq. (4)), and is designed to be equivariant under                     quires  a  more  nuanced  choice  of  the  active  space.   In
+the exchange of like-spin electrons.                                         principle, we must ensure that the solutions contain de-
+                                                                             terminants with orbitals of the necessary rotational sym-
+                                                                             metries (the Jastrow factor and backﬂow correction are
+                 Ground-state optimization                                   rotationally-symmetric modiﬁcations of the orbitals) and
+                                                                             spin conﬁgurations (the choice of the number of spin-up
+     Like  traditional  VMC  methods,  PauliNet  is  based                   and spin-down electrons does impose restrictions on the
+on  the  variational  principle,  which  guarantees  that  the               states  that  may  be  attained  by  our  ansatz).   For  most
+energy expectation value of a trial wavefunctionψθ is an                     systems studied in this paper, a generic choice of the ac-
+upper bound to the true ground-state energy:                                 tive space was suﬃcient (see Supplementary Table VIII)
+             E0 = minψ ⟨ψ| ˆH|ψ⟩≤ minθ ⟨ψθ| ˆH|ψθ⟩.            (5)           and we have not studied the dependence on the CAS ini-
+                                                                             tialization in more depth.  As shown in previous studies
+                                                                             the quality of the orbitals has only a minor eﬀect on the
+For  a  given  system,   a  standard  quantum  chemistry                     training  and  does  not  change  the  ﬁnal  energy  [78].   If,
+method  (Hartree-Fock  (HF)  for  a  single  determinant;                    however,  the initialization is not accounted for and the
+complete active space self-consistent ﬁeld (CASSCF) for                      baseline solutions provide a qualitatively wrong spectrum
+multiple  determinants)  is  performed,  with  the  solution                 of  excited  states  our  ansatzes  may  be  trapped  in  local
+supplemented by the analytically-known cusp conditions,                      minima and miss intermediate excited states (see Fig. 2),
+thus producing a reasonable baseline wavefunction.  We                       even though we keep the Slater-determinant coeﬃcients
+                                                                                                                                                   9
+
+cp and linear coeﬃcientscµk of the single-electron orbitals                  excitation  energies.   In  order  to  improve  the  error  can-
+ϕµ(ri) =∑kcµkφk(ri) trainable.                                               cellation of our ansatzes we employ a variance-matching
+     Our objective is to calculate the lowestn eigenstates                   technique.  As the variance of the energy σ2 can be con-
+of  a  given  system,  that  is,  ﬁnd  the  set  of  orthogonal              sidered a metric of how close a wavefunction is to a true
+states that minimizes the energy expectation value.  We                      eigenstate,  variance-matching  procedures  can  be  useful
+approach  this  challenge  by  introducing  a  penalty  term                 tools [23, 80, 81].  Here, we utilize a simple scheme:  for
+to the energy loss function (Eq. (6)) and optimizing the                     single-state quantities such as total energies, we evaluate
+joint loss for n PauliNet instances:                                         all wavefunctions at the end of training.  For multi-state
+                                                (      1          )          quantities, such as excitation energies or transition dipole
+  L(θ) =∑       Ei[Eloc[ψθ,i](r)]+ α∑                                ,       moments, we match states of a similar variance.  That is,
+                                                   1−|Sij|− 1                if ﬁnal ψθ,i has a lower variance than ﬁnal ψθ,j, we take
+            |i         {z           }      |i>j        {z          }         ψθ,i at an earlier point in training.  This simply involves
+
+              energy minimization               overlap penalty              computing σ2  of the training energies and applying ex-
+                                                                    (7)      ponential  moving  average  at  each  iteration  to  monitor
+where Ei  =  Er∼|ψθ,i|2  and Sij  is  the  pairwise  overlap                 convergence (see below for details).  We ﬁnd this proce-
+between states i and j.  The functional form of the over-                    dure typically improves the ﬁnal results.
+lap penalty is chosen to diverge when two states collapse
+and  behave  linearly  when  states  are  close  to  orthogo-
+nal (see the next section for details).  This allows states                               Loss function and overlap penalty
+to overlap during the optimization procedure, while pre-
+venting their collapse and eventually driving them to or-                         There are a number of choices of possible loss func-
+thogonality when they have settled in a local minimum of                     tions for the optimization of excited states in quantum
+the energy.  The hyperparameter α weights the two loss                       Monte  Carlo  [22,  28,  82].   In  order  to  assess  the  feasi-
+terms  and  can  be  increased  throughout  the  training  to                bility of excited-state optimization with deep neural net-
+strengthen  the  orthogonality  condition  when  approach-                   work ansatzes in variational Monte Carlo we conducted a
+ing  the  ﬁnal  wavefunctions.   For  a  suﬃciently  large α                 range of experiments with diﬀerent types of optimization
+the  true  minimum  of  the  loss  function  corresponds  to                 objectives.  Our empirical ﬁndings showed that employ-
+the sum of the energies of the lowest-lying excited states                   ing a penalty method is the conceptually most straight-
+with  these  states  having  no  overlap.   Thus,  optimizing                forward approach and gives stable results when combin-
+the  penalized  loss  function  (Eq.  (7))  leads  to  an  unbi-             ing it with our implementation of PauliNet.  Initially, we
+ased convergence towards the lowest-lying excited states                     started with an overlap penalty term similar to Pathak
+(see below).  In practice a small α is typically suﬃcient,                   et al[28].  However, we found that our optimization could
+making a robust choice possible.                                             still collapse even if we chose a suﬃciently large prefac-
+     To  stabilize  the  training  and  reduce  the  computa-                tor (α) and the training could not recover.  We therefore
+tional  cost  we  detach  gradients  in  such  a  way  that  we              switched to an alternative penalty term (Eq. (7)) which
+only consider the overlap with the lower-lying states re-                    diverges upon a collapse of the states.  The eﬀect of our
+spectively, that is, the ground state is subject to uncon-                   penalty  term  can  be  illustrated  by  considering  the  loss
+strained energy minimization and the n-th excited state                      for a two-state system with the exact ground state|ψ0⟩
+introduces n  pairwise  penalty  terms.   We  compute  the                   and a linear combination of the ground and ﬁrst excited
+overlap  of  the  unnormalized  states i  and j  as  the  geo-               state|ψ1⟩ (see Fig. 6):
+metric mean of the two Monte Carlo estimates, obtained
+over distributions|ψθ,i|2 and|ψθ,j|2, respectively:                                            |ψϵ⟩ =√1−ϵ|ψ1⟩ +√ϵ|ψ0⟩.                  (9)
+
+            (    [ψθ,j(r)])        √     [ψθ,j(r)   ]     [ψθ,i(r)   ]       The overlap and the energy can be obtained as
+
+Sij = sgn     Ei                ×     Ei               Ej              .         ⟨ψ0|ψϵ⟩ =√ϵ, ⟨ψϵ|H|ψϵ⟩ = (1−ϵ)E1 +ϵE0.     (10)
+                   ψθ,i(r)                 ψθ,i(r)          ψθ,j(r)
+                                                                    (8)      In the vicinity of the orthogonal solution, the Taylor ex-
+The  sign  of  the  overlap  can  be  obtained  from  either  of             pansion of the penalty term is
+the two estimators, which match in the limit of inﬁnite                            1
+sampling.   If  the  overlap  is  close  to  zero  and  the  signs              1−|S|− 1 =|S| +|S|2 +|S|3 +...,  at |S| = 0,   (11)
+of the two estimates diﬀer due to statistical noise of the
+sampling, we consider the states to be orthogonal.  Sim-                     that is, the overlap penalty behaves linearly to ﬁrst or-
+ilar to the energy loss, the gradient [79] of the pairwise                   der.  This gives rise to a penalty that is locally stable for
+overlap  can  be  formulated  such  that  it  depends  on  the               any  prefactor,  lower  bounded  by  the S2  penalty  term,
+ﬁrst  derivative  of  the  log  wavefunction  with  respect  to              and diverges if states collapse.  For a large enough α pa-
+the parameters only (see below for details).                                 rameter the global optimum of the total loss is at zero
+     Finally, we note that diﬀerent states may be modeled                    overlap, that is, the optimization method is incentivized
+at diﬀerent levels of quality, which can lead to erroneous                   to ﬁnd exactly orthogonal states without mixing.
+                                                                                                                                                     10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 6. Sketch of the loss function.  This ﬁgure illustrates
+the behavior of our loss function for a two-state system.  The
+ground state is kept ﬁxed and the second state is considered to
+be a linear combination of the ground state and ﬁrst excited
+state (Eq. (9)).  The scales are to be understood in arbitrary
+units, as they depend on the choice of the hyperparameters
+and the energies of the system under investigation.
+
+
+
+     In practice,  for the batch sizes used in our calcula-
+tions, we have not observed a bias due to the non-linear
+nature of the penalty when applied to sampled expecta-
+tion values of the overlap.  However, it is expected that
+this is no longer the case in the limit of small batches.  In                 FIG. 7.  Behavior of the loss function with batch size.
+order to elucidate how our loss function behaves in this                      The ground state and ﬁrst excited state of LiH are approxi-
+regard, we compute the two lowest states of LiH using a                       mated.  The convergence of the total energies (a), excitation
+range of diﬀerent batch sizes (see Fig. 7).  We ﬁnd the                       energy (b) and the pairwise overlap between the wavefunc-
+optimization procedure to be robust for the large batch                       tions (c)  are  shown.   Dotted  horizontal  lines  are  excitation
+sizes that we typically employ (≥ 2000), with the excita-                     energies from highly accurate references [39, 40].  While the
+tion energy within 1 mHa of the exact, and the pairwise                       optimization  works  well  for  the  large  batches  that  we  typi-
+overlap  remaining  small  throughout  training  (panel  c).                  cally employ in our calculations (≥ 2000), this becomes less
+For smaller batch sizes, we observe a larger degree of sta-                   reliable, at least for the excited state, in the limit of smaller
+tistical  noise  in  the  pairwise  overlap,  which  leads  to  a             batch sizes.  Note:  Darker corresponds to a larger batch size
+less reliable approximation for the excited state and the                     in each respective color.
+corresponding excitation energy (panel b).
+                                                                              on the wavefunction norms:√
+                                                                                                Ni    [ ˆOψθ,j(r)   ]√Nj        [ ˆOψθ,i(r)]
+                                                                                    Oij =      Nj Ei      ψθ,i(r)        Ni Ej     ψθ,j(r)     ,
+
+                Gradient of the loss function                                                                                                     (14)
+                                                                                                (     [ ˆOψθ,j(r)])
+     In order to diﬀerentiate the loss function we explicitly                            = sgn     Ei    ψθ,i(r)
+formulate the gradient.  We consider the general case of                                            √     [ ˆOψθ,j(r)  ]     [ ˆOψθ,i(r)]
+a mixed observable:                                                                              ×     Ei    ψθ,i(r)      Ej    ψθ,j(r)     .       (15)
+
+                            ∫                                                       This  expression  reduces  to  the  pairwise  overlaps
+            Oij =     1NiNj     d3r ψθ,i(r)[ ˆOψθ,j(r)],        (12)          (Eq.  (8))  upon  setting  ˆO  =  Id.   The  derivative  of  this
+                           [ ˆOψθ,j(r)   ]                                    term can be expressed as
+                 = Ni                      ,                             (13)                   {    [( ˆOψθ,j(r)           [ ˆOψθ,j(r)])
+                    Nj Ei      ψθ,i(r)                                            ∂Oij =  1Oij    Ei       ψθ,i(r) − Ei        ψθ,i(r)
+                                                                                                          ]        [ ˆOψθ,i(r)  ]                }
+where Ni, Nj  are  the  norms  of  the  wavefunctions  and                                 ∂ ln|ψθ,i(r)|     × Ej     ψθ,j(r)      + (i⇐⇒j)         ,
+Ei = Er∼|ψθ,i|2.  By the property of Hermitian matrices,                                                                                          (16)
+Oij =Oji, we derive an expression that does not depend
+                                                                                                                                                 11
+
+where (i⇐⇒j) is an additional term with the two indices                     are  simply  found  in  the  order  of  increasing  energy,  in-
+interchanged.                                                               dependent  of  spin.   The  spin  of  a  found  eigenstate  can
+     By considering the Hamiltonian operator  ˆH and set-                   be obtained in principle by Monte Carlo sampling [84].
+tingi =j we recover the gradient of the energy loss [29]:                   Whether a particular spin state is found in practice may
+              [( ˆHψθ,i(r)          [ ˆHψθ,i(r)])                   ]       be inﬂuenced by the spin of the CASSCF baseline wave-
+∂Eii = 2Ei                                           ∂ ln|ψθ,i(r)|    .     function, which we therefore report in Supplementary Ta-
+                   ψθ,i(r) − Ei        ψθ,i(r)                              ble VIII. In special cases, we may wish to target a speciﬁc
+                                                                  (17)      spin state (e.g., see the section “Multi-reference applica-
+                                                                            tion:  conical  intersections”),  and  for  that,  we  can  take
+                                                                            advantage of the orbital-assigned backﬂow of PauliNet.
+                       Variance matching                                    Combined  with  the  freezing  of  the  determinant  coeﬃ-
+                                                                            cients,  this  ensures  that  PauliNet  remains  in  the  same
+                                                                            spin state as the CASSCF baseline wavefunction.
+     As far as relative energies are concerned most compu-
+tational chemistry methods rely heavily on the cancella-
+tion of error. While quantum Monte Carlo methods using
+neural network-based trial wavefunctions provide highly
+accurate total energies, the ﬂexibility of these ansatzes is
+diﬃcult to control which can lead to varying qualities of
+approximations for diﬀerent states.  In order to account
+for  potential  imbalances  we  utilize  the  variance  of  the
+wavefunctions as a measure of the quality of the approx-
+imation (zero-variance principle) and employ a variance-
+matching scheme.  Variance-matching techniques as well
+as variance extrapolation have typically been applied by
+optimizing a family of ansatzes and comparing variances
+across the optimized wavefunctions [81].  Instead of train-
+ing multiple ansatzes we checkpoint wavefunctions during
+the training and compute excitation energies by rewind-
+ing  the  ground  state  to  match  the  variance  of  the  ex-
+cited state as depicted in Fig. 8.  The mean and variance                   FIG.  8.   Sketch  of  the  variance-matching  procedure.
+of  each  wavefunction  are  computed  over  the  batch  di-                The excitation energy of the benzene calculation at step 4000
+mension at each step in training and smoothed with an                       is obtained for illustration purposes.  The variance (b) of the
+exponential walking average.  For the ﬁnal estimation of                    excited state is higher than that of the ground state and is
+excitation energies, the respective wavefunctions are then                  therefore  matched  with  the  variance  of  the  ground  state  at
+sampled exhaustively as in the usual evaluation process.                    a previous iteration.  The excitation energy is computed by
+While the variance matching hardly impacts the excita-                      comparing the mean energies (a) at the respective iterations.
+tion energies for small systems, for larger and harder to                   This  acts  to  reduce  the  excitation  energy  and  is  found  to
+optimize  systems,  such  as  benzene,  it  becomes  increas-               improve the results in all of our experiments.
+ingly relevant.
+
+                                                                                                DATA AVAILABILITY
+
+                         Spin treatment                                     The dataset generated in this study is openly available
+     PauliNet encodes only the spatial part of the wave-                    in   Zenodo   (https://doi.org/10.5281/zenodo.7274855).
+function  and  its  like-spin  antisymmetry  explicitly  [14],              Source data are provided with this paper.
+
+while the spin part, which guarantees the opposite-spin
+antisymmetry, is only implicit.  Every spin-assigned spa-                                       CODE AVAILABILITY
+tial ansatz such as PauliNet is always an eigenstate ofSz
+with an eigenvalue of M  =  12(N↑−N↓), but it may not                       The computer code used in this study is openly available
+be an eigenstate ofS2.  The spatial part of eigenstates of                  in Zenodo (https://doi.org/10.5281/zenodo.7347937).
+S2 is characterized by speciﬁc sets of permutational sym-
+metries involving opposite-spin electrons [83].  PauliNet
+does not enforce these symmetries but instead attempts
+to learn them through the variational principle because
+eigenstates of the Hamiltonian are also eigenstates ofS2.
+Therefore, we do not, in general, control the spin of the
+eigenstates found in the optimization procedure — they
+                                                                                                                                                          12
+
+
+
+
+
+ [1]R.  Lindh  and  L.  Gonz´alez,      Quantum  Chemistry  and                  [26]N.  S.  Blunt  and  E.  Neuscamman,  Journal  of  Chemical
+     Dynamics  of  Excited  States:  Methods  and  Applications                        Theory and Computation 15, 178 (2019).
+     (John Wiley & Sons, 2020).                                                  [27]K. Choo, G. Carleo, N. Regnault, and T. Neupert, Phys.
+ [2]W. Kohn and L. J. Sham, Phys. Rev.    140, A1133 (1965).                           Rev. Lett. 121, 167204 (2018).
+ [3]E. Runge and E. K. U. Gross, Phys. Rev. Lett.     52, 997                    [28]S. Pathak, B. Busemeyer, J. N. B. Rodrigues, and L. K.
+     (1984).                                                                           Wagner, The Journal of Chemical Physics 154, 034101
+ [4]P. Elliott, J. I. Fuks, A. Rubio, and N. T. Maitra, Phys.                          (2021).
+     Rev. Lett. 109, 266404 (2012).                                              [29]J. Hermann, Z. Sch¨atzle, and F. No´e, Nature Chemistry
+ [5]J.  I.  Fuks,  K.  Luo,  E.  D.  Sandoval,  and  N.  T.  Maitra,                   12, 891 (2020).
+     Phys. Rev. Lett. 114, 183002 (2015).                                        [30]D.  Pfau,  J.  S.  Spencer,  A.  G.  D.  G.  Matthews,  and
+ [6]Y. Suzuki, L. Lacombe, K. Watanabe, and N. T. Maitra,                              W. M. C. Foulkes, Phys. Rev. Research 2, 033429 (2020).
+     Phys. Rev. Lett. 119, 263401 (2017).                                        [31]K. Choo, A. Mezzacapo, and G. Carleo, Nat. Commun.
+ [7]N.  Singh,  P.  Elliott,  T.  Nautiyal,  J.  K.  Dewhurst,  and                    11, 2368 (2020).
+     S. Sharma, Phys. Rev. B 99, 035151 (2019).                                  [32]J.  Han,  L.  Zhang,  and  W.  E,  J.  Comput.  Phys.       399,
+ [8]N. T. Maitra, Journal of Physics:  Condensed Matter    29,                         108929 (2019).
+     423001 (2017).                                                              [33]J. S. Spencer, D. Pfau, A. Botev, and W. M. C. Foulkes,
+ [9]C. A. Ullrich and I. V. Tokatly, Phys. Rev. B    73, 235102                        arXiv:2011.07125 [physics.comp-ph] (2021).
+     (2006).                                                                     [34]M.  Scherbela,  R.  Reisenhofer,  L.  Gerard,  P.  Marque-
+[10]P.  G.  Szalay,  T.  M¨uller,  G.  Gidofalvi,  H.  Lischka,  and                   tand, and P. Grohs, arXiv:2105.08351v2 [physics.comp-
+     R. Shepard, Chemical Reviews 112, 108 (2012).                                     ph] (2021).
+[11]K. Sneskov and O. Christiansen, WIREs Computational                          [35]N. Gao and S. G¨unnemann, arXiv:2110.05064v2 [cs.LG]
+     Molecular Science 2, 566 (2011).                                                  (2021).
+[12]FCI scales exponentially, while truncated CI scales poly-                    [36]G. Carleo and M. Troyer, Science      355, 602 (2017).
+     nomially.                                                                   [37]J.  Westermayr  and  P.  Marquetand,  Chemical  Reviews
+[13]The  scaling  of  CC  depends  on  the  particular  method                         121, 9873 (2021).
+     used:   CC2 O(N5),  CCSD O(N6),  CCSD(T) O(N7),                             [38]R. D. J. III, NIST Computational Chemistry Compari-
+     CC3O(N7), CCSDTO(N8), CCSDT(Q)O(N9), CCS-                                         son and Benchmark Database, NIST Standard Reference
+     DTQO(N10).                                                                        Database Number 101 (2021).
+[14]W.  M.  C.  Foulkes,  L.  Mitas,  R.  J.  Needs,  and  G.  Ra-               [39]A.  Bande,  H.  Nakashima,  and  H.  Nakatsuji,  Chemical
+     jagopal, Rev. Mod. Phys. 73, 33 (2001).                                           Physics Letters 496, 347 (2010).
+[15]K. T. Williams, Y. Yao, J. Li, L. Chen, H. Shi, M. Motta,                    [40]P. Jasik, J. E. Sienkiewicz, J. Domsta, and N. E. Henrik-
+     C. Niu, U. Ray, S. Guo, R. J. Anderson, J. Li, L. N. Tran,                        sen, Phys. Chem. Chem. Phys. 19, 19777 (2017).
+     C.-N. Yeh, B. Mussard, S. Sharma, F. Bruneval, M. van                       [41]J.  Pitarch-Ruiz,  J.  S´anchez-Mar´ın,  and  A.  M.  Velasco,
+     Schilfgaarde,  G.  H.  Booth,  G.  K.-L.  Chan,  S.  Zhang,                       Journal of Computational Chemistry 29, 523 (2008).
+     E. Gull, D. Zgid, A. Millis, C. J. Umrigar, and L. K. Wag-                  [42]E. Br´emond, M. Savarese, C. Adamo, and D. Jacquemin,
+     ner (Simons Collaboration on the Many-Electron Prob-                              Journal of Chemical Theory and Computation 14, 3715
+     lem), Phys. Rev. X 10, 011041 (2020).                                             (2018).
+[16]M.  A.  Morales,  J.  McMinis,  B.  K.  Clark,  J.  Kim,  and                [43]A. Tajti and P. G. Szalay, Journal of Chemical Theory
+     G. E. Scuseria, Journal of Chemical Theory and Compu-                             and Computation 15, 5523 (2019).
+     tation 8, 2181 (2012).                                                      [44]A. Tajti, L. Tulip´an, and P. G. Szalay, Journal of Chem-
+[17]A. Benali, K. Gasperich, K. D. Jordan, T. Applencourt,                             ical Theory and Computation 16, 468 (2020).
+     Y. Luo,  M. C. Bennett,  J. T. Krogel,  L. Shulenburger,                    [45]R. Crossley, Physica Scripta      T8, 117 (1984).
+     P. R. C. Kent, P.-F. Loos, A. Scemama, and M. Caﬀarel,                      [46]P.-F.  Loos,   A.  Scemama,   A.  Blondel,   Y.  Garniron,
+     The Journal of Chemical Physics 153, 184111 (2020).                               M. Caﬀarel, and D. Jacquemin, Journal of Chemical The-
+[18]B. M. Austin, D. Y. Zubarev, and W. A. Lester, Chemical                            ory and Computation 14, 4360 (2018), pMID: 29966098.
+     Reviews 112, 263 (2012).                                                    [47]A. Chrayteh, A. Blondel, P.-F. Loos, and D. Jacquemin,
+[19]D. M. Ceperley and B. Bernu, The Journal of Chemical                               Journal  of  Chemical  Theory  and  Computation 17,  416
+     Physics 89, 6316 (1988).                                                          (2021), pMID: 33256412.
+[20]N. S. Blunt, S. D. Smart, G. H. Booth, and A. Alavi, The                     [48]D. Bhattacharya,  N. Vaval, and S. Pal, The Journal of
+     Journal of Chemical Physics 143, 134117 (2015).                                   Chemical Physics 138, 094108 (2013).
+[21]R. Send, O. Valsson, and C. Filippi, Journal of Chemical                     [49]CH       + was not included in the CC calculations in refs. 46
+     Theory and Computation 7, 444 (2011).                                             and  47.  We  instead  compare  to  (MR-)CC  results  in
+[22]M. Dash, J. Feldt, S. Moroni, A. Scemama, and C. Fil-                              ref.  48,  using  the  same  ground-state  equilibrium  ge-
+     ippi, Journal of Chemical Theory and Computation 15,                              ometry,   which  was  obtained  in  a  split-valence  basis
+     4896 (2019).                                                                      augmented  with  diﬀuse  and  polarization  functions.  See
+[23]S. D. Pineda Flores and E. Neuscamman, The Journal of                              refs. 48 and 60 for more details.
+     Physical Chemistry A 123, 1487 (2019).                                      [50]D. P. O’eill and P. M. W. Gill, Molecular Physics      103,
+[24]L. Zhao and E. Neuscamman, Journal of Chemical The-                                763 (2005).
+     ory and Computation 12, 3436 (2016).                                        [51]E. Giner, D. Traore, B. Pradines, and J. Toulouse, The
+[25]J. A. R. Shea and E. Neuscamman, Journal of Chemical                               Journal of Chemical Physics 155, 044109 (2021).
+     Theory and Computation 13, 6078 (2017).
+                                                                                                                                                        13
+
+[52]H. Larsen, K. Hald, J. Olsen, and P. Jørgensen, The Jour-                   [76]M. Barbatti and R. Crespo-Otero, in       Density-Functional
+     nal of Chemical Physics 115, 3015 (2001).                                        Methods for Excited States  (Springer International Pub-
+[53]K.  Kowalski  and  P.  Piecuch,  Chemical  Physics  Letters                       lishing, 2014) pp. 415–444.
+     347, 237 (2001).                                                           [77]M.  Barbatti,  J.  Paier,  and  H.  Lischka,  The  Journal  of
+[54]K.  Kowalski  and  P.  Piecuch,  The  Journal  of  Chemical                       Chemical Physics 121, 11614 (2004).
+     Physics 115, 643 (2001).                                                   [78]Z.  Sch¨atzle,  J.  Hermann,  and  F.  No´e,  The  Journal  of
+[55]P.  Cronstrand,  B.  Jansik,  D.  Jonsson,  Y.  Luo,  and                         Chemical Physics 154, 124108 (2021).
+     H.  ˚Agren,  The  Journal  of  Chemical  Physics 121,  9239                [79]We employ gradient clipping to stabilize the training.
+     (2004).                                                                    [80]L.  Otis,  I.  Craig,  and  E.  Neuscamman,  The  Journal  of
+[56]P. Sa lek, T. Helgaker, O. Vahtras, H.       ˚Agren, D. Jonsson,                  Chemical Physics 153, 234105 (2020).
+     and J. Gauss, Molecular Physics 103, 439 (2005).                           [81]P. J. Robinson, S. D. Pineda Flores, and E. Neuscamman,
+[57]F. Liu, Z. Gan, Y. Shao, C.-P. Hsu, A. Dreuw, M. Head-                            The Journal of Chemical Physics 147, 164114 (2017).
+     Gordon,  B.  T.  Miller,  B.  R.  Brooks,  J.-G.  Yu,  T.  R.              [82]S. M. Garner and E. Neuscamman, The Journal of Chem-
+     Furlani,  and  J.  Kong,  Molecular  Physics  108,  2791                         ical Physics 153, 144108 (2020).
+     (2010).                                                                    [83]R.  Pauncz,        Spin  Eigenfunctions  (Springer  New  York,
+[58]C. Adamo, G. E. Scuseria, and V. Barone, The Journal                              NY).
+     of Chemical Physics 111, 2889 (1999).                                      [84]C.-J. Huang, C. Filippi, and C. J. Umrigar, The Journal
+[59]Z. Biglari, A. Shayesteh, and A. Maghari, Computational                           of Chemical Physics 108, 8838 (1998).
+     and Theoretical Chemistry 1047, 22 (2014).
+[60]J.  Olsen,   A.  M.  De  Me´ras,   H.  J.  A.  Jensen,  and
+     P. Jørgensen, Chemical Physics Letters 154, 380 (1989).                                        ACKNOWLEDGMENTS
+[61]M. Barysz, Theoretica chimica acta      90, 257 (1995).
+[62]J. R. Lane, V. Vaida, and H. G. Kjaergaard, The Journal                     We  thank  Tim  Gould  (Griﬃth  U)  for  early  discussions
+     of Chemical Physics 128, 034302 (2008).
+[63]Y. Tawada,  T. Tsuneda,  S. Yanagisawa,  T. Yanai, and                      about variational principles for excited states.  Funding
+     K.  Hirao,  The  Journal  of  Chemical  Physics  120,  8425                is  gratefully  acknowledged  from  the  Berlin  mathemat-
+     (2004).                                                                    ics center MATH+ (Projects AA1-6, AA2-8), European
+[64]C. H. Douglass, H. H. Nelson, and J. K. Rice, The Journal                   Commission (ERC CoG 772230),  Deutsche Forschungs-
+     of Chemical Physics 90, 6940 (1989).                                       gemeinschaft (NO825/3-2),  and the Berlin Institute for
+[65]B.  Mahan  and  A.  O’Keefe,  Astrophysical  Journal      248               Foundations in Learning and Data (BIFOLD).
+     (1981).
+[66]P.  A.  Thorn,  M.  J.  Brunger,  P.  J.  O.  Teubner,  N.  Di-
+     akomichalis,  T.  Maddern,  M.  A.  Bolorizadeh,  W.  R.                                   AUTHOR CONTRIBUTIONS
+     Newell,  H. Kato,  M. Hoshino,  H. Tanaka,  H. Cho, and
+     Y.-K. Kim, The Journal of Chemical Physics 126, 064306
+     (2007).                                                                    M.T.E, Z.S, J.H and F.N designed the research.  M.T.E,
+[67]T. Chen, Y. W. Liu, X. J. Du, Y. C. Xu, and L. F. Zhu,                      Z.S, P.A.E, J. H and F.N developed the method.  M.T.E,
+     The Journal of Chemical Physics 150, 064311 (2019).                        Z.S  and  J.H  wrote  the  computer  code.    M.T.E  and
+[68]X. Kang, Y. W. Liu, L. Q. Xu, D. D. Ni, K. Yang, N. Hi-                     Z.S carried out the numerical calculations.  M.T.E, Z.S,
+     raoka,  K.  D.  Tsuei,  and  L.  F.  Zhu,  The  Astrophysical              P.A.E, J.H and F.N analyzed the data.  M.T. E, Z.S, J.H
+     Journal 807, 96 (2015).                                                    and F.N wrote the manuscript.
+[69]J. P. Doering, The Journal of Chemical Physics      51, 2866
+     (1969).
+[70]J. J. Eriksen, T. A. Anderson, J. E. Deustua, K. Ghanem,                                      COMPETING INTERESTS
+     D.   Hait,   M.   R.   Hoﬀmann,   S.   Lee,   D.   S.   Levine,
+     I.  Magoulas,  J.  Shen,  N.  M.  Tubman,  K.  B.  Whaley,
+     E.  Xu,  Y.  Yao,  N.  Zhang,  A.  Alavi,  G.  K.-L.  Chan,                The authors declare no competing interests.
+     M. Head-Gordon, W. Liu, P. Piecuch, S. Sharma, S. L.
+     Ten-no,   C.  J.  Umrigar,  and  J.  Gauss,  The  Journal
+     of  Physical  Chemistry  Letters 11,  8922  (2020),  pMID:                               ADDITIONAL INFORMATION
+     33022176.
+[71]P.-F.  Loos,  F.  Lipparini,  M.  Boggio-Pasqua,  A.  Sce-                  Supplementary material is available below.
+     mama, and D. Jacquemin, Journal of Chemical Theory
+     and Computation 16, 1711 (2020), pMID: 31986042.
+[72]J. Lorentzon, P.-      ˚A. Malmqvist, M. F¨ulscher, and B. O.               Correspondence and requests for materials should be
+     Roos, Theoretica chimica acta 91, 91 (1995).                               addressed to J. Hermann or F. No´e.
+[73]I.   Fdez.   Galv´an,   M.   Vacher,   A.   Alavi,   C.   Angeli,
+     F.  Aquilante,  J.  Autschbach,  J.  J.  Bao,  S.  I.  Bokarev,
+     N. A. Bogdanov, R. K. Carlson, et al., Journal of chem-
+     ical theory and computation 15, 5925 (2019).
+[74]A. I. Krylov, Chemical Physics Letters      350, 522 (2001).
+[75]M. Maliˇs and S. Luber, Journal of Chemical Theory and
+     Computation 16, 4071 (2020), pMID: 32602729.
+                                                                                                                                                                                14
+
+                                                        Appendix A: Geometries of test systems
+
+      All  calculations  presented  in  Sections  II  A  –  C  of  the  main  paper  were  done  at  the  ground-state  equilibrium
+geometries.  The geometries for all molecules are listed in Supplementary Table I. For the ethylene structures presented
+in Section II D, we list the planar (ground-state equilibrium) and twisted (τ = 90) geometries.
+
+
+                                Supplementary Table I. Ground-state equilibrium geometries of the test systems.
+
+Molecule                Atom                      Position (˚A)                      Molecule               Atom                      Position (˚A)
+
+LiH                           Li                   (0.000, 0.000, 0.000)                BeH                        Be          (0.000000, 0.000000, 0.000000)
+                              H                   (1.595, 0.000, 0.000)                                                H           (1.326903, 0.000000, 0.000000)
+
+BH                            B           (0.000000, 0.000000, 0.000000)        CH+                         C             (0.00000, 0.00000, 0.00000)
+                              H           (0.000000, 0.000000, 1.222874)                                        H             (1.13092, 0.00000, 0.00000)
+
+H2O                          O           (0.000000, 0.000000, -0.069903)        CO                           C          (0.000000, 0.000000, -0.661165)
+                              H           (0.000000, 0.757532, 0.518435)                                        O           (0.000000, 0.000000, 0.472379)
+                              H           (0.000000, -0.757532, 0.518435)
+
+NH3                          N           (0.067759, -0.000000, 0.000000)        C2H4 (planar)         C          (-0.675000, 0.000000, 0.000000)
+                              H          (-0.313823, 0.468746, -0.811891)                                       C           (0.675000, 0.000000, 0.000000)
+                              H         (-0.313823, -0.937491, -0.000000)                                      H         (-1.242900, 0.000000, -0.930370)
+                              H           (-0.313823, 0.468746, 0.811891)                                        H          (-1.242900, 0.000000, 0.930370)
+                                                                                                                          H          (1.242900, 0.000000, -0.930370)
+                                                                                                                          H           (1.242900, 0.000000, 0.930370)
+
+C2H4 (twisted)         C           (-0.688500, 0.000000, 0.000000)        C6H6                        C           (0.000000, 1.396792, 0.000000)
+                              C           (0.688500, 0.000000, 0.000000)                                        C          (0.000000, -1.396792, 0.000000)
+                              H          (-1.307207, 0.000000, -0.915547)                                       C           (1.209657, 0.698396, 0.000000)
+                              H           (-1.307207, 0.000000, 0.915547)                                        C         (-1.209657, -0.698396, 0.000000)
+                              H           (1.307207, -0.915547, 0.000000)                                        C          (-1.209657, 0.698396, 0.000000)
+                              H           (1.307207, 0.915547, 0.000000)                                        C          (1.209657, -0.698396, 0.000000)
+                                                                                                                          H           (0.000000, 2.484212, 0.000000)
+                                                                                                                          H           (2.151390, 1.242106, 0.000000)
+                                                                                                                          H         (-2.151390, -1.242106, 0.000000)
+                                                                                                                          H          (-2.151390, 1.242106, 0.000000)
+                                                                                                                          H          (2.151390, -1.242106, 0.000000)
+                                                                                                                          H          (0.000000, -2.484212, 0.000000)
+                                                                                                                                                                                                             15
+
+                                                      Appendix B: Energies for small atoms and molecules
+
+       We  tabulate  the  total  energies  and  vertical  excitation  energies  that  were  obtained  for  the  small  systems,  as
+presented in Section II A of the main paper.  These are listed in Supplementary Table II.
+
+
+    Supplementary Table II. Total energies and vertical excitation energies (both in Ha) for the small atoms in Section II A.
+
+System            En                             Correlation energy (%)                           ∆E                           ∆E (σ2 matching)
+
+Li                              -7.47800(4)                                  99.9(1)a                                        —                                         —
+                                   -7.40998(5)                                       —                                      0.06801(7)                            0.06807(7)
+                                   -7.40988(7)                                       —                                      0.06812(8)                            0.06811(9)
+                                   -7.40977(7)                                       —                                      0.06823(8)                            0.06824(9)
+                                     -7.335(4)                                        —                                       0.143(4)                               0.143(4)
+
+Be                            -14.66736(7)                                100.0(1)a                                       —                                         —
+                                   -14.5663(6)                                       —                                       0.1011(6)                              0.1009(6)
+                                   -14.5664(1)                                       —                                       0.1010(1)                              0.1007(2)
+                                   -14.5664(1)                                       —                                       0.1010(1)                              0.1004(2)
+                                   -14.4710(2)                                       —                                       0.1964(2)                              0.1952(2)
+
+B                               -24.6509(2)                                  97.6(1)a                                        —                                         —
+                                   -24.6506(2)                                       —                                       0.0004(3)                              0.0005(3)
+                                   -24.6498(2)                                       —                                       0.0011(3)                              0.0008(3)
+                                   -24.5206(2)                                       —                                       0.1303(2)                              0.1300(3)
+                                   -24.5202(2)                                       —                                       0.1307(3)                              0.1300(3)
+
+C                               -37.8388(3)                                  96.0(2)a                                        —                                         —
+                                   -37.8388(2)                                       —                                      -0.0001(4)                             0.0001(4)
+                                   -37.8378(2)                                       —                                       0.0010(4)                              0.0008(4)
+                                   -37.7918(2)                                       —                                       0.0470(4)                              0.0470(4)
+                                   -37.7911(3)                                       —                                       0.0477(4)                              0.0451(4)
+N                               -54.5836(3)                                  97.0(2)a                                        —                                         —
+                                   -54.4911(4)                                       —                                       0.0925(5)                              0.0900(5)
+                                   -54.4885(4)                                       —                                       0.0952(5)                              0.0893(6)
+                                   -54.4874(4)                                       —                                       0.0963(6)                              0.0883(6)
+                                   -54.4861(4)                                       —                                       0.0975(5)                              0.0918(6)
+O                               -75.0532(5)                                  94.6(2)a                                        —                                         —
+                                   -75.0506(5)                                       —                                       0.0027(7)                             -0.0003(8)
+                                   -75.0519(5)                                       —                                       0.0013(7)                             -0.0011(7)
+                                   -74.9763(6)                                       —                                       0.0769(8)                              0.0711(8)
+                                   -74.9771(6)                                       —                                       0.0761(8)                              0.0703(9)
+
+
+           a Exact energy and HF energy at the CBS limit [50]
+                                                                                                                                                                                                                16
+
+
+Supplementary Table II (continued).  Total energies and vertical excitation energies (both in Ha) for the many-state calculations
+in Section II A.
+
+System            En                             Correlation energy (%)                           ∆E                           ∆E (σ2 matching)
+
+LiH                            -8.0695(1)                                   98.9(1)a                                        —                                         —
+                                    -7.9497(1)                                       —                                       0.1198(1)                              0.1199(1)
+                                    -7.9348(1)                                       —                                       0.1348(2)                              0.1347(2)
+                                    -7.9112(1)                                       —                                       0.1584(2)                              0.1573(2)
+                                    -7.9114(1)                                       —                                       0.1582(1)                              0.1574(2)
+                                    -7.8978(1)                                       —                                       0.1717(2)                              0.1710(2)
+                                    -7.8977(1)                                       —                                       0.1718(2)                              0.1709(2)
+                                    -7.8549(1)                                       —                                       0.2147(2)                              0.2130(2)
+
+BeH                           -15.2452(4)                                  98.3(4)a                                        —                                         —
+                                   -15.1516(2)                                       —                                       0.0936(4)                              0.0916(3)
+                                   -15.1507(2)                                       —                                       0.0946(5)                              0.0914(3)
+                                   -15.0286(3)                                       —                                       0.2166(5)                              0.2132(4)
+                                   -15.0259(2)                                       —                                       0.2193(5)                              0.2156(4)
+                                   -15.0249(2)                                       —                                       0.2203(5)                             0.2138(17)
+                                   -14.9951(4)                                       —                                       0.2500(5)                              0.2379(5)
+                                   -14.9528(3)                                       —                                       0.2923(5)                             0.2793(16)
+
+Be                             -14.6667(1)                                  99.3(1)a                                        —                                         —
+                                   -14.5655(2)                                       —                                       0.1012(2)                              0.1011(2)
+                                   -14.5654(1)                                       —                                       0.1013(2)                              0.1007(2)
+                                   -14.5651(2)                                       —                                       0.1016(2)                              0.1009(3)
+                                   -14.4663(3)                                       —                                       0.2004(4)                             0.1967(10)
+                                   -14.4671(3)                                       —                                       0.1996(3)                              0.1976(5)
+                                   -14.4665(3)                                       —                                       0.2002(3)                              0.1982(5)
+                                   -14.3915(2)                                       —                                       0.2752(2)                              0.2732(4)
+
+
+           a Exact energy and HF energy at the CBS limit [50]
+                                                                                                                                                                                       17
+
+                                Appendix C: Energies and oscillator strengths for intermediate systems
+
+      We  tabulate  the  total  energies,  vertical  excitation  energies  and  oscillator  strengths  that  were  obtained  for  the
+intermediate systems, as presented in Section II B of the main paper.  These are listed in Supplementary Table III.
+
+
+Supplementary Table III. Total energies (in Ha), vertical excitation energies (in Ha) and oscillator strengths (in au) for the
+systems in Section II B.
+
+Molecule      En               Correlation energy (%)           ∆E            ∆E (σ2 matching)      f      f  (σ2 matching)
+
+BH                 -25.2883(2)                    99.5(1)a                         —                         —                          —                        —
+                    -25.2361(2)                        —                       0.0522(3)              0.0511(3)                     —                        —
+                    -25.2356(2)                        —                       0.0527(3)              0.0503(3)                     —                        —
+                    -25.1765(2)                        —                       0.1118(3)              0.1088(3)               0.0276(1)             0.0253(1)
+
+CH+              -38.0863(2)                        —                             —                         —                          —                        —
+                    -38.0385(2)                        —                       0.0478(3)              0.0460(3)                     —                        —
+                    -38.0375(3)                        —                       0.0488(4)              0.0465(4)                     —                        —
+                    -37.9664(3)                        —                       0.1199(4)              0.1172(4)              0.00606(4)            0.00576(3)
+
+H2O               -76.4230(5)                    95.9(1)b                         —                         —                          —                        —
+                    -76.1499(6)                        —                       0.2731(8)              0.2702(8)                     —                        —
+                    -76.1343(6)                        —                       0.2887(8)              0.2845(9)               0.0395(3)             0.0374(3)
+
+NH3               -56.5533(3)                    96.6(1)b                         —                         —                          —                        —
+                    -56.3122(4)                        —                       0.2411(5)              0.2391(6)                     —                        —
+                    -56.2972(4)                        —                       0.2561(5)              0.2531(6)               0.0630(4)             0.0731(5)
+
+CO                -113.3039(6)                   95.9(1)b                         —                         —                          —                        —
+                   -113.0618(7)                       —                       0.2421(9)              0.2386(9)                     —                        —
+                   -112.9765(7)                       —                       0.3274(9)              0.3211(9)               0.1048(5)             0.1030(5)
+
+
+         a Exact energy [51] and HF energy at the CBS limit [38]
+         b Exact energy and HF energy at the CBS limit [50]
+
+
+
+
+                                                                Appendix D: Energies for benzene
+
+      We tabulate the total energies and vertical excitation energies that were obtained for benzene, as presented in
+Section II C of the main paper.  These are listed in Supplementary Table IV.
+
+
+         Supplementary Table IV. Total energies and vertical excitation energies (both in Ha) for benzene in Section II C.
+
+E0                          E1                                                  ∆E                                           ∆E (σ2 matching)
+
+-232.0675(11)                                     -231.8628(9)                                     0.2047(14)                                            0.1637(13)
+                                                                                                                                                                                             18
+
+                                                                  Appendix E: Energies for ethylene
+
+      We tabulate the total energies and vertical excitation energies that were obtained for all ethylene structures, as
+presented in Section II D of the main paper.  These are listed in Supplementary Table V.
+
+
+         Supplementary Table V. Total energies and vertical excitation energies (both in Ha) for ethylene in Section II D.
+
+τ  (φ = 0)     En                 ∆E           ∆E (σ2 matching)   φ (τ = 90°)     En                 ∆E           ∆E (σ2 matching)
+
+0                   -78.5650(4)            —                        —                   0                      -78.4477(4)            —                        —
+                    -78.2617(5)      0.3033(6)             0.2964(7)                                     -78.3578(5)      0.0899(6)             0.0897(7)
+15                 -78.5609(4)            —                        —                   20                    -78.4471(4)            —                        —
+                    -78.2755(5)      0.2854(6)             0.2799(7)                                     -78.3589(5)      0.0882(6)             0.0869(7)
+30                 -78.5461(4)            —                        —                   40                    -78.4391(4)            —                        —
+                    -78.2925(5)      0.2536(6)             0.2459(7)                                     -78.3661(5)      0.0730(6)             0.0735(6)
+45                 -78.5254(4)            —                        —                   60                    -78.4267(5)            —                        —
+                    -78.3171(5)      0.2083(6)             0.2032(7)                                     -78.3704(5)      0.0563(7)             0.0537(7)
+60                 -78.4952(4)            —                        —                   70                    -78.4161(5)            —                        —
+                    -78.3339(5)      0.1613(6)             0.1580(7)                                     -78.3721(5)      0.0440(7)             0.0428(7)
+70                 -78.4771(4)            —                        —                   80                    -78.3992(4)            —                        —
+                    -78.3416(5)      0.1355(6)             0.1324(7)                                     -78.3701(5)      0.0291(6)             0.0258(7)
+80                 -78.4540(5)            —                        —                   90                    -78.3828(4)            —                        —
+                    -78.3449(5)      0.1091(7)             0.1089(7)                                     -78.3675(5)      0.0153(6)             0.0112(7)
+85                 -78.4483(4)            —                        —                   95                    -78.3697(4)            —                        —
+                    -78.3512(5)      0.0971(6)             0.0922(7)                                     -78.3612(5)      0.0085(6)             0.0083(7)
+90                 -78.4425(5)            —                        —                   97.5                 -78.3634(5)            —                        —
+                    -78.3531(5)      0.0894(7)             0.0881(7)                                     -78.3593(5)      0.0041(7)             0.0023(7)
+                                                                                                 100                  -78.3587(5)            —                        —
+                                                                                                                         -78.3559(5)      0.0028(7)             0.0014(7)
+                                                                                                 102.5                -78.3552(5)            —                        —
+                                                                                                                         -78.3529(5)      0.0023(7)             0.0042(7)
+                                                                                                 105                  -78.3509(5)            —                        —
+                                                                                                                         -78.3448(5)      0.0061(7)             0.0048(7)
+                                                                                                 110                  -78.3449(5)            —                        —
+                                                                                                                         -78.3224(5)      0.0225(7)             0.0189(7)
+                                                                                                 120                  -78.3284(5)            —                        —
+                                                                                                                         -78.2929(5)      0.0355(7)             0.0231(7)
+                                                                                                                                                                              19
+
+                                                  Appendix F: Overlaps of trained wavefunctions
+
+      For  each  system  we  compute  the  pairwise  overlaps  between  all  trained  wavefunctions  and  tabulate  the  mean.
+These are listed in Supplementary Table VI.
+
+
+                                           Supplementary Table VI. Mean pairwise overlaps for all systems.
+
+System                           |Sij|          System                       |Sij|          System                       |Sij|         System                           |Sij|
+
+Li                              0.0010(6)      CH+                      0.0018(7)      C2H4 (τ = 80)      0.002(2)      C2H4 (φ = 95)           0.002(1)
+Be                              0.004(1)       H2O                       0.007(3)       C2H4 (τ = 85)      0.001(1)      C2H4 (φ = 97.5)        0.003(2)
+B                               0.0023(9)      NH3                       0.014(3)       C2H4 (τ = 90)      0.008(2)      C2H4 (φ = 100)         0.002(3)
+C                              0.0030(4)      CO                         0.003(1)       C2H4 (φ = 0)        0.009(1)      C2H4 (φ = 102.5)      0.007(1)
+N                              0.0040(5)      C2H4 (τ = 0)         0.011(3)       C2H4 (φ = 20)      0.002(2)      C2H4 (φ = 105)         0.007(2)
+O                              0.0035(4)      C2H4 (τ = 15)       0.007(3)       C2H4 (φ = 40)      0.003(2)      C2H4 (φ = 110)         0.009(1)
+LiH                           0.0047(9)      C2H4 (τ = 30)       0.004(3)       C2H4 (φ = 60)      0.001(1)      C2H4 (φ = 120)         0.002(3)
+BeH                          0.0068(5)      C2H4 (τ = 45)       0.003(2)       C2H4 (φ = 70)      0.002(2)      C6H6                         0.001(4)
+Be (many states)      0.0035(5)      C2H4 (τ = 60)       0.008(2)       C2H4 (φ = 80)      0.002(3)
+BH                            0.0033(9)      C2H4 (τ = 70)       0.002(2)       C2H4 (φ = 90)      0.006(2)
+                                                                                                                                                                                               20
+
+                                                                     Appendix G: Hyperparameters
+
+      We tabulate the hyperparameters that were used in all calculations.  These are listed in Supplementary Table VII.
+We also tabulate the active spaces and spin conﬁgurations (S2,M = (N↑−N↓)/2 (eigenvalue ofSz)) used to generate
+the CASSCF baselines.  These are listed in Supplementary Table VIII.
+
+
+                       Supplementary Table VII. Hyperparameters used in calculations.  (See ref. 29 for more details.)
+
+Hyperparameter                                                     Value               Hyperparameter                                                      Value
+
+One-electron basis                                                 6-311G              Maximum number of determinants                            10
+Dimension of e (# distance features)                       32                  Dimension of xi (embedding dimension)                  128
+Dimension of zi (kernel dimension)                          64                  Number of layers in wθ                                               1
+Number of layers in hθ                                              2                   Number of layers in gθ                                                2
+Number of interaction layers L:                                                      Number of layers in ηθ:
+  small/intermediate systems & ethylene                   4                     small/intermediate systems & ethylene                    3
+  benzene                                                                    5                     benzene                                                                     5
+Number of layers in κθ:                                                                  Number of walkers:
+  small/intermediate systems & ethylene                   3                     small/intermediate systems & ethylene                 1000
+  benzene                                                                    5                     benzene                                                                   400
+Batch size                                                                2000                Number of equilibration steps                                   500
+Number of training steps:                                                               Optimizer                                                              AdamW
+  small systems                                                   5000/10000           Learning rate scheduler                                        CyclicLR
+  intermediate systems                                            20000               Minimum/maximum learning rate:
+  ethylene                                                                10000                  small/intermediate systems & ethylene           0.0001/0.005
+  benzene                                                                10000                  benzene                                                            0.0001/0.001
+Cyclic frequency                                                      1000                Clipping window q                                                      5
+Minimum/maximum α                                         0.25/1.0             Epoch size                                                                  10
+Resampling frequency                                                3                   Number of decorrelation sampling steps:
+Target acceptance                                                    57%                   small/intermediate systems & ethylene                    5
+                                                                                                        benzene                                                                    15
+
+
+
+
+Supplementary Table VIII. The active spaces, specifyingN electrons acrossP orbitals, and spin conﬁgurations, used to generate
+the CASSCF baselines for all systems.
+
+System          CAS(P,N)                     Spin(S2,M)                     System                          CAS(P,N)                 Spin(S2,M)
+
+Li                       (5, 3)                      ( 34/ 34/ 34/ 34/ 34, 1)                  Be (many states)               (6, 4)               (0/2/2/2/0/0/0/2, 1)
+Be                      (5, 4)                        (0/2/2/2/0, 0)                   BH                                    (5, 2)                      (0/2/2/0, 0)
+B                       (5, 5)                     ( 34/ 34/ 34/ 154 / 154 , 1)                CH+                                  (5, 2)                      (0/2/2/0, 0)
+C                       (5, 6)                        (2/2/2/0/0, 0)                   H2O                                   (5, 2)                        (0/2/0, 0)
+N                       (5, 7)                      ( 154 / 34/ 34/ 34/ 34, 1)                 NH3                                   (7, 2)                        (0/2/0, 0)
+O                       (5, 8)                        (2/2/2/0/0, 0)                   CO                                  (10, 10)                      (0/2/0, 0)
+LiH                   (12, 4)                 (0/2/0/2/2/0/0/2, 0)              C2H4                                 (4, 4)                         (0/0, 0)
+BeH                  (12, 5)              ( 34/ 34/ 34/ 34/ 154 / 154 / 34/ 34, 1)          C6H6                                 (4, 4)                         (0/2, 0)

@@ -12,6 +12,8 @@ export const HEG_MODELS = new Set(["HEG2D", "HEG3D"]);
 // Track 3 (RULES.md 13): hydrogen chains and square sheets, stored as totals in Hartree with the
 // nuclear repulsion; n_sites holds the number of atoms N, and E/N is the energy per atom.
 export const H_MODELS = new Set(["Hchain", "Hsheet"]);
+// Track 3 atoms and molecules (RULES.md 13.2): stored and shown as totals, dof = the number of electrons.
+export const MOL_MODELS = new Set(["Atom", "Molecule"]);
 
 // Is the reported energy a Monte-Carlo estimate, or a deterministic contraction?
 // Only a sampled energy has an error bar to report: DMRG at a stated bond dimension, exact
@@ -188,6 +190,7 @@ export function perSiteLabel(inst) {
 // VarBench filenames carry Nf = N_up = N_dn.
 export function expectedDof(inst) {
   if (SPIN_MODELS.has(inst.model) || HEG_MODELS.has(inst.model) || H_MODELS.has(inst.model)) return inst.n_sites;
+  if (MOL_MODELS.has(inst.model)) return inst.n_electrons ?? null;
   // t-V is spinless, so Nf is already the total particle number.
   if (inst.model === "tV") return inst.params?.Nf ?? null;
   // tJ carries N_up and N_dn (the hole count fixes N_up + N_dn; RULES.md 2.1).

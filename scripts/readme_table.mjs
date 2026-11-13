@@ -81,7 +81,55 @@ export const MODELS = [
   ["HEG2D", "Electron gas, 2D"],
   ["Hchain", "Hydrogen chain"],
   ["Hsheet", "Hydrogen sheet"],
+  ["Atom", "Atom"],
+  ["Molecule", "Molecule"],
 ];
+
+// Track 3 atoms and molecules (RULES.md 13.1): <element|formula-geometry>_q<charge>_s<N_up - N_dn>_<basis>[_<variant>...].
+export function molParts(inst) {
+  const m = inst.instance_id.split("/")[1].match(/^(.+?)_q(-?\d+)_s(-?\d+)_([a-z0-9]+)((?:_[a-z0-9]+)*)$/);
+  if (!m) return null;
+  const [, head, q, sz, basis, rest] = m;
+  const dash = head.indexOf("-");
+  return { species: dash < 0 ? head : head.slice(0, dash), geometry: dash < 0 ? null : head.slice(dash + 1), charge: +q, sz: +sz, basis, variants: rest ? rest.slice(1).split("_") : [] };
+}
+// Pseudopotentials (RULES.md 13.1, an id token each) by the name the sources print.
+export const CORE_NAMES = { ccecp: "ccECP", ccecpall: "ccECP on every atom", bfd: "BFD", stu: "Stuttgart (STU)", ecepp: "eCEPP", eceppnocpp: "eCEPP without core polarization", fc: "frozen core" };
+export const coreLabel = variants => variants.length ? variants.map(v => CORE_NAMES[v] ?? v).join(", ") : "all-electron";
+// Labels people read (2026-11-12): the conventional formula where it differs from the id's Hill order, and the
+// common name of a single compound. Ids keep the Hill formula (RULES.md 13.1).
+const CONVENTIONAL = { H3N: "NH3", H3P: "PH3", H4Si: "SiH4", HLi: "LiH", HMg: "MgH", HNa: "NaH", ClH: "HCl", FH: "HF", OSc: "ScO", OTi: "TiO",
+  CLiN: "LiCN", CHN: "HCN", CHF: "HCF", CH2Si: "H2CSi", CH5N: "CH3NH2", CH4N: "CH2NH2", H4O2: "(H2O)2", C2H8: "(CH4)2", C4H8: "(C2H4)2", C12H12: "(C6H6)2" };
+const COMMON = { NH3: "ammonia", CH4: "methane", H2O: "water", C6H6: "benzene", C7H8: "toluene", C10H8: "naphthalene", C2H4: "ethylene", C2H6: "ethane",
+  O3: "ozone", CH3NH2: "methylamine", C2H2N4: "tetrazine", C2H2O2: "glyoxal", C5H4O: "cyclopentadienone", CH2O: "formaldehyde", CH2S: "thioformaldehyde",
+  LiCN: "lithium cyanide", "(C6H6)2": "benzene dimer", C12H12O2: "phenol dimer", C2H4O4: "formic acid dimer", C2H6N2O2: "formamide dimer", "(CH4)2": "methane dimer",
+  "(C2H4)2": "ethylene dimer", C8H8N4O4: "uracil dimer", "(H2O)2": "water dimer", C6H8O: "benzene–water complex", CCl4: "carbon tetrachloride", N2: "nitrogen",
+  CO: "carbon monoxide", HCN: "hydrogen cyanide", HCl: "hydrogen chloride", HF: "hydrogen fluoride", F2: "fluorine", O2: "oxygen", H2S: "hydrogen sulfide",
+  SiH4: "silane", PH3: "phosphine", LiH: "lithium hydride", BH3: "borane", HN3: "hydrazoic acid", HNO: "nitroxyl" };
+const SUB = d => d.replace(/\d/g, c => "₀₁₂₃₄₅₆₇₈₉"[c]);
+export function speciesLabel(hill) {
+  const f = CONVENTIONAL[hill] ?? hill;
+  return COMMON[f] ? `${COMMON[f]} (${SUB(f)})` : SUB(f);
+}
+// Where a geometry comes from, in words, for a label that is a hash in the id.
+export function geometryFrom(inst) {
+  const src = String(inst.params?.geometry_source ?? "");
+  // The geometry's own source where it names one, else the paper whose rows sit on it.
+  const a = src.match(/arXiv:(\d{4}\.\d{4,5})/) ?? (inst.rows ?? []).map(r => String(r.reference ?? "").match(/arXiv:(\d{4}\.\d{4,5})/)).find(Boolean);
+  return a ? `geometry of arXiv:${a[1]}` : null;
+}
+const GEOMETRY_SETS = { g3: "G3 set", quest: "QUEST set", w411: "W4-11 set", cccbdbexp: "CCCBDB experimental geometry" };
+export function molGeometry(g, inst) {
+  if (!g) return null;
+  if (/^g[0-9a-f]{6}$/.test(g) && inst && geometryFrom(inst)) return geometryFrom(inst);
+  if (/^R[\d.]+$/.test(g)) return `R = ${g.slice(1)}`;
+  for (const [k, v] of Object.entries(GEOMETRY_SETS)) if (g === k) return v;
+  if (/^s22n\d+$/.test(g)) return `S22 no. ${g.slice(4)}`;
+  if (/^bh76/.test(g)) return `BH76 ${g.slice(4)}`;
+  if (/^bbmep\d+$/.test(g)) return `path point ${+g.slice(5)}`;
+  if (/^g[0-9a-f]{6}$/.test(g)) return `geometry ${g}`;
+  return g;
+}
 
 // Boundary codes as defined in vendor/varbench/lattice.md. Periodic is the default and
 // goes unsaid, as in the frontier labels.
@@ -94,6 +142,8 @@ export function geometry(inst) {
   // Track 3 (RULES.md 13.1): N atoms on a line or a square grid.
   if (inst.model === "Hchain") return `H${n} chain`;
   if (inst.model === "Hsheet") return `H${n} sheet (${Math.sqrt(n)}x${Math.sqrt(n)})`;
+  if (inst.model === "Atom") return molParts(inst)?.species ?? inst.instance_id.split("/")[1];
+  if (inst.model === "Molecule") { const m = molParts(inst); return m ? speciesLabel(m.species) : inst.instance_id.split("/")[1]; }
   const cells = inst.lattice.match(/^([a-z]+)-(\d+(?:x\d+)+)$/);
   if (cells) {
     const product = cells[2].split("x").reduce((a, b) => a * Number(b), 1);
@@ -115,6 +165,12 @@ export function instanceLabel(inst) {
   if (inst.model === "Hchain" || inst.model === "Hsheet")
     return [geometry(inst), BOUNDARY[inst.boundary] ?? "periodic", `R = ${+(+p.R).toPrecision(6)}`, p.basis === "none" ? "basis-free" : p.basis,
       ...(p.twist && p.twist !== "Gamma" ? [`twist ${p.twist}`] : [])].join(", ");
+  if (inst.model === "Atom" || inst.model === "Molecule") {
+    const m = molParts(inst);
+    if (!m) return inst.instance_id.split("/")[1];
+    return [inst.model === "Molecule" ? speciesLabel(m.species) : m.species, molGeometry(m.geometry, inst), m.charge ? `charge ${m.charge > 0 ? "+" : ""}${m.charge}` : null, `N↑ − N↓ = ${m.sz}`,
+      m.basis === "none" ? "basis-free" : String(p.basis ?? m.basis), ...(m.variants.length ? [coreLabel(m.variants)] : [])].filter(Boolean).join(", ");
+  }
   const parts = [geometry(inst)];
   if (BOUNDARY[inst.boundary]) parts.push(BOUNDARY[inst.boundary]);
   // t-J (RULES.md 2.1, 2026-10-22): t = 1; J, t' (t2) and t'' (t3); the hole count; and whether the

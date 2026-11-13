@@ -1,0 +1,65 @@
+{
+  "model": "Molecule",
+  "lattice": "molecule",
+  "n_sites": 2,
+  "boundary": "O",
+  "n_electrons": 3,
+  "params": {
+    "formula": "HMg",
+    "name": "MgH",
+    "charge": 0,
+    "N_up": 2,
+    "N_dn": 1,
+    "basis": "none",
+    "variant": "ccECP (Annaberdiyev et al.), from PySCF; on Mg only, H all-electron",
+    "core_electrons": 10,
+    "geometry": [
+      {
+        "el": "Mg",
+        "r": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "el": "H",
+        "r": [
+          0,
+          0,
+          3.2686592776601873
+        ]
+      }
+    ],
+    "geometry_source": "CCCBDB Release 22 experimental geometry for MgH (magnesium monohydride) (cccbdb.nist.gov/expgeom2x.asp, formula MgH; the paper cites the CCCBDB experimental dataset, ref. 40), Cartesian coordinates in ångström: Mg (0.0000, 0.0000, 0.0000); H (0.0000, 0.0000, 1.7297)"
+  },
+  "instance_id": "Molecule/HMg-R3.26866_q0_s1_none_ccecp",
+  "rows": [
+    {
+      "energy": -1.37559,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 3,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "FermiNet",
+      "method_detail": "\"modified FermiNet\" (a recent FermiNet version, Sec. III), isotropic envelope, training iterations as in Appendix A, ECP ccECP on Mg",
+      "method_as_published": "FermiNet [VMC, \"modified FermiNet\" (a recent FermiNet version, Sec. III), isotropic envelope, training iterations as in Appendix A, ECP ccECP on Mg]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "M. Wang, Y. Zhou & H. Wang, Performance assessment of the effective core potentials under the fermionic neural network: First and second row elements, J. Chem. Phys. 160, 204109 (2024), arXiv:2403.08287, doi:10.1063/5.0207853",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2403.08287 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "−1.375 59 (Table XI, MgH, column ccECP)",
+        "note": "J. Chem. Phys. 160, 204109 Table XI (Appendix F), journal text line 1164; same digits in the arXiv text | Hartree, total energy with ccECP on Mg (10 core electrons, 3 electrons treated); geometry from CCCBDB as cited (ruling of 2026-11-12); spin sector not printed, filed on the 2Σ+ ground state (N_up - N_dn = 1); no error bar printed | reader confidence medium",
+        "secondary_of": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,1308 @@
+    Ab-Initio Solution of the Many-Electron Schr¨odinger Equation with Deep Neural
+                                                                  Networks
+
+                            David  Pfau*,  James  S.  Spencer*,  and  Alexander  G.  D.  G.  Matthews
+                                            DeepMind,  6  Pancras  Square,  London  N1C  4AG
+
+                                                             W.  M.  C.  Foulkes
+                Department  of  Physics,  Imperial  College  London,  South  Kensington  Campus,  London  SW7  2AZ
+
+
+                                                         (Dated:  September 10, 2020)
+                  Given access to accurate solutions of the many-electron Schr¨odinger equation, nearly all chem-
+                istry could be derived from ﬁrst principles.  Exact wavefunctions of interesting chemical systems are
+                out of reach because they are NP-hard to compute in general,  but approximations can be found
+                using polynomially-scaling algorithms.  The key challenge for many of these algorithms is the choice
+                of wavefunction approximation, or Ansatz, which must trade oﬀ between eﬃciency and accuracy.
+                Neural  networks  have  shown  impressive  power  as  accurate  practical  function  approximators  and
+                promise as a compact wavefunction Ansatz for spin systems, but problems in electronic structure
+                require  wavefunctions  that  obey  Fermi-Dirac  statistics.   Here  we  introduce  a  novel  deep  learning
+                architecture, the Fermionic Neural Network, as a powerful wavefunction Ansatz for many-electron
+                systems.  The Fermionic Neural Network is able to achieve accuracy beyond other variational quan-
+                tum Monte Carlo Ans¨atze on a variety of atoms and small molecules.  Using no data other than
+                atomic positions and charges, we predict the dissociation curves of the nitrogen molecule and hy-
+                drogen chain, two challenging strongly-correlated systems, to signiﬁcantly higher accuracy than the
+                coupled cluster method, widely considered the most accurate scalable method for quantum chemistry
+                at equilibrium geometry.  This demonstrates that deep neural networks can improve the accuracy of
+                variational quantum Monte Carlo to the point where it outperforms other ab-initio quantum chem-
+                istry methods, opening the possibility of accurate direct optimization of wavefunctions for previously
+                intractable many-electron systems.
+
+
+                    I.    INTRODUCTION                                      found by solving the time-independent Schr¨odinger equa-
+                                                                            tion,
+  The success of deep learning in artiﬁcial intelligence1,2                                ˆHψ(x1,..., xn) =Eψ(x1,..., xn)             (1)
+has led to an outpouring of research into the use of neu-
+ral networks for quantum physics and chemistry.  Many                                    ˆH =− 1    ∑                    1
+of  these  methods  train  a  deep  neural  network  to  pre-                                     2     ∇2i +∑       |ri− rj|
+dict  properties  of  novel  systems  by  use  of  supervised                                        i          i>j
+learning  on  a  dataset  compiled  from  existing  compu-                                    −∑          ZI                  ZIZJ
+tational methods — typically density functional theory                                            iI  |ri− RI| +∑I>J       |RI− RJ|
+(DFT),3,4  exact solutions on a lattice,5  or coupled clus-
+ter with single, double and perturbative triple excitations                 where xi ={ri,σi} are the coordinates of electroni, with
+(CCSD(T)).6,7 Yet all of these methods have drawbacks.
+Even CCSD(T), which is generally much more accurate                         ri∈ R3  the position and σi∈{↑,↓} the spin,∇2i  is the
+than DFT, has diﬃculties with bond breaking and tran-                       Laplacian  with  respect  to  ri,  and  RI  and ZI  are  the
+sition  states.8  While  methods  exist  that  are  even  more              position  and  atomic  number  of  nucleus I.   We  work  in
+accurate,  most  suﬀer  from  impractical  scaling  (in  the                the Born-Oppenheimer approximation,10  where the nu-
+worst case exponential)9 or require complicated system-                     clear positions are ﬁxed input parameters,  and Hartree
+dependent tuning, making them diﬃcult to apply “out-                        atomic units are used throughout.  The Schr¨odinger dif-
+of-the-box” to new systems.  Here we focus instead on ab-                   ferential  operator  is  spin  independent  but  the  electron
+initio methods that use deep neural networks as approx-                     spin matters because the wavefunction must obey Fermi-
+imate solutions to the many-electron Schr¨odinger equa-                     Dirac  statistics  —  it  must  be  antisymmetric  under  the
+tion  without  the  need  for  external  data.  We are able to              simultaneous  exchange  of  the  position  and  spin  coor-
+achieve very high accuracy on a number of small but chal-                   dinates  of  any  two  electrons: ψ(..., xi,..., xj,...)  =
+lenging systems, all with the same neural network archi-                    −ψ(..., xj,..., xi,...).
+tecture, suggesting that our method could be a promising                       Many approaches in quantum chemistry start from a
+“out-of-the-box” solution for larger systems for which ex-                  ﬁnite set of one-electron orbitals φ1,...,φN  and approx-
+isting approaches are insuﬃcient.                                           imate the many-electron wavefunction as a linear combi-
+  The ground state wavefunction ψ(x1, x2,..., xn) and                       nation of antisymmetrized tensor products (Slater deter-
+energy E  of a chemical system with n electrons may be                      minants) of those functions:
+                                                                                                                                                     2
+                                                            ⏐⏐⏐⏐⏐⏐⏐φk1(x1) ... φk1(xn)⏐⏐⏐⏐⏐⏐⏐
+                           ∑sign(P)∏          φki (xPi) =        ...                  ...= det[φki (xj)] = det[Φk],                             (2)
+
+
+                            P              i                 φkn(x1) ... φkn(xn)
+
+
+                                                       ψ(x1,..., xn) =∑          ωk det[Φk],                                                               (3)
+                                                                             k
+
+
+
+where{φk1,...,φkn}  is  a  subset  of n  of  the N  orbitals,                nants are evaluated are replaced by collective coordinates
+the  sum  in  Eqn.  2  is  taken  over  all  permutationsP  of               rj +∑i(⁄=j)η(rij)(ri− rj), but the orbitals remain func-
+the  electron  indices,  and  the  sum  in  Eqn.  3  is  over  all           tions  of  a  single  three-dimensional  variable.   The  Fer-
+subsets  of n  orbitals.   The  diﬃculty  is  that  the  num-                miNet  wave  function  goes  much  further,  replacing  the
+ber  of  possible  Slater  determinants  rises  exponentially                one-electron orbitals φki (xj) by functions of 3n indepen-
+with the system size, restricting this “full conﬁguration-                   dent variables.  Every “orbital” in every determinant now
+interaction” (FCI) approach to tiny molecules, even with                     depends both on xj and (in a general symmetric way) on
+recent advances.11                                                           the position and spin coordinates of every other electron.
+  To address problems of practical interest, a more com-
+pact representation of the wavefunction is needed.  The
+choice  of  function  class  used  to  approximate  the  wave-
+function is known as the wavefunction Ansatz.  For most                         Our approach is similar in spirit to the neural network
+applications  of  quantum  Monte  Carlo  (QMC)  methods                      backﬂow  transform21  that  has  been  applied  to  discrete
+to  quantum  chemistry,  the  default  choice  is  the  Slater-              systems. Certain simpliﬁcations in the discrete case allow
+Jastrow  Ansatz,12  which  takes  a  truncated  linear  com-                 the use of conventional neural networks, while the contin-
+bination  of  Slater  determinants  and  adds  a  multiplica-                uous case requires a novel architecture to handle antisym-
+tive term — the Jastrow factor — to capture close-range                      metry constraints, boundary conditions and cusps.  The
+correlations.  The Jastrow factor is normally a product                      closest  prior  work  we  are  aware  of  in  continuous  space
+of functions of the distances between pairs and triplets                     is the iterative backﬂow transform,25,26  which has been
+of  particles.   Additionally,  a  backﬂow  transformation13                 applied  to  superﬂuid  3He.   While  that  work  uses  inter-
+is  sometimes  applied  before  the  orbitals  are  evaluated,               mediate layers of the same dimensionality as the input,
+shifting the position of every electron by an amount de-                     the FermiNet can use intermediate layers of arbitrary di-
+pendent on the positions of nearby electrons.  There are                     mensionality, increasing the representational capacity.27
+many alternative Ans¨atze,14,15  but for continuous-space
+many-electron problems in three dimensions the Slater-
+Jastrow-backﬂow form remains the default.
+  Here,  we  greatly  improve  the  accuracy  of  the  Slater-
+Jastrow-backﬂow   variational   quantum   Monte   Carlo                         The FermiNet is not only an improvement over existing
+(VMC)  method  by  using  a  neural  network  we  dub  the                   Ans¨atze for VMC, but is competitive with and in some
+Fermionic Neural Network, or FermiNet, as a more ﬂex-                        cases superior to more sophisticated quantum chemistry
+ible Ansatz.  This avoids the use of a ﬁnite basis set, a                    algorithms.   Projector  methods  such  as  diﬀusion  quan-
+signiﬁcant  source  of  error  for  other  Ans¨atze,  and  mod-              tum Monte Carlo (DMC)12 and auxiliary ﬁeld quantum
+els higher-order electron-electron interactions compactly.                   Monte  Carlo  (AFQMC)28  generate  stochastic  trajecto-
+The  use  of  neural  networks  as  a  compact  wavefunction                 ries that sample the ground state wavefunction without
+Ansatz  has  been  studied  before  for  spin  systems16–20                  the need for an explicit representation, although accurate
+and  many-electron  systems  on  a  lattice19,21  as  well  as               explicit trial wavefunctions are still required for good per-
+small  systems  of  bosons  in  continuous  space.22  Appli-                 formance and numerical stability.  We ﬁnd the FermiNet
+cations  of  neural  network  Ans¨atze  to  chemical  systems                is competitive with projector methods on all systems in-
+have been limited to date, presumably due to the com-                        vestigated, in contrast with the conventional wisdom that
+plexity  of  Fermi-Dirac  statistics.     Existing  work  has                VMC is less accurate.  Coupled cluster methods8 use an
+been restricted to very small numbers of electrons,23  or                    Ansatz  that  multiplies  a  reference  wavefunction  by  an
+has been of very low accuracy.24  Unlike these other ap-                     exponential of a truncated sum of creation and annihi-
+proaches, we use the Slater determinant as the starting                      lation  operators.   This  proves  remarkably  accurate  for
+point for our Ansatz, and then extend it by generalising                     equilibrium geometries, but conventional reference wave-
+the single-electron orbitals to include generic exchange-                    functions are insuﬃcient for systems with many low-lying
+able nonlinear interactions of all electrons.  In a conven-                  excited states.  We evaluate the FermiNet on a variety of
+tional backﬂow transformation, the electron positions rj                     stretched systems and ﬁnd that it outperforms coupled
+at which the one-electron orbitals in the Slater determi-                    cluster in all cases.
+                                                                                                                                                     3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1.  The Fermionic Neural Network (FermiNet).  Top:  Global architecture.  Features of one or two electron positions are
+inputs to diﬀerent streams of the network.  These features are transformed through several layers, a determinant is applied,
+and the wavefunction at that position is given as output.  Bottom:  Detail of a single layer.  The network averages features of
+electrons with the same spin together, then concatenates these features to construct an equivariant function of electron position
+at each layer.
+
+
+      II.    FERMIONIC NEURAL NETWORKS                                       struction of a set of these permutation-equivariant func-
+                                                                             tions with a neural network is the main innovation of the
+     A.    Fermionic Neural Network Architecture                             FermiNet.  We emphasize that determinants constructed
+                                                                             from permutation-equivariant functions are substantially
+                                                                             more expressive than conventional Slater determinants.
+  To construct an expressive neural network Ansatz, we                       Fig.  1  contains  a  schematic  of  the  network  and  Algo-
+note that nothing requires the orbitals in the matrix in                     rithm 1 pseudocode for evaluating the network.
+Eqn. 2 to be functions of the coordinates of a single elec-
+tron.   The  only  requirement  for  the  determinant  of  a                    The  Fermionic  Neural  Network  takes  features  of  sin-
+matrix-valued function of x1, x2, ..., xn to be antisym-                     gle  electrons  and  pairs  of  electrons  as  input.   As  input
+metric is that exchanging any two input variables, xi and                    to the single-electron stream of the network, we include
+xj, exchanges two rows or columns of the output matrix,                      both the diﬀerence in position between each electron and
+leaving  the  rest  invariant.   This  observation  allows  us               nucleus ri− RI and the distance|ri− RI|.  The input to
+to  replace  the  single-electron  orbitals φki (xj)  by  multi-             the two-electron stream is similarly the diﬀerences ri−rj
+electron  functions φki (xj; x1,..., xj−1, xj+1,..., xn)   =                 and  distances|ri− rj|.   Adding  the  absolute  distances
+φki (xj;{x/j}), where{x/j} denotes the set of all electron                   between particles directly as input removes the need to
+states  except xj,  so  long  as  these  functions  are  invari-             include a separate Jastrow factor after a determinant.  As
+ant  to  any  change  in  the  order  of  the  arguments  after              the distance is a non-smooth function at zero, the neural
+xj.   In  theory,  a  single  determinant  made  up  of  these               network is capable of expressing the non-smooth behav-
+permutation-equivariant functions is suﬃcient to repre-                      ior  of  the  wavefunction  when  two  particles  coincide  —
+sent any antisymmetric function (see Appendix B), how-                       the wavefunction cusps.  Accurately modeling the cusps
+ever  the  practicality  of  approximating  an  antisymmet-                  is critical for correctly estimating the energy and other
+ric  function  will  depend  on  the  choice  of  permutation-               properties of the system.  The quality of the wavefunc-
+equivariant  function  class;  we  hence  use  a  small  linear              tion  cusps  for  the  helium  atom  are  investigated  in  Ap-
+combination of nk  determinants in this work.  The con-                      pendix  F.   We  denote  the  concatenation  of  all  features
+                                                                                                                                                      4
+
+                                                                              than  mapping  atomic  positions  to  total  energies  and
+             Algorithm 1 FermiNet evaluation.                                 other properties.
+Require:  walker conﬁguration{r↑1,··· , r↑             1,··· , r↓                In our intermediate layers, we take the mean of acti-
+                                                  n↑, r↓        n↓}           vations  from  diﬀerent  streams  of  the  network,  concate-
+Require:  nuclear positions{RI}
+ 1:  for each electron i,α do                                                 nate these mean activations together and append them
+ 2:      h𝓁αi ← concatenate(rαi − RI,|rαi − RI|∀ I)                           to the single-electron streams of the network. For a single
+ 3:      h𝓁αβij ← concatenate(rαi − rβj,|rαi − rβj|∀ j,β)                     layer this is a purely linear operation, but when combined
+ 4:  end for                                                                  with  a  nonlinear  activation  function  after  each  layer  it
+ 5:  for each layer 𝓁∈{0,L− 1} do                                             becomes a ﬂexible architecture for building permutation-
+ 6:      g𝓁↑←   1n↑∑n↑i   h𝓁↑i                                                equivariant functions33.  Information from both the other
+ 7:      g𝓁↓←   1           i                                                 one-electron streams and the two-electron streams are fed
+                 n↓∑n↓i   h𝓁↓
+ 8:      for each electron i,α do                                             into  the  one-electron  streams.   However,  to  reduce  the
+ 9:           g𝓁α↑                                                            computational  overhead,  no  information  is  transferred
+              i ←   1n↑∑n↑j   h𝓁α↑ij
+10:           g𝓁α↓                                                            between two-electron streams — these are multilayer per-
+              i ←   1n↓∑n↓j   h𝓁α↓ij                                          ceptrons running in parallel.  If the outputs of the one-
+11:           f𝓁αi ← concatenate(h𝓁αi , g𝓁↑, g𝓁↓, g𝓁α↑i  , g𝓁α↓i    )         electron stream at layer 𝓁 with spin α  are denoted h𝓁αi
+12:           h𝓁+1αi  ← tanh(matmul(Vl, f𝓁αi   ) + bl) + h𝓁αi(                and  outputs  of  the  two-electron  stream  are h𝓁αβ
+13:           h𝓁+1αβ             matmul(Wl, h𝓁αβ               + h𝓁αβ                                                                      ij   ,  then
+              ij  ← tanh                          ij   ) + cl)      ij        the input to the one-electron stream for electron i with
+14:      end for                                                              spin α at layer 𝓁 + 1 is
+15:  end for                                                                                                                                       
+16:  for each determinant k do                                                               n↑∑            n↓∑           n↑∑              n↓∑
+17:      for each orbital i do                                                 h𝓁αi ,  1        h𝓁↑            h𝓁↓           h𝓁α↑             h𝓁α↓
+18:           for each electron j,α do                                                  n↑         j ,  1n↓      j ,  1n↑       ij ,  1n↓        ij
+19:        e← envelope(rαj,{rαi − RI})                                                      j=1            j=1            j=1             j=1
+                                                                                         (                              )
+20:        φi(rαj ;{rα/j};{r¯α}) =(dot(wkαi , hLαj   ) +gkαi )e                      =    h𝓁αi , g𝓁↑, g𝓁↓, g𝓁α↑i  , g𝓁α↓i = f𝓁αi ,                     (4)
+21:           end for
+22:      end for      [                       ]
+23:   Dk↑← det         φk↑i  (r↑j;{r↑/j};{r↓})                                which is the concatenation of the mean activation for spin
+                      [                       ]                               up and down parts of the one and two electron streams,
+24:   Dk↓← det         φk↓i  (r↓j;{r↓/j};{r↑})                                respectively.  This concatenated vector is then input into
+25:  end for                                                                  a linear layer followed by a tanh nonlinearity.  A resid-
+26: ψ←∑kωkDk↑Dk↓                                                              ual connection is also added between layers of the same
+                                                                              shape, for both one and two electron streams:
+
+
+for one electron h0i , or h0αi    if we explicitly index its spin                          h𝓁+1αi       = tanh(V𝓁f𝓁αi   + b𝓁) + h𝓁αi(
+α∈{↑,↓}; the features of two electrons are denoted h0ij                                   h𝓁+1αβij       = tanhW𝓁h𝓁αβij    + c𝓁)   + h𝓁αβij            (5)
+or h0αβij   .  If the system has n↑  spin-up electrons and n↓
+spin  down  electrons,  without  loss  of  generality  we  can                   After the last intermediate layer of the network, a ﬁnal
+reorder the electrons so that σj =↑ for j∈ 1,...,n↑ and                       spin-dependent  linear  transformation  is  applied  to  the
+σj =↓ for j∈n↑ + 1,...,n.                                                     activations, and the output is multiplied by a weighted
+  To  satisfy  the  overall  antisymmetry  constraint  for                    sum of exponentially-decaying envelopes, which enforces
+a  fermionic  wavefunction,   intermediate  layers  of  the                   the  boundary  condition  that  the  wavefunction  goes  to
+Fermionic  Neural  Network  must  mix  information  to-                       zero far away from the nuclei:
+gether in a permutation-equivariant way.  Permutation-                                                                               )
+equivariant neural network layers like self-attention have                       φkαi   (rαj ;{rα/j};{r¯α}) =(wkαi · hLαj    +gkαi
+gained   success   in   recent   years   in   natural   language                                      ∑
+processing29 and protein folding,30 but we pursue a sim-                                                   πkαimexp(−|Σkαim(rαj− Rm)|),    (6)
+pler yet eﬀective approach.  Permutation-equivariant lay-                                               m
+ers have also been widely adopted in the computational
+chemistry and machine learning community for modeling                         where ¯α is↓ ifα is↑ or vice versa, hLαj    is an output from
+energies and force ﬁelds from atomic conﬁgurations.3,31,32                    the L-th (ﬁnal) layer of the intermediate single-electron
+The Fermionic Neural Network shares some architectural                        features network for electrons of spin α, and wkαi    (gkαi   )
+details  with  these  models,  such  as  the  use  of  pairwise               are  the  weights  (biases)  of  the  ﬁnal  linear  transforma-
+distances as inputs and parallel streams of feature vec-                      tion for determinantk.  The learned parametersπkαim and
+tors,  one  per  particle,  through  the  network,  but  is  tai-             Σkαim ∈ R3×3  control  the  anisotropic  decay  to  zero  far
+lored speciﬁcally for mapping electronic conﬁgurations to                     from  each  nucleus.   The  functions{φkαi   (rαj )}  are  then
+wavefunction values with ﬁxed atomic positions,  rather                       used as the input to multiple determinants, and the full
+                                                                                                                                                  5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.  Comparison of the FermiNet against the Slater-Jastrow Ansatz,  with and without backﬂow.  (a):  First-row atoms
+with a single determinant.  Baseline numbers are from Chakravorty et al.34.  The Slater-Jastrow neural network yields slightly
+lower energies than VMC with a conventional Slater-Jastrow Ansatz, while the FermiNet is substantially more accurate.  (b):
+The CO and N2  molecules (bond lengths 2.17328 a0  and 2.13534 a0  respectively) with increasing numbers of determinants.
+All-electron CCSD(T)/CBS results are used as the baseline.  No matter how many determinants are used, the FermiNet far
+exceeds the accuracy of the Slater-Jastrow net.
+
+
+wavefunction is taken as a weighted sum of these deter-                     theory  general  enough  to  represent  any  antisymmetric
+minants:                       (     [                         ]            function, though in practice we require a small number
+ ψ(r↑                      ωk    det   φk↑                                  of determinants to reach high accuracy.  This may be due
+      1,..., r↓n↓) =∑                   i  (r↑j;{r↑/j};{r↓})                to the limitations of ﬁnite-size neural networks in repre-
+                        k             [                          ])         senting functions of the type described in Appendix B.
+                                 det   φk↓i  (r↓j;{r↓/j});{r↑};     .       In  all  our  experiments  on  N2  and  the  hydrogen  chain
+                                                                   (7)      (Secs. III D, III E, Table VI), the FermiNet was able to
+                                                                            learn a size-consistent solution.
+Eq.  7  uses  the  fact  that  the  full  determinant  det[Φ]  =
+det[φi(xj;{x/j})] may be replaced by a product of spin-
+up and spin-down terms if we chooseφi(xj;{x/j}) = 0 if
+i∈ 1...n↑ andj∈n↑ + 1,...,n ori∈n↑ + 1,...,n and                                          B.    Wavefunction optimization
+j∈ 1,...,n↑.  Then the matrix Φ is block-diagonal and:
+   det [Φ] = det[φi(xj;{x/j})] =[]    [                        ]               As in the standard setting for wavefunction optimiza-
+   det   φ↑                       det   φ↓                         (8)      tion for variational Monte Carlo, we sought to minimize
+           i (r↑j;{r↑/j};{r↓})           i (r↓j;{r↓/j};{r↑})                the energy expectation value of the wavefunction Ansatz:
+The new wavefunction is only antisymmetric under ex-                                                            ∫ dXψ∗θ(X) ˆHψθ(X)
+change of electrons of the same spin,{r↑} or{r↓}, but                                L(θ) =⟨ψθ| ˆH|ψθ⟩           ∫ dXψ∗θ(X)ψθ(X) ,
+nevertheless  yields  correct  expectation  values  of  spin-                                   ⟨ψθ|ψθ⟩    =
+independent  observables  and  the  fully  antisymmetric
+wavefunction can be reconstructed if required.  This fac-
+torization allows spin-dependence to be handled explictly                   where θ  are  the  parameters  of  the  Ansatz,   ˆH  is  the
+rather than as input to the network.                                        Hamiltonian of the system as given in Eqn. I, and X =
+  The linear combination of determinants in Eq. 7 bears                     (x1,..., xn) denotes the full state of all electrons. As  ˆH is
+some  resemblance  to  Ans¨atze  used  in  truncated  con-                  time-reversal invariant and Hermitian, its eigenfunctions
+ﬁguration  interaction  methods  like  CI  singles  and  dou-               and  eigenvalues  are  real.   If  the  minimization  is  taken
+bles (CISD), which are known to have issues with size-                      over all real normalizable functions, the minimum of the
+consistency, thus it is natural to wonder if the FermiNet                   energy occurs whenψθ(X) is the ground-state eigenfunc-
+also has these issues.  The determinants in the FermiNet                    tion of  ˆH; for a more restricted Ansatz, the minimum lies
+are very diﬀerent from conventional Slater determinants,                    above the ground-state eigenvalue.  When samples from
+as  they  allow  for  essentially  arbitrary  correlations  be-             the probability distribution deﬁned by the wavefunction
+tween  electrons  in  each  orbital φkαi   .   We  prove  in  Ap-           Ansatz p(X)∝ ψ2θ(X) are available, unbiased estimates
+pendix  B  that  a  single  determinant  of  this  form  is  in             of  the  gradient  of  the  energy  with  respect  to θ  can  be
+                                                                                                                                             6
+
+computed as follows:                                                        For large neural networks with thousands to millions
+                                                                         of parameters, solving the linear systemFδθ =∇θL be-
+   EL(X) =ψ−1(X) ˆHψ(X),                                                 comes impractical.  KFAC ameliorates this with two ap-
+      ∇θL = 2Ep(X)[(EL− Ep(X) [EL])∇θlog|ψ|],     (9)                    proximations.   First,  any  termsFij  are  assumed  to  be
+                                                                         zero  when θi  and θj  are  in  diﬀerent  layers  of  the  net-
+where EL  is  the  local  energy  and  we  have  dropped                 work.   This  makes  the  FIM  block-diagonal  and  signiﬁ-
+the   dependence   of ψ   on θ   for   clarity.       Recent             cantly more eﬃcient to invert.  The second approxima-
+developments,28,35–37  including  investigating  ﬁrst-order              tion is based on the structure of the gradient for a linear
+stochastic   opitimization   methods   from   the   machine              layer in a neural network.  If W𝓁 is the weight matrix for
+learning  community.38,39,  have  enabled  optimization  of              layer 𝓁 of a network, then the block of the FIM for that
+conventional  wavefunctions  with  large  parameter  sets.               weight is, in vectorized form:
+We  use  a  second-order  method  which  can  exploit  the
+structure of the neural network.                                                   [                           T]
+  For  all  wavefunction  Ans¨atze  used  in  this  paper,  the             Ep(X)     ∂logp(X)     ∂logp(X)        =
+determinants were computed in the log domain, and the                                ∂vec(W𝓁)     ∂vec(W𝓁)
+ﬁnal network output gave the log of the absolute value                                                      [
+of the wavefunction,  along with its sign.  The local en-                                            Ep(X)   (a𝓁⊗ e𝓁) (a𝓁⊗ e𝓁)T]         (10)
+ergy was computed directly in the log domain using the                   where a𝓁 are the forward activations and e𝓁 are the back-
+formula:                                                                 ward sensitivities for that layer.  KFAC approximates the
+EL(X) =ψ−1(X) ˆHψ(X)                                                     inverse of this block as the Kronecker product of the in-
+                ∑[               ⏐⏐⏐⏐X (∂log|ψ|    ⏐⏐⏐⏐X)2]              verse second moments:
+         =−1           ∂2log|ψ|      +                     +V (X),
+              2   i       ∂r2i              ∂ri                                    [
+                                                                            Ep(X)    (a𝓁⊗ e𝓁) (a𝓁⊗ e𝓁)T]−1≈
+where V (X) is the potential energy of the state X and                                        Ep(X)[a𝓁aT𝓁   ]−1⊗ Ep(X)[e𝓁eT𝓁      ]−1    (11)
+the index i runs over all 3N dimensions of the electron
+position vector.  To optimize the wavefunction, we used
+a modiﬁed version of Kronecker Factorized Approximate                    Further  details  can  be  found  in  Martens  and  Grosse
+Curvature (KFAC),40  an approximation to natural gra-                    (2015).40
+dient descent41 appropriate for neural networks.  Natural                   The original KFAC derivation assumed the density to
+gradient descent updates for optimizingL with respect                    be estimated was normalized,  but we wish to extend it
+to parameters θ have the form δθ∝F−1∇θL(θ), where                        to stochastic reconﬁguration for unnormalized wavefunc-
+F  is the Fisher Information Matrix (FIM):                               tions. In Appendix C, we show that if we only have access
+                           [∂logp(X)                 ]                   to an unnormalized wavefunction, terms in the FIM can
+            Fij = Ep(X)                  ∂logp(X)      .                 be expressed as:
+                                 ∂θi         ∂θj
+This  is  equivalent  to  stochastic  reconﬁguration42  when                   Fij∝ Ep(X)[(Oi− Ep(X)[Oi])(Oj− Ep(X)[Oj])]
+the probability density is unnormalized (see Appendix C)
+and closely related to the linear method of Toulouse and                 whereOi = ∂log|ψ|∂xi   . The terms in the FIM for the weights
+Umrigar.43                                                               of a linear neural network layer would then be:
+
+
+
+                    [                          T]            [(a𝓁⊗ e𝓁− Ep(X)[a𝓁⊗ e𝓁])(a𝓁⊗ e𝓁− Ep(X)[a𝓁⊗ e𝓁])T]
+            Ep(X)     ∂logp(X)     ∂logp(X)        ∝ Ep(X)
+                      ∂vec(W𝓁)    ∂vec(W𝓁)
+                                                             [
+                                                   = Ep(X)     (a𝓁⊗ e𝓁) (a𝓁⊗ e𝓁)T]      − Ep(X) [a𝓁⊗ e𝓁]Ep(X) [a𝓁⊗ e𝓁]T
+
+
+
+
+
+  We use a similar approximation for the inverse to that                 moments with mean-centered covariances:
+of conventional KFAC, replacing the uncentered second                              [
+                                                                                      ∂logp(X)     ∂logp(X)    T]
+                                                                            Ep(X)    ∂vec(W𝓁)     ∂vec(W𝓁)         ≈
+                                                                                             Ep(X)[ˆa𝓁ˆaT𝓁 ]−1⊗ Ep(X)[ˆe𝓁ˆeT𝓁    ]−1,    (12)
+                                                                                                                                                                                7
+
+
+                                             Ground state energy (Eh)                                                      Ionization potential (mEh)       Electron aﬃnity (mEh)
+Atom     FermiNet         VMC44           DMC44       CCSD(T)/CBS  HF/CBS     Exact34      % corr    FermiNet   Expt.45      ∆E       FermiNet   Expt.45      ∆E
+  Li       -7.47798(1)    -7.478034(8)  -7.478067(5)      -7.478157      -7.432747  -7.47806032  99.82(3)   198.10(4)   198.147   0.04(4)    21.82(20)    22.716   0.89(20)
+ Be    -14.66733(3)  -14.66719(1)  -14.667306(7)       -14.66737      -14.57301    -14.66736    99.97(3)  342.77(18)  342.593  -0.17(18)         -               -             -
+  B      -24.65370(3)   -24.65337(4)  -24.65379(3)      -24.65373      -24.53316    -24.65391    99.83(3)   304.86(4)   304.979   0.12(4)     9.03(11)     10.336   1.31(11)
+  C    -37.84471(5)  -37.84377(7)   -37.84446(6)        -37.8448        -37.6938     -37.8450    99.81(3)   413.98(8)   414.014   0.03(8)     46.18(9)     46.610    0.43(9)
+  N    -54.58882(6)   -54.5873(1)    -54.58867(8)        -54.5894        -54.4047     -54.5892    99.80(3)  534.80(12)  534.777  -0.03(12)         -               -             -
+  O    -75.06655(7)   -75.0632(2)     -75.0654(1)         -75.0678        -74.8192     -75.0673    99.70(3)  500.29(26)  500.453  0.17(26)   53.55(19)    53.993   0.44(19)
+  F     -99.7329(1)    -99.7287(2)     -99.7318(1)         -99.7348        -99.4168     -99.7339    99.69(3)  640.86(41)  640.949  0.09(41)  125.71(26)  125.959  0.25(26)
+ Ne    -128.9366(1)  -128.9347(2)  -128.9366(1)      -128.9394      -128.5479    -128.9376    99.74(3)  794.30(52)  794.409  0.11(52)          -               -             -
+
+           TABLE I: Ground state energy, ionization potential and electron aﬃnity for ﬁrst-row atoms.  The QMC method
+         (FermiNet, conventional VMC or DMC) closest to the exact ground state energy for each atom is in bold.  Electron
+          aﬃnities for Be, N and Ne are not computed as their anions are unstable.  Experimental ionization potentials and
+           electron aﬃnities have had estimated relativistic eﬀects45 removed.  All ground state energies are within chemical
+            accuracy of the exact numerical solution, and all electron aﬃnities and all ionization potentials except neon are
+                within chemical accuracy of experimental results.  If no citation is provided, the number was from our own
+                                                                                     calculation.
+
+               Molecule      Bond length (a0)  FermiNet (Eh)                      CCSD(T) (Eh)                      HF (Eh)  Exact (Eh)   % corr
+                                                                             aug-cc-pCVQZ  aug-cc-pCV5Z     CBS         CBS
+                   LiH                   3.015              -8.07050(1)          -8.0687             -8.0697       -8.070696  -7.98737  -8.07054846  99.94(1)
+                   Li2                    5.051             -14.99475(1)         -14.9921            -14.9936      -14.99507  -14.87155  -14.995447   99.47(1)
+                  NH3                      -                -56.56295(8)         -56.5535            -56.5591       -56.5644   -56.2247           -          99.57(2)
+                  CH4                      -                -40.51400(7)         -40.5067            -40.5110       -40.5150   -40.2171           -          99.66(3)
+                   CO                   2.173             -113.3218(1)        -113.3047          -113.3154     -113.3255  -112.7871          -          99.32(3)
+                   N2                    2.068             -109.5388(1)        -109.5224          -109.5327     -109.5425  -108.9940  -109.542347  99.36(2)
+                Ethene                    -                 -78.5844(1)          -78.5733            -78.5812       -78.5888   -78.0705           -          99.16(2)
+            Methylamine               -                 -95.8554(2)          -95.8437                 -             -95.8653   -95.2628           -          98.36(3)
+                 Ozone                     -                -225.4145(3)        -225.3907          -225.4119     -225.4338  -224.3526          -          98.42(3)
+                Ethanol                   -                -155.0308(3)        -155.0205                 -            -155.0545  -154.1573          -          97.36(4)
+            Bicyclobutane              -                -155.9263(6)        -155.9216                 -            -155.9575  -154.9372          -          96.94(5)
+
+            TABLE II: Ground state energy at equilibrium geometry for diatomics and small molecules.  The percentage of
+            correlation energy captured by the FermiNet relative to the exact energy (where available) or CCSD(T)/CBS is
+         given in the rightmost column.  If no citation is provided, the number was from our own calculation.  Geometries for
+                                                              larger molecules are given in Appendix G.
+
+
+        where                                                                                   conventional Slater-Jastrow and Slater-Jastrow-backﬂow
+                                                                                                Ans¨atze with varying numbers of determinants:
+                                  ˆa𝓁 = a𝓁− Ep(X) [a𝓁],                                                                                 [           ]       [           ]
+                                  ˆe𝓁 = e𝓁− Ep(X) [e𝓁].                                             ΨSJ =eJ({ri})∑             ωk det     φk↑i  (r↑j) det    φk↓i  (r↓j)    (13)
+                                                                                                                           k            [            ]      [            ]
+        We  illustrate  the  advantage  of  using  KFAC  over  more                                ΨSJB =eJ({ri})∑             ωk det     φk↑          det    φk↓           (14)
+        commonly used stochastic ﬁrst order optimization meth-                                                                              i  (q↑j)            i  (q↓j)
+        ods for neural networks in Fig. 3.                                                                                 k
+
+                                                                                                where{φkαi   (rj)} is a set of single-particle orbitals, typi-
+                                     III.    RESULTS                                            cally obtained from a Hartree–Fock or density functional
+                                                                                                theory calculation, and the Jastrow factor, J  is a func-
+            Here we evaluate the performance of the FermiNet on a                               tion of the electron and nuclear coordinates.  The Slater-
+        variety of problems in chemistry and electronic structure.                              Jastrow-backﬂow wavefunction Ansatz replaces the elec-
+                                                                                                tron coordinates in the orbitals with a set of collective co-
+        Further  details  on  the  exact  architectures  and  training                          ordinates, given by qi = ri+ξi({rj}), where the backﬂow
+        procedures for the FermiNet and baselines can be found                                  functions ξi depend on electron and nuclear coordinates
+        in Appendix A.                                                                          and contain additional optimizable parameters.
+                                                                                                   In addition to conventional Slater-Jastrow and Slater-
+                                                                                                Jastrow backﬂow wavefunctions, we also compare against
+              A.    Slater-Jastrow versus FermiNet Ans¨atze                                     neural network versions.  Rather than using Hartree-Fock
+                                                                                                orbitals,  a  closed-form  Jastrow  factor,  and  a  backﬂow
+            To demonstrate the expressive power of the FermiNet,                                transform  with  only  a  few  free  parameters,  our  Slater-
+        we ﬁrst investigated its performance relative to the more                               Jastrow-backﬂow network uses residual neural networks
+                                                                                                                                                  8
+
+                                                                            represent the orbitals and a ﬂexible Jastrow factor.  The
+                                                                            FermiNet  cuts  the  error  relative  to  the  Slater-Jastrow
+                                                                            Ansatz  without  backﬂow  by  almost  an  order  of  magni-
+                                                                            tude, and more than a factor of two relative to the Slater-
+                                                                            Jastrow-Backﬂow Ansatz.  Just a single FermiNet deter-
+                                                                            minant is suﬃcient to come within a few mEh of chemical
+                                                                            accuracy, deﬁned as 1 kcal/mol (1.594 mEh), which is the
+                                                                            typical standard for a quantum chemical calculation to
+                                                                            be considered “correct.”
+                                                                               Not  only  is  the  FermiNet  a  signiﬁcant  improvement
+                                                                            over  the  Slater-Jastrow  Ansatz  with  one  determinant,
+                                                                            but  only  a  few  FermiNet  determinants  are  necessary
+                                                                            to  saturate  performance.   Figure  2b  shows  the  Slater-
+                                                                            Jastrow network and FermiNet energies of the nitrogen
+                                                                            and carbon monoxide molecules as functions of the num-
+                                                                            ber  of  determinants.   As  FCI  calculations  are  imprac-
+                                                                            tical  for  these  systems,  we  compare  against  the  unre-
+                                                                            stricted  coupled  cluster  singles,  doubles,  and  perturba-
+                                                                            tive triples method (CCSD(T)) in the complete basis set
+                                                                            (CBS)  limit  to  provide  a  comparable  baseline  for  both
+                                                                            systems.  As the Slater-Jastrow network optimizes all or-
+                                                                            bitals separately, the results from the Slater-Jastrow net-
+                                                                            work should be a lower bound on the performance of a
+                                                                            Slater-Jastrow Ansatz with a given number of determi-
+                                                                            nants. As expected, the Slater-Jastrow network is still far
+                                                                            from the accuracy of CCSD(T) at 64 determinants.  The
+                                                                            64-determinant  FermiNet,  in  contrast,  comes  within  a
+                                                                            few mEh of CCSD(T). While the Slater-Jastrow-backﬂow
+                                                                            Ansatz with large numbers of determinants did not com-
+                                                                            pletely  converge,  the  trend  is  clear  that  the  FermiNet
+                                                                            cuts  the  error  roughly  in  half.   The  FermiNet  energies
+FIG.  3.   optimization  progress  for  ﬁrst-row  atoms,  H2,  LiH          begin to plateau after only a few tens of determinants,
+and the hydrogen chain with KFAC (blue) vs.  ADAM (or-                      suggesting that large linear combinations of FermiNet de-
+ange).  The qualitative advantage of KFAC is clear.  For clar-              terminants are not required.  Despite recent advances in
+ity, the median energy over the last 10% of iterations is shown.            optimal  determinant  selection,48,49  conventional  Slater-
+Note that the small overshoot with KFAC between 103  and                    Jastrow VMC calculations typically require tens of thou-
+104  iterations is due to the slow equilibration of the MCMC                sands of determinants for systems of this size and rarely
+chain and goes away with a larger Metropolis-Hastings pro-                  match CCSD(T) accuracy even then.
+posal step size.
+
+
+to represent the one-electron orbitals, Jastrow factor and                                  B.    Equilibrium Geometries
+backﬂow transform, making it much more ﬂexible.  The
+determinant part of the Slater-Jastrow network amounts                         Tables  I  and  II  show  that  the  same  16-determinant
+to  removing  the  two-electron  stream  and  interactions                  FermiNet with the same training hyperparameters gen-
+between  the  one-electron  streams  from  FermiNet.   We                   eralizes well to a wide variety of atoms and diatomic and
+used  the  conventional  backﬂow  transformation  (Equa-                    small organic molecules, while Figure 3 shows the opti-
+tion A4), in which the orbitals depend on a single three-                   mization progress over time for many of these systems.
+dimensional linear combination of electron position vec-                    As  a  baseline,  we  used  a  combination  of  experimental
+tors and a nonlinear function of interparticle distances.                   and exact computational results where available,34,46,47
+Further details are provided in Appendix A 2.                               and all-electron CBS CCSD(T) otherwise.  On all atoms,
+  To  fairly  compare  our  calculations  against  previous                 as  well  as  LiH,  Li2,  methane  and  ammonia,  the  Fer-
+work,  we ﬁrst looked at single-determinant Ans¨atze for                    miNet  error  was  within  chemical  accuracy.   In  compar-
+ﬁrst-row  atoms.   Figure  2a  compares  the  FermiNet  re-                 ison,  energies  from  VMC  using  a  conventional  Slater-
+sults with numbers already available in the literature.44                   Jastrow-backﬂow  Ansatz  for  ﬁrst-row  atoms44  are  uni-
+The neural network Slater-Jastrow Ansatz already out-                       formly worse than the FermiNet,  despite using at least
+performs the numbers from the literature by a few milli-                    an  order  of  magnitude  more  determinants.   The  VMC-
+Hartrees (mEh), which could be due to the lack of basis                     based  FermiNet  energies  are  more  comparable  in  qual-
+set approximation error when using a neural network to                      ity to diﬀusion Monte Carlo (DMC), which is typically
+                                                                                                                                                    9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  4.   The  H4  rectangle, R  =  3.2843a0.   Coupled  cluster            FIG. 5.  The dissociation curve for the nitrogen triple-bond.
+methods incorrectly predict a cusp and energy minimum at                     The diﬀerence from experimental data50 is given in the main
+Θ = 90◦, while the FermiNet approach agrees with exact FCI                   panel.   In  the  region  of  largest  UCCSD(T)  error,  the  Fer-
+results.                                                                     miNet  prediction  is  comparable  to  highly-accurate r12-MR-
+                                                                             ACPF results.51
+
+much more accurate than VMC. On molecules as large                           percent of correlation energy recovered for large systems
+as  ethene  (C2H4)  we  recover  over  99%  of  the  correla-                like  bicyclobutane.   It  may  be  that  the  FermiNet  has
+tion  energy,  while  for  larger  systems  like  methylamine                issues  with  size-extensivity  for  larger  systems.   On  the
+(CH3NH2),  ozone  (O3),  ethanol  (C2H5OH)  and  bicy-                       other  hand,  the  FermiNet  outperforms  CCSD(T)  in  a
+clobutane  (C4H6)  the  percentage  of  correlation  energy                  ﬁxed basis set, and the exponential Ansatz used by cou-
+recovered declines gradually to∼97% – still remarkably                       pled  cluster  is  size  extensive,  suggesting  that  the  issue
+good  for  a  variational  calculation.   Bicyclobutane  is  an              may instead be the ﬁnite width of our neural network lay-
+especially challenging system due to its high ring strain                    ers.  In fact, our results are with a ﬁxed-width network,
+and large number of electrons.                                               while the total number of basis functions grows with the
+  We also compare against CCSD(T) in a ﬁnite basis set                       system size for coupled cluster, meaning the coupled clus-
+in Table II, and ﬁnd that in all cases the FermiNet is more                  ter  Ansatz  becomes  more  expressive  for  larger  systems
+accurate than CCSD(T) in the largest basis set we could                      while  the  FermiNet  stays  ﬁxed.   Other  avenues  for  im-
+practically run calculations on (quintupleζ for most sys-                    provement  include  increasing  the  batch  size/number  of
+tems, quadruple ζ for large systems).  This suggests that                    walkers,  improving  the  MCMC  chain  mixing  and  opti-
+a  comparable  extrapolation  of  FermiNet  results  could                   mization eﬃciency, and increasing the number of deter-
+match or even exceed the accuracy of CCSD(T). As the                         minants.
+FermiNet works directly in the continuum and does not
+depend on a basis set,  the natural equivalent would be
+extrapolation to the limit of inﬁnitely-wide layers in the                                        C.    The H4 Rectangle
+one-electron stream.  Our analysis of the FermiNet with
+diﬀerent numbers of layers and layer widths in Sec. IV C                        While CCSD(T) is exceptionally accurate for equilib-
+shows  that  the  error  appears  to  decrease  polynomially                 rium  geometries,  it  often  fails  for  molecules  with  low-
+with layer width.                                                            lying  excited  states  or  stretched,  twisted  or  otherwise
+  We   also   computed   the   ﬁrst   ionization   potentials,               out-of-equilibrium geometries.  Understanding these sys-
+E(X+)−E(X)  for  element X,  and  electron  aﬃnities,                        tems is critical for predicting many chemical properties.
+E(X)−E(X−), for ﬁrst-row atoms (Table I) and com-                            A  model  system  small  enough  to  be  solved  exactly  by
+pare  to  experimental  data45  with  relativistic  eﬀects  re-              FCI  for  which  coupled  cluster  fails  is  the  rectangle  of
+moved.   Agreement  with  experiment  is  excellent  (mean                   four  hydrogen  atoms,  parametrized  by  the  distance R
+absolute error of 0.09 mEh for ionization potentials and                     of  the  atoms  from  the  centre  and  the  angle θ  between
+0.66 mEh for electron aﬃnities), demonstrating that the                      neighbouring atoms.53 FCI shows that the energy varies
+FermiNet Ansatz is capable of representing charged and                       smoothly with θ  and is maximized when the atoms are
+neutral species with similar accuracy.                                       at the corners of a square (θ = 90o).  The coupled cluster
+  There are many possible causes for the decline in the                      results are non-variational, predicting energies too low by
+                                                                                                                                                  10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                             FIG.  7.   Electron  dimerization  in  the  hydrogen  chain.   The
+                                                                             gap between alternating minima of the density shrinks with
+FIG.  6.   The  H10  chain.   All  energies  except  the  FermiNet           increasing nuclear separation.
+are taken from Motta et al. (2017)52.  The absolute energies
+(inset) cannot be distinguished by eye.  The diﬀerence from
+highly accurate MRCI+Q+F12 results are shown in the main                     miNet  reaches  accuracy  comparable  to r12-MR-ACPF,
+panel, where the shaded region indicates an estimate of the                  but scales much more favourably with system size.  In-
+basis-set extrapolation error. The errors in the coupled cluster             creasing  the  number  of  determinants  in  the  FermiNet
+and conventional VMC energies are large at medium atomic                     improves  performance  up  to  a  point,  but  not  beyond
+separations but the FermiNet remains comparable to AFQMC                     32 determinants, again suggesting that the bottleneck to
+at  all  separations.   See  also  Appendix  E  for  data  on  larger        performance is not size-consistency.  While coupled clus-
+separations.                                                                 ter  could  in  theory  be  made  more  accurate  by  extend-
+                                                                             ing to full triples or quadruples, or using multireference
+several milli-hartree, and qualitatively incorrect, predict-                 methods,  CCSD(T)  is  generally  considered  the  largest
+ing an energy minimum with a non-analytic downward-                          coupled cluster approximation that can reasonably scale
+facing cusp at 90o, caused by a crossing of two Hartree–                     beyond small molecules.  This shows that,  without any
+Fock states with diﬀerent symmetries.54  Figure 4 shows                      speciﬁc tuning to the system of interest, the FermiNet is
+that the FermiNet does not suﬀer from the same errors                        a clear improvement over single-reference coupled cluster
+as coupled cluster and is in essentially perfect agreement                   for  modelling  a  strongly  correlated  real-world  chemical
+with  FCI.  We  attribute  the  small  discrepancy  between                  system.
+the FermiNet and FCI energies to errors arising from the
+basis set extrapolation used for the FCI energies.
+                                                                                               E.    The Hydrogen Chain
+
+                D.    The Nitrogen Molecule                                     Finally,  we  investigated  the  performance  of  the  Fer-
+                                                                             miNet on the evenly-spaced linear hydrogen chain.  The
+  A problem more relevant to real chemistry that trou-                       hydrogen  chain  is  of  great  interest  as  a  system  that
+bles  coupled  cluster  methods  is  the  dissociation  of  the              bridges  model  Hamiltonians  and  real  material  systems
+nitrogen  molecule.    The  triple  bond  is  challenging  to                and may undergo an insulator-to-metal transition as the
+describe  accurately  and  the  stretched  N2  molecule  has                 separation of the atoms is decreased.  Consequently, re-
+several  low-lying  excited  states,  leading  to  errors  when              sults obtained using a wide range of many-electron meth-
+using single-reference coupled cluster methods.55 Exper-                     ods have been rigorously evaluated and compared.52 We
+imental values for the dissociation potential have been re-                  compare the performance of the FermiNet against many
+constructed from spectroscopic measurements using the                        of these methods in Figure 6.  Of the two projector QMC
+Morse/Long-range potential.50  These closely match cal-                      methods studied by Motta et al. , AFQMC gave slightly
+culations  using  the r12-MR-ACPF  method,51  which  is                      better  results  than  lattice  regularized  DMC  and  so  we
+highly accurate but scales factorially.  A comparison be-                    omit  the  latter  for  clarity.   Without  changing  the  net-
+tween  unrestricted  CCSD(T),  the  FermiNet,  and  these                    work architecture or hyperparameters, we are again able
+high-accuracy  methods  is  given  in  Figure  5.   The  total               to outperform coupled cluster methods and conventional
+FermiNet error is signiﬁcantly smaller than UCCSD(T),                        VMC  and  obtain  results  competitive  with  state-of-the-
+and  in  the  region  of  largest  UCCSD(T)  error  the  Fer-                art approaches.
+                                                                                                                                                  11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                             FIG. 9.  Comparison of the runtime for one optimization it-
+                                                                             eration  on  atoms  up  to  zinc.   Polynomial  regressions  up  to
+                                                                             fourth order are ﬁt to the data.  The small diﬀerence between
+                                                                             the cubic and quartic ﬁt suggests that the determinant com-
+                                                                             putation is not the dominant factor at this scale.
+
+
+                                                                             mark  of  electronic  structure  in  insulators,  and  under-
+                                                                             standing  when  and  where  it  occurs  helps  understand
+                                                                             metal-insulator phase transitions in materials.
+                                                                                Additionally,  we  investigated  the  two-electron  den-
+                                                                             sity n(r, r′) for the neon atom (Figure 8).  Understand-
+                                                                             ing  the  behaviour  of  the  two-electron  density  is  impor-
+FIG. 8.  The pair-correlation function 1−g(r, r′) for the neon               tant for many electronic structure methods, for instance
+atom,  where n(r, r′)  = n(r)g(r, r′)n(r′).   Diﬀerent  columns              for  analysing  functionals  for  DFT.58  What  is  interest-
+show the hole for electrons of the same spin (left), diﬀerent                ing about the two-electron density is how it diﬀers from
+spins (middle),  or all electrons (right).  Diﬀerent rows show               the  product  of  one-electron  densities, n(r)n(r′).   This
+the  hole  when r′  is  between  0  and  0.3  Bohr  radii  from  the         can  be  expressed  in  terms  of  the  exchange-correlation
+nucleus.                                                                     hole, nxc(r, r′),  deﬁned  such  that n(r, r′)  =  [n(r) +
+                                                                             nxc(r, r′)]n(r′), or in terms of the pair-correlation func-
+                        IV.    ANALYSIS                                      tion, g(r, r′), deﬁned by n(r, r′) = n(r)g(r, r′)n(r′).  As
+                                                                             most of the density is concentrated near r = 0,nxc(r, r′)
+                                                                             is very strongly peaked near r = 0,  obscuring its other
+  Here we provide an analysis of the performance of the                      features.   We  therefore  show nxc(r,r′)n(r)     =  1−g(r, r′)  in
+FermiNet,  looking  at  scaling  with  system  size,  network                Figure 8.  This behaves as expected when r is close to r′,
+size, and visualising quantities beyond just total energy                    showing that, at least for ﬁrst and second order statistics,
+of the system.                                                               the FermiNet Ansatz is smooth and well-behaved.
+
+
+                    A.    Electron Densities
+                                                                                         B.    Scaling and Computation Time
+  One advantage of VMC over other ab-initio electronic
+structure methods is the ease of evaluating expectation                         One  of  our  main  claims  about  the  FermiNet  is  that
+values of arbitrary observables.  For instance, forces are                   it scales favorably compared to other ab-initio quantum
+signiﬁcantly easier to calculate with VMC than projec-                       chemistry methods.  The ability to run at all on systems
+tor QMC methods.56 To illustrate the quality of the Fer-                     the size of bicyclobutane proves the FermiNet scales more
+miNet Ansatz for observables other than energy, we ana-                      favorably than exact methods like FCI, but the scaling
+lyzed the one- and two-electron densities.  The electron-                    relative  to  other  approximate  methods  is  a  more  sub-
+electron and electron-nuclear cusps for the helium atom                      tle question.  Both the size of the FermiNet (number of
+are investigated in Appendix F.                                              hidden units, number of layers, number of determinants)
+  For the hydrogen chain, we computed the one-electron                       and the number of training iterations required to reach
+density n(r)  at  diﬀerent  nuclear  separations,  shown  in                 a certain level of accuracy are unknown,  and likely de-
+Figure 7.  Consistent with many other electronic struc-                      pend on the system being studied.  What can be quanti-
+ture methods,57  we found that the electron density un-                      ﬁed is the computational complexity of a single iteration
+dergoes  a  dimerization  —  the  density  clusters  around                  of training, which can be seen as a lower bound on the
+pairs of nuclei — and the eﬀect becomes stronger with                        computational complexity of training the FermiNet to a
+less  separation  between  nuclei.   Dimerization  is  a  hall-              certain level of accuracy.
+                                                                                                                                              12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 10.  Eﬀects of network architecture on FermiNet performance on the hydrogen chain H10 with separationR = 2.0a0.  Each
+point is one run of the same model.  (a):  Eﬀect of network depth.  The marginal improvement with 4 layers is small but not
+zero. (b):  Eﬀect of number of hidden units in the one-electron stream.  There is a continuous improvement with wider layers,
+with the error decreasing roughly asO(N−0.395±0.067). (c):  Eﬀect of number of hidden units in the two-electron stream.  The
+accuracy plateaus above 16 units.
+
+
+  For a system with Ne electrons, Na atoms and a Fer-                      date together gives an overall quartic asymptotic scaling
+miNet  with L  hidden  layers, n1  (n2)  hidden  units  per                with system size for a single step of wavefunction opti-
+one-electron  (two-electron)  layer  and nk  determinants,                 mization.   We  emphasize  that  the  analysis  here  treats
+evaluating the one-electron stream of the network scales                   system size,  network size and number of samping steps
+asO(Ne(Na+L(n21+n1n2))), evaluating the two-electron                       independently, and that the exact dependence of network
+stream scales asO(N2eLn22), evaluating the orbitals and                    size and sampling parameters on system size to achieve
+envelope scales asO(N2enk(n1 +Na)), and evaluating the                     constant accuracy requires further investigation.
+determinants scales asO(N3enk), so the determinant cal-                       We give an empirical analysis of the scaling of iteration
+culation should dominate asNe grows for a ﬁxed network                     time in Figure 9 on atoms from lithium to zinc, using the
+architecture determined by{L,n1,n2,nk}.  While evalu-                      default training conﬁguration with 8 GPUs.  For larger
+ating the gradient of a function has the same asymptotic                   atoms, we were not able to run optimization to conver-
+complexity as evaluating the function, evaluating the lo-                  gence, but we were able to execute enough updates to get
+cal energy scales with an additional multiplicative factor                 an accurate estimate of the timing for a single iteration
+of Ne,  as  computing  the  Laplacian  has  the  same  com-                consisting of 10 MCMC steps, a local energy and gradient
+plexity as computing the Hessian with respect to the in-                   evaluation and a KFAC update.  Fitting polynomials of
+puts, giving an asymptotic complexity ofO(N4enk) asNe                      diﬀerent order to the curve, we ﬁnd a cubic ﬁt is able to
+grows.  A Markov Chain Monte Carlo (MCMC) step for                         accurately match the scaling, suggesting that for systems
+sampling fromψ2 also has the same asymptotic complex-                      of this size the computation is dominated by the O(N2)
+ity as network evaluation for all-electron moves, or simi-                 evaluation  of  the  two-electron  stream  of  the  FermiNet,
+lar complexity to Laplacian calculation for single-electron                while the determinant only becomes dominant for much
+moves if all electrons are moved in each loop of training.                 larger systems.
+  The  number  of total  parameters  scales  asO(Nan1 +
+L(n21 +n1n2 +n22) +Nenk(n1 +Na) +nk) (see Table IV
+for  the  exact  shapes  for  each  parameter).   Note  that,                C.    Feature Ablation and Network Architectures
+other than the orbital shaping and envelope parameters,
+there is no direct dependence on Ne.  KFAC requires a                         There  are  many  free  parameters  in  the  FermiNet  ar-
+matrix  inversion  for  each  Kronecker-factorized  block  of              chitecture that must be chosen to maximize accuracy for
+the approximate FIM, which scales asO(m3 +n3) for a                        a given amount of computation.  To illustrate the eﬀect
+linear layer with m inputs and n outputs.  For the Fer-                    of diﬀerent architectural choices, we removed many fea-
+miNet, this works out to a scaling ofO(N3an31 +L(n31 +                     tures, layers and hidden units from the FermiNet and in-
+n32) + (Nenkn1)3 + (NenkNa)3 + n3k).   Combining  the                      vestigated how the performance decayed.  The FermiNet
+MCMC  steps,  local  energy  calculation  and  KFAC  up-                   has  4  distinct  input  features:   the  nuclear  coordinates
+                                                                                                                                               13
+
+                ∆E (mEh)       without rij  with rij                                              V.    DISCUSSION
+               without|rij|        89.7          28.4
+                 with|rij|          1.2          0.8                          We  have  shown  that  antisymmetric  neural  networks
+ TABLE III: Performance of the FermiNet on the                             can   be   constructed   and   optimized   to   enable   high-
+  oxygen atom with input features removed.  All                            accuracy quantum chemistry calculations of challenging
+  conﬁgurations without the electron-nuclear distances                     systems.  The Fermionic Neural Network makes the sim-
+    |riI| were numerically unstable and diverged.  All                     ple and straightforward VMC method competitive with
+      numbers are relative to Chakravorty (1993).34                        DMC, AFQMC and CCSD(T) methods for equilibrium
+                                                                           geometries  and  better  than  CCSD(T)  for  many  out-of-
+                                                                           equilibrium geometries.  Importantly, one network archi-
+                                                                           tecture with one set of training parameters has been able
+                                                                           to attain high accuracy on every system examined.  The
+                                                                           use  of  neural  networks  means  that  we  do  not  have  to
+riI  = ri− RI  and nuclear distances|riI|, which are in-                   choose  a  basis  set  or  worry  about  basis-set  extrapola-
+puts to the one-electron stream, and the interelectron co-                 tion, a common source of error in computational quan-
+ordinates rij  = ri− rj  and interelectron distances|rij|,                 tum  chemistry.   There  are  many  possible  applications
+which  are  inputs  to  the  two-electron  stream.   We  com-              of  the  FermiNet  beyond  VMC,  for  instance  as  a  trial
+pared  the  accuracy  of  the  FermiNet  with  and  without                wavefunction  for  projector  QMC  methods.   We  expect
+these features on the oxygen atom in Table III.  All net-                  further work investigating the tradeoﬀs of diﬀerent anti-
+works included the nuclear coordinates.  Without the nu-                   symmetric neural networks and optimization algorithms
+clear distances, the network became unstable and train-                    to  lead  to  greater  computational  eﬃciency,  higher  rep-
+ing  crashed,  possibly  due  to  the  inability  to  accurately           resentational capacity, and improved accuracy on larger
+capture the electron-nuclear cusp conditions.  When in-                    systems.   This  has  the  potential  to  bring  to  quantum
+cluding  interelectron  features,  most  of  the  increase  in             chemistry the same rapid progress that deep learning has
+accuracy  was  due  to  the  distances |rij|,  while  the  co-             enabled in numerous ﬁelds of artiﬁcial intelligence.
+ordinates rij  also improved accuracy,  though not by as
+large an amount.  This shows that all input features con-
+tributed  towards  stability  and  accuracy,  especially  the                                 ACKNOWLEDGMENTS
+distance features.  Even though a smooth neural network
+can approximate the non-smooth cusps to high precision                        We would like to thank J. Jumper, J. Kirkpatrick, M.
+(although  not  perfectly),  by  including  distances,  which              Hutter, T. Green, N. Blunt, S. Mohamed and A. Cohen
+are non-smooth at zero, we can make the wavefunction                       for helpful discussions, B. McMorrow for providing data,
+signiﬁcantly easier to approximate.                                        J. Martens and P. Buchlovsky for assistance with code,
+
+  To understand the eﬀect of the size and shape of the                     and A. Obika, S. Nelson, C. Meyer, T. Back, S. Petersen,
+network, we compared the FermiNet with diﬀerent num-                       P.  Kohli,  K.  Kavukcuoglu  and  D.  Hassabis  for  support
+bers  of  layers  and  hidden  units  on  the  hydrogen  chain             and guidance.  Additional thanks to the rest of the Deep-
+H10.  The results are presented in Figure 10.  When in-                    Mind team for support, ideas and encouragement.
+creasing  the  number  of  layers,  the  overall  accuracy  in-               D.P. and J.S.S.  contributed equally to this work.  Cor-
+creases as more layers are added, but the diﬀerence from                   respondence  and  requests  for  materials  should  be  ad-
+3 to 4 layers is only on the order of 1 mEh, suggesting that               dressed to D.P. (pfau@google.com).
+
+the gains from additional layers would be minor.  When
+adding more hidden units to the one-electron stream but                                 Appendix A: Experimental Setup
+keeping 32 units in the two-electron stream, the accuracy
+increases uniformly with more units.  Based on a linear                             1.    FermiNet architecture and training
+regression  of  the  log-errors  relative  to  MRCI+Q+F12,
+and using bootstrapping to generate error bars, the error
+scales with the number of hidden units in the one-electron                    For all experiments, a Fermionic Neural Network with
+stream asO(N−0.395±0.067). This means we would expect                      four layers was used, not counting the ﬁnal linear layer
+around 760 hidden units to be needed to reach chemical                     that  outputs  the  orbitals.   Each  layer  had  256  hidden
+accuracy  on  the  hydrogen  chain.   For  the  two-electron               units for the one-electron stream and 32 hidden units for
+stream, the improvement with more units quickly satu-                      the two electron stream.  A tanh nonlinearity was used
+rates.  In fact, going from 16 to 32 hidden units seems to                 for all layers, as a smooth function is needed to guaran-
+make the results slightly noisier.  This suggests that in-                 tee that the Laplacian is well deﬁned and nonzero every-
+creasing the width of the one-electron stream, more than                   where.  16 determinants were used where not otherwise
+increasing  the  width  of  the  two-electron  stream  or  the             speciﬁed.  For comparison, the conventional VMC results
+total  depth,  is  the  most  promising  route  to  increasing             in  Table  I  from  Seth  et  al.   (2011)44  use  50  conﬁgura-
+overall accuracy of the FermiNet.                                          tion  state  functions  (CSF).  While  the  exact  number  of
+                                                                                                                                                    14
+
+                 symbol          dimension            quantity   learnable  description
+                   h0αi                    4Na         Ne                        one-electron features
+                  h0αβij                      4          N2e                        two-electron features
+                   h𝓁αi        n𝓁−11                   (L− 1)Ne                  one-electron activations from layer 𝓁− 1
+                  h𝓁αβij        n𝓁−12                  (L− 1)N2e                  two-electron activations from layer 𝓁− 1
+                   f𝓁αi             3n𝓁−11    + 2n𝓁−12       LNe                      one-electron input for layer 𝓁
+                   V𝓁  n𝓁1× (3n𝓁−11    + 2n𝓁−12    )    L          ✓       weights for one-electron linear layer
+                    b𝓁         n𝓁1          L          ✓       biases for one-electron linear layer
+                   W𝓁      n𝓁2×n𝓁−12         L          ✓       weights for two-electron linear layer
+                    c𝓁         n𝓁2          L          ✓       biases for two-electron linear layer
+                   wkαi         nL1         nkNe        ✓       weights for ﬁnal linear layer (orbital shaping)
+                   gkαi                   scalar        nkNe        ✓       bias for ﬁnal linear layer (orbital shaping)
+                   πkαim                 scalar       nkNaNe      ✓       enevelope weight
+                   Σkαim                 3× 3       nkNaNe      ✓       enevelope decay
+                    ω         nk                        1          ✓       weights in determinant expansion
+
+ TABLE IV: Network activations and parameters for Fermi-Net with L layers, nk many-electron determinants for a
+system of Na atoms and Ne electrons. i,j index electrons in spin channels α,β∈{↑,↓}.  Each layer contains n𝓁1 (n𝓁2)
+hidden units for the one-electron (two-electron) stream.  The quantity column shows the total number of each object.
+
+
+determinants in a CSF will depend on the system, gener-                          The pretraining loss is:
+ally this will be on the order of hundreds to thousands of                                       ∫                 (      (                    )
+determinants.  With this conﬁguration of the FermiNet                              Lpre(θ) =         ∑        ∑      φkαi   rαj ;{rα/j};{r¯α}
+there were approximately 700,000 parameters in the net-
+work, although the exact number depends on the number                                                 α∈{↑,↓}   ijk              
+of atoms in the system due to the way we construct the                                                                  (rαj ))2
+input  features  and  exponentially-decaying  envelope.   A                                                   − φHFiα            ppre(X)dX,
+breakdown of these parameters are given in Table IV.
+                                                                              where φHFiα    (rαj)  denotes  the  value  of  the i-th  Hartree-
+                                                                              Fock orbital for spin α at the position of electron j,  ¯α is( )
+                                                                              ↓ if α is↑ or vice versa, and φkαi           rαj ;{rα/j};{r¯α}    is the
+  Before  using  the  local  energy  as  an  optimization  ob-                corresponding entry in the input to thek-th determinant
+jective we pretrained the network to match Hartree-Fock                       of  the  Fermionic  Neural  Network.   We  use  a  minimal
+(HF)  orbitals  computed  using  PySCF59.    There  were                      (STO-3G) basis set for the Hartree-Fock computation as
+two  reasons  for  this.   First,  we  found  that  the  numeri-              we require only a stable initialization in the rough vicinity
+cal stability of the subsequent local energy optimization                     of  the  mean  ﬁeld  solution,  not  an  accurate  mean  ﬁeld
+was  improved.   On  large  systems,  the  determinants  in                   result.  The probability distribution ppre(X) is an equal
+the Fermionic Neural Network would  often numerically                         mixture of the product of Hartree-Fock orbitals and the
+underﬂow  if  no  pretraining  was  used,  causing  the  opti-                output of the Fermionic Neural Network:
+mization to fail.  Pretraining with HF orbitals as a guide                                                                                   
+meant that the main optimization started in a region of                             ppre(X) = 1      ∏         ∏(φHFiα (rαi ))2 +ψ2(X).
+relatively low variance, with comparitively stable deter-                                         2    α∈{↑,↓}   i
+minant evaluations and electron walkers in representative
+conﬁgurations.  Second, we found that time was saved by                       We chose not to use the distribution from the Hartree-
+not optimizing the local energy through a region that we                      Fock determinant because we wanted sample coverage at
+knew  to  be  physically  uninteresting,  given  that  it  had                every  point  where  the  orbitals  were  large,  but  in  prac-
+an  energy  higher  than  that  of  a  straightforward  mean                  tice the diﬀerence to using the anti-symmetrized distri-
+ﬁeld  approximation.   The  pretraining  did  not  seem  to                   bution was marginal. The inclusion of the neural network
+strand  the  neural  network  in  a  poor  local  optimum,  as                density helps to increase the sampling probability in ar-
+the  energy  minimization  always  gave  consistent  results                  eas where the neural network wavefunction is spuriously
+capturing  roughly  99%  of  the  correlation  energy.   This                 high.   We  approximate  the  expectation  for  the  loss  by
+is  consistent  with  the  conventional  wisdom  in  the  ma-                 using MCMC to draw half the samples in the batch from
+chine learning community that issues with local minima                        ψ2  and  half  from  the  product  of  Hartree-Fock  orbitals
+are less severe in wider, deeper neural networks.  Further,                   using MCMC.
+stochasticity in the optimization procedure helps break                          Initial MCMC conﬁgurations were drawn from Gaus-
+symmetry and escape bad minima.                                               sian distributions centred on each atom in the molecule.
+                                                                                                                                              15
+
+                          Parameter                     Value              aﬀect  the  asymptotic  performance.   If  the  damping  is
+                          Batch size                     4096              too high, KFAC behaves like gradient descent near a lo-
+                      Training iterations                 2e5              cal minimum and converges too slowly.  If the damping
+                    Pretraining iterations                1e3              is reduced, training quickly becomes unstable unless the
+                         Learning rate               (1e4 +t)−1            norm constraint (a generalization of gradient clipping) is
+                    Local energy clipping                 5.0              lowered in tandem.  Surprisingly, we found little advan-
+    KFAC                  Momentum                         0               tage to using momentum, and sometimes it even seemed
+    KFAC     Covariance moving average decay             0.95
+    KFAC               Norm constraint                   1e-3              to reduce training performance, so we set it to zero for
+    KFAC                   Damping                       1e-3              all experiments.
+   MCMC      Proposal std dev (per dimension)            0.02                To reduce the variance in the parameter updates, we
+   MCMC      Steps between parameter updates              10               clipped  the  local  energy  when  computing  the  gradients
+TABLE V: Default hyperparameters for all experiments                       but not when evaluating the total energy of the system.
+   in the paper.  For bicyclobutane, the batch size was                    This is a commonly used strategy to improve the accu-
+halved and the pretraining iterations were increased by                    racy of QMC61.  We computed the total variation of each∑
+                    an order of magnitude.                                 batch,   1N   i|EL(Xi)−  ˜EL|, where  ˜EL is the median lo-
+                                                                           cal  energy  of  that  batch.   This  is  to  the 𝓁1  norm  what
+                                                                           the standard deviation is to the 𝓁2  norm, and we prefer
+Electrons  were  assigned  to  atoms  according  to  the  nu-              it to the standard deviation as it is more robust to out-
+clear charge and spin polarization of the ground state of                  liers. We clip any local energies more than 5 times further
+the isolated atom, with the atomic spins orientated such                   from the median than this total variation and compute
+that the total spin projection of the molecule was correct,                the gradient in Eqn. 9 with the clipped energy in place
+which  was  possible  for  systems  studied  here.   We  used              of EL.  The aforementioned KFAC norm constraint en-
+ADAM with default parameters as the optimizer.  After                      forces gradient clipping in a manner which respects the
+pretraining, we reinitialized the electron walker positions                information geometry of the model.
+and then had a burn in MCMC period with target dis-                          To   sample   from ψ2(X)   we   used   the   standard
+tribution ψ2 before we began local energy minimization.                    Metropolis-Hastings  algorithm.12  The  proposed  moves
+  For the FermiNet, all code was implemented in Tensor-                    were Gaussian distributed with a ﬁxed, isotropic covari-
+Flow 1 built with CUDA 9.  All experiments for systems                     ance.    All  electron  positions  were  updated  simultane-
+with less than 20 electrons were run in parallel on 8 V100                 ously.   While  one-electron  moves  are  more  common  in
+GPUs, while 16 GPUs were used for larger systems. With                     VMC, prior work suggests that all-electron moves are ef-
+a smaller batch size we were able to train on a single GPU                 fective at the scale of system we investigated,62 and the
+but convergence was signiﬁcantly and disproportionately                    fact that our orbitals depend on all electrons means that
+slower. For instance, ethene converged after just 2 days of                we  cannot  exploit  fast  determinant  updates  with  one-
+training with 8 GPUs, while several weeks were required                    electron moves.  We expect one-electron moves will have
+on a single GPU. Bicyclobutane, with 30 electrons, took                    a more noticeable impact for larger systems and will in-
+roughly 1 month on 16 GPUs to train.  We expect further                    vestigate diﬀerent MCMC strategies and parameters in
+engineering  improvements  will  reduce  this  number.   10                future work.  Typical acceptance rates were∼0.95 for the
+Metropolis-Hastings steps were taken between every pa-                     smallest systems and∼0.6 for the largest systems investi-
+rameter update, and it typically requiredO(105−106) pa-                    gated.  Due to slow equilibration of the MCMC sampling,
+rameter updates to reach convergence (results in the pa-                   the computed energy sometimes overshot the true value,
+per used 2×105 parameter updates).  Conventional VMC                       but always reequilibrated after a few thousand iterations.
+wavefunction optimization will performO(101− 102) pa-                      We experimented with Hamiltonian Monte Carlo to give
+rameter updates andO(104−106) MCMC steps between                           faster mixing and lower bias in the gradients, but found
+updates, so we require roughly the same number of wave-                    this led to signiﬁcantly higher variance in the local energy
+function evaluations as conventional VMC. After network                    and lower overall performance.
+optimization, we run O(105) MCMC steps and calculate
+the  mean  local  energy  every  10  steps.   The  energy  and                             2.    Slater-Jastrow networks
+associated standard error are estimated using a standard
+approach to account for correlations.60
+  Accurate and stable convergence was highly dependent                       For the baseline Slater-Jastrow network, an multilayer
+on the hyperparameters used;  the default values for all                   perceptrons (MLP) with 3 hidden layers of 128 units were
+experiments  are  included  in  Table  V.   These  hyperpa-                used for the orbitals. The electron positions and electron-
+rameters  do  seem  to  be  generalizable  —  we  have  ob-                nuclear vectors and distances were used as input features.
+served  good  performance  on  every  system  investigated.                The output of the MLP was fed into a ﬁnal linear layer to
+For some larger systems, stability was improved by using                   generate the required orbitals and the same multiplica-
+more pretraining iterations.  Getting good performance                     tive envelope employed in the Fermionic Neural Network
+from KFAC requires careful tuning,  and we found that                      was  included;  this  can  be  seen  as  an  extension  to  the
+the  damping  and  norm  constraint  parameters  critically                electron-nuclear Jastrow factor.  The Jastrow factor and
+                                                                                                                                                 16
+
+backﬂow transform are of the standard form:63                               on  all  other  molecules,  and  and  FCI  calculations  on
+   J({r↑},{r↓},{R}) =J(e−n)({r↑},{r↓},{R})+                                 H4.   Cholesky  decomposition65  was  used  to  reduce  the
+                                                                            memory requirements for bicyclobutane, which we veri-
+                             J(e−e)({r↑},{r↓})+                             ﬁed introduces an error in the total energies ofO(10−5)
+                             J(e−e−n)({r↑},{r↓},{R})    (A1)                hartrees with the aug-cc-pCVTZ basis set.  The H4  cal-
+                                                                            culations  used  a  cc-pVXZ  (X=T,  Q,  5)  basis  set.   All
+                                                                            other CCSD(T) calculations used aug-cc-pCVXZ (X=T,
+                                            nα∑ Na∑                         Q,  5)  basis  sets.    An  unrestricted  Hartree-Fock  refer-
+ J(e−n)({r↑},{r↓},{R}) = ∑                           χj(|rαi − RI|)         ence  was  used  for  atoms  and  dimers,  with  restricted
+                                  α∈{↑,↓}  i=1   I                          Hartree-Fock used otherwise.  We extrapolated energies
+                                                                            to  the  CBS  limit  using  standard  methods66,67.    CBS
+                                       nα∑  nβ∑                             Hartree-Fock energies for Li, Be and Li2 were taken from
+ J(e−e)({r↑},{r↓}) =  ∑                         uαβ(|rαi − rβj|)            aug-cc-pCV5Z calculations, in which the basis set error
+                           α,β∈{↑,↓}   i=1 j=1                              was  below  10−4  hartrees.    CBS  Hartree-Fock  energies
+
+                                                 nα∑  nβ∑ Na∑               for other systems were obtained by ﬁtting the function
+ J(e−e−n)({r↑},{r↓},{R}) =  ∑                                               EHF(X)  = EHF(CBS) +ae−bX,  where X  is  the  cardi-
+                                     α,β∈{↑,↓}   i=1 j=1   I                nality  of  the  basis;  CCSD,  CCSD(T)  and  FCI  correla-
+         fαβ                                                                tion  energies  were  extrapolated  to  the  CBS  by  ﬁtting
+          k   (|rαi − rβj|,|rαi − RI|,|rβj− RI|)              (A2)          the  energies  from  quadruple-  and  quintuple-zeta  basis
+for the Jastrow factor and:                                                 sets (triple- and quadruple-zeta for bicyclobutane) to the
+                                                                            function Ec(X) = Ec(HF) +aX−3.  The total energy is
+            r′i = ri+ξ(e−e)                                                 given by the sum of the Hartree-Fock energy and correla-
+                        i       ({rj}) +ξ(e−N)i        ({RI})               tion energy.  To compare the dissociation potential of N2
+                    +ξ(e−e−N)i           ({rj},{RI})                   (A3) against  experiment,  we  used  the  MLR4(6,  8)  potential
+                                                                            from Le Roy et al.  (2006),50 which is based on ﬁtting 19
+                                    n∑                                      lines of the N2 vibrational spectrum.
+                ξ(e−e)i       ({rj}) =  η(|rij|)rij
+                                   j⁄=i
+                                      Na∑                                       Appendix B: Universality of Generalized Slater
+                ξ(e−N)                    µ(|riI|)riI                                                  Determinants
+                 i        ({RI}) =
+                                       I
+                ξ(e−e−N)                                                       Empirically, the accuracy of the FermiNet increases as
+                 i           ({rj},{RI}) =                                  the number of determinants grows.  This raises the ques-
+                  n∑  Na∑                                                   tion:   in  theory,  how  many  determinants  are  necessary
+                          Φ(|rij|,|riI|,|rjI|)rij                           to  represent  any  antisymmetric  function ψ(x1,..., xn)
+                 j⁄=i  I                                                    when the elements of the determinant are permutation-
+                       + Θ(|rij|,|riI|,|rjI|)riI                (A4)        equivariant  functions  of  the  form Φij  = φi(xj;{x/j})?
+                                                                            The  answer,  perhaps  surprisingly,  is  just  one.   The  ar-
+for the backﬂow transform, where rij = ri−rj and riI =                      gument  below  is  originally  due  to  M.  Hutter  (personal
+ri− RI.  Here{χj},{uαβ},{fαβk },η,µ, Φ and Θ are all                        communication).
+separate 3-layer perceptrons with 64 hidden units. Resid-                      Deﬁne a unique ordering on the vectors x1,..., xn, for
+ual  connections  were  used  in  all  MLPs,  which  greatly                instance, xi < xj if the ﬁrst coordinate of xi is less than
+improved  the  stability  of  training.    We  found  Slater-               the ﬁrst coordinate of xj.  Letπ be the permutation such
+Jastrow-backﬂow  networks  to  be  extremely  unstable  to                  that xπ(1)≤ xπ(2)≤...≤ xπ(n), that is,π sorts the vec-
+train from random initial weights and hence used a ﬁne-                     tors x1,..., xn, and letσ(π) be the sign of the permuta-
+tuning  approach  where  the  Slater-Jastow-backﬂow  net-                   tionπ. Deﬁneφ1(xj;{x/j}) =           1 j=π(1)ψ(xπ(1),..., xπ(n))
+works were initialized from an optimized Slater-Jastrow                     andφi(xj;{x/j}) =           1 j=π(i) ifi⁄= 1. Then each row of the
+network  with  the  weights  and  biases  in  the  backﬂow                  matrix has only one nonzero entry, and the determinant
+MLPs  randomly  initialized  close  to  zero.   The  Slater-                det[Φij] =σ(π)ψ(xπ(1),..., xπ(n)) =ψ(x1,..., xn).
+Jastrow and Slater-Jastrow-backﬂow networks were oth-                          The functionsφi are not everywhere continuous, due to
+erwise optimized in the identical fashion to FermiNet.                      the indicator functions               1 j=π(i), and therefore not learn-
+                                                                            able by the FermiNet.  This may partially explain why,
+                                                                            despite  the  theoretical  universality  of  a  single  determi-
+ 3.    Hartree–Fock and Coupled Cluster calcuations                         nant,  in  practice  we  still  require  multiple  determinants
+                                                                            to achieve high accuracy.  We should note that this con-
+  We  used  PySCF59  to  perform  all-electron  CCSD(T)                     struction  is  very  similar  to  the  suggestion  in  Luo  and
+calculations  on  atoms  and  dimers  (Table  I).    PSI464                 Clark21 that neural network backﬂow could be extended
+was  used  to  perform  all-electron  CCSD(T)  calculations                 to  continuous  spaces  by  sorting  the  input  vectors  and
+                                                                                                                                            17
+
+multiplying a neural network Ansatz by the sign of the                    Plugging this into the expression forMij  yields
+permutation.   As  the  choice  of  ordering  breaks  a  nat-                Mij =Ep(X)[(Oi− Ep(X) [Oi])(Oj− Ep(X) [Oj])]
+ural  symmetry  of  the  system,  and  the  Ansatz  becomes                                    [(∂log˜p(X)                    )
+non-smooth anywhere the ordering changes, we suspect                                =1
+such an Ansatz would be less eﬀective than the FermiNet,                              4Ep(X)     (∂log˜p(X)∂θi  − ∂logZ(θ)∂θi )]
+however it is appealingly simple.
+                                                                                               [∂logp(X)∂θj  − ∂logZ(θ)∂θj]
+                                                                                    =1                       ∂logp(X)      ,
+    Appendix C: Equivalence of Natural Gradient                                       4Ep(X)         ∂θi         ∂θj
+        Descent and Stochastic Reconﬁguration                             which, up to a constant, is the Fisher information metric
+                                                                          for p(X).
+  Here we provide a derivation illustrating that stochas-
+tic reconﬁguration is equivalent to natural gradient de-
+scent for unnormalized distributions.  Though many au-                      Appendix D: Numerically Stable Computation of
+thors have investigated extensions of the Fisher informa-                           the Log Determinant and Derivatives
+tion metric to quantum systems,68 this particular connec-
+tion between methods in machine learning and quantum                        For numerical stability, the Fermionic Neural Network
+chemistry seems not to be widely appreciated by either                    outputs the logarithm of the absolute value of the wave-
+community, though it was pointed out in Nomura  et  al.                   function (along with its sign), and we compute log deter-
+(2017).19                                                                 minants rather than determinants.  Even if some of the
+  We denote the density proportional toψ2(X) byp(X),                      matrices are singular, this is not an issue for numerical
+and  the  normalizing  factor  by Z(θ).    In  addition,  let             stability on the forward pass, because these matrices will
+˜p(X)  = ψ2(X)  denote  the  unnormalized  density.    In                 have zero contribution to the overall sum of determinants
+stochastic  reconﬁguration,  the  entries  of  the  precondi-             the network outputs:
+tioner matrixM have the form                                                                              ⏐⏐⏐⏐⏐∑
+                                                                            log|ψ(r↑1,..., r↓n↓)| = log        ωk det[Φk↑] det[Φk↓]⏐⏐⏐⏐⏐.
+  Mij = Ep(X)[(Oi− Ep(X) [Oi])(Oj− Ep(X) [Oj])],                                                            k
+where                                                                     We use the “log-sum-exp trick” to compute the sum —
+                                                                          that is, we subtract oﬀ the largest log determinant before
+                                                       ∂log˜p(X)          exponentiating  and  computing  the  weighted  sum,  and
+ Oi(X) =ψ(X)−1∂ψ(X)                                                       add it back in after the logarithm at the end.  This avoids
+                         ∂θi    = ∂log|ψ(X)|∂θi        = 12∂θi            numerical underﬂow if the log determinants are not well
+                                                                          scaled.
+andM is a metric for the parameter space.69 The term                        Naively applying automatic diﬀerentiation frameworks
+Ep(X) [Oi] can be expressed in terms of the normalizing                   to compute the gradient and Laplacian of the log wave-
+factor:                                                                   function will not work if one of the matrices is singular.
+                                    [∂log˜p(X)]                           However,  the  ﬁrst  and  second  derivatives  are  still  well
+          Ep(X) [Oi] = 1                                                  deﬁned, and we show how to express these derivatives in
+                          2Ep(X)         ∂θi                              closed form appropriate for reverse-mode automatic dif-
+                             ∫ ∂log˜p(X)                                  ferentiation.  Several of the results used here, as well as
+                       = 1                                                the notation, are based on the collected matrix derivative
+                          2  ∫ ∂log˜p(X)∂θi  p(X)dX                       results of Giles (2008)70.
+                       = 1                   ˜p(X)                          From Jacobi’s formula, the gradient of the determinant
+                          2         ∂θi     Z(θ)dX                        of a matrix is given by
+                             ∫      1  ∂ ˜p(X)  ˜p(X)                           ∂ det(A)
+                       = 12      ˜p(X)   ∂θi    Z(θ)dX                             ∂A      = det(A)A−T  = Adj(A)T  = Cof(A),
+                                  ∫ ∂ ˜p(X)                               where  Cof(A)  is  the  cofactor  matrix  of  A.   Let  C  =
+                       =     12Z(θ)     ∂θi dX                            Cof(A).  Then, by the product rule, we can express the
+                                   ∂   ∫                                  reverse-mode gradient of Cof(A) as
+                       =     12Z(θ)∂θi    ˜p(X)dX                                 ¯A = A−T[Tr( ¯CT Cof(A)) I− ¯CT Cof(A)],
+
+                       =     1    ∂Z(θ)                                   where  ¯C is the reverse-mode sensitivity.  Unfortunately,
+                          2Z(θ)     ∂θi                                   this expression becomes undeﬁned if the matrix A is sin-
+                       = 1   ∂logZ(θ)                                     gular.  Even so, both the cofactor matrix and its deriva-
+                          2     ∂θi  .                                    tive  are  still  well  deﬁned.   To  see  this,  we  express  the
+                                                                                                                                              18
+
+          N                    Energy / N  (Eh)
+               Separation:  10 a0    Separation:  15 a0
+           2    -0.5000023(9)          -0.50000021(5)
+           4    -0.4999977(6)          -0.4999991(2)
+           6    -0.499991(2)            -0.499990(1)
+           8    -0.499985(3)            -0.499993(2)
+          10    -0.499980(2)            -0.499989(1)
+
+   TABLE VI: Chains of N  hydrogen atoms at equal
+    separations.  The energy per atom is in excellent
+     agreement with that of a single hydrogen atom.
+
+cofactor in terms of the singular value decomposition of
+A.  Let UΣVT  be the singular value decomposition of
+A, then
+        Cof(A) = det(A)A−T
+                  = det(U) det(Σ) det(V)UΣ−1VT.                            FIG.  11.   Evaluation  of  the  FermiNet  wavefunction  for  the
+                                                                           helium  atom.   The  second  electron  is  clamped  at  position
+Since U  and V  are  orthonormal  matrices,  their  deter-                 (0.5, 0, 0)a0  and  the  ﬁrst  electron  is  moved  along  the  path
+minant  is  just  the  sign  of  their  determinant.   To  avoid           (x, 0, 0)a0, through both the nucleus and the second electron
+clutter, we drop the det(U) and det(V) terms until the                     (top), and along the path (0.5 cosθ, 0.5 sinθ, 0)a0, through the
+very end.  Let σi be the ith diagonal element of Σ, then                   second electron (bottom).
+we have det(Σ) =∏iσi, and cancelling terms in the ex-
+pression, we get (up to a sign factor)
+                       Cof(A) = UΓVT,                                      and the diagonal terms have the form
+where Γ is a diagonal matrix with elementsγi deﬁned as                                                ∑
+                                                                                          Ξii =σ−1i        Mjjγj−Miiσ−1i γi
+                                                                                                        j
+                            γi =∏σj                                                           =∑      Mjjσ−1
+                                  j⁄=i                                                                      i γj
+                                                                                                 j⁄=i
+because  the σ−1i     term  in Σ−1  cancels  out  one  term  in                                             ∏
+det(Σ).                                                                                       =∑      Mjj        σk.
+  The gradient of the cofactor is more complicated, but                                          j⁄=i      k⁄=i,j
+once again terms cancel.  Again neglecting a sign factor,                  Putting this all together, we get
+the reverse-mode gradient can be expanded in terms of
+the singular vectors as:                                                               ¯A = Sgn(det(U))Sgn(det(V))UΞVT,
+   ¯A = A−T[Tr( ¯CT Cof(A)) I− ¯CT Cof(A)]
+      = UΣ−1VT[Tr( ¯CTUΓVT) I− ¯CTUΓVT]                                    with
+      = U[Tr( ¯CTUΓVT) Σ−1− Σ−1VT ¯CTUΓ] VT                                                     {∑
+                                                                                         Ξij =        j⁄=iMjjρij,    if i =j,
+      = U[Tr (MΓ) Σ−1− Σ−1MΓ] VT,                                                                  −Mijρij,          otherwise,
+where M = VT ¯CTU,  and we have taken advantage of
+the invariance of the trace of matrix products to cyclic                                             ρij = ∏       σk,
+permutation in the last line.
+  Now,  in  the  expression  inside  the  square  brackets  in                                               k⁄=i,j
+the last line, terms conveniently cancel that prevent the
+expression  from  becoming  undeﬁned  should σi  =  0  for
+some singular value.  Denote this term Ξ, the oﬀ-diagonal                                           M = VT ¯CTU.
+terms of Ξ only depend on the second term Σ−1MΓ:
+                     Ξij =−Mijσ−1                                          This allows us to compute second derivatives of the ma-
+                                     i γj∏                                 trix determinant even for singular matrices.  To handle
+                         =−Mijσ−1i           σk                            degenerate matrices gracefully, we fuse everything from
+                                         k⁄=j                              the computation of the log determinant to the ﬁnal net-
+                                     ∏                                     work output into a single TensorFlow operation, with a
+                         =−Mij            σk,                              custom  gradient  and  gradient-of-gradient  that  includes
+                                    k⁄=i,j                                 the expression above.
+                                                                                                                                                19
+
+    Appendix E: Non-interacting hydrogen chains                                           Atom              Position (a0)
+                                                                                             N           (0.0, 0.0, 0.22013)
+                                                                                            H1        (0.0, 1.77583, -0.51364)
+  At  suﬃcently  large  separations,  two  systems  become                                  H2     (1.53791, -0.88791, -0.51364)
+non-interacting.    The  energy  of  the  combined  system                                  H3    (-1.53791, -0.88791, -0.51364)
+should be equal to the sum of the energies of the individ-
+ual systems.  We demonstrate this property for FermiNet                        TABLE VII: Atomic positions for ammonia (NH3).
+on chains of well-separated hydrogen atoms of up to 10
+atoms (Table VI).
+
+                                                                                           Atom             Position (a0)
+                                                                                             C             (0.0, 0.0, 0.0)
+           Appendix F: Electron-Electron and                                                H1     (1.18886, 1.18886, 1.18886)
+                   Electron-Nuclear Cusps                                                   H2     (-1.18886, -1.18886, 1.18886)
+                                                                                            H3     (1.18886, -1.18886, -1.18886)
+                                                                                            H4     (-1.18886, 1.18886, -1.18886)
+  The derivatives of the wavefunction must be discontin-                       TABLE VIII: Atomic positions for methane (CH4).
+uous when two electrons or an electron and nucleus coin-
+cide in order to cancel corresponding singularities in the
+Hamiltonian.  Capturing these cusps correctly, especially
+the electron-nuclear cusp,  is critical for accurately cap-                                  Atom           Position (a0)
+turing correlation energy.  Assuming the wavefunction is                                       C1        (0.0, 0.0, 1.26135)
+non-zero at these points, the cusp conditions specify the                                      C2       (0.0, 0.0, -1.26135)
+relationship between the wavefunction and its derivative                                       H1     (0.0, 1.74390, 2.33889)
+to be:                                                                                         H2     (0.0, -1.74390, 2.33889)
+                                                                                               H3     (0.0, 1.74390, -2.33889)
+                     ( ∂Ψ    )                                                                 H4    (0.0, -1.74390, -2.33889)
+               limriI→0∂riI        =−ZΨ(riI = 0)                                 TABLE IX: Atomic positions for ethene (C2H4).
+                     (∂Ψ     )ave
+               limrij→0 ∂rij       = 12Ψ(rij = 0)
+                               ave                                                          Atom            Position (a0)
+                                                                                               C       (0.0517, 0.7044, 0.0)
+where riI  (rij) is an electron-nuclear (electron-electron)                                    N       (0.0517, -0.7596, 0.0)
+distance,ZI is the nuclear charge of theI-th nucleus and                                      H1       (-0.9417, 1.1762, 0.0)
+ave implies a spherical averaging over all directions.                                        H2     (-0.4582, -1.0994, 0.8124)
+  Fig. 11 shows FermiNet correctly describes the cusps                                        H3    (-0.4582, -1.0994, -0.8124)
+                                                                                              H4     (0.5928, 1.0567, 0.8807)
+for the helium atom.  We estimate limr→0 ∂ log|Ψ|∂r      using                                H5     (0.5928, 1.0567, -0.8807)
+Monte Carlo integration over spherical surfaces of radius
+10−5a0 centered on the helium nucleus and second elec-                      TABLE X: Atomic positions for methylamine (CH3NH2).
+tron, ﬁxed at 0.5a0 from the nucleus, and obtain, where
+r1 (r12) is the distance between the ﬁrst electron and the
+nucleus (second electron),                                                                     Atom         Position (a0)
+              (∂ log|Ψ|)                                                                        O1     (0.0, 2.0859, -0.4319)
+                                                                                                O2       (0.0, 0.0, 0.8638)
+                    dr1                                                                         O3     (0.0, -2.0859, -0.4319)
+             (∂ log|Ψ|     )  r1=0,ave =−1.9979(4)
+                                        = 0.4934(1),                               TABLE XI: Atomic positions for ozone (O3).
+                  dr12       r12=0,ave
+
+                                                                                             Atom           Position (a0)
+in excellent agreement with the theoretical values.                                            C1      (2.2075, -0.7566, 0.0)
+                                                                                               C2        (0.0, 1.0572, 0.0)
+                                                                                               O       (-2.2489, -0.4302, 0.0)
+                                                                                               H1      (-3.6786, 0.7210, 0.0)
+            Appendix G: Molecular structures                                                   H2    (0.0804, 2.2819, 1.6761)
+                                                                                               H3    (0.0804, 2.2819, -1.6761)
+                                                                                               H4      (3.9985, 0.2736, 0.0)
+  Molecular    structures    were    taken    from    the    G3                                H5    (2.1327, -1.9601, 1.6741)
+database71  where  available.   We  reproduce  the  atomic                   TABLE XII: Atomic positions for ethanol (C2H5OH).
+positions for all molecules studied in Tables VII-XIII.
+                                                                                                                                                            20
+
+                   Atom           Position (a0)
+                    C1      (0.0, 2.13792, 0.58661)
+                    C2     (0.0, -2.13792, 0.58661)
+                    C3     (1.41342, 0.0, -0.58924)
+                    C4     (-1.41342, 0.0, -0.58924)
+                    H1      (0.0, 2.33765, 2.64110)
+                    H2     (0.0, 3.92566, -0.43023)
+                    H3     (0.0, -2.33765, 2.64110)
+                    H4     (0.0, -3.92566, -0.43023)
+                    H5     (2.67285, 0.0, -2.19514)
+                    H6     (-2.67285, 0.0, -2.19514)
+
+TABLE XIII: Atomic positions for bicyclobutane (C4H6).
+
+
+
+
+
+
+
+
+ 1  A. Krizhevsky, I. Sutskever,   and G. E. Hinton, in NIPS,                     23  J.  Kessler,  C.  Calcavecchia,    and  T.  D.  K¨uhne,  arXiv
+   Vol. 25 (2012) pp. 1097–1105.                                                      preprint arXiv:1904.10251  (2019).
+ 2  D.  Silver,  A.  Huang,  C.  J.  Maddison,  A.  Guez,  L.  Sifre,             24  J.   Han,    L.   Zhang,       and   W.   E,   arXiv   preprint
+   G.  Van  Den  Driessche,  J.  Schrittwieser,  I.  Antonoglou,                      arXiv:1807.07014  (2018).
+   V.  Panneershelvam,  M.  Lanctot,  et  al.,  Nature 529,  485                  25  M.  Taddei,  M.  Ruggeri,  S.  Moroni,   and  M.  Holzmann,
+   (2016).                                                                            Phys. Rev. B 91, 115106 (2015).
+ 3  J. Gilmer, S. S. Schoenholz, P. F. Riley, O. Vinyals,   and                   26  M.  Ruggeri,  S.  Moroni,    and  M.  Holzmann,  Phys.  Rev.
+   G. E. Dahl, in Proceedings of the 34th International Con-                          Lett. 120, 205302 (2018).
+   ference on Machine Learning (ICML), Vol. 70 (JMLR.org,                         27  Since this manuscript appeared online, several other works
+   2017) pp. 1263–1272.                                                               using  neural  networks  as  Ans¨atze  for  continuous-space
+ 4  K. T. Sch¨utt, M. Gastegger, A. Tkatchenko, K.-R. M¨uller,                        fermionic systems have appeared.72,73 The ﬁrst72 also aug-
+   and R. J. Maurer, Nat. Commun. 10, 5024 (2019).                                    ments the typical Slater-Jastrow Ansatz with a deep neural
+ 5  K. Mills, M. Spanner,   and I. Tamblyn, Phys. Rev. A 96,                          network, while physical constraints like the cusp conditions
+   042113 (2017).                                                                     are included explicitly. As the model has fewer parameters
+ 6  A.   V.   Sinitskiy   and   V.   S.   Pande,   arXiv   preprint                   than ours, it is faster to optimize, but does not achieve the
+   arXiv:1908.00971  (2019).                                                          same accuracy. The second73 represents a chemical system
+ 7  L.  Cheng,  M.  Welborn,  A.  S.  Christensen,    and  T.  F.                     in second-quantized form using a given basis set, then ﬁts
+   Miller III, J. Chem. Phys. 150, 131103 (2019).                                     a restricted Boltzmann machine to the ground state. This
+ 8  R. J. Bartlett and M. Musia l, Rev. Modern Phys. 79, 291                          model is also able to exceed the performance of CCSD(T)
+   (2007).                                                                            within a basis set. However, it is less clear how easily this
+ 9  M. Troyer and U. J. Wiese, Phys. Rev. Lett. 94, 170201                            model  extrapolates  to  the  complete  basis  set  limit.  Our
+   (2005).                                                                            approach  sidesteps  the  diﬃculty  of  choosing  a  basis  set
+10  M. Born and R. Oppenheimer, Annalen der Physik 389,                               entirely.
+   457 (1927).                                                                    28  S.  Zhang,  “Ab  initio  electronic  structure  calculations  by
+11  G.  H.  Booth  and  A.  Alavi,  J.  Chem.  Phys. 132,  174104                     auxiliary-ﬁeld quantum monte carlo,” in Handbook of Ma-
+   (2010).                                                                            terials  Modeling  :  Methods:  Theory  and  Modeling, edited
+12  W.  M.  C.  Foulkes,  L.  Mitas,  R.  J.  Needs,    and  G.  Ra-                  by W. Andreoni and S. Yip (Springer International Pub-
+   jagopal, Rev. Modern Phys. 73, 33 (2001).                                          lishing, 2018) pp. 1–27.
+13  R.  P.  Feynman  and  M.  Cohen,  Phys.  Rev.  102,  1189                     29  A. Vaswani, N. Shazeer, N. Parmar, J. Uszkoreit, L. Jones,
+   (1956).                                                                            A. N. Gomez,  L. Kaiser,  and I. Polosukhin, in Advances in
+14  M. Bajdich, L. Mitas, G. Drobn´y, L. K. Wagner,  and K. E.                        Neural Information Processing Systems (NeurIPS) (2017)
+   Schmidt, Phys. Rev. Lett. 96, 130201 (2006).                                       pp. 5998–6008.
+15  R. Or´us, Ann. Phys. 349, 117 (2014).                                         30  A. Senior,  R. Evans,  J. Jumper,  J. Kirkpatrick,  L. Sifre,
+16  G. Carleo and M. Troyer, Science 356, 602 (2017).                                 T.  Green,  C.  Qin,  A.  ˇZ´ıdek,  A.  Nelson,  A.  Bridgland,
+17  K. Choo, G. Carleo, N. Regnault,  and T. Neupert, Phys.                           H.  Penedones,  S.  Petersen,  K.  Simonyan,  S.  Crossan,
+   Rev. Lett. 121, 167204 (2018).                                                     P. Kohli, D. Jones, D. Silver, K. Kavukcuoglu,  and D. Has-
+18  A.  Nagy  and  V.  Savona,  Phys.  Rev.  Lett.  122,  250501                      sabis, Nature 577, 1 (2020).
+   (2019).                                                                        31  K. T. Sch¨utt,  F. Arbabzadah,  S. Chmiela,  K. R. M¨uller,
+19  Y. Nomura, A. S. Darmawan, Y. Yamaji,  and M. Imada,                              and A. Tkatchenko, Nat. Commun. 8, 1 (2017).
+   Phys. Rev. B 96, 205152 (2017).                                                32  K.   T.   Sch¨utt,    H.   E.   Sauceda,    P.-J.   Kindermans,
+20  L. Yang, Z. Leng, G. Yu, A. Patel, W.-J. Hu,  and H. Pu,                          A. Tkatchenko,   and K.-R. M¨uller, J.  Chem.  Phys. 148,
+   arXiv preprint arXiv:1905.10730  (2019).                                           241722 (2018).
+21  D.  Luo  and  B.  K.  Clark,  Phys.  Rev.  Lett.  122,  226401                33  J. Shawe-Taylor, in ICANN, Vol. 1 (1989) pp. 158–162.
+   (2019).                                                                        34  S. J. Chakravorty, S. R. Gwaltney, E. R. Davidson, F. A.
+22  H. Saito, J. Phys. Soc. Japan 87, 074002 (2018).                                  Parpia,  and C. F. Fischer, Phys. Rev. A 47, 3649 (1993).
+                                                                                                                                                           21
+
+
+35  B.  K.  Clark,  M.  A.  Morales,  J.  McMinis,  J.  Kim,   and               56  A. Badinski, P. Haynes, J. Trail,   and R. Needs, J. Phys.
+   G. E. Scuseria, J. Chem. Phys. 135, 244105 (2011), arXiv:                         Condens. Matter 22, 074202 (2010).
+   1106.2456.                                                                    57  M.  Motta,  C.  Genovese,  F.  Ma,  Z.-H.  Cui,  R.  Sawaya,
+36  E. Neuscamman, C. J. Umrigar,  and G. K.-L. Chan, Phys-                          G.  K.  Chan,  N.  Chepiga,  P.  Helms,  C.  Jimenez-Hoyos,
+   ical Review B 85, 045103 (2012), arXiv:  1108.0900.                               A. J. Millis, et al., arXiv preprint arXiv:1911.01618  (2019).
+37  R. Assaraf, S. Moroni,   and C. Filippi, J. Chem. Theory                     58  R. Q. Hood, M. Y. Chou, A. J. Williamson, G. Rajagopal,
+   Comput. 13, 5273 (2017).                                                          R. J. Needs,  and W. M. C. Foulkes, Phys. Rev. Lett. 78,
+38  L.  Otis  and  E.  Neuscamman,  Phys.  Chem.  Chem.  Phys.                       3350 (1997).
+   21, 14491 (2019).                                                             59  Q.  Sun,  T.  C.  Berkelbach,  N.  S.  Blunt,  G.  H.  Booth,
+39  I.  Sabzevari,  A.  Mahajan,    and  S.  Sharma,  J.  Chem.                      S. Guo, Z. Li, J. Liu, J. D. McClain, E. R. Sayfutyarova,
+   Phys. 152, 024111 (2020), publisher:  American Institute                          S. Sharma, S. Wouters,   and G. K.-L. Chan, Wiley Inter-
+   of Physics.                                                                       disciplinary Reviews:  Computational Molecular Science 8,
+40  J.  Martens  and  R.  Grosse,  in  ICML,  Vol.  37  (2015)  pp.                  e1340 (2018).
+   2408–2417.                                                                    60  H. Flyvbjerg and H. G. Petersen, J. Chem. Phys. 91, 461
+41  S. Amari, Neural Comput. 10, 251 (1998).                                         (1989).
+42  S. Sorella, Phys. Rev. Lett. 80, 4558 (1998).                                61  C.  Umrigar,  M.  Nightingale,    and  K.  Runge,  J.  Chem.
+43  J. Toulouse and C. Umrigar, J. Chem. Phys. 126, 084102                           Phys. 99, 2865 (1993).
+   (2007).                                                                       62  R. M. Lee, G. J. Conduit, N. Nemec, P. L´opez R´ıos,  and
+44  P. Seth, P. L. R´ıos,  and R. J. Needs, J. Chem. Phys. 134,                      N. D. Drummond, Phys. Rev. E 83, 066706 (2011).
+   084105 (2011).                                                                63  R.  Needs,  M.  Towler,  N.  Drummond,  ,   and  P.  L.  Rios,
+45  W.  Klopper,  R.  A.  Bachorz,  D.  P.  Tew,   and  C.  H¨attig,                 “CASINO: User’s Guide Version 2.13,”  (2015).
+   Phys. Rev. A 81, 022503 (2010).                                               64  R. M. Parrish, L. A. Burns, D. G. A. Smith, A. C. Simmon-
+46  W. Cencek and J. Rychlewski, Chem. Phys. Lett. 320, 549                          ett, A. E. DePrince, E. G. Hohenstein, U. Bozkaya, A. Y.
+   (2000).                                                                           Sokolov,  R.  Di  Remigio,  R.  M.  Richard,  J.  F.  Gonthier,
+47  C. Filippi and C. Umrigar, J. Chem. Phys. 105, 213 (1996).                       A. M. James, H. R. McAlexander, A. Kumar, M. Saitow,
+48  E. Giner,  R. Assaraf,   and J. Toulouse, Mol. Phys. 114,                        X.  Wang,  B.  P.  Pritchard,  P.  Verma,  H.  F.  Schaefer,
+   910 (2016).                                                                       K.  Patkowski,  R.  A.  King,  E.  F.  Valeev,  F.  A.  Evange-
+49  M. Dash, S. Moroni, A. Scemama,  and C. Filippi, J. Chem.                        lista, J. M. Turney, T. D. Crawford,  and C. D. Sherrill, J.
+   Theory Comput. 14, 4176 (2018).                                                   Chem. Theory Comput. 13, 3185–3197 (2017).
+50  R. J. Le Roy, Y. Huang,  and C. Jary, J. Chem. Phys. 125,                    65  A. DePrince and C. Sherrill, J. Chem. Theory Comput. 9,
+   164310 (2006).                                                                    2687 (2013).
+51  R. Gdanitz, Chem. Phys. Lett. 283, 253 (1998).                               66  D. Feller, J. Chem. Phys. 96, 6104 (1992).
+52  M. Motta, D. M. Ceperley, G. K.-L. Chan, J. A. Gomez,                        67  T.  Helgaker and  W.  Klopper,  J. Chem.  Phys. 106,  9639
+   E. Gull,  S. Guo,  C. A. Jim´enez-Hoyos,  T. N. Lan,  J. Li,                      (1997).
+   F. Ma, A. J. Millis, N. V. Prokof’ev, U. Ray, G. E. Scuseria,                 68  D. Petz and C. Sud´ar, J. Math. Phys. 37, 2662 (1996).
+   S. Sorella, E. M. Stoudenmire, Q. Sun, I. S. Tupitsyn, S. R.                  69  G. Mazzola, A. Zen,  and S. Sorella, J. Chem. Phys. 137,
+   White,  D.  Zgid,   and  S.  Zhang,  Phys.  Rev.  X 7,  031059                    134112 (2012), publisher:  American Institute of Physics.
+   (2017).                                                                       70  M.  B.  Giles,  in  Advances  in  Automatic  Diﬀerentiation,
+53  T. Van Voorhis and M. Head-Gordon, J. Chem. Phys. 113,                           edited by C. H. Bischof, H. M. B¨ucker, P. Hovland, U. Nau-
+   8873 (2000).                                                                      mann,  and J. Utke (2008) pp. 35–44.
+54  H. Burton and A. Thom, J. Chem. Theory Comput. 12,                           71  L. A. Curtiss, K. Raghavachari, P. C. Redfern, V. Rassolov,
+   67 (2016).                                                                        and J. Pople, J. Chem. Phys. 109, 7764 (1998).
+55  D. Lyakh, M. Musia l, V. Lotrich,  and R. Bartlett, Chem.                    72  J.  Hermann,  Z.  Sch¨atzle,    and  F.  No´e,  arXiv  preprint
+   Rev. 112, 182 (2011).                                                             arXiv:1909.08423  (2019).
+                                                                                 73  K.  Choo,  A.  Mezzacapo,   and  G.  Carleo,  arXiv  preprint
+                                                                                     arXiv:1909.12852  (2019).

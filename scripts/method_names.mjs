@@ -36,7 +36,8 @@ const SLOTS = ["symmetric", "projected", "extrapolated"];
 const EXTRAPOLATION = /^(?:(?:variance|truncation error|Δτ|1\/M) → 0|χ → ∞)(?: \([^()]+\))?$/; // 1/M: the one-particle basis size (track 2)
 // Symmetry or extrapolation wording outside a slot. A Gutzwiller projection removes double
 // occupancy; it is part of the state, not a symmetry.
-const LOOSE = /symmetr|projection|(?<!Gutzwiller)-projected|→ [0∞]|extrapolat/i;
+// An antisymmetric layer is the fermion statistics, not a symmetry (atoms and molecules, 2026-11-12).
+const LOOSE = /(?<!anti)symmetr|projection|(?<!Gutzwiller)-projected|→ [0∞]|extrapolat/i;
 
 // Why a detail breaks the slot convention, or null.
 export function detailIssue(detail) {
@@ -1215,6 +1216,16 @@ const TRACK3 = {
   "GW": d => ["GW", d, { family: "other" }],
   "DMET": d => ["DMET", d, { family: "other" }],
   "SEET": d => ["SEET", d, { family: "other" }],
+  // Atoms and molecules (RULES.md 13, 2026-11-12): real-space neural-network states. The pass detail starts with the
+  // algorithm ("VMC, ..."), which the name already implies; "NES-VMC" (natural excited states) is kept.
+  ...Object.fromEntries([
+    ["FermiNet", "FermiNet", "other NQS"], ["FermiNet*", "FermiNet", "other NQS"], ["FermiNet-FA", "FermiNet-FA", "other NQS"],
+    ["FermiNet-GA", "FermiNet-GA", "other NQS"], ["FermiNet+SchNet", "FermiNet+SchNet", "other NQS"], ["PauliNet", "PauliNet", "other NQS"],
+    ["Psiformer", "Psiformer", "transformer / ViT"], ["LapNet", "LapNet", "transformer / ViT"], ["LAVA", "LAVA", "other NQS"],
+    ["NucleoNet", "NucleoNet", "other NQS"], ["DeepQMC (transferable)", "DeepQMC", "other NQS"], ["NNAGP", "NNAGP", "other NQS"],
+    ["Excited Pfaffian", "Excited Pfaffian", "other NQS"],
+  ].map(([m, name, family]) => [m, d => [name, d.replace(/^VMC(, |; |$)/, ""), { family }]])),
+  "FN-DMC": d => ["FN-DMC", d.replace(/^fixed-node DMC (from )?/, "trial state: "), { family: "DMC" }],
   ...Object.fromEntries(["CCSD", "CCSD(T)", "CCSDT", "CCSDTQ", "RCCSD", "RCCSD(T)", "UCCSD", "UCCSD(T)", "MkMRCCSD", "MkMRCCSD(T)", "MP2",
     "MRCI", "MRCI+Q", "MRCI-F12+Q", "PC-NEVPT2", "SC-NEVPT2"].map(m => [m, d => [m, d, CC]])),
 };

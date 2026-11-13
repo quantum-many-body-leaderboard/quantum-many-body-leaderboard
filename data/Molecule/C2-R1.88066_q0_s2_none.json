@@ -1,0 +1,89 @@
+{
+  "model": "Molecule",
+  "lattice": "molecule",
+  "n_sites": 2,
+  "boundary": "O",
+  "n_electrons": 12,
+  "params": {
+    "formula": "C2",
+    "name": "carbon dimer",
+    "charge": 0,
+    "N_up": 7,
+    "N_dn": 5,
+    "basis": "none",
+    "geometry": [
+      {
+        "el": "C",
+        "r": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "el": "C",
+        "r": [
+          0,
+          0,
+          1.8806554391671495
+        ]
+      }
+    ],
+    "geometry_source": "arXiv:2503.19847 Supplementary Tables 3-4: C-C bond length 0.9952 Å (converted × 1/0.52917721092)"
+  },
+  "instance_id": "Molecule/C2-R1.88066_q0_s2_none",
+  "rows": [
+    {
+      "energy": -75.74981,
+      "sigma": 0.00026,
+      "energy_variance": null,
+      "dof": 12,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "DeepQMC",
+      "method_detail": "transferable optimization over the 10 bond lengths, 4 triplet states with overlap penalty, dynamic state ordering, shared electron-nucleus transformer parameters",
+      "method_as_published": "DeepQMC (transferable) [VMC, transferable optimization over the 10 bond lengths, 4 triplet states with overlap penalty, dynamic state ordering, shared electron-nucleus transformer parameters]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "Z. Schätzle, P. B. Szabó, A. Cuzzocrea, M. Mezera and F. Noé, Ab initio simulation of excited-state potential energy surfaces with transferable deep quantum Monte Carlo, Nat. Comput. Sci. (2026), arXiv:2503.19847, doi:10.1038/s43588-026-01065-y",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2503.19847 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "-75.74981(26)",
+        "note": "Nat. Comput. Sci. Supplementary Table 4, SI text line 270: \"0.9952      -75.69047(27)     -75.69006(26)     -75.74981(26\"; arXiv v2 same digits | Hartree, total energy, all-electron, basis-free; the lowest of the four lowest triplet states at this bond length (N_up - N_dn = 2); no quintet computed in the source",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -75.75867,
+      "sigma": 0.00011,
+      "energy_variance": null,
+      "dof": 12,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "Excited Pfaffian",
+      "method_detail": "one Excited Pfaffian trained jointly on 10 bond lengths and 12 states (6 singlet, 6 triplet, S+ penalty); the lowest triplet",
+      "method_as_published": "Excited Pfaffian [VMC, one Excited Pfaffian trained jointly on 10 bond lengths and 12 states (6 singlet, 6 triplet, S+ penalty); the lowest triplet]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "N. Gao, T. Grutschus, F. Noé and S. Günnemann, Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State, Proceedings of the 43rd International Conference on Machine Learning (ICML 2026), PMLR 306, arXiv:2603.14515",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2603.14515 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "-75.75867(11) (total energy, Hartree)",
+        "note": "ICML 2026 / arXiv:2603.14515 v2 Table 11 (triplet block), text line 1728 | Hartree, total energy, all-electron. Raw state energies \"before averaging over degenerate states and correcting for state swaps\"; the row is the lowest of the six columns of its spin. N_up - N_dn = 2: the S+ penalty admits a triplet only at Ms = 1 (read from Sec. 5, not printed). | reader confidence medium",
+        "secondary_of": null
+      }
+    }
+  ]
+}

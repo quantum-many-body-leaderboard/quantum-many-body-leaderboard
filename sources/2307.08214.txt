@@ -1,0 +1,1474 @@
+Forward Laplacian: A New Computational Framework for
+Neural Network-based Variational Monte Carlo
+Ruichen Li1,2§†, Haotian Ye1†, Du Jiang1,2§, Xuelan Wen2, Chuwei Wang1,
+Zhe Li2, Xiang Li2, Di He1,a, Ji Chen1,b, Weiluo Ren2,c, Liwei Wang1,d
+1Peking University.
+2ByteDance Research.
+Abstract
+Neural network-based variational Monte Carlo (NN-VMC) has emerged as a promising cutting-edge
+technique of ab initio quantum chemistry. However, the high computational cost of existing approaches
+hinders their applications in realistic chemistry problems. Here, we report the development of a new
+NN-VMC method that achieves a remarkable speed-up by more than one order of magnitude, thereby
+greatly extending the applicability of NN-VMC to larger systems. Our key design is a novel compu-
+tational framework named Forward Laplacian, which computes the Laplacian associated with neural
+networks, the bottleneck of NN-VMC, through an efficient forward propagation process. We then
+demonstrate that Forward Laplacian is not only versatile but also facilitates more developments of
+acceleration methods across various aspects, including optimization for sparse derivative matrix and
+efficient neural network design. Empirically, our approach enables NN-VMC to investigate a broader
+range of atoms, molecules and chemical reactions for the first time, providing valuable references to
+other ab initio methods. The results demonstrate a great potential in applying deep learning methods
+to solve general quantum mechanical problems.
+1 Main
+Accurately solving the time-independent electronic
+Schr¨ odinger equation can yield the fundamental prop-
+erties of a given quantum mechanical system. Quan-
+tum Monte Carlo (QMC) [1, 2] is one of the
+most important ab initio methods for solving the
+Schr¨ odinger equation, widely employed in various sce-
+narios in quantum chemistry. However, in QMC, the
+accuracy of the solution heavily relies on the choice of
+the ansatz, which requires significant expertise. This
+limitation restricts the adaptability of QMC compared
+§These authors carried out this work as interns at
+ByteDance.
+†Equal Contribution
+adihe@pku.edu.cn
+bji.chen@pku.edu.cn
+crenweiluo@bytedance.com
+dwanglw@pku.edu.cn
+to other deterministic approaches, such as CCSD(T),
+which is widely considered as the “gold standard”.
+Recently, deep learning has revolutionized the field
+of quantum chemistry for obtaining more accurate
+solutions to the Schr¨ odinger equation. One of the
+pioneering approaches is Neural Network-based Vari-
+ational Monte Carlo (NN-VMC), such as FermiNet
+[3, 4] and PauliNet [5]. The ground state wavefunc-
+tion can be obtained through the variational principle,
+by which the expectation value of the energy is min-
+imized. Based on this fact, NN-VMC methods utilize
+deep neural networks to parameterize the wavefunc-
+tion and optimize the network parameters with the
+energy serving as the loss function. Benefiting from
+the remarkable capacity of neural networks, NN-VMC
+methods demonstrated promising results to attain
+chemical accuracy for diverse systems. However, it is
+essential to note that these methods often incur sig-
+nificant computational costs during model training.
+For instance, learning a wavefunction for the benzene
+1
+arXiv:2307.08214v1  [physics.comp-ph]  17 Jul 2023
+dimer system requires approximately 10,000 GPU
+hours [6] on modern hardware, making it challenging
+to scale up toward larger systems.
+In this work, we tackle the challenge of compu-
+tational efficiency in NN-VMC methods, especially
+for large-scale systems. Note that NN-VMC needs
+to compute the Laplacian with respect to the neu-
+ral network input to obtain the loss. Through our
+investigation, the calculation of this term consumes a
+substantial proportion of the overall training time and
+becomes the primary bottleneck in the learning proce-
+dure. In detail, previous works first compute the Hes-
+sian matrix using the auto differentiation ( AutoDiff)
+method in deep learning toolkits and then derive the
+Laplacian by taking the trace. Such a process requires
+performing forward propagation and backward prop-
+agation multiple times, significantly slowing down the
+overall training speed of NN-VMC. See Section 4.2 for
+a detailed analysis.
+Observing this problem, we first develop a novel
+computational framework named Forward Laplacian.
+In contrast to the commonly used method that indi-
+rectly derives the Laplacian from the Hessian, Forward
+Laplacian directly computes the value through a care-
+fully crafted forward propagation process, which we
+mathematically show is much more efficient as it
+eliminates unnecessary computation and propagation.
+Second, we demonstrate that this way of computation
+not only accelerates the process but also paves the way
+for developing advanced techniques in NN-VMC. In
+particular, we illustrate that in the Forward Laplacian
+associated with NN-VMC ansatz, many intermedi-
+ate derivatives exhibit sparsity and can be optimized
+to a considerable extent. We also design an efficient
+neural network architecture called LapNet, which can
+better exploit the strength of the Forward Laplacian
+method using carefully designed attention blocks with
+sparse derivatives. Together, these developments allow
+us to study atoms, molecules, and chemical reactions
+beyond the capability of existing NN-VMC packages.
+In the following sections, we first evaluate our
+method on a wide range of systems in terms of
+calculating the absolute energy following [3, 4, 6].
+All results consistently indicate that LapNet, cou-
+pled with the Forward Laplacian method, obtains
+accurate energy estimation while significantly reduc-
+ing the computational cost of model training. Given
+these promising results, we further explore whether
+our approach can learn a more useful quantity—the
+relative energy—across different practical scenarios,
+including the barrier of chemical reactions, the ioniza-
+tion energy of transition metals, and the noncovalent
+interaction between molecules. The results demon-
+strate, for the first time, that the relative energies
+obtained using NN-VMC methods align with those
+obtained using gold-standard computational methods
+and experimental results, suggesting a great potential
+of using deep learning to solve quantum mechanical
+systems.
+2 Results
+2.1 Forward Laplacian Framework
+The most time-consuming part of NN-VMC is the
+calculation of the Laplacian, i.e., the divergence of
+the gradient of the network’s output with respect to
+the coordinates of electrons. In modern deep learn-
+ing toolkits, one of the most commonly used methods
+for obtaining the Laplacian is to first compute the
+Hessian matrix with the AutoDiff package and then
+take its trace [3–6]. However, deriving the Hessian
+matrix to compute the Laplacian is unnecessary and
+inefficient, making it far from ideal. We develop a
+brand-new computational framework, named Forward
+Laplacian, that directly calculates the Laplacian and
+can significantly improve the computation efficiency
+of NN-VMC. For the sake of simplicity and without
+loss of generality, we introduce the implementation
+and the advantage of Forward Laplacian on the Multi-
+Layer Perceptron (MLP) network. A detailed analysis
+of the Forward Laplacian method for general neural
+networks will be discussed in Section 4.
+Let x denote the input variable (e.g., the electron
+coordinates) and ϕ denote an arbitrary MLP model.
+Usually, ϕ can be decomposed into a sequence of linear
+transformations and non-linear activation functions,
+i.e., ϕ(x) = FL ◦ FL−1 ◦ ... ◦ F0(x), where Fl(h) =
+σ(W lh + bl), l = 0 , · · ·, L. W l and bl are learnable
+parameters and σ is an element-wise activation func-
+tion. For ease of reference, we denote hl+1 = Fl(hl)
+as the hidden value and y = FL(hL) as the final out-
+put. We denote the derivative with respect to variable
+h as ∇h. For simplicity, we use the notation ∇ for
+the derivative with respect to input and ∆ for the
+Laplacian with respect to input. For a vector-valued
+function, its Laplacian is derived through applying
+∆ to each element. To compute ∆ ϕ(x), previous
+method first computes the first-order derivative ∇ϕ
+through a forward propagation followed by a backward
+propagation:
+x → · · · →hl → hl+1 → · · · →y
+→ ∇hL y → · · · → ∇hl y · · · → ∇xy,
+(1)
+where the chain rule in deriving ∇hl y is given by
+∇hl y = ∇hl Fl(hl)∇hl+1 y. The Hessian matrix ∇2ϕ
+is calculated through another pass using the following
+chain rule:
+∇hl+1 = ∇hl∇hl Fl(hl), (2)
+2
+a. Standard Method
+b. Forward LaplacianMethod
+Δ𝑦
+𝑦=𝐹!(𝐡)𝐱 𝐡=𝐹"(𝐱) ∇𝐡𝑦$ ∇𝑦$
+∇𝐱 ∇𝐡 ∇𝑦 ∇∇𝐡𝑦 ∇∇𝑦∇∇%𝑦=0
+trace
+Δ𝐡Δ𝐱 Δ𝑦
+ Gradient Calculation
+Hessian Calculation
+ Target
+Direct Laplacian Calculation
+∇%𝑦=1
+∇=𝜕 𝜕𝐱				∇𝐡	=𝜕 𝜕𝐡				∇"	=d d𝑦				Δ=∇⋅∇				𝐹#(𝐯)=𝜎(𝑊#𝐯+𝑏#)
+Fig. 1: Illustration of the computation process for Laplacian with the standard method and the proposed Forward
+Laplacian method. The standard method is presented in the grey box, and our proposed method is presented
+in the green box. From the figure, we can see that the standard method requires the calculation of Hessian in
+deriving Laplacian, which is unnecessary and inefficient. In contrast, our method obtains the Laplacian through
+a carefully crafted forward propagation process, and thus approximately halves the total computational cost.
+∇∇hl y = ∇∇hl+1 y ∇hl Fl(hl)⊤
++ [( ∇hl · ∇hl )∇hl Fl(hl)]∇hl+1 y . (3)
+The Laplacian is then obtained by taking the trace
+and the whole computation graph of the method is
+visualized in Fig. 1a.
+Unlike the previous method, we demonstrate that
+the Laplacian can be calculated efficiently in a direct
+way. In the forward pass, in each layer l, besides cal-
+culating the value of hidden state hl, we additionally
+calculate two terms: the first-order derivative ∇hl, as
+well as the intermediate Laplacian term ∆ hl.
+
+
+x
+∇x
+∆x
+
+ → · · · →
+
+
+hl
+∇hl
+∆hl
+
+ → · · · →
+
+
+y
+∇y
+∆y
+
+ . (4)
+The key insight in our method is that the calculation
+of all three terms in layer l + 1 only requires the term
+values in layer l, where the chain rule is given by
+hl+1 = Fl(hl) (5)
+∇hl+1 = ∇hl∇hl Fl(hl), (6)
+∆hl+1 = (∇hl Fl(hl))⊤ ∆hl
++ tr((∇hl)⊤∇hl∇2 hl Fl(hl)). (7)
+In such a way, all terms are computed iteratively
+from the first layer, and the value of ∆ ϕ(x) will be
+obtained in the final layer. This method calculates the
+Laplacian in a single forward pass without comput-
+ing ∇2ϕ, thereby avoiding redundant computations.
+Additionally, the memory requirements of Forward
+Laplacian is not significant as the memory that stores
+intermediate tuple in eq. (4) can be released in the
+succeeding forward process. The whole computation
+graph of the proposed method is visualized in Fig.
+1b. In Section 4, we provide a detailed analysis of the
+computational complexity of the Forward Laplacian
+method, demonstrating that the cost can be approxi-
+mately halved compared to the previous method. It’s
+important to note that the efficiency is not attributed
+to any approximation that loses precision but rather
+to an alternative computational strategy. Hence, our
+method serves as a more efficient replacement for the
+previous method in the general setting.
+While the Forward Laplacian method offers supe-
+rior efficiency from a computational point of view, it
+is crucial yet challenging to integrate it into modern
+deep learning toolkits and make it compatible with
+existing frameworks, as the entire training algorithm
+still heavily relies on many other AutoDiff function-
+alities, e.g., the backward gradient calculation for
+the network parameters. We implement the Forward
+Laplacian method in JAX [7], a greatly flexible and effi-
+cient open-sourced toolkit developed by Google. We
+carefully overload all the related functions such that
+when the input of f (x) is a tuple (x, ∇x, ∆x), the out-
+put will automatically become ( f (x), ∇f (x), ∆f (x)).
+Additionally, for a wide range of elementary opera-
+tions used in the NN-VMC methods, we manually
+3
+Orbital
+ Det
+Jastrow 
+Factor
+𝜓
+Embedding
+𝐫!−𝐑"	
+𝐫!−𝐫#
+Envelope
+𝜎!
+Sparse Derivative 
+Attention 
+Sparse Derivative
+Attention 
+Sparse Derivative
+Attention 
+Sparse Derivative
+Attention 
+∇𝐫𝐫 ∇𝐫𝐃 ∇𝐫𝐀
+derivative matrix
+Concatenate
+Linear
+Rescale
+𝐫!−𝐑" 𝜎!
+Orbital Matrix
+Concatenate
+Linear Linear
+Spin Split
+Individual Stream Attentive Stream
+Q
+K
+V
+Electron-wise
+MLP
+Linear
+MatMul
+SoftMax MatMul
+Linear
+Linear
+Electron-wise
+MLP
+	𝑁 		
+	𝑁	 	
+Fig. 2: The LapNet Architecture. The blue block represents the embedding layer, the yellow block represents
+the sparse derivative attention block, and the green block represents the orbital mapping. The top right part
+illustrates the derivative sparsity in the envelope function. r is the input electron position, D, A are intermediate
+matrices. The dark color represents non-zero elements and the light color represents zero elements. The derivative
+matrices are structurally sparse, thus we can reduce the cost of storing and operating these matrices. A detailed
+explanation of each block will be shown in Section 4.3.
+define their forward propagation rules (e.g., eq. (7))
+and optimized their efficiency.
+2.2 Accelerating NN-VMC using the
+Forward Laplacian Framework
+In the previous subsection, we introduce a new compu-
+tational framework that can accelerate the calculation
+of Laplacian in general settings. In this subsection, we
+demonstrate that using the proposed framework, we
+can achieve an even more substantial acceleration rate
+for some specific classes of neural networks, such as
+NN-VMC ansatz.
+One of the key designs in Forward Laplacian is
+using forward propagation only. When we applied For-
+ward Laplacian to an NN-VMC ansatz, we found that
+many intermediate outputs along the propagation nat-
+urally exhibit sparsity and can be further optimized
+to a considerable extent. For example, the envelope
+function (refer to Fig. 2) of any NN-VMC ansatz guar-
+antees that the wavefunction decays exponentially as
+electrons move away from atoms. It sequentially com-
+putes the relative distance matrixD between electrons
+and nuclei, and the exponentially decaying feature
+matrix A. Mathematically, ∇rr, ∇rD, ∇rA are all
+block-diagonal, where r denotes the electron positions.
+Matrix operations can be optimized by leveraging this
+sparse property. We optimize the Forward Laplacian
+method to preserve only the non-zero elements and
+remove others, resulting in an O(N ) efficiency gain
+in both memory and computation, where N is the
+number of electrons. The improvement can be applied
+to various components beyond the envelope function,
+including the Hartree-Fock function and the Jastrow
+factor [8]. Remarkably, this technique is only appli-
+cable to our framework, as the intermediate variables
+(e.g., ∇∇hl y) in the standard approach are not sparse.
+We then design a new neural network ansatz,
+namely the LapNet, which increases the sparsity dur-
+ing the forward process in Forward Laplacian while
+maintaining excellent performance compared to other
+NN-VMC architectures. We illustrate the structure of
+4
+𝑏𝑎#.										CH2 CH2n
+Time per iter (s)
+Fig. 3: Efficiency and performance comparison of different NN-VMC methods. a , Total training time
+and energy of LapNet, FermiNet, and Psiformer for 200,000 iterations. The FermiNet and Psiformer results are
+from [6]. See Supplementary Table 6 for a detailed energy comparison.b, c, LapNet’s training curve on naphthalene
+and toluene, compared against the curve of Psiformer and FermiNet. d, To investigate the scaling effect of the
+computational cost with system size, we measure the per-iteration time of different models on Polyethylene systems
+with varying molecule numbers. We study three models for each system, Psiformer, Psiformer with Forward
+Laplacian, and LapNet. The speed-up rate of LapNet compared to the original Psiformer is presented at the
+endpoint of each bar. We also illustrate the dependency between the speed-up rate and the system size on the
+right side, and the results suggest an almost linear relationship between the acceleration rate and the size of the
+system. 5
+LapNet in Fig. (2). LapNet incorporates general atten-
+tion modules, a popular component used in numerous
+powerful models such as GPT [9] and AlphaFold2 [10].
+We develop a sparse derivative attention(SDA) block,
+which is functionally similar to the standard attention
+block while inherently introducing additional sparsity
+to the derivative matrices, thereby achieving better
+efficiency through the Forward Laplacian method.
+Extensive evaluations in Section 2.3 demonstrate the
+efficiency and performance of LapNet.
+2.3 Efficiency and Performance
+In this subsection, we demonstrate that the combi-
+nation of Forward Laplacian and LapNet achieves
+state-of-the-art energy results while reducing the com-
+putational cost by up to 20 times. We first bench-
+mark LapNet against FermiNet [3] and the recently
+introduced Psiformer [6], an attention-based neural
+network ansatz that has shown state-of-the-art per-
+formance. The architecture hyperparameters can be
+found in Supplementary Table 1. Second, we study the
+runtime scaling law of different methods on polyethy-
+lene systems (C 2H4)n over different n. Throughout
+this section, we evaluate the performance of trained
+models using absolute energy. For baseline approaches,
+we directly use the open-sourced implementation [11]
+to measure the corresponding runtime. More details on
+network training and energy evaluation are discussed
+in Section 4.
+We first calculate the absolute energy on 16 molec-
+ular systems with electron numbers ranging from 4 to
+84 with 200,000 training iterations. The total training
+time and energy results of all methods are presented
+in Fig. 3a. Both LapNet and Psiformer consistently
+produce lower, namely better, absolute energy than
+FermiNet across all systems. When compared to Psi-
+former, the energy results of LapNet either align
+closely with those of Psiformer within chemical accu-
+racy, or outperform them in the case of certain larger
+molecules such as CCl4. This suggests that LapNet has
+state-of-the-art capacity for approximating the ground
+state wavefunction. Regarding the total training time,
+it is clear from Fig. 3a that LapNet incurs significantly
+lower costs compared to the baselines. We provide a
+detailed examination of training curves on naphtha-
+lene and toluene in Fig. 3b and Fig. 3c. In both figures,
+the x-axis indicates the training time instead of the
+number of iterations, and the y-axis indicates the esti-
+mated energy. It is evident that our LapNet converges
+faster and achieves better accuracy compared to the
+baselines. This is because LapNet can run for more
+iterations within the same training period, made pos-
+sible by the efficient Laplacian calculation in Forward
+Laplacian, leading to improved accuracy.
+To better understand the efficiency enhancements,
+we investigate the per-iteration computational cost
+of different models using the polyethylene systems
+(C2H4)n as an example and setn ranging from 1 to 10.
+We mainly study three models, one LapNet and two
+Psiformers. For one of the Psiformers, we use the For-
+ward Laplacian method with sparse derivative matrix
+optimization, and for the other one, we use the original
+implementation. The computational cost and speed-
+up rate of all the models are shown in Fig. 3d. It can be
+seen from the figure, the Forward Laplacian method
+can accelerate the Psiformer by 2.6 times when n = 1,
+and 5.9 times when n increases to 10. This obser-
+vation is consistent with our analysis in Section 2.2
+that when the system size grows, the speed-up rate of
+using the Forward Laplacian method will be more sig-
+nificant. The combination of Forward Laplacian and
+LapNet generates a speed-up rate exceeding 20 when
+compared to Psiformer without Forward Laplacian,
+with n = 10. This demonstrates the significant poten-
+tial of our framework for larger systems. In addition,
+when comparing the computational cost of Psiformer
+and LapNet, with Forward Laplacian applied to both,
+the speed-up rate of LapNet is 2 to 3, which showcases
+the efficiency improvement of the proposed sparse
+derivative attention block.
+2.4 Pushing the Limits of Relative
+Energy
+In quantum chemistry, relative energy holds greater
+significance than absolute energy in addressing prac-
+tical problems. For example, the ionization energy
+reflects the electron affinity of molecules, the barrier
+height controls the kinetics of chemical reactions, and
+the binding energy determines the stability of chem-
+ical complexes, to name just a few. Unfortunately,
+due to the huge computational cost, previous NN-
+VMC research mainly focused on the absolute energy
+of small systems, resulting in a lack of comprehensive
+evaluation pertaining to relative energy. Obtaining
+accurate relative energy is especially difficult, as the
+energy scale for relative energy is typically hundreds
+or thousands of times smaller than that of absolute
+energy. It is worth noting that although examples
+of relative energy calculations were reported and
+discussed in several NN-VMC studies, accurate cal-
+culations were only possible for rather small systems
+and extrapolation techniques were further employed
+to reduce the error [15, 16]. In this paper, we com-
+prehensively evaluate the relative energy in more
+challenging and practical systems, thanks to the effi-
+ciency improvement brought by Forward Laplacian
+and LapNet. Specifically, we calculate the ionization
+potential of 5 metal atoms, reaction barrier heights
+6
+𝑒!
+𝑒!
+4s 3d
+4s 3d
+4s 3d
+4s 3d
+4s 3d
+116 
+electrons
+Fig. 4: Relative energy estimation using LapNet. a , Estimated ionization potentials of 5 third-row tran-
+sition metals, compared against experimental results [12]. We also show the 4s and 3d orbital occupations of our
+calculated ground state next to the symbol for each atom. b, Estimated barrier heights of 3 heavy-atom transfer,
+2 nucleophilic substitution, 5 unimolecular association, and 4 hydrogen transfer reactions are plotted (see Sup-
+plementary Table 4 for details), and W2-F12 data from [13] are used as reference. c, Left: Interaction energies
+of 4 hydrogen-bonding interaction systems, 3 dispersion interaction systems, and 4 mixed electrostatic dispersion
+interaction systems (see Supplementary Table 5 for details). We take CCSD(T)/CBS results from [14] for com-
+parison. Right: Comparison between the total A100 GPU hours of training all the systems using our method and
+the estimated A100 GPU hours of training 2 largest systems using Psiformer. All the energy data is given in the
+Supplementary Table 7, 8, 9.
+7
+of 14 reactions, and noncovalent dissociation energy
+for 11 systems. We compare LapNet with estab-
+lished benchmarks, aiming to better understand the
+strengths and limitations of the NN-VMC framework.
+The ionization potential of an atom can be accu-
+rately measured [17–20] through experiments and are
+widely used to benchmark the ab initio calculation
+methods. We run LapNet to evaluate the ionization
+potential of five third-row transition metal atoms,
+namely vanadium (V), iron (Fe), cobalt (Co), nickel
+(Ni), and zinc (Zn). We train LapNet separately on
+atoms and the corresponding ions, compute the energy
+difference as the reported ionization potentials, and
+compare with the experimental value where the rel-
+ativistic effects are removed. As shown in Fig. 4a,
+LapNet can accurately estimate the ionization poten-
+tials and achieve chemical accuracy for three out of
+five systems (V, Co, Ni), and the errors on Fe, Zn are
+relatively larger (2.9 mHa and 3.7 mHa, respectively).
+To further study the electronic structure of these tran-
+sition metals, we calculate the orbital occupations of
+our wavefunction in outer 4s and 3d shells, as shown in
+Fig. 4a. The calculated orbital occupations align per-
+fectly with experimental observation, illustrating that
+our LapNet-based wavefunction is capable of not only
+producing accurate energy results but also encoding
+the correct information about the electronic structure.
+The barrier height represents the energy difference
+between the transition state and reactants, deter-
+mining the minimum energy to activate a chemical
+reaction and the affecting reaction rate. Therefore,
+accurate prediction of the barrier is crucial for cat-
+alyst design [21]. However, popular ab initio meth-
+ods such as density functional theory (DFT) and
+CCSD(T) struggle to accurately describe transition
+states because chemical bonds are partially broken
+and formed during chemical reactions. In this regard,
+we have chosen 14 distinct barrier heights from
+the BH76 dataset [13] encompassing various reaction
+types such as hydrogen transfer, heavy atom transfer,
+nucleophilic substitution, and unimolecular associa-
+tion reactions. We use the W2-F12 level of theory [22]
+in [13] as references. As shown in Fig. 4b, LapNet
+achieves chemical accuracy for 12 out of 14 reac-
+tions, where the average difference is only 0 .7 mHa.
+These results demonstrate that LapNet can accurately
+estimate the barrier heights.
+Non-covalent interactions are critical for main-
+taining the structure of large chemical and biological
+molecules. Due to the relatively large contribution
+of dynamic correlations, standard quantum chemistry
+methods may face difficulties [23]. To further demon-
+strate the powerfulness of LapNet, we train LapNet
+on 11 systems selected from the S22 noncovalent inter-
+action dataset [24], where the largest contains 116
+electrons. The selected data encompasses all types
+of noncovalent interactions in S22, including hydro-
+gen bonding interactions, dispersion interactions, and
+mixed electrostatic dispersion interactions. To esti-
+mate the binding energy of a noncovalent system, we
+follow the calculation setting in [15] and calculate the
+energy difference between the dissociated state and the
+equilibrium state. As shown in Fig. 4c, the average dif-
+ference over 11 systems is within 2 .2 mHa compared
+to the CCSD(T) benchmark, and LapNet achieves
+chemical accuracy for 5 out of 11 systems. Our supe-
+rior efficiency allows for the fine-grained investigation
+of large systems with more than a hundred electrons
+and sheds light on future improvement of NN-VMC
+methods. For instance, across the analysis of 11 sys-
+tems, we notice that LapNet typically overestimates
+the energies of equilibrium states since their electron
+structures are more complex than that of dissociated
+states. Inspired by this observation, future NN-VMC
+methods should focus more on expressing the elec-
+tron structures of equilibrium states to achieve better
+calculation results.
+We would like to highlight that this comprehen-
+sive investigation into relative energies would not be
+possible without the help of Forward Laplacian and
+LapNet. Prior to our work, the largest molecular sys-
+tem analyzed by previous NN-VMC methods was the
+benzene dimer system with 84 electrons. However,
+their training requires more than 10 , 000 A100 GPU
+hours, while ours requires only 1, 800 GPU hours, giv-
+ing a 6 times acceleration. In addition, LapNet is able
+to estimate even larger systems, such as the uracil
+dimer with 116 electrons. On the right side of Fig.
+4c, we present the GPU hours to compute all the 11
+systems with LapNet and compare it with the com-
+putational cost of Psiformer to finish the two largest
+systems, uracil dimer stack and uracil dimer h-bonded.
+Due to the huge computational cost, we only esti-
+mate the GPU hours of these two training process
+using per iteration cost × num iteration, where
+num iteration is set to 200,000, following all previ-
+ous works [3, 6]. It can be clearly seen that calculating
+all the systems using our method is even faster than
+calculating one system using the original Psiformer.
+In summary, we demonstrate the potential of Lap-
+Net to estimate different types of relative energies.
+The significantly improved efficiency allows a more
+comprehensive study of a wide range of large chem-
+ical systems, which is beneficial for the development
+of NN-VMC methods and the field of computational
+quantum chemistry.
+8
+3 Discussion
+NN-VMC methods have been used for ground-state
+energy estimation in a wide range of applications,
+including molecular systems [3–6, 25–28], solid sys-
+tems [29, 30], and homogeneous electron gas [31–33].
+The approach has been extended to compute other
+important quantities, such as excitation energy [16],
+inter-atomic force [34] and electric polarization [35].
+Recently, several works further combined NN-VMC
+methods with other classical methods, such as Effec-
+tive Core Potential [36] and Diffusion Monte Carlo
+[15, 37]. Refs. [38–42] learn universal representations of
+wavefunctions on multiple systems to enable transfer
+learning to unseen system configurations. Notably, in
+all of these works, the Laplacian calculation with neu-
+ral networks is indispensable. Our proposed Forward
+Laplacian offers advantages for all the aforementioned
+methods and can be integrated with all existing
+NN-VMC packages [11, 43, 44].
+Although our proposed approach yields relative
+energies that align closely with the gold standard or
+experimental results in most cases, there are instances
+where discrepancies persist between our results and
+ground truth. Our hypothesis for this inconsistency is
+that existing NN-VMC methods inadequately incor-
+porate all critical chemical and physical knowledge.
+For instance, the error cancellation property, which is
+crucial for obtaining accurate relative energies in gold-
+standard methods like CCSD(T), is not inherently
+encoded in the NN-VMC ansatz or prevailing training
+strategies. We believe encoding proper chemical and
+physical knowledge into neural networks will be vital
+in advancing NN-VMC techniques in the future.
+Our principal objective is to tackle the compu-
+tational bottleneck associated with the calculation of
+the Laplacian in the NN-VMC methods. However,
+the prospective utilization of our Forward Laplacian
+approach could extend to diverse scenarios outside
+the realm of quantum mechanics. As shown in the
+Method section, the Forward Laplacian method can
+replace the previous method with improved efficiency
+when calculating Laplacian associated with any neural
+network. Therefore, it can accelerate the training of
+other neural network-based solvers of partial differen-
+tial equations [45–47], such as heat diffusion equations
+and Navier-Stokes equations.
+4 Methods
+4.1 Wavefunction Optimization
+For a molecular system with N electrons and M
+nuclei, we consider the time-independent Schr¨ odinger
+equation under the Born-Oppenheimer approxima-
+tion:
+ˆHψ (x1, . . . ,xN ) = Eψ (x1, . . . ,xN ) , (8)
+ˆH = − 1 2 ∑ i ∆i + ∑ i>j 1⏐⏐ri − rj ⏐⏐ (9)
+−
+∑
+iI
+ZI
+|ri − RI | +
+∑
+I>J
+ZI ZJ
+|RI − RJ | , (10)
+where xi = {ri, σi} is the coordinate of electron i.
+ri ∈ R3 is the position of the i-th electron and σi ∈
+{1, −1} is the spin coordinate. ZI is the charge of the
+I-th nucleus and RI is the corresponding position. ∆ i
+is the Laplacian w.r.t. ri. For ease of reference, we
+denote (x1, x2, ...,xN ) as x.
+The wavefunction of a multi-electron system
+should be antisymmetric under the exchange of any
+electron’s coordinates of the same spin, i.e.,
+ψ(· · ·, xi, · · ·, xj ) = −ψ(· · ·, xj , · · ·, xi). (11)
+Following previous methods, we leverage the form of
+Slater-Jastrow-Backflow ansatz to satisfy this condi-
+tion:
+ψθ(x) = eJθ(x)
+K∑
+k=1
+det
+[
+Φk θ (x) ] , (12)
+where Jθ(x) is the Jastrow factor and Φk θ (x) is a
+permutation-equivariant neural network. The output
+of this network is used as the input for the k-th Slater
+determinant.
+Following [3], the training of NN-VMC is divided
+into two phases. The first is the pre-training phase
+in which Φk θ (x) is updated to match the Hartree-
+Fock orbitals. The second is the VMC training phase
+where we optimize the parameters to minimize the
+total energy of the wavefunction defined below.
+Lθ = ⟨ψθ| ˆH|ψθ⟩ ⟨ψθ|ψθ⟩ = ∫ ψ∗ θ (x) ˆHψ θ(x)dx∫ ψ∗ θ (x)ψθ(x)dx
+=
+∫
+p(x)EL(x)dx.
+(13)
+EL(x) = ψ−1 θ (x) ˆHψ θ(x) is known as the local energy,
+and p(x) = ψ∗ θ (x)ψθ(x) ⟨ψθ|ψθ⟩ . We use gradient descent to
+optimize the parameters, where the unbiased estimate
+of θ’s gradient is given by:
+∇θLθ = 2Ep(x)[(EL − Ep(x)[EL])∇θ log |ψθ|]. (14)
+The loss function and the gradient are estimated
+using the Metropolis-Hastings algorithm, one of the
+most popular Markov Chain Monte Carlo (MCMC)
+methods. To make the initial electron distribution
+closer to the target distribution, we assign each elec-
+tron to a nucleus according to the Mulliken population
+analysis [48] results within the Hartree-Fock method.
+Initial electron positions are then sampled from Gaus-
+sian distributions centered around the corresponding
+9
+atom. The convergence of the wavefunction to the
+ground state is achieved through iterative sampling
+and updates of parameters during training. For eval-
+uation, we follow [3] and run MCMC steps without
+updating the network parameters to sample batches
+of workers and compute their local energy. The total
+energy and associated standard error are determined
+by reblocking analysis.
+In practice, the accuracy of a learned model can
+be significantly influenced by the quality of its pre-
+training phase. The Hartree-Fock solution may be
+inaccurate when the electron structure is complex,
+such as in transition metals, which may result in an
+inaccurate initialization of the neural network during
+a prolonged pre-training phase. To mitigate this issue,
+we use a short pre-training phase alongside a moderate
+basis set for the Hatree-Fock method. This strategy
+results in improved performance on complex systems
+like CCl 4. All training hyperparameters are listed in
+Supplementary Table 2 and 3.
+4.2 Forward Laplacian Method for
+General Neural Networks
+In this subsection, we provide a detailed explanation
+of how the Forward Laplacian method accelerates the
+calculation of Laplacian for general neural networks.
+The computation graph serves as the descriptive lan-
+guage of deep learning models across various deep
+learning toolkits, including PyTorch [49], TensorFlow
+[50], and Jax [7]. Therefore, we can narrow our focus to
+investigating the performance of the proposed method
+in a specific computation graph.
+In a computation graph G, the edges represent
+function arguments, and nodes represent operations
+or variables. Note that G is always a directed acyclic
+graph. We use {v−1, ...v−N } to represent the exter-
+nal nodes of G (i.e., the input of the neural network),
+and use {v0, ...vM } to represent the internal nodes,
+sorted in topological orders. vM serves as the network
+output ϕ. We use the abbreviation i → j if there is
+a directed edge from vi to vj in G. Furthermore, we
+denote operations as F , e.g., vj = Fj ({vi : i → j})
+for all j ≥ 0.
+We first show that the Forward Laplacian method
+can be applied to general neural networks, such as
+FermiNet, Psiformer, and LapNet. Similar to Section
+2.1, along the computation graph, we compute the
+tuple (vj , ∇vj , ∆vj ) for each node. To be specific, the
+tuple associated with node j is derived through chain
+rules[51]:
+vj = Fj ({vi : i → j}) (15)
+∇vj = ∑
+i:i→j
+∂Fj
+∂vi ∇vi (16)
+∆vj = ∑
+i,l
+i→j l→j
+∂2Fj
+∂vi∂vl ∇vi · ∇vl + ∑ i:i→j ∂Fj ∂vi ∆vi
+(17)
+Note that eqs. (15) - (17) only rely on tuples asso-
+ciated with parent nodes of j. Therefore, we can
+sequentially apply eqs. (15) - (17) to nodes of any com-
+putational graph in topological orders, and finally get
+the Laplacian in the output node.
+We then analyze the speed-up rate of the For-
+ward Laplacian method compared to the previous
+method. The previous method obtains ∆ϕ(x) through
+computing the Hessian matrix. It first performs for-
+ward propagation to obtain the value of each variable
+vj . Next, a standard backward process is employed
+by creating a new computation graph ˆG where node
+ˆvi ∈ ˆG represents the operation to calculate ∂ϕ ∂vi ,
+i = M, ...,−N . The associated computations are
+∂ϕ
+∂vi =
+∑
+j:i→j
+∂Fj
+∂vi
+∂ϕ
+∂vj , i = M − 1, ...,−N. (18)
+The Hessian matrix is then obtained through the
+following forward-mode Jacobian calculation along G
+and ˆG, respectively:
+∇vi = ∑
+j:j→i
+∂Fi
+∂vj ∇vj (19)
+∇ ∂ϕ ∂vi = ∑ j,l
+i→j
+l→j
+∂2Fj
+∂vl∂vi
+∂ϕ
+∂vj ∇vl + ∑ j:i→j ∂Fj ∂vi ∇ ∂ϕ ∂vj ,
+(20)
+where we always use ∇ to denote ∇x for simplicity.
+The bottleneck of Hessian computation comes
+from eq. (19) and eq. (20). eq. (19) takes N |E| floating
+point operations (FLOPs) if we only count multiplica-
+tions, where E denotes the set of edges in G. For eq.
+(20), the second term also takes N |E| FLOPs. To cal-
+culate the computational cost of the first term in eq.
+(20), we first introduce two notations, T and R, which
+are both sets of ordered tuples:
+T = {(i, l, j)|i → j, l → j, ∂2Fj
+∂vi∂vl ̸= 0},
+R = {(i, l)|∃j s.t.(i, l, j) ∈ T }.
+(21)
+The previous method sums over j first to obtain∑
+j:i→j,l→j
+∂2Fj
+∂vl∂vi
+∂ϕ
+∂vj for all ( i, l) ∈ R, and then sums
+over l. It can be shown that the total computation cost
+of this term is 0.5|T | + N |R| by exploiting the symme-
+try of the Hessian matrix. Thus, the total FLOPs for
+the previous method is about N (|R| + 2|E|) + 0.5|T |.
+10
+For the proposed Forward Laplacian method, we
+perform forward propagation along G to obtain ϕ(x),
+∇ϕ(x) and ∆ ϕ(x). The second term ∇ϕ(x) is calcu-
+lated along G according to eq. (16). The third term,
+i.e., the Laplacian, is calculated along G according to
+eq. (17).
+The computational cost of the Forward Laplacian
+method is dominated by eq. (16) and eq. (17). As pre-
+viously discussed, eq. (16) takes N |E| FLOPs. For the
+first term in eq. (17), we decompose its calculation into
+two steps. First, we compute {∇vj · ∇vl}j≤l, (j,l)∈R,
+which takes 0 .5N |R| FLOPs in total. Next, following
+the topological order of G, we sum over j ≤ l for each
+i, deriving the first term in ∆ vi. By leveraging the
+symmetry of the Hessian matrix and Gram matrix,
+we reduce this computation by a factor of 2, which is
+0.5|T | FLOPs. The computational cost of the second
+term is negligible compared with the first term since
+∆vj is a scalar. Summing the computational cost of
+all the terms, we have that the Forward Laplacian
+method uses 0 .5N (|R| + 2|E|) + 0.5|T |. In practice, a
+large percentage of operations are linear transforma-
+tions, and for any linear operation Fj , ∂2Fj ∂vi∂vl = 0 for
+any i → j, l → j. This means the value |T | is much
+smaller than N |R| and N |E|. Thus, our method is
+about two times faster than the previous method for
+computing Laplacian.
+We implement the Forward Laplacian method
+in Jax[7]. We overload a large number of fre-
+quently used operations such that if the input of
+f (x) is a Laplacian tuple ( x, ∇x, ∆x), the output
+will automatically become another Laplacian tuple
+(f (x), ∇f (x), ∆f (x)). This process is implemented via
+Python decorator, which can make our implementa-
+tion compatible with existing operations. To achieve
+further acceleration, we manually define the forward
+propagation rules for a wide range of operations used
+in NN-VMC methods and optimize their efficiency
+in computing the Laplacian tuple. Specifically, we
+mainly optimize two classes of operations, namely
+element-wise operations, linear operations, and
+several frequently used non-linear operations.
+Element-wise operations apply a scalar function
+to each element of the input array and output an
+array with the same shape. Many operations in neu-
+ral networks are element-wise, such as activation and
+exponential functions. The Jacobian matrix is always
+diagonal for these operations, and there is no need
+to calculate non-diagonal elements. We implement a
+customized framework for element-wise functions to
+avoid unnecessary calculations, thus speeding up the
+Laplacian computation. An operation f is linear if
+f (x + y) = f (x) + f (y). Here x, y are arrays. For
+example, reshape, concatenate, sum are all linear.
+It can be proved that for linear operations, we have
+∇f (x) = f (∇x). Based on this, we can compute
+∇f (x), ∆f (x) by directly “applying” f on ∇x, ∆x,
+thus avoiding second-order calculations. For opera-
+tions that are not mentioned above, but are commonly
+used such as matmul, slogdet, softmax, we manu-
+ally customize the computation rules case-by-case as
+they significantly differ from one another.
+4.3 LapNet Ansatz
+To better leverage the benefits of the Forward Lapla-
+cian method, we develop a neural network archi-
+tecture, called LapNet. This architecture facilitates
+a significant faster Laplacian calculation [52] thus
+improves the training speed further without sacrificing
+any accuracy compared to the previous state-of-the-
+art approach [6]. The overall architecture of LapNet is
+illustrated in Fig. 2.
+We use the relative position of electron-nuclei pairs
+ri −RI and the electron spins σi as the input features.
+Following [6], a norm-rescaled function Rescale :R3 →
+R4 is applied to each electron-nuclei pair:
+eiI = Rescale(ri − RI ), (22)
+where each output dimension of Rescale(z) is given by:
+Rescale1(z) = ln(1 + |z|)ˆz1
+Rescale2(z) = ln(1 + |z|)ˆz2
+Rescale3(z) = ln(1 + |z|)ˆz3
+Rescale4(z) = ln(1 + |z|).
+(23)
+| · |refers to the L2 norm and ˆz = z/|z| is the direc-
+tional vector of z, the subscripts refer to the index of
+coordinates. Then, {eiI }M I=1 is concatenated with σi
+to form the feature set for electron i:
+di = Concat({eiI }M I=1, σi). (24)
+di is then projected via a linear layer into two terms
+h0 i , g0 i , which will be further fed into the LapNet.
+We denote h0 = ( h0 1, · · ·, h0 i , · · ·, h0 N ) and g0 =
+(g0 1, · · ·, g0 i , · · ·, g0 N ) for ease of reference.
+The main building block of LapNet is the stacked
+Sparse Derivative Attention (SDA) module. The l-
+th SDA module takes hl, gl as input and outputs
+hl+1, gl+1 through two streams.
+gl is updated by a stream called the individual
+stream, where each gl i is updated as below
+gl+1 i = gl i + MLPl indiv
+(
+gl i
+)
+. (25)
+In the individual stream, each electroni independently
+updates its own features using MLPs with parameter
+sharing. Since there is no interaction between different
+electrons in the stream, the derivative matrix ∇rgl
+is sparse, i.e., ∇ri′ gl i = 0 when i ̸= i′. As shown in
+Section 2.2, this sparsity leads to acceleration with the
+Forward Laplacian method.
+11
+hl is updated by the other stream called atten-
+tive stream, where the features of different electrons
+interact with each other through attention. In the
+attention, we use individual-stream-produced gl as
+queries and keys, and use attention-stream-produced
+hl as Values with different linear projection layers.
+qi = W l Qgl i, ki = W l K gl i, vi = W l V hl i, (26)
+Matrices W l Q, W l K and W l V are learnable parameters
+of the l-th block. We use normalized dot products to
+calculate weights assigned to different value terms and
+the update of hl is given by
+¯hl+1 i = hl i + ∑
+j
+αij vj (27)
+hl+1 i = ¯hl+1 i + MLPl attn
+(
+¯hl+1 i
+)
+, (28)
+where
+αij = Sij∑
+j′ Sij′
+, Sij = exp(q⊤ i kj ) (29)
+Note that queries and keys used in the attentive
+stream are independently updated in the individual
+stream. Therefore the Sij also exhibit a certain level of
+derivative sparsity. As a result, this design facilitates
+efficient computation through our Forward Laplacian
+method.
+After stacking L layers of Sparse Derivative Atten-
+tion blocks, we use the output of attentive stream
+hL i to construct the wavefunction. Our wavefunction
+follows the Slater-Jastrow-Backflow ansatz [53]:
+ψθ(x) = eJθ(x)
+K∑
+k=1
+det
+[
+Φk θ (x) ] . (30)
+To construct Φk θ , we first project hL i to RN using a
+spin-dependent linear transformation:
+ok i = Wk σi hL i + bk σi , (31)
+To ensure the wavefunction approaches zero when
+the electron moves away from all nuclei, we use the
+envelope function and multiply it with ok i to obtain
+Φk θ (x):
+envj (xi) =
+∑
+I
+πσi Ij e−|ξ
+σi
+Ij ||ri−RI |, (32)
+[Φk θ (x)]ji = envj (xi)[ok i ]j , (33)
+where πσi Ij and ξσi Ij are learnable parameters. In
+practice, we observed some determinants det[ Φk θ (x)]
+degenerate and we remove those determinants during
+training. We use a simple form for the Jastrow fac-
+tor in eq. (30) to satisfy the electron-electron Cusp
+condition [8]:
+Jθ(x) =
+∑
+i<j;σi=σj
+− 1 4 α2par αpar + |ri − rj |
++
+∑
+i<j;σi̸=σj
+− 1 2 α2 anti αanti + |ri − rj | , (34)
+where αpar and αanti are learnable parameters. Com-
+bining with det[ Φk θ (x)], the wavefunction is finally
+computed through eq. (30). As discussed above, the
+LapNet incorporates more derivative sparsity in many
+operations related to gl i, qi, ki and Sij , leading to
+a significantly speed-up rate compared to previous
+architectures.
+Acknowledgments. We thank Hang Li and
+ByteDance Research for support and inspiration. We
+thank David Pfau for his valuable feedback. We
+thank Bohang Zhang and Haiyang Wang for their
+helpful suggestion and discussion. Liwei Wang is sup-
+ported by National Key R&D Program of China
+(2022ZD0114900) and National Science Foundation
+of China (NSFC62276005). J.C. acknowledges the
+National Natural Science Foundation of China for
+support under Grant No. 92165101.
+References
+[1] Needs, R.J., Towler, M.D., Drummond, N.D.,
+L´ opez R ´ ıos, P., Trail, J.R.: Variational and
+diffusion quantum Monte Carlo calculations
+with the CASINO code. The Journal of
+Chemical Physics 152(15), 154106 (2020)
+https://doi.org/10.1063/1.5144288
+[2] Foulkes, W.M.C., Mitas, L., Needs, R.J.,
+Rajagopal, G.: Quantum Monte Carlo simu-
+lations of solids. Reviews of Modern Physics
+73(1), 33–83 (2001) https://doi.org/10.1103/
+RevModPhys.73.33
+[3] Pfau, D., Spencer, J.S., G. Matthews,
+A.G., Foulkes, W.M.C.: Ab-initio solution
+of the many-electron schr¨ odinger equation
+with deep neural networks. Physical Review
+Research 2, 033429 (2020) https://doi.org/
+10.1103/PhysRevResearch.2.033429
+[4] Spencer, J.S., Pfau, D., Botev, A., Foulkes,
+W.M.C.: Better, Faster Fermionic Neural
+Networks. arXiv:2011.07125 (2020)
+[5] Hermann, J., Sch¨ atzle, Z., No´ e, F.: Deep-
+neural-network solution of the electronic
+Schr¨ odinger equation. Nature Chemistry
+12(10), 891–897 (2020)
+[6] Glehn, I., Spencer, J.S., Pfau, D.: A
+12
+self-attention ansatz for ab-initio quan-
+tum chemistry. In: The Eleventh Interna-
+tional Conference on Learning Representa-
+tions (2023). https://openreview.net/forum?
+id=xveTeHVlF7j
+[7] Bradbury, J., et al.: JAX: Composable Trans-
+formations of Python+NumPy programs.
+http://github.com/google/jax
+[8] Drummond, N.D., Towler, M.D., Needs,
+R.J.: Jastrow correlation factor for atoms,
+molecules, and solids. Physical Review B
+70, 235119 (2004) https://doi.org/10.1103/
+PhysRevB.70.235119
+[9] Brown, T., Mann, B., Ryder, N., Subbiah,
+M., Kaplan, J.D., Dhariwal, P., Neelakan-
+tan, A., Shyam, P., Sastry, G., Askell, A.,
+Agarwal, S., Herbert-Voss, A., Krueger,
+G., Henighan, T., Child, R., Ramesh, A.,
+Ziegler, D., Wu, J., Winter, C., Hesse,
+C., Chen, M., Sigler, E., Litwin, M.,
+Gray, S., Chess, B., Clark, J., Berner, C.,
+McCandlish, S., Radford, A., Sutskever, I.,
+Amodei, D.: Language models are few-shot
+learners. In: Advances in Neural Infor-
+mation Processing Systems, vol. 33, pp.
+1877–1901 (2020). https://proceedings.
+neurips.cc/paper files/paper/2020/file/
+1457c0d6bfcb4967418bfb8ac142f64a-Paper.
+pdf
+[10] Jumper, J., Evans, R., Pritzel, A., Green, T.,
+Figurnov, M., Ronneberger, O., Tunyasuvu-
+nakool, K., Bates, R., ˇZ ´ ıdek, A., Potapenko,
+A., Bridgland, A., Meyer, C., Kohl, S.A.A.,
+Ballard, A.J., Cowie, A., Romera-Paredes,
+B., Nikolov, S., Jain, R., Adler, J., Back,
+T., Petersen, S., Reiman, D., Clancy, E.,
+Zielinski, M., Steinegger, M., Pacholska, M.,
+Berghammer, T., Bodenstein, S., Silver, D.,
+Vinyals, O., Senior, A.W., Kavukcuoglu, K.,
+Kohli, P., Hassabis, D.: Highly accurate pro-
+tein structure prediction with AlphaFold.
+Nature 596(7873), 583–589 (2021) https://
+doi.org/10.1038/s41586-021-03819-2
+[11] James S. Spencer, D.P., Contributors, F.:
+FermiNet. http://github.com/deepmind/
+ferminet
+[12] Balabanov, N.B., Peterson, K.A.: Basis set
+limit electronic excitation energies, ioniza-
+tion potentials, and electron affinities for the
+3d transition metal atoms: Coupled clus-
+ter and multireference methods. The Journal
+of Chemical Physics 125(7), 074110 (2006)
+https://doi.org/10.1063/1.2335444
+[13] Goerigk, L., Hansen, A., Bauer, C., Ehrlich,
+S., Najibi, A., Grimme, S.: A look at the den-
+sity functional theory zoo with the advanced
+gmtkn55 database for general main group
+thermochemistry, kinetics and noncovalent
+interactions. Physical Chemistry Chemical
+Physics 19, 32184–32215 (2017) https://doi.
+org/10.1039/C7CP04913G
+[14] Marshall, M.S., Burns, L.A., Sherrill, C.D.:
+Basis set convergence of the coupled-cluster
+correction, δCCSD(T) MP2 : Best practices for
+benchmarking non-covalent interactions and
+the attendant revision of the S22, NBC10,
+HBC6, and HSG databases. The Journal of
+Chemical Physics 135(19) (2011) https://
+doi.org/10.1063/1.3659142
+[15] Ren, W., Fu, W., Wu, X., Chen, J.: Towards
+the ground state of molecules via diffusion
+monte carlo on neural networks. Nature Com-
+munications 14(1), 1860 (2023) https://doi.
+org/10.1038/s41467-023-37609-3
+[16] Entwistle, M.T., Sch¨ atzle, Z., Erdman,
+P.A., Hermann, J., No´ e, F.: Electronic
+excited states in deep variational Monte
+Carlo. Nature Communications 14(1),
+274 (2023) https://doi.org/10.1038/
+s41467-022-35534-5
+[17] Sugar, J., Corliss, C.: Atomic energy levels of
+the iron-period elements: potassium through
+nickel. Journal of Physical and Chemical Ref-
+erence Data 14(Suppl. 2), 1 (1985)
+[18] Page, R.H., Gudeman, C.S.: Completing the
+iron period: double-resonance, fluorescence-
+dip rydberg spectroscopy and ionization
+potentials of titanium, vanadium, iron,
+cobalt, and nickel. Journal of the Optical
+Society of America B 7(9), 1761–1771 (1990)
+https://doi.org/10.1364/JOSAB.7.001761
+13
+[19] Sohl, J.E., Zhu, Y., Knight, R.D.: Two-color
+laser photoionization spectroscopy of Ti i:
+multichannel quantum defect theory analy-
+sis and a new ionization potential. Journal
+of the Optical Society of America B 7(1), 9–
+14 (1990) https://doi.org/10.1364/JOSAB.7.
+000009
+[20] James, A.M., Kowalczyk, P., Langlois, E.,
+Campbell, M.D., Ogawa, A., Simard, B.: Res-
+onant two photon ionization spectroscopy of
+the molecules V2, VNb, and Nb2. The Jour-
+nal of Chemical Physics 101(6), 4485–4495
+(1994) https://doi.org/10.1063/1.468462
+[21] Spiekermann, K., Pattanaik, L., Green,
+W.H.: High accuracy barrier heights,
+enthalpies, and rate coefficients for
+chemical reactions. Scientific Data 9(1),
+417 (2022) https://doi.org/10.1038/
+s41597-022-01529-6
+[22] Karton, A., Martin, J.M.L.: Explicitly corre-
+lated Wn theory: W1-F12 and W2-F12. The
+Journal of Chemical Physics 136(12) (2012)
+https://doi.org/10.1063/1.3697678
+[23] Al-Hamdani, Y.S., Nagy, P.R., Zen, A., Bar-
+ton, D., K´ allay, M., Brandenburg, J.G.,
+Tkatchenko, A.: Interactions between large
+molecules pose a puzzle for reference quan-
+tum mechanical methods. Nature Communi-
+cations 12(1), 3927 (2021)
+[24] Jureˇ cka, P.,ˇSponer, J., ˇCern` y, J., Hobza, P.:
+Benchmark database of accurate (MP2 and
+CCSD (T) complete basis set limit) interac-
+tion energies of small model complexes, DNA
+base pairs, and amino acid pairs. Physical
+Chemistry Chemical Physics 8(17), 1985–
+1993 (2006)
+[25] Han, J., Zhang, L., E, W.: Solving many-
+electron schr¨ odinger equation using deep
+neural networks. Journal of Computational
+Physics 399, 108929 (2019) https://doi.org/
+10.1016/j.jcp.2019.108929
+[26] Lin, J., Goldshlager, G., Lin, L.: Explicitly
+antisymmetrized neural network layers for
+variational monte carlo simulation. Journal of
+Computational Physics 474, 111765 (2023)
+[27] Abrahamsen, N., Lin, L.: Taming the sign
+problem of explicitly antisymmetrized neu-
+ral networks via rough activation functions.
+arXiv preprint arXiv:2205.12250 (2022)
+[28] Gerard, L., Scherbela, M., Marquetand, P.,
+Grohs, P.: Gold-standard solutions to the
+schr¨ odinger equation using deep learning:
+How much physics do we need? In: Oh,
+A.H., Agarwal, A., Belgrave, D., Cho, K.
+(eds.) Advances in Neural Information Pro-
+cessing Systems (2022). https://openreview.
+net/forum?id=nX-gReQ0OT
+[29] Li, X., Li, Z., Chen, J.: Ab initio calcula-
+tion of real solids via neural network ansatz.
+Nature Communications 13(1), 7895 (2022)
+[30] Pescia, G., Han, J., Lovato, A., Lu, J., Car-
+leo, G.: Neural-network quantum states for
+periodic systems in continuous space. Phys.
+Rev. Res. 4, 023138 (2022) https://doi.org/
+10.1103/PhysRevResearch.4.023138
+[31] Wilson, M., Moroni, S., Holzmann, M., Gao,
+N., Wudarski, F., Vegge, T., Bhowmik, A.:
+Neural network ansatz for periodic wave func-
+tions and the homogeneous electron gas.
+Phys. Rev. B 107, 235139 (2023) https://doi.
+org/10.1103/PhysRevB.107.235139
+[32] Cassella, G., Sutterud, H., Azadi, S., Drum-
+mond, N.D., Pfau, D., Spencer, J.S., Foulkes,
+W.M.C.: Discovering quantum phase transi-
+tions with fermionic neural networks. Phys.
+Rev. Lett. 130, 036401 (2023) https://doi.
+org/10.1103/PhysRevLett.130.036401
+[33] Pescia, G., Nys, J., Kim, J., Lovato, A.,
+Carleo, G.: Message-passing neural quan-
+tum states for the homogeneous electron gas.
+arXiv preprint arXiv:2305.07240 (2023)
+[34] Qian, Y., Fu, W., Ren, W., Chen, J.: Inter-
+atomic force from neural network based vari-
+ational quantum monte carlo. The Journal of
+Chemical Physics 157(16), 164104 (2022)
+[35] Li, X., Qian, Y., Chen, J.: Electric Polar-
+ization from Many-Body Neural Network
+Ansatz (2023)
+14
+[36] Li, X., Fan, C., Ren, W., Chen, J.:
+Fermionic neural network with effective
+core potential. Physical Review Research
+4, 013021 (2022) https://doi.org/10.1103/
+PhysRevResearch.4.013021
+[37] Wilson, M., Gao, N., Wudarski, F., Rief-
+fel, E., Tubman, N.M.: Simulations of state-
+of-the-art fermionic neural network wave
+functions with diffusion monte carlo. arXiv
+preprint arXiv:2103.12570 (2021)
+[38] Scherbela, M., Reisenhofer, R., Gerard, L.,
+Marquetand, P., Grohs, P.: Solving the
+electronic schr¨ odinger equation for multi-
+ple nuclear geometries with weight-sharing
+deep neural networks. Nature Computa-
+tional Science (2022) https://doi.org/10.
+1038/s43588-022-00228-x
+[39] Gao, N., G¨ unnemann, S.: Ab-initio potential
+energy surfaces by pairing GNNs with neural
+wave functions. In: International Conference
+on Learning Representations (2022). https://
+openreview.net/forum?id=apv504XsysP
+[40] Gao, N., G¨ unnemann, S.: Sampling-free
+inference for ab-initio potential energy sur-
+face networks. In: The Eleventh Interna-
+tional Conference on Learning Representa-
+tions (2023). https://openreview.net/forum?
+id=Tuk3Pqaizx
+[41] Gao, N., G¨ unnemann, S.: Generalizing
+neural wave functions. arXiv preprint
+arXiv:2302.04168 (2023)
+[42] Scherbela, M., Gerard, L., Grohs, P.: Towards
+a foundation model for neural network wave-
+functions. arXiv preprint arXiv:2303.09949
+(2023)
+[43] Hermann, J., Sch¨ atzle, Z., Szab´ o, P.B., Mez-
+era, M., DeepQMC Contributers: DeepQMC.
+https://doi.org/10.5281/zenodo.7503172 .
+https://github.com/deepqmc/deepqmc
+[44] Vicentini, F., Hofmann, D., Szab´ o, A., Wu,
+D., Roth, C., Giuliani, C., Pescia, G., Nys, J.,
+Vargas-Calder´ on, V., Astrakhantsev, N., Car-
+leo, G.: NetKet 3: Machine Learning Toolbox
+for Many-Body Quantum Systems. SciPost
+Phys. Codebases, 7 (2022) https://doi.org/
+10.21468/SciPostPhysCodeb.7
+[45] Wang, C., Li, S., He, D., Wang, L.: Is L2
+physics informed loss always suitable for
+training physics informed neural network?
+In: Advances in Neural Information Process-
+ing Systems (2022). https://openreview.net/
+forum?id=cy1TKLRAEML
+[46] Raissi, M., Perdikaris, P., Karniadakis, G.E.:
+Physics-informed neural networks: A deep
+learning framework for solving forward and
+inverse problems involving nonlinear partial
+differential equations. Journal of Computa-
+tional Physics 378, 686–707 (2019)
+[47] He, D., Li, S., Shi, W., Gao, X., Zhang,
+J., Bian, J., Wang, L., Liu, T.-Y.: Learn-
+ing physics-informed neural networks with-
+out stacked back-propagation. In: Interna-
+tional Conference on Artificial Intelligence
+and Statistics, pp. 3034–3047 (2023). PMLR
+[48] Mulliken, R.S.: Electronic population analy-
+sis on LCAO–MO molecular wave functions.
+i. The Journal of chemical physics 23(10),
+1833–1840 (1955)
+[49] Paszke, A., Gross, S., Chintala, S., Chanan,
+G., Yang, E., DeVito, Z., Lin, Z., Desmai-
+son, A., Antiga, L., Lerer, A.: Automatic
+differentiation in pytorch (2017)
+[50] Abadi, M., Barham, P., Chen, J., Chen, Z.,
+Davis, A., Dean, J., Devin, M., Ghemawat,
+S., Irving, G., Isard, M., et al.: Tensorflow:
+a system for large-scale machine learning. In:
+Osdi, vol. 16, pp. 265–283 (2016). Savannah,
+GA, USA
+[51] Botev, A.: The gauss-newton matrix for deep
+learning models and its applications. PhD
+thesis, UCL (University College London)
+(2020)
+[52] Martens, J., Sutskever, I., Swersky, K.:
+Estimating the hessian by back-propagating
+curvature. arXiv preprint arXiv:1206.6464
+(2012)
+[53] Brown, M.D., Trail, J.R., L´ opez R ´ ıos, P.,
+15
+Needs, R.J.: Energies of the first row atoms
+from quantum Monte Carlo. The Journal
+of Chemical Physics 126(22), 224110 (2007)
+https://doi.org/10.1063/1.2743972
+16
+Supplementary information of “Forward Laplacian: A New Computational
+Framework for Neural Network-based Variational Monte Carlo”
+Ruichen Li et al
+Supplementary Note 1. Hyperparameters
+Supplementary Table 1 gives the network architecture hyperparameters for each NN-VMC ansatz. The default hyperparameters for
+all calculations reported in the main text are mainly listed in Supplementary Table 2. The variations in hyperparameters are shown
+in Supplementary Table 3.
+Supplementary Table 1 | Architecture hyperparameter for different NN-VMC models
+Parameter FermiNet Psiformer LapNet
+Determinants 16 16 16
+Network layers 4 4 4
+Attention heads – 4 4
+Attention dimension – 64 64
+MLP hidden dimension (256, 32) 256 256
+Supplementary Table 2 | Default hyperparameters
+Parameter Value
+Training
+Optimizer KFAC
+Iterations 2e5
+Learning rate at iteration𝑡 𝑙𝑟 0∕(1 + 𝑡 𝑡0 )
+Initial learning rate𝑙𝑟0 0.05
+Learning rate decay𝑡0 1e4
+Local energy clipping 5.0
+Pretraining Optimizer LAMB Learning rate 1e-3
+MCMC Decorrelation steps 30 Proposal standard deviation 0.02
+KFAC
+Norm constraint 1e-3
+Damping 1e-3
+Momentum 0
+Covariance moving average decay 0.95
+1
+arXiv:2307.08214v1  [physics.comp-ph]  17 Jul 2023
+Supplementary Table 3 |Variations in hyperparameters between calculations
+Number of Pretraining MCMC Pretraining Batch
+electrons𝑛 iterations blocks basis set size
+Molecules
+𝑛< 42 5e3 1
+cc-pVDZ 409642 ≤𝑛< 84 2e4 2
+𝑛 ≥ 84 5e4 4
+Ionization potential any 5e3 1 cc-pVTZ 8192
+Barrier height any 2e4 1 aug-cc-pVDZ 4096
+Interaction energy
+𝑛< 42 5e3 1
+aug-cc-pVDZ 409642 ≤𝑛< 84 2e4 2
+𝑛 ≥ 84 5e4 4
+Supplementary Note 2. Systems
+The configurations of molecules studied in Fig. 3a can be found in [1, 2]. The reactions we studied in Fig. 4b are listed in Supple-
+mentaryTable4andthecorrespondingconfigurationscanbefoundin[3]. Thenon-covalentsystemswestudiedinFig. 4carelisted
+in Supplementary Table 5 and the corresponding configurations can be found in [4].
+Supplementary Table 4 | Reactions in Fig. 4b
+Reaction Type
+1 H+N 2O ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← →OH+N 2
+Heavy-atom transfer reaction 2 1 reverse
+3 H+FH ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← →HF+H
+4 F – ...CH3F ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← →FCH3...F – Nucleophilic substitution reaction5 Cl – ...CH3Cl ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← →ClCH3...Cl –
+6 H+C 2H4 ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← →C2H5
+Unimolecular and association reaction
+7 C 2H5 ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← →H+C 2H4
+8 HCN ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← →HNC
+9 8 reverse
+10 s-trans cis-C5H8 ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← →s-trans cis-C5H8
+11 NH 2 +CH 3 ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← →NH+CH 4
+Hydrogen transfer reaction12 11 reverse 13 NH 2 +C 2H5 ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← →NH+C 2H6
+14 13 reverse
+2
+Supplementary Table 5 | Systems in Fig. 4c
+system Type
+1 Water dimer
+Hydrogen-bonding interaction system2 Formic acid dimer 3 Formamide dimer
+4 Uracil dimer h-bonded
+5 Methane dimer
+Dispersion interaction system 6 Ethene dimer
+7 Uracil dimer stack
+8 Ethene ethyne complex
+Mixed electrostatic dispersion interaction system9 Benzene water complex 10 Benzene dimer T-shaped
+11 Phenol dimer
+Supplementary Note 3. Energy results
+This note provides the energy results plotted in Fig. 3a and Fig. 4.
+Supplementary Table 6 | Molecules energy in Fig. 3a. The results of FermiNet and Psiformer are from [2].
+System HF, aug-cc-pVDZ Psiformer[2] FermiNet[2] LapNet
+LiH -7.98416 -8.070528(5) -8.07050(1) -8.070523(4)
+Li2 -14.86984 -14.99486(1) -14.99480(2) -14.99485(1)
+NH3 -56.20514 -56.56367(2) -56.56347(4) -56.56359(2)
+CH4 -40.19963 -40.51454(2) -40.51430(3) -40.51445(2)
+CO -112.75173 -113.32416(4) -113.32354(7) -113.32417(4)
+N2 -108.96104 -109.54137(4) -109.54046(6) -109.54128(4)
+C2H4 -78.04351 -78.58762(3) -78.58604(5) -78.58721(4)
+methylamine -95.23044 -95.86050(4) -95.85917(6) -95.86025(3)
+O3 -224.27901 -225.43061(9) -225.4226(2) -225.4293(1)
+ethanol -154.10515 -155.04656(7) -155.0419(1) -155.04563(6)
+bicyclobutane -154.88814 -155.94619(8) -155.9388(1) -155.94528(4)
+benzene -230.7280 -232.2400(1) -232.2205(2) -232.2389(1)
+toluene -269.7684 -271.5538(1) -271.5274(2) -271.5524(1)
+naphthalene -383.3934 -385.8685(2) -385.8147(4) -385.8655(2)
+CCl4 -1875.8507 -1878.804(1) -1878.684(1) -1878.839(1)
+benzene dimer -461.4555 -464.4667(2) -464.3770(5) -464.4681(1)
+3
+Supplementary Table 7 |Ionization potential of 5 transition metals in Fig. 4a
+System Atom Ion Ionization potential Experiments[5]
+V -943.8773(1) -943.6412(1) 0.2361(2) 0.23733
+Fe -1263.6586(2) -1263.3743(2) 0.2843(3) 0.2871
+Co -1382.7192(1) -1382.4487(1) 0.2705(2) 0.27137
+Ni -1508.2694(2) -1508.0117(2) 0.2577(2) 0.25864
+Zn -1779.4364(2) -1779.1017(3) 0.3347(4) 0.3383
+Supplementary Table 8 |Barrier heights of 14 reactions in Fig. 4b
+Reactants Transition state Barrier height W2-F12[3]
+1 -185.17156(5) -185.14391(5) 0.02765(7) 0.02821
+2 -185.27710(4) -185.14391(5) 0.13319(6) 0.13163
+3 -100.95854(3) -100.89248(2) 0.06606(4) 0.06709
+4 -239.62929(5) -239.60805(7) 0.02124(9) 0.02135
+5 -960.3632(5) -960.3388(5) 0.0244(7) 0.02151
+6 -79.08694(2) -79.08432(2) 0.00262(3) 0.00319
+7 -79.15115(2) -79.08432(2) 0.06683(3) 0.06693
+8 -93.43241(1) -93.35566(2) 0.07675(3) 0.07665
+9 -93.40824(2) -93.35566(2) 0.05258(3) 0.05259
+10 -195.30143(7) -195.23616(7) 0.0653(1) 0.06327
+11 -95.71460(2) -95.70018(3) 0.01442(3) 0.01418
+12 -95.73547(2) -95.70018(3) 0.03529(3) 0.03506
+13 -135.02977(3) -135.01383(3) 0.01594(5) 0.01562
+14 -135.04518(4) -135.01383(3) 0.03135(5) 0.03092
+Supplementary Table 9 | Interaction energies of 11 systems in Fig. 4c
+System Equilibrium Dissociated Interaction CCSD(T)/CBS[6]
+1 Water dimer -152.88309(6) -152.87584(3) 0.00725(8) 0.00795
+2 Formic acid dimer -379.5638(1) -379.5374(1) 0.0264(2) 0.02988
+3 Formamide dimer -339.8195(1) -339.79692(8) 0.0226(1) 0.02560
+4 Uracil dimer h-bonded -829.6199(3) -829.5829(3) 0.0370(4) 0.03289
+5 Methane dimer -81.02888(8) -81.02861(2) 0.0003(1) 0.00084
+6 Ethene dimer -157.17415(7) -157.17258(5) 0.0016(1) 0.00235
+7 Uracil dimer stack -829.5946(3) -829.5829(3) 0.0117(4) 0.01563
+8 Ethene-ethyne complex -155.92198(6) -155.92068(5) 0.00130(8) 0.00238
+9 Benzene-water complex -308.6756(1) -308.6727(1) 0.0029(2) 0.00522
+10 Benzene dimer T-shape -464.4681(1) -464.4655(1) 0.0026(1) 0.00433
+11 Phenol dimer -614.9097(2) -614.9017(2) 0.0080(3) 0.01131
+Supplementary References
+[1] D. Pfau, J.S. Spencer, A.G. de G. Matthews, and W.M.C. Foulkes. Ab-initio solution of the many-electron schrödinger equation
+with deep neural networks.Physical Review Research, 2:033429, 2020.
+[2] Ingrid von Glehn, James S Spencer, and David Pfau. A self-attention ansatz for ab-initio quantum chemistry. InThe Eleventh
+International Conference on Learning Representations, 2023.
+4
+[3] Lars Goerigk, Andreas Hansen, Christoph Bauer, Stephan Ehrlich, Asim Najibi, and Stefan Grimme. A look at the density
+functional theory zoo with the advanced gmtkn55 database for general main group thermochemistry, kinetics and noncovalent
+interactions. Physical Chemistry Chemical Physics, 19:32184–32215, 2017.
+[4] Petr Jurečka, Jiří Šponer, Jiří Čern`y, and Pavel Hobza. Benchmark database of accurate (MP2 and CCSD (T) complete basis
+set limit) interaction energies of small model complexes, DNA base pairs, and amino acid pairs.Physical Chemistry Chemical
+Physics, 8(17):1985–1993, 2006.
+[5] Nikolai B. Balabanov and Kirk A. Peterson. Basis set limit electronic excitation energies, ionization potentials, and electron
+affinities for the 3d transition metal atoms: Coupled cluster and multireference methods.The Journal of Chemical Physics ,
+125(7):074110, 08 2006.
+[6] MichaelS.Marshall,LoriA.Burns,andC.DavidSherrill.Basissetconvergenceofthecoupled-clustercorrection, 𝛿CCSD(T) MP2 : Best practicesfor benchmarkingnon-covalent interactionsandthe attendantrevision ofthe S22, NBC10, HBC6, and HSGdatabases.
+The Journal of Chemical Physics, 135(19), 11 2011.
+5

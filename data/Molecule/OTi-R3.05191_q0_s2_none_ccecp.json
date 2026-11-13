@@ -1,0 +1,65 @@
+{
+  "model": "Molecule",
+  "lattice": "molecule",
+  "n_sites": 2,
+  "boundary": "O",
+  "n_electrons": 20,
+  "params": {
+    "formula": "OTi",
+    "name": "TiO",
+    "charge": 0,
+    "N_up": 11,
+    "N_dn": 9,
+    "basis": "none",
+    "variant": "ccECP (Annaberdiyev et al.) on Ti only ([Ne] core), O all-electron",
+    "core_electrons": 10,
+    "geometry": [
+      {
+        "el": "Ti",
+        "r": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "el": "O",
+        "r": [
+          0,
+          0,
+          3.051907691172575
+        ]
+      }
+    ],
+    "geometry_source": "r_e = 1.615 Å, the AE equilibrium bond length in the Supplementary Material of Annaberdiyev et al., J. Chem. Phys. 149, 134108 (2018), TiO table (sm text line 307); its ccECP discrepancy is 0.000(3) Å (line 316), so AE and ccECP agree at the printed precision. 2108.11661 Sec. III B: \"the same equilibrium bond length for monoxides as CCSD(T) results in the supplementary material of Ref. [25]\""
+  },
+  "instance_id": "Molecule/OTi-R3.05191_q0_s2_none_ccecp",
+  "rows": [
+    {
+      "energy": -133.4073,
+      "sigma": 0.0001,
+      "energy_variance": null,
+      "dof": 20,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "FermiNet",
+      "method_detail": "ccECP on the metal with 12-point icosahedron quadrature, O all-electron, KFAC, 500 000 training iterations",
+      "method_as_published": "FermiNet [VMC, ccECP on the metal with 12-point icosahedron quadrature, O all-electron, KFAC, 500 000 training iterations]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "X. Li, C. Fan, W. Ren & J. Chen, Fermionic neural network with effective core potential, Phys. Rev. Research 4, 013021 (2022), arXiv:2108.11661, doi:10.1103/PhysRevResearch.4.013021",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2108.11661 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "−133.4073(1) (Table III, Ground state energy)",
+        "note": "PRR 4, 013021 Table III, journal text line 284; same digits in the arXiv text | Hartree, total energy with ccECP on Ti (20 electrons treated), O all-electron; bond length printed to 1e-3 Å (Morse-fit value). Spin sector not printed: filed on the ground-state term N_up - N_dn = 2 (ruling of 2026-11-12) | reader confidence medium",
+        "secondary_of": null
+      }
+    }
+  ]
+}

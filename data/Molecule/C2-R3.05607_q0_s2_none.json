@@ -1,0 +1,63 @@
+{
+  "model": "Molecule",
+  "lattice": "molecule",
+  "n_sites": 2,
+  "boundary": "O",
+  "n_electrons": 12,
+  "params": {
+    "formula": "C2",
+    "name": "carbon dimer",
+    "charge": 0,
+    "N_up": 7,
+    "N_dn": 5,
+    "basis": "none",
+    "geometry": [
+      {
+        "el": "C",
+        "r": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "el": "C",
+        "r": [
+          0,
+          0,
+          3.056065088646618
+        ]
+      }
+    ],
+    "geometry_source": "arXiv:2503.19847 Supplementary Tables 3-4: C-C bond length 1.6172 Å (converted × 1/0.52917721092)"
+  },
+  "instance_id": "Molecule/C2-R3.05607_q0_s2_none",
+  "rows": [
+    {
+      "energy": -75.85593,
+      "sigma": 0.00023,
+      "energy_variance": null,
+      "dof": 12,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "DeepQMC",
+      "method_detail": "transferable optimization over the 10 bond lengths, 4 triplet states with overlap penalty, dynamic state ordering, shared electron-nucleus transformer parameters",
+      "method_as_published": "DeepQMC (transferable) [VMC, transferable optimization over the 10 bond lengths, 4 triplet states with overlap penalty, dynamic state ordering, shared electron-nucleus transformer parameters]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "Z. Schätzle, P. B. Szabó, A. Cuzzocrea, M. Mezera and F. Noé, Ab initio simulation of excited-state potential energy surfaces with transferable deep quantum Monte Carlo, Nat. Comput. Sci. (2026), arXiv:2503.19847, doi:10.1038/s43588-026-01065-y",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2503.19847 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "-75.85593(23)",
+        "note": "Nat. Comput. Sci. Supplementary Table 4, SI text line 277: \"1.6172      -75.85593(23)     -75.85491(23)     -75.75698(26\"; arXiv v2 same digits | Hartree, total energy, all-electron, basis-free; the lowest of the four lowest triplet states at this bond length (N_up - N_dn = 2); no quintet computed in the source",
+        "secondary_of": null
+      }
+    }
+  ]
+}

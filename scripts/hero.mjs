@@ -48,7 +48,7 @@ const FORMULA = {
   tJ: [I("H"), O("="), O("−"), I("t"), SUM(ijs), hc(cd("i", "σ"), c("j", "σ")), O("+"), I("J"), SUM(nn), R(O("("), SdS, O("−"), FR(R(sb(I("n"), I("i")), sb(I("n"), I("j"))), N(4)), O(")"))],
   Impurity: [I("H"), O("="), SUM(R(I("k"), O(","), I("σ"))), sb(I("ε"), I("k")), cd("k", "σ"), c("k", "σ"), O("+"), SUM(I("σ")), sb(I("ε"), I("d")), ss(I("d"), I("σ"), O("†")), sb(I("d"), I("σ")),
     O("+"), I("U"), sb(I("n"), R(I("d"), O("↑"))), sb(I("n"), R(I("d"), O("↓"))), O("+"), SUM(R(I("k"), O(","), I("σ"))), sb(I("V"), I("k")), hc(ss(I("d"), I("σ"), O("†")), c("k", "σ"))],
-  Hchain: molecular, Hsheet: molecular, HEG2D: jellium, HEG3D: jellium,
+  Hchain: molecular, Hsheet: molecular, Atom: molecular, Molecule: molecular, HEG2D: jellium, HEG3D: jellium,
 };
 export const formula = (model, block = false) => FORMULA[model] ? `<math${block ? ' display="block"' : ""}>${FORMULA[model].join("")}</math>` : "";
 
@@ -66,6 +66,8 @@ const ABOUT = {
   HEG2D: "The homogeneous electron gas in two dimensions.",
   Hchain: "Chains of hydrogen atoms, an ab initio benchmark (atomic units).",
   Hsheet: "A square sheet of hydrogen atoms, ab initio (atomic units).",
+  Atom: "Single atoms and ions: all electrons or a pseudopotential core, basis-free or in a basis set (atomic units).",
+  Molecule: "Molecules with fixed nuclei: total energies, basis-free or in a basis set (atomic units).",
 };
 export const about = model => ABOUT[model] ?? "";
 
@@ -98,6 +100,9 @@ const G = {
   tJ: () => sqLines() + neel((x, y) => x === 30 && y === 30),
   Impurity: () => [...Array(8).keys()].map(k => { const a = k * Math.PI / 4, x = +(30 + 20 * Math.cos(a)).toFixed(2), y = +(30 + 20 * Math.sin(a)).toFixed(2); return L(30, 30, x, y, "g-dash") + D(x, y, 2.2); }).join("") + `<circle class="g-h" cx="30" cy="30" r="5.5"/>` + A(30, 30, 0, 3.5),
   Hchain: () => L(6, 30, 54, 30, "g-dash") + [10, 22, 34, 46].map(x => `<circle class="g-h" cx="${x}" cy="30" r="4"/>` + D(x, 30, 1.2)).join("") + `<path class="g-l" d="M10 42 V46 M22 42 V46 M10 44 H22"/><text class="g-t" x="13" y="54">R</text>`,
+  // An atom: the nucleus inside three orbits. A molecule: three nuclei and their bonds.
+  Atom: () => [30, 90, 150].map(a => `<ellipse class="g-l" cx="30" cy="30" rx="22" ry="8" fill="none" transform="rotate(${a} 30 30)"/>`).join("") + `<circle class="g-h" cx="30" cy="30" r="4.5"/>` + D(30, 30, 1.4) + D(41, 49, 2) + D(8, 30, 2) + D(41, 11, 2),
+  Molecule: () => L(30, 24, 14, 42) + L(30, 24, 46, 42) + `<circle class="g-h" cx="30" cy="24" r="7"/><circle class="g-h" cx="14" cy="42" r="4.5"/><circle class="g-h" cx="46" cy="42" r="4.5"/>` + D(30, 24, 1.6) + D(14, 42, 1.2) + D(46, 42, 1.2),
   Hsheet: () => [14, 25, 36, 47].flatMap(y => [14, 25, 36, 47].map(x => `<circle class="g-h" cx="${x}" cy="${y}" r="3.6"/>` + D(x, y, 1))).join(""),
   HEG2D: () => { const r = rng(7); let s = `<rect class="g-l" x="9" y="9" width="42" height="42"/>`; for (let i = 0; i < 16; i++) s += D(+(12 + r() * 36).toFixed(1), +(12 + r() * 36).toFixed(1), 1.8); return s; },
   HEG3D: () => { const r = rng(11); let s = `<path class="g-l" d="M10 20 H40 V50 H10 Z M10 20 L20 10 H50 V40 L40 50 M40 20 L50 10"/>`; for (let i = 0; i < 16; i++) { const z = r(); s += D(+(12 + r() * 26 + z * 10).toFixed(1), +(22 - z * 10 + r() * 26).toFixed(1), +(1.3 + z * 0.8).toFixed(2)); } return s; },
@@ -232,7 +237,14 @@ export const HERO_CSS = `
 .pk-title { display: flex; gap: 1.2rem; align-items: center; margin-top: 0.6rem; flex-wrap: wrap; }
 .pk-title .pk-glyph { width: 76px; height: 76px; border: 1px solid var(--grid); border-radius: 50%; padding: 8px; background: var(--surface); flex: none; }
 .pk-title h2 { font-size: 2rem; margin: 0 0 0.3rem; }
-.pk-title > div { min-width: 0; overflow-x: auto; }
+.pk-title > div { min-width: 0; flex: 1 1 16rem; }
+.pk-math { overflow-x: auto; max-width: 100%; scrollbar-width: none; }
+/* A flex box sizes the block formula to its content, so it starts at the left edge instead of centring. */
+.pk-math { display: flex; }
+.pk-math math { flex: none; margin: 0; }
+@media (max-width: 560px) { .pk-title > div { flex-basis: 100%; } }
+.pk-math::-webkit-scrollbar { display: none; }
+.pk-math.pk-ovf { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent); }
 .pk-title math { font-size: 1.2em; }
 .pk-desc { color: var(--ink2); margin: 0.9rem 0 0; }
 .pk-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.3rem; }
@@ -248,8 +260,10 @@ export const HERO_CSS = `
 .pk-chip:hover { border-color: var(--accent); }
 .pk-chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
 .pk-chip i { font-style: normal; opacity: 0.6; font-size: 0.75em; margin-left: 0.25em; }
+.pk-chipmore { border: 0; background: none; color: var(--accent); font: inherit; font-size: 0.85rem; cursor: pointer; padding: 0.12rem 0.4rem; }
+.pk-find { font: inherit; font-size: 0.85rem; padding: 0.15rem 0.6rem; border: 1px solid var(--grid); border-radius: 999px; background: var(--surface); color: var(--ink); min-width: 17rem; }
 .pk-chart { margin-top: 1rem; overflow-x: auto; }
-.pk-chart svg { width: 100%; min-width: 520px; height: auto; display: block; border: 1px solid var(--grid); border-radius: 3px; background: var(--surface); }
+.pk-chart svg { width: 100%; height: auto; display: block; border: 1px solid var(--grid); border-radius: 3px; background: var(--surface); }
 .pk-ax { stroke: var(--grid); }
 .pk-tk { fill: var(--muted); font-family: var(--mono); font-size: 11px; }
 .pk-axl { fill: var(--ink2); font-size: 12px; }

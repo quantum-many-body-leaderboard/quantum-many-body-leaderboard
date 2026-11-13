@@ -1,0 +1,52 @@
+{
+  "model": "Atom",
+  "lattice": "atom",
+  "n_sites": 1,
+  "boundary": "O",
+  "n_electrons": 2,
+  "params": {
+    "element": "He",
+    "Z": 2,
+    "charge": 0,
+    "N_up": 1,
+    "N_dn": 1,
+    "basis": "none"
+  },
+  "instance_id": "Atom/He_q0_s0_none",
+  "rows": [
+    {
+      "energy": -2.90372,
+      "sigma": 0.00001,
+      "energy_variance": null,
+      "dof": 2,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "PauliNet",
+      "method_detail": "deep Jastrow factor on the Hartree-Fock determinant (node-less ground state)",
+      "method_as_published": "PauliNet [VMC, deep Jastrow factor on the Hartree-Fock determinant (node-less ground state)]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "Z. Schätzle, J. Hermann & F. Noé, Convergence to the fixed-node limit in deep variational Monte Carlo, J. Chem. Phys. 154, 124108 (2021), arXiv:2010.05316, doi:10.1063/5.0032836",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2010.05316 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "2.90 372(1) (printed without a minus sign)",
+        "note": "J. Chem. Phys. 154, 124108 Table I, journal text line 346; same digits (and the same missing sign) in the arXiv text | Hartree, total energy of the He atom; singlet ground state",
+        "secondary_of": null
+      },
+      "corrections": [
+        {
+          "field": "energy",
+          "from": "2.90372 (as printed)",
+          "to": -2.90372,
+          "reason": "sign restored (ruling of 2026-11-12): the exact reference beside it is −2.903 724 722 and the correlation fraction 99.98(2)% needs a negative energy; same misprint in arXiv v2"
+        }
+      ]
+    }
+  ]
+}

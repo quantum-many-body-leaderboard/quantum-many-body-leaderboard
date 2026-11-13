@@ -1,0 +1,530 @@
+                         Fermionic Neural Network with Eﬀective Core Potential
+
+                                       Xiang  Li,1  Cunwei  Fan,2  Weiluo  Ren,1  and  Ji  Chen3
+              1ByteDance  Inc,  Zhonghang  Plaza,  No.  43,  North  3rd  Ring  West  Road,  Haidian  District,  Beijing.∗
+                                 2Department  of  Physics  and  Institute  for  Condensed  Matter  Theory,
+                              University  of  Illinois  1110  W.  Green  Street,  Urbana,  IL  61801,  U.S.A.†
+                       3School  of  Physics,  Peking  University,  Beijing  100871,  People’s  Republic  of  China ‡
+                                                          (Dated:  September 8, 2021)
+                  Deep learning techniques have opened a new venue for electronic structure theory in recent years.
+                In contrast to traditional methods, deep neural networks provide much more expressive and ﬂexible
+                wave function ansatz, resulting in better accuracy and time scaling behavior. In order to study larger
+                systems  while  retaining  suﬃcient  accuracy,  we  integrate  a  powerful  neural-network  based  model
+                (FermiNet) with the eﬀective core potential method, which helps to reduce the complexity of the
+                problem by replacing inner core electrons with additional semi-local potential terms in Hamiltonian.
+                In this work, we calculate the ground state energy of 3d transition metal atoms and their monoxides
+                which are quite challenging for original FermiNet work, and the results are in good consistency with
+                both experimental data and other state-of-the-art computational methods.  Our development is an
+                important step for a broader application of deep learning in the electronic structure calculation of
+                molecules and materials.
+
+
+                    I.    INTRODUCTION                                       the enormous amount of parameters in deep neural net-
+                                                                             works  strictly  restrict  the  simulation  speed  and  system
+  The last decade has witnessed incredible fast develop-                     size they can study.  For example, it would take the Fer-
+ment of artiﬁcial intelligence.  Deep learning [1] becomes                   miNet a month to simulate a system of about 30 electrons
+widely used and receives great success in computer vision                    using 16 V100 GPUs in its TensorFlow version [13].
+[2, 3], natural language processing [4, 5] and recommen-                        In order to extend neural network electronic structure
+dation  systems  [6,  7],  just  to  name  a  few.   In  the  past           calculations to larger systems, the computation complex-
+few years, deep learning technology is broadly applied in                    ity has to be reduced and one helpful approach is the so-
+computational physics and chemistry to tackle key chal-                      called eﬀective core potential (ECP) method (also known
+lenges in  ab  initio  molecule modelling [8–19], which are                  as pseudopotential).  Electrons in each system can be di-
+crucial for materials design, drug discovery and other ap-                   vided into core electrons and valence electrons. Core elec-
+plications.                                                                  trons, ﬁlling inner shells of the system, are tightly bound
+  Deep learning techniques can be roughly divided into                       around the atom cores, and it is mainly the valence elec-
+two categories.  The ﬁrst category, e.g.  machining learn-                   trons  in  the  outer  shell  that  determine  the  property  of
+ing  force  ﬁeld,  aims  at  improving  the  eﬃciency  of  sim-              the system.  The ECP method simply removes the core
+ulation while retaining the accuracy at a higher level of                    electrons from computation and introduces semi-local po-
+theory  [8–10].   These  methods  usually  requires  labeled                 tential terms to eﬀectively simulate their inﬂuence on va-
+data  (such  as  energy  and  force  of  a  given  structure),               lence  electrons,  in  which  way  the  number  of  electrons
+and  then  trains  the  neural  network  by  minimizing  the                 in the calculation is reduced and the whole computation
+deviation  between  its  prediction  and  the  labeled  data.                process is accelerated.  ECP method is widely employed
+The second category, e.g.  neural network based quantum                      in  traditional  electronic  structure  calculations,  such  as
+Monte Carlo (QMC) [11–17], targets more accurate elec-                       density functional theory (DFT), post Hartree-Fock and
+tronic  structure  and  only  needs  unlabeled  sample  data                 QMC. In particular, the development of ECPs for QMC
+in  training.   A  deep  neural  network  can  provide  much                 are  still  a  hot  subject  of  research.   Nevertheless,  there
+more expressive and ﬂexible wave function ansatz than                        are already a number of ECPs designed or used in QMC
+traditional forms used in QMC, which leads to better ac-                     calculations, such as Burkatzki-Filippi-Dolg (BFD) ECP
+curacy.  Recently developed PauliNet and FermiNet are                        [20], Stuttgart (STU) ECP [21], Trail-Needs (TN) ECP
+two promising examples [13–15],  which have shown the                        [22], and correlation consistent (cc) ECP [23, 24].  These
+ability to outperform traditional methods such as coupled                    ECPs are examined carefully in traditional QMC simu-
+cluster with single, double and perturbative triple excita-                  lations,  but  their  numerical  stability  and  performances
+tions [CCSD(T)] in certain systems.  In spite of their ad-                   have  not  yet  been  examined  in  deep  neural  networks,
+vantages, these methods also have their own drawbacks:                       which  has  a  much  complex  structure  to  express  wave
+                                                                             functions.
+                                                                                In this work, we investigate the implementation of ECP
+                                                                             method  into  a  deep  neural  network,  namely  FermiNet.
+∗  {lixiang.62770689, renweiluo}@bytedance.com                               The main aim is to improve the eﬃciency of deep neu-
+† cfan11@illinois.edu                                                        ral network modelling,  so as to increase the size of the
+‡ ji.chen@pku.edu.cn
+                                                                             system  that  we  can  handle  with  FermiNet.   Based  on
+                                                                                                                                                 2
+
+our method, we calculate the ground state energy of 3d                         Traditional  VMC  approaches  usually  start  from  the
+transition  metal  atoms  and  their  monoxides.   The  re-                 Hartree-Fock wave function, which reads
+sults show satisfactory consistency with both experimen-                                               ⏐⏐⏐⏐⏐⏐⏐⏐⏐φ1(x1) ··· φ1(xN)⏐⏐⏐⏐⏐⏐⏐⏐⏐
+tal data and other accurate  ab  initio  methods.  We also                                                  ·     ·
+discuss some details of how to improve the training eﬃ-                                   ψHF(x) =          ·     ·                 ,             (3)
+ciency of the ECP based FermiNet.                                                                           ·     ·
+  The  remainder  of  this  paper  is  organized  as  follows.                                          φN(x1) ··· φN(xN)
+In Sec. II, we introduce brieﬂy the theoretical framework
+of neural network,  ECP method,  the workﬂow and cal-                       where{φi}  denotes  the  molecular  orbitals  for  the  elec-
+culation details.  In Sec. III, we present our calculations                 trons.  In deep neural networks [12–15], the one electron
+and results.  In Sec. IV, we discuss more details on our                    orbital φi(xj) is extended to φi(xj; x⁄=j), where x⁄=j  de-
+calculation and training.  In Sec. V, we give a summary                     notes all the electron coordinates except xj, and it can be
+and outlook.                                                                seen as a generalization of widely-used backﬂow transfor-
+                                                                            mation [25].  In order to ensure the anti-symmetry of ψ,
+                                                                            φi(xj; x⁄=j) is required to be permutation invariant with
+                         II.    METHOD                                      respect to permutation of x⁄=j.  With this generalization
+                                                                            employed,  the  simulation  accuracy  is  highly  improved
+                A.    Theoretical Framework                                 and  the  time  complexity  is  retained  as  the  traditional
+                                                                            VMC approach, which scales as N 4.
+  Solving   Schr¨odinger   equation   is   always   the   main                 However,  existing deep neural networks,  namely Fer-
+task  of  electronic  structure  calculation.    Under  Born-               miNet  and  PauliNet,  suﬀer  from  a  large  prefactor  in
+Oppenheimer  approximation,  atomic  motion  is  frozen                     its asymptotic N 4  time scaling.  The enormous amount
+and  the  equation  for  electron  wave  function ψ  can  be                of  parameters  and  linear  operations  within  neural  net-
+formulated as                                                               works reduce their computation eﬃciency, and the largest
+                                                                            system  size  they  can  study  is  limited  up  to  dozens  of
+         ˆHψ(x1, x2,··· , xN) =Eψ(x1, x2,··· , xN),      (1)                electrons.   In  order  to  enlarge  the  system  size  we  can
+                                  ∑        1                                study,  it’s  natural  to  employ  ECP  method,  which  has
+          ˆH =∑     −1                                                      already been widely used in quantum chemistry commu-
+                 i     2∆i + 12   i⁄=j |ri− rj|                             nity.   Within  ECP  framework,  core  electrons  decouple
+                           ZI            ∑        ZIZJ                      with the valence electron, and additional semi-local po-
+                −∑     |ri− RI| + 12           |RI− RJ|,                    tential  terms  are  added  in  Hamiltonian  to  mimic  core
+                   i,I                   I⁄=J                               electron eﬀects, which read
+
+                                                                                        nv∑               nv∑lmax∑          m=l∑
+where xi = (ri,σi) denotes the spatial position and spin                      ˆVECP =       Vloc(rv) +             Vl(rv)         |lm⟩⟨lm|,  (4)
+of  i-th  electron.   RI,ZI  are  the  spatial  position  and                           v=1              v=1   l=0         m=−l
+charge of I-th nucleus, which are treated as external pa-
+rameters for a given molecule structure.  Moreover, since                   where nv  denotes  the  number  of  valence  electrons  and
+electrons obey Fermi-Dirac statistics, the wave function                    |lm⟩ represents the spherical harmonics.  Moreover,  the
+ψ needs to be anti-symmetric with respect to the permu-                     potential  terms Vloc  and Vl  are  simply  functions  of rv,
+tation of (x1, x2,··· , xN).  The anti-symmetric require-                   which represents the radial distance between valence elec-
+ment  together  with  its  high-dimensional  nature  make                   tron and nucleus.  These potential terms are usually ex-
+Schr¨odinger  equation  notoriously  hard  to  solve.   In  or-             panded in Gaussian basis sets, which read
+der to obtain highly accurate results, the time complex-
+ity of the state-of-the-art methods, such as CCSD, scales                                   Vl(r) =r−2∑        Alkrnlke−Blkr2,               (5)
+as large as N 6 or more, where N  is the total number of
+electrons in the system.                                                                                    k
+  Recently,  deep  neural  network  models,  such  as  Fer-                 where Alk,Blk  and nlk  are  the  expansion  parameters,
+miNet and PauliNet [13–15] are proposed and shed new                        and l,k  denote  the  angular  quantum  number  and  the
+light on the electronic structure problem.  Based on the                    expansion index, respectively.
+variational  principle,  these  deep  learning  methods  ap-                   Note that eﬀective core potentials usually diverge near
+proach  the  ground  state  wave  function  via  minimizing                 nucleus due to ther−2 term in Eq. (5), making the QMC
+the energy expectation value Eθ, which reads                                simulation  unstable.   There  are  several  kinds  of  ECPs
+                          ∫ d3r ψ∗θ(r)Hψθ(r)                                such as ccECP, STU ECP, BFD ECP and TN ECP over-
+                   Eθ =     ∫ d3r ψ∗θ(r)ψθ(r) .                   (2)       coming this problem via exact cancellation of diverging
+                                                                            terms in  Eq. (4),  which are more  suitable for quantum
+                                                                            Monte Carlo simulations [20–24].  In this work, we adopt
+ψθ is simply the wave function output by neural network                     recently proposed ccECP [23, 24].  Other ECPs can be
+and θ denotes all the parameters within.                                    implemented in a similar way with FermiNet.
+                                                                                                                                                   3
+
+                          B.    Workﬂow                                     choices of integration quadrature suitable for this situa-
+                                                                            tion [29–32].  We decided to use the 12-point icosahedron
+  The  workﬂow  of  our  work  is  an  extension  of  Fer-                  quadrature in the calculation because it has acceptable
+miNet, with modiﬁcations related to the integrated ECP                      accuracy as well as a reasonably small number of points.
+method.                                                                     In  the  12-point  icosahedron  quadrature,  12  points  and
+  The main workﬂow can be divided into three phases:                        their  weights  are  properly  chosen  so  that  the  integra-
+pretrain, train and inference.  In the pretrain phase, the                  tion  on  a  unit  sphere  is  exact  for  integrands  with  only
+neural network is trained to match the Hartree-Fock wave                    l≤ 5 components when decomposed in Ylm basis, which
+function, obtained via PySCF package [26] with certain                      suﬃces  our  calculations.   Speciﬁcally,  for  the  12-point
+ECP type speciﬁed.  Then the neural network is trained                      icosahedron integral quadrature, we approximate the in-
+to minimize the expected energy value.  Note that with                      tegration
+ECP employed, the gradient formula for energy optimiza-                                                       ∫
+tion is slightly modiﬁed as follows,                                                               J =   14π     dΩ f(Ω),                        (9)
+
+    Grad = Eψ2(r)[(E(r)− Eψ2(r)[E(r)])∇θ log|ψ|],                           on a unit sphere by the sum
+              E(r) =ψ−1(r) ˆHψ(r) +Enl(r),                  (6)                                        2∑               10∑
+where Eψ2(r)[·] represents the expectation value accord-                                     J =A         f(ai) +B          f(bi),               (10)
+                                                                                                      i=1               i=1
+ing to the distribution ψ2(x) and it’s evaluated via tra-                   with  the  points ai, bi  written  in  spherical  coordinates
+ditional Markov Chain Monte Carlo (MCMC) approach.                          (θ,φ) as:
+Moreover,Enl denotes the semi-local energy contribution
+from eﬀective core potential and its speciﬁc form reads                       a1 = [0, 0],a2 = [π, 0]
+[27]                                                                                {[arctan 2, 2π                                          ,  (11)
+∑                      ∫                                                      bi =     [π− arctan 2, π5 (i− 1)]            for 1≤i≤ 5
+     Vl(rv)Ylm(Ωv)         dΩ′vY∗lm(Ω′v)ψ(r1,··· , r′v,··· , rN)ψ(r1,··· , rv,··· , rN).                 5 (2i− 11)]    for 6≤i≤ 10
+vlm                                                                         and the coeﬃcients A, B are
+                                                                   (7)
+whereYlm denotes the spherical harmonics.  This integral                                                A =B =  1
+is over the solid angle Ω′v  of valence electron vector r′v                                                          12.                            (12)
+with respect to the nucleus.  Although, in the mean-ﬁeld                    The coordinates of the 12 points are written in a certain
+approximation, the integration has a closed-form result,                    coordinate system,  whose orientation remains arbitrary
+an analytic result does not exist for the wavefunction ψ                    and each choice can be related by a global rotation.  Gen-
+produced  by  the  FermiNet  and  thus  numerical  integra-                 erally  speaking,  for  an  arbitrary  integrand,  its  integral
+tion methods shall be used.  After a long enough training                   result  varies  in  a  diﬀerent  coordinate  system,  since  the
+process  until  the  energy  converges,  the  ﬁnal  energy  re-             employed 12-point icosahedron quadrature is only exact
+sult  can  be  obtained  from  a  separate  inference  phase,               for l≤  5  component.   In  order  to  cancel  out  the  error
+in which energy is estimated via pure MCMC approach                         introduced by the orientation choices, we could average
+without training.                                                           the results from randomly chosen orientations, then the
+                                                                            result is actually an unbiased Monte Carlo estimation on
+             C.    ECP Implementation Details                               a unit sphere.
+                                                                               In our calculation, however, we only chose one random
+  Before  carrying  out  the  numerical  integration  con-                  orientation for each sample at one Monte Carlo step to
+cretely,  we  note  that  the  integrand  in  Eq.  (7)  can  be             have  satisfactory  training  speed  with  some  sacriﬁces  in
+simpliﬁed  further.   The  polar  axis  of  the  integrand  can             the variance of the energy estimation.  Although,  more
+be  set  parallel  to rv  and  the  outer Ylm(Ωv)  terms  are               orientation conﬁgurations in each estimation step would
+reduced to constants [28], then terms in Eq. (7) read                       help  decrease  the  variance,  in  our  calculation,  a  one-
+                       ∫                                                    orientation  estimation  has  already  given  a  satisfactory
+∑                                                                           variance compared to that introduced from the MCMC
+    Vl(rv)Ylm(Ωv)          dΩ′vY∗lm(Ω′v)ψ(r1,··· , r′v,··· , rN)ψ(r1,··· , rv,··· , rN)steps.
+ m                   ∫
+= Vl(rv)2l + 14π        dΩ′vPl(cosθ′v)ψ(r1,··· , r′v,··· , rN)ψ(r1,··· , rv,··· , rN),      D.    Calculation Speciﬁcation
+                                                                   (8)
+where Pl is the Legendre polynomial and θ′v denotes the                        Based on the open-sourced FermiNet package [13, 14],
+polar angle with polar axis set to rv  now.  The integral                   the numerical setup for our calculations is listed in Ta-
+in Eq. (8) is over the unit sphere ofv-th valence electron                  ble I. Note that in most cases, we used the default val-
+with  respect  to  the  nucleus  and  there  are  quite  a  few             ues  for  hyper-parameters  provided  in  the  open-sourced
+                                                                                                                                                   4
+
+repository for FermiNet. The neural networks are trained                     with ccECP from Ref. [24].  Note that all the compared
+on the internal machine learning platform in ByteDance                       methods are dealing with the same eﬀective core Hamil-
+Inc.,  which  supports  elastic  resources  and  large-scale                 tonian since they use the same ECP, hence it is fair to
+training tasks.                                                              make comparisons on the ground state energy.  The lower
+                                                                             the energy, the better the method is.
+
+                   TABLE I.  Numerical Setup                                    Among  all  compared  methods,  CCSDT(Q)  at  CBS
+Name                                                Value                    limit, despite its non-variational nature and basis-set ex-
+Framework                                         JAX [33]                   trapolation  error,  has  the  lowest  energy  for  all  consid-
+Main computing resource                 8 Nvidia V100 GPU cards              ered  systems,  and  thus  we  use  its  results  as  the  refer-
+Optimizer                                        KFAC [34]                   ence,  against  which  the  diﬀerence  from  other  results  is
+Optimization hyper-parameters            Same as in Refs. [13, 14]           plotted  in  Figure  1.   Our  method  achieves  the  second-
+Batch size                                           4096                    best result.  In particular,  our result is better than the
+Number of HF pretrain iteration                      3000                    CCSDT(Q)  with  basis  cc-pCV5Z,  the  largest  ﬁnite  ba-
+Number of training iteration                       500,000                   sis  set  used  in  CCSDT(Q)  calculation  for  those  atoms
+Number of inference iteration                      100,000                   to  our  knowledge,  which  is  as  expected  since  neural-
+Pretrain basis                             ccECP-cc-pVDZ [23]                network related ansatz has the ability to approach CBS
+                                                                             limit [37].  Fixed-node DMC result with multi-reference
+                                                                             trial wave function is also plot in Figure 1.  DMC typ-
+                                                                             ically requires millions of determinants in its trial wave
+                         III.    RESULTS                                     function  in  order  to  decrease  the  ﬁxed-node  error.   In
+                                                                             comparison,  neural-network based methods can achieve
+  In  this  work,  we  mainly  study  3d  transition  metals,                better accuracy than DMC method with only dozens of
+namely  from  Sc  to  Zn,  and  their  monoxides.    Their                   determinants.   Moreover,  the  gap  between  results  from
+ground state energy and dissociation energy (DE) are rel-                    CCSDT(Q)  /  cc-pCV5Z  and  CBS  limit  increases  quite
+atively diﬃcult to compute using traditional methods1.                       signiﬁcantly  as  the  number  of  electrons  increases,  and
+Moreover, ccECP can remove a signiﬁcant amount of core                       similarly for DMC. Comparatively, the discrepancy from
+electrons  from  calculations  for  those  systems.   For  in-               our  results  to  the  referential  ones  is  much  smaller  for
+stance, atom Sc has 21 electrons in total, while we only                     heavier  transition  metals  such  as  Cu  and  Zn,  suggest-
+need to consider 11 electrons with ccECP. We also per-                       ing that ECP method works well with FermiNet in those
+formed calculations on elements Ga and Kr, where most                        larger systems.
+electrons are treated as core electrons by ccECP, so as to
+show beneﬁts on computation eﬃciency.  From now on,
+we refer to our ECP based FermiNet method as FermiNet
++ ECP.
+  For ground state energy of 3d transition metals, our re-
+sults are close to the state-of-the-art CCSDT(Q) at CBS
+limit and outperform projection methods such as ﬁxed-
+node  diﬀusion  Monte  Carlo  (DMC)  [24].   For  dissocia-
+tion energy of transition metal monoxides, our results are
+consistent with highly accurate CCSD(T), semistochas-
+tic heat bath conﬁguration interaction (SHCI), auxiliary
+ﬁeld quantum Monte Carlo (AFQMC) and density ma-
+trix renormalization group (DMRG) results [23, 36].
+
+
+                            A.    Atoms
+
+  In  this  section,  we  study  the  ground  state  energy  of              FIG.  1.     Ground  state  energy  of  3d  transition  metals  cal-
+atoms  using  FermiNet  with  ccECP.  We  carry  out  cal-                   culated using FermiNet + ECP (blue dots),  compared with
+culations on elements Ga, Kr and 3d transition metals,                       CCSDT(Q)  /  cc-pCV5Z  (orange  squares)  and  DMC  (green
+with  the  results  listed  in  Table  II.  For  the  purpose  of            triangles) results provided in Ref. [24], all with ccECP. Here
+comparison,  we  also  list  CCSDT(Q)  and  DMC  results                     we show the relative diﬀerence against CCSDT(Q) / CBS. It
+                                                                             is clear that our method achieves better results than the com-
+                                                                             pared ones, even though they are still around 10 mHa higher
+                                                                             than the referential result for heavier atoms.
+1 Results   calculated   with   various   methods   can   be   found   in
+  Refs. [23, 24, 35, 36].
+                                                                                                                                                                5
+
+
+TABLE II.  Calculated ground state energy in Hartree for Ga, Kr and 3d transition metals, using various methods with ccECP:
+FermiNet + ECP, CCSDT(Q) with both cc-pCV5Z basis and CBS limit, and DMC using millions of determinants in its trial
+wave function.  The results of the latter three methods are from Ref. [24].  CCSDT(Q) at CBS limit achieves the lowest energy
+for all the systems, and our method performs the second best.  For heavier transition metals such as Cu and Zn, our calculated
+energies are around 10 mHa higher than the CCSDT(Q) / CBS ones, while the other methods’ results are more than 40 mHa
+higher.
+
+Element                   FermiNet + ECP                      CCSDT(Q) / cc-pCV5Z                      CCSDT(Q) / CBS                       DMC(MD)
+   Ga                        -2.039853(2)                                   -2.0395                                   -2.039915(13)                        -2.0392(2)
+   Kr                       -18.472355(8)                                 -18.4659                                  -18.47259(27)                       -18.4680(1)
+    Sc                       -46.5536(1)                                   -46.5494                                  -46.55704(81)                        -46.550(1)
+    Ti                       -58.0895(1)                                   -58.0826                                  -58.09263(76)                        -58.085(1)
+    V                        -71.4346(1)                                   -71.4274                                  -71.44178(59)                        -71.421(2)
+   Cr                        -86.6349(1)                                   -86.6236                                  -86.64109(33)                          -86.625
+   Mn                       -103.8828(10)                                -103.8718                                 -103.8919(10)                       -103.859(2)
+    Fe                       -123.3754(1)                                 -123.3626                                -123.38804(93)                      -123.358(2)
+   Co                        -145.1409(1)                                 -145.1232                                 -145.1541(10)                       -145.115(4)
+   Ni                        -169.3760(1)                                 -169.3546                                 -169.3912(12)                       -169.345(2)
+   Cu                        -196.3873(1)                                 -196.3584                                 -196.4038(10)                       -196.353(3)
+   Zn                        -226.3516(2)                                 -226.3210                                 -226.3699(18)                       -226.320(3)
+
+
+
+              B.    Transition Metal Monoxides
+
+   In order to show our methods can be used to obtain
+high  quality  ab  initio  data  comparable  to  experiments,
+we compute the dissociation energy DE of 3d transition
+metal monoxides, deﬁned as
+                DE(X) = E(X) + E(O)− E(XO),            (13)
+where XO denotes the monoxide of element X and E(·)
+denotes the ground state energy.  For monoxides, we only
+apply ECP to transition metal atoms while all electrons
+for atom O are included, and we use−75.06655 Ha for
+E(O) (same as the result given in the original FermiNet
+paper [13]).
+   We compare our calculated DE against high-accuracy
+electronic  structure  methods  such  as  SHCI,  CCSD(T),                           FIG. 2.   Fitted density of the diﬀerence from calculated tran-
+DMC, DMRG and AFQMC in Table III. Moreover, since                                   sition  metal  monoxide  DE  to  the  experimental  data  [38]  in
+DFT  is  broadly  employed  in  computational  studies  of                          Hartree for each method.  The CCSD(T) data (with ccECP)
+transition metal systems, we also list DFT results using                            is from Ref. [23] while others (with TN ECP [22]) are from
+the B3LYP exchange correlation functional for compari-                              Ref. [36].  Individual data points are indicated by small verti-
+son.  All these compared results are from Refs. [23, 36],                           cal lines.  The red shaded region, centered at 0 and with width
+where  we  only  take  results  calculated  with  the  largest                      0.007 Hartree, indicates the acceptable discrepancy from cal-
+basis  set  provided.   We  use  the  same  equilibrium  bond                       culated results to experimental data.  All the data from SHCI
+length for monoxides as CCSD(T) results in the supple-                              and  AFQMC,  as  well  as  most  data  from  our  method  and
+                                                                                    CCSD(T) fall into that region.
+mentary material of Ref. [23].  For completeness, we also
+list our calculated ground state energy of monoxides in
+Table III.
+   To  visualize  the  overall  performance  of  FermiNet  +                        much as 0.5 eV [36, 38].  Therefore, we place a shade re-
+ECP calculation, in Figure 2 we plot the ﬁtted density of                           gion (with a width of 0.007 Ha.)  on Figure 2 to indicate
+the diﬀerence between the calculated result and the ex-                             acceptable discrepancy from the experimental data.  All
+perimental data [38] of 3d transition metal monoxide DE                             data from very accurate methods such as AFQMC and
+for each method.  Here we compare with the experimen-                               SHCI fall into this interval.  Our results mostly fall into
+tal data because they can serve as reasonable references                            this interval except for a long tail on the left, led by the
+when comparing methods using diﬀerent ECPs and ba-                                  CoO,  CuO  and  ZnO  results.   We  will  comment  on  the
+sis sets.  However,  it is worth noting that experimental                           issue associated with those monoxides later, but overall
+results  are  not  completely  self-consistent  among  diﬀer-                       our calculations provide results almost as accurate as the
+ent studies, which may diﬀer from one to another by as                              current state-of-the-art electronic structure approaches.
+                                                                                                                                                      6
+
+
+TABLE III.  Comparison of calculated DE of 3d transition metal monoxides against the experimental data [38], the CCSD(T)
+/  CBS  result  [23],  and  the  calculated  results  from  SHCI,  AFQMC  and  DMRG  [36].   CCSD(T)  results  use  ccECP  and  the
+associated basis while SHCI, AFQMC and DMRG use TN ECP. Speciﬁcally, SHCI and AFQMC use aug-ccpV5Z basis and
+DMRG use aug-ccpVDZ basis.  Our DE result is calculated with the ground state energy of both monoxides (listed here) and
+atoms (listed in Table II), and we use -75.06655 Ha as the ground state energy for atom O [13].  The bond length of monoxides
+in our calculation is the same as the one in CCSD(T) result [23].
+System      Ground State Energy (Ha)                                                Dissociation Energy (Ha)
+                                                FermiNet + ECP     Experimental Data      CCSD(T)           SHCI            AFQMC       DMRG
+  ScO                -121.8765(1)                   0.2564(2)                0.2566(3)           0.2550(11)    0.25684(1)    0.2585(16)     0.2422
+  TiO                -133.4073(1)                   0.2513(2)               0.2548(25)          0.2517(11)    0.25444(1)    0.2568(16)     0.2397
+  VO                 -146.7417(2)                   0.2406(3)               0.2405(31)           0.2464(7)     0.24439(1)    0.2462(15)     0.2268
+  CrO               -161.8682(13)                   0.1668(14)              0.1670(22)           0.1684(3)     0.17424(1)    0.1717(22)     0.1649
+ MnO                 -179.0892(2)                   0.1399(12)              0.1423(29)           0.1390(7)     0.14377(1)    0.1436(18)     0.1268
+  FeO                -198.5927(1)                   0.1508(2)                0.1555(3)           0.1525(11)    0.15671(1)    0.1549(18)     0.1359
+  CoO                -220.3459(2)                   0.1385(3)               0.1519(33)          0.1396(18)          NA               NA            NA
+  NiO                -244.5855(4)                   0.1430(5)               0.1439(11)          0.1561(11)          NA               NA            NA
+  CuO               -271.5504(16)                   0.0965(17)              0.1131(11)           0.1010(6)     0.10987(1)    0.1105(25)     0.1046
+  ZnO                -301.4705(3)                   0.0523(5)               0.0608(14)          0.0536(18)          NA               NA            NA
+
+
+DMRG,  DMC  and  B3LYP  data  have  less  overlap  with                       quite far away from the experimental reference (greater
+this  interval.   We  want  to  point  out  that  those  meth-                than 10 mHa), while ours are farther away.  We will dis-
+ods perform less ideally for diﬀerent reasons:  DMRG is                       cuss more on our CoO, CuO and ZnO results in the next
+known  to  be  an  accurate  method,  but  the  heavy  cost                   section.  Note that compared to CCSD(T), known as the
+limits its calculation of these molecules to aug-ccpVDZ                       golden-standard in quantum chemistry, our method has
+basis set.  So the basis set incompleteness error has dom-                    not only comparable accuracy, but also better computa-
+inated its DE underestimation.  DMC is largely limited                        tional scaling, namelyN 4, same as FermiNet, as opposed
+by the ﬁxed-node approximation and the single determi-                        to  CCSD(T)’s N 7,  where N  stands  for  the  number  of
+nant trial wave function employed.  For transition metal                      electrons considered in the computation.
+oxides, multi-conﬁgurational wave function is needed and
+ﬁxed-node DMC based on single determinant trial wave
+function does not perform satisfactorily.  For DFT, it is
+known that the results strongly depends on the chosen
+exchange correlation functional.  The comparison of dif-
+ferent functionals is beyond the scope of this work, but we
+present the results of one functional, namely the B3LYP
+functional, which is a hybrid functional known as one of
+the well-behaving functionals for transition metal oxides.
+Yet  the  results  shows  that  B3LYP  underestimates  the
+DE  by  an  average  of  15  mHa.   Therefore,  we  conclude
+that FermiNet + ECP is more accurate and reliable than
+DFT, and should be promoted in future studies to tackle
+larger transition metal containing molecules and materi-
+als.
+  The ﬁtted density shape of the CCSD(T) result is sim-
+ilar to ours, but it has long tails on both sides.  The good
+performance of CCSD(T) on transition metal monoxide
+was also mentioned in a recent study using full conﬁgura-
+tion interaction quantum Monte Carlo [35], here we show                       FIG. 3.    DE of transition metal monoxides calculated using
+that FermiNet + ECP outperforms CCSD(T) slightly for                          FermiNet + ECP (blue dots) compared to CCSD(T) (orange
+the majority of 3d transition metal monoxides.  In Fig-                       triangles) both with ccECP. We show the relative diﬀerence
+ure 3 we present a ﬁner comparison between our method                         against the experimental data.  Our results are quite close to
+and  CCSD(T)  at  CBS  limit  [23],  where  the  diﬀerence                    the CCSD(T) ones, except for VO, NiO and CuO, in which
+to  the  experimental  data  is  compared  for  each  system.                 cases our results are closer to the experimental ones for VO
+For most of the monoxides,  our results are close to the                      and NiO.
+CCSD(T) ones,  except for VO, NiO and CuO. For VO
+and NiO, our results are very close to the experimental
+data.  For CuO, both our result and CCSD(T) one are
+                                                                                                                                                        7
+
+                       IV.    DISCUSSION                                       TABLE IV.  The number of electrons and runtime of a single
+                                                                               training iteration in AE and ECP calculation respectively.
+   In this section, we discuss some details of our calcula-                                              AE                             ECP
+tion and model training.                                                        Element
+                                                                                           #Electrons  Single iterationruntime (s)#Electrons  Single iterationruntime (s)
+
+                           A.    Eﬃciency                                          Ga           31                 2.9           3                0.086
+                                                                                   Kr           36                 4.5           8                 0.39
+   Eﬃciency and scalability, as well as accuracy, are our                          Sc           21                1.08          11                0.61
+main  motivations  for  taking  ECP  into  consideration.                          Ti           22                1.19          12                0.71
+ECP  reduces  the  number  of  electrons  to  deal  with  in                        V           23                1.32          13                0.85
+FermiNet,  but  it  also  introduces  additional  cost  of  nu-                    Cr           24                1.42          14                0.99
+                                                                                   Mn           25                1.65          15                1.13
+mercial  intergration  of  the  ECP  Hamiltonian.   In  neu-                       Fe           26                1.80          16                1.30
+ral networks, the cost of such numerical interaction has                           Co           27                2.00          17                1.55
+not been investigated.  Whether the combination of Fer-                            Ni           28                2.11          18                1.73
+miNet with ECP can have better computation eﬃciency                                Cu           29                2.32          19                1.99
+and scalability than all-electron (AE) calculations needs                          Zn           30                2.59          20                2.16
+to be examined.
+   Here we show the application of FermiNet + ECP on
+elements Ga and Kr in which cases ECP method has a                             state  yielding  lower  energy.   It  also  converges  in  much
+signiﬁcant advantage.  With ccECP, we only need to con-                        fewer  iterations.   As  shown  in  Figure  4  where  we  show
+sider 3 electrons for Ga and 8 electrons for Kr, while with                    atoms Sc, Ti and V as examples.  Energy optimized by
+all-electrons, we have to deal with 31 and 36 electrons for                    KFAC  approaches  1-percent  of  correlation  energy  error
+Ga and Kr respectively, which are already quite large sys-                     after  around  ten  thousand  iterations  while  the  one  op-
+tems for FermiNet to handle.  The computation runtime                          timized by ADAM is not close to that level of accuracy
+are listed in Table IV, where the data is obtained from                        even after one million iterations.
+1000  training  iterations  by  taking  the  average  of  their
+runtime,  and  we  also  ignore  the  ﬁrst  several  iterations
+to avoid the eﬀect of initial warmup and/or compilation
+process. It is apparent that, compared with the AE calcu-
+lation, the simulation eﬃciency is highly improved with
+ECP employed.
+   In Table IV we also list the computation runtime of 3d
+transition  metal  atoms,  for  which  10  core  electrons are
+considered in ccECP. Because of the ﬁxed number of core
+electrons, the heavier the element, the smaller the diﬀer-
+ence between AE and ECP is.  For Sc there is about 50%
+reduction in single-iteration runtime from ECP, whereas                        FIG.  4.      The  log-log  plot  of  the  optimization  progress  of
+for Zn the reduction is less than 20%.  Nonetheless,  we                       Fermint with ECP for Sc, Ti and V using optimizers KFAC
+ﬁnd  that  our  implementation  of  ECP  in  FermiNet  has                     (blue lines) v.s.  ADAM (orange lines).  The horizontal axis
+larger  gains  from  electron  reduction  than  losses  due  to                is the number of training iterations.  The vertical axis is the
+integration of ECP part, which suggests a promising fu-                        correlation energy error, calculated using CCSDT(Q) / CBS
+ture for applying various ECPs in fast-developing neural                       with ccECP provided in Ref. [24].  For clarity,  we show the
+network electronic structure packages.                                         median energy over the last 10% of iterations.
+
+
+
+                 B.    Optimizer Comparison
+                                                                                                 C.    Model Training Details
+   Following the original work of FermiNet [13], we have
+tested both ADAM [39] and KFAC [34] optimizers when                               Here we discuss a few technical issues occurred in cal-
+training neural networks with ECP. In terms of training                        culating Co, Cu, Zn and their monoxides, which may be
+runtime,  we  ﬁnd  that  the  choice  of  optimizer  does  not                 related to the bad performances presented in above sec-
+matter much, suggesting that the runtime is dominated                          tions.   The  ﬁrst  issue  is  that  when  training  the  neural
+by the forward pass, especially the numerical integration                      network for these atoms, it may start to produce Not-a-
+introduced by ECP method.  For instance, for the vana-                         number (NAN) value after a number of iterations, which
+dium atom, one training step runs for around 0.8 seconds                       ruins the whole process. To resolve this issue, we removed
+regardless  of  the  optimizer.   As  for  the  model  perfor-                 outliers in terms of the local energy from the training pro-
+mance,  KFAC  can  lead  the  neural  network  to  a  better                   cess instead of simply doing clipping.  Surprisingly, there
+                                                                                                                                                   8
+
+was  a  magical  threshold  for  outlier  identiﬁcation  such                process aﬀect the performance of neural networks is cer-
+that  the  training  energy  may  be  around  10  mHa  lower                 tainly  an  interesting  topic  for  future  studies,  especially
+than the result with a lower or higher threshold.  In our                    for strongly correlated systems.
+case,  such threshold is 10 times the standard deviation
+of  the  local  energy  in  one  training  batch.   We  did  not
+observe such phenomena for monoxides and we speculate                                              V.    CONCLUSION
+that it is because electrons are less likely to be too close
+to the nuclei of transition metal atoms in molecules. Note                      In this work, we have implemented the ECP method in
+that during inference phase we do not do such outlier re-                    the existing deep learning work, namely FermiNet.  Em-
+moval so that our calculated energy remains reliable and                     ploying  ECP  method  pushes  FermiNet  towards  study-
+variational.   Therefore,  although  this  is  an  issue  to  be             ing larger systems by reducing the cost while retaining
+further investigated in future developments of FermiNet,                     the  accuracy  to  describe  chemical  bonding.   Based  on
+we do not expect it is the main cause of the deviation of                    our implementation we carry out studies of 3d transition
+our results from experimental values.                                        metal  atoms  and  their  monoxides,  which  are  challeng-
+  Moreover, as mentioned in Section III B, our calculated                    ing systems for electronic structure methods.  The calcu-
+DEs for CoO, CuO and ZnO are underestimating com-                            lated results are consistent with state-of-the-art compu-
+paring to the result of the most accurate methods and the                    tational methods and experimental data.  Comparing to
+experimental data.  CoO result is 13 mHa lower, CuO re-                      more widely used methods such as DFT and CCSD(T),
+sult is 17 mHa lower and ZnO result is 8 mHa lower, in                       FermiNet  +  ECP  outperforms  them  in  a  broad  range
+which cases the gap is more than 10% of their DE. Since                      of systems, suggesting a bright future for deep learning
+our method is variational, it is more likely that there is                   techniques in molecules and materials modelling.  Based
+an  overestimation  of  the  total  energy  of  the  monoxide.               on this study,  we expect ECPs can also be successfully
+There are several potential reasons.  Firstly, we used the                   used in other neural networks, where beneﬁts in compu-
+same bond length as CCSD(T) [23] for monoxides’ equi-                        tational eﬃciency are likely to be similar to our work. We
+librium  position,  which  may  not  be  the  optimal  value                 also  want  to  mention  that  investigating  better  network
+for FermiNet + ECP. A ﬁne search of the optimal bond                         structures,  such  as  the  Transformer  network  structure
+length  may  improve  the  calculated  DE  by  a  few  mHa.                  [4],  may further improve the accuracy and eﬃciency in
+Secondly, those monoxides are notoriously strongly cor-                      solving electronic structures, and related works are under
+related and challenging systems for electronic structure                     progress.
+calculations.   Although  we  have  made  it  possible  with
+FermiNet  +  ECP,  the  system  is  at  the  limit  of  cur-
+rent  computational  capacity.   Thus,  it  remains  unclear
+whether a more powerful network with a larger number                                          ACKNOWLEDGEMENTS
+of layers and determinants can improve the description of
+such strongly correlated systems.  Last but not least, we
+trained our neural networks up to 500,000 iterations, up                        The  authors  thank  Matthew  Foulkes,  David  Ceper-
+to which the convergence of the training process becomes                     ley and Abdulgani Annaberdiyev for helpful discussions,
+really slow.  This maximum number of training iterations                     Hang Li for support and guidance, DeepMind FermiNet
+is chosen based on our aﬀordability, but the slow conver-                    team for the open-sourced FermiNet software and prompt
+gence  does  indicate  that  the  wave  function  represented                response on Github. Additional thanks to the ByteDance
+by the neural network is still evolving slowly.  For such                    AML  team  for  technical  support,  ByteDance  AI-Lab
+challenging systems, we can not rule out the possibility                     LIT  Group  for  fruitful  collaboration,  and  the  rest  of
+that  further  ﬁne-tuning  in  the  network  can  eventually                 ByteDance AI-Lab Research team and collaborators for
+lead to better results.  How the network size and training                   ideas and inspiration.
+
+
+
+
+
+ [1]I. Goodfellow, Y. Bengio, and A. Courville,     Deep Learn-                   Vol. 30 (Curran Associates, Inc., 2017).
+     ing  (MIT Press, 2016)  http://www.deeplearningbook.                     [5]H.  Li,      Learning  to  Rank  for  Information  Retrieval  and
+     org.                                                                         Natural Language Processing:  Second Edition  (2014).
+ [2]A. Krizhevsky, I. Sutskever, and G. E. Hinton, Commun.                    [6]P. Covington, J. Adams, and E. Sargin (Association for
+     ACM 60, 84–90 (2017).                                                        Computing  Machinery,  New  York,  NY,  USA,  2016)  p.
+ [3]S. Ren, K. He, R. Girshick, and J. Sun, in     Advances in                    191–198.
+     Neural  Information  Processing  Systems,  Vol.  28  (2015)              [7]W.  Gao,  X.  Fan,  C.  Wang,  J.  Sun,  K.  Jia,  W.  Xiao,
+     pp. 91–99.                                                                   R.  Ding,  X.  Bin,  H.  Yang,  and  X.  Liu,  Deep  retrieval:
+ [4]A.   Vaswani,   N.   Shazeer,   N.   Parmar,   J.   Uszkoreit,                Learning  a  retrievable  structure  for  large-scale  recom-
+     L. Jones, A. N. Gomez, L. u. Kaiser, and I. Polosukhin,                      mendations (2021), arXiv:2007.07203 [cs.IR].
+     in Advances  in  Neural  Information  Processing  Systems,
+                                                                                                                                                                9
+
+ [8]J.  Han,  L.  Zhang,  R.  Car,      et  al.,  Commun.  Comput.                 [26]Q.  Sun,  T.  C.  Berkelbach,  N.  S.  Blunt,  G.  H.  Booth,
+     Phys. 23, 629 (2018).                                                               S. Guo, Z. Li, J. Liu, J. D. McClain, E. R. Sayfutyarova,
+ [9]K.   T.   Sch¨utt,   P.-J.   Kindermans,   H.   E.   Sauceda,                        S. Sharma, S. Wouters, and G. K.-L. Chan, WIREs Com-
+     S.  Chmiela,  A.  Tkatchenko,  and  K.-R.  M¨uller  (Curran                         put. Mol. Sci. 8, e1340 (2018).
+     Associates Inc., Red Hook, NY, USA, 2017) p. 992–1002.                        [27]W.  M.  C.  Foulkes,  L.  Mitas,  R.  J.  Needs,  and  G.  Ra-
+[10]L.  Zhang,  J.  Han,  H.  Wang,  R.  Car,  and  W.  E,  Phys.                        jagopal, Rev. Mod. Phys. 73, 33 (2001).
+     Rev. Lett. 120, 143001 (2018).                                                [28]S.  Fahy,  X.  Wang,  and  S.  G.  Louie,  Phys.  Rev.  B      42,
+[11]J.  Han,  L.  Zhang,  and  W.  E,  J.  Comput.  Phys.      399,                      3503 (1990).
+     108929 (2019).                                                                [29]L.  Mit´aˇs,  E.  L.  Shirley,  and  D.  M.  Ceperley,  J.  Chem.
+[12]D. Luo and B. K. Clark, Phys. Rev. Lett.      122, 226401                            Phys. 95, 3467 (1991).
+     (2019).                                                                       [30]A. McLaren, Math. Comput.      17, 361 (1963).
+[13]D.  Pfau,  J.  S.  Spencer,  A.  G.  D.  G.  Matthews,  and                    [31]V. Lebedev, USSR Comput. Math. Math. Phys.      15, 44
+     W. M. C. Foulkes, Phys. Rev. Research 2, 033429 (2020).                             (1975).
+[14]J.  S.  Spencer,  D.  Pfau,  A.  Botev,  and  W.  M.  Foulkes,                 [32]V. Lebedev, Zh. v¯ychisl. Mat. mat. Fiz      15, 48 (1976).
+     (2020), arXiv:2011.07125.                                                     [33]J.  Bradbury,  R.  Frostig,  P.  Hawkins,  M.  J.  Johnson,
+[15]J.  Hermann,  Z.  Sch¨atzle,  and  F.  No´e,  Nat.  Chem.      12,                   C. Leary,  D. Maclaurin,  G. Necula,  A. Paszke,  J. Van-
+     891 (2020).                                                                         derPlas, S. Wanderman-Milne, and Q. Zhang, JAX: com-
+[16]J.  Kessler,  F.  Calcavecchia,  and  T.  D.  K¨uhne,  Adv.                          posable  transformations  of  Python+NumPy  programs
+     Theor. Simul. 4, 2000269 (2021).                                                    (2018).
+[17]K. Choo, A. Mezzacapo, and G. Carleo, Nat. Commun.                             [34]J. Martens and R. Grosse, in       Proceedings of the 32nd In-
+     11 (2020).                                                                          ternational  Conference  on  International  Conference  on
+[18]M. Wilson, N. Gao, F. Wudarski, E. Rieﬀel, and N. M.                                 Machine  Learning  -  Volume  37,  ICML’15  (JMLR.org,
+     Tubman, arXiv:2103.12570  (2021).                                                   2015) p. 2408–2417.
+[19]Y. Chen, L. Zhang, H. Wang, and W. E, J. Chem. The-                            [35]T. Jiang, Y. Chen, N. A. Bogdanov, E. Wang, A. Alavi,
+     ory. Comput. 17, 170 (2021).                                                        and J. Chen, J. Chem. Phys 154, 164302 (2021).
+[20]M. Burkatzki, C. Filippi, and M. Dolg, J. Chem. Phys.                          [36]K. T. Williams, Y. Yao, J. Li, L. Chen, H. Shi, M. Motta,
+     126, 234105 (2007).                                                                 C. Niu, U. Ray, S. Guo, R. J. Anderson, J. Li, L. N. Tran,
+[21]M.  Dolg,  U.  Wedig,  H.  Stoll,  and  H.  Preuss,  J.  Chem.                       C.-N. Yeh, B. Mussard, S. Sharma, F. Bruneval, M. van
+     Phys. 86, 866 (1987).                                                               Schilfgaarde,  G.  H.  Booth,  G.  K.-L.  Chan,  S.  Zhang,
+[22]J. R. Trail and R. J. Needs, J. Chem. Phys.      146, 204107                         E. Gull, D. Zgid, A. Millis, C. J. Umrigar, and L. K. Wag-
+     (2017).                                                                             ner (Simons Collaboration on the Many-Electron Prob-
+[23]A. Annaberdiyev,  G. Wang,  C. A. Melton,  M. C. Ben-                                lem), Phys. Rev. X 10, 011041 (2020).
+     nett, L. Shulenburger, and L. Mitas, J. Chem. Phys 149,                       [37]Z.  Sch¨atzle,  J.  Hermann,  and  F.  No´e,  J.  Chem.  Phys.
+     134108 (2018).                                                                      154, 124108 (2021).
+[24]A.   Annaberdiyev,   C.   A.   Melton,   M.   C.   Bennett,                    [38]Y. A. Aoto, A. P. de Lima Batista, A. K¨ohn, and A. G. S.
+     G. Wang, and L. Mitas, J. Chem. Theory. Comput. 16,                                 de  Oliveira-Filho,  J.  Chem.  Theory.  Comput. 13,  5291
+     1482 (2020).                                                                        (2017).
+[25]R.  P.  Feynman  and  M.  Cohen,  Phys.  Rev.      102,  1189                  [39]D. P. Kingma and J. Ba, in       3rd International Conference
+     (1956).                                                                             on  Learning  Representations,  ICLR  2015,  San  Diego,
+                                                                                         CA, USA, May 7-9, 2015, Conference Track Proceedings
+                                                                                         (2015).

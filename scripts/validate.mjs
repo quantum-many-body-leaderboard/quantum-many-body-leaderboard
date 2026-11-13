@@ -1,4 +1,4 @@
-import fs from "node:fs"; import path from "node:path";
+import fs from "node:fs"; import path from "node:path"; import crypto from "node:crypto";
 import { leaksIn } from "../checks/cost/scrub.mjs";
 import { expectedDof, expectedEinf, vScore, perSiteDivisor, groundStateExact, stochasticExact, exactEligible, classEligible, BEST_CLASSES, printedTolerance } from "./units.mjs";
 import { classBest } from "./summary.mjs";
@@ -333,6 +333,41 @@ for (const f of fs.readdirSync(path.join("data", "TFIsing"))) {
   if (perSiteDivisor(inst) !== inst.n_sites)
     issues.push(`TFCONV ${inst.instance_id}: perSiteDivisor ${perSiteDivisor(inst)}, expected ${inst.n_sites} (Pauli convention)`);
 }
+
+// Atoms and molecules (RULES.md 13.1): the id's charge and sector against the electrons, the nuclei against the
+// geometry, a diatomic's R and a hashed label against the stored positions. A pseudopotential instance holds
+// the valence electrons only, so its count is checked to lie below the all-electron one.
+const Z = Object.fromEntries("H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr".split(" ").map((e, k) => [e, k + 1]));
+let checkedM = 0;
+for (const m of ["Atom", "Molecule"]) {
+  if (!fs.existsSync(path.join("data", m))) continue;
+  for (const f of fs.readdirSync(path.join("data", m))) {
+    const inst = JSON.parse(fs.readFileSync(path.join("data", m, f), "utf8")), p = inst.params, id = inst.instance_id;
+    checkedM++;
+    const k = id.match(/^(?:Atom|Molecule)\/(.+?)_q(-?\d+)_s(-?\d+)_([a-z0-9]+)((?:_[a-z0-9]+)*)$/);
+    if (!k) { issues.push(`MOLID ${id}: id does not parse (RULES.md 13.1)`); continue; }
+    const [, head, q, sz, , variants] = k, nuclei = m === "Atom" ? [{ el: p.element, r: [0, 0, 0] }] : p.geometry;
+    if (p.N_up - p.N_dn !== +sz || p.charge !== +q) issues.push(`MOLID ${id}: N_up - N_dn = ${p.N_up - p.N_dn}, charge ${p.charge}`);
+    if (inst.n_electrons !== p.N_up + p.N_dn) issues.push(`MOLID ${id}: n_electrons ${inst.n_electrons} is not N_up + N_dn`);
+    const all = nuclei.reduce((a, n) => a + Z[n.el], 0) - +q, ecp = variants && !/^_fc\d*$/.test(variants);
+    if (ecp ? inst.n_electrons >= all : inst.n_electrons !== all) issues.push(`MOLID ${id}: ${inst.n_electrons} electrons, the nuclei and charge give ${all}${ecp ? " (a pseudopotential removes core electrons)" : ""}`);
+    if (inst.n_sites !== nuclei.length) issues.push(`MOLID ${id}: n_sites ${inst.n_sites}, ${nuclei.length} nuclei`);
+    if (m !== "Molecule") continue;
+    const dist = (a, b) => Math.hypot(a.r[0] - b.r[0], a.r[1] - b.r[1], a.r[2] - b.r[2]);
+    const label = head.slice(head.indexOf("-") + 1);
+    if (/^R[\d.]+$/.test(label)) {
+      if (nuclei.length !== 2) issues.push(`MOLID ${id}: an R label on ${nuclei.length} nuclei`);
+      else if (Math.abs(dist(nuclei[0], nuclei[1]) - +label.slice(1)) > 1e-4) issues.push(`MOLID ${id}: R ${label.slice(1)}, the positions give ${dist(nuclei[0], nuclei[1])}`);
+    } else if (nuclei.length === 2) issues.push(`MOLID ${id}: a diatomic is labelled by R (RULES.md 13.1)`);
+    else if (/^g[0-9a-f]{6}$/.test(label)) {
+      const pairs = [];
+      for (let i = 0; i < nuclei.length; i++) for (let j = i + 1; j < nuclei.length; j++) pairs.push(`${[nuclei[i].el, nuclei[j].el].sort().join("-")}:${dist(nuclei[i], nuclei[j]).toFixed(4)}`);
+      const h = crypto.createHash("sha256").update(pairs.sort().join(";")).digest("hex").slice(0, 6);
+      if (h !== label.slice(1)) issues.push(`MOLID ${id}: label g${label.slice(1)}, the positions hash to g${h}`);
+    }
+  }
+}
+console.log(`atoms and molecules checked: ${checkedM}`);
 
 console.log(`rows=${rows}  dof_checked=${checkedD}  einf_checked=${checkedE}  vscore_checked=${checkedV}  tfising_exact_checked=${checkedT}`);
 console.log(`compute_blocks=${checkedC}  coverage_entries=${checkedCov}  spectrum_entries=${checkedS}`);

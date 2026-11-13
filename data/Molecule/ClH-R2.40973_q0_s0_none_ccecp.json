@@ -1,0 +1,117 @@
+{
+  "model": "Molecule",
+  "lattice": "molecule",
+  "n_sites": 2,
+  "boundary": "O",
+  "n_electrons": 8,
+  "params": {
+    "formula": "ClH",
+    "name": "HCl",
+    "charge": 0,
+    "N_up": 4,
+    "N_dn": 4,
+    "basis": "none",
+    "variant": "ccecp",
+    "variant_note": "ccECP on the second-row atoms (Na-Ar) only; first-row atoms and H all-electron",
+    "geometry": [
+      {
+        "el": "Cl",
+        "r": [
+          0,
+          0,
+          -0.024897821992549533
+        ]
+      },
+      {
+        "el": "H",
+        "r": [
+          0,
+          0,
+          2.3848314023310926
+        ]
+      }
+    ],
+    "geometry_source": "QUEST database (Loos, Jacquemin and coworkers), CC3/aug-cc-pVTZ ground-state geometry \"Hydrogen chloride,^1\\Sigma^+,CC3,aug-cc-pVTZ\", github.com/LCPQ/QUESTDB_website @ 9cdb572 static/data/structures/QUEST1/hydrogen_chloride.xyz (ångström, converted)"
+  },
+  "instance_id": "Molecule/ClH-R2.40973_q0_s0_none_ccecp",
+  "rows": [
+    {
+      "energy": -15.59729,
+      "sigma": 0.00001,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "FermiNet",
+      "method_detail": "NES-VMC, FermiNet ansatz; lowest state",
+      "method_as_published": "FermiNet [NES-VMC, FermiNet ansatz; lowest state]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "D. Pfau, S. Axelrod, H. Sutterud, I. von Glehn and J. S. Spencer, Accurate computation of quantum excited states with neural networks, Science 385, eadn0137 (2024), arXiv:2308.16848, doi:10.1126/science.adn0137",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2308.16848 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "-15.59729(1) (total energy, Hartree)",
+        "note": "Science 385, eadn0137 SI Table S3; journal SI, Safari accessibility text, line 1118 | Hartree, total energy. Geometry: the QUEST ground-state structure (the paper's baselines are QUEST theoretical best estimates; \"data on molecular geometries ... are available in referenced works\"). ccECP on the second-row atom (SI S9; main text: HCl, H2S, H2CSi; the CH2S energy, -49.46 Ha, is valence-only too). Closed-shell singlet ground state; computed with N_up = N_dn (triplets with <S^2> = 2 in the same run).",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -15.597583,
+      "sigma": 0.000009,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "Psiformer",
+      "method_detail": "NES-VMC, Psiformer ansatz; lowest state",
+      "method_as_published": "Psiformer [NES-VMC, Psiformer ansatz; lowest state]",
+      "family": "transformer / ViT",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "D. Pfau, S. Axelrod, H. Sutterud, I. von Glehn and J. S. Spencer, Accurate computation of quantum excited states with neural networks, Science 385, eadn0137 (2024), arXiv:2308.16848, doi:10.1126/science.adn0137",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2308.16848 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "-15.597583(9) (total energy, Hartree)",
+        "note": "Science 385, eadn0137 SI Table S3; journal SI, Safari accessibility text, line 1118 | Hartree, total energy. Geometry: the QUEST ground-state structure (the paper's baselines are QUEST theoretical best estimates; \"data on molecular geometries ... are available in referenced works\"). ccECP on the second-row atom (SI S9; main text: HCl, H2S, H2CSi; the CH2S energy, -49.46 Ha, is valence-only too). Closed-shell singlet ground state; computed with N_up = N_dn (triplets with <S^2> = 2 in the same run).",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -15.5959,
+      "sigma": 0.0004,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "Excited Pfaffian",
+      "method_detail": "one Excited Pfaffian trained jointly on the 12 molecules of Fig. 4, 5 states each; the lowest state",
+      "method_as_published": "Excited Pfaffian [VMC, one Excited Pfaffian trained jointly on the 12 molecules of Fig. 4, 5 states each; the lowest state]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "N. Gao, T. Grutschus, F. Noé and S. Günnemann, Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State, Proceedings of the 43rd International Conference on Machine Learning (ICML 2026), PMLR 306, arXiv:2603.14515",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2603.14515 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "-15.5959(4) (total energy, Hartree)",
+        "note": "ICML 2026 / arXiv:2603.14515 v2 Table 9, text line 1614 | Hartree, total energy. Geometry not printed: the molecules are those of Pfau et al. 2024 (NES, Science 385, eadn0137), on the QUEST structures; consistent with NES's Psiformer value on that instance (-15.597583(9)), this value lying 1.7 mHa above it. Valence-only energy: an effective core potential is used but not named; filed on the ccECP instance that NES used. Closed-shell singlet; N_up = N_dn. | reader confidence medium",
+        "secondary_of": null
+      }
+    }
+  ]
+}

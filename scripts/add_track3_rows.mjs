@@ -1,7 +1,10 @@
 // Track 3 (RULES.md 13, open since 2026-10-25): rows from passes/track3/sweep-rows-YYYY-MM-DD-hydrogen.json,
-// written by scripts/track3/ (SWEEP.md, track 3). Each pass row is a per-atom reading in Hartree with the
+// written by scripts/track3/ (SWEEP.md, track 3), and from passes/track3/sweep-rows-YYYY-MM-DD-molecules.json
+// (atoms and molecules, 2026-11-12). A hydrogen pass row is a per-atom reading in Hartree with the
 // nuclear repulsion included; this script stores it as a total (x N) on its instance, creating the instance
-// from the row's `create` header (data/Hchain/, data/Hsheet/). The generator has already applied the verify
+// from the row's `create` header (data/Hchain/, data/Hsheet/). An Atom or Molecule pass row carries the total
+// energy and its error bar (`energy`, `sigma`) and its header the electron count and the nuclei; the instance
+// gets n_sites = the number of nuclei, boundary O, and dof = the number of electrons (RULES.md 13.2). The generator has already applied the verify
 // file of the pass (removals, corrections, notes, verifications) and the code links; they are carried over:
 //   - a pass correction of `eps` or `sigma_per_site` is recorded on the row in stored units (energy,
 //     sigma; x N), every other one as written;
@@ -12,11 +15,11 @@
 // `sampled` is written only where the reader's reading differs from what the method string says
 // (units.mjs, isSampled), with a corrections record that states it.
 import fs from "node:fs";
-import { isSampled } from "./units.mjs";
+import { isSampled, MOL_MODELS } from "./units.mjs";
 import { track3Published } from "./method_names.mjs";
 
 const DIR = "passes/track3";
-const PASSES = fs.readdirSync(DIR).filter(f => /^sweep-rows-\d{4}-\d{2}-\d{2}-hydrogen\.json$/.test(f)).sort();
+const PASSES = fs.readdirSync(DIR).filter(f => /^sweep-rows-\d{4}-\d{2}-\d{2}-(hydrogen|molecules)\.json$/.test(f)).sort();
 // RULES.md 13.4, by bound type
 const REASON = {
   exact: "full CI or exact diagonalization in the instance's basis (RULES.md 13.4; assigned during source reading)",
@@ -27,6 +30,12 @@ const REASON = {
 };
 const PER_ATOM = { eps: "energy", sigma_per_site: "sigma" };
 const total = (x, n, digits) => x == null ? null : +(x * n).toPrecision(digits);
+// Atom and Molecule (RULES.md 13.1): one instance per nuclei, positions, charge, spin sector, variant and basis.
+function createInstance(c) {
+  if (!MOL_MODELS.has(c.model)) return c;
+  const nuclei = c.model === "Atom" ? [{ el: c.params.element, r: [0, 0, 0] }] : c.params.geometry;
+  return { model: c.model, lattice: c.model === "Atom" ? "atom" : "molecule", n_sites: nuclei.length, boundary: "O", n_electrons: c.n_electrons, params: c.params };
+}
 
 let added = 0, created = 0;
 const instances = new Map();
@@ -36,18 +45,18 @@ for (const file of PASSES) {
     const id = r.instance_id, p = `data/${id}.json`;
     if (!instances.has(id)) {
       if (fs.existsSync(p)) instances.set(id, JSON.parse(fs.readFileSync(p, "utf8")));
-      else { instances.set(id, { ...r.create, instance_id: id, rows: [] }); created++; }
+      else { instances.set(id, { ...createInstance(r.create), instance_id: id, rows: [] }); created++; }
     }
-    const inst = instances.get(id), n = inst.n_sites;
+    const inst = instances.get(id), n = inst.n_sites, mol = MOL_MODELS.has(inst.model);
     const src = `arXiv:${r.arxiv}`;
     const method = track3Published(r.method, r.method_detail);
-    const corrections = (r.corrections || []).map(c => PER_ATOM[c.field]
+    const corrections = (r.corrections || []).map(c => !mol && PER_ATOM[c.field]
       ? { ...c, field: PER_ATOM[c.field], from: total(c.from, n, PER_ATOM[c.field] === "energy" ? 12 : 6), to: total(c.to, n, PER_ATOM[c.field] === "energy" ? 12 : 6),
           conversion: [c.conversion, `per atom ${c.from} -> ${c.to}, stored as totals (x ${n})`].filter(Boolean).join("; ") }
       : c);
     const row = {
-      energy: total(r.eps, n, 12), sigma: total(r.sigma_per_site, n, 6),
-      energy_variance: null, dof: n, einf: null, v_score: null,
+      ...(mol ? { energy: r.energy, sigma: r.sigma ?? null } : { energy: total(r.eps, n, 12), sigma: total(r.sigma_per_site, n, 6) }),
+      energy_variance: null, dof: mol ? inst.n_electrons : n, einf: null, v_score: null,
       method, bound_type: r.bound_type, bound_type_reason: r.bound_type_reason ?? REASON[r.bound_type] ?? null,
       reference: r.reference, peer_reviewed: r.peer_reviewed,
       source: `track3-${date}`, provenance: r.origin === "own" ? "primary" : "secondary",

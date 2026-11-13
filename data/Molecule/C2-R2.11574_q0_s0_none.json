@@ -1,0 +1,88 @@
+{
+  "model": "Molecule",
+  "lattice": "molecule",
+  "n_sites": 2,
+  "boundary": "O",
+  "n_electrons": 12,
+  "params": {
+    "formula": "C2",
+    "charge": 0,
+    "N_up": 6,
+    "N_dn": 6,
+    "basis": "none",
+    "geometry": [
+      {
+        "el": "C",
+        "r": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "el": "C",
+        "r": [
+          0,
+          0,
+          2.115737369063043
+        ]
+      }
+    ],
+    "geometry_source": "NES SI Table S6: bond length 0.9 x 1.244 Å = 1.1196 Å (converted)"
+  },
+  "instance_id": "Molecule/C2-R2.11574_q0_s0_none",
+  "rows": [
+    {
+      "energy": -75.89507,
+      "sigma": 0.00003,
+      "energy_variance": null,
+      "dof": 12,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "Psiformer",
+      "method_detail": "NES-VMC, Psiformer ansatz, C2 curve; lowest computed state (X1Σ+g)",
+      "method_as_published": "Psiformer [NES-VMC, Psiformer ansatz, C2 curve; lowest computed state (X1Σ+g)]",
+      "family": "transformer / ViT",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "D. Pfau, S. Axelrod, H. Sutterud, I. von Glehn and J. S. Spencer, Accurate computation of quantum excited states with neural networks, Science 385, eadn0137 (2024), arXiv:2308.16848, doi:10.1126/science.adn0137",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2308.16848 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "-75.89507(3) (total energy, Hartree)",
+        "note": "Science 385, eadn0137 SI Table S6; journal SI, Safari accessibility text, line 1207 | Hartree, total energy, all-electron. Bond length 0.9 x 1.244 Å. Computed with N_up = N_dn (singlets and triplets in one run); the lowest state here is X1Σ+g.",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -75.88988,
+      "sigma": 0.00022,
+      "energy_variance": null,
+      "dof": 12,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "DeepQMC",
+      "method_detail": "transferable optimization over the 10 bond lengths, 4 singlet states with overlap penalty, dynamic state ordering, shared electron-nucleus transformer parameters",
+      "method_as_published": "DeepQMC (transferable) [VMC, transferable optimization over the 10 bond lengths, 4 singlet states with overlap penalty, dynamic state ordering, shared electron-nucleus transformer parameters]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "Z. Schätzle, P. B. Szabó, A. Cuzzocrea, M. Mezera and F. Noé, Ab initio simulation of excited-state potential energy surfaces with transferable deep quantum Monte Carlo, Nat. Comput. Sci. (2026), arXiv:2503.19847, doi:10.1038/s43588-026-01065-y",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2503.19847 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "-75.88988(22)",
+        "note": "Nat. Comput. Sci. Supplementary Table 3, SI text line 248: \"1.1196      -75.88988(22)     -75.81400(22)     -75.81446(22\"; arXiv v2 same digits | Hartree, total energy, all-electron, basis-free; the lowest of the four lowest singlets, 31.28 mEh below the lowest triplet of Supplementary Table 4 at this bond length",
+        "secondary_of": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "model": "Molecule",
+  "lattice": "molecule",
+  "n_sites": 5,
+  "boundary": "O",
+  "n_electrons": 8,
+  "params": {
+    "formula": "CH4",
+    "name": "methane",
+    "charge": 0,
+    "N_up": 4,
+    "N_dn": 4,
+    "basis": "none",
+    "variant": "BFD ECP (Burkatzki, Filippi and Dolg), from PySCF; on C only, H all-electron",
+    "core_electrons": 2,
+    "geometry": [
+      {
+        "el": "C",
+        "r": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "el": "H",
+        "r": [
+          1.18886,
+          1.18886,
+          1.18886
+        ]
+      },
+      {
+        "el": "H",
+        "r": [
+          -1.18886,
+          -1.18886,
+          1.18886
+        ]
+      },
+      {
+        "el": "H",
+        "r": [
+          1.18886,
+          -1.18886,
+          -1.18886
+        ]
+      },
+      {
+        "el": "H",
+        "r": [
+          -1.18886,
+          1.18886,
+          -1.18886
+        ]
+      }
+    ],
+    "geometry_source": "arXiv:1909.02487 (PRR 2, 033429) Table VIII, as for Molecule/CH4-g622e3f_q0_s0_none (the paper: \"The molecular structure of CH4 is from Ref. 3\")"
+  },
+  "instance_id": "Molecule/CH4-g622e3f_q0_s0_none_bfd",
+  "rows": [
+    {
+      "energy": -8.10065,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "FermiNet",
+      "method_detail": "\"modified FermiNet\" (a recent FermiNet version, Sec. III), isotropic envelope, training iterations as in Appendix A, ECP BFD on C",
+      "method_as_published": "FermiNet [VMC, \"modified FermiNet\" (a recent FermiNet version, Sec. III), isotropic envelope, training iterations as in Appendix A, ECP BFD on C]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "M. Wang, Y. Zhou & H. Wang, Performance assessment of the effective core potentials under the fermionic neural network: First and second row elements, J. Chem. Phys. 160, 204109 (2024), arXiv:2403.08287, doi:10.1063/5.0207853",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2403.08287 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "−8.100 65 (Table XI, CH4, column BFD)",
+        "note": "J. Chem. Phys. 160, 204109 Table XI (Appendix F), journal text line 1159; same digits in the arXiv text | Hartree, total energy with BFD on C ([He] core, 8 electrons treated); H all-electron (the paper sets E(H) = -0.5 Eh and names no ECP for H); closed shell; no error bar printed | reader confidence medium",
+        "secondary_of": null
+      }
+    }
+  ]
+}

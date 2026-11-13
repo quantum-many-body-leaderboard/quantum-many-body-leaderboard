@@ -1,0 +1,725 @@
+                           Neural network variational Monte Carlo for positronic chemistry
+
+                                Gino Cassella1*, W.M.C. Foulkes1, David Pfau2,1, and James S. Spencer2
+                              1Dept. of Physics, Imperial College London, London SW7 2AZ, United Kingdom and
+                                                   2DeepMind,  London  N1C  4DJ,  United  Kingdom
+                                                              (*g.cassella20@imperial.ac.uk)
+                                                                 (Dated: February 8, 2024)
+                 Quantum chemical calculations of the ground-state properties of positron-molecule complexes are challenging.
+                 The main difficulty lies in employing an appropriate basis set for representing the coalescence between electrons
+                 and a positron. Here, we tackle this problem with the recently developed Fermionic neural network (FermiNet)
+                 wavefunction, which does not depend on a basis set. We find that FermiNet produces highly accurate, in some
+                 cases state-of-the-art, ground-state energies across a range of atoms and small molecules with a wide variety
+                 of qualitatively distinct positron binding characteristics.  We calculate the binding energy of the challenging
+                 non-polar benzene molecule, finding good agreement with the experimental value, and obtain annihilation rates
+                 which compare favourably with those obtained with explicitly correlated Gaussian wavefunctions.  Our results
+                 demonstrate a generic advantage of neural network wavefunction-based methods and broaden their applicability
+                 to systems beyond the standard molecular Hamiltonian.
+
+
+   The  positron  –  the  positively  charged  anti-particle  of  the              weakly  bound  to  the  molecule  [45].   Due  to  the  repulsive
+electron – was first postulated by Dirac [1] almost a century                      potential  between  the  nuclei  of  the  host  molecule  and  the
+ago.   Today,  the  once  exotic  notion  of  anti-matter  is  tech-               positron, these virtual atoms are localized away from the nu-
+nologically  relevant  in  a  variety  of  fields,  such  as  medical              cleus.   Accurately  describing  such  a  wavefunction  (particu-
+physics [2], astrophysics [3], and materials science [4, 5].                       larly the electron-positron cusp) in a basis of single-particle
+   Experimental  apparatus  for  trapping  large  numbers  of                      orbitals centred on the nuclei requires the inclusion of basis
+positrons  continues  to  grow  in  sophistication,   offering  a                  functions with very large angular momenta [46].  This results
+glimpse into a world of exotic antimatter chemistry [6]. These                     in  very  slow  convergence  of  CI  calculations  with  the  max-
+advances  motivate  the  development  of  improved  computa-                       imum angular momentum of functions included in the basis.
+tional tools able to describe positronic bound states and thus                     Furthermore, the positronic density is typically highly diffuse,
+accelerate the continued development of new antimatter-based                       requiring the augmentation of standard basis sets with addi-
+technologies. In the present work, we make progress in this di-                    tional diffuse basis functions [27, 29–31].
+rection by developing a highly accurate method for the ab ini-                        The  most  successful  description  of  positron  binding  to
+tio calculation of the ground-state properties of bound states                     molecules comes from a recent work that develops a many-
+between positrons and ordinary molecules.                                          body theory of positron binding to molecules and produces
+   Despite   annihilating   upon   contact   with   an   electron,                 positron binding energies in close agreement with experimen-
+positrons readily form bound states with ordinary molecules.                       tal measurements [47]. In their work, Hofierka et al. highlight
+The  formation  of  these  bound  states,  enabled  by  an  inci-                  the shortcomings of QMC methods applied to positron bind-
+dent positron exciting a vibrational Feshbach resonance,  re-                      ing,  particularly the lack of calculations for large non-polar
+sults  in  greatly  enhanced  annihilation  rates.    This  process                molecules,  which  constitute  the  majority  of  experimentally
+has  recently  been  successfully  exploited  in  positron  annihi-                studied systems [15]. Here, we address this shortcoming.
+lation  spectroscopy  experiments  [7–14],  where  the  energy-                       We propose a new approach to calculating the ground state
+dependent annihilation rate enables sensitive measurements of                      properties of molecular positronic bound states, based on re-
+the positron binding energy [15].                                                  cently  developed  neural  network  wavefunction  ansatze  for
+   Theoretical  calculations  of  positron  binding  energies  and                 QMC [48].  The Fermionic neural network (FermiNet) mod-
+annihilation  rates  have  been  performed  using  many  of  the                   els the many-body wavefunction without referencing a set of
+standard tools of computational chemistry.  Positron binding                       basis functions.  This conveniently sidesteps a number of the
+to atoms and molecules has been studied using wavefunction                         aforementioned difficulties in describing positronic wavefunc-
+expansions in explicitly correlated Gausians with the stochas-                     tions.  We extend FermiNet to represent the positronic com-
+tic variational method (ECG-SVM) [16–24], configuration in-                        ponent of the wavefunction on an even footing with the elec-
+teraction  (CI)  methods  [25–31],  and  quantum  Monte  Carlo                     tronic component. With a minimal alteration to the neural net-
+(QMC) methods [32–40].  The annihilation rate and lifetime                         work architecture, we obtain a flexible and accurate ansatz for
+of positrons in solids, particularly in the presence of defects,                   mixed electron-positron wavefunctions. We calculate positron
+has been studied using density functional theory [41, 42] and                      binding energies and annihilation rates for a range of systems
+quantum Monte Carlo methods [43, 44].                                              with  qualitatively  distinct  mechanisms  for  positron  binding
+   Despite  the  intense  theoretical  interest,   describing  the                 and obtain state-of-the-art accuracy for the ground-state en-
+positronic wavefunction remains challenging for several rea-                       ergy in these systems.  Our method yields a positron binding
+sons.  As a result of the strong correlations enabled by the at-                   energy for benzene in close agreement with the experimental
+tractive interaction between electrons and the positron, molec-                    value and the many-body theory of Hofierka et al. [47], and
+ular bound states often resemble a ‘virtual’ positronium atom                      we obtain annihilation rates which compare favourably with
+                                                                                                                                                             2
+
+highly accurate ECG-SVM calculations for alkali metal atoms                       agreement with previous work but are seen to yield the most
+and small molecules.                                                              accurate variational result for [LiH, e+].
+                                                                                     We have calculated the ground-state wavefunction of BeO
+                                                                                  over  a  range  of  interatomic  separations  –  from  below  the
+                                RESULTS                                           equilibrium  separation  to  dissociation.    We  fit  the  poten-
+                                                                                  tial energy surfaces using MOLCAS and obtain an equilibrium
+   We  benchmark  the  accuracy  of  FermiNet  in  calculations                   bond distance of 2.515 Bohr with a ground-state energy of -
+of the ground-state energy, the positron binding energy, and                      89.90572(4) Hartrees for BeO, and 2.530 Bohr with a ground-
+the  positron  annihilation  rate  for  a  series  of  well-studied               state energy of -89.93082(3) Hartrees for [BeO, e+]. We com-
+positronic systems. These are presented here in (approximate)                     pare our results against previous calculations in Table I and
+order of increasing complexity. Unless otherwise specified, all                   find that FermiNet yields the most accurate variational result
+results presented herein were obtained using the network ar-                      for [BeO, e+].
+chitecture and training protocol detailed by Spencer [49]. We                        The  electronic  ground  state  of  BeO  transitions  from  the
+pre-train the electron orbitals to the Hartree-Fock solution of                   spin-singlet configuration at the equilibrium interatomic sepa-
+the bare molecule and do not pre-train the positron orbitals.                     ration to the spin-triplet configuration at the dissociative limit.
+Errors in energy expectation values are evaluated using a re-                     We enforce the appropriate ground-state spin configuration by
+blocking approach [50] to account for sequential correlations                     choosing Sz = 1 (as FermiNet is a spin-assigned wavefunc-
+in the Metropolis-Hastings sampling.                                              tion) at wide interatomic separations.  The resulting potential
+                                                                                  energy surfaces are plotted in Fig. 1.  At ∼4 Bohr, the elec-
+                                                                                  tronic  ground-state  transitions  between  the  spin-singlet  and
+                                                                                  spin-triplet, causing a sharp change in the ground-state dipole
+                            Binding energies                                      moment  and  the  resulting  positron  binding  energy  with  the
+                                                                                  molecular  ground-state,  which  vanishes  almost  completely.
+   Positronium hydride – The positronium (Ps) atom (consist-                      At ∼6 Bohr, we see a smooth transition between two quali-
+ing of a bound electron and positron) and hydrogen form a                         tatively distinct binding modes between the molecule and the
+stable molecule.  Here we work within the Born-Oppenhimer                         positron – binding to the molecular dipole field below this sep-
+approximation, neglecting the proton’s motion.  Almost exact                      aration and binding exclusively to the ‘lone’ beryllium atom
+ECG calculations are available for this system [16], yielding a                   beyond this separation. This is readily seen by visualizing the
+ground-state energy of E0 = −0.7891794 Hartrees. We obtain                        ground-state positron density on either side of the maximum,
+a ground state energy of E0 = −0.789144(3) Hartrees.                              as shown in Fig. 1 for the triplet state, and corroborated by the
+   Sodium and magnesium atoms – The first ionisation energy                       dipole moment falling below the critical threshold for binding
+of sodium, 0.1886 Hartrees, is smaller than the binding energy                    (∼1.625 Debye) at the transition.
+of the Ps atom,  0.25 Hartrees.  The positronic sodium atom                          Dilithium  –  For  the  dilithium  molecule,   we  obtain  a
+is then more accurately described as a bound complex of a                         positron binding energy of 66.75(2) milliHartrees at an equi-
+positronium atom and a sodium cation. The binding energy of                       librium bond length of 5.015 Bohr.   The molecular binding
+this complex is calculated as ε = E ([Na+,Ps])− E(Na+)−                           energy of Li2 from our calculations is ∼38 milliHartrees, and
+0.25.    We  fail  to  predict  binding  without  variance  match-                the positron binding energy of a lone lithium atom is known
+ing, obtaining ε = −0.37 milliHartrees.  Utilizing a variance                     from the literature to be ∼2 milliHartrees [53], meaning this
+matching  procedure,  we  obtain ε = 0.32(15)  milliHartrees,                     system is very stable against the [Li2,e+] → [Li,e+] + Li dis-
+predicting binding in agreement with previous ECG-FCSVM                           sociation channel.  The one-particle density of the positronic
+(εFCSVM = 0.473 milliHartrees [51]) calculations.                                 ground-state of dilithium is shown in Fig. 2(a).
+   We obtain a positron binding energy of 0.01618(9) Hartrees                        Benzene  –  The  experimental  positron  binding  energy  of
+for  the  magnesium  atom.   This  agrees  with  previous  ECG-                   benzene  is  5.51  milliHartrees  [15].   Utilizing  our  variance-
+FCSVM (0.016930 Hartrees [28]) and CI (0.017099 Hartrees                          matching  procedure  (described  in  detail  for  benzene  in  the
+[28]) results.                                                                    Supplementary  Material),  we  obtain  a  finite  positron  bind-
+   Lithium hydride and beryllium oxide – We have calculated                       ing  energy  of  4.1(3)  milliHartrees.   This  falls  in  very  close
+the ground-state energy of LiH and its positronic complex for                     agreement with the binding energy obtained by Hofierka et al.
+a range of interatomic separations (see Data Tables in Sup-                       of ∼4.26 milliHartrees [47].  The one-particle density of the
+plementary Material).  Fitting these potential energy surfaces                    positronic ground-state of benzene is shown in Fig. 2(b).
+using Nesterov’s algorithm, implemented in the MOLCAS pack-
+age,  we  obtain  equilibrium  bond  distances  of  3.0196  Bohr,                                            Annihilation rates
+with ground-state energy -8.07050(1) Hartrees for LiH, and
+3.371 Bohr with a ground state energy of -8.10774(1) Hartrees
+for [LiH, e+]. These deviate very slightly from the widely ac-                       The largest contribution to the annihilation process between
+cepted literature values of 3.015 Bohr (LiH) and 3.348 Bohr                       positrons  and  electrons  is  the  two-photon  (2γ)  annihilation
+([LiH, e+]).  We have calculated ground-state energies at the                     rate,  which  is  proportional  to  the  positron-electron  contact
+canonical  separations  for  comparison  with  previous  results,                 density.   This quantity is readily obtained from our calcula-
+shown in Table I. Our calculations are not only in excellent                      tions.  We have calculated 2γ  positron annihilation rates (ac-
+                                                                                                                                                                            3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1.  (a) Ground-state positronic density, projected into the molecular plane, of a positron attached to a beryllium oxide molecule over
+a range of interatomic distances, accumulated via MCMC sampling.  Image scale has been normalized by bondlength.  The scale bar in the
+bottom left of each panel indicates the relative size of one Bohr radius, a0.  The blue (red) marker indicates the position of the beryllium
+(oxygen) nucleus.  (b) Energy (of the bare molecule and positronic complex), dipole moment (of the bare molecule), and positron binding
+energy of beryllium oxide over a range of interatomic distances.  Green (black) markers in the dipole moment and positron binding energy
+plots indicate values accumulated for the electronic singlet (triplet) projected wavefunction. Error bars indicating standard errors in the Monte
+Carlo estimate of each quantity are smaller than the markers. Solid lines and dots in the dipole moment plot indicate the corresponding values
+obtained by Buenker et al. [29].  Horizontal red lines in the dipole moment and positron binding energy plots indicate the mean-field critical
+value for positron binding to the molecular dipole field and the positron affinity of a lone beryllium atom [52], respectively.
+                                                                                                                                                                                                          4
+
+
+                                                                       LiH                                                                                          BeO
+ Method                                  Bare                       Positronic           Binding energy               Bare                   Positronic           Binding energy
+ FermiNet-VMC               -8.07051(1)               -8.10775(1)             0.03723(2)           -89.90572(4)         -89.93082(3)            0.02510(7)
+ SJ-VMC                      -8.06307(3) [36]        -8.08034(4) [36]          0.01727(7)        -89.3173(25) [32]  -89.3365(13) [32]        0.0192(38)
+ SJ-FN-DMC              -8.070045(38) [36]     -8.10718(11) [36]        0.03714(15)       -89.7854(13) [32]  -89.8134(12) [32]       0.02800(25)
+ CISD                              -8.03830 [25]             -8.05530 [25]                0.017                          -                              -                              -
+ MRD-CI                        -8.06827 [27]             -8.09764 [27]              0.02937            -89.759352 [29]     -89.773133 [29]          0.013781
+ ECG-SVM                   -8.07054 [23]             -8.10747 [23]              0.03693                        -                              -                              -
+ Hofierka et al. [47]                   -                                 -                    0.039(1)*[47]                    -                              -                              -
+
+
+ * Theoretical (not statistical) uncertainty estimated from the comparison between different levels of theory as described by Hofierka et al., caption of Table I
+
+
+TABLE I. Ground state energy of LiH and BeO, and their positronic complexes, obtained via various computational methods at equilibrium
+bond-length.  Statistical errors are omitted where they are smaller than the reported precision or otherwise omitted in the referenced source.
+The lowest variational energy in each column is bolded.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.  Orthographic projections of the ground-state one-particle density for positronic (a) dilithium and (b) benzene molecules.  Left/right
+columns show the electronic/positronic density, ρe−/ρe+.  In the dilithium molecule, the positron is seen to be strongly localized to a torus
+wrapping the covalent bond. In the benzene molecule, the positronic orbital is highly diffuse, resulting in a much noisier Monte Carlo estimate
+of the one-particle density.  The positronic orbital resembles a p-orbital ‘sandwiching’ the aromatic ring.  The scale bar in the bottom left of
+each subfigure indicates the relative size of one Bohr radius, a0.
+
+                                                                                                     2γ annihilation rate [ns−1]
+Method                               HPs                 [Na+, Ps]             [Mg, e+]             [LiH, e+]            [BeO, e+]             [Li2, e+]          [Benzene, e+]
+CI                                 2.0183 [26]                 –               1.000991 [28]      0.8947* [31]                 –                          –                          –
+FN-DMC                        2.32 [33]                   –                          –                 1.3602* [34]                 –                          –                          –
+ECG-SVM                   2.4361 [16],                      1.898 [20]           0.955 [22],                  1.375 [23]                  –                          –                          –
+                                  2.4722 [17],                                      1.0249 [28]
+                                  2.4685 [19]
+Hofierka et al. [47]               –                          –                          –                      2.083                      –                          –                      0.666
+FermiNet-VMC              2.440(1)              1.870(1)              1.076(1)             1.3391(7)            0.9533(8)             1.962(2)             0.5247(6)
+* Contact density at equilibrium bond length of 3.348 bohr obtained by quadratic interpolation of three values around the minimum in the potential energy surface.
+
+
+TABLE II. 2γ annihilation rates for positronic atoms and molecules accumulated with FermiNet wavefunctions, compared with those obtained
+via various other computational methods. Statistical errors are omitted where they are smaller than the reported precision, or otherwise omitted
+in the referenced source. ECG results for all species besides HPs utilize the fixed-core approximation.
+                                                                                                                                                             5
+
+cording to the procedure detailed in the Supplementary Mate-                      ing mechanism between non-polar molecules and positrons:
+rial) for every system studied, listed in Table II.                               correlation-dominated binding is facilitated by the presence of
+   Positron annihilation rates are highly sensitive to the accu-                  a centre of increased electronic density away from the atomic
+rate description of the coalescence between the positron and                      nuclei of a molecule.  In dilithium, this is the covalent bond,
+electrons.  This sensitivity, and the fact that annihilation rates                and in benzene, this is the increased electronic density in the
+are not a variational quantity, hinders the comparison between                    centre of the molecule from the delocalisation of the π-bonds
+annihilation rates calculated by different methods.  However,                     in the ring.
+of the other methods compared in Table II, ECG-SVM cap-
+tures  this  feature  of  the  wavefunction  best  by  construction.                 Our result for the positron binding energy of benzene fall
+We see that our FermiNet-VMC annihilation rates are in close                      within ‘chemical accuracy’ (∼1.6 milliHartrees) of the experi-
+agreement with ECG-SVM results for positronium hydride,                           mental value, but this level of accuracy is insufficient for other
+lithium  hydride,  and  the  alkali  metal  atoms.   On  this  basis,             species of experimental interest. Many chemical species pos-
+we reason that our approach produces accurate annihilation                        sess positron binding energies below chemical accuracy (see,
+rates, and therefore offers an accurate description of electron-                  e.g., the experimental binding energies in ref. [11], where 15
+positron correlations.  We note that the many-body theory re-                     small organic molecules are found to possess binding energies
+sults of Hofierka et al. appear to overestimate the annihilation                  below chemical accuracy),  and obtaining this level of accu-
+rate  in  lithium  hydride  compared  to  ECG-SVM,  suggesting                    racy for relative energies represents a significant challenge to
+that FermiNet-VMC may be more suitable for the calculation                        computational chemistry methods.  We believe that the nec-
+of annihilation rates.                                                            essary  improvement in  accuracy,  and obviation  of our  need
+                                                                                  to utilise variance matching, can be achieved by adopting the
+                             DISCUSSION                                           recently introduced PsiFormer architecture [54], an improve-
+                                                                                  ment  upon  the  FermiNet  architecture  utilising  Transformer
+                                                                                  networks [55], given that the PsiFormer obtains more accurate
+   The selection of systems presented here spans a broad range                    total energies for the ground-state energy of the bare benzene
+of positron binding phenomena: positronium formation, bind-                       molecule than FermiNet.
+ing with an induced atomic dipole moment,  binding with a
+static  molecular  dipole  moment,  and  binding  due  to  corre-                    As with previous work utilizing FermiNet, computational
+lations with covalent bonding electrons in molecules.  In all                     scaling remains an issue.  Calculations involving ≳ 50 parti-
+cases where benchmarks are available, FermiNet-VMC pro-                           cles are too expensive for presently available computational
+duces excellent and, in some cases, state-of-the-art results for                  resources, prohibiting the application of the method to large
+the positron binding energy. From the density plots presented,                    molecules.    One  approach  to  calculating  the  ground-state
+it is clear that this performance is consistent between wave-                     wavefunctions of large molecules is to utilize pseudopoten-
+functions with very different qualitative characteristics.   An                   tials  to  remove  core  electrons  from  the  calculations.    The
+identical ansatz is used for every system studied – we have not                   positronic component of the wavefunction is often small near
+employed any fine-tuning or system-specific treatments.  An                       the  atomic  nuclei,  so  we  would  expect  the  correlation  ef-
+important aspect of our approach is that, due to being a basis-                   fect between the core electrons and the positron to be small.
+set-free  method,  we  do  not  provide  any  information  about                  Pseudopotentials have been successfully employed in previ-
+the nature of the positron binding in the input to the calcu-                     ous  QMC  calculations  of  positron  lifetimes  in  solids  [44].
+lation (e.g., via the placement of basis set functions).  Rather,                 As the architecture employed herein only extends the origi-
+the location and nature of the positron binding emerges natu-                     nal FermiNet architecture to treat different particle types sep-
+rally during optimization of the wavefunction. The high level                     arately, we expect that future advances in the computational
+of accuracy achieved across various systems shows that Fer-                       efficiency of FermiNet and related neural network wavefunc-
+miNet offers a flexible and accurate ansatz for mixed electron-                   tions will be able to be combined with our approach to model
+positron wavefunctions.                                                           positron binding.
+   To  date,  quantum  Monte  Carlo  calculations  of  positron
+binding have focused on small, polar molecules.  As pointed
+out  by  Hofierka  et  al.  [47],  accurate  quantum  Monte  Carlo                   Finally, we highlight that these results demonstrate a gen-
+results for large non-polar organics, which comprise the ma-                      eral advantage of neural network wavefunction methods. The
+jority  of  experimentally  relevant  systems,  are  lacking.   We                lack of a dependence on a basis set simplifies the treatment
+believe  that  the  present  work  fills  this  gap.    Our  results              of  systems  which  are  not  well  described  by  traditional  no-
+for positronium hydride, sodium and magnesium atoms, and                          tions  of  atom-centered,  low  angular  momentum  basis  func-
+small  diatomic  molecules  demonstrate  that  our  approach                      tions.  Highly accurate calculations can be carried out with-
+can  achieve  state-of-the-art  accuracy  compared  with  previ-                  out foreknowledge of the appropriate features of the ground-
+ous  work.   Further,  our  results  for  the  non-polar  dilithium               state wavefunction, lowering the degree of inductive bias in
+and benzene molecules demonstrate that this accuracy is re-                       the method. As a result, we believe that neural network varia-
+tained when describing modes of positron binding governed                         tional Monte Carlo offers a highly performant, generic method
+entirely by strong electron-positron correlation effects.   The                   for obtaining ground-state properties of any continuous-space
+results in Fig. 2 offer an intuitive understanding of the bind-                   Hamiltonian.
+                                                                                                                                                            6
+
+                            CONCLUSION                                           in a permutation equivariant manner. This is written
+                                                                                                       ndet∑       h                            i
+   We have shown that the FermiNet ansatz for VMC calcula-                                  Ψ(r) =                  ψkχi   (rχj ;{rχ/ j};{r/χj  }),         (5)
+tions can be extended to include positrons naturally, treating                                          k ∏χ  det
+positrons on an equal footing to electrons. Because this ansatz                  where the  set {r/ j}  includes all  particle coordinates  except
+does not depend on a basis set, our treatment sidesteps tradi-                   r j, and χ = (σ,q) labels species of particles which are dis-
+tional methods’ issues in selecting and converging an appro-                     tinguished  by  their  spin  σ ∈ (↑,↓)  and  charge  q ∈ (+,−).
+priate basis set for describing positronic wavefunctions.  Our                   Here we have made a slight abuse of notation for the sake of
+method produces highly accurate results for several molecules                    brevity: permutation invariance for the set {r/χj  } is only main-
+with various binding mechanisms for positrons without any                        tained between particles of the same species.  We emphasise
+system-specific tuning.  We expect that the simplicity of this                   that these are not the dense determinants discussed in recent
+method will lend itself to many challenging applications be-                     works extending FermiNet [57], except the benzene calcula-
+yond those presented here,  e.g.,  calculations involving mul-                   tion for which dense determinants were used for the electronic
+tiple  positrons.    With  additional  computational  effort,  this              component of the wavefunction. The many-particle functions
+method can provide accurate predictions for positron annihi-                     ψi  are represented by a deep neural network [48] (architec-
+lation experiments.                                                              ture described in the Supplementary Material). Multiplicative
+                                                                                 coefficients are omitted from the sum as they are trivially ab-
+                                                                                 sorbed into the entries of the determinant.  Gradient descent
+                              METHODS                                            is performed via the Kronecker-factored approximate curva-
+                                                                                 ture (KFAC) algorithm, an approximation of natural gradient
+   We find the ground-state wavefunction and corresponding                       descent [58] which scales well to large neural networks [59].
+ground-state energy of the many-body Coulomb Hamiltonian                         Natural  gradient  descent  is  closely  related  to  the  stochastic
+in the Born-Oppenheimer clamped nuclei approximation,                            reconfiguration  method,  well-known  in  the  quantum  Monte
+                                                                                 Carlo literature [60].  The present work introduces two alter-
+H  =−1         ∇2i +∑        qiZ j             qiq j              ZiZ j          ations to the original FermiNet architecture.  Firstly, we have
+          2 ∑i        i, j|ri −R j| +∑i> j   |ri −r j| +∑i> j |Ri −R j|,         included positronic orbitals as additional species,  i.e.   addi-
+                                                                        (1)      tional blocks in the determinant. Secondly, we utilise distinct
+where qi,ri are the particle charges and positions, and Zi,Ri                    weights in the neural network layers for every species (unlike
+are  the  charges  and  positions  of  fixed  nuclei.    Here,  and              the original FermiNet, where spin up and down electronic or-
+throughout,  we  utilise  Hartree  atomic  units:   ¯h = e = me =                bitals shared weights).
+1.  For the mixed electron-positron systems considered here,                        A single determinant of the form in Eq. (5) can represent
+qi = ±1. We solve for the many-body ground-state wavefunc-                       any  fermionic  many-body  wavefunction  [61].    In  practice,
+tion using the variational Monte Carlo (VMC) method: [56] a                      the  argument  for  the  universality  of  FermiNet  determinants
+many-body wavefunction Ψθ , parameterized by θ, is contin-                       depends  upon  the  representation  of  discontinuous  functions
+uously updated via a gradient descent procedure to minimize                      which cannot be constructed using realistic neural networks.
+the energy expectation value,                                                    Despite this, FermiNet-VMC calculations obtain state-of-the-
+                             R Ψ∗θ(r)H Ψθ(r)dr                                   art accuracy in ground state energy calculations for a range of
+                                                                                 molecules and solids [48, 49, 57, 62–64] with a linear com-
+                   ⟨E⟩θ =      R Ψ∗θ(r)Ψθ(r)dr  ,                    (2)         bination  of  a  small  number  of  determinants.   We  utilise  32
+                                                                                 determinants for all calculations in the present work.
+where r = (r1,...,rN). This integral, and its gradient with re-                     We only consider calculations involving a single positron
+spect to θ, are evaluated via Monte Carlo integration. Particle                  in  the  present  work.    We  have  discussed  the  treatment  of
+configurations, r(i), are sampled from the probability density                   the  positronic  spin  coordinate  only  to  demonstrate  how  our
+|Ψθ(r)|2 via the Metropolis-Hastings algorithm.  The expec-                      technique  may  be  extended  to  calculations  involving  many
+tation value of the energy and its gradient are then evaluated                   positrons, as such systems have recently attracted theoretical
+by the Monte Carlo estimators,                                                   interest.
+                 "                       #                                          Ground-state   wavefunctions   for   bare   and   positronic
+                       N∑                                  H Ψθ(r)               molecules  are  not  guaranteed  to  be  similarly  converged  af-
+ ⟨E⟩θ =  lim       1      H Ψθ(r(i))        = Er∼|Ψθ|2                           ter  an  equal  number  of  gradient  descent  steps.   This  intro-
+           N→∞     N  i=1   Ψθ(r(i))                          Ψθ(r)              duces uncontrolled error in calculating positron binding en-
+                                                                        (3)      ergies  via  VMC.  Previous  work  has  shown  that  FermiNet-
+                            H Ψθ(r)                                              VMC calculations yield ground-state energies within chem-
+∇θ⟨E⟩θ = 2Er∼|Ψθ|2                                     ∇θ log|Ψθ(r)|             ical accuracy (∼1.5 milliHartrees) of exact results for many
+                                 Ψθ(r)   −⟨E⟩θ                                   small molecules [48, 49]. With this level of accuracy, the un-
+                                                                        (4)      controlled error will be negligible for molecules with a large
+   The FermiNet represents the many-body wavefunction as a                       positron binding energy.   However,  for molecules with very
+sum of block-diagonal determinants containing many-particle                      small binding energies, or large molecules for which the un-
+functions which depend upon the coordinates of all particles                     controlled error may become large compared to the positron
+                                                                                                                                                                          7
+
+binding energy, there is no guarantee that an accurate estimate                          Facility  through  a  UK  Research  and  Innovation  Access  to
+of the positron binding energy will be obtained by comparing                             HPC  grant.    Additionally,  the  authors  gratefully  acknowl-
+ground-state calculations of different quality.  In these cases,                         edge both PRACE, and the Gauss Centre for Supercomputing
+we employ the variance matching technique described by En-                               e.V. (www.gauss-centre.eu) for funding this project by provid-
+twistle et al. [65], addressed in the Supplementary Material.                            ing computing time through the John von Neumann Institute
+                                                                                         for Computing (NIC) on the GCS Supercomputer JUWELS
+                                                                                         at Jülich Supercomputing Centre (JSC). Via his membership
+                        ACKNOWLEDGMENTS                                                  of the UK’s HEC Materials Chemistry Consortium, which is
+                                                                                         funded by EPSRC (EP/R029431), Foulkes used the UK Ma-
+   This   work   was   undertaken   with   funding   from   the                          terials  and  Molecular  Modelling  Hub  for  computational  re-
+UK  Engineering  and  Physical  Sciences  Research  Council                              sources,  MMM  Hub,  which  is  partially  funded  by  EPSRC
+(EP/T51780X/1)  (GC).  Calculations  were  carried  out  with                            (EP/T022213).
+resources provided by the Baskerville Accelerated Compute
+
+
+
+
+
+ [1]P.  A.  M.  Dirac  and  R.  H.  Fowler,  Proc.  R.  Soc.  A      117,  610                 and Methods in Physics Research Section B: Beam Interactions
+      (1928).                                                                                  with Materials and Atoms 171, 47 (2000).
+ [2]A. K. Shukla and U. Kumar, J Med Phys     31, 13 (2006).                             [27]R. J. Buenker, H.-P. Liebermann, V. Melnikov, M. Tachikawa,
+ [3]N. Prantzos,  C. Boehm,  A. M. Bykov,  R. Diehl,  K. Ferrière,                             L. Pichl,  and M. Kimura, J. Phys. Chem. A 109, 5956 (2005).
+      N.  Guessoum,  P.  Jean,  J.  Knoedlseder,  A.  Marcowith,  I.  V.                 [28]M.  W.  J.  Bromley  and  J.  Mitroy,  Phys.  Rev.  A        73,  032507
+      Moskalenko,  A. Strong,   and G. Weidenspointner, Rev. Mod.                              (2006).
+      Phys. 83, 1001 (2011).                                                             [29]R. J. Buenker, H.-P. Liebermann, L. Pichl, M. Tachikawa,  and
+ [4]F.  Tuomisto  and  I.  Makkonen,  Rev.  Mod.  Phys.      85,  1583                         M. Kimura, J. Chem. Phys. 126, 104305 (2007).
+      (2013).                                                                            [30]R. J. Buenker and H.-P. Liebermann, Nuclear Instruments and
+ [5]C. Hugenschmidt, Surface Science Reports     71, 547 (2016).                               Methods  in  Physics  Research  Section  B:  Beam  Interactions
+ [6]C. M. Surko, Nature     449, 153 (2007).                                                   with Materials and Atoms 266, 483 (2008), low Energy Positron
+ [7]S. J. Gilbert,  L. D. Barnes,  J. P. Sullivan,   and C. M. Surko,                          and Positronium Physics.
+      Phys. Rev. Lett. 88, 043201 (2002).                                                [31]R. J. Buenker and H.-P. Liebermann, Nuclear Instruments and
+ [8]L. D. Barnes, S. J. Gilbert,  and C. M. Surko, Phys. Rev. A     67,                        Methods  in  Physics  Research  Section  B:  Beam  Interactions
+      032706 (2003).                                                                           with Materials and Atoms 267, 763 (2009).
+ [9]L. D. Barnes, J. A. Young,  and C. M. Surko, Phys. Rev. A     74,                    [32]D. Bressanini, M. Mella,  and G. Morosi, J. Chem. Phys.       109,
+      012706 (2006).                                                                           1716 (1998).
+[10]J. A. Young and C. M. Surko, Phys. Rev. A       77, 052704 (2008).                   [33]M. Mella, G. Morosi,  and D. Bressanini, The Journal of Chem-
+[11]J. A. Young and C. M. Surko, Phys. Rev. A       78, 032702 (2008).                         ical Physics 111, 108 (1999).
+[12]J. R. Danielson, J. A. Young,  and C. M. Surko, J. Phys. B: At.                      [34]M. Mella, S. Chiesa,  and G. Morosi, The Journal of Chemical
+      Mol. Opt. Phys. 42, 235203 (2009).                                                       Physics 116, 2852 (2002).
+[13]J. R. Danielson, J. J. Gosselin,   and C. M. Surko, Phys. Rev.                       [35]Y. Kita, R. Maezono,  and M. Tachikawa, in        Recent Progress in
+      Lett. 104, 233201 (2010).                                                                Computational Sciences and Engineering (CRC Press, 2006).
+[14]J. R. Danielson, A. C. L. Jones, M. R. Natisin,  and C. M. Surko,                    [36]Y.  Kita,  R.  Maezono,  M.  Tachikawa,  M.  Towler,   and  R.  J.
+      Phys. Rev. Lett. 109, 113201 (2012).                                                     Needs, J. Chem. Phys. 131, 134310 (2009).
+[15]G. F. Gribakin, J. A. Young,  and C. M. Surko, Rev. Mod. Phys.                       [37]Y. Kita, R. Maezono, M. Tachikawa, M. D. Towler,   and R. J.
+      82, 2557 (2010).                                                                         Needs, J. Chem. Phys. 135, 054108 (2011).
+[16]A. M. Frolov and V. H. Smith, Phys. Rev. A       55, 2662 (1997).                    [38]S. Ito, D. Yoshida, Y. Kita,  and M. Tachikawa, J. Chem. Phys.
+[17]J. Usukura, K. Varga,   and Y. Suzuki, Phys. Rev. A       58, 1918                         153, 224305 (2020).
+      (1998).                                                                            [39]D. Bressanini, J. Chem. Phys.       155, 054306 (2021).
+[18]J. Mitroy and G. G. Ryzhikh, J. Phys. B: At. Mol. Opt. Phys.                         [40]J. A. Charry Martinez,  M. Barborini,   and A. Tkatchenko, J.
+      32, L621 (1999).                                                                         Chem. Theory Comput. 18, 2267 (2022).
+[19]G.  G.  Ryzhikh  and  J.  Mitroy,  Journal  of  Physics  B:  Atomic,                 [41]E. Boro       ´nski and R. M. Nieminen, Phys. Rev. B 34, 3820 (1986).
+      Molecular and Optical Physics 32, 4051 (1999).                                     [42]J. Kuriplach and B. Barbiellini, Phys. Rev. B       89, 155111 (2014).
+[20]G. G. Ryzhikh, J. Mitroy,  and K. Varga, Journal of Physics B:                       [43]N. D. Drummond, P. López Ríos, R. J. Needs,  and C. J. Pickard,
+      Atomic, Molecular and Optical Physics 31, 3965 (1998).                                   Phys. Rev. Lett. 107, 207402 (2011).
+[21]J.  Mitroy  and  G.  G.  Ryzhikh,  Journal  of  Physics  B:  Atomic,                 [44]K. A. Simula, J. E. Muff, I. Makkonen,  and N. D. Drummond,
+      Molecular and Optical Physics 33, 3495 (2000).                                           Phys. Rev. Lett. 129, 166403 (2022), arXiv:2202.13204 [cond-
+[22]J.  Mitroy  and  G.  G.  Ryzhikh,  Journal  of  Physics  B:  Atomic,                       mat].
+      Molecular and Optical Physics 34, 2001 (2001).                                     [45]D. Schrader, Nuclear Instruments and Methods in Physics Re-
+[23]K. Strasburger, J. Chem. Phys.       114, 615 (2001).                                      search Section B: Beam Interactions with Materials and Atoms
+[24]S. Bubin and L. Adamowicz, The Journal of Chemical Physics                                 143, 209 (1998).
+      120, 6051 (2004).                                                                  [46]M.  W.  J.  Bromley,        Positron-atom  interactions  studied  using
+[25]K. Strasburger, Chemical Physics Letters       253, 49 (1996).                             configuration interaction methods (Charles Darwin University
+[26]M. Bromley, J. Mitroy,   and G. Ryzhikh, Nuclear Instruments                               (Australia), 2002).
+                                                                                                                                                                                8
+
+[47]J. Hofierka, B. Cunningham, C. M. Rawlins, C. H. Patterson,
+      and D. G. Green, Nature 606, 688 (2022).
+[48]D. Pfau, J. S. Spencer, A. G. D. G. Matthews,   and W. M. C.
+      Foulkes, Phys. Rev. Research 2, 033429 (2020).
+[49]J.  S.  Spencer,  D.  Pfau,  A.  Botev,    and  W.  M.  C.  Foulkes,
+      arXiv:2011.07125 [physics]  (2020), 2011.07125 [physics].
+[50]H. Flyvbjerg and H. G. Petersen, J. Chem. Phys.       91, 7 (1989).
+[51]G.  Ryzhikh,  J.  Mitroy,   and  K.  Varga,  Journal  of  Physics  B:
+      Atomic, Molecular and Optical Physics 31, L265 (1998).
+[52]M.  W.  J.  Bromley  and  J.  Mitroy,  Phys.  Rev.  A        65,  012505
+      (2001).
+[53]J. Mitroy, M. W. J. Bromley,   and G. G. Ryzhikh, J. Phys. B:
+      At. Mol. Opt. Phys. 35, R81 (2002).
+[54]I.   von   Glehn,   J.   S.   Spencer,      and   D.   Pfau,   “A   Self-
+      Attention Ansatz for Ab-initio Quantum Chemistry,”   (2022),
+      arXiv:2211.13672 [physics].
+[55]A. Vaswani, N. Shazeer, N. Parmar, J. Uszkoreit, L. Jones, A. N.
+      Gomez, Ł. Kaiser,   and I. Polosukhin, in Advances in Neural
+      Information  Processing  Systems,  Vol.  30  (Curran  Associates,
+      Inc., 2017).
+[56]W. M. C. Foulkes, L. Mitas, R. J. Needs,   and G. Rajagopal,
+      Rev. Mod. Phys. 73, 33 (2001).
+[57]G. Cassella, H. Sutterud, S. Azadi, N. Drummond, D. Pfau,  and
+      J. S. Spencer, Phys. Rev. Letters 130, 036401 (2023).
+[58]S.-i. Amari, Neural Computation       10, 251 (1998).
+[59]J.  Martens  and  R.  Grosse,         Proceedings  of  the  32nd  Inter-
+      national  Conference  on  Machine  Learning,  PMLR  37,  2408
+      (2015).
+[60]S. Sorella, Phys. Rev. B       71, 241103 (2005).
+[61]M. Hutter, arXiv:2007.15298  (2020).
+[62]M.  Wilson,  S.  Moroni,  M.  Holzmann,  N.  Gao,  F.  Wudarski,
+      T. Vegge,  and A. Bhowmik, Phys. Rev. B 107, 235139 (2023).
+[63]M. Wilson, N. Gao, F. Wudarski, E. Rieffel,   and N. M. Tub-
+      man, arXiv:2103.12570  (2021).
+[64]X. Li,  C. Fan,  W. Ren,   and J. Chen, Phys. Rev. Research       4,
+      013021 (2022).
+[65]M.  Entwistle,  Z.  Schätzle,  P.  A.  Erdman,  J.  Hermann,    and
+      F. Noé, arXiv:2203.09472  (2022).
+[66]T. Kato, Comm. Pure Appl. Math.       10, 151 (1957).
+[67]J. C. Kimball, Phys. Rev. A       7, 1648 (1973).
+[68]J.   Bradbury,    R.   Frostig,    P.   Hawkins,    M.   J.   Johnson,
+      C. Leary, D. Maclaurin, G. Necula, A. Paszke, J. VanderPlas,
+      S. Wanderman-Milne,  and Q. Zhang, “JAX: composable trans-
+      formations  of  Python+NumPy  programs,”  http://github.
+      com/google/jax (2018).
+[69]D. Pfau and J. Spencer, “Ferminet JAX implementation,”       http:
+      //github.com/deepmind/ferminet (2020).
+[70]A.      Botev,      “KFAC     JAX      implementation,”            https:
+      //github.com/deepmind/deepmind-research/tree/
+      master/kfac_ferminet_alpha (2020).
+                                                                                                                                                               9
+
+                                                                                   checkpoints during training – approximately every 50k itera-
+                                                                                   tions from 150k to 300k. We refine the variance matching by
+                                                                                   calculating the variance between the two checkpoints where
+                                                                                   the difference crosses zero. We additionally calculate the vari-
+                                                                                   ance at several other randomly chosen points in the range of
+                                                                                   interest to validate our implicit assumption that the variance is
+                                                                                   approximately monotonic.  The closest variance match is ob-
+                                                                                   tained after 175k training iterations of the bare molecule. The
+                                                                                   binding energy and variance difference as a function of the
+                                                                                   bare molecule training iterations is shown in Fig. 3.  The ob-
+                                                                                   tained variance difference as a function of training iteration is
+                                                                                   not completely monotonic due to the stochastic optimisation
+                                                                                   procedure.
+
+
+                                                                                                         Fermionic neural networks
+
+                                                                                      The  many-body  orbitals ψkχi   ,  which  enter  into  FermiNet
+                                                                                   determinants (Eq. (5)), are represented by a deep neural net-
+                                                                                   work architecture. Electron-nuclear and electron-electron co-
+                                                                                   ordinates are input to the network. The vector separations and
+                                                                                   their norms are used as inputs:  the norm provides the neces-
+                                                                                   sary discontinuity to allow the – otherwise smooth – network
+                                                                                   to satisfy the Kato cusp conditions [66]. We write these inputs
+                                                                                   as
+
+                                                                                                h1χi   =  rχi −RI,rχ   i −RI   ∀    I                 (6)rχ
+                                                                                                       h1χξi j    =rχi −rξj ,     i −rξj       ,                 (7)
+
+                                                                                   with the notation in brackets indicating the concatenation of
+                                                                                   the vector separation and its norm for all pairs of indices, RI
+                                                                                   referring to nuclear co-ordinates, χ and ξ  labelling fermionic
+                                                                                   species as in the main text, and ∥.∥ the Euclidean norm.
+FIG. 3. Top: Binding energy obtained using bare molecular ground-                     Consecutive transformations update these input features,
+state energies obtained from checkpoints taken after varying training                                                       ljlχ
+iterations.  Bottom:  Local energy variance difference between bare                                   hl+1χi      = tanh V    i   +bl +hlχi                  (8)
+molecular checkpoints and positronic molecule at the end of training.
+                                                                                               hl+1χξi j      = tanhWlhlχξi j   +cl +hlχξi j  .                (9)
+
+
+                             APPENDICES                                            where
+
+                           Variance matching                                                          jℓχi   = concatenate     hℓχi  ,Hℓχi                 (10)
+
+   Variance matching was utilised in the main text to calcu-                       and
+late the positron binding energy for the sodium atom and the                                                              nξ             nξ       !
+benzene molecule.  Here we will describe the procedure for                              Hℓχ                           1       hℓξ           hℓχξ     .      (11)
+obtaining benzene’s positron binding energy. We note that all                              i   = concatenateξ        nξ   ∑     j  ,  1nξ∑    i j
+                                                                                                                          j=1           j=1
+variances are evaluated by freezing the wavefunction param-
+eters and taking 10k samples of the local energy by MCMC                           The first transformation (one subscripted index) is referred to
+sampling. The variance in the local energy is calculated using                     as the one-electron stream, and the second (two subscripted
+a reblocking procedure to account for sequential correlations                      indices)  is  the  two-electron  stream.   These  are  the  ‘layers’
+in the MCMC sampling [50].                                                         of  the  network.   The  linear  dimension  of  the  weight  matri-
+   After a fixed number of optimisation steps (i.e.  at the end                    ces V   l  and W    l  determine the ‘width’ of the layers.   These
+of  training),  we  calculate  the  variance  of  the  local  energy               widths, and the total number of layers L, are the hyperparam-
+for  the  positronic  ground-state  wavefunction.   We  then  cal-                 eters which determine the network architecture.
+culate the variance of the local energy for the bare molecu-                          The outputs from the Lth transformation are subject to a fi-
+lar ground-state wavefunction at a series of regularly spaced                      nal, spin-dependent, linear transformation and multiplied by
+                                                                                                                                                              10
+
+(in open boundary conditions) an exponentially decaying en-                                 Kind                   Parameter                     Value
+velope [49], which enforces the decay of the wave function as                             Network          Number of determinants                  32
+ri → ∞,                                                                                   Network         One-particle stream width               512
+                                                                                          Network         Two-particle stream width                32
+             ψkχi   (r j,{r/ j}) = φ kχi   (r j,{r/ j}) f kχi   (r j)          (12)        Optim                   Batch size                     4096
+                                                                                           Optim              Training iterations                 3e5
+where                                                                                      Optim             Pretraining iterations               1e4
+                                                                                           Optim                 Learning rate                (1e4+t)−1
+                φ kχ                                                                       Optim            Local energy clipping                  5.0
+                  i   (r j,{r/ j}) = (wkχi  ·hLχj   + gkχi  )              (13)            KFAC                   Momentum                          0
+                                                                                           KFAC      Covariance moving average decay              0.95
+and                                                                                        KFAC                Norm constraint                    1e-3
+                                                                                           KFAC                    Damping                        1e-3
+       f kχ           ∑              −σ kχ                      .         (14)            MCMC        Steps between parameter updates              10
+        i   (r j) =    m πkχim exp        im |(rχj −Rm)|
+                                                                                   TABLE III. FermiNet hyperparameters for all experiments in the pa-
+The functions ψkχ                                                                  per. For the Benzene calculations, the decay of the learning rate was
+                    i    are used as the inputs to the determinants,               disabled (i.e. the value was fixed at 1e-4 throughout training)
+Eq. (5).
+   The determinant expansion in Eq. (5) does not require mul-
+tiplicative coefficients as they can be trivially absorbed into                    where  the  prefactor  of  1/2  enacts  the  averaging  over  spin
+the determinants [49].  Hutter showed that a single determi-                       species  resulting  from  the  action  of  the  spin  projection  op-
+nant of such many-body functions could represent any anti-                         erator.
+symmetric function [61].  However, the proof depends upon                              In  practice  this  is  accumulated  by  sampling  electron  and
+the construction of discontinuous functions that cannot be rep-                    positron positions from |Ψ|2  via the Metropolis-Hastings al-
+resented in practice by a finite network of a reasonable size.                     gorithm.  Electron-positron separations are accumulated into
+   The set of parameters,                                                          fixed-width  bins,  which  are  then  normalized  to  produce  a
+            θ = {V     l,Wl,wkχ                                                    histogram of values of g(r).   We fit logg(r) to a fifth-order
+                                  i  ,bl,cl,gkχi  ,πkχim ,σ kχim },          (15)  polynomial via the Levenberg-Marquadt algorithm as imple-
+are all learnable. The electronic orbitals, χ = (σ,−), are pre-                    mented in SciPy, excluding bins with zero counts, and extrap-
+trained to the Hartree-Fock orbitals of the bare molecule, even                    olate the value to r = 0 to evaluate g(0).  The first-order term
+for  positronic  calculations,  according  to  the  procedure  out-                in the polynomial is fixed to −x to satisfy the Kimball cusp
+lined  in  [48].   For  a  more  extensive  description  of  the  Fer-             conditions [67]. Extrapolation is necessary due to the vanish-
+miNet architecture, see Pfau et al. [48].                                          ing volume of the spherical bins for separations approaching
+                                                                                   r = 0. Errors in the bin counts are estimated as
+
+              Calculating annihilation rates with VMC                                                               σr ≃ pCr                                   (18)
+                                                                                   where Cr is the number of counts in a bin centered at r.  The
+   We  follow  the  procedure  for  the  calculation  of  positron                 error  in  g(0)  is  obtained  from  the  variance  of  the  0th  order
+annihilation  rates  within  the  VMC  framework  described  in                    parameter of the polynomial fit.
+ref.  [44],  which  we  repeat  here.   The  dominant  process  for
+positron annihilation in molecular bound states is the 2γ  an-                                                Experimental setup
+nihilation,  which is proportional to the expectation value of
+the spin-projected contact density between positrons and elec-
+trons. The 2γ annihilation rate is thus calculated as,                                 Four A100 GPUs were used for all calculations presented,
+                   N∑                                                              except the Benzene molecule, for which sixteen A100 GPUs
+     Γ = πr20c        ⟨Ψ|  ˆOsiδ(ri −r+)|Ψ⟩                                        were used. Single-precision floating point numbers were used
+                  i=1          ⟨Ψ|Ψ⟩           = 100.9g(0)       (16)              in all calculations. The FermiNet was implemented using the
+                                                                                   JAX Python library [68], extending a development version of
+where ri  is the position of the ith  of N  electrons, r+  is the                  the FermiNet [69].  Optimization used a JAX implementation
+position of the positron,  ˆOsi  is the spin projection operator to                of the Kronecker-factored approximate curvature (KFAC) gra-
+the positron-electron singlet for electron i, r0 is the classical                  dient descent algorithm [49, 59, 70].
+electron radius, c is the speed of light, and the prefactor has                        Monte Carlo moves are accepted/rejected on a per-species
+been expressed such that the final expression is given in units                    basis, including spin species.  All particles of a given species
+of ns−1.                                                                           are  moved  simultaneously  within  each  Monte  Carlo  step.
+   The rotationally and translationally averaged pair correla-                     Each species has an independent Monte Carlo step proposal
+tion function g(r) is calculated as                                                size, and this step size is adapted during training to maintain
+                                    ∑Ni=1 δ (|ri −r+|− r)                          a ∼ 50% acceptance rate.
+           g(r)dr = 1                                                   (17)           We found the convergence of the Benzene calculations was
+                       2Er∼|Ψ|2                 4πr2                               accelerated when the decay of the learning rate (see Table III)
+                                                                                                                                                           11
+
+was disabled.  We found that following this aggressive train-
+ing regime with an additional 2000 training iterations with the
+appropriately decayed learning rate greatly improved the en-
+ergies obtained during inference.  Understanding the training
+dynamics of the FermiNet continues to be an open question of
+great interest.
+                                                                                                                                                                             12
+
+                                                         DATA TABLES
+
+                                                        Lithium hydride
+
+
+
+                                                                      Energy [Hartrees]
+Bondlength [a0]              Bare                    σBare                  Positronic             σPositronic
+2.815                           -8.069021              0.000004              -8.100914              0.000004
+2.882                           -8.069882              0.000005              -8.102727              0.000009
+2.948                           -8.070345              0.000003              -8.104151              0.000010
+3.015                           -8.070507              0.000004              -8.105283              0.000004
+3.082                           -8.070371              0.000007              -8.106226              0.000007
+3.148                           -8.069958              0.000003              -8.106885              0.000005
+3.215                           -8.069331              0.000004              -8.107324              0.000003
+3.281                           -8.068203              0.000278              -8.107583              0.000003
+3.348                           -8.067207              0.000287              -8.107737              0.000004
+3.415                           -8.066352              0.000007              -8.107712              0.000011
+3.481                           -8.065065              0.000005              -8.107542              0.000004
+3.548                           -8.063663              0.000005              -8.107234              0.000005
+3.615                           -8.062156              0.000004              -8.106949              0.000006
+3.682                           -8.060571              0.000004              -8.106551              0.000008
+3.749                           -8.058894              0.000008              -8.105952              0.000010
+3.816                           -8.057171              0.000005              -8.105373              0.000132
+3.883                           -8.055407              0.000007              -8.104972              0.000006
+3.950                           -8.053575              0.000007              -8.104321              0.000010
+4.017                           -8.051748              0.000008              -8.103593              0.000004
+4.084                           -8.049849              0.000008              -8.102936              0.000005
+4.151                           -8.047965              0.000005              -8.102246              0.000010
+                                                                                                                                                                           13
+
+                                                        Beryllium oxide
+
+
+
+                                                                     Energy [Hartrees]
+Bondlength [a0]              Bare                    σBare                  Positronic             σPositronic
+                                                                             Singlet
+2.115                          -89.845004             0.000024             -89.865185             0.000027
+2.215                          -89.875412             0.000024             -89.896963             0.000019
+2.315                          -89.893706             0.000014             -89.916586             0.000019
+2.415                          -89.903115             0.000042             -89.927073             0.000033
+2.515                          -89.905721             0.000014             -89.930761             0.000057
+2.615                          -89.903574             0.000075             -89.929260             0.000088
+2.715                          -89.897711             0.000070             -89.924101             0.000020
+2.815                          -89.889610             0.000022             -89.915860             0.000043
+2.915                          -89.879387             0.000073             -89.906657             0.000029
+3.015                          -89.869008             0.000073             -89.895173             0.000032
+3.115                          -89.857212             0.000018             -89.884496             0.000039
+3.215                          -89.846269             0.000021             -89.872785             0.000118
+3.315                          -89.838491             0.000082             -89.860431             0.000095
+3.415                          -89.830544             0.000024             -89.845536             0.000027
+3.515                          -89.820883             0.000027             -89.834588             0.000032
+3.615                          -89.812532             0.000032             -89.824085             0.000029
+3.715                          -89.805062             0.000019             -89.812757             0.000077
+3.815                          -89.798934             0.000097             -89.801516             0.000026
+3.915                          -89.786483             0.000030             -89.792682             0.000042
+4.015                          -89.794044             0.000051             -89.794320             0.000043
+                                                                              Triplet
+3.515                          -89.824472             0.000018             -89.822049             0.000031
+4.015                          -89.784895             0.000023             -89.788294             0.000031
+4.515                          -89.754943             0.000024             -89.763941             0.000031
+5.015                          -89.738802             0.000023             -89.745154             0.000032
+5.515                          -89.732889             0.000022             -89.736450             0.000033
+6.015                          -89.731046             0.000022             -89.732024             0.000033
+6.515                          -89.730538             0.000023             -89.730718             0.000034
+7.015                          -89.730307             0.000022             -89.731238             0.000031
+7.515                          -89.730150             0.000021             -89.731904             0.000030
+8.015                          -89.730040             0.000021             -89.731992             0.000036
+8.515                          -89.730035             0.000025             -89.732091             0.000031
+9.015                          -89.729969             0.000022             -89.732011             0.000030
+                                                                                                                                      14
+
+                                    Benzene
+
+
+
+System                       ⟨E⟩ [Hartrees]               σ 2E
+Positronic @ 300k iter.               -232.223293                 0.000847
+Bare @ 134k iter.                 -232.216986            0.001202
+Bare @ 138k iter.                 -232.217466            0.001170
+Bare @ 150k iter.                 -232.217369            0.001040
+Bare @ 176k iter.                     -232.219174                 0.000871
+Bare @ 200k iter.                 -232.221368            0.000639
+Bare @ 226k iter.                 -232.222084            0.000747
+Bare @ 240k iter.                 -232.222453            0.000568
+Bare @ 260k iter.                 -232.223825            0.000680
+Bare @ 276k iter.                 -232.223786            0.000576
+Bare @ 300k iter.                 -232.225837            0.000668

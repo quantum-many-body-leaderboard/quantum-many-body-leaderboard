@@ -1,0 +1,46 @@
+{
+  "model": "Atom",
+  "lattice": "atom",
+  "n_sites": 1,
+  "boundary": "O",
+  "n_electrons": 5,
+  "params": {
+    "element": "N",
+    "Z": 7,
+    "charge": 0,
+    "N_up": 4,
+    "N_dn": 1,
+    "basis": "none",
+    "variant": "eCEPP (Trail and Needs) with its core-polarization term, parameters from the SI of J. Chem. Phys. 146, 204107",
+    "core_electrons": 2
+  },
+  "instance_id": "Atom/N_q0_s3_none_ecepp",
+  "rows": [
+    {
+      "energy": -9.78748,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 5,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "FermiNet",
+      "method_detail": "\"modified FermiNet\" (a recent FermiNet version, Sec. III), isotropic envelope, training iterations as in Appendix A, ECP eCEPP",
+      "method_as_published": "FermiNet [VMC, \"modified FermiNet\" (a recent FermiNet version, Sec. III), isotropic envelope, training iterations as in Appendix A, ECP eCEPP]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "M. Wang, Y. Zhou & H. Wang, Performance assessment of the effective core potentials under the fermionic neural network: First and second row elements, J. Chem. Phys. 160, 204109 (2024), arXiv:2403.08287, doi:10.1063/5.0207853",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2403.08287 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "−9.787 48 (Table X, column eCEPP)",
+        "note": "J. Chem. Phys. 160, 204109 Table X (Appendix F), journal text line 1112; same digits in the arXiv text | Hartree, valence energy with eCEPP (2 core electrons, 5 electrons treated); spin sector not printed; filed on the ground-state term N_up - N_dn = 3 (the paper compares with Chakravorty-type exact ground-state energies); no error bar printed | reader confidence medium",
+        "secondary_of": null
+      }
+    }
+  ]
+}

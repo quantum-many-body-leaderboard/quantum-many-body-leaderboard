@@ -1,0 +1,70 @@
+{
+  "model": "Atom",
+  "lattice": "atom",
+  "n_sites": 1,
+  "boundary": "O",
+  "n_electrons": 13,
+  "params": {
+    "element": "Al",
+    "Z": 13,
+    "charge": 0,
+    "N_up": 7,
+    "N_dn": 6,
+    "basis": "none"
+  },
+  "instance_id": "Atom/Al_q0_s1_none",
+  "rows": [
+    {
+      "energy": -242.34466,
+      "sigma": 0.00012,
+      "energy_variance": null,
+      "dof": 13,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "FermiNet",
+      "method_detail": "\"modified FermiNet\" (a recent FermiNet version, Sec. III), isotropic envelope, 100 000 training iterations",
+      "method_as_published": "FermiNet [VMC, \"modified FermiNet\" (a recent FermiNet version, Sec. III), isotropic envelope, 100 000 training iterations]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "M. Wang, Y. Zhou & H. Wang, Performance assessment of the effective core potentials under the fermionic neural network: First and second row elements, J. Chem. Phys. 160, 204109 (2024), arXiv:2403.08287, doi:10.1063/5.0207853",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2403.08287 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "−242.344 66(12){10}",
+        "note": "J. Chem. Phys. 160, 204109 Table I, journal text line 242; same digits in the arXiv text | Hartree, all-electron total energy of the neutral atom; spin sector not printed; filed on the ground-state term N_up - N_dn = 1 (the paper compares with Chakravorty-type exact ground-state energies) | reader confidence medium",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -242.34687,
+      "sigma": 0.00002,
+      "energy_variance": null,
+      "dof": 13,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "LAVA",
+      "method_detail": "LAVA optimization, network (4, 512, 8, 128) (Supplementary Note 4.2)",
+      "method_as_published": "LAVA [VMC, LAVA optimization, network (4, 512, 8, 128) (Supplementary Note 4.2)]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "D. Jiang, X. Wen, Y. Chen, R. Li, W. Fu, H. Q. Pham, J. Chen, D. He, W. A. Goddard III, L. Wang and W. Ren, Neural Scaling Laws Surpass Chemical Accuracy for the Many-Electron Schrödinger Equation, arXiv:2508.02570 (2025)",
+      "peer_reviewed": false,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2508.02570 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "-242.34687(2) (total energy, Hartree)",
+        "note": "arXiv:2508.02570 v2 Supplementary Table 4, text line 1405 | Hartree, total energy, all-electron, basis-free; neutral atom, N_up - N_dn = 1: no spin sector is printed, so the row goes on the ground-state term (ruling of 2026-11-12), confidence medium; the paper compares with the experiment-derived ground-state energies of Chakravorty et al. [5] | reader confidence medium",
+        "secondary_of": null
+      }
+    }
+  ]
+}

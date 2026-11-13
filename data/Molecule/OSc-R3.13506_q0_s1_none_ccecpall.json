@@ -1,0 +1,65 @@
+{
+  "model": "Molecule",
+  "lattice": "molecule",
+  "n_sites": 2,
+  "boundary": "O",
+  "n_electrons": 17,
+  "params": {
+    "formula": "OSc",
+    "name": "ScO",
+    "charge": 0,
+    "N_up": 9,
+    "N_dn": 8,
+    "basis": "none",
+    "variant": "ccECP (Annaberdiyev et al.) on Sc ([Ne] core) and on O ([He] core)",
+    "core_electrons": 12,
+    "geometry": [
+      {
+        "el": "Sc",
+        "r": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "el": "O",
+        "r": [
+          0,
+          0,
+          3.135055640653438
+        ]
+      }
+    ],
+    "geometry_source": "r_e = 1.659 Å, the AE equilibrium bond length in the Supplementary Material of Annaberdiyev et al., J. Chem. Phys. 149, 134108 (2018), ScO table (sm text line 197); its ccECP.S discrepancy is 0.000(2) Å (line 206), so AE and ccECP.S agree at the printed precision. 2108.11661 Sec. III B: \"the same equilibrium bond length for monoxides as CCSD(T) results in the supplementary material of Ref. [25]\""
+  },
+  "instance_id": "Molecule/OSc-R3.13506_q0_s1_none_ccecpall",
+  "rows": [
+    {
+      "energy": -62.6876,
+      "sigma": 0.0001,
+      "energy_variance": null,
+      "dof": 17,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "FermiNet",
+      "method_detail": "ccECP on Sc and O, KFAC, 200 000 training iterations",
+      "method_as_published": "FermiNet [VMC, ccECP on Sc and O, KFAC, 200 000 training iterations]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "X. Li, C. Fan, W. Ren & J. Chen, Fermionic neural network with effective core potential, Phys. Rev. Research 4, 013021 (2022), arXiv:2108.11661, doi:10.1103/PhysRevResearch.4.013021",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2108.11661 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "−62.6876(1) hartree (Sec. III B: ScO with ECP used for both Sc and O)",
+        "note": "PRR 4, 013021 Sec. III B, journal text lines 394-397 (not in arXiv v1) | Hartree, total energy with ccECP on both atoms (17 valence electrons); bond length as for the monoxides of Table III (Sec. III B: the CCSD(T) equilibrium bond lengths of Ref. [25]); spin sector as the Sc-only ScO row (doublet ground state, confidence medium) | reader confidence medium",
+        "secondary_of": null
+      }
+    }
+  ]
+}

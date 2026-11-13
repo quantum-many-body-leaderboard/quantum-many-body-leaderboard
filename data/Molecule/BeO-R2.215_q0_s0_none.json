@@ -1,0 +1,63 @@
+{
+  "model": "Molecule",
+  "lattice": "molecule",
+  "n_sites": 2,
+  "boundary": "O",
+  "n_electrons": 12,
+  "params": {
+    "formula": "BeO",
+    "name": "Beryllium oxide",
+    "charge": 0,
+    "N_up": 6,
+    "N_dn": 6,
+    "basis": "none",
+    "geometry": [
+      {
+        "el": "Be",
+        "r": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "el": "O",
+        "r": [
+          0,
+          0,
+          2.215
+        ]
+      }
+    ],
+    "geometry_source": "Nat. Commun. 15, 5214, Supplementary Data Tables (Beryllium oxide), bond length 2.215 a0 as printed"
+  },
+  "instance_id": "Molecule/BeO-R2.215_q0_s0_none",
+  "rows": [
+    {
+      "energy": -89.875412,
+      "sigma": 0.000024,
+      "energy_variance": null,
+      "dof": 12,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "FermiNet",
+      "method_detail": "32 determinants, KFAC, single precision (bare molecule)",
+      "method_as_published": "FermiNet [VMC, 32 determinants, KFAC, single precision (bare molecule)]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "G. Cassella, W. M. C. Foulkes, D. Pfau & J. S. Spencer, Neural network variational Monte Carlo for positronic chemistry, Nat. Commun. 15, 5214 (2024), arXiv:2310.05607, doi:10.1038/s41467-024-49290-1",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2310.05607 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "2.215 -89.875412 0.000024 (bond length a0, bare energy Ha, σBare)",
+        "note": "Nat. Commun. 15, 5214, Supplementary Information, Data Tables, Beryllium oxide, SI text line 292; same digits in the arXiv text | Hartree, all-electron total energy, basis-free, bare (no positron). 'Singlet' block: N_up = N_dn (FermiNet is spin-assigned; the block is the S_z = 0 calculation, so the lowest state of that sector). σBare read as the statistical error of the mean (the paper does not define it further).",
+        "secondary_of": null
+      }
+    }
+  ]
+}

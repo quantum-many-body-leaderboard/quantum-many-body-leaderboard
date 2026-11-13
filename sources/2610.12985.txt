@@ -1,0 +1,1313 @@
+       NucleoNet:    A   Nuclear-Aware   Determinant   Ansatz   for   Multi-Geometry   Neural
+                                                               Variational   Monte   Carlo
+
+                Qiao   Gao,1   Yang   Huang,2, 3   Enze   Hou,4   Yuzhi   Liu,5 ,                ∗  Jingrun   Chen,6, 3 ,      †  and   Han   Wang7, 8 ,‡
+
+                                                   1School    of    Artificial    Intel ligence    and    Data    Science,
+                                      University    of    Science    and    Technology    of    China,    Hefei    230026,    China
+                                     2University    of    Science    and    Technology    of    China,    Hefei    230026,    China
+        3Suzhou   Institute   for   Advanced   Research,   University   of   Science   and   Technology   of   China,   Suzhou   215213,   China
+                                      4Science,    Mathematics    and    Technology    Cluster,    Singapore    University
+                                          of    Technology    and    Design,    8    Somapah    Road,    487372    Singapore
+                                                    5AI    for    Science    Institute,    Beijing    100080,    China
+              6School   of   Mathematical   Sciences,   University   of   Science   and   Technology   of   China,   Hefei   230026,   China
+                                       7National    Laboratory    of    Computational    Physics,    Institute    of    Applied
+                                         Physics    and    Computational    Mathematics,    Beijing    100088,    China
+                                 8HEDPS,   CAPT,   Col lege   of   Engineering,    Peking   University,    Beijing,    China
+                                                                     (Dated:   October  12,  2026)
+                      Neural-network    variational    Monte    Carlo    provides    an    accurate    route    to    solving    the    electronic
+                   Schrödinger   equation,   but   many   neural   wavefunctions   are   optimized   for   a   single   nuclear   geome-
+                   try,  requiring  separate  calculations  to  map  out  a  potential  energy  surface.   We  introduce  NucleoNet,
+                   a  nuclear-aware  determinant  ansatz  in  which  electrons  and  nuclei  form  a  unified  particle  set  propa-
+                   gated  through  a  shared  electron–nucleus  backbone  that  jointly  evolves  one-particle  and  two-particle
+                   representations.      Nuclei   carry   learned   representations   that   evolve   alongside   the   electronic   repre-
+                   sentations   and   condition   orbital   construction,    while   antisymmetry   is   imposed   only   by   electronic
+                   determinants.      On   equilibrium   small-molecule   benchmarks,    NucleoNet   achieves   accuracy   compa-
+                   rable   to   established   neural-wavefunction   baselines   with   substantially   fewer   parameters.     For   each
+                   molecular   system,   a   single   model   optimized   jointly   across   geometries   describes   the   N2   dissociation
+                   curve,   Li   displacement   in   LiCN,   and   the   ethane   and   formamide   minimum-energy   paths   for   bond
+                   dissociation.    Sparse-geometry   training   generalizes   to   unseen   geometries   for   N2   and   LiCN   without
+                   further  optimization,  and  N2  ablations  show  that  nuclear  streams  substantially  improve  this  interpo-
+                   lation.   These  results  show  that  a  compact  wavefunction  with  jointly  evolved  nuclear  representations
+                   can  describe  the  geometries  of  a  molecular  system  with  a  single  set  of  parameters.
+
+
+                        I.       INTRODUCTION                                              is   costly   and   can   yield   a   noisy   surface   because   stochas-
+                                                                                           tic    errors    are    uncorrelated    across    independently    opti-
+   Neural-network     wavefunctions     optimized     with     real-                       mized   geometries   [15,          16].      Recent   neural-wavefunction
+space    variational    Monte    Carlo    (VMC)    provide    expres-                      approaches    address    this    challenge    by    sharing    informa-
+sive  representations  for  solving  the  electronic  Schrödinger                          tion  across  nuclear  configurations,  either  through  shared
+equation   [1–3].    Architectures   such   as   PauliNet   [4],   Fer-                    parameters   or   by   explicitly   conditioning   the   wavefunc-
+miNet  [5],  Psiformer  [6],  and  LapNet  [7–9]  have  achieved                           tion    on    molecular    geometry.        These    approaches    differ
+high    accuracy    for    atoms    and    molecules.        Despite    the                in    how    nuclear    geometry    enters    the    electronic    wave-
+accuracy,   neural   VMC   remains   computationally   expen-                              function.      Weight-sharing   methods   reuse   most   parame-
+sive  because  optimization  requires  repeated  Monte  Carlo                              ters   across   geometry-specific   models,   without   explicitly
+sampling,  local-energy  evaluation,  wavefunction-gradient                                mapping    nuclear    configurations    to    wavefunction    com-
+estimation,    and   stochastic   parameter   updates.      Recent                         ponents    [15].         PESNet    uses    a    graph    neural    network
+advances   have   reduced   this   computational   cost   through                          to   generate   geometry-dependent   wavefunction   parame-
+improved    architectures    [10],     stochastic-reconfiguration                          ters   [17],   whereas   Globe   generates   localized   molecular-
+optimizers  such  as  SPRING  [11–13],  and  faster  Laplacian                             orbital  embeddings  that  reparametrize  the  wavefunction
+evaluation  [7].   A  broader  review  of  neural  wavefunctions                           across    molecular    structures    [18].       Transferable    atomic-
+in  ab  initio  quantum  chemistry  is  provided  by  Hermann                              orbital   models   construct   orbital   descriptors   from   local-
+et   al.  [14].                                                                            ized  Hartree–Fock  orbitals  and  combine  them  with  elec-
+   Many    chemical    applications    require    an    accurate    po-                    tron   embeddings   to   form   the   Slater-matrix   entries   [19].
+tential    energy    surface    rather    than    an    isolated    single-                Orbformer    uses    an    Orbital    Generator    and    a    message-
+geometry  solution.   Independently  optimizing  each  geom-                               passing   neural   network   (MPNN)   that   operate   only   on
+etry  along  a  bond-dissociation  curve  or  reaction  pathway                            nuclei   to   generate   orbital   components   and   nuclear   rep-
+                                                                                           resentations,  while  a  separate  Electron  Transformer  pro-
+                                                                                           cesses  the  sampled  electrons  [20].   The  geometry  pathway
+∗ liuyuzhi17@mails.ucas.ac.cn                                                              is   therefore   determined   by   the   nuclear   configuration,   or
+† jingrunchen@ustc.edu.cn                                                                  by  mean-field  orbitals  derived  from  it,  and  conditions  the
+‡ wang_han@iapcm.ac.cn                                                                     electron-dependent   wavefunction   through   generated   pa-
+                                                                                                                                                                         2
+
+rameters,  nuclear  representations,  or  orbital  components,                          electron–nucleus   backbone.    The   nuclear   representations
+without   being   updated   in   return   by   the   evolving   elec-                   therefore    reach    the    wavefunction    along    two    pathways:
+tronic  representations.                                                                within  the  backbone,  where  they  are  mixed  into  the  elec-
+   This     one-way     conditioning     raises     a     distinct     archi-           tronic   representations   from   which   the   orbital   matrices
+tectural    question:       should    nuclear    representations    re-                 are   constructed,   and   at   the   readout,   where   they   gener-
+main    independent    of    the    sampled    electron    configura-                   ate  the  parameters  of  the  orbital  envelopes.   An  overview
+tion,  or  should  electrons  and  nuclei  exchange  information                        of  the  complete  wavefunction  construction,  from  the  uni-
+throughout   the   wavefunction   backbone?    We   investigate                         fied   particle   set   to   the   Jastrow   factor,   Slater   matrices,
+the   latter   design   through   NucleoNet,   a   nuclear-aware,                       and  determinant  expansion,  is  shown  in  Fig.                 1(a).
+determinant-based  neural-wavefunction  ansatz  for  VMC.                                  Throughout   this   section,   we   consider   a   system   of  N
+In  NucleoNet,  electrons  and  nuclei  form  a  unified  particle                      electrons   and M    nuclei.     We   write r = {r1, . . . , rN}   for
+set  whose  representations  are  bidirectionally  coupled  and                         electronic   configuration   and R = {R1, . . . , RM}   for   nu-
+updated  at  every  layer  through  shared  group  summaries.                           clear   configuration,    with   lowercase   indices  i, j    labeling
+The  nuclear  representations  are  therefore  conditioned  not                         electrons  and  uppercase  indices I, J   labeling  nuclei.   The
+only   on   the   molecular   geometry   but   also   on   the   evolv-                 index  sets E↑, E↓,  and N   collect  the  spin-up  electrons,  the
+ing   electronic   ones.    The   shared   backbone   enables   these                   spin-down   electrons,   and   the   nuclei,   with N↑ = |E↑|   and
+electron-aware  nuclear  representations  without  requiring                            N↓ = |E↓|  fixed  for  a  given  spin  state.   The  unified  parti-
+a  separate  nuclear  encoder,  thereby  limiting  the  parame-                         cle  set  treats  the  two  species  alike  as  network  inputs,  and
+ter  overhead  associated  with  geometry  conditioning.   The                          we  write x = {r1, . . . , rN, R1, . . . , RM}  for  the  combined
+orbital  matrices  are  constructed  solely  from  the  electronic                      configuration,   with   Greek   indices α, β   labeling   particles
+representations,  and  fermionic  antisymmetry  is  enforced                            of   either   type.      For   each   geometry,   the   nuclear   coordi-
+through  the  determinants  of  the  enveloped  Slater  matri-                          nates  R    are    held    fixed    during    electronic    Monte    Carlo
+ces.   NucleoNet  targets  the  geometries  of  a  single  molec-                       sampling,   while   they   vary   across   the   nuclear   configura-
+ular  system,  which  differs  from  the  transfer  across  chem-                       tions  considered  by  a  single  NucleoNet  model.   We  write
+ical  space  pursued  by  Globe,  transferable  atomic-orbital                          (·, ·)   for   concatenation, ⟨·⟩   for   permutation-invariant  av-
+models,  and  Orbformer  [18–20].                                                       eraging,   with   a   subscript   indicating   the   group   averaged
+   Our  numerical  results  support  the  central  design  choice                       over,  and ⊙  for  elementwise  multiplication.
+of   evolving   learned   nuclear   representations   jointly   with                       NucleoNet  adopts  a  Slater–Jastrow  form  with  a  multi-
+the    electronic    ones    through    a    shared    backbone.        On              determinant  expansion,
+equilibrium-geometry    benchmarks,    NucleoNet    achieves
+variational   accuracy   comparable   to   established   neural-                                    Ψ(r; R) = exp(J(r; R))  K∑               ωkDk(r; R),                (1)
+wavefunction   baselines   with   a   substantially   smaller   pa-                                                                    k=1
+rameter   count.     When   optimized   jointly   across   multiple                     where J   is  a  neural  Jastrow  exponent,  long  used  in  vari-
+configurations,  a  single  NucleoNet  model  produces  accu-                           ational   wavefunctions   [2,        21], K   is   the   number   of   deter-
+rate  energy  profiles  for  N2,  LiCN,  ethane,  and  formamide,                       minants, Dk   is  the  determinant  of  the k-th  Slater  matrix
+spanning  variation  along  a  single  nuclear  coordinate,  di-                        defined   in   Eq.   (12),   and  ωk    is   a   learnable   determinant
+atomic   dissociation,   and   bond   cleavage   along   minimum-                       coeﬀicient.    The   quantities J , Dk,   and ωk   all   depend   on
+energy  paths  involving  concerted  motion  of  the  remaining                         trainable   parameters,   which   we   leave   implicit   in   the   no-
+nuclei.     For   N2   and   LiCN,   models   optimized   on   sparse                   tation  throughout.
+subsets   of   geometries   also   generalize   to   unseen   geome-                       For   each   ordered   particle   pair (α, β),   NucleoNet   con-
+tries   without   further   optimization,   yielding   energy   pro-                    structs     a     pair     feature  uαβ     from     the     logarithmically
+files  close  to  those  from  full-geometry  joint  optimization.                      rescaled    relative    displacement,    together    with    a    corre-
+Ablation  studies  show  that  nuclear  streams  substantially                          sponding  one-particle  feature uα:
+improve  interpolation  at  unseen  geometries  in  the  tested                                   (log(1 + ∥xαβ∥)                                        )
+N2  setting,  while  envelope  conditioning  provides  a  small,                                                                                              ,   α ̸= β,
+consistent  gain.                                                                       uαβ =                ∥xαβ∥      xαβ, log(1 + ∥xαβ∥)
+                                                                                                     0,                                                            α = β,
+                                                                                                  {⟨uαβ⟩β∈E↑∪E↓ ,   α ∈ E↑ ∪ E↓,
+                          II.       NUCLEONET                                             uα =
+                                                                                                     ⟨uαβ⟩β∈N ,         α ∈ N ,
+   We  propose  NucleoNet  as  a  neural-network  wavefunc-                                                                                                           (2)
+tion  ansatz  for  real-space  VMC.  The  central  idea  is  to  let                    where xαβ  =  xα − xβ .      The   logarithmic   radial   rescal-
+the  nuclear  geometry  shape  the  representations  that  the                          ing   compresses   long-range   distances   while   retaining   di-
+network   evolves   internally,   rather   than   to   fix   its   role   in            rectional  information,  following  the  pair  features  used  in
+advance.   Instead  of  using  nuclei  only  as  external  centers                      neural  wavefunction  ansatzes  [5,            6].   The  one-particle  fea-
+in  electron–nucleus  distances  or  orbital  envelopes,  Nucle-                        ture uα   averages  over  particles  of  the  same  species  as α,
+oNet  represents  electrons  and  nuclei  in  a  unified  particle                      so   that   it   summarizes   the   local   electronic   or   nuclear   ge-
+set   and   evolves   their   representations   through   a   shared                    ometry;  electron–nucleus  geometry  is  carried  by  the  pair
+                                                                                                                                                                                3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.   1.     Overview   of   NucleoNet.     (a)   Wavefunction   construction.     Electrons   and   nuclei   are   represented   in   a   unified   particle
+set  and  processed  by  a  shared  electron–nucleus  backbone.   The  final  electronic  representations  produce  the  Jastrow  factor  and
+orbital  matrices,  while  the  final  nuclear  representations  generate  envelope  parameters.   These  quantities  are  combined  to  form  the
+Slater  matrices,  determinant  expansion,  and  final  wavefunction.   (b)  Initialization  layer.   Fixed  geometric  features  and  particle
+descriptors   are   mapped   to   the   initial   one-particle   and   two-particle   representations.      (c)   Shared   electron–nucleus   backbone.
+The  initial  representations  are  propagated  through L  electron–nucleus  layers.   (d)  Electron–nucleus  layer.   Pair-gated  messages
+and   permutation-invariant   group   summaries   enter   the   one-particle   update,   while   the   two-particle  representations   are   updated
+through   a   shared   nonlinear   map.     (e)   Mean   pooling.     Representations   are   averaged   separately   over   nuclei,   spin-up   electrons,
+and   spin-down   electrons   and   concatenated   to   form   the   group   summaries.    For   simplicity,   the   figure   uses ∥   for   concatenation, ·
+for  elementwise  multiplication,  and ×  for  scalar  multiplication.
+
+
+features uαβ   and   enters   the   one-particle   representations                          maps  are  shared  across  particle  types,  while  particle  iden-
+through  the  backbone.                                                                     tity  enters  through  the  descriptors  and  the  group-specific
+   The        initialization        procedure        is        summarized        in         pooling  operations  described  below.
+Fig.   1(b),  where  the  initial  one-particle  and  two-particle
+representations, h0α    and h0αβ ,   are   obtained   by   concate-
+nating   these   geometric   features   with   fixed   particle   and                          The   core   of   NucleoNet   is   the   shared   electron–nucleus
+pair  descriptors, cα  and cαβ ,  and  applying  a  single  aﬀine                           backbone  illustrated  in  Fig.            1(c),  in  which  electrons  and
+map  with  a  SiLU  nonlinearity.                                                           nuclei  alike  carry  representations  through  every  layer.   A
+                   h0α = SiLU(W 01 (uα, cα) + b01),                                         single  electron–nucleus  layer  is  illustrated  in  Fig.               1(d).   At
+                                                                  ).                          (3)layer ℓ,  NucleoNet  maintains  one-particle  representations
+                 h0αβ = SiLU(W 02 (uαβ, cαβ) + b02                                          hℓα  ∈ Rh1    and   two-particle   representations hℓαβ  ∈ Rh2 ,
+                                                                                            where   the   dimensions h1   and h2   are   fixed   across   layers,
+The   descriptors   encode   particle   properties   such   as   nor-                       and  we  refer  to  the  layerwise  sequence h0α, . . . , hLα   as  the
+malized  particle  charge qα,  spin sα,  and  type oα,  together                            stream   of   particle  α.      Each   layer   begins   by   construct-
+with  pairwise  combinations  of  these  quantities;  the  Sup-                             ing  a  directed  message mℓαβ   for  each  ordered  pair (α, β),
+plementary  Material  gives  their  full  definition.   The  aﬀine                          by   gating   the   pair   representation   with   the   current   one-
+                                                                                                                                                                            4
+
+particle  representation  of  the  source  particle β:                                       The   envelope  Ωkσia     enforces   the   decay   of   the   orbitals
+                                                                                          away  from  the  nuclei,  using  an  isotropic  exponential  form
+                            mℓαβ = hℓαβ ⊙ ˆhℓβ,                                                   (4)whose  coeﬀicients πkσIa   and  decay  parameters λkσIa   are  gen-
+                                                                                          erated   by   multilayer   perceptrons   (MLPs)   applied   to   the
+where ˆhℓβ   is  the  projection  of hℓβ   onto  the h2-dimensional                       final  nuclear  representations hLI  :
+two-particle  representation  space.
+   NucleoNet    then    applies    permutation-invariant    mean                               Ωkσia  (ri; R) = ∑         πkσIa exp( − λkσIa ∥ri − RI∥)
+pooling    over    three    particle    groups    (the    nuclei  N ,    the                                        I∈N               (hLI  )]
+spin-up  electrons E↑,  and  the  spin-down  electrons E↓)  and                                           πkσIa  = 1 +[MLPkσπ                                           (10)
+concatenates   the   results   into   group   summaries,   as   illus-                                                                   (hLI  )]a,
+trated  in  Fig.    1(e).   The  one-particle  summary,  shared  by                                       λkσIa = 0.5 +[MLPkσλ                    a,
+all  particles,  is
+              gℓ1 =(⟨hℓI⟩                   ⟩              ⟩       ),                     (5)where i ∈ Eσ ,   and MLPkσπ      and MLPkσλ      are   independent
+                               I∈N ,⟨hℓi      i∈E↑ ,⟨hℓi    i∈E↓                          networks  whose N   outputs  are  indexed  by  the  orbital a.
+                                                                                             For  each  determinant k,   the  orbital  matrices Akσ   and
+and  the  pair  summary  of  particle α  is                                               envelopes Ωkσ   are  combined  elementwise  and  stacked  by
+        gℓ2,α =(⟨mℓαI⟩                         ⟩                ⟩       ).         (6)    spin  to  form  the  full  Slater  matrix:
+                               I∈N ,⟨mℓαi       i∈E↑ ,⟨mℓαi       i∈E↓                                                            (Ak↑ ⊙ Ωk↑)
+where  gℓ1    and  gℓ2,α    couple    nuclear    and    electronic    rep-                                      Φk (r; R) =         Ak↓ ⊙ Ωk↓          .                                 (11)
+resentations   in   each   update,   and   the   averaging   renders
+the  backbone  equivariant  under  particle  exchange  within                             Each  block Akσ ⊙ Ωkσ   has Nσ   rows  and N   columns,  and
+each  group.                                                                              Φk    is   an  N × N    matrix   whose   rows   run   over   all   elec-
+   The  input  to  the  one-particle  update  is                                          trons   and   whose   columns   run   over   the N    orbitals.    The
+                          Fℓα =(hℓα, gℓ1, gℓ2,α) .                                              (7)determinant  of  the k-th  Slater  matrix  is  then
+
+The    one-particle    and    two-particle    representations    are                                           Dk (r; R) = det [Φk (r; R)] .                                 (12)
+then  updated  as                                                                         The   Jastrow   exponent   is   obtained   from   the   final   elec-
+                            (                                   ))                        tronic  representations:
+           hℓ+1α    =   1√2   hℓα + SiLU(W ℓ1Fℓα + bℓ1              ,                                                                                   ) ,                         (13)
+                            (                                       ))         (8)                          J (r; R) = ∑               MLPjas(hLi
+           hℓ+1αβ  =   1√2    hℓαβ + SiLU(W ℓ2hℓαβ + bℓ2               ,                                                    i∈E↑∪E↓
+
+where   the   factor 1/√2   normalizes   the   residual   sum   [18,                      where MLPjas   returns  a  scalar  and  is  shared  by  all  elec-
+22]   so   that   the   magnitude   of   the   representations   does                     trons.
+not  grow  with  depth.   The  one-particle  update  draws  on                               Substituting  the  determinants  of  Eq.  (12)  and  the  Jas-
+both  summaries,  whereas  the  two-particle  representation                              trow    exponent    of    Eq.    (13)    into    Eq.    (1)    completes    the
+evolves  through  its  own  nonlinearity.                                                 NucleoNet   wavefunction.     The   Supplementary   Material
+   After L  layers,  the  backbone  outputs  the  final  represen-                        gives  further  implementation  details.
+tations {hLα}.   The  electronic  representations hLi    are  used
+to  construct  the  orbital  matrices  and  the  Jastrow  factor,                                                      III.       RESULTS
+while  the  nuclear  representations hLI    generate  geometry-
+dependent  envelope  parameters.                                                             We   organize   the   numerical   experiments   around   three
+   For    each    determinant  k,    the    orbital    matrix  Akσ  ∈                     questions:      whether    NucleoNet    retains    single-geometry
+RNσ×N   is  obtained  by  a  linear  map  of  the  final  electronic                      accuracy,     whether     a     single     model     can     be     optimized
+representations hLi  ,                                                                    jointly   across   nuclear   configurations,   and   whether   such
+
+                              h1∑        (hLi  )                                          a  model  can  be  evaluated  at  configurations  not  included
+                  Akσia  =        W kσac         c,    i ∈ Eσ,                              (9)in  the  optimization.   We  first  verify  on  equilibrium  small
+                             c=1                                                          molecules  that  the  nuclear-aware  backbone  retains  com-
+                                                                                          petitive  variational  accuracy  with  a  compact  parameter-
+where σ ∈ {↑, ↓}   is   the   spin   index, a = 1, . . . , N    is   the)                 ization.       We    then    optimize    a    single    NucleoNet    model
+orbital   index,(hLi        c   denotes   the c-th   component   of hLi  ,                jointly   over   the   N2   dissociation   curve,   the   controlled   Li
+and W kσ  ∈ RN×h1    are   trainable   weight   matrices,   with                          displacement   in   LiCN,   and   the   ethane   and   formamide
+independent  parameters  for  each  spin  channel.   Row a  of                            minimum-energy   paths,   testing   whether   one   set   of   pa-
+W kσ   generates  orbital a,  and  the  entry Akσia    is  the  value                     rameters  can  describe  substantially  different  nuclear  con-
+of  orbital a  at  electron i.                                                            figurations  along  a  potential-energy  surface.   For  N2   and
+                                                                                                                                                                           5
+
+LiCN,  we  further  restrict  the  optimization  to  sparse  sub-
+sets   of   configurations   and   evaluate   the   resulting   models
+at   configurations   not   included   in   the   optimization.     Fi-
+nally,    ablation   studies   separate   the   effects   of   envelope
+conditioning  and  of  the  propagated  nuclear  streams,  and
+identify   which   of   the   two   underlies   the   behavior   of   the
+single  model  across  geometries.   Throughout  this  section,
+we  use s  to  denote  the  configuration  index.
+
+
+                    A.       Optimization   protocol
+
+   For  a  nuclear  configuration Rs,  the  variational  energy
+of  a  NucleoNet  wavefunction  with  shared  parameters θ  is
+
+        Eθ(Rs) = ⟨Ψθ(r; Rs)| ˆH(Rs)|Ψθ(r; Rs)⟩⟨Ψθ(r; Rs)|Ψθ(r; Rs)⟩      .                  (14)
+
+For     multi-geometry     optimization,     a     single     parameter
+vector  θ     is     shared     across     all     training     configurations
+{Rs}Ntrains=1      .   We  optimize  the  equally  weighted  mean  vari-
+ational  energy                                                                          FIG.  2.     Energy  error  versus  number  of  trainable  parameters
+                                                                                         for    equilibrium    small-molecule    benchmarks.      The    lower-left
+                                          Ntrain∑                                        region  corresponds  to  lower  errors  and  fewer  parameters.   Re-
+                     L(θ) =     1Ntrain           Eθ(Rs).                                (15)sults   for   the   same   molecule   use   the   same   marker   style   and
+                                           s=1                                           are   connected   by   gray  lines   as   a   visual   guide.   NucleoNet   lies
+Thus,   each   nuclear   configuration   contributes   to   the   op-                    in   the   low-parameter,   low-error   region   relative   to   FermiNet,
+                                                                                         Psiformer,  and  LapNet  baselines.   Benchmark  geometries  and
+timization   of   the   same   wavefunction   parameters,   while                        reference  energies  follow  the  protocols  of  Refs.  [5–7].
+its  electronic  configurations  are  sampled  from  the  corre-
+sponding  geometry-dependent  wavefunction.
+   The  variational  optimization  stage  uses  SPRING  [13],                            reach   the   accuracy   regime   of   larger   neural   wavefunction
+an   optimizer   based   on   stochastic   reconfiguration   (SR),                       models  with  a  more  compact  parameterization.   Detailed
+which  is  closely  related  to  natural-gradient  optimization                          energies   and   parameter   counts   are   provided   in   the   Sup-
+in   VMC   [11,     12].     SPRING   reuses   information   from   re-                  plementary  Material.
+cent  minibatches  while  avoiding  the  explicit  construction
+and   inversion   of   the   full   SR   matrix.      All   reported   Nu-
+cleoNet   experiments   are   performed   on   a   single   NVIDIA                                        C.       Nitrogen   dissociation   curve
+A100   GPU.   Detailed   optimization   protocols   and   hyper-
+parameters  are  provided  in  Supplementary  Material.                                      We  next  evaluate  NucleoNet  on  the  dissociation  curve
+                                                                                         of  N2,  a  standard  benchmark  for  methods  treating  strong
+                                                                                         static   correlation.    As   the   N≡N   triple   bond   is   stretched,
+               B.       Single-geometry   benchmarks                                     the    electronic    structure    develops    strong    multireference
+                                                                                         character,    making   single-reference   descriptions   increas-
+   Before   turning   to   multiple   geometries,   we   check   that                    ingly   unreliable   [24].    A   single   NucleoNet   model   is   opti-
+carrying  nuclear  streams  through  the  backbone  does  not                            mized   jointly   on   32   bond   lengths   uniformly   spaced   be-
+cost   accuracy   on   standard   single-geometry   benchmarks.                          tween  1.6   and  6.4  a0    and   evaluated   on   the   same   grid,
+We   test   NucleoNet   on   eight   standard   small   molecules,                       which    spans    the    compressed    repulsive    region,    equilib-
+following  the  benchmark  set  and  geometries  used  in  pre-                          rium,    and    the    multireference    regime    of    the    stretched
+vious   neural   VMC   studies   [5–7].      Since   VMC   provides                      bond.
+a   variational   upper   bound   to   the   ground-state   energy,                          We  quantify  the  deviation  from  the  reference  curve  us-
+lower  optimized  energies  indicate  a  better  variational  ap-                        ing  the  mean  absolute  error  (MAE):
+proximation,  up  to  statistical  uncertainty  [2,                23].                                             NL∑
+   As    shown    in    Fig.    2,    NucleoNet    achieves    variational                       MAE =   1               |Emethod(Ls) − Eref(Ls)| ,                (16)
+energies   comparable   to   established   neural-wavefunction                                                NL    s=1
+baselines   across   the   eight   systems,   while   using   substan-
+tially   fewer   parameters.    NucleoNet   has   about 0.11–0.15                        where NL  = 32   and Eref    denotes   the   Morse/long-range
+million  trainable  parameters,  compared  with  several  hun-                           (MLR)   potential   MLR4(6, 8)   of   Ref.   [25],   placed   on   an
+dred    thousand    to    multiple    million    for    FermiNet,    Psi-                absolute-energy   scale   by   anchoring   its   dissociation   limit
+former,   and   LapNet.    This   indicates   that   NucleoNet   can                     to  twice  the  nitrogen-atom  energy.
+                                                                                                                                                                           6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                         FIG.   4.     Signed   energy   differences   across   the   five   LiCN   ge-
+                                                                                         ometries   as   a   function   of   the   Li–C   distance,   relative   to   in-
+                                                                                         dependently   optimized    single-geometry   NucleoNet    energies.
+                                                                                         The    Orbformer    results    correspond    to    the    model    fine-tuned
+                                                                                         from  the  LAC  checkpoint;  the  Orbformer  and  CCSD(T)/CBS
+FIG.   3.    Energy   errors   along   the   N2   dissociation   curve   rela-           energies  are  taken  from  Ref.  [20].   The  black  zero  line  denotes
+tive   to   the   MLR4(6, 8)   reference.    A   single   NucleoNet   model              the  single-geometry  NucleoNet  baseline,  and  the  MSD  values
+is  jointly  optimized  on  32  bond  lengths  uniformly  spaced  be-                    in  the  legend  are  averaged  over  the  five  geometries.
+tween 1.6  and 6.4 a0.   MAEs  reported  in  the  legend  are  com-
+puted  over  the  full  bond-length  range.
+                                                                                         single-geometry  NucleoNet  energies  as  the  baseline:
+
+   As   shown   in   Fig.      3,   NucleoNet   achieves   an   MAE   of                                ∆E(s) = Emethod(s) − EsingleNucleoNet(s),                  (17)
+1.07  mEh,   the   smallest   among   the   compared   methods.
+For   comparison,    Ref.   [26]   reports   MAEs   of  2.69,  1.99,                     and   summarize   the   overall   signed   energy   shift   using   the
+and 5.34 mEh   for   FermiNet,   Pfaﬀian,   and   PESNet,   re-                          mean  signed  difference  (MSD),
+spectively,  while  r12-MR-ACPF  [27]  yields 5.56 mEh.
+   The   NucleoNet   error   profile   is   smooth   across   the   dis-                                                             Ngeom∑
+sociation    path,     with    the    largest    deviations    from    the                                    MSD =     1Ngeom               ∆E(s),                                (18)
+MLR4(6, 8)  reference  in  the  intermediate  bond-stretching                                                                         s=1
+region.   The  error  decreases  toward  dissociation,  and  Nu-                         where Ngeom = 5.   We  keep  the  sign  because  the  baseline
+cleoNet   remains   closer   to   the   reference   than   the   other                   is   itself   variational.    A   negative ∆E   means   a   lower,   and
+methods  over  most  of  the  curve.   These  results  show  that                        hence  more  accurate,  total  energy  rather  than  an  error.
+a  single  set  of  NucleoNet  parameters  can  describe  the  N2                            As   shown   in   Fig.      4,   NucleoNet   remains   close   to   the
+potential-energy  curve  across  a  range  of  bond  lengths.                            single-geometry   energies   across   the   full   Li-displacement
+                                                                                         coordinate,   with   an   MSD   of   only +0.04 mEh.     In   com-
+                                                                                         parison,   CCSD(T)/CBS   and   Orbformer   yield   MSDs   of
+                  D.       Li   displacement   in   LiCN                                 +1.06  mEh    and  +3.89  mEh,   respectively.      The   Nucle-
+                                                                                         oNet    curve    stays    near    zero    for    all    five    configurations.
+   We   next   consider   a   controlled   multi-geometry   setting                      The  jointly  optimized  model  thus  reaches  essentially  the
+based   on   the   LiCN   benchmark   used   in   Orbformer   [20].                      same   energies   as   independent   single-geometry   optimiza-
+The  C  and  N  nuclei  remain  fixed,  while  the  Li  nucleus  is                      tion,    and   lies   below   both   the   CCSD(T)/CBS   and   the
+displaced  along  the  molecular  axis  over  Li–C  distances  of                        Orbformer  energies  at  every  geometry.
+approximately 3.6   to 4.7 a0.     This   construction   isolates
+the  response  of  the  wavefunction  to  the  motion  of  the  Li
+center  relative  to  the  fixed  CN  fragment.                                             E.       Ethane   and   formamide   dissociation   pathways
+   A    single    set    of    NucleoNet    model    parameters    is    op-
+timized    jointly    across    all    geometries.          We    find    that               We   next   evaluate   NucleoNet   on   the   ethane   and   for-
+the   multi-geometry   NucleoNet   optimization   reaches   en-                          mamide  minimum-energy  paths  (MEPs)  reported  in  the
+ergies  below  the  CCSD(T)  reference  extrapolated  to  the                            Orbformer    benchmark    [20].       These    paths    describe    ho-
+complete-basis-set    (CBS)    limit    for    all    these    configura-                molytic   C–H   cleavage, CH3CH3 → CH3CH2 · +H·,   and
+tions,   making   the   CCSD(T)/CBS   curve   unsuitable   as   a                        homolytic   N–H   cleavage,  HCONH2  →  HCONH · +H·.
+baseline   for   quantifying   the   remaining   optimization   gap                      Each   path   contains   20   nudged-elastic-band   [28]   images,
+of  NucleoNet.   We  therefore  use  independently  optimized                            with   several   nuclear   coordinates   changing   as   the   bond
+                                                                                                                                                                           7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  5.    Multi-geometry  dissociation  benchmarks  for  ethane  and  formamide.   Panels  (a)  and  (b)  show  representative  molecular
+geometries   along   the   corresponding   minimum-energy   paths   (MEPs).    Panels   (c)   and   (e)   show   mean-centered   relative   energies,
+while   panels   (d)   and   (f)   show   signed   energy   differences   relative   to   the   reference   calculations   reported   in   Ref.   [20].    The   MSD
+values  are  averaged  over  all  geometries  along  each  path.   NucleoNet  uses  a  single  set  of  shared  parameters  for  all  geometries  of
+each  molecular  system.
+
+
+breaks.   We  jointly  optimize  a  separate  NucleoNet  model                           ing  geometries  without  further  optimization.   Fig.                  6  sum-
+across  the  images  for  each  molecule.                                                marizes   the   results   for   N2   and   LiCN.   The   energy   refer-
+   The       reference       energies       are       independent       single-          ences  and  units  are  kept  consistent  with  the  correspond-
+geometry      Psiformer      VMC      calculations      reported      in                 ing  benchmarks  above.
+Ref.   [20].      We   quantify   the   signed   energy   difference   as
+∆E(s) = Emethod(s) − Eref(s)   and   report   its   mean,   the                             For   N2,   the   model   is   optimized   on   six   bond   lengths
+MSD   defined   in   Eq.   (18),   with  Ngeom  =  20.      Negative                     uniformly   spaced   between 1.6   and 6.0 a0   and   evaluated
+values   indicate   energies   below   the   reference.     Following                    on   32   bond   lengths   uniformly   spaced   between  1.6   and
+Ref.  [20],  energies  are  reported  in  kcal/mol  (1 kcal/mol =                        6.4  a0,    consistent   with   Sec.        III C.   The   resulting   curve
+1.594 mEh).                                                                              closely  follows  the  full-geometry  joint-optimization  result
+   Fig.  5  shows  mean-centered  energy  profiles  in  panels  (c)                      over   most   of   the   dissociation   coordinate,   with   an   MAE
+and  (e),  and  signed  energy  differences  from  the  reference                        of 1.13 mEh,  compared  with 1.07 mEh   for  full-geometry
+in  panels  (d)  and  (f).   For  ethane,  NucleoNet  stays  within                      joint  optimization.
+approximately 0.6 kcal/mol  of  the  reference  at  every  im-
+age  and  has   an  MSD   of −0.12 kcal/mol,   compared   with                              For   LiCN,   only   the   two   endpoint   geometries   are   in-
+0.92 kcal/mol  for  Orbformer.   For  formamide,  NucleoNet                              cluded  in  the  optimization.   The  three  intermediate  con-
+lies  above  the  reference  at  every  image,  with  an  MSD  of                        figurations   are   evaluated   without   further   optimization,
+2.04 kcal/mol,   compared   with   an   MSD   of 4.29 kcal/mol                           with  an  MSD  of 0.02 mEh   evaluated  over  all  five  geome-
+for  Orbformer.   For  both  systems,  the  mean-centered  Nu-                           tries,    compared   with  0.04  mEh    for   full-geometry   joint
+cleoNet  profile  follows  the  reference  along  the  entire  path                      optimization.
+and  reaches  lower  total  energies  than  Orbformer  at  every
+image.                                                                                      For   both   N2   and   LiCN,   the   model   optimized   on   the
+                                                                                         sparse  set  generalizes  to  the  unseen  geometries,  with  en-
+                                                                                         ergy    profiles    and    benchmark    metrics    close    to    those    of
+     F.       Generalization   from   sparse   geometry   sets                           full-geometry  joint  optimization.   The  present  evidence  is
+                                                                                         limited  to  these  one-dimensional  coordinates;  we  have  not
+   We   next   test   whether   a   NucleoNet   model   optimized                        established   such   generalization   along   the   multi-nuclear
+on   a   sparse   set   of   geometries   generalizes   to   the   remain-               paths  of  ethane  and  formamide.
+                                                                                                                                                                               8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                           FIG.   7.      Energy   errors   along   the   N2   dissociation   curve   for
+                                                                                           NucleoNet   and   its   ablation   variants.    Triangles   mark   the   six
+                                                                                           training   geometries,   and   the   legend   reports   the   MAE   on   the
+                                                                                           evaluation   grid.   The   inset   shows   the   full   error   range,   includ-
+                                                                                           ing   the   large   error   of   NucleoNet-FE-EB   near   the   short-bond
+                                                                                           region.
+
+
+
+
+FIG.   6.      Generalization   from   sparse   geometry   sets.      Blue                 through  the  backbone.
+
+triangles   mark   the   training   geometries,   blue   curves   show   the                   All   ablation   results   are   reported   relative   to   the   cor-
+model  optimized  on  the  training  geometries  and  evaluated  at                        responding   full   NucleoNet   model.     Positive   values   indi-
+all   geometries,   and   red   curves   show   full-geometry   joint   op-                cate   higher   variational   energies   for   single-geometry   cal-
+timization.       The    upper-right    values    give    the    corresponding             culations  or  larger  MAEs  for  multi-geometry  evaluation.
+benchmark   metric   (MAE   for   N2   and   MSD   for   LiCN),   using                    Comparing    NucleoNet-FE    with    NucleoNet-FE-EB    as-
+the   same   references   and   units   as   in   the   preceding   sections.              sesses  the  effect  of  removing  nuclear  streams  while  keep-
+For   N2,   six   uniformly   spaced   bond   lengths   are   used   for   op-             ing  the  envelope  fixed.   Definitions  of  the  relative  energy
+timization;   for   LiCN,   only   the   two   endpoint   geometries   are                 and  MAE  are  given  in  the  Supplementary  Material.
+used.
+                                                                                               As      shown      in      Table   I,      replacing      the      conditioned
+                         G.       Ablation   studies                                       envelope     with     a     fixed     one     increases     the     errors     by
+                                                                                           0.01  mEh    for   NH3,  0.11  mEh    for   single-geometry   N2,
+   We    examine    the    roles    of    envelope    conditioning    and                  and  0.21/0.23  mEh    for    the    N2    multi-geometry    train-
+nuclear   streams   using   NH3   and   N2   at   their   equilibrium                      ing/evaluation  MAEs.    Thus,   envelope  conditioning  pro-
+geometries   (single-geometry   setting;   Sec.                III B)   and   the          vides   a   small,    consistent   improvement   in   these   bench-
+N2   sparse-geometry  benchmark  (multi-geometry  setting;                                 marks.   We  retain  it  in  the  full  model.
+Sec.   III F).                                                                                 The  benefit  of  the  nuclear  streams  is  most  pronounced
+   Three   variants   are   compared.     Full   NucleoNet   uses   a                      in   the   multi-geometry   setting.      Comparing   NucleoNet-
+shared  electron–nucleus  backbone,  in  which  each  nucleus                              FE-EB  with  NucleoNet-FE,  which  use  the  same  fixed  en-
+has  a  stream  that  evolves  alongside  the  electron  streams                           velope,   removing   the   nuclear   streams   increases   the   NH3
+and  contributes  to  the  shared  one-  and  two-particle  sum-                           and   N2   single-geometry   energies   by 0.04   and 0.11 mEh,
+maries.    Its   isotropic   electron–nucleus   envelope   is   condi-                     respectively.       For    multi-geometry    N2,    it    increases    the
+tioned   on   the   final   nuclear   representations.     NucleoNet-                      training   and   evaluation   MAEs   by 0.71   and 38.63 mEh.
+FE     replaces     this     conditioned     envelope     with     learned,                Figure     7  shows  that  the  evaluation  error  is  concentrated
+geometry-independent  isotropic  parameters  while  retain-                                at  geometries  not  included  in  the  optimization.
+ing   the   shared   backbone.    NucleoNet-FE-EB   further   re-
+stricts  the  backbone  to  electron  streams.   It  retains  static                           These   results   show   that   envelope   conditioning   gives   a
+nuclear-geometry   information   through   pooled   electron–                              small   improvement   in   the   tested   benchmarks,   while   nu-
+nucleus   initialization   features   and   nuclear-centered   en-                         clear   streams   substantially   improve   the   multi-geometry
+velope   factors,   but   does   not   propagate   nuclear   streams                       N2   fit,  particularly  at  unseen  geometries.
+                                                                                                                                                                                   9
+
+
+TABLE    I.       Diagnostic    ablation    results    on    NH3    single-geometry,    N2    single-geometry,    and    N2    multi-geometry    benchmarks.
+Positive    values    indicate    worse    performance.       The    N2    training    MAE    is    computed    on    the    six    training    geometries,    and    the
+evaluation  MAE  on  the  grid  of  Sec.            III F.  All  relative  errors  are  reported  in  mEh.
+             Model                                                  Envelope           Propagated  streams      NH3 ∆E       N2 ∆E       N2   training/evaluation ∆MAE
+             NucleoNet                               Conditioned           Electrons+nuclei                   0.00                   0.00                                            0.00  /  0.00
+             NucleoNet-FE                              Fixed                      Electrons+nuclei       +0.01      +0.11                +0.21  / +0.23
+             NucleoNet-FE-EB                 Fixed                          Electrons  only         +0.05      +0.22               +0.92  / +38.86
+
+
+                           IV.       DISCUSSION                                               centrated  at  geometries  not  included  in  the  optimization,
+                                                                                              indicating  that  the  nuclear  streams  substantially  improve
+   NucleoNet  incorporates  nuclear  geometry  directly  into                                 interpolation  in  the  tested  sparse-geometry  N2   setting.
+the    learned    representations    of    the    wavefunction    back-                          The    present    results    also    define    the    current    scope    of
+bone.     Each   nucleus   carries   its   own   stream,   updated   at                       NucleoNet.    A   single   model   covers   the   geometries   of   one
+every   layer   together   with   the   electron   streams   through                          molecular    system.        Transfer    across    chemical    composi-
+the   shared   group   summaries.    The   electronic   representa-                           tion,   molecular   size,   or   electronic   state,   as   pursued   by
+tions   that   enter   the   orbitals   thus   depend   on   the   nuclear                    chemical-space  foundation  models,   has  not  been  investi-
+positions  through  the  entire  depth  of  the  network,  while                              gated.   Generalization  from  sparse  training  sets  has  been
+antisymmetry   is   still   imposed   only   by   the   electronic   de-                      established  only  along  the  one-dimensional  N2  and  LiCN
+terminants.                                                                                   coordinates,  not  along  the  multi-nuclear  ethane  and  for-
+                                                                                              mamide  paths.
+   The    numerical    results    show    that    this    design    retains                      Two   aspects   of   the   architecture   set   the   direction   for
+competitive  single-geometry  accuracy  with  a  compact  pa-                                 future    work.       The    all-particle    pairwise    interactions    in
+rameterization   and   extends   to   joint   optimization   across                           the  shared  electron–nucleus  backbone  scale  quadratically
+geometries.   The  four  multi-geometry  systems  span  differ-                               with  the  number  of  particles,  and  sparse  or  locality-based
+ent  types  of  geometric  change,  from  variation  in  a  single                            interactions   would   be   needed   for   larger   systems.      The
+bond   length   to   concerted   motion   of   several   nuclei   along                       particle   descriptors   are   fixed   rather   than   learned,    and
+a  reaction  path.    For  each  system,   one  set  of   parameters                          learned  or  symmetry-aware  descriptors  may  improve  gen-
+describes    the    geometries    along    the    path.       The    sparse-                  eralization  along  multi-nuclear  paths.   Finally,  because  a
+geometry  experiments  further  show  that,  along  the  tested                               single  model  provides  energies  across  the  geometries  of  a
+one-dimensional    N2    and    LiCN    coordinates,    the    model                          system,   extending   NucleoNet   to   predict   forces   and   sup-
+captures   the   energy   variation   between   training   geome-                             port  molecular  dynamics  is  a  natural  next  step.
+tries.
+   The   ablation   results   clarify   the   contributions   of   enve-
+lope   conditioning   and   nuclear   streams.     Relative   to   full                                             ACKNOWLEDGMENTS
+NucleoNet,    replacing    the    conditioned    envelope    with    a
+fixed   one   produces   small   increases   in   the   errors   across                          The  work  is  supported  by  the  National  Key  R&D  Pro-
+the   tested   benchmarks.      To   assess   the   nuclear   streams                         gram   of   China   (Grant   No.      2022YFA1004300)   and   the
+at   fixed   envelope,    we   compare   NucleoNet-FE-EB   with                               National    Natural    Science    Foundation    of    China    (Grant
+NucleoNet-FE.   Removing   the   nuclear   streams   increases                                Nos.      12425113,   12525113   and   12561160120).      The   au-
+the    N2    single-geometry    energy    by  0.11  mEh    and    the                         thors  thank  Mengsa  Wang  and  Yifei  Sun  for  helpful  dis-
+multi-geometry   training   and   evaluation   MAEs   by  0.71                                cussions   on   optimization,    and   Xuelan   Wen   for   helpful
+and 38.63 mEh,  respectively.   The  evaluation  error  is  con-                              discussions  on  N2   benchmarks.
+
+
+
+
+
+ [1]  G.   Carleo   and   M.   Troyer,   Solving   the   quantum   many-                       [4]  J.     Hermann,     Z.     Schätzle,     and     F.     Noé,     Deep-neural-
+      body    problem    with    artificial    neural    networks,           Science                network   solution   of   the   electronic   Schrödinger   equation,
+      355,  602  (2017).                                                                            Nature  Chemistry  12,  891  (2020).
+ [2]  W.   M.   C.   Foulkes,    L.   Mitas,    R.   J.   Needs,   and   G.   Ra-              [5]  D.  Pfau,  J.  Spencer,  A.  de  G.  Matthews,  and  W.  Foulkes,
+      jagopal,  Quantum  Monte  Carlo  simulations  of  solids,                   Re-               Ab-initio  solution  of  the  many-electron  schrödinger  equa-
+      views  of  Modern  Physics  73,  33  (2001).                                                  tion    with    deep    neural    networks,       Physical    Review    Re-
+ [3]  R.      J.      Needs,       M.      D.      Towler,       N.      D.      Drummond,          search  2,  033429  (2020).
+      P.  López  Ríos,  and  J.  R.  Trail,  Variational  and  diffusion                       [6]  I.  von  Glehn,  J.  S.  Spencer,  and  D.  Pfau,  A  self-attention
+      quantum  Monte  Carlo  calculations  with  the  casino  code,                                 ansatz   for   ab-initio   quantum  chemistry,   in           The   Eleventh
+      The  Journal  of  Chemical  Physics  152,  154106  (2020).                                    International    Conference    on    Learning    Representations
+                                                                                                    (2023).
+                                                                                                                                                                                       10
+
+ [7]  R.   Li,   H.   Ye,   D.   Jiang,   X.   Wen,   C.   Wang,   Z.   Li,   X.   Li,                 in  International  Conference  on  Learning  Representations
+      D.  He,  J.  Chen,  W.  Ren,  and  L.  Wang,  A  computational                                   (2022).
+      framework    for    neural    network-based    variational    Monte                        [18]  N.    Gao    and    S.    Günnemann,    Generalizing    neural    wave
+      Carlo   with   Forward   Laplacian,             Nature   Machine   Intelli-                      functions,   in     Proceedings   of   the   40th   International   Con-
+      gence  6,  209  (2024).                                                                          ference    on    Machine    Learning,    Proceedings    of    Machine
+ [8]  W.    Fu,    R.    Fujimaru,    R.    Li,    Y.    Liu,    X.    Wen,    X.    Li,               Learning     Research,      Vol.     202,     edited     by     A.     Krause,
+      K.   Hongo,   L.   Wang,   T.   Ichibha,   R.   Maezono,   J.   Chen,                            E.    Brunskill,    K.    Cho,    B.    Engelhardt,    S.    Sabato,    and
+      and   W.   Ren,   Empowering   neural   network-based   quan-                                    J.  Scarlett  (PMLR,  2023)  pp.  10708–10726.
+      tum    Monte    Carlo    with    local    pseudopotentials,               Nature           [19]  M.  Scherbela,  L.  Gerard,  and  P.  Grohs,  Towards  a  trans-
+      Computational  Science  6,  1005  (2026).                                                        ferable  fermionic  neural  wavefunction  for  molecules,                      Na-
+ [9]  R.    Li,     Y.    Liu,     D.    Jiang,     Y.    Chen,     X.    Wen,     W.    Li,           ture  Communications  15,  120  (2024).
+      D.   He,    L.   Wang,    J.   Chen,   and   W.   Ren,          Spin-adapted               [20]  A.   Foster,   Z.   Schätzle,   P.   B.   Szabó,   J.   Köhler,   G.   Cas-
+      neural     network     wavefunctions     in     real     space            (2025),                sella,    N.    Gao,    J.    Li,    F.    Noé,    and    J.    Hermann,    An    ab
+      arXiv:2511.01671  [physics.chem-ph].                                                             initio  foundation  model  of  wavefunctions  that  accurately
+[10]  L.   Gerard,   M.   Scherbela,   P.   Marquetand,   and   P.   Grohs,                            describes   chemical   bond   breaking,               Nature   Communica-
+      Gold-standard   solutions   to   the   schrödinger   equation   us-                              tions  17,  9976  (2026).
+      ing    deep    learning:       How    much    physics    do    we    need?,                [21]  R.     Jastrow,     Many-body     problem     with     strong     forces,
+      in  Advances   in   Neural   Information   Processing   Systems,                                 Physical  Review  98,  1479  (1955).
+      Vol.   35,   edited   by   S.   Koyejo,   S.   Mohamed,   A.   Agarwal,                    [22]  K.    He,    X.    Zhang,    S.    Ren,    and    J.    Sun,    Deep    residual
+      D.  Belgrave,  K.  Cho,  and  A.  Oh  (Curran  Associates,  Inc.,                                learning  for  image  recognition,  in            2016  IEEE  Conference
+      2022)  pp.  10282–10294.                                                                         on    Computer    Vision    and    Pattern    Recognition    (CVPR)
+[11]  S.   Sorella,   Green   function   Monte   Carlo   with   stochastic                             (2016)  pp.  770–778.
+      reconfiguration,         Phys.  Rev.  Lett.  80,  4558  (1998).                            [23]  T.    Helgaker,     P.    Jørgensen,    and    J.    Olsen,    Exact    and
+[12]  S.   Sorella,   M.   Casula,   and   D.   Rocca,   Weak   binding   be-                          approximate    wave    functions,    in            Molecular     Electronic-
+      tween  two  aromatic  rings:   Feeling  the  van  der  Waals  at-                                Structure      Theory         (John     Wiley     &     Sons,      Ltd,     2000)
+      traction  by  quantum  Monte  Carlo  methods,                     The  Journal                   Chap.  4,  pp.  107–141.
+      of  Chemical  Physics  127,  014105  (2007).                                               [24]  D.  I.  Lyakh,  M.  Musiał,  V.  F.  Lotrich,  and  R.  J.  Bartlett,
+[13]  G.  Goldshlager,  N.  Abrahamsen,  and  L.  Lin,  A  kaczmarz-                                   Multireference     Nature     of     Chemistry:         The     Coupled-
+      inspired   approach   to   accelerate   the   optimization   of   neu-                           Cluster  View,        Chemical  Reviews  112,  182  (2012).
+      ral    network    wavefunctions,            Journal    of    Computational                 [25]  R.   J.   Le   Roy,   Y.   Huang,   and   C.   Jary,   An   accurate   ana-
+      Physics  516,  113351  (2024).                                                                   lytic  potential  function  for  ground-state  N2  from  a  direct-
+[14]  J.     Hermann,      J.     Spencer,      K.     Choo,      A.     Mezzacapo,                    potential-fit   analysis   of   spectroscopic   data,             The   Journal
+      W.   M.   C.   Foulkes,   D.   Pfau,   G.   Carleo,   and   F.   Noé,   Ab                       of  Chemical  Physics  125,  164310  (2006).
+      initio  quantum  chemistry  with  neural-network  wavefunc-                                [26]  N.    Gao    and    S.    Günnemann,    Neural    pfaﬀians:      Solving
+      tions,    Nature  Reviews  Chemistry  7,  692  (2023).                                           many   many-electron   schrödinger   equations,   in                  Advances
+[15]  M.  Scherbela,  R.  Reisenhofer,  L.  Gerard,  P.  Marquetand,                                   in  Neural  Information  Processing  Systems,  Vol.  37,  edited
+      and   P.   Grohs,   Solving   the   electronic   Schrödinger   equa-                             by  A.  Globerson,  L.  Mackey,  D.  Belgrave,  A.  Fan,  U.  Pa-
+      tion   for   multiple   nuclear   geometries   with   weight-sharing                             quet,  J.  Tomczak,  and  C.  Zhang  (Curran  Associates,  Inc.,
+      deep   neural   networks,         Nature   Computational   Science   2,                          2024)  pp.  125336–125369.
+      331  (2022).                                                                               [27]  R.       J.       Gdanitz,       Accurately       solving       the       electronic
+[16]  M.     Scherbela,     L.     Gerard,     and     P.     Grohs,     Variational                   schrödinger   equation   of   atoms   and   molecules   using   ex-
+      Monte  Carlo  on  a  budget  —fine-tuning  pre-trained  neural                                   plicitly  correlated  (r12-)mr-ci:   the  ground  state  potential
+      wavefunctions,   in        Advances   in   Neural   Information   Pro-                           energy   curve   of   N2,      Chemical   Physics   Letters   283,   253
+      cessing   Systems,  Vol.  36,  edited  by  A.  Oh,  T.  Naumann,                                 (1998).
+      A.  Globerson,  K.  Saenko,  M.  Hardt,  and  S.  Levine  (Cur-                            [28]  H.  Jónsson,  G.  Mills,  and  K.  W.  Jacobsen,  Nudged  elastic
+      ran  Associates,  Inc.,  2023)  pp.  23902–23920.                                                band  method  for  finding  minimum  energy  paths  of  transi-
+[17]  N.   Gao   and   S.   Günnemann,   Ab-initio   potential   energy                                tions,  in   Classical  and  Quantum  Dynamics  in  Condensed
+      surfaces    by    pairing    GNNs    with    neural    wave    functions,                        Phase   Simulations          (World  Scientific,  1998)  pp.  385–404.
+                                                                      Supplementary   Material
+
+
+
+                                                      I.       NETWORK   IMPLEMENTATION   DETAILS
+
+   This  section  provides  implementation  details  of  NucleoNet  that  are  omitted  from  the  main  text  for  readability.
+
+
+                                                                          A.       Multilayer   Perceptron
+
+   A  multilayer  perceptron  (MLP)  is  constructed  as  the  composition  of  multiple  nonlinear  blocks:
+                                             MLP(x) = Wout NonLinearLMLP ◦ · · · ◦ NonLinear1(x) + bout,                                                                            (1)
+
+where NonLinear(·)   denotes   a   learned   aﬀine   transformation   followed   by   the SiLU   activation   together   with   residual
+mixing:
+                                                               NonLinear(x) =   1√                x + SiLU(Wx + b).                                                                                                            (2)
+                                                                                               2
+
+
+                                                                    B.       Particle   and   Pair   Descriptors
+
+   NucleoNet  encodes  particle-type  information  via  descriptor  features  to  represent  spin-up  electrons,  spin-down  elec-
+trons,  and  nuclei.   Let oα   denote  the  raw  particle-type  one-hot  vector, qα   the  normalized  particle  charge,  and sα   the
+spin  marker.   The  charge  is  normalized  with  respect  to  the  maximum  nuclear  charge Zmax:
+                                                                                 (−1/Zmax,   α ∈ E↑ ∪ E↓,
+                                                                       qα =         ZI/Zmax,    α ∈ N .                                                                                                                                            (3)
+
+   The  spin  marker  is
+                                                                                          8>><+1,   α ∈ E↑,
+
+                                                                                sα =      >>:−1,   α ∈ E↓,                                                                                     (4)
+                                                                                             0,      α ∈ N .
+
+   The  particle  descriptor  is
+
+                                                             cα = concat oα, qα, |qα|, q2α, sign(qα) , sα .                                                                                                        (5)
+
+   The  pair  descriptor  is
+
+                                                  cαβ = concat (oα, oβ, qα, qβ, qαqβ, |qαqβ|, sα, sβ, sαsβ) .                                                                                    (6)
+
+   These  descriptors  are  concatenated  with  the  corresponding  geometric  features  before  initialization  of  the  one-particle
+and  two-particle  representations.
+
+
+                                                                 C.       Nuclear-Aware   Shared   Backbone
+
+   At  each  layer,  NucleoNet  constructs  directed  pair-gated  messages  from  the  one-particle  and  two-particle  represen-
+tations.    When   the   one-particle   and   two-particle   representation   dimensions   differ,   the   one-particle   representation   is
+first  projected  to  the  two-particle  representation  dimension:
+                                                                                   ˆhℓα = W ℓhℓα + bℓ.                                                                                                                                                  (7)
+
+   For  each  ordered  particle  pair (α, β),  the  pair-gated  message  is
+
+                                                                                   mℓαβ = hℓαβ ⊙ ˆhℓβ,                                                                                                                                                 (8)
+                                                                                                                                                                                             2
+
+where β   denotes   the   source   particle.     Thus,   the   message   associated   with   a   pair   depends   on   both   the   two-particle
+representation  and  the  current  one-particle  representation  of  the  source  particle.
+   The  permutation-invariant  one-particle  group  summary  is
+                                                                               
+hℓI
+                                                          gℓ1 = concat                  I∈N , 
+hℓi       i∈E↑ , 
+hℓi      i∈E↓     ,                                                                                                       (9)
+
+and  the  particle-dependent  pair-message  group  summary  is
+                                                                            
+mℓαI
+                                                    gℓ2,α = concat                      I∈N , 
+mℓαi         i∈E↑ , 
+mℓαi        i∈E↓     .                                                                                        (10)
+
+   The  one-particle  update  input  is
+                                                                        Fℓα = concat hℓα, gℓ1, gℓ2,α .                                                                                                                              (11)
+
+
+   The  one-particle  and  two-particle  representations  are  then  updated  as
+                                                                                                                         
+                                                              hℓ+1α    =   1√2     hℓα + SiLU W ℓ1Fℓα + bℓ1                  ,
+                                                                                                                                                                                       (12)
+                                                              hℓ+1αβ   =   1√2     hℓαβ + SiLU W ℓ2hℓαβ + bℓ2                   .
+
+
+   The  layerwise  sequence h0α, . . . , hLα   defines  the  stream  associated  with  particle α.   Because  electrons  and  nuclei  both
+carry  streams  through  the  shared  electron–nucleus  backbone,  the  nuclear  representations  enter  the  electronic  updates
+through  the  group  summaries,  while  the  electronic  representations  analogously  enter  the  nuclear  updates.
+
+
+
+                                                                    D.       Determinant   Construction
+
+   After   the   shared   electron–nucleus   backbone,   the   final   electronic   representations   are   used   to   construct   the   orbital
+matrices,  while  the  final  nuclear  representations  determine  the  electron–nucleus  envelope  parameters  as  described  in
+the  main  text.
+   For    determinant  k    and    spin    channel  σ,    let  Akσ    denote    the    orbital    matrix    generated    from    the    final    electronic
+representations   and   let  Ωkσ   denote   the   corresponding   envelope   matrix.     Their   elementwise   product   gives   the   spin-
+resolved  block
+
+                                         Bkσ = Akσ ⊙ Ωkσ,       Bkσia  = Akσia Ωkσia ,       i ∈ Eσ,    a = 1, . . . , N.                                                                  (13)
+
+   For   each   determinant k,   the   spin-resolved   blocks   are   stacked   along   the   electron   dimension   to   form   the   full   Slater
+matrix,
+                                                                         Bk↑              Ak↑ ⊙ Ωk↑
+                                                               Φk =        Bk↓       =      Ak↓ ⊙ Ωk↓            ∈ RN×N.                                                                                                           (14)
+
+   The  contribution  of  determinant k   is
+
+                                                                         Dk (r; R) = det [Φk (r; R)] .                                                                                                                               (15)
+
+   The  NucleoNet  wavefunction  is  then
+
+
+                                                             Ψ (r; R) = exp J(r; R)  KX                    ωkDk (r; R) ,                                                                                                         (16)
+                                                                                                      k=1
+
+where ωk   is  the  learnable  coeﬀicient  of  determinant k.
+   Because  the  rows  of  the  Slater  matrix  are  indexed  only  by  electrons,  exchanging  two  same-spin  electrons  exchanges
+the  corresponding  rows  and  changes  the  sign  of  the  determinant.   The  nuclear  representations  do  not  appear  as  rows
+or  columns  of  the  Slater  matrix  and  therefore  are  not  included  in  the  fermionic  antisymmetrization.
+                                                                                                                                                                                                    3
+
+                                                   II.       TRAINING   AND   EXPERIMENTAL   DETAILS
+
+                                                                   A.       Optimizer   and   VMC   Objective
+
+   All   reported   NucleoNet   calculations   use   the   SPRING   optimizer   during   the   VMC   stage.     SPRING   [1]   is   an   eﬀi-
+cient   stochastic-reconfiguration-based   optimizer   that   combines   ideas   from   minimum-step   stochastic   reconfiguration
+(MinSR)  and  the  randomized  block  Kaczmarz  method.   At  each  iteration,  Monte  Carlo  samples  define  an  underdeter-
+mined  subsampled  SR  problem  through  centered  log-wavefunction  derivatives  and  local-energy  fluctuations.   SPRING
+updates   an   approximate   SR   direction   by   projecting   the   previous   direction   toward   the   solution   of   the   current   sub-
+sampled  problem,  thereby  reusing  information  from  previous  minibatches.   Tikhonov  damping,  a  decay  factor  on  the
+previous   update   direction,   and   a   Euclidean   norm   constraint   are   used   for   stability,   while   the   update   is   computed   in
+sample  space  without  constructing  the  full  parameter-space  SR  matrix.
+   For  a  wavefunction Ψθ ,  the  VMC  objective  is
+                                                                             D       ˆHΨθE
+                                                                               Ψθ
+                                                                  Eθ =          ⟨Ψθ|Ψθ⟩     = Er∼|Ψθ|2 [EL(r)] ,                                                                                                              (17)
+
+
+where  the  local  energy  is
+
+
+                                                                                    EL(r) =  ˆHΨθ(r)Ψθ(r)  .                                                                                                                                             (18)
+
+
+   The  corresponding  VMC  gradient  can  be  written  as
+
+                                                          ∇θEθ = 2Er∼|Ψθ|2 [(EL(r) − Eθ) ∇θ log |Ψθ(r)|] .                                                                                               (19)
+
+   At  each  iteration,  Monte  Carlo  samples  define  an  underdetermined  subsampled  SR  problem  through  centered  log-
+wavefunction  derivatives  and  local-energy  fluctuations.
+
+
+
+                                                        B.       Optimizer   and   Sampling   Hyperparameters
+
+   Table      S1   summarizes  the  main  optimizer  and  sampling  hyperparameters.   All  reported  runs  use  the  same  optimizer
+hyperparameters   unless   otherwise   stated;   the   initial   learning   rate   is   adjusted   for   different   benchmark   settings.     All
+reported  NucleoNet  calculations  are  performed  on  a  single  NVIDIA  A100  GPU.
+
+
+              TABLE  S1.           Default  optimizer,  pretraining,  and  VMC  hyperparameters  used  in  the  reported  calculations.
+                                                 Category          Hyperparameter                                                                  Value
+                                                 SPRING           Learning-rate  schedule                         (1 + 10−4t)−1
+                                                                     Initial  learning  rate                              5 × 10−2
+                                                                     Initial  damping λ0                                                           0.001
+                                                                     History  coeﬀicient µ                                                     0.99
+                                                                     Norm  constraint                                                                  0.001
+                                                 Pretraining   Optimizer                                                                                      Adam
+                                                                     Pretraining  iterations                                                 4000
+                                                                     MCMC  steps  per  parameter  update   20
+                                                 VMC                      Training  iterations                                                           150000
+                                                                     Burn-in  steps                                                                           4000
+                                                                     MCMC  steps  per  parameter  update   40
+                                                                     Local-energy  clipping  center                            mean
+                                                                     Local-energy  clipping  threshold                 5.0
+                                                                                                                                                                                           4
+
+                                                                    C.       Hartree–Fock   Pretraining
+
+   We  tested  Hartree–Fock  (HF)  pretraining  as  an  initialization  strategy  before  VMC  optimization.   During  pretraining,
+the  neural  orbitals  are  fitted  to  Hartree–Fock  orbitals,  and  the  pretraining  parameters  are  updated  with  Adam.
+   For  all  equilibrium  small-molecule  benchmarks,  HF  pretraining  was  used  before  VMC  optimization.   Although  the
+final   optimized   energies   are   largely   determined   by   the   subsequent   VMC   stage,   HF   initialization   provides   a   stable
+starting  point  and  follows  the  common  practice  in  neural  variational  Monte  Carlo  calculations.
+   For  the  multi-geometry  benchmarks,  HF  pretraining  was  also  used  for  the  N2   dissociation  and  LiCN  displacement
+experiments.    For   ethane   and   formamide,   HF   pretraining   resulted   in   slightly   higher   final   VMC   energies   than   direct
+VMC  optimization  without  pretraining.   The  reported  calculations  therefore  omit  HF  pretraining  for  these  two  systems.
+
+
+
+                                                                D.       Architecture   Hyperparameters
+
+   Table      S2    summarizes   the   main   architecture   hyperparameters.      The   small-molecule   benchmarks   use   a   compact
+NucleoNet  configuration,  while  the  multi-geometry  benchmarks  use  a  wider  configuration.
+
+
+                                   TABLE  S2.          Architecture  hyperparameters  used  in  the  reported  calculations.
+                                        Category                                                   Hyperparameter                                                             Value
+                                        Small  molecules                             One-particle  width h1                                           64
+                                                                              Two-particle  width h2                                           16
+                                        Multi-geometry  systems   One-particle  width h1                                           128
+                                                                              Two-particle  width h2                                           32
+                                        Shared  architecture                  Number  of  electron–nucleus  layers   4
+                                                                              Number  of  determinants K                          16
+                                                                              Orbital  type                                                                         Real-valued
+
+
+
+
+                                                  III.       SMALL-MOLECULE   BENCHMARK   DATA
+
+   For  the  equilibrium  small-molecule  benchmarks,  we  use  a  compact  NucleoNet  configuration  with (h1, h2) = (64, 16)
+and   a   batch   size   of   4096   for   all   systems.    Table            S3   reports   the   total   energies   and   parameter   counts.    The   molecular
+geometries  are  taken  from  the  FermiNet  benchmark  protocol  [2].
+
+
+                                               IV.       MULTI-GEOMETRY   BENCHMARK   DETAILS
+
+   For   the   multi-geometry   experiments,   we   use   a   wider   NucleoNet   configuration   with (h1, h2) = (128, 32).    A   single
+set   of   neural-network   parameters   is   shared   across   all   selected   nuclear   geometries.    The   optimization   objective   is   the
+average  VMC  energy  over  the  training  geometries:
+
+                                                                                NtrainX
+                                                         L(θ) =     1Ntrain              Er∼|Ψθ(·;Rs)|2 [EL(r; Rs)] .                                                                                                   (20)
+                                                                                  s=1
+
+   For   the   multi-geometry   benchmarks,   we   report   signed   energy   differences   relative   to   the   corresponding   reference
+calculations:
+
+                                                                ∆E(s) = ENucleoNet(Rs) − Eref(Rs),                                                                                                                (21)
+
+where s  indexes  the  molecular  geometry.   The  mean  signed  difference  is
+
+                                                                                                NgeomX
+                                                                       MSD =     1Ngeom                  ∆E(s).                                                                                                                              (22)
+                                                                                                  s=1
+                                                                                                                                                                                                                                                                       5
+
+
+TABLE   S3.                      Total   energies   and   parameter   counts   for   eight   small   molecular   systems.      Energies   are   reported   in   Hartree.
+FermiNet   and   Psiformer   results   are   taken   from   [3],   and   LapNet   results   are   taken   from   [4].    Energies   are   reported   in   Hartree,
+and  values  in  parentheses  denote  the  statistical  uncertainty  in  the  last  reported  digit.   Bold  values  indicate  the  lowest  reported
+energy  for  each  system.
+
+                     System                                                                   Psiformer(small)    Psiformer(large)    FermiNet(small)    FermiNet(large)                          LapNet                      NucleoNet
+                        LiH                                            Energy                   -8.070528(5)                  -8.070536(4)                      -8.07050(1)                 -8.070515(8)        -8.070523(4)         -8.070544(2)
+                                         #   parameters                                          1.59M                                        6.37M                                         0.68M                                       2.61M                              1.88M                                     0.11M
+                        Li2                                             Energy                   -14.99486(1)                  -14.99485(2)                  -14.99480(2)                 -14.99484(2)        -14.99485(1)    -14.994913(4)
+                                         #   parameters                                          1.60M                                        6.40M                                         0.70M                                       2.68M                              1.89M                                     0.11M
+                       NH3                                           Energy                   -56.56367(2)                  -56.56381(2)                  -56.56347(4)                 -56.56387(3)        -56.56359(2)         -56.56389(2)
+                                         #   parameters                                          1.62M                                        6.47M                                         0.74M                                       2.82M                              1.93M                                     0.12M
+                       CH4                                           Energy                   -40.51454(2)                  -40.51461(1)                  -40.51430(3)                 -40.51450(3)        -40.51445(2)         -40.51471(1)
+                                         #   parameters                                          1.62M                                        6.47M                                         0.74M                                       2.83M                              1.93M                                     0.12M
+                        CO                                             Energy               -113.32416(4)        -113.32466(3)              -113.32354(7)             -113.32444(5)    -113.32417(4)           -113.32465(3)
+                                         #   parameters                                          1.64M                                        6.53M                                         0.77M                                       2.94M                              1.96M                                     0.14M
+                         N2                                              Energy               -109.54137(4)              -109.54179(4)              -109.54046(6)             -109.54148(6)    -109.54128(4)    -109.54195(3)
+                                         #   parameters                                          1.64M                                        6.53M                                         0.77M                                       2.94M                              1.96M                                     0.14M
+                      C2 H4                                         Energy                   -78.58762(3)                  -78.58794(3)                  -78.58604(5)                 -78.58701(6)        -78.58721(4)         -78.58799(3)
+                                         #   parameters                                          1.65M                                        6.58M                                         0.80M                                       3.04M                              1.99M                                     0.14M
+               methylamine                            Energy                   -95.86050(4)            -95.86096(3)                  -95.85917(6)                 -95.86010(5)        -95.86025(3)               -95.86083(4)
+                                         #   parameters                                          1.66M                                        6.61M                                         0.82M                                       3.11M                              2.01M                                     0.15M
+
+
+
+     When  the  reference  is  an  empirical  or  fitted  potential  energy  curve,  as  in  the  N2   benchmark,  we  instead  report  the
+mean  absolute  error:
+
+
+                                                                                                               NgeomX
+                                                                            MAE =     1Ngeom                                |ENucleoNet(Rs) − Eref(Rs)| .                                                                                            (23)
+                                                                                                                 s=1
+
+     For  ethane  and  formamide, Eref(Rs)  denotes  the  reference  calculations  reported  in  Ref.  [5].   In  these  cases,  negative
+signed  differences  indicate  lower  optimized  variational  energies  relative  to  the  reported  reference  calculations.
+     Table         S4     lists  the  effective  batch  sizes  used  for  the  multi-geometry  experiments.   The  notation nchain×Ngeom  denotes
+the  number  of  Monte  Carlo  chains  per  geometry  times  the  number  of  geometries  included  in  the  optimization.
+
+
+
+                                                              TABLE  S4.                   Batch  sizes  used  in  the  multi-geometry  experiments.
+                                                              System                                                        Number  of  geometries   Effective  batch  size
+                                                              N2   dissociation                              32                                    128 × 32
+                                                              LiCN  displacement                  5                                      820 × 5
+                                                              Ethane  dissociation                20                                    128 × 20
+                                                              Formamide  dissociation   20                                    128 × 20
+
+
+
+
+
+
+                                                                                                   A.       N2   Dissociation   Details
+
+     For  the  full-geometry  N2  dissociation  benchmark,  a  single  NucleoNet  model  is  optimized  jointly  on  32  bond  lengths
+uniformly   spaced   between  1.6   and  6.4  a0.      The   same   32   geometries   are   used   to   evaluate   the   full-geometry   result
+reported  in  the  main  text.
+     The  reference  curve  is  the  MLR4(6, 8)  potential  of  Ref.  [6],  with  its  dissociation  limit  anchored  to  twice  the  atomic
+nitrogen  energy  per  Ref.  [7].
+     The  NucleoNet  energies  on  the  32-point  grid  are  reported  in  Table                                                                              S5.   Values  in  parentheses  denote  the  statistical
+uncertainty  in  the  last  reported  digit.
+                                                                                                                                                                                                 6
+
+
+TABLE   S5.        N2   energies   on   32   bond   lengths   uniformly   spaced   between 1.6   and 6.4 a0.    Energies   are   reported   in   Hartree,   and
+values  in  parentheses  denote  the  statistical  uncertainty  in  the  last  reported  digit.
+
+                                Bond  length L  (a0)                Energy  (Eh)                              Bond  length L  (a0)                Energy  (Eh)
+
+                                          1.6000            −109.22020(8)                                                4.0774            −109.19612(6)
+                                          1.7548            −109.42544(7)                                                4.2323            −109.19126(6)
+                                          1.9097            −109.51676(7)                                                4.3871            −109.18787(6)
+                                          2.0645            −109.54171(7)                                                4.5419            −109.18552(6)
+                                          2.2194            −109.52889(6)                                                4.6968            −109.18367(6)
+                                          2.3742            −109.49621(6)                                                4.8516            −109.18246(5)
+                                          2.5290            −109.45468(7)                                                5.0065            −109.18157(6)
+                                          2.6839            −109.41088(7)                                                5.1613            −109.18087(5)
+                                          2.8387            −109.36855(7)                                                5.3161            −109.18029(5)
+                                          2.9935            −109.32987(7)                                                5.4710            −109.17982(6)
+                                          3.1484            −109.29610(8)                                                5.6258            −109.17956(6)
+                                          3.3032            −109.26748(7)                                                5.7806            −109.17932(5)
+                                          3.4581            −109.24423(7)                                                5.9355            −109.17902(5)
+                                          3.6129            −109.22625(7)                                                6.0903            −109.17883(5)
+                                          3.7677            −109.21287(8)                                                6.2452            −109.17880(6)
+                                          3.9226            −109.20307(7)                                                6.4000            −109.17857(6)
+
+
+TABLE   S6.            Li–C   distances   and   NucleoNet   energies   for   the   five   LiCN   configurations.      The   C   and   N   nuclei   remain   fixed
+across  all  configurations,  while  the  Li  position  varies  along  the  molecular  axis.   The  single-geometry  energies  are  obtained  from
+independent   optimization   at   each   geometry   and   serve   as   the   baseline   used   in   the   main   text.    The   multi-geometry   energies   are
+obtained  from  a  single  NucleoNet  model  optimized  jointly  across  all  five  configurations.   Distances  are  reported  in a0,  energies
+in  Hartree,  and  values  in  parentheses  denote  the  statistical  uncertainty  in  the  last  reported  digit.
+
+              Geometry  ID           Li–C  distance  (a0)           Single-geometry  NucleoNet  (Eh)           Multi-geometry  NucleoNet  (Eh)
+
+                        1                                              3.590479                    −100.38046(3)                        −100.38045(3)
+                        2                                              3.779452                    −100.37951(3)                        −100.37945(3)
+                        3                                              3.968425                    −100.37624(3)                        −100.37625(3)
+                        4                                              4.346370                    −100.36622(3)                        −100.36614(4)
+                        5                                              4.724315                    −100.35389(3)                        −100.35385(4)
+
+
+
+                                                                       B.       LiCN   Benchmark   Details
+
+   For   the   LiCN   benchmark,   we   consider   five   collinear   configurations   from   the   benchmark   used   in   Orbformer   [5].
+Across   these   configurations,   the   C   and   N   nuclei   remain   fixed,   while   the   Li   nucleus   is   displaced   along   the   molecular
+axis.    The  corresponding  Li–C   distances,   spanning  approximately 3.6   to 4.7 a0,   are  listed  in   Table                                                   S6   and  define  the
+one-dimensional  coordinate  used  for  the  Li-displacement  benchmark.   The  Orbformer  results  shown  in  the  main  text
+correspond  to  the  model  fine-tuned  from  the  LAC  checkpoint,  and  both  the  Orbformer  and  CCSD(T)/CBS  energies
+are  taken  from  Ref.  [5].
+   We   perform   two   sets   of   NucleoNet   calculations.     First,   each   geometry   is   optimized   independently   using   a   single-
+geometry   NucleoNet   model.      These   independently   optimized   energies   serve   as   the   baseline   for   the   signed   energy
+differences  reported  in  the  main  text.   Second,  a  single  NucleoNet  model  is  optimized  jointly  across  all  five  geometries
+using  shared  parameters.   The  resulting  single-geometry  and  multi-geometry  energies  are  reported  in  Table                                                             S6.   Values
+in  parentheses  denote  the  statistical  uncertainty  in  the  last  reported  digit.
+
+
+                                                      C.       Ethane   and   Formamide   Dissociation   Details
+
+   For    the    ethane    and    formamide    benchmarks,    we    use    the    20-image    nudged-elastic-band    minimum-energy    paths
+(MEPs)   reported   in   the   Orbformer   benchmark   [5].    The   paths   describe   homolytic   C–H   cleavage   in   ethane   and   N–H
+                                                                                                                                                                                7
+
+
+TABLE  S7.         NucleoNet  energies  for  the  ethane  and  formamide  dissociation  benchmarks.   Image  IDs  identify  the  20  geometries
+along  each  dissociation  path.   Energies   are  reported   in   Hartree,   and  values  in  parentheses  denote   the  statistical   uncertainty  in
+the  last  reported  digit.
+
+                   Image  ID            Ethane  (Eh)            Formamide  (Eh)                    Image  ID            Ethane  (Eh)            Formamide  (Eh)
+
+                         0         −79.82448(8)      −169.8992(2)                                     10        −79.64326(7)      −169.8623(2)
+                         1         −79.82254(7)      −169.8995(2)                                     11        −79.64816(7)      −169.8478(2)
+                         2         −79.81594(7)      −169.8957(2)                                     12        −79.64788(7)      −169.7359(2)
+                         3         −79.77018(8)      −169.8853(2)                                     13        −79.64827(7)      −169.6903(2)
+                         4         −79.70948(7)      −169.8650(2)                                     14        −79.64937(7)      −169.6905(2)
+                         5         −79.65531(7)      −169.7275(2)                                     15        −79.65006(7)      −169.6891(2)
+                         6         −79.63373(8)      −169.7114(2)                                     16         −79.6502(1)      −169.6918(2)
+                         7         −79.60163(9)      −169.8353(2)                                     17        −79.65056(7)      −169.6916(2)
+                         8         −79.59682(9)      −169.8592(2)                                     18        −79.65056(7)      −169.6911(3)
+                         9         −79.63426(8)      −169.8621(2)                                     19        −79.65038(7)      −169.6913(2)
+
+
+cleavage   in   formamide,   with   the   remaining   nuclei   allowed   to   relax   along   the   path.     The   reference   energies   used   for
+the  signed  energy  differences  in  the  main  text  are  independently  optimized  single-geometry  Psiformer  VMC  energies
+reported  in  the  same  reference.   For  each  molecule,  a  single  NucleoNet  model  is  optimized  jointly  across  all  20  images.
+The  resulting  NucleoNet  total  energies  are  listed  in  Table                       S7.
+
+
+                                     V.       GENERALIZATION   FROM   SPARSE   GEOMETRY   SETS
+
+   We   evaluate   generalization   by   optimizing   NucleoNet   models   on   sparse   sets   of   training   geometries   and   evaluating
+them   on   denser   geometry   grids,   most   of   whose   geometries   are   not   included   in   the   optimization.    These   experiments
+are  performed  for  N2   and  LiCN.  No  additional  wavefunction  optimization  is  performed  at  the  unseen  geometries.
+   Table     S8  summarizes  the  effective  batch  sizes  used  in  the  sparse-geometry  experiments.   The  notation nchain × Nopt
+denotes  the  number  of  Monte  Carlo  chains  per  optimization  geometry  multiplied  by  the  number  of  geometries  included
+in  the  optimization.
+
+
+                                         TABLE  S8.         Batch  sizes  used  in  the  sparse-geometry  experiments.
+
+                                                   System   Optimization  geometries   Effective  batch  size
+
+                                                   N2                  6                                          684 × 6
+                                                   LiCN         2                                          2048 × 2
+
+
+
+
+                                                                       A.       N2   Generalization
+
+   For  the  N2   sparse-geometry  experiment,  a  separate  NucleoNet  model  is  optimized  on  six  training  geometries,  bond
+lengths  uniformly  spaced  between 1.6  and 6.0 a0.   After  optimization,  the  model  is  evaluated  without  further  parameter
+updates  on  a  32-point  bond-length  grid  uniformly  spaced  between 1.6  and 6.4 a0.
+   The   sparse-geometry   result   is   compared   with   the   full-geometry   joint-optimization   result   described   in   Sec.                                      IV A.
+The  six  optimization  geometries  and  corresponding  energies  are  listed  in  Table                                  S9.   Values  in  parentheses  denote  the
+statistical  uncertainty  in  the  last  reported  digit.
+   The  energies  obtained  on  the  complete  evaluation  grid  are  reported  in  Table                                S10.
+
+
+                                                                    B.       LiCN   Generalization
+
+   For   the   LiCN   sparse-geometry   experiment,   a   separate   NucleoNet   model   is   optimized   only   on   the   two   endpoint
+configurations  as  training  geometries  (Geometry  IDs  1  and  5).   The  optimized  model  is  then  evaluated  directly  on  the
+                                                                                                                                                                                            8
+
+
+TABLE  S9.          N2  optimization  geometries  and  corresponding  energies  for  the  sparse-geometry  experiment.   Energies  are  reported
+in  Hartree,  and  values  in  parentheses  denote  the  statistical  uncertainty  in  the  last  reported  digit.
+
+                                                                 Bond  length L  (a0)                   Energy  (Eh)
+
+                                                                           1.6000             −109.22046(5)
+                                                                           2.4800             −109.46837(5)
+                                                                           3.3600             −109.25831(5)
+                                                                           4.2400             −109.19088(5)
+                                                                           5.1200             −109.18093(4)
+                                                                           6.0000             −109.17897(4)
+
+
+
+TABLE   S10.           N2   energies   on   a   32-point   bond-length   grid   uniformly   spaced   between  1.6   and  6.4 a0   for   the   sparse-geometry
+experiment.   Energies  are  reported  in  Hartree,  and  values  in  parentheses  denote  the  statistical  uncertainty  in  the  last  reported
+digit.
+
+                               Bond  length L  (a0)                Energy  (Eh)                              Bond  length L  (a0)                Energy  (Eh)
+
+                                         1.6000            −109.22032(7)                                                4.0774            −109.19600(6)
+                                         1.7548            −109.42535(7)                                                4.2323            −109.19123(7)
+                                         1.9097            −109.51670(7)                                                4.3871            −109.18768(6)
+                                         2.0645            −109.54159(8)                                                4.5419            −109.18527(6)
+                                         2.2194            −109.52875(7)                                                4.6968            −109.18351(7)
+                                         2.3742            −109.49613(7)                                                4.8516            −109.18239(6)
+                                         2.5290            −109.45462(7)                                                5.0065            −109.18147(6)
+                                         2.6839            −109.41081(7)                                                5.1613            −109.18079(5)
+                                         2.8387            −109.36852(7)                                                5.3161            −109.18030(6)
+                                         2.9935            −109.32978(7)                                                5.4710            −109.17991(6)
+                                         3.1484            −109.29595(7)                                                5.6258            −109.17958(5)
+                                         3.3032            −109.26746(7)                                                5.7806            −109.17929(6)
+                                         3.4581            −109.24428(7)                                                5.9355            −109.17910(6)
+                                         3.6129            −109.22619(7)                                                6.0903            −109.17899(6)
+                                         3.7677            −109.21268(7)                                                6.2452            −109.17863(8)
+                                         3.9226            −109.20297(7)                                                6.4000            −109.17858(7)
+
+
+
+three  intermediate  configurations  (Geometry  IDs  2–4)  without  further  wavefunction  optimization.
+   The   resulting   five-geometry   energy   profile   is   compared   with   the   full-geometry   NucleoNet   model   optimized   jointly
+on  all  five  configurations  in  Sec.             IV B.  Both  calculations  are  evaluated  relative  to  the  independently  optimized  single-
+geometry  NucleoNet  energies  used  as  the  baseline  in  the  main  text.
+   The  energies  evaluated  with  the  sparsely  optimized  model  are  listed  in  Table                                      S11.   Values  in  parentheses  denote  the
+statistical  uncertainty  in  the  last  reported  digit.
+
+
+
+
+                                                                      VI.       ABLATION   DETAILS
+
+   This   section   defines   the   ablation   variants   and   the   relative   metrics   used   in   the   main   text.      The   full   NucleoNet
+architecture  consists  of  the  shared  electron–nucleus  backbone  together  with  an  electron–nucleus  envelope  conditioned
+on   the   final   nuclear   representations.     We   consider   two   controlled   modifications   of   this   architecture.     NucleoNet-FE
+removes   the   dependence   of   the   envelope   parameters   on   the   final   nuclear   representations   while   retaining   the   shared
+electron–nucleus  backbone.   NucleoNet-FE-EB  is  constructed  from  NucleoNet-FE  by  further  restricting  the  backbone
+to  the  electron  streams  while  retaining  static  nuclear  geometry  through  pooled  electron–nucleus  initialization  features
+and  nuclear-centered  envelope  factors.   All  other  training,  sampling,  and  optimization  settings  are  kept  unchanged.
+                                                                                                                                                                                    9
+
+
+TABLE  S11.          LiCN  energies  evaluated  with  the  model  optimized  on  the  two  endpoint  geometries.   The  model  is  optimized  only
+on   the   two   endpoint   geometries   and   evaluated   on   all   five   configurations   without   further   wavefunction   optimization.    Energies
+are  reported  in  Hartree,  and  values  in  parentheses  denote  the  statistical  uncertainty  in  the  last  reported  digit.
+
+                                             Geometry  ID                           Role                           Sparse-geometry  energy  (Eh)
+
+                                                      1                                Optimization             −100.38049(3)
+                                                      2                                    Evaluation              −100.37944(4)
+                                                      3                                    Evaluation              −100.37626(4)
+                                                      4                                    Evaluation              −100.36622(3)
+                                                      5                                Optimization             −100.35382(3)
+
+
+                                                                         A.       Relative   Metrics
+
+   For   the   single-geometry   calculations,   the   energy   difference   of   an   ablation   model M   relative   to   the   full   NucleoNet
+model  is  defined  as
+                                                                      ∆EFull(M) = EM − EFull,                                                                                                                                 (24)
+where  a  positive  value  indicates  a  higher  variational  energy  than  the  full  model.
+   For  the  N2   sparse-geometry  ablation,  the  mean  absolute  error  of  model M   on  a  geometry  set S   is
+                                                         MAES(M) =   1              X     |EM(Rs) − Eref(Rs)| .                                                                                                     (25)
+                                                                               |S|  s∈S
+
+For  N2, Eref   is  the  same  dissociation-limit-anchored  MLR4(6, 8)  reference  defined  in  Sec.                                        IV A.
+   The  corresponding  change  relative  to  the  full  NucleoNet  model  is
+                                                       ∆MAEFull,S(M) = MAES(M) − MAES(Full).                                                                                                 (26)
+   We  report  this  quantity  separately  on  the  six  geometries  included  in  the  sparse-geometry  optimization,  denoted  by
+Strain,  and  on  the  quantitative  evaluation  set,  denoted  by Seval.   The  metric  on Strain  measures  the  error  at  the  training
+geometries,   whereas   the   metric   on Seval   measures   the   error   over   the   evaluation   set.    Positive   values   of ∆MAEFull,S
+indicate  a  larger  MAE  than  the  full  NucleoNet  model.
+
+
+                                                      B.       Fixed-envelope   ablation:    NucleoNet-FE
+
+   In   the   full   NucleoNet   model,   the   envelope   amplitude   and   decay   parameters   are   generated   from   the   final   nuclear
+representations  separately  for  each  determinant  and  spin  channel.   NucleoNet-FE  retains  the  same  isotropic  electron–
+nucleus  envelope  form  and  the  same  determinant-  and  spin-resolved  parameterization,  but  removes  the  dependence  of
+the  envelope  parameters  on  the  final  nuclear  representations.   The  envelope  parameters  are  instead  optimized  directly
+as  geometry-independent  trainable  parameters,
+
+                                     Ωkσ,FEia       = X     ¯πkσIa exp −¯λkσIa ∥ri − RI∥ ,       i ∈ Eσ,    a = 1, . . . , N,                                                               (27)
+                                                     I∈N
+where  ¯πkσIa     and  ¯λkσIa    are   geometry-independent   trainable   parameters   for   nucleus  I ,    orbital  a,    determinant  k,    and
+spin   channel σ.     These   parameters   are   optimized   directly   and   do   not   depend   on   the   final   nuclear   representations.
+The   nuclear   coordinates RI   remain   explicitly   present   through   the   electron–nucleus   distances,   so   the   fixed   envelope
+retains  its  nuclear-centered  spatial  dependence.   All  other  components,  including  the  shared  electron–nucleus  backbone,
+orbital  construction,  determinant  expansion,  and  spin-resolved  envelope  structure,  remain  unchanged.   The  comparison
+between  NucleoNet  and  NucleoNet-FE  therefore  isolates  the  contribution  of  conditioning  the  envelope  parameters  on
+the  learned  nuclear  representations.
+
+
+                                            C.       Electron-only-backbone   ablation:    NucleoNet-FE-EB
+
+   NucleoNet-FE-EB  is  constructed  from  NucleoNet-FE  by  restricting  the  backbone  to  the  electron  streams.   Accord-
+ingly,  only  electronic  one-particle  streams  and  electron–electron  two-particle  representations  are  propagated  through
+                                                                                                                                                                                               10
+
+the  backbone.   The  fixed  envelope  defined  in  Eq.  (27)  is  retained.   Static  nuclear  geometry  remains  available  through
+pooled   electron–nucleus   initialization   features   and   through   the   nuclear-centered   envelope.    Thus,   NucleoNet-FE-EB
+implements   the   electron-only-backbone   variant   described   in   the   main   text   without   removing   nuclear   geometry   from
+the  wavefunction.
+   The  propagated  particle  set  is  reduced  from
+
+                                                                                   P = E↑ ∪ E↓ ∪ N                                                                                                                                                (28)
+
+to
+
+                                                                                     PEB = E↑ ∪ E↓.                                                                                                                                                  (29)
+
+   To  retain  static  nuclear-geometry  information,  the  initial  one-particle  feature  of  electron i  is  constructed  by  averaging
+its  pair  features  over  all  electrons  and  nuclei,
+
+                                                                uEBi    = ⟨uiα⟩α∈E↑∪E↓∪N ,       i ∈ E↑ ∪ E↓.                                                                                                           (30)
+
+   The  initial  electronic  one-particle  and  electron–electron  two-particle  representations  are
+                                                                 h0i  = SiLU W 01 concat uEBi   , ci + b01 ,
+                                                                h0ij = SiLU W 02 concat (uij, cij) + b02 ,                                                                                                             (31)
+
+
+where  i, j  ∈  E↑ ∪ E↓.      Only   electronic   one-particle   streams   and   electron–electron   two-particle   representations   are
+propagated  after  initialization.
+   At  layer ℓ,  the  pair-gated  message  between  electrons  is
+
+                                                                                    mℓij = hℓij ⊙ ˆhℓj.                                                                                                                                                 (32)
+
+   The  one-particle  group  summary  is  restricted  to  the  two  electronic  spin  channels,
+                                                                                            
+hℓj
+                                                                  gℓ1,EB = concat                    j∈E↑ ,
+hℓj       j∈E↓      .                                                                                                              (33)
+
+   The  pair-message  group  summary  is  likewise  restricted  to  electron–electron  messages,
+                                                                                           
+mℓij
+                                                              gℓ2,i,EB = concat                       j∈E↑ ,
+mℓij         j∈E↓     .                                                                                                        (34)
+
+   The  one-particle  update  input  is
+                                                                    Fℓi,EB = concat hℓi, gℓ1,EB, gℓ2,i,EB .                                                                                                                   (35)
+
+   The  electronic  representations  are  updated  using  the  same  nonlinear  transformations  as  in  the  full  model,
+                                                                                                                               
+                                                               hℓ+1i     =   1√2    hℓi + SiLU W ℓ1Fℓi,EB + bℓ1                    ,
+                                                                                                                                                                                           (36)
+                                                               hℓ+1ij    =   1√2    hℓij + SiLU W ℓ2hℓij + bℓ2                  .
+
+   The  final  electronic  representations  are  passed  to  the  same  orbital  construction,  fixed-envelope  multiplication,  and
+determinant  construction  used  by  NucleoNet-FE.  Thus,  NucleoNet-FE-EB  retains  static  nuclear-geometry  information
+but  removes  the  propagation  of  nuclear  representations  through  the  backbone.   The  comparison  between  NucleoNet-FE
+and  NucleoNet-FE-EB  therefore  tests  the  effect  of  replacing  the  shared  electron–nucleus  backbone  by  an  electron-only
+backbone  while  retaining  the  same  fixed  envelope.
+
+
+                                                                            D.       Raw   Ablation   Data
+
+   For  completeness,  we  report  the  absolute  variational  energies  used  in  the  ablation  analysis.   The  columns  correspond
+to   the   full   NucleoNet   model   and   the   two   ablation   variants,   NucleoNet-FE   and   NucleoNet-FE-EB.   Tables                                                        S12–S14
+contain  the  single-geometry  results  and  the  N2  sparse-geometry  results  on  the  training  and  evaluation  sets,  respectively.
+Energies  are  reported  in  Hartree,  and  values  in  parentheses  denote  the  statistical  uncertainty  in  the  last  reported  digit.
+                                                                                                                                                                                 11
+
+
+TABLE   S12.         Absolute   variational   energies   for   the   NH3   and   N2   single-geometry   ablation   benchmarks.    Energies   are   reported
+in  Hartree,  and  values  in  parentheses  denote  the  statistical  uncertainty  in  the  last  reported  digit.
+
+                                           System                  NucleoNet                  NucleoNet-FE             NucleoNet-FE-EB
+
+                                           NH3                        -56.56389(2)                  -56.56388(2)                         -56.56384(2)
+                                           N2                           -109.54195(3)              -109.54184(3)                     -109.54173(4)
+
+
+TABLE  S13.          Absolute  N2   energies  at  the  six  geometries  used  to  optimize  the  sparse-geometry  ablation  models.   Energies  are
+reported  in  Hartree,  and  values  in  parentheses  denote  the  statistical  uncertainty  in  the  last  reported  digit.
+
+                                  Bond  length L  (a0)                   NucleoNet                    NucleoNet-FE             NucleoNet-FE-EB
+                                           1.6000            −109.22046(5)    −109.22033(7)       −109.21963(9)
+                                           2.4800            −109.46837(5)    −109.46817(7)       −109.46775(9)
+                                           3.3600            −109.25831(5)    −109.25818(8)       −109.25729(9)
+                                           4.2400            −109.19088(5)    −109.19091(7)       −109.19006(9)
+                                           5.1200            −109.18093(4)    −109.18032(6)       −109.17995(8)
+                                           6.0000            −109.17897(4)    −109.17877(5)       −109.1777(1)
+
+
+
+
+
+
+[1] G.  Goldshlager,  N.  Abrahamsen,  and  L.  Lin,  A  kaczmarz-inspired  approach  to  accelerate  the  optimization  of  neural  network
+    wavefunctions,        Journal  of  Computational  Physics  516,  113351  (2024).
+[2] D.  Pfau,  J.  Spencer,  A.  de  G.  Matthews,  and  W.  Foulkes,  Ab-initio  solution  of  the  many-electron  schrödinger  equation  with
+    deep  neural  networks,          Physical  Review  Research  2,  033429  (2020).
+[3] I.  von  Glehn,  J.  S.  Spencer,  and  D.  Pfau,  A  self-attention  ansatz  for  ab-initio  quantum  chemistry,  in                           The  Eleventh  Interna-
+    tional   Conference   on   Learning   Representations                (2023).
+[4] R.  Li,  H.  Ye,  D.  Jiang,  X.  Wen,  C.  Wang,  Z.  Li,  X.  Li,  D.  He,  J.  Chen,  W.  Ren,  and  L.  Wang,  A  computational  framework
+    for  neural  network-based  variational  Monte  Carlo  with  Forward  Laplacian,                             Nature  Machine  Intelligence  6,  209  (2024).
+[5] A.  Foster,  Z.  Schätzle,  P.  B.  Szabó,  J.  Köhler,  G.  Cassella,  N.  Gao,  J.  Li,  F.  Noé,  and  J.  Hermann,  An  ab  initio  foundation
+    model  of  wavefunctions  that  accurately  describes  chemical  bond  breaking,                            Nature  Communications  17,  9976  (2026).
+[6] R.  J.  Le  Roy,  Y.  Huang,  and  C.  Jary,  An  accurate  analytic  potential  function  for  ground-state  N2  from  a  direct-potential-fit
+    analysis  of  spectroscopic  data,           The  Journal  of  Chemical  Physics  125,  164310  (2006).
+[7] S.  J.  Chakravorty,  S.  R.  Gwaltney,  E.  R.  Davidson,  F.  A.  Parpia,  and  C.  F.  p  Fischer,  Ground-state  correlation  energies  for
+    atomic  ions  with  3  to  18  electrons,          Physical  Review  A  47,  3649  (1993).
+                                                                                                                                                          12
+
+
+TABLE   S14.      Absolute   N2   energies   on   the   evaluation   grid   for   the   sparse-geometry   ablation   models.    Energies   are   reported   in
+Hartree,  and  values  in  parentheses  denote  the  statistical  uncertainty  in  the  last  reported  digit.
+
+                             Bond  length L  (a0)                   NucleoNet                    NucleoNet-FE             NucleoNet-FE-EB
+
+                                     1.6000            −109.22032(7)    −109.22020(7)       −109.2197(1)
+                                     1.7548            −109.42535(7)    −109.42536(7)       −109.4011(5)
+                                     1.9097            −109.51670(7)    −109.51666(7)        −108.997(3)
+                                     2.0645            −109.54159(8)    −109.54156(7)        −108.896(4)
+                                     2.2194            −109.52875(7)    −109.52881(7)       −109.5015(8)
+                                     2.3742            −109.49613(7)    −109.49617(7)       −109.4950(2)
+                                     2.5290            −109.45462(7)    −109.45462(7)       −109.4538(1)
+                                     2.6839            −109.41081(7)    −109.41075(7)       −109.4100(1)
+                                     2.8387            −109.36852(7)    −109.36845(7)       −109.3677(1)
+                                     2.9935            −109.32978(7)    −109.32976(7)       −109.3291(1)
+                                     3.1484            −109.29595(7)    −109.29575(8)       −109.2951(1)
+                                     3.3032            −109.26746(7)    −109.26731(7)       −109.2665(1)
+                                     3.4581            −109.24428(7)    −109.24419(8)       −109.2434(1)
+                                     3.6129            −109.22619(7)    −109.22614(7)       −109.22538(9)
+                                     3.7677            −109.21268(7)    −109.21267(7)       −109.2115(1)
+                                     3.9226            −109.20297(7)    −109.20284(7)       −109.20210(9)
+                                     4.0774            −109.19600(6)    −109.19577(8)       −109.19494(9)
+                                     4.2323            −109.19123(7)     −109.1907(2)       −109.19014(9)
+                                     4.3871            −109.18768(6)    −109.18758(7)       −109.18666(9)
+                                     4.5419            −109.18527(6)    −109.18498(8)       −109.18427(8)
+                                     4.6968            −109.18351(7)    −109.18325(7)       −109.18266(8)
+                                     4.8516            −109.18239(6)    −109.18203(7)       −109.18141(9)
+                                     5.0065            −109.18147(6)    −109.18094(6)       −109.18054(9)
+                                     5.1613            −109.18079(5)     −109.1792(4)       −109.17979(8)
+                                     5.3161            −109.18030(6)    −109.17997(6)       −109.17941(9)
+                                     5.4710            −109.17991(6)    −109.17944(6)       −109.17892(8)
+                                     5.6258            −109.17958(5)    −109.17922(6)       −109.1784(1)
+                                     5.7806            −109.17929(6)    −109.17897(6)       −109.1782(1)
+                                     5.9355            −109.17910(6)    −109.17892(6)       −109.1782(1)
+                                     6.0903            −109.17899(6)    −109.17862(6)       −109.1779(1)
+                                     6.2452            −109.17863(8)    −109.17844(6)       −109.17765(9)
+                                     6.4000            −109.17858(7)    −109.17846(6)       −109.1775(1)

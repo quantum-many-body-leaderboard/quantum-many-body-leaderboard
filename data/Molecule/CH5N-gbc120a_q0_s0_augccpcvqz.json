@@ -1,0 +1,112 @@
+{
+  "model": "Molecule",
+  "lattice": "molecule",
+  "n_sites": 7,
+  "boundary": "O",
+  "n_electrons": 18,
+  "params": {
+    "formula": "CH5N",
+    "name": "Methylamine",
+    "charge": 0,
+    "N_up": 9,
+    "N_dn": 9,
+    "basis": "aug-cc-pCVQZ",
+    "geometry": [
+      {
+        "el": "C",
+        "r": [
+          0.0976988406400137,
+          1.3311230821436295,
+          0
+        ]
+      },
+      {
+        "el": "N",
+        "r": [
+          0.0976988406400137,
+          -1.435435964219621,
+          0
+        ]
+      },
+      {
+        "el": "H",
+        "r": [
+          -1.7795550915029188,
+          2.2226958677134254,
+          0
+        ]
+      },
+      {
+        "el": "H",
+        "r": [
+          -0.8658725102757113,
+          -2.077564901346829,
+          1.5352135035966563
+        ]
+      },
+      {
+        "el": "H",
+        "r": [
+          -0.8658725102757113,
+          -2.077564901346829,
+          -1.5352135035966563
+        ]
+      },
+      {
+        "el": "H",
+        "r": [
+          1.1202296466421686,
+          1.9968735958279007,
+          1.66428179790445
+        ]
+      },
+      {
+        "el": "H",
+        "r": [
+          1.1202296466421686,
+          1.9968735958279007,
+          -1.66428179790445
+        ]
+      }
+    ],
+    "geometry_source": "arXiv:1909.02487 (PRR 2, 033429): positions of Table X (journal lines 1200-1206), stated in a0 but printed in ångström, converted to bohr (corrections); Appendix G says the structures come from the G3 database where available"
+  },
+  "instance_id": "Molecule/CH5N-gbc120a_q0_s0_augccpcvqz",
+  "rows": [
+    {
+      "energy": -95.8437,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 18,
+      "einf": null,
+      "v_score": null,
+      "method": "RCCSD(T)",
+      "ansatz": null,
+      "method_detail": "all-electron, RHF reference",
+      "method_as_published": "RCCSD(T) [all-electron, RHF reference]",
+      "family": "FCIQMC / CC",
+      "bound_type": "approximate",
+      "bound_type_reason": "finite-order perturbation theory, GW, or a perturbative correction to coupled cluster (track 3, 2026-10-21); error of unknown sign (RULES.md 13.4; assigned during source reading)",
+      "reference": "D. Pfau, J. S. Spencer, A. G. D. G. Matthews and W. M. C. Foulkes, Ab initio solution of the many-electron Schrödinger equation with deep neural networks, Phys. Rev. Research 2, 033429 (2020), arXiv:1909.02487, doi:10.1103/PhysRevResearch.2.033429",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:1909.02487 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "−95.8437",
+        "note": "PRR 2, 033429 Table II, journal text line 494; arXiv text line 412 (same digits) | Hartree, total energy with nuclear repulsion (all-electron; FermiNet and CCSD(T) agree to mEh, so the same Hamiltonian); closed-shell singlet, N_up = N_dn",
+        "secondary_of": null
+      },
+      "corrections": [
+        {
+          "field": "geometry",
+          "conversion": "positions as printed x 1/0.52917721092 (ångström to bohr), unrounded",
+          "reason": "Table X is headed (a0), but the printed positions are in ångström (same in arXiv v1): read as bohr the bonds would be C-N 0.775 Å, C-H 0.58 Å, N-H 0.54 Å; read as ångström they are 1.464, 1.092-1.100 and 1.018 Å. RHF (pyscf 2.14, 2026-11-12): cc-pVQZ -90.9431 Eh with the positions as bohr, -95.2602 as ångström, against the paper's HF/CBS -95.2628 (Table II); control ozone (Table XI, bohr) cc-pVQZ -224.3465 against -224.3526. Converted by the ruling of 2026-11-12.",
+          "from": "TABLE X as printed (unit heading a0)",
+          "to": "bohr"
+        }
+      ]
+    }
+  ]
+}

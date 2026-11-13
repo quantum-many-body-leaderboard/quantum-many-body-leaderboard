@@ -1,0 +1,1171 @@
+Simulations of state-of-the-art fermionic neural network wave functions with diﬀusion
+                                                               Monte Carlo
+
+                                                                 Max  Wilson∗
+                               Quantum  Engineering  CDT,  Bristol  University,  Bristol,  BS8  1TH,  UK
+                         QuAIL,  NASA  Ames  Research  Center,  Moﬀett  Field,  California  94035,  USA  and
+                                       KBR,  Inc.,  601  Jeﬀerson  St.,  Houston,  TX  77002,  USA
+
+                                                                 Nicholas  Gao
+                           QuAIL,  NASA  Ames  Research  Center,  Moﬀett  Field,  California  94035,  USA
+                                       KBR,  Inc.,  601  Jeﬀerson  St.,  Houston,  TX  77002,  USA
+                            German  Aerospace  Center  (DLR),  Linder  H¨ohe  51147  K¨oln,  Germany    and
+                           Technical  University  of  Munich,  Boltzmann  Str.   3  85748  Garching,  Germany
+
+                                                                Filip  Wudarski†
+                         QuAIL,  NASA  Ames  Research  Center,  Moﬀett  Field,  California  94035,  USA  and
+               USRA  Research  Institute  for  Advanced  Computer  Science,  Mountain  View,  California  94043,  USA
+
+                                                Eleanor  Rieﬀel  and  Norm  M.  Tubman‡
+                           QuAIL,  NASA  Ames  Research  Center,  Moﬀett  Field,  California  94035,  USA
+                                                            (Dated:  March 26, 2021)
+                  Recently developed neural network-based ab-initio solutions (Pfau et.  al arxiv:1909.02487v2) for
+                ﬁnding ground states of fermionic systems can generate state-of-the-art results on a broad class of
+                systems.  In this work, we improve the results for this Ansatz with Diﬀusion Monte Carlo.  Addi-
+                tionally, we introduce several modiﬁcations to the network (Fermi Net) and optimization method
+                (Kronecker Factored Approximate Curvature) that reduce the number of required resources while
+                maintaining or improving the modelling performance.  In terms of the model, we remove redundant
+                computations and alter the way data is handled in the permutation equivariant function.  The Diﬀu-
+                sion Monte Carlo results exceed or match state-of-the-art performance for all systems investigated:
+                atomic systems Be-Ne, and the carbon cation C+.
+
+
+                    I.    INTRODUCTION                                       of producing state-of-the-art results for electronic struc-
+                                                                             ture  simulations.   We  have  particular  interest  in  ﬁnd-
+  Neural networks, in recent years, have provided an al-                     ing  good  approximations  to  ground  states  of  fermionic
+ternative computational paradigm for solving electronic                      Hamiltonians [9] and the precision and accuracy of Fermi
+structure  problems  which  includes  applications  in  di-                  Net [7].
+rectly  solving  the  time-independent  Schr¨odinger  equa-                     In  this  paper  we  modify  an  existing  framework,  the
+tion  to  ﬁnd  approximate  ground  states  of  atoms  and                   Fermi  Net  [7],  by  changing  how  data  is  handled  in  the
+molecules [1].  Standard quantum chemistry methods [2],                      network  and  removing  redundant  elements.   We  apply
+such as coupled-cluster [3], full conﬁguration interaction                   the  wave  function  optimization  algorithm  VMC  whilst
+[4],  Variational  Monte  Carlo  (VMC)  [5],  and  Diﬀusion                  altering some aspects of the Kronecker-Factored Approx-
+Monte  Carlo  (DMC)  [6]  have  been  used  in  conjunction                  imate  Curvature  (KFAC)  optimization,  and  then  run-
+with neural network methods in diﬀerent ways, such as                        ning  the  DMC  algorithm  to  improve  the  wave  func-
+the introduction of new Ans¨atze [7–12] or providing rich                    tion  further.   The  use  of  DMC  is  standard  practice  in
+datasets  for  the  prediction  of  properties  of  previously               many  Quantum  Monte  Carlo  (QMC)  codes,  however,
+untested systems and their dynamics in supervised learn-                     the  wave  functions  used  in  virtually  all  packages  prior
+ing frameworks [13–16].                                                      to  this  new  wave  of  neural  network  approaches  are  us-
+  Notable examples of new Ans¨atze are neural networks                       ing a wave function consisting of Slater/Jastrow/Multi-
+such as SchNet [11],  PauliNet [9],  Boltzmann machines                      determinant/Backﬂow components,  which generally are
+[12] and Fermi Net [7].  Even though these techniques are                    less accurate or less systematically improveable than the
+still in the early stages of development, machine learning                   Fermi Net Ansatz.
+for  fermionic  systems  has  been  widely  studied  over  the                  The  QMC  we  described  above  is  generally  run  with
+past few years, and some of these techniques are capable                     standard VMC and then DMC with the ﬁxed node ap-
+                                                                             proximation (nuclei are ﬁxed in place) in the continuum.
+                                                                             That is to say we solve the Schr¨odinger equation
+
+∗ aw16952@bristol.ac.uk                                                                               ˆHψ(X) =Eψ(X),                         (1)
+† ﬁlip.a.wudarski@nasa.gov
+‡ norm.m.tubman@nasa.gov
+                                                                             where X  deﬁnes the system conﬁguration,  Figure 1,   ˆH
+                                                                                                                                                  2
+
+                                                                            II.    SOLVING THE SCHR¨ODINGER EQUATION
+                                                                                           FOR FERMIONIC SYSTEMS
+
+                                                                                            A.    Variational Monte Carlo
+
+                                                                               The Schr¨odinger Equation plays a central role in the
+                                                                            description  of  quantum  behavior  of  chemical  systems.
+                                                                            Apart from a handful of analytically solvable models, for
+                                                                            example the hydrogen atom [17], one mostly needs to in-
+                                                                            corporate approximate techniques and numerical meth-
+                                                                            ods that scale unfavorably with the increasing system size
+                                                                            (e.g.  number of electrons) [8].  Many techniques and ap-
+                                                                            proximations have been introduced to address this prob-
+                                                                            lem, and in this work we have a particular focus on real
+                                                                            space Monte Carlo approaches.
+                                                                               An  atomic  or  molecular  system  can  be  described  by
+                                                                            the time-independent Schr¨odinger equation
+
+FIG. 1.  The system of atoms (protons/neutrons red/green)                                            ˆHψ(X) =Eψ(X).                         (2)
+
+and electrons (blue). The set of position vectors of a system of            Using  the  Born-Oppenheimer  approximation,  the  posi-
+atoms, Ri and electrons ri. Xorigin is the origin (black) of the            tion of nuclei are frozen and we have a Hamiltonian for
+coordinate system.  In all cases explored here we considered                the electronic degrees of freedom,
+single  atom  systems  and  the  origin  was  set  to  the  nucleus
+position.  However, the choice of origin is completely arbitrary
+as Fermi Net is invariant to translations.                                                         ˆH =−1
+                                                                                                           2 ˆ∇2 +V (X).                       (3)
+
+is the Hamiltonian operator and E  is the energy of the                     Units  of  energy E   expressed  here  are  Hartrees,   ˆ∇2
+eigenfunctionψ(X), the wave function we are attempting                      is  the  multidimensional  (3ne  where ne  is  the  number
+to model.  The Ansatz developed in this work is function-                   of  electrons)  Laplacian  of  the  wave  function   ˆ∇2   =
+                                                                            ∑ne    ∑
+ally identical to previous work,  although improvements                        i=1    j=x,y,z d2dr2i,j   that  describes  kinetic  energy. ri,j
+are made.  We refer to this model and the associated op-                    and Ri,j  correspond to coordinate j =x,y,z of the i-th
+timization methods as Fermi Net* in order to distinguish                    electron and nuclei, respectively. V (X) is the potential
+from previous work referred to as Fermi Net.                                energy of some (electron, nuclei) conﬁguration
+  The  paper  is  organized  as  follows:   Section  II  intro-                 X = (r1,x,r1,y,r1,z,...,rne,z;R1,x,...,Rnn,z),      (4)
+duces the problem to be solved (i.e. the time-independent
+Schr¨odinger equation for fermionic systems) and all the                    given by
+relevant background including VMC, KFAC, DMC and
+a sketch of the Fermi Net; Section III describes the par-                                          ne∑     1         ne,nn∑     ZI
+ticular methods used in this work including detailed de-                               V (X) =         |ri− rj| +           |ri− RI|
+scriptions  of  the  algorithms;  The  results  are  described                                    i>j                  i,I
+and discussed in Section IV; and ﬁnally we conclude our                                               nn∑    ZIZJ
+ﬁndings in Section V.                                                                             +       |RI− RJ|                              (5)
+  There are several contributions in this work:                                                      I>J
+
+    • Introduced changes to the Fermi Net implementa-                       wherenn is the number of nuclei, ZI  is the atomic num-
+       tion:  removing the diagonal elements of the pair-                   ber of nuclei I,  and ri  and RI  are the position vectors
+       wise  terms;  and  changing  how  the  data  is  han-                of the electron i and nuclei I, respectively.  Throughout
+       dled in the permutation equivariant function.  Both                  the  paper  we  use  bold  font  to  denote  vectors  and  reg-
+       changes result in eﬃciency improvements;                             ular  font  to  denote  vector  components  (scalars).   Both
+                                                                            are lower case symbols or letters.  Matrices are capital-
+                                                                            ized symbols or letters and are not written in bold font.
+    • ﬁrst  (to  our  knowledge)  application  of  diﬀusion                 Though a batched vector,  for example m vectors of di-
+       Monte Carlo with a neural network Ansatz;                            mension n arranged in an m×n, can be represented as
+                                                                            a matrix, we notationally treat it as a vector, as is typ-
+                                                                            ical for deep learning.  There are some caveats to these,
+    • and state-of-the-art results on all systems explored                  though in general the meaning is obvious from context,
+       (Be-Ne, C+)                                                          for example nuclei coordinates are capitalized.
+                                                                                                                                                 3
+
+  Approximately   solving   the   Schr¨odinger   equation,                  The parametersθ of the wave function are optimized us-
+Equation  (2),  is  a  subroutine  in  ﬁnding  the  minimum                 ing some form of gradient descent and computed via
+energy  of  the  system,  i.e.   the  ground  state  energy E0.                              [                                             ]
+Since the Hamiltonian is a bounded operator,  one may                         ∆L(θ) = EX      (EL(X;θ)− EX[EL(X;θ)]) ˆ∇ log|ψ(X;θ)|           (11)
+use a variational principle [2]                                              and  estimated  through  sampling  of  the  conﬁguration
+                                  ∫ dXψ∗(X) ˆHψ(X)                          space. This procedure allows us to get close to the ground
+           E0≤⟨ψ|  ˆH|ψ⟩           ∫ dXψ∗(X)ψ(X) ,         (6)              stateψ0(X), however it strongly relies on the parameter-
+                    ⟨ψ|ψ⟩    =                                              ized Ansatz and ease of computing the gradients ∆L(θ).
+                                                                            From now on, we will omitθ parameters where it is clear
+detailing that the expectation value of the HamiltonianˆH  with  respect  to  a  state ψ(X)  is  bounded  from  be-from the context, and introduce Fermi Net as an Ansatz
+                                                                            that provides powerful parameterization.
+low  by  the  ground  state  energy E0.   Finding  the  best
+approximation  to  the  ground  state ψ0(X)  can  be  done
+with a parameterized Ansatz, a so-called trial wave func-                            B.    Fermionic Neural Network Ansatz
+tion ψ(X;θ),  which is iteratively optimized until a sat-
+isfactory accuracy (in terms of energy) is achieved.  Dif-                     The Fermionic Neural Network (Fermi Net) is a neural
+ferent  Ans¨atze  have  varying  capacities  to  express  wave              network  designed  speciﬁcally  for  the  task  of  represent-
+functions, resulting in diﬀerent possible minimal energy                    ing the wave function, in continuous Euclidean space, of
+wave functions.  The greater the capacity of an Ansatz                      the  Schr¨odinger  equation  for  a  fermionic  Hamiltonian.
+to model the true wave function, the better the approxi-                    In this section we describe the original model, found in
+mation to the ground state, in general.                                     Reference  [7],  and  in  Section  III A  we  describe  Fermi
+  A  popular  class  of  variational  methods  -  Variational               Net*, which is functionally identical but better perform-
+Monte  Carlo  (VMC)  -  relies  on  random  sampling  of                    ing (faster) than the original.
+the conﬁguration space in order to estimate expectation                        At a high level, the Fermi Net consists of
+value of the Hamiltonian (computing loss function) as
+                                    ∫ dX|ψ(X;θ)|2EL(X;θ)                       Ilearnable single electron features (single streams),
+   L(θ) =⟨ψ(θ)|  ˆH|ψ(θ)⟩⟨ψ(θ)|ψ(θ)⟩    = ∫ dX|ψ(X;θ)|2   ,                   IIlearnable electron-electron interaction features (pair-
+                                                                   (7)           wise streams),
+where EL(X;θ)  = ψ−1(X;θ) ˆHψ(X;θ)  is  local  energy,                       IIIpermutation equivariant operations (EQV),
+which  for  molecular/atomic  Hamiltonians  is  convenient                   IVand multi-electron orbitals.
+to express in log-domain as
+                         [ ˆ∇2 log|ψ(X;θ)|⏐⏐X ′                                To  a  lesser  extent  the  implementation  and  optimiza-
+    EL(X′;θ) =−12                                                           tion details are necessary to the performance and usage.
+                    +( ˆ∇ log|ψ(X;θ)|⏐⏐X ′)2]      +V (X′).      (8)        As such they are characteristic of the Fermi Net imple-
+                                                                            mentation:
+
+( ˆ∇·)2   is   the   inner   product   of   the   nabla   operator           VIKFAC optimization;
+(                   )
+   ∂·                 with itself.                                          VIIand  stable  log-domain  computation  of  the  ampli-
+  ∂r1,x,...,  ∂·∂rne,z
+  The integral (7) is an expectation value of the sampled                        tudes, ﬁrst order derivatives and second order deriva-
+conﬁgurations X,                                                                 tives.
+   ∫                                                [            ]
+       dX|ψ(X;θ)|2EL(X;θ) = EX∼p(X;θ)                EL(X;θ)      .(9)         Next, in this background, we give an overview of the
+                                                                            Fermi Net model, describing I-IV. Then we detail KFAC,
+The  expectation  in  Equation  (9)  is  approximated  by  a                describing VI. Details on VII, including the LogSumExp
+Monte-Carlo estimate,                                                       trick  and  derivations  of  the  derivatives  of  the  determi-
+                                                                            nant,  can be found in the appendix of Reference [7] or
+                   [            ]         N∑                                understood from other references [18].
+      EX∼p(X;θ)      EL(X;θ)      ≈  1N       EL(Xi;θ),        (10)
+                                         i=1
+                                                                                                           Ansatz
+where we introduce conﬁguration probability p(X;θ)∝
+|ψ(X;θ)|2.  Samples (also referred to as walkers and are                       There are two sets of streams in the network referred to
+represented by X) are generated from the wave function                      as the single and pairwise streams. These streams contain
+distribution  via  the  Metropolis  Hastings  Monte  Carlo                  the data corresponding to single, hlαi  , and pairwise, hlαβ
+method.   In  order  to  update  the  parameters θ  and  im-                electron input features, respectively.  These variables areij   ,
+prove the wave function, one needs to compute gradients
+of  the  loss  function  with  respect  to θ  denoted  ∆L(θ).               indexed by l, the layer of the network, and i and j, the
+                                                                                                                                                    4
+
+electron indexes. α is the spin of electron i and β is the                   Equation (19) is a representation of the full determinant
+spin of electron j.                                                          as  a  product  of  spin  up  and  down  determinants.   This
+  The inputs to the network indexed by l = 0 and com-                        representation  forces  oﬀ-block-diagonal  elements  of  the
+puted from the system X are                                                  full determinant to zero, when
+      h0αi   = (ri− R0,‖ri− R0‖, ri− R1,‖ri− R1‖,                                    (i∈{1,...,n↑}∧j∈{n↑ + 1,...,n})
+                ..., ri− Rn,‖ri− Rn‖),                          (12)                 ∨ (i∈{n↑ + 1,...,n}∧j∈{1,...,n↑})
+         h0αβ                                                                         = (i≤n↑∧j >n↑)∨ (i>n↑∧j≤n↑),         (20)
+           ij    = (ri− rj,‖ri− rj‖).                            (13)
+ri and Rj are the electron and atom position vectors, as                     wherei andj refer to the orbital index.  Finally, the sign
+shown in Figure 1, and‖·‖ is the Euclidean norm.                             is split from the the amplitudes and the network outputs
+  The  data  from  the  streams  at  each  layer  are  trans-                the amplitudes in the log-domain for numerical stability
+formed  by  a  permutation  equivariant  function.    The                                               ⏐⏐⏐∑
+permutation  equivariant  function  maintains  the  anti-                          log|ψ(X)| = log            ωk det[Φ↑k] det[Φ↓k]⏐⏐⏐       (21)
+symmetry (required by fermionic systems) of the Ansatz                                                     k
+and  generates  multi-electron  orbitals  with  demonstra-                   Other  work  [19],   removes  the  weights ωk   in  Equa-
+bly good modelling capacity.  This function outputs one
+streams of data flαi  :                                                      tion  (19),  as  they  are  functionally  redundant,  and  re-
+       (          ∑              ∑              ∑            ∑       )       places  the  anisotropic  decay  parameters Σαkim  in  Equa-
+flαi    =hlα,  1      hlαβ           hlαβ           hlαi ,  1    hlαi        tion (17) with a single parameter, restricting the orbitals
+              n↑        ij ,  1n↓      ij ,  1n↑         n↓                  to  isotropic  decay.   Surprisingly,  the  authors  note  this
+                  β⁄=↓           β⁄=↑          α⁄=↓          α⁄=↑
+                                                                    (14)     does not seem to result in a decrease in modelling accu-
+The data at each layer l are computed                                        racy but does lead to signiﬁcant gains in speed.  These
+                                                                             improvements are further discussed in Section IV.
+             hlαi   = tanh(Wlflαi   + bl) + h(l−1)αi
+            hlαβij    = tanh(Vlhlαβij   + cl) + h(l−1)αβij                 (15)         Kronecker Factored Approximate Curvature
+
+where in a layerl, Wl, and Vl are weights, bl and cl are                        The optimization algorithm used here is a variant ap-
+the biases.  Residual connections are added to all layers                    proximate  natural  gradient  descent  method  known  as
+where dim(hl) = dim(h(l−1)).                                                 KFAC. Roughly speaking, updates (the approximate nat-
+  There are nl  of these parameterized layers.  The out-                     ural gradients) ˜δl for layer l are computed as
+puts fLαi    are split into spin dependent data blocks.  There
+is a linear transformation to map hLαi    to a scalars which                                          ˜δl =  ˜F−1
+are coeﬃcients of the exponentials in the orbitals.  Mul-                                                     l   vec(∆lL)
+tiple determinants are generated in this way, indexed by                                                 =  ¯A−1l   ∆lL ¯S−1l ,                        (22)
+k, which contribute to the modelling capacity of the net-                    where  ˜F−1
+work and the elements of the determinants are the prod-                      are the gradients corresponding to weights in layerl, andl     is the approximate inverse Fisher block, ∆lL
+uct of the coeﬃcient computed by the Fermi Net and the                        ¯Al  and  ¯Sl  are  the  moving  covariances  of  the  left  and
+envelopes                                                                    right Fisher factors, respectively, discussed in literature
+
+           φαkij  =(wαkli  hlαj   +dαkli  )×                               (16)[20–23].   The  term  Fisher  block  is  used  to  indicate  the
+                    ∑   παkim exp(−|Σαkim(rαj− Rm)|)        (17)             elements of the Fisher Information Matrix (FIM) corre-
+                                                                             sponding to a given layer in the network.  In Reference [7]
+                     m                                                       the authors use a reduced version of the full KFAC al-
+Σαkim  control  the  anisotropic  (direction  dependent)  be-                gorithm.  They do not use adaptive damping or adaptive
+haviour of the envelope whereas the inverse exponential                      learning rates which are somewhat characteristic of the
+ensures the wave function decays to zero when the elec-                      original algorithm [24] and considered important in the
+trons are large distances from the nuclei.                                   literature [20].
+  The determinants are constructed                                              The  KFAC  variant  used  in  this  work  is  closer  to  an
+                                  ⏐⏐⏐⏐⏐⏐⏐          ⏐⏐⏐⏐⏐⏐⏐                   adaption named Kronecker Factors for Convolution [21]
+                                   φαk00 ... φαk0n                           because the weights in most of the layers are reused.  For
+                  det[Φαk] =         ...             ....                (18)example,  the  single  stream  weights  are  used ne  times,
+                                                                             wherene is the number of electrons in the system.  There
+                                   φαkn0 ... φαknn                           are diﬀerent approaches to approximating the eﬀect this
+                                                                             has on the FIM and here we use the simpler and more
+and the amplitudes are computed from these                                   eﬃcient approximation developed in Reference [22]
+              ψ(X) =∑        ωk det[Φ↑k] det[Φ↓k].           (19)                ˜Fl =|T|2 EX[ Ei[ali] Ei[ali]T]⊗ EX[ Ei[sli] Ei[sli]T]
+
+                          k                                                                                                                     (23)
+                                                                                                                                                    5
+
+                                                                             encounter  the  sign  problem  [8,  29],  resulting  from  the
+                                                                             antisymmetry  constraint  of  exchange  of  electrons.   The
+                                                                             most successful approach to avoiding the sign problem in
+                                                                             DMC simulations is the ﬁxed node approximation [30].
+                                                                             In this approximation, the nodes (points in space where
+FIG.  2.   Sketch  of  the  relationship  between  a  and  z.   For          the  wave  function  changes  from  positive  to  negative)
+some layer l, zl are the pre-activations, f(z) is an activation              are  ﬁxed  in  place.   Practically,  this  is  implemented  by
+function, al are the activations and wl are the weights.  Data               not allowing walkers to cross nodes during the sampling
+variables are in circles, functions in square and network pa-                process.
+rameters in diamond.                                                            For some state ψn(X)⁄=ψ0(X) with eigenvalue En >
+                                                                             ET  we can see that the derivative of the excited states
+where T  indicates the transpose, ali  are the activations                   amplitudes will also be negative:  The amplitudes of the
+of spatial location (the index of data which are operated                    states  with  eigenvalues En > ET  decay  as  a  function
+on by the same parameters) i at layer l and sli  are the                     of  time.   It  is  clearer  to  see  when  the  wave  function  is
+sensitivities of the pre-activations zli of layer l                          expanded as a linear combination eigenfunctions
+
+                        sli = d log|ψ(X)|                                                −∂ψ(X,t)∂t      = ( ˆH−ET )∑       αiψi(X,t)        (28)
+                                    dzli   .                        (24)                                                 i
+See Figure 2 for a sketch of how these variables are re-                     and the eigenfunctions of this equation are
+lated.  Ei  is the expectation taken over all spatial loca-                                                             ∞∑
+tions                                                                                       ψ(X,t) =e−t( ˆH−ET )           αiψi(X)
+                                        ∑                                                                              i=0
+                       Ei[ali] =   1|T|      ali                       (25)                               ∞∑
+                                          i                                                           =       αie−t(Ei−ET )ψi(X)            (29)
+                                        ∑                                                                i=0
+                       Ei[sli] =   1|T|      sli                       (26)
+                                          i                                  in the limit of t→∞ the behaviour of the wave func-
+where T  is the set of spatial locations and|T| is its car-                  tion is dependent on ET .  There are three cases for the
+dinality.                                                                    behaviour in the asymptotic region:
+                                                                                                            
+                                                                                                               ∞        for ET >E0
+                 C.    Diﬀusion Monte Carlo                                               limt→∞ψ(X,t) =    α0ψ0    for ET  =E0               (30)
+                                                                                                               0          for ET <E0
+  Whereas  VMC  relies  on  the  optimization  of  the  pa-                  The trial energy is not known beforehand.  It is set adap-
+rameters of the Ansatz via the derivatives of the expec-                     tively  dependent  on  the  behaviour  the  evolution.    In
+tation value of the energy,  DMC is a projector method                       DMCET  is varied dynamically to keep the population of
+relying  on  repeated  application  of  the  imaginary  time                 walkers ﬁnite.
+operator.   Given  a  trial  function,  which  has  some  non-
+zero overlap with the ground sate, repeated application of
+the Hamiltonian (via the power method) will project the                                              III.    METHODS
+wave function toward the ground state.  Green’s function
+Monte Carlo is an example of a projector method [25].
+Diﬀusion Monte Carlo is a related but distinct projector                                              A.    Fermi Net*
+method that is equivalent to a Green’s function method
+in the limit of small time steps [6, 26, 27].
+  Starting with the imaginary time Schr¨odinger equation                               Name                                symbol    value
+                                                                                       Single Stream hidden units          ns        256
+                −∂ψ(X,t)                                                               Pairwise Stream hidden units        np        32
+                       ∂t      = ( ˆH−ET )ψ(X,t)              (27)                     Split Stream hidden units           nss       256
+                                                                                       Determinants                        nk        16
+that can be interpreted as a diﬀusion equation and solved                              Layers                              nl        4
+in the path integral formalism [28] andET  is some oﬀset.                                   TABLE I. Model hyperparameters.
+The ground state of the system is a stationary state; there
+are no time dynamics and the LHS is equal to zero.
+  Attempting     to     simulate     the     imaginary     time                 We  change  the  network  slightly,  decreasing  the  re-
+Schr¨odinger  equation  via  the  application  of  the  ap-                  sources  (deﬁned  as  the  number  of  operations)  required
+proximated imaginary time operator na¨ıvely one would                        by the original model.  We refer to this implementation
+                                                                                                                                                      6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3.  Overview of Fermi Net.  The system description X  is used to compute the single stream and pairwise stream input
+feature tensors h0αi    and h0αβi    , respectively.  These are passed to the permutation equivariant function (EQV), Figure 4.  Linear
+layers  are  applied  to  the  resulting  tensors  with  tanh  activations.   Outputs  of  the  Split  Stream  and  Single  Stream  matrix
+multiplications are combined before a tanh activation in the Single Stream layer.  These layers are repeated 4 times.  After
+the ﬁnal permutation equivariant function, the Split Stream and Single Stream outputs are concatenated (++) and Pairwise
+Stream data discarded.  The concatenated tensor is passed through a ﬁnal spin dependent linear transformation to spin-up
+and  spin-down  determinants.   The  ﬁnal  layer  is  a  custom  computation  of  the  determinants  which  involves  stable  ﬁrst-  and
+second-order derivatives and the LogSumExp trick.
+
+
+of the model (and distinct optimization) as Fermi Net* in                     pairwise  tensor hlαβij    where i  = j  are  redundant.   The
+order to distinguish from other work, Reference [7], which                    inputs computed from Equation (13) are zero, have zero
+is referred to as Fermi Net.  For both implementations of                     contribution to computation of the energy (and therefore
+the model we compute the total number of operations of                        zero contribution to the computation of the gradients).
+the implementations and compare the walltime.                                 Though this only results in a small reduction in resource,
+  The number of operations nops is computed as                                Figure 5b, we ﬁnd a per iteration walltime reduction of
+       nops =∑       nluses×dlout× (dlin + (dlin− 1))         (31)            ∼ 5−10%.  The eﬀect is more noticeable at larger system
+                                                                              sizes.  The permutation equivariant function is changed
+                  l                                                           to decrease the number of operations, Figure 4.  This new
+where l is index running over all layers performing ma-                       function outputs two streams of data, flαi    and gl:
+trix multiplications and nluses, dlout and dlin are the num-                                     (                                       )
+ber  of  times  those  weights  are  used,  the  input  dimen-                                                ∑               ∑
+sion and the output dimension, respectively.  To clarify,                                 flαi   =  hlα,  1n↑      hlαβij ,  1n↓   hlαβij         (32)
+dout×(din+(din−1)) is the cost of one matrix-vector prod-                                        (            β⁄=↓            β⁄=↑)
+uct in terms of the number of operations (multiplication                                             1  ∑              ∑
+or  addition).   This  equation  only  computes  the  contri-                              gl =     n↑       hlαi ,  1n↓    hlαi   .                 (33)
+butions from the linear layers because these are the only                                               α⁄=↓           α⁄=↑
+layers where the implementations diﬀer and ignores other
+operations such as computing the determinant, which is                        This  implementation  requires  less  resources  than  the
+the dominant operation in the complexity.  It is possible                     original,  as  the  mean  over  spin  terms  in  the  layer,  gl,
+to completely remove elements from the pairwise streams                       are  only  operated  on  once,  instead  of ne  times,  in  the
+tensor  with  no  eﬀect  to  the  modelling  capacity  or  per-               case that these data are not split and gl  appears in all
+formance of the network.  The diagonal elements of the                        single electron streams.
+                                                                                                                                                    7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 4.  Data from the single and pairwise streams are combined in this operation via Equations 32 & 33.  The pairwise stream
+data remains unchanged.
+
+
+  The data at each layer l are computed                                      rigorous investigation will likely yield interesting and use-
+                                                                             ful insight.
+             hlαi   = tanh(Wlflαi   + Zlgl−1 + bl)                              As such, we use a reduced version of KFAC. We decay
+                            + h(l−1)α                                        the learning rate, norm constraint and damping
+                                 i                                        (34)
+            hlαβij    = tanh(Vlhlαβij   + cl) + h(l−1)αβij                 (35)                        x =    x01 +t× 10−4                         (36)
+
+where in a layerl, Wl, Zl and Vl are weights, bl and cl                      where x  stands  in  for  the  damping,  learning  rate  and
+are the biases.  As before, residual connections are added                   norm  constraint  and x0  for  the  initial  values. t  is  the
+to all layers where dim(hl) = dim(h(l−1)).  The outputs                      iteration  of  the  optimization.   The  norm  constraint  is
+fLαi    and gL are concatenated, hLαi    = (fLαi , gL), and split            particularly important at the start of training when the
+into two spin dependent data blocks.                                         quadratic approximation to the local optimization space
+  This  is  an  alternate  but  equivalent  representation  of               is large, the natural gradients are large and lead to un-
+the permutation equivariant function outlined in Refer-                      stable optimization.  In this region the norm constraint
+ence [7].  This representation reduces the number of oper-                   plays  a  role  and  eﬀectively  clips  the  gradients.   Later
+ations required to perform a forward pass in the network,                    in  the  optimization  the  approximate  natural  gradients
+Figures 5a and 5b.                                                           are small and not constrained.  The damping / learning
+  Using this implementation results in a worse approxi-                      rate interplay is an essential ingredient to a functioning
+mation to the FIM, discussed further in the next section,                    KFAC implementation.  The algorithm has nice conver-
+see  Figure  6a,  though  we  did  not  observe  meaningful                  gence  properties,  for  this  problem  especially,  but  high
+diﬀerences  in  performance  between  the  two  implemen-                    performance  is  only  possible  with  careful  tuning  of  the
+tations.  The reduction in computational eﬀort (as mea-                      damping and learning rate.
+sured by the per iteration walltime as a proxy) was not                         We  bundle  parameters  in  the  envelope  layers  by  us-
+as large as the drop in resource requirements, though was                    ing sparse matrix multiplications.  We compute the en-
+signiﬁcant enough (∼ 5− 10%) to warrant the additional                       tire Fisher block for all parameters of the same symbol
+complication.                                                                (i.e.   the  π  and Σ  parameters).   This  is  illustrated  in
+  A  complete  set  of  the  hyperparameters  of  the  Fermi                 Figure 6b.  Although we found this implementation was
+Net* Ansatz used in these experiments are given in Ta-                       faster in practice, it performs more operations than main-
+ble I.                                                                       taining  a  separation  between  these  layers.   It  does  not
+                                                                             scale favorably for larger systems, though relative to the
+                                                                             computational cost of the network may be negligible.
+  B.    Kronecker Factored Approximate Curvature                                In  Figures  6a  and  6b  we  show  the  changes  on  the
+                                                                             left  Fisher  factor  resulting  from  using  an  implementa-
+  We found divergent behaviour of the damping in the                         tion  which  splits  data  in  the  permutation  equivariant
+asymptotic region of the training, most likely due to the                    function, versus an implementation which does not.  For
+relatively large noise on the loss and small precision re-                   atomic  systems,  the  right  Fisher  factor,  ¯S,  is  the  same
+quirements of this particular optimization, though more                      in this new formulation.  Therefore the changes in  ¯A are
+                                                                                                                                                    8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     (a)  Resource comparison of diﬀerent implementations.  The              (b)  Reduction in average walltime resulting from the change
+               orange line is overlayed by the green line.                      of implementation.  These values are the average of 1000
+                                                                             sampling steps and 100 energy computations of the model on
+                                                                                                       1 V100 GPU.
+
+FIG.  5.   The  blue  line  corresponds  to  the  network  outlined  in  Reference  [7],  the  orange  line  to  the  method  of  splitting  the
+single streams, Equations 32 and 33, and the green line the resource requirements of splitting the single stream and removing
+redundant pairwise streams.  The resource requirements are measured as the number of required operations,nops, Equation (31).
+The walltime comparison of these methods is shown in (b).  It is important to note that the computational time of the framework
+is dominated by the determinant calculation.  These improvements will become negligible at much larger systems.
+
+
+representative of the changes to the entire FIM.                             that  moves  around  the  space  by  taking  random  steps.
+  The quality of approximation to the FIM is dependent                       These moves are accepted or rejected dependent on the
+on the data distribution and the model.  In this problem                     ratio of in probability of the starting and end points.  A
+and for a small model, we found that this approximation                      description of the algorithm is given in Algorithm 1.
+provided a better representation of the exact FIM than
+other methods [21] when compared on a small model over                       Algorithm 1 Metropolis-Hastings algorithm used here
+an initial optimization run of 1× 103 iterations.  It is not                 for sampling. cl  is the correlation length.  r and xi are
+possible to perform the comparison to the exact FIM as                       M×ne× 3 dimensional tensors.  Steps update electron
+the  memory  requirements  scale  asO(n2w),  where nw  is                    positions simultaneously and acceptance of steps are per-
+the number of parameters.                                                    formed in parallel across all walkers. Line 7 updates walk-
+                                                                             ers where the condition is true. σ  is the step size that
+                                                                             is adaptively determined to maintain an acceptance ratio
+     C.    Variational Monte Carlo with Kronecker                            of 0.5.
+             Factored Approximate Curvature                                   1:  for cl do
+                                                                              2:   ξ∼N(0,σ)
+  The goal is to create a good enough approximation of                        3:      r′← r +ξ
+the  wave  function  and  therefore  the  nodal  structure  of                4:   α∼U[0, 1]
+the  wave  function  using  VMC  to  be  followed  up  with                   5:   Pmove← p(r′)p(r)
+DMC given the Fermi Net* Ansatz.  The VMC requires                            6:      if Pmove >α then
+cl forward passes (sampling), 1 backward pass (gradient)                      7:           r← r′
+and 1 energy computations.  To sample the wave function                       8:      end if
+we use Metropolis Hastings.  The step size is adaptively                      9:  end for
+changed during training to move the acceptance toward
+the  target  sampling  acceptance  ratio  of  0.5. cl  is  the                  The approximate natural gradients for layer l,  which
+correlation  length  and  here  was  set  to  10.   The  model               are the updates to the Ansatz parameters, are computed
+is  pretrained  for  1× 103  iterations  using  the  methods                 via  Equation  (22).    The  approximation  to  the  Fisher
+outlined in Appendix A.                                                      factors,   ¯A  and  ¯S,  are  ‘warmed-up’  by  taking  100  steps
+  The  gradients  of  the  parameters  are  computed  from                   of  stochastic  gradient  descent  with  small  learning  rate
+Equation  (11)  and  the  centered  energies  (EL(X)−                        (ν  = 1× 10−5) whilst accumulating statistics.  This en-
+EX[EL(X)]) in Equation (11) have been clipped 5x from                        sures a smoothed initial approximation to the FIM and
+the median value.  WalkersX are sampled via Metropolis                       is consistent with other work in the literature [20].
+Hastings.  A walker is a point in the conﬁguration space                        For all systems, other than Beryllium, 1×105 iterations
+                                                                                                                                                    9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        (a)  Fisher factor A of only the layers              (b)  Fisher factors A of the layers corresponding
+                     containing Zl, Wl and Vl parameters. W′l                      to theπαkim, Σαkim andωk parameters.
+                      represents the variables for computing the
+                   Fisher factor from a layer where the parameters
+                       Wl and Zl are not split into two layers.
+
+FIG. 6.  Two cartoons of the diﬀerences between the approximations to the ‘left Fisher factor’ A, Equation (22), in this work
+and in Reference [7].  Regions in gray are not computed in either case.  Black are computed in both cases.  Red are regions lost
+in this work and green are regions gained.  The variable labels (e.g. παkim) are the parameters corresponding to the Fisher factor.
+
+
+                                                                             is a simpliﬁed version of the algorithm described in Ref-
+                                                                             erence  [6].   We  make  simplifying  changes  by  removing
+                                                                             transformations to spherical coordinate systems and set
+                                                                             τeﬀ  = τ.   Also,  we  move  all  walkers  and  electrons  si-
+                                                                             multaneously with no change to how the algorithm be-
+                                                                             haves.  We setτ by testing a non-uniform range of values
+                                                                             for τ,  computing  the  average  acceptance  over  100  iter-
+                                                                             ations,  and  solving  the  equation  of  a  line  between  two
+                                                                             points to ﬁnd the closest value that gives an acceptance
+                                                                             ratio (Acceptance) of 0.999, shown in Figure 7.  We found
+                                                                             this worked well in practice and all τ  acceptances were
+                                                                             ∼ 99.9%.  A complete list of the hyperparameters needed
+                                                                             given in Table IV.
+                                                                                The DMC implementation is parallelized over all elec-
+                                                                             trons and walkers.  The model weights and walker con-
+                                                                             ﬁgurations  are  converted  to  64-bit  ﬂoats  for  the  DMC.
+                                                                             DMC was run for a variable number of iterations, where
+FIG. 7.  The Acceptance ratio of Nitrogen as a function of the               the minimum was 5× 104, and this is discussed further
+time-stepτ.  The red diamond marker indicates the estimated                  in Section V.
+value of τ  at an acceptance ratio of 0.999 (99.9%).
+                                                                                                E.    Code and Hardware
+of VMC were run.  The full VMC and KFAC algorithm                               Each VMC experiment used 2 V100 GPUs, the DMC
+used in this work is outlined in Algorithm 2 and a full set                  runs  were  distributed  over  a  variable  number  of  CPUs
+of hyperparameters and initialization values of variables                    due to constraints on the availability of GPU time.
+are given in Table III.                                                         The code was written in PyTorch 1.5 using CUDA 10.1.
+                                                                             The implementation was parallelized such that each GPU
+                 D.    Diﬀusion Monte Carlo                                  held 2 models, or each CPU 1 model.  Initial attempts at
+                                                                             producing this model were written in Tensorﬂow 2 with
+                                                                             CUDA 10.1 but we experienced signiﬁcant and sometimes
+  The full algorithm used in this work is outlined in Al-                    not  (easily)  diagnosable  issues.   A  simpliﬁed  version  of
+gorithm 3 (found in Appendix D.  This implementation                         this Ansatz will be released to DeepQMC [33].
+                                                                                                                                                  10
+
+             Atom    Fermi Net* + DMC  Fermi Net*            Fermi Net [7]    VMC [31]      DMC [31]         HF      Exact [32]
+                          (This work)        (This work)
+              Be         -14.66734(2)        -14.66726(1)     -14.66733(3)  -14.66719(1)  -14.667306(7)  -14.35188  -14.66736
+               B         -24.65384(9)        -24.65290(2)     -24.65370(3)  -24.65337(4)  -24.65379(3)  -24.14899  -24.65391
+              C+         -37.43086(6)        -37.43061(1)     -37.4307(1)†   -37.43034(6)  -37.43073(4)  -36.87037  -37.43088
+               C         -37.84472(7)        -37.84452(1)     -37.84471(5)  -37.84377(7)  -37.84446(6)  -37.08959   -37.8450
+               N          -54.5891(5)         -54.58755(6)    -54.58882(6)   -54.5873(1)   -54.58867(8)   -53.5545    -54.5892
+               O          -75.0667(3)         -75.0599(2)     -75.06655(7)   -75.0632(2)    -75.0654(1)    -73.6618    -75.0673
+               F          -99.7332(5)         -99.7277(1)      -99.7329(1)    -99.7287(2)    -99.7318(1)    -97.9865    -99.7339
+              Ne         -128.9370(3)        -128.9351(1)     -128.9366(1)  -128.9347(2)  -128.9366(1)  -126.6045  -128.9376
+
+TABLE II. Comparison of VMC ad DMC results with existing works.  Fermi Net* energies are computed from 1× 104 batches
+of size 8096 given a model after 1× 105 of training.  The number in the brackets indicates the error on the calculation at the
+same precision as the value reported.  For example, -14.66734(2) indicates a value of -14.66734±0.00002.  All errors reported in
+this work are the standard error on the mean.
+†  Fermi Net carbon cation result not directly reported.  Computed from ionisation energy and carbon energy result and the
+errors propagated via addition.
+
+
+  Computations of the Hartree Fock orbitals were per-                        slightly worse.  Highlighting this result clearly does not
+formed using PySCF [34] and the model was distributed                        guarantee equivalent performance on larger systems and
+using Ray [35].                                                              more extensive trials on larger systems are required.  The
+                                                                             other  Fermi  Net*  results  are  consistently  poorer  than
+                                                                             Fermi  Net,  but  better  than  the  referenced  benchmark
+          IV.    RESULTS AND DISCUSSION                                      VMC results.
+                                                                                All energies in column 1 are to within less than 0.25%
+                    Diﬀusion Monte Carlo                                     of the respective correlation energies, at best (Be) within
+                                                                             0.03%.  Be, B, C+, and N are all accurate to the exact
+  We demonstrate functionality of the introduced com-                        ground state energy within error bars.  Systems Be,  B,
+putational techniques on the atomic systems from second                      C+ and Ne are the most accurate energies.  Systems Be,
+period (Be-Ne), and the cation C+. For each system, ﬁrst                     C+, C and Ne were run with around 2× 105  iterations,
+we  optimize  parameters  of  the  Fermi  Net*,  in  order  to               which are explored in more depth in Figure 9, and B, C,
+generate a good trial wave function, that is subsequently                    N, O with around 5× 104 iterations of DMC.
+improved through DMC method. As it was demonstrated                             The error bars are the standard error σSEM = σ/√m
+in [7] Fermi Net is capable of outperforming other VMC                       where σ is the standard deviation of the energies of the
+methods.  Our VMC results do not exceed the existing                         batches andm is the number of batches evaluated.  They
+state-of-the-art, the DMC either exceed or match other                       are noticeably larger in column 1 of Table II for the sys-
+best results (see Table II).                                                 tems  mentioned  where  less  iterations  of  DMC  are  run.
+  Table  II  summarizes  the  results.    All  references  to                DMC  consistently  improved  the  wave  function,  that  is
+Fermi Net* Ansatz indicate the methods outlined in this                      the evaluated energy of the wave function was lower, but
+work.   The  ﬁrst  column  of  this  Table  contains  the  ﬁ-                the error bars are signiﬁcantly larger in some cases, due
+nal  energies  and  errors  of  the wave  function after  both               to the autocorrelation of the data trace.
+VMC and DMC with the Fermi Net* Ansatz and the sec-                             Figure  9  shows  DMC  applied  to  diﬀerent  trial  wave
+ond column are the corresponding energies only after the                     functions.   Each  DMC  point  is  evolved  from  the  cor-
+VMC.  The  third  through  seventh  columns  (Fermi  Net,                    responding  VMC  iteration.   The  VMC  lines  in  general
+VMC, DMC, HF, and Exact) contain benchmark results                           show a clear trend for improving the energy of the wave
+from  the  literature  indicated.   The  HF  column  are  the                function as the iterations increase, and this is mirrored in
+Hartree-Fock energies obtained using the STO-3g basis,                       the energy computed from the DMC. There are several
+the basis used in this work for the pretraining orbitals.                    apparent anomalies in the data.  In the Neon VMC line
+  The  Fermi  Net*  VMC  energies  in  column  2  are  not                   there is a clear decrease in the quality of the model (in-
+directly  comparable  to  the  Fermi  Net  energies.    We                   crease in the energy) during the training.  We believe this
+focused  computational  resources  on  the  DMC  and  re-                    is a result of divergence in training and may indicate that
+stricted  all  but  one  system  (Be)  to  1× 105  iterations,               our implementation of KFAC becomes more unstable as
+whereas  the  original  Fermi  Net  work  used  double  this                 the molecules become larger.  We cannot extrapolate sig-
+number.  We extended one Be to 2× 105  iterations and                        niﬁcant  conclusions  without  more  analysis  of  the  opti-
+found improvements to the energy,  Figure 9,  computed                       mization.  In both the Neon and Carbon DMC lines there
+as  -14.66730(1).   This  is  at  the  top  end  of  the  error  in          is a large kink in the energy achieved by DMC. Further
+the  original  Fermi  Net  result,  indicating  that  the  per-              investigation  did  not  reveal  divergent  behaviour  in  the
+formance may be matched with this implementation,  if                        DMC, that is large changes in energy after convergence,
+                                                                                                                                               11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 8.  Graphical representation of data from Table II, see caption for details.  A chemical accuracy line (Chem.  Acc.  - pink
+dashed line) is plotted where it falls within the range of the plotted data for a system.
+
+
+and repeated runs showed more stable behaviour in line                                          V.    CONCLUSIONS
+with what would be expected.  It is possible on these par-
+ticular runs the walkers became trapped near the nodes                        In this work we have changed the structure of a neural
+and accumulated anomalous low energy statistics. Again,                    network Ansatz, the Fermi Net, by removing redundant
+further analysis and development of this DMC is required                   elements (the diagonal elements of the pairwise streams)
+to understand if this is a feature of the precise Ansatz or                and  splitting  the  data  in  the  permutation  equivariant
+issues with the DMC implementation.                                        function such that it is not reused unnecessarily.  These
+                                                                           changes  increase  the  performance  (as  measured  by  the
+                                                                           walltime) of the network. Additionally, we have improved
+                                                                           approximations  to  the  ground  state,  found  with  Varia-
+                                                                           tional Monte Carlo and a Fermi Net* Ansatz, with Diﬀu-
+                                                                           sion Monte Carlo, matching or exceeding state-of-the-art
+       A.    GPU, CPU and Computational Time                               in all systems.
+                                                                              With  respect  to  the  ﬁrst  contribution,  although  this
+  In this work we have used a combination of GPU and                       model is small compared with other state-of-the-art neu-
+CPU compute resources.  Typically, research groups may                     ral networks [36], it contains the expensive determinant
+not have access to state-of-the-art compute architectures                  computation,  which  is  the  dominant  term  in  the  com-
+and  may  need  to  exploit  alternate  compute  resources.                plexity  of  the  network  scaling  asO(n3ek),  where ne  is
+The GPU methods were signiﬁcantly faster than the CPU                      the number of electrons and k is the number of determi-
+experiments, especially in the cases of larger systems, for                nants.  Variational Monte Carlo requires computation of
+example GPU vs.  CPU per iteration times for the DMC                       the Laplacian, which usesne backward passes of the ﬁrst
+algorithm  on  the  system  Neon  were    4s  and    24s,  re-             order derivatives.  In total, the estimated complexity of
+spectively, we found that in these small systems a CPU                     the network isO(n4ek).  Although the changes made here
+implementation distributed over 3 nodes was enough for                     improve the performance, this improvement in speed may
+reasonable  experiment  time  (<  1  week).   However,  the                be negligible at larger system sizes.
+scaling  makes  the  CPU  implementation  impractical  for
+larger systems.  CPU implementations are not standard                                             A.    Related Work
+for  the  machine  learning  community,  but  are  for  the
+quantum chemistry community.  We highlight here that                          Other  more  recent  work  [19]  additionally  found  sig-
+these methods can be used on CPU architectures, though                     niﬁcant  eﬃciency  gains  in  altering  the  neural  network
+may quickly become impractical for larger systems.                         with  no  noticeable  reduction  in  accuracy:    replacing
+  One iteration of DMC is less computationally demand-                     the  anisotropic  decay  parameters  with  isotropic  decay
+ing than VMC, requiring 1 forward pass, 1 energy com-                      parameters  in  the  envelopes;   and  removing  more  re-
+putation and 1 backward pass, plus some negligible func-                   dundant  parameters  in  the  determinant  sum.   Further,
+tions.  However, we port the Fermi Net weights to 64-bit                   other smaller networks employing a more traditional Jas-
+precision for the DMC phase, ﬁnding signiﬁcantly better                    torw/backﬂow  Ansatz  [9]  and  integrated  Hartree-Fock
+performance.  This is increases the walltime of 1 iteration                orbitals were signiﬁcantly less computationally demand-
+of DMC to 1-1.5x 1 iteration of VMC.                                       ing at the cost of notably worse performance.  There are
+                                                                                                                                                    12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 9.  DMC applied to Ansatz at diﬀerent stages of VMC optimisation.  The red line is the exact energy of the ground state,
+given in Table II.  The orange line is the energy of the wave function at a particular VMC iteration.  Note that Be extends to
+2× 105.  It is demonstrated here to show that there is still capacity for the wave function to improve, but we were restricted by
+computational time for the other systems.  The blue line is the resulting energy from the application of DMC to that iteration
+of the wave function.  The DMC converged generally after around 5× 103 iterations, and was run for between 5× 104− 2× 105
+iterations after convergence.  The error bars are the standard error σSEM  = σ/√m where σ  is the standard deviation of the
+energies of the batches evaluated andm is the number of batches.  A chemical accuracy line (pink dashed) is added to the plots
+where it is within the range of the plotted data.
+
+
+clearly  still  gains  to  be  made  in  the  eﬃciency  of  these             improving the approximation to the Fisher Information
+methods,  and  a  better  understanding  on  the  relation-                   Matrix in the region where there are small variations in
+ship  between  the  problem  and  the  size  of  the  network                 the optimization landscape.  In early tests, reducing the
+required  will  be  important  pieces  of  understanding  for                 algorithm and model to 16-bit precision proved unstable
+tuning these methods.                                                         by generating singular Fisher blocks (that could not be
+                                                                              inverted).
+                                                                                 There  is  a  lot  of  room  to  improve  the  optimization.
+                        B.    Future Work                                     KFAC is a powerful algorithm which requires careful tun-
+                                                                              ing.  The methods used in this work are relatively simple,
+  In  this  work  we  alternate  between  32-bit  and  64-bit                 notably the schedule of the learning rate and damping,
+computational precision for the Variational Monte Carlo                       and not representative of the suggested mode of opera-
+and Diﬀusion Monte Carlo methods, respectively.  It may                       tion.  Stable adaptive techniques will be essential to im-
+be possible to exploit this further.  One example is mixed                    proving  the  optimization  in  this  domain.   Additionally,
+precision algorithms and networks [37].  A suitable and                       the eﬃciency of KFAC  can be  improved further  by us-
+easy ﬁrst step might be mixed precision schedules.  Using                     ing intuitions about the FIM. For example, the FIM will
+low precision weights earlier in training and switching to                    change less in the asymptotic region of the optimization,
+high precision in the asymptotic region of the optimiza-                      schedules which exploit this fact and update the Fisher
+tion  might  encourage  even  better  results,  for  example                  blocks and their inverses less should be used, as outlined
+                                                                                                                                           13
+
+in the literature [20].
+  Finally, there are existing approximations from VMC
+literature which can be easily integrated into these frame-
+works,  such  as  pseudopotentials  (for  scaling  to  larger
+systems) [38], and alternate representations of the wave
+function [39, 40].  Additionally, these new and highly pre-
+cise techniques can be applied to other systems including
+solids and other interesting Hamiltonians.
+
+
+                     C.    Final comment
+
+  We  conclude  that  though  these  results  are  compara-
+tively good in isolation, the prospects for improvements
+in  these  methods  and  hardware  paint  a  strong  future
+for the application of neural networks in modelling wave
+functions in the continuum.
+
+
+                ACKNOWLEDGEMENTS
+
+  We thank David Pfau for helpful discussions.  We are
+grateful for support from NASA Ames Research Center
+and from the AFRL Information Directorate under grant
+F4HBKC4162G001.  F.W. was supported by NASA Aca-
+demic Mission Services, contract number NNA16BD14C.
+                                                                                                                                                  14
+
+                         APPENDICES                                          where pθ(X)  is  some  distribution  parameterized  by θ.
+                                                                             KFAC is an algorithm that approximates the natural gra-
+                  Appendix A: Pretraining                                    dients of a neural network.  There are a series of approx-
+                                                                             imations  and  methods  associated  with  this  algorithm,
+  The pretraining was performed very similarly to as de-                     which  are  often  applied  in  a  case  dependent  way.   The
+scribed in Reference [7].  We outline the methods here for                   main drawback of Natural Gradient Descent is the cost of
+completeness.                                                                inverting the FIM, which for ann×n matrix is∼O(n3).
+  The pretraining loss is                                                    This is prohibitive for neural networks with even a few
+                        ∫ [ ∑         ∑(                                     thousand parameters.  KFAC reduces this burden whilst
+               Lpre =                        φkαij (X)                       still accurately (enough) modelling the Fisher such that
+                                       ijk                                   useful approximate natural gradients can be found.
+                             α∈{↑,↓}                                            Given that the inverse of a Kronecker product is the
+                                     )2]                                     Kronecker product of the inverses
+                        −φHFiα (rβ)       ppre(X)dX            (A1)
+                                                                                                 (A⊗B)−1 =A−1⊗B−1                  (B3)
+where           ( ∏                                     )                    the authors break down the FIM into blocks, extract the
+      ppre = 1              ∏    φHFiα (rβ) +|ψ(X)|2       ,       (A2)      most important blocks, and approximate these blocks in
+               2   α∈{↑,↓}    i                                              a  form  that  allows  the  identity  of  inverting  Kronecker
+                                                                             products, Equation (B3), to be used.
+withφHFiα  being Hartee-Fock orbitals obtained with STO-                        Expressing the FIM as blocks it is natural to use the
+3g basis evaluated with PySCF python package.                                structure of the neural network to dictate the layout of
+  This  quantity  is  approximated  by  splitting  the  sam-                 the blocks:
+ples   (at   random)   into   two   equal   length   sets   and                            E[Dθ(0)Dθ(0)T ] ···   E[Dθ(0)Dθ(L)T ]             
+taking   one   Metropolis   Hastings   step   with p(X)   =                                                                                 
+∏          ∏                                                                     F  =                ...               ...               ...
+  α∈{↑,↓}     iφHFiα (rαi)   for   the   ﬁrst   set   and p(X)   =
+|ψ(X)|2  for the second set.  The sets are joined and the                                  E[Dθ(0)Dθ(L)T ] ···   E[Dθ(L)Dθ(L)]
+process  repeated.   This  implementation  is  slightly  dif-                                                                                  (B4)
+ferent  to  the  original  work,  and  seems  to  improve  the                  where
+pretraining:  The Ansatz (after pretraining) has a lower
+energy.
+  As  described  in  Reference  [7],  this  distribution  sam-                                      Dθ(i) = d logpθ(X)dθ(i)                           (B5)
+ples where the Hartree Fock (HF) orbitals are large, and
+also where the wave function is poorly initialized and is                    the  (i)  superscript  denotes  the  parameters  in  layer i  of
+incorrectly  large.   This  method  of  pretraining  is  a  bet-             the network.
+ter  solution  to  the  problem  of  guiding  the  initial  wave                Removing all but the diagonal blocks we have
+function.  An Ansatz close to the HF orbitals seems to                                  E[Dθ(0)Dθ(0)T ] ···              0               
+not  get  stuck  in  local  minima  and  drastically  improves                                   ...               ...              ...    (B6)
+the optimization behaviour.  Other solutions include in-                        ˜F  =
+tegrating  the  HF  orbitals  into  the  network  throughout                                      0    ···   E[Dθ(L)Dθ(L)]
+the whole training, for example in Reference [9].  The op-
+timization was performed using an Adam optimizer with                        Each  of  these  blocks  can  be  reformulated  as  the  Kro-
+default hyperparameters, notably learning rate 1× 10−3.                      necker product of the outer product of the activtations
+                                                                             and sensitivities, for example layer 0,
+
+   Appendix B: Kronecker Factored Approximate                                                F (0) = EX[Dθ(0)Dθ(0)T ]
+                            Curvature                                                              = EX[(a0⊗ s0)(a0⊗ s0)T ]
+
+  Natural gradient descent [41], is an algorithm for com-                                          = EX[a0aT0⊗ s0sT0 ]                        (B7)
+puting the natural gradients of a parameterized function.                    and ﬁnally assuming that the expectation of Kronecker
+They are                                                                     product is approximately equal to the Kronecker product
+                        ∆ =F−1vec(∆L)                       (B1)             of  the  expectations,  which  has  no  name  so  we  simply
+                                                                             call  the  KFAC  approximation  here,  though  technically
+where ∆ are the natural gradients, ∆L are the gradients                      more accurately is independence of the covariances of the
+of the function parameters, vec(M) is the vectorization                      activations and covariances of the sensitivities,
+of a matrix M, and F  is the FIM
+                       [d logpθ(X)Td logpθ(X)]                                               F (l) KFAC≈   EX[aTl al]⊗ EX[sTl sl]             (B8)
+            F  = EX            dθ              dθ         ,         (B2)                           =Al⊗Sl.                                      (B9)
+                                                                                                                                                    15
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  10.   Flow  diagram  of  distributed  KFAC  used  in  this  work.   The  blue  hexagons  are  the  head  worker,  green  hexagons
+workers.  There are multiple workers, indicated by the staggered images and ellipses.  The red squares are variables computed
+at one step and used at the next. θ are the parameters of the model, ˜δ are the approximate natural gradients, ∆ log|ψ(X)| are
+the derivatives of the wave function wrt the electron position vectors and EL  are the local energies of the walkers X.  These
+are tensors with M  copies, where M  is the batch size on a worker.   ¯A and  ¯S  are the left and right Fisher factors computed
+during the forward and backward passes.  These variables are averaged before being used to compute the approximate natural
+gradients.  Note that the average  ¯A and  ¯S  are not  passed back to the workers.  This results in a worse approximation to the
+Fisher, but a diﬀerence in performance was not noticed during tests.
+
+
+In practice, it is common to smooth the approximation                            Damping is a tool for shifting the eigenspectrum of a
+to the Fisher in time.  At any iteration in the optimiza-                     matrix  (such  that  the  matrix  is  non-singular)  and  also
+tion  the  quality  of  the  approximation  is  limited  by  the              restricting the ‘trust region’ of the updates.  The inverse
+number of samples in a batch.  This can be unstable.  In-                     Fisher described in Equation (B11) is adjusted, typically
+stead,  the  approximation  is  smoothed  by  replacing  the                  in Tikhonov damping,
+left and right Fisher factors with their moving averages.                                        ¯∆l = ( ˜F (l) +λ)−1vec(∆Ll)              (B12)
+There are diﬀerent methods for implementing this expo-
+nentially decaying average of the history, in this work it                    This  can  no  longer  be  decomposed  as  Equation    B3.
+is computed                                                                   An adapted technique, Factored Tikhonov Damping de-
+                     ¯Alt = ( ¯Al(t−1) +κAlt)/κt                (B10)         scribed in detail in Reference [20], is used which approx-
+                                                                              imates the true damping
+
+where  κt = κ(t−1) +κ is deﬁned as the total weight and                            ( ˜F (l) +λ)−1 FT≈  (A +√πλ)⊗ (S +√λ/π)       (B13)
+κ0  =  0,   ¯Al0  is  a  matrix  of  zeros  and Alt  is  the  instan-         where
+taneous covariances computed from Equation (B8).  The
+right  Fisher  factor  is  computed  in  the  same  way.   It  is                                     πl = Tr[Al] dim(Sl)Tr[Sl] dim(Al)                    (B14)
+important to be careful here that the contribution to the
+exponentially decaying average of the moving covariances                      This method is derived from minimizing the residual from
+from the zeroth term is zero, otherwise the following com-                    the  expansion  of  damped  Fisher  block  into  Kronecker
+puted averages will be zero biased.  The ﬁrst update step                     factors.
+is at t = 1.
+  The  approximate  natural  gradients  of  each  Fisher
+block can be computed as Equation (B1),                                                                  2.    Centering
+
+                       ˜δl =  ˜F (l−1)vec(∆Ll)                    (B11)          All approximations to the Fisher block have thus far
+We  use  ˜δ  to  indicate  approximate  natural  gradients                    been  computed  via  the  derivatives  of  the  log-likelihood
+                                                                              of the normalized distribution p(X) with respect to the
+throughout.                                                                   weights.   However,  we  computeO  = d log|ψ(X)|
+                                                                                                                                      dθ        which
+                                                                              are  the  derivatives  of  the  log  unnormalized  wave  func-
+                           1.    Damping                                      tion ψ(X).  It can be shown, for example Appendix C of
+                                                                              Reference [7] that elements in the FIM can be expressed[  ]
+
+  This form of KFAC is unstable for two reasons:  The                               Fij∝ EX       (Oi− EX[Oi])(Oj− EX[Oj])                      (B15)
+approximate  natural  gradients  can  be  large  and  the                                                  [d logp(X)     d logp(X)]
+Fisher blocks are potentially singular (thus the inversion                                      = 14 EX          dθi           dθj              (B16)
+can’t be performed).
+                                                                                                                                              16
+
+Where the derivatives of the log wave function have been                   Name                                           symbol    initial value
+centered by EX[O].  However, in tests we found that the                    iteration                                      k         0
+performance was more dependent on the hyperparame-                         number iterations                              kVMCmax   1× 105
+ters used in KFAC than on the centering. There are many                    learning rate                                  η         1× 10−4
+approximations  aﬀecting  the  quality  of  the  approxima-                norm constraint                                c         1× 10−4
+tion to the FIM and the interplay between the optimiza-                    covariance state decay                         κ         0.95
+tion and this approximation.  We ignored the centering                     damping                                        λ         1× 10−4
+to simplify the implementation but outline the method                      damping factor                                 π         N/A
+here of approximating this centering for readers who are                   instantaneous activations                      a         N/A
+                                                                           instantaneous sensitivities                    s         N/A
+interested.                                                                energy gradients                               ∆L        N/A
+                  [                                  ]                     approx.  natural gradients                     ˜δ        N/A
+        F∝ EX       (O− EX[O])T (O− EX[O])                                 variable decay                                 ν         1× 10−4
+                  [                                                        spatial locations                              i¯Al      N/A
+           = EX     OTO− EX[O]TO−OT EX[O]                                  decaying average left Kronecker factor          ¯Sl      0
+                                ]                                          decaying average right Kronecker factor                  0
+           − EX[O]T EX[O]                                                  instantaneous left Kronecker factor            Al        N/A
+                                                                           instantaneous right Kronecker factor           Sl        N/A
+           LINEAR=    EX[OTO]− EX[O]T EX[O]          (B17)                 correlation length                             cl        10
+                                                              (B18)        sampling step size                             σ         0.022
+                                                                           batch size                                     m         4096
+
+The second term can be approximated by assuming In-                        TABLE III. Table containing all variables used in the VMC
+dependent Activations and Sensitivities (IAD):                             algorithm using KFAC updates in this work.
+
+  EX[O]T EX[O] = EX[a⊗ s]T EX[a⊗ s]                (B19)
+                     IAD≈  (EX[a]⊗ EX[s])T (EX[a]⊗ EX[s])
+                                                                                      Appendix D: Diﬀusion Monte Carlo
+                                                              (B20)
+                     = EX[a]T EX[a]⊗ EX[s]T EX[s]   (B21)                    Table  IV  contains  all  the  hyperparameters,  variables
+                     =A′⊗S′.                                    (B22)      and  initial  values  used  in  the  version  of  DMC  imple-
+                                                                           mented for this work.  The entire algorithm is outlined in
+Overall,  the  centering  outlined  in  Equation  (B17)  can               Algorithm 3.
+be approximated by mean centering the activations and                      Name                                    symbol    initial value
+sensitivities in Equation (B8)                                             number iterations                       kDMC      variable
+                                                                                                                     max
+                          ¯a = a− EX[a]                        (B23)       Forces                                  F         N/A
+                                                                           Green’s function                        G(r, r′)  1.
+                          ¯s = a− EX[s]                         (B24)      trial energy                            ET        N/A
+                                                                           acceptance (rejection) probability      p (q)     N/A
+or  alternately  maintaining  a  moving  average  of A′  and               weights                                 ω         1
+S′ and subtracting those directly from  ¯A and  ¯S in Equa-                batch size                              M         4096
+tion (B10).  Both these methods result in the same resid-
+ual, which can be computed by expanding either expres-                     TABLE  IV.  Variables  used  in  the  Diﬀusion  Monte  Carlo
+sion for the resultant approximate FIM.                                    method.
+
+
+
+         Appendix C: Variational Monte Carlo
+
+  Table  III  contains  all  the  hyperparameters,  variables
+and initial values for both the VMC and KFAC methods
+used in this work.  The entire algorithm, the update loop
+for the model, is given in Algorithm 2.
+  Figure ?? shows the VMC evolution of the Ansatz on
+the systems Be - Ne.  The evolution is roughly the same
+as previous work.  Here, no explicit comparison is made
+to alternate optimizers.  We note that in tests we found
+similar results to the original work where KFAC outper-
+formed another method (ADAM).
+                                                                                                                                        17
+
+
+
+
+
+
+
+
+
+
+ Algorithm 2 KFAC for Fermi Net*. CholeskyInverse indicates the Cholesky Inversion, FactoredTikhonov is
+the technique for computing π given by Equation (B14), and Clip indicates clipping a batch of values to within 5x
+of the median value.  A high level overview of the distribution of this algorithm across multiple workers is shown in
+                                                               Figure 10
+ 1:  for kVMCmax   do
+
+ 2:       Update walker coordinates X                                             ⊿ Metropolis Hastings
+ 3:        ˜EL = Clip(EL(X)− EX[EL(X)])                                                   ⊿ energy[ ˜EL∇ log|ψ(X)|]
+ 4:       ∆L = EX                                                                                                       ⊿  backward pass
+ 5:       Compute a                                                              ⊿ forward pass
+ 6:       Compute s                                                             ⊿ backward pass
+
+ 7:      for all layers l do
+
+ 8:             ¯al← Ei[ali]
+ 9:     Al← EX[¯aTl ¯al]
+10:              ¯Al←κ ¯Al + (1−κ)Al
+
+11:             ¯sl← Ei[sli]
+12:     Sl← EX[¯sTl ¯sl]
+13:             ¯Sl←κ ¯Sl + (1−κ)Sl
+
+14:     πl← FactoredTikhonov( ¯Al, ¯Sl)
+15:     λA← (  λπ×|T|2 )1/2
+16:     λS← (λ×π|T|2 )1/2
+
+17:              ¯A−1l ←CholeskyInverse( ¯Al +IλA)
+18:             ¯S−1l ←CholeskyInverse( ¯Sl +IλS)
+
+19:             ˜δl←  ¯A−1∆lL
+                   l  |T|2 ¯S−1l
+
+20:      end for
+                 (               )
+21:   ϵ← min       1,√∑     c
+
+                          l ˜δl∆lL
+22:      for all layers l do
+
+23:     θl←θl−ϵ×η× ˜δl                                                   ⊿ Update the model
+
+24:      end for
+
+25:   η← η0/ν1+k
+26:   λ← λ0/ν1+k
+27:   c← c0/ν1+k
+
+28:  end for
+                                                                                                                               18
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Algorithm 3 Diﬀusion Monte Carlo. r, ξ and F are M×ne× 3 dimensional tensors.  Steps update electron
+positions simultaneously and acceptance of steps are performed in parallel across all walkers.  Line 7 updates walkers
+                                                 where the condition is true.
+ 1:  Compute ψ(X)                                                              ⊿ forward pass
+ 2:  F← d log|ψ(X)|dr                                                                ⊿ backward pass
+
+ 3:  for kDMCmax   do
+
+ 4:   G(r, r′) =G(r′, r) = 1
+
+ 5:   ξ∼N(0,τ)
+ 6:      r′← r +τF +ξ
+
+ 7:   X′←{R, r′}
+ 8:       Compute ψ(X′)                                                           ⊿ forward pass
+ 9:      F′← d log|ψ(X′)|dr′                                                            ⊿ backward pass
+
+10:   G(r, r′)←∏nei   exp((ri− r′i−τF′i)2/2τ)
+11:   G(r′, r)←∏nei   exp((r′i− ri−τFi)2/2τ)
+                (                 )
+12:   p← min      1,|ψ(X′)|2G(r,r′)|ψ(X)|2G(r′,r)
+13:   q← 1−p
+14:       Set p = 0 where sign(ψ(X))⁄= sign(ψ(X′))                                ⊿ Fixed node approximation
+
+15:   s←ET−EL(X)
+16:   s′←ET−EL(X′)[
+                       [p(s′ +s) +qs]]
+17:   ω←ω× exp        τ  2
+
+18:   α∼U[0, 1]
+19:      if p>α then
+20:     ψ(X)←ψ(X′), r← r′, F← F′, etc                             ⊿ Update variables for next iteration
+21:      end if
+22:  end for
+                                                                                                                                                             19
+
+
+
+
+
+ [1]O. A. Von Lilienfeld and K. Burke, Retrospective on a                                (2020).
+     decade of machine learning for chemical discovery, Nature                     [20]J.  Martens  and  R.  Grosse,  Optimizing  neural  networks
+     communications 11, 1 (2020).                                                        with  kronecker-factored  approximate  curvature,  in  In-
+ [2]A.  Szabo  and  N.  S.  Ostlund,      Modern  quantum  chem-                         ternational  conference  on  machine  learning  (2015)  pp.
+     istry:  introduction to advanced electronic structure theory                        2408–2417.
+     (Courier Corporation, 2012).                                                  [21]R. Grosse and J. Martens, A kronecker-factored approx-
+ [3]H.  G.  K¨ummel,  A  biography  of  the  coupled  cluster                            imate  Fisher  matrix  for  convolution  layers,  in  Interna-
+     method, International Journal of Modern Physics B 17,                               tional Conference on Machine Learning  (2016) pp. 573–
+     5311 (2003).                                                                        582.
+ [4]I. Ross, Calculations of the energy levels of acetylene by                     [22]J.  Ba,  R.  Grosse,  and  J.  Martens,  Distributed  second-
+     the method of antisymmetric molecular orbitals, includ-                             order optimization using kronecker-factored approxima-
+     ing σ-π interaction, Transactions of the Faraday Society                            tions, ICLR  (2017).
+     48, 973 (1952).                                                               [23]J. Martens, J. Ba, and M. Johnson, Kronecker-factored
+ [5]W. L. McMillan, Ground state of liquid He 4, Physical                                curvature approximations for recurrent neural networks,
+     Review 138, A442 (1965).                                                            in International Conference on Learning Representations
+ [6]C. Umrigar, M. Nightingale, and K. Runge, A diﬀusion                                 (2018).
+     Monte Carlo algorithm with very small time-step errors,                       [24]D. Pfau, private communication (2020).
+     The Journal of chemical physics 99, 2865 (1993).                              [25]M.  A.  Lee,  K.  Schmidt,  M.  Kalos,  and  G.  Chester,
+ [7]D.  Pfau,  J.  S.  Spencer,  A.  G.  d.  G.  Matthews,  and                          Green’s  function  Monte  Carlo  method  for  liquid  He  3,
+     W.  M.  C.  Foulkes,  Ab-initio  solution  of  the  many-                           Physical Review Letters 46, 728 (1981).
+     electron Schr¨odinger equation with deep neural networks,                     [26]W. Foulkes, L. Mitas, R. Needs, and G. Rajagopal, Quan-
+     arXiv:1909.02487  (2019).                                                           tum Monte Carlo simulations of solids, Reviews of Mod-
+ [8]M.  Troyer  and  U.-J.  Wiese,  Computational  complex-                              ern Physics 73, 33 (2001).
+     ity  and  fundamental  limitations  to  fermionic  quantum                    [27]P.  Maldonado,  A.  Sarsa,  E.  Buend´ıa,  and  F.  G´alvez,
+     Monte  Carlo  simulations,  Physical  review  letters  94,                          Quantum  Monte  Carlo  ground  state  energies  for  the
+     170201 (2005).                                                                      singly  charged  ions  from  li  through  ar,  The  Journal  of
+ [9]J. Hermann, Z. Sch¨atzle, and F. No´e, Deep neural net-                              chemical physics 133, 064102 (2010).
+     work  solution  of  the  electronic  Schr¨odinger  equation,                  [28]I.  Kosztin,  B.  Faber,  and  K.  Schulten,  Introduction  to
+     arXiv:1909.08423  (2019).                                                           the diﬀusion Monte Carlo method, American Journal of
+[10]K. Sch¨utt, M. Gastegger, A. Tkatchenko, K.-R. M¨uller,                              Physics 64, 633 (1996).
+     and R. J. Maurer, Unifying machine learning and quan-                         [29]L. Gupta and I. Hen, Elucidating the interplay between
+     tum chemistry with a deep neural network for molecular                              non-stoquasticity and the sign problem, Advanced Quan-
+     wavefunctions, Nature communications 10, 1 (2019).                                  tum Technologies 3, 1900108 (2020).
+[11]K. Sch¨utt, P.-J. Kindermans, H. E. S. Felix, S. Chmiela,                      [30]J.  B.  Anderson,  Quantum  chemistry  by  random  walk,
+     A. Tkatchenko, and K.-R. M¨uller, Schnet:  A continuous-                            The Journal of Chemical Physics 65, 4121 (1976).
+     ﬁlter convolutional neural network for modeling quantum                       [31]P. Seth, P. L. R´ıos, and R. Needs, Quantum Monte Carlo
+     interactions, in Advances  in  neural  information  process-                        study  of  the  ﬁrst-row  atoms  and  ions,  The  Journal  of
+     ing systems  (2017) pp. 991–1001.                                                   chemical physics 134, 084105 (2011).
+[12]G.  Carleo  and  M.  Troyer,  Solving  the  quantum  many-                     [32]S. J. Chakravorty, S. R. Gwaltney, E. R. Davidson, F. A.
+     body  problem  with  artiﬁcial  neural  networks,  Science                          Parpia,  and  C.  F.  p  Fischer,  Ground-state  correlation
+     355, 602 (2017).                                                                    energies for atomic ions with 3 to 18 electrons, Physical
+[13]R. M. Balabin and E. I. Lomakina, Neural network ap-                                 Review A 47, 3649 (1993).
+     proach  to  quantum-chemistry  data:   Accurate  predic-                      [33]Various,    DeepQMC    (2020),           https://github.com/
+     tion  of  density  functional  theory  energies,  The  journal                      deepqmc/deepqmc.
+     of chemical physics 131, 074104 (2009).                                       [34]Q.  Sun,  T.  C.  Berkelbach,  N.  S.  Blunt,  G.  H.  Booth,
+[14]G. B. Goh, N. O. Hodas, and A. Vishnu, Deep learning                                 S. Guo, Z. Li, J. Liu, J. D. McClain, E. R. Sayfutyarova,
+     for  computational  chemistry,  Journal  of  computational                          S.  Sharma,  S.  Wouters,  and  G.  K.  Chan,  Pyscf:   the
+     chemistry 38, 1291 (2017).                                                          python based simulations of chemistry framework (2017).
+[15]T. F. Cova and A. A. Pais, Deep learning for deep chem-                        [35]Ray (2020),       https://github.com/ray-project/ray.
+     istry:   optimizing  the  prediction  of  chemical  patterns,                 [36]T.  B.  Brown,  B.  Mann,  N.  Ryder,  M.  Subbiah,  J.  Ka-
+     Frontiers in Chemistry 7 (2019).                                                    plan, P. Dhariwal, A. Neelakantan, P. Shyam, G. Sastry,
+[16]W. Yang, L. Peng, Y. Zhu, and L. Hong, When machine                                  A. Askell, et al., Language models are few-shot learners,
+     learning meets multiscale modeling in chemical reactions,                           arXiv:2005.14165  (2020).
+     arXiv:2006.00700  (2020).                                                     [37]P.   Micikevicius,   S.   Narang,   J.   Alben,   G.   Diamos,
+[17]B.   Bransden   and   C.   Joachain,   Quantum   mechan-                             E.   Elsen,    D.   Garcia,    B.   Ginsburg,    M.   Houston,
+     ics,(2000), Prentice Hall..                                                         O. Kuchaiev, G. Venkatesh, et al., Mixed precision train-
+[18]C.  H.  Bischof,  H.  M.  B¨ucker,  P.  Hovland,  U.  Nau-                           ing, arXiv:1710.03740  (2017).
+     mann,  and  J.  Utke,  Advances  in  automatic  diﬀerentia-                   [38]J.  J.  Quinn  and  J.  J.  Quinn,  Pseudopotentials,  corre-
+     tion, Springer  (2008).                                                             lations,  and  hierarchy  states  in  quantum  Hall  systems:
+[19]J. S. Spencer, D. Pfau, A. Botev, and W. Foulkes, Bet-                               When  the  composite  fermion  picture  works  and  why,
+     ter,  faster  fermionic  neural  networks,  arXiv:2011.07125                        Solid state communications 140, 52 (2006).
+                                                                                                                                                              20
+
+[39]M.  Bajdich,   L.  Mitas,   G.  Drobn`y,   L.  Wagner,  and                          Journal of Chemical Physics 119, 6500 (2003).
+     K. Schmidt, Pfaﬃan pairing wave functions in electronic-                      [41]S.   Amari,   Neural   learning   in   structured   parameter
+     structure quantum Monte Carlo simulations, Physical re-                             spaces-natural Riemannian gradient, in Advances in neu-
+     view letters 96, 130201 (2006).                                                     ral information processing systems  (1997) pp. 127–133.
+[40]M. Casula and S. Sorella, Geminal wave functions with
+     Jastrow  correlation:   A  ﬁrst  application  to  atoms,  The

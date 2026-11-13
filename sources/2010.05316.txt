@@ -1,0 +1,762 @@
+Convergence to the ﬁxed-node limit in deep variational Monte Carlo
+           Z. Schätzle,1 J. Hermann,1, 2 and F. Noé1, 3, 4, a)
+           1)FU Berlin,  Department of Mathematics and Computer Science,  Arnimallee 6,  14195 Berlin,
+           Germany
+           2)TU Berlin, Machine Learning Group, Marchstr. 23, 10587 Berlin, Germany
+           3)FU Berlin, Department of Physics, Arnimallee 14, 14195 Berlin, Germany
+           4)Rice University, Department of Chemistry, Houston, TX 77005, USA
+
+           Variational quantum Monte Carlo (QMC) is an ab-initio method for solving the electronic Schrödinger equation that is
+           exact in principle, but limited by the ﬂexibility of the available ansatzes in practice. The recently introduced deep QMC
+           approach, speciﬁcally two deep-neural-network ansatzes PauliNet and FermiNet, allows variational QMC to reach the
+           accuracy of diffusion QMC, but little is understood about the convergence behavior of such ansatzes. Here, we analyze
+           how deep variational QMC approaches the ﬁxed-node limit with increasing network size.  First, we demonstrate that
+           a deep neural network can overcome the limitations of a small basis set and reach the mean-ﬁeld complete-basis-set
+           limit.   Moving to electron correlation,  we then perform an extensive hyperparameter scan of a deep Jastrow factor
+           for  LiH  and  H4  and  ﬁnd  that  variational  energies  at  the  ﬁxed-node  limit  can  be  obtained  with  a  sufﬁciently  large
+           network. Finally, we benchmark mean-ﬁeld and many-body ansatzes on H2O, increasing the fraction of recovered ﬁxed-
+           node correlation energy of single-determinant Slater–Jastrow-type ansatzes by half an order of magnitude compared to
+           previous variational QMC results and demonstrate that a single-determinant Slater–Jastrow–backﬂow version of the
+           ansatz overcomes the ﬁxed-node limitations. This analysis helps understanding the superb accuracy of deep variational
+           ansatzes in comparison to the traditional trial wavefunctions at the respective level of theory,  and will guide future
+           improvements of the neural network architectures in deep QMC.
+
+
+I.  INTRODUCTION                                                                 QMC method to many-particle quantum systems other than
+                                                                                 electrons is also possible9.
+   The fundamental problem in quantum chemistry is to solve                         Currently, there is little understanding of why these DNN
+the  electronic  Schrödinger  equation  as  accurately  as  possi-               wavefunctions  work  well  and  how  their  individual  compo-
+ble at a manageable cost.  Variational quantum Monte Carlo                       nents  contribute  to  the  approximation  of  the  ground-state
+(variational QMC, or VMC for short) is an ab-initio method                       wavefunction and energy.  Examining their expressive power
+based on the stochastic evaluation of quantum expectation val-                   and measuring their accuracy in comparison to traditional ap-
+ues that scales favorably with system size and provides ex-                      proaches is essential to establish neural-network trial wave-
+plicit access to the wavefunction1.  Although exact in princi-                   functions as a standard technique in VMC and to guide further
+ple, VMC strongly depends on the quality of the trial wave-                      development.
+function,  which  determines  both  efﬁciency  and  accuracy  of                    Here,  we  identify  a  hierarchy  of  model  ansatzes  based
+the computation and typically constitutes the limiting factor                    on  the  traditional  VMC  methodology  (Fig.  1)  that  enables
+of VMC calculations.                                                             us  to  distinguish  the  effects  of  improving  single-particle
+   Recently, deep QMC has been introduced.  Deep QMC in-                         orbitals and adding correlation in the symmetric part of the
+volves  a  new  class  of  ansatzes  that  complement  traditional               wavefunction  ansatz.    This  is  of  particular  interest  in  the
+trial wavefunctions with the expressiveness of deep neural net-                  context of discriminating these improvements from reducing
+works (DNNs).  This ab-initio approach is orthogonal to the                      the  energy  by  solving  the  intricate  problem  of  missing
+supervised learning of electronic structure that requires exter-                 many-body effects in the nodal surface.
+nal datasets2,3. The use of neural network trial wavefunctions
+has been pioneered for spin lattice systems4 and later gener-                       The trial wavefunctions in QMC are typically constructed
+alized to molecules in second quantization5.  The ﬁrst appli-                    by  combining  a  symmetric  Jastrow  factor  with  an  anti-
+cation to molecules in real space was a proof-of-principle ef-                   symmetric  part  that  implements  the  Pauli  exclusion  prin-
+fort, but did not reach the accuracy close to traditional VMC6.                  ciple  for  fermions  by  specifying  the  nodal  surface  of  the
+The DNN architectures PauliNet and FermiNet advanced the                         ansatz—the hyperplane in the space of electron coordinates,
+real-space deep QMC approach7,8, increasing the accuracy to                      r  =  (r1, . . . ,rN), on which the wavefunction changes sign.
+state-of-the-art levels and beyond.  Demonstrating very high                     Expressing  the  antisymmetric  part  as  a  linear  combination
+accuracy  with  far  fewer  determinants  than  traditional  coun-               of Slater determinants gives rise to the ansatz of the Slater–
+terparts,  these deep neural network trial wavefunctions pro-                    Jastrow–backﬂow-type  that  comprises  most  VMC  ansatzes,
+vide an alternative to increasing the number of Slater deter-                    including the deep variants PauliNet and FermiNet,
+minants,  thus  potentially  improving  the  unfavorable  scaling
+with respect to the number of electrons that complicates ac-                                 ψ(r) =    eJ(r)|{z}∑pcp det[A↑p(r)]det[A↓p(r)]              (1)
+curate calculations for large systems. Application of the deep                                         symmetric|              {z               }
+                                                                                                                          antisymmetric
+
+                                                                                 The  ability  of  neural  networks  to  represent  antisymmetric
+a)Electronic mail: frank.noe@fu-berlin.de
+                                                                                 (wave) functions has been also explored theoretically10,11.
+                                                                                                                                                               2
+
+                                                                                   ing  the  backﬂow  technique,  transforming  single-particle  or-
+                                                                                   bitals to many-body orbitals under consideration of the sym-
+                                                                                   metry constraints. These are key concepts to efﬁciently reach
+                                                                                   very high accuracy with VMC and integral features of deep
+                                                                                   QMC.  Using  multiple  determinants,  applying  the  backﬂow
+                                                                                   technique  and  modifying  the  symmetric  component  of  the
+                                                                                   ansatz  at  the  same  time  however  makes  it  difﬁcult  identify
+                                                                                   the contributions of each individual part. Benchmarking deep
+                                                                                   QMC ansatzes in conceptually simpler contexts conﬁrms their
+                                                                                   correct functionality and helps to achieve a better understand-
+                                                                                   ing.
+                                                                                      In  this  paper  we  take  a  closer  look  at  how  neural  net-
+                                                                                   works compensate for errors arising from ﬁnite basis sets and
+                                                                                   demonstrate  convergence  to  the  ﬁxed-node  limit  within  the
+FIG. 1.  Hierarchy of single-determinant ansatzes in QMC. The                      VMC framework by systematically increasing the expressive-
+starting  point  of  a  ﬁnite-basis  Hartree–Fock  (HF)  calculation  can          ness of a deep Jastrow factor.  For the sake of disentangling
+be extended  by a “mean-ﬁeld”  Jastrow factor to  improve the one-                 the individual contributions to the overall accuracy, we con-
+electron density of the ansatz. From that point, the ansatz can be im-             duct our analysis mainly with Slater–Jastrow-type trial wave-
+proved in one of two directions—by modifying the orbitals (bottom–                 functions  with  an  antisymmetric  part  consisting  of  a  single
+top) or introducing electron correlation (left–right). The red pathway             determinant,  that  is,  with  ansatzes  possessing  a  mean-ﬁeld
+shows a standard approach in traditional QMC and is the path we                    nodal surface.  We compare neural-network variants with tra-
+pursue in our analysis.                                                            ditional  functional  forms,  as  well  as  with  DMC  results.   In
+                                                                                   particular  we  investigate  the  PauliNet,  a  recently  proposed
+   Traditionally,   Slater   determinants   are   antisymmetrized                  neural-network trial wavefunction7. PauliNet combines ideas
+product states constructed from single-particle molecular or-                      from conventional trial wavefunctions,  such as a symmetric
+bitals, which are expressed in a one-electron basis set consist-                   Jastrow factor, a generalized backﬂow transformation, multi-
+ing of basis functions φk,                                                         determinant  expansions,  quantum  chemistry  baselines,  and
+                     Ai j = ϕi(r j) =∑k cikφk(r j)                      (2)        an explicit implementation of physical constraints of ground-
+                                                                                   state wavefunctions. Since PauliNet is a powerful instance of
+Employing such basis sets transforms the problem of search-                        the general ansatz in (1),  we can obtain traditional types of
+ing over inﬁnitely many functions into a problem of search-                        QMC ansatzes at different levels of the theory by deactivating
+ing over coefﬁcients in a system of equations, which can be                        certain trainable parts of PauliNet.  The hierarchy of ansatzes
+solved by means of linear algebra applying for instance the                        sketched in Fig. 1 maps restricted single-determinant versions
+Hartree–Fock (HF), the multi-conﬁgurational self-consistent                        of PauliNet and their eventual expressiveness in the context
+ﬁeld  (MCSCF),  or  the  full  conﬁguration  interaction  (FCI)                    of the traditional single-determinant VMC approach.  The in-
+method.  The projection comes at the cost of introducing the                       centive of implementing restricted variants of PauliNet is to
+ﬁnite-basis-set error,  which completely vanishes only in the                      test the behavior of the ansatz in settings that are well solved
+limit of inﬁnitely many basis function—the complete-basis-                         by existing methods and investigate the expressiveness of the
+set  (CBS)  limit  (Fig.  1a).   Finite-basis-set  errors  are  inher-             individual components of PauliNet on well-deﬁned subprob-
+ent  to the  second-quantized representation,  which  neverthe-                    lems. These restricted variants however are not intended to be
+less provides an alternative platform to introduce deep learn-                     used in order to achieve best accuracy, which is attained when
+ing to quantum chemistry5.                                                         taking advantage of the full ﬂexibility of the PauliNet ansatz
+   The real-space formulation of VMC allows to introduce ex-                       as demonstrated previously7.
+plicit electron correlation efﬁciently by modelling many-body                         The  rest  of  the  paper  is  organized  as  follows.   In  Sec.  II
+interactions with a Jastrow factor (Fig. 1b). The Jastrow factor                   we  review  the  general  PauliNet  ansatz  and  show  how  dif-
+is a symmetric function of the electron coordinates that tradi-                    ferent levels of the model hierarchy (Fig.1) can be obtained.
+tionally  involves  an  expansion  in  one,  two,  and  three-body                 In Sec. III we use these instances of PauliNet to investigate
+terms12.  Although strongly improving the ansatz, traditional                      several subproblems of the ﬁxed-node limit within the deep
+Jastrow factors do not have sufﬁcient expressiveness to reach                      QMC approach.  First we demonstrate that DNNs can be em-
+high  accuracy  and  an  initial  VMC  calculation  is  typically                  ployed  to  correct  the  single-particle  orbitals  of  a  HF  calcu-
+followed by a computationally demanding ﬁxed-node diffu-                           lation in a small basis and obtain energies close to the CBS
+sion QMC (FN-DMC) simulation (Fig. 1c), which eventually                           limit.  Next we benchmark the deep Jastrow factor.  We start
+projects out the exact solution for the given nodal surface—                       by  applying  it  to  two  node-less  test  systems,  H2  and  He,
+the ﬁxed-node limit13.  DMC is based on the imaginary-time                         where results within ﬁve signiﬁcant digits of the exact energy
+Schrödinger equation and offers yet another entry point for the                    are achieved.  Next we conduct an extensive hyperparameter
+use of neural networks to represent quantum states14,15.                           search for two systems with four electrons, LiH and the H4
+   The  nodal  surface  of  the  trial  wavefunctions  can  be  im-                rectangle, revealing that the expressiveness of the ansatz can
+proved by increasing the number of determinants or by apply-                       be systematically increased to converge to the ﬁxed-node limit
+                                                                                                                                                              3
+
+imposed by the employed antisymmetric ansatz.  We further                         with generalized orbitals is capable of representing any anti-
+explore the convergence aspect by sampling the dipole mo-                         symmetric function, if the many-body orbitals are sufﬁciently
+ment for the LiH ansatzes and evaluating energy differences                       expressive11.  Both Jastrow factor Jθ  and backﬂow transfor-
+for two conﬁgurations of the hydrogen rectangle.  Thereafter                      mation fθ  are obtained from a joint latent-space representa-
+we show the size consistency of the method,  examining the                        tion encoded by a graph-convolutional neural network.  The
+optimization of the deep Jastrow factor for systems of non-                       network acts on the rotation- and translation-invariant repre-
+interacting molecules (H2-H2  and LiH-H2).   Finally we test                      sentation  of  the  system  given  by  the  fully-connected  graph
+various single-determinant variants of PauliNet in an analysis                    of  distances  between  all  electrons  and  nuclei.   The  latent-
+of the water molecule and compare them to traditional trial                       space  many-body  representation  is  designed  to  be  equivari-
+wavefunctions. Section IV discusses the results.                                  ant under the exchange of same-spin electrons, which is used
+                                                                                  to construct the permutation-equivariant backﬂow transforma-
+                                                                                  tion and the permutation-invariant Jastrow factor.  Details on
+II.  THEORY AND METHODS                                                           the  graph-convolutional  neural  network  architecture  can  be
+                                                                                  found in the Appendix.   Combining an expansion in Slater-
+A.  PauliNet                                                                      determinants with Jastrow factor and backﬂow transformation
+                                                                                  introduces  multiple  different  ways  to  model  many-body  ef-
+   The central object of our investigation is PauliNet, a neural-                 fects, helping to efﬁciently encode correlation in the ansatz by
+network  trial  wavefunction  of  the  form  in  (1).    PauliNet                 representing i.e.  dynamic correlation explicitly while imple-
+extends   the   traditional   multi-determinant   Slater–Jastrow–                 menting static correlation with multiple determinants.
+backﬂow-type trial wavefunctions16, retaining physically mo-                         The PauliNet ansatz is optimized according to the standard
+tivated structural features while replacing ad-hoc parameteri-                    VMC  scheme1  of  minimizing  its  energy  expectation  value.
+zations with highly expressive DNNs,                                              This  is  based  on  the  variational  principle  of  quantum  me-
+                                                                                  chanics that guarantees the energy expectation value of any
+    ψθ(r) = eγ(r)+Jθ(r)∑                                                          trial  wavefunction  to  be  lower-bounded  by  the  ground-state
+                                         θ,µpi(r)]det[ ˜ϕ↓θ,µpi(r)]     (3)       energy,  as  long  as  the  fermionic  antisymmetry  constraint  is
+                             p  cp det[ ˜ϕ↑
+                ˜ϕθ,µi(r) = ϕµ(ri) f⊗                                             implemented,
+                                       θ,µi(r)+ f⊕θ,µi(r)                (4)
+The ansatz consists of a linear combination of Slater determi-                            E0 = minψ ⟨ψ| ˆH|ψ⟩≤ minθ ⟨ψθ| ˆH|ψθ⟩,    ψ∈H−     (5)
+nants of molecular single-particle orbitals ϕµ  corrected by a                    In  VMC  this  expectation  value  is  approximated  by  Monte
+generalized backﬂow transformation fθ and of a Jastrow fac-                       Carlo integration,
+tor  Jθ.   The  DNN  components  are  indicated  by  the θ  sub-
+script, denoting the trainable parameters of the involved neu-                                                M∑  ˆHψθ(rk)
+ral networks.   The expansion coefﬁcients cp  and the single-                          ⟨ψθ| ˆH|ψθ⟩≈  1
+particle  orbitals  are  initialized  from  a  preceding  standard                                       M   k=1   ψθ(rk)    ,    rk∈ R3N∼|ψθ|2      (6)
+quantum-chemistry  calculation  (HF  or  MCSCF).  The  ana-
+lytically known electron–nucleus and electron–electron cusp                       In  practice  this  gives  rise  to  an  alternating  scheme  of  sam-
+conditions17 are enforced within the orbitals ϕµ and as a ﬁxed                    pling  electronic  conﬁgurations  according  to  the  probability
+part γ  of the Jastrow factor, respectively.  The correct cusps                   density associated with the trial wavefunction with a standard
+are maintained by designing the remaining trial wavefunction                      Langevin sampling approach and optimizing the parameters
+architecture to be cusp-less.                                                     of this wavefunction by following their (stochastic) gradient
+   Both  backﬂow  transformation  and  Jastrow  factor  can  in-                  with respect to estimates of the expectation value over small
+troduce many-body correlation and are constructed in such a                       batches.  For further details of the training methodology see
+way that they preserve the anti-symmetry of the trial wave-                       ref. 7. Numerical calculations were carried out with the Deep-
+function.   The  Jastrow  factor  consists  of  a  symmetric  func-               QMC Python package18, with training hyperparameters as re-
+tion, that is it retains the antisymmetry upon being invariant                    ported in Table VI.
+under  the  exchange  of  same-spin  electrons.   This  however                      Next we show how to obtain the ansatzes of Fig. 1 from
+has the consequence that it scales the wavefunction without                       the general PauliNet architecture and introduce the respective
+altering  the  nodes  of  the  ansatz.   The  backﬂow  transforma-                optimization problems to be solved.
+tion on the other hand alters the nodal surface by acting on
+the orbitals directly. Traditionally the backﬂow correction in-
+troduces  many-body  correlation  by  assigning  quasi-particle                   B.  Deep orbital correction
+coordinates  that  get  streamed  through  the  original  orbitals.
+PauliNet  generalizes  this  concept,  based  on  the  observation                   The  simplest  way  to  approach  the  quantum  many-body
+that equivariance with respect to the exchange of electrons is                    problem  is  by  considering  a  mean-ﬁeld  theory.    The  HF
+a sufﬁcient criterion to retain the antisymmetry of the Slater                    method gives the optimal mean-ﬁeld solution within the space
+determinant, and considers the backﬂow correction as a many-                      of  the  employed  basis  set.     A  mean-ﬁeld  variant  of  the
+body  transformation  of  the  orbitals  themselves.    In  fact  it              PauliNet architecture can be used to account for ﬁnite-basis-
+has been shown that in principle a single Slater determinant                      set errors in the HF baseline, by introducing a real-space cor-
+                                                                                                                                                               4
+
+rection to the single-particle orbitals,                                              Benchmarking Jastrow factors comes with the difﬁculty of
+                ψθ(r) = det[ ˜ϕ↑                                                   distinguishing errors arising from the nodal surface from those
+                                   θ,µ(ri)]det[ ˜ϕ↓θ,µ(ri)]                 (7)    present due to a lack of expressiveness in the Jastrow factor.
+        ˜ϕθ,µ(ri) = ϕµ(ri) f⊗       (x(L)                (x(L)                     The optimal energy of a Slater–Jastrow-type trial wavefunc-
+                                θ,µ    i   (ri))+ f⊕θ,µ     i   (ri))      (8)     tion however can be obtained with the FN-DMC algorithm,
+The functions f⊗                                                                   that gives the exact ground state of the Schrödinger equation
+                   θ   and f⊕θ   are implemented by DNNs that gen-                 under the ﬁxed-node constraint of the antisymmetric part of
+erate a multiplicative and an additive correction to the HF or-                    the ansatz.
+bitals ϕµ, respectively. Combining a multiplicative and an ad-
+ditive correction serves the practical purpose of facilitating the
+learning process, as the multiplicative correction has a strong                    D.  Mean-ﬁeld Jastrow factor
+effect where the value of the orbital is large, while the addi-
+tive  correction  can  alter  the  nodes  of  the  molecular  orbital.                We  furthermore  implement  a  mean-ﬁeld  Jastrow  factor,
+(In  principle,  an  additive  correction  only  would  be  a  sufﬁ-               which constitutes another point in the space of ansatz classes
+cient  parameterization.)   This  approach  is  a  special  case  of               (Fig. 1),
+the generalized backﬂow transformation in (4), in which the
+backﬂow correction depends on the position of the i-th elec-
+tron only.  The single-particle representation x(L)i   (ri) can be                                         Jθ(r) := ∑i ηθ(x(L)i   (ri))                       (11)
+obtained by a slight modiﬁcation of the graph-convolutional                        The mean-ﬁeld Jastrow factor can optimize the one-electron
+architecture as described in the Appendix.  If Gaussian-type                       density of the ansatz without modifying the nodal surface or
+orbitals are used, it is common to correct the missing nuclear                     introducing correlation,  making its variations a strict subset
+cusp at the coalescence points within the orbitals. We employ                      of the orbital correction.  This equips us with an intermediate
+the cusp correction of Ma et al. 19  and construct the DNNs                        step in approaching the ﬁnite-basis-set limit, that can be used
+to be cusp-less. Though the DNN could in principle approxi-                        to  relate  the  ﬁnite-basis-set  error  to  the  ﬁxed-node  error  of
+mate the orbitals from scratch, providing the HF baseline that                     the HF baseline. If the many-body Jastrow factor is used, the
+ensures the correct asymptotics and offers a good initial guess                    mean-ﬁeld version is not needed, as it is implicitly included in
+reduces the training cost and makes the training process more                      the many-body version.
+robust.   In the mean-ﬁeld theory the HF energy at the CBS
+limit constitutes a benchmark for the best possible solution to
+the optimization problem.                                                          III.  RESULTS
+
+
+C.  Deep Jastrow factor                                                            A.  Large basis sets are not necessary in DNN ansatzes
+
+   The Slater–Jastrow-type ansatz goes beyond the mean-ﬁeld                           We start from a HF baseline obtained in the small 6-31G
+theory  by  introducing  explicit  electronic  correlation.    The                 basis  set.   Instead  of  introducing  more  basis  functions,  the
+symmetric Jastrow factor however cannot alter the nodal sur-                       PauliNet  ansatz  follows  the alternative  approach  of  correct-
+face and the single-determinant Slater–Jastrow-type ansatz is                      ing the orbitals directly in real space.  We trained the mean-
+therefore a many-body ansatz possessing a mean-ﬁeld nodal                          ﬁeld variant of the PauliNet ansatz (Sec. II B) on H2, He, Be,
+surface,                                                                           LiH and the hydrogen square H4. For all ﬁve test systems we
+                                                                                   obtained energies close to the extrapolated CBS limit and re-
+            ψθ(r) = eγ(r)+Jθ(r) det[ϕ↑µ(ri)]det[ϕ↓µ(ri)]           (9)             covered at least 97% of the ﬁnite-basis-set error (Fig. 2). This
+The  deep  Jastrow  factor  Jθ   is  obtained  from  the  latent-                  shows that the use of a very small basis set for the baseline
+space   many-body   representation   encoded   by   the   graph-                   of PauliNet does not introduce any fundamental limitation to
+convolutional neural network described in the Appendix,                            accuracy, because the neural network is able to correct it. We
+                                                                                   note that such an approach to the CBS limit is practical only
+                       Jθ(r) := ηθ(∑i x(L)i   (r))                       (10)      within  the  context  of  the  full  PauliNet,  not  as  a  standalone
+                                                                                   technique to replace large basis sets in quantum chemistry.
+To   enforce   the   symmetry   of   the   Jastrow   factor,    the
+permutation-equivariant   many-body   embeddings   x(L)i      are
+summed over the electrons to give permutation invariant fea-                       B.  Exact solutions for two electron systems
+tures. These features serve as input to a fully-connected neural
+network ηθ , which returns the ﬁnal Jastrow factor.  The pro-                         Next  we  turn  to  modelling  electron  correlation  with  the
+cess of obtaining the latent-space representation involves mul-                    deep Jastrow factor (Sec. II C). We start by evaluating the deep
+tiple smaller components, such as trainable arrays and fully-                      Jastrow factor for H2  and He, two-electron closed-shell sys-
+connected neural networks, whose full speciﬁcation gives rise                      tems for which the ground state is node-less (the antisymme-
+to a collection of hyperparameters that inﬂuence the expres-                       try comes from the spin part of the wavefunction only), such
+siveness of the ansatz.  A list of the components and the re-                      that the Jastrow factor is, in principle, sufﬁcient to reproduce
+spective hyperparameters can be found in Table V.                                  exact results. This yields a pure test for the expressiveness of
+                                                                                                                                                                    5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                     FIG. 3. Dissociation curve of the hydrogen molecule. Upper panel
+                                                                                     shows  total  energy.   Exact  results20  cannot  be  distinguished  from
+                                                                                     FCI and the deep Jastrow factor.   Lower panel shows the percent-
+                                                                                     age of correlation energy recovered.  FCI results were obtained with
+                                                                                     PySCF21 in the cc-pVQZ basis (orange) and cc-pV5Z basis (green).
+                                                                                     Deep  QMC  surpasses  the  FCI  accuracy  for  the  entire  dissociation
+                                                                                     curve.
+
+
+                                                                                     culty of modelling dynamic correlation in Slater-determinant
+                                                                                     space when applying purely second-quantized approaches and
+FIG. 2.    Removing the basis-set error of a HF calculation.  The                    showcase  the  advantages  of  explicitly  encoding  many-body
+error with respect to the estimated CBS limit of HF calculations with                correlations.
+increasingly  large  basis  sets,  as  well  as  the  result  of  employing  a
+DNN to correct the single-particle orbitals of a HF calculation in a
+small basis (6-31G) are shown.   The statistical error of the Monte                  C.  Systematically approaching the ﬁxed-node limit
+Carlo  integration  is  shown  in  light  blue.   The  DNN  is  capable  to
+correct deﬁciencies arising from the ﬁnite basis, producing energies
+close to the CBS limit.                                                                  The complexity of modeling correlation increases steeply
+                                                                                     with the number of particles.   We evaluate the performance
+the deep Jastrow factor. The recovered many-body correlation                         of the deep Jastrow factor for LiH and the hydrogen rectan-
+is measured by the correlation energy,                                               gle H4.  While these four-electron systems exhibit more intri-
+                                                                                     cate interactions, they are computationally lightweight, such
+                            η = EVMC− EHF                                            that the hyperparameter space of the deep ansatzes can be ex-
+                                   Eexact− EHF                             (12)      plored exhaustively.   With multiple same-spin electrons,  the
+                                                                                     spatial  wavefunction  is  no  longer  node-less  and  the  single-
+                                                                                     determinant Slater–Jastrow ansatz possesses a ﬁxed-node er-
+       TABLE I. Results for two-electron node-less systems.                          ror. Instead of comparing to exact energies, we therefore mea-
+                                                                                     sure the performance of the Jastrow factor with respect to the
+system                deep Jastrow factor        exact energy         η [%]          ﬁxed-node  limit  estimated  from  FN-DMC  calculations,  and
+H2 (d = 1.4)             -1.17446(1)             -1.174474820       99.97(3)         reporting the ﬁxed-node correlation energy,
+He                             2.90372(1)              -2.903724722       99.98(2)
+                                                                                                                ηFN = EVMC− EHFEDMC− EHF                           (13)
+   For both systems we obtain energies matching ﬁve signif-
+icant digits of the exact references (Table I). We evaluate the                      As the ﬁxed-node correlation energy is deﬁned for ansatzes
+ansatz along the dissociation curve of H2 (Fig. 3). Deep QMC                         with  an  identical  nodal  surface,  the  nodes  of  the  FN-DMC
+outperforms FCI even with the large cc-pV5Z basis set,  re-                          benchmark have to be reconstructed. For the mean-ﬁeld nodal
+ducing the error in correlation energy by one to two orders                          surface this implies starting from a HF computation with the
+of magnitude at compressed geometries and still being more                           same basis set.
+accurate  at  stretched  geometries,  where  the  system  exhibits                       For the H4 rectangle we performed a scan of all the hyper-
+static  correlation  and  the  restricted  HF  baseline  gives  qual-                parameters of the deep Jastrow factor including those of the
+itatively wrong results (ionic contributions resulting in neg-                       graph-convolutional  neural  network  architecture  (Table  V).
+ative interaction energy).   The results demonstrate the difﬁ-                       The scan was a grid search that involved the training of 864
+                                                                                                                                                                   6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  4.      Approaching  FN-DMC  accuracy  with  deep  Jastrow
+factor.  For LiH increasingly expressive Jastrow factors are trained.
+The dependence on the dimension of the convolutional kernel (DNN
+width)  and  the  number  of  interactions  (L)  in  the  Jastrow  graph-
+neural-network  is  shown.   The  orbitals  of  the  antisymmetric  part
+are expressed in the TZP basis23.   The upper panel shows the en-
+ergy of the trial wavefunctions.  The most accurate ansatzes give re-
+sults within the sampling error of the FN-DMC energy of a single-
+determinant benchmark from Casalegno, Mella, and Rappe 24, indi-                     FIG. 5.  Relative energy for hydrogen rectangle. The convergence
+cated by the shaded region at the upper end of the graph. In the lower               of the energy to the DMC reference26  (black line) with increasing
+panel  the  dipole  moment  of  the  trial  wavefunctions  is  evaluated.            model size for two geometries of the hydrogen rectangle, as well as
+As a reference the dipole moment of a HF (dashed line) and of an                     the relative energy difference is shown.   The minimal energy over
+explicitly-correlated  coupled-cluster  (CCSD(T)-R12)  calculation25                 ﬁve independent runs is highlighted in the upper plots and used to
+(dashed doted line) are shown. For the models with ﬁve and six inter-                compute the relative energy. The dashed lines indicate error margins
+actions the dipole moment converges to the results from the coupled-                 of 1 and 2 kcal/mol.
+cluster calculation.
+
+                                                                                     sion of  the convolutional kernel,  referring to  the dimension
+                                                                                     of  the  latent  space  where  the interactions  within  the  graph-
+models, comprising models with all combinations of the hy-                           convolutional neural network take place (see Appendix).
+perparameters in the vicinity of their default values.  In order                        The results were used to perform a thorough investigation
+to reduce the dimensionality of the experiment some hyperpa-                         of the convergence behavior on LiH, varying a subset of hy-
+rameters were merged and varied together.  Further details of                        perparameters  and  ﬁxing  the  remaining  hyperparameters  at
+the scan can be found in the caption of Fig. 8, depicting the                        suitable  values.   We  show  a  systematic  convergence  to  the
+energies of all the model instances.  The experiment aimed at                        ﬁxed-node limit with an increasing dimension of the convo-
+obtaining a ﬁrst impression of the hyperparameter space and                          lutional kernel (DNN width) as well as the number of inter-
+revealed that by increasing the total number of trainable pa-                        actions L (Fig. 4).  This is an indication that the deep Jastrow
+rameters, the ﬁxed-node limit can be approached. The experi-                         factor can be extended towards completeness in a computa-
+ment shows that the energy behaves smoothly with respect to                          tionally feasible way. The remaining ﬂuctuations of the ﬁxed-
+changes in the hyperparameters and there are no strong mu-                           node correlation energy are caused by the stochasticity of the
+tual dependencies between hyperparameters.  Several impor-                           training and the sampling error of evaluating the energy of the
+tant hyperparameters for systematically scaling the architec-                        wavefunction.
+ture can be identiﬁed, such as the depth of the neural network                          By  evaluating  the  dipole  moment  of  the  LiH  wavefunc-
+ηθ  from (10),  the  number of interactions L  and the dimen-                        tions we go beyond the energy and investigate the convergence
+                                                                                                                                                               7
+
+of a property that the PauliNet ansatz is not explicitly opti-
+mized for.  We found that upon converging to the ﬁxed-node
+limit with increasingly large models the dipole moment ap-
+proaches the coupled cluster reference (Fig. 4).  Even though
+the energies of the LiH wavefunctions converge consistently,
+the convergence of the dipole moment is subject to ﬂuctua-
+tions, which are particularly strong for the small models and
+decrease as the ﬁxed-node limit is approached.  This can be
+explained by degenerate energy minima of the ansatz with re-
+spect to the parameters.  Multiple solutions to the optimiza-
+tion problem can be present if the exact solution is outside the
+variational subspace. This ambiguity however decreases with
+increasing expressiveness of the trial wavefunction.
+   While the accuracy with respect to the total energy is an
+appropriate measure for expressiveness of the trial wavefunc-
+tion ansatz, in practice relative energies are most often of in-
+terest.  The capability of the full PauliNet ansatz in comput-                     FIG. 6.  Size consistency of deep Jastrow factor optimization. The
+ing relative energies has been previously demonstrated for the                     ﬁgure shows the smoothed training curves of the deep Jastrow factor
+cyclobutadiene automerization7 and the results with the deep                       for two systems of non-interacting molecules. The optimization of an
+Jastrow factor for the node-less H2 (Fig.  3) provide interac-                     ansatz for the joint system (orange) is compared to the independent
+tion energies at the level of FCI. Here we want to study how                       optimization of two separate ansatzes for the subsystems respectively
+the relative energy converges with an increasing expressive-                       (blue).
+ness of the deep Jastrow factor and demonstrate a cancella-
+tion of errors at different geometries.   This is a feature that                      One  of  the  essential  properties  of  any  proper  electronic
+makes relative energy calculations usually more accurate than                      structure method is size consistency.  Traditional Jastrow fac-
+total energy calculations and is very desirable for any quan-                      tors are factorizable in the electronic and nuclear coordinates
+tum chemistry method. We optimized increasingly expressive                         of two inﬁnitely distant subsystems, which leads to exact size
+versions of the deep Jastrow factor for two geometries of the                      consistency for identical copies of a given system, and to ap-
+hydrogen rectangle (Tabel VII) and determined their relative                       proximate size consistency for an assembly of different sys-
+energy  (Fig.  5).   In  order  to  reduce  the  level  of  stochastic-            tems (because optimized parameters are now shared by differ-
+ity in the training we performed ﬁve independent optimiza-                         ent systems). In PauliNet the embeddings xi for two electrons
+tion runs and used the ones with the lowest energy to calcu-                       at two distant subsystems are independent of each other by
+late the relative energies.  Both the total and relative energy                    construction.  Although the subsequent nonlinear transforma-
+converge to the DMC reference with an increasing number of                         tion ηθ  applied to the sum of the embeddings breaks exact
+trainable parameters of the ansatz.  Furthermore the relative                      factorizability, it could be restored by applying the transfor-
+energy ﬂuctuates within 2 kcal/mol of the DMC reference for                        mation  before  summing  the  embeddings,  which  in  numeri-
+all models with more than two interactions, and is well within                     cal experiments does not affect performance.  Regardless, in
+1 kcal/mol for the models with the largest DNN width.  This                        numerical  experiments  with  two  systems  of  non-interacting
+demonstrates that the deep Jastrow factor can achieve similar                      molecules (H2-H2  and LiH-H2) we show that even the vari-
+accuracy  for  both  geometries  and  exhibits  a  cancellation  of                ant  of  our  ansatz  which  is  not  exactly  factorizable  is  size-
+errors. The stochasticity of the optimization however compli-                      consistent  in  practice  (Table  II).  For  the  system  composed
+cates the comparison of individual runs, which will be subject                     of  two  distant  hydrogen  molecules,  both  the  combined  and
+to further investigation.  Looking at the energy of the differ-                    individual  calculations  give  nearly  exact  results,  99.99(1)%
+ent optimizations though, we found a decrease in stochasticity                     and 100.00(1)% of the correlation energy, respectively. In the
+of the ﬁnal energy with increasing model size, which is con-                       second  test  with  LiH  and  H2,  99.65(2)%  and  99.68(2)%  of
+venient  for  practical  purpose,  where  typically  large  models                 the correlation energy is achieved, respectively, which corre-
+would be used.  The difﬁculty of optimizing small models is                        sponds to the difference of less than 10% of the overall er-
+well-known in the context of training neural networks, which                       ror of PauliNet with respect to the exact energy.  The results
+tends to be improved by increasing the number of trainable                         furthermore show that optimization of the ansatz for the com-
+parameters27.                                                                      bined system works similarly well as optimizing the separate
+                                                                                   instances for the respective subsystems (Fig. 6).
+
+TABLE II. Sampled energies of the size consistency experiment.
+system                 combined                 individual               exact20,28D.  Application of diﬀerent levels of theory to H2O
+
+H2-H2                -2.34894(1)              -2.34895(1)              -2.34895       The results for the small test systems showed that DNNs
+LiH-H2              -9.24394(7)              -9.24405(7)              -9.24501
+                                                                                   can be used to converge to the CBS limit within the mean-ﬁeld
+                                                                                                                                                             8
+
+                                                                                  trow  factor  with  a  HF  determinant  in  the  Roos  augmented
+                                                                                  double-zeta basis (Roos-aug-DZ-ANO)33,  a basis set that is
+                                                                                  frequently used for calculations on H2O and gives HF energies
+                                                                                  at the CBS limit. We compare to VMC and DMC results from
+                                                                                  the literature,  achieving 97.2(1)% of the ﬁxed-node correla-
+                                                                                  tion energy and surpassing the accuracy of previous VMC cal-
+                                                                                  culations with single-determinant Slater–Jastrow trial wave-
+                                                                                  functions by half an order of magnitude (Table III).
+                                                                                     In order to study how ﬁnite-basis-set errors manifest in the
+                                                                                  mean-ﬁeld nodal surface of both the HF and the many-body
+                                                                                  ansatzes, we computed the energies of the deep Jastrow factor
+                                                                                  with a HF determinant in a 6-311G basis. The results suggest
+                                                                                  that ﬁnite-basis-set errors of the HF calculations transfers di-
+                                                                                  rectly to the many-body regime. In particular, the differences
+                                                                                  between the energies of the mean-ﬁeld ansatzes match the dif-
+                                                                                  ferences of the respective Slater–Jastrow trial wavefunctions
+                                                                                  and errors in the energy due to ﬁnite-basis-set effects are not
+                                                                                  altered by the many-body correlation.
+                                                                                     We furthermore demonstrate that both methods can be com-
+FIG. 7.     Single-determinant variants of PauliNet evaluated on                  bined, by optimizing a trial wavefunction composed of a deep
+the  H2O  molecule.    All  three  restricted  variants  of  PauliNet  in-        Jastrow factor and a Slater determinant of orbitals of an im-
+troduced in Methods are compared:  the deep orbital correction (6-                precise HF baseline that are modiﬁed by the orbital correction.
+311G+DNN), the full deep Jastrow factor, and the mean-ﬁeld (MF)                   The parameters of both Jastrow factor and orbital correction
+Jastrow  factor.    Furthermore  the  energy  of  the  combined  ansatz           were optimized simultaneously.  The HF baseline was com-
+(Jastrow@6-311G+DNN) and single-determinant versions of the full                  puted in the small 6-311G basis set.  With this setup we were
+PauliNet (full) are shown.   ROOS denotes the Roos-aug-DZ-ANO                     able to achieve energies close to the ﬁxed-node limit of the
+basis set.  VMC and DMC references are taken from Gurtubay and                    optimal  mean-ﬁeld  nodal  surface.   Starting  from  a  minimal
+Needs 30. HF@CBS and exact energy are taken from Rosenberg and                    baseline we recovered 96.0(2)% of the ﬁxed-node correlation
+Shavitt 32.  The Monte Carlo sampling error is smaller than the size              energy with respect to the Roos-aug-DZ-ANO basis.
+of the markers.   The training curves for the ansatzes are shown in
+Fig. 9.                                                                              Finally we show that the full PauliNet ansatz can go beyond
+                                                                                  the ﬁxed-node approximation and train an instance with the
+theory, and that by adding correlation with a deep Jastrow fac-                   same  graph-convolutional  architecture  as  in  the  previous
+tor the ﬁxed-node limit can be approached. To investigate how                     experiments, but using the full backﬂow transformation. With
+these ansatzes behave for larger systems, we evaluated the re-                    this  ansatz  we  obtained  a  VMC  energy  of  -76.4252(3)  and
+spective instances of PauliNet on the water molecule (Fig. 7,                     -76.4281(3) for the 6-311G and the Roos-aug-DZ-ANO basis
+Fig. 9). These experiments aim at demonstrating that the same                     set  respectively,   amounting  to  96.67(8)%  and  97.38(8)%
+ansatzes can be applied to a variety of systems without any                       of  the  total  correlation  energy.     This  energy  is  signiﬁ-
+modiﬁcations and test how much their respective accuracy de-                      cantly  below  the  single-determinant  DMC  results  (Fig.   7),
+creases if the size of the graph-convolutional neural network                     demonstrating  energetically  favorable  changes  in  the  nodal
+is kept ﬁxed.  For the experiment we chose 4 interactions and                     surface  due  to  the  backﬂow  transformation.   A  comparison
+a kernel dimension of 256, which is equal to the large models                     to traditional VMC results shows that the single-determinant
+from the H4 and LiH experiments.  Due to the convolutional                        version of PauliNet strongly improves on single-determinant
+nature of the neural network the number of trainable parame-                      Slater–Jastrow–backﬂow  (SD-SJB)  trial  wavefunctions  and
+ters is mostly independent of the number of electrons, hence                      multi-determinant   Slater–Jastrow   (MD-SJ)   wavefunctions
+it is similar to the previous experiments.                                        need thousands of determinants to obtain a similar accuracy
+                                                                                  (Table IV). Here it should be stated that in principle the ac-
+   We again start with the mean-ﬁeld theory and consider the                      curacy of PauliNet can be further improved by increasing the
+ﬁnite-basis-set error. We corrected the HF orbitals in the small                  size  of  the  graph-convolutional  neural  network  architecture
+6-311G basis set with the deep orbital correction (Sec. II B),                    or introducing multiple determinants. The comparison should
+which  recovered  90%  of  the  ﬁnite-basis-set  error.   We  then                therefore not be understood as ultimate, but serves to give an
+estimated how much of the ﬁnite-basis-set error amounts to                        impression of the capabilities of the PauliNet backﬂow. More
+the ﬁxed-node error by applying the mean-ﬁeld Jastrow factor                      exemplary calculations with the full PauliNet ansatz including
+(Sec. II D), which can recover about half of the ﬁnite-basis-                     multi-determinant ansatzes have been carried out previously7
+set error only. This suggests that upon approaching the ﬁnite-                    and a more thorough investigation of the improvements in the
+basis-set limit the nodal surface is altered signiﬁcantly.                        nodal-surface  as  well  as  a  benchmark  of  the  computational
+   Next,  we investigate single-determinant ansatzes with the                     complexity will be conducted in future work.
+full Jastrow factor (Sec. II C). We benchmark the deep Jas-
+                                                                                                                                                                          9
+
+
+                            TABLE III. Benchmarking single-determinant (SD) Slater–Jastrow (SJ) ansatzes on H2O.
+
+reference                                            HF                     VMC (SD-SJ)                DMC (SD-SJ)              ηFN [%]                         basis set
+PauliNet          −76.009     −76.3923(7)                            –                           91.2(2)a                          6-311G
+PauliNet          −76.0612    −76.4096(7)                            –                           96.0(2)a                     6-311G+DNN
+PauliNet          −76.0672    −76.4139(5)                           –                           97.2(1)a                Roos-aug-DZ-ANO
+Clark et al. 29                                      –      −76.3938(4)     −76.4236(2)                  91.6(1)                 Roos-aug-TZ-ANO
+Gurtubay and Needs 30    −76.0672    −76.3773(2)    −76.42376(5)                87.01(6)                Roos-aug-DZ-ANO
+Gurtubay et al. 31      −76.0587     −76.327(1)     −76.42102(4)                 73.5(3)                   6–311++G(2d,2p)
+
+         a The ﬁxed-node correlation energy is computed with respect to the reference FN-DMC energy of Gurtubay and Needs 30.
+
+
+
+TABLE IV. Comparison of full PauliNet instance with traditional                          DATA AVAILABILITY
+trial wavefunctions.
+                                 ansatz      # determinants          VMC                    The   data   that   support   the   ﬁndings   of   this   study
+PauliNet                            SD-SJB               1    −76.4281(3)                are   openly   available   at   http://doi.org/10.6084/m9.
+Gurtubay and Needs 30     SD-SJB               1    −76.4034(2)                          figshare.13077158.v3.
+Clark et al. 29                    MD-SJ             2316   −76.4259(6)
+Clark et al. 29                    MD-SJ             7425   −76.4289(8)                  ACKNOWLEDGMENTS
+
+
+IV.  DISCUSSION                                                                             We gratefully acknowledge funding and support from the
+                                                                                         European  Research  Commission  (ERC  CoG  772230),  the
+                                                                                         Berlin Mathematics Research Center MATH+ (Projects AA2-
+   We have demonstrated that the choice of the architecture                              8,  EF1-2,  AA2-22) and the German Ministry for Education
+does not introduce fundamental limitations regarding the ﬂex-                            and Research (Berlin Institute for the Foundations of Learn-
+ibility of the investigated components of the PauliNet and that                          ing and Data BIFOLD). J. H. would like to thank K.-R. Müller
+a systematic improvement of the accuracy is possible when                                for support and acknowledge funding from TU Berlin.
+increasing  the  number  of  trainable  parameters  in  a  suitable
+way.  For both the deep orbital correction and the deep Jas-
+trow factor, close to exact energies for the corresponding level                         REFERENCES
+of theory can be obtained.  This highlights the generality and
+expressiveness  of  deep  QMC—a  single  ansatz  without  any                             1W. M. C. Foulkes,  L. Mitas,  R. J. Needs,   and G. Rajagopal, Rev. Mod.
+problem-speciﬁc modiﬁcations can be applied to a variety of                                Phys. 73, 33 (2001).
+systems and extended systematically to improve the accuracy                               2K. T. Schütt, M. Gastegger, A. Tkatchenko, K.-R. Müller,  and R. J. Maurer,
+without introducing new components to the trial wavefunction                               Nat. Commun. 10, 5024 (2019).
+architecture.  Though the results with the deep orbital correc-                           3M.  Gastegger,  A.  McSloy,  M.  Luya,  K.  T.  Schütt,   and  R.  J.  Maurer,  J.
+tion and the deep Jastrow factor emphasize the potential of                                Chem. Phys. 153, 044123 (2020).
+                                                                                          4G. Carleo and M. Troyer, Science 355, 602 (2017).
+the deep QMC approach, the major beneﬁt of deep QMC over                                  5K. Choo, A. Mezzacapo,  and G. Carleo, Nature Communications 11, 2368
+FN-DMC calculations remains that it can go beyond the ﬁxed-                                (2020).
+node approximation by faithfully representing the nodal sur-                              6J. Han, L. Zhang,  and W. E, Journal of Computational Physics 399, 108929
+face upon introducing many-body correlation at the level of                                (2019).
+the  orbitals.   We  have  outlined  this  with  an  exemplary  cal-                      7J. Hermann, Z. Schätzle,  and F. Noé, Nature Chemistry 12, 891 (2020).
+                                                                                          8D. Pfau, J. S. Spencer, A. G. D. G. Matthews,  and W. M. C. Foulkes, Phys.
+culation  on  the  water  molecule,  using  a  single-determinant                          Rev. Research 2, 033429 (2020).
+instance  of  the  full  PauliNet  ansatz.   The  presented  analy-                       9C. Adams, G. Carleo, A. Lovato,  and N. Rocco, “Variational Monte Carlo
+sis  paves  the  way  for  future  investigations  on  how  the  full                      calculations  of  A≤  4  nuclei  with  an  artiﬁcial  neural-network  correlator
+PauliNet ansatz improves the nodes and overcomes the ﬁxed-                                 ansatz,”  (2020), preprint at http://arxiv.org/abs/2007.14282.
+                                                                                         10J. Han, Y. Li, L. Lin, J. Lu, J. Zhang,   and L. Zhang, “Universal approx-
+node limitations.                                                                          imation of symmetric and anti-symmetric functions,”   (2019), preprint at
+                                                                                           http://arxiv.org/abs/1912.01765.
+                                                                                         11M.   Hutter,   “On   Representing   (Anti)Symmetric   Functions,”      (2020),
+                                                                                           arXiv:2007.15298.
+                                                                                         12N. D. Drummond, M. D. Towler,  and R. J. Needs, Phys. Rev. B 70, 235119
+                                                                                           (2004).
+                                                                                         13R. J. Needs,  M. D. Towler,  N. D. Drummond,   and P. L. Ríos, J. Phys.:
+                                                                                           Condens. Matter 22, 023201 (2009).
+                                                                                         14A. Barr, W. Gispen,  and A. Lamacraft, in Proceedings of Machine Learning
+                                                                                           Research, Vol. 107 (PMLR, 2020) pp. 635–653.
+                                                                                         15J. Han, J. Lu,  and M. Zhou, Journal of Computational Physics 423, 109792
+                                                                                           (2020).
+                                                                                                                                                                           10
+
+
+16P. López Ríos, A. Ma, N. D. Drummond, M. D. Towler,  and R. J. Needs,                   APPENDIX
+  Phys. Rev. E 74, 066701 (2006).
+17T.  Kato,  Communications  on  Pure  and  Applied  Mathematics  10,  151
+  (1957).                                                                                 Graph-convolutional neural-network architecture
+18J. Hermann, Z. Schätzle,  and H. E. Sauceda, “Deepqmc/deepqmc:  Deep-
+  QMC 0.3.0,” Zenodo (2021).
+19A. Ma, M. D. Towler, N. D. Drummond,  and R. J. Needs, J. Chem. Phys.                      At   the   core   of   the   PauliNet   architecture   a   graph-
+  122, 224322 (2005).                                                                     convolutional   neural   network   generates   a   permutation-
+20W. Kołos and L. Wolniewicz, J. Chem. Phys. 43, 2429 (1965).                             equivariant latent-space many-body representation of a given
+21Q. Sun, X. Zhang, S. Banerjee, P. Bao, M. Barbry, N. S. Blunt, N. A. Bog-
+  danov,  G.  H.  Booth,  J.  Chen,  Z.-H.  Cui,  J.  J.  Eriksen,  Y.  Gao,  S.  Guo,    electron conﬁguration. In the following we give a short intro-
+  J. Hermann,  M. R. Hermes,  K. Koh,  P. Koval,  S. Lehtola,  Z. Li,  J. Liu,            duction to the network architecture, discussing both the gen-
+  N.  Mardirossian,  J.  D.  McClain,  M.  Motta,  B.  Mussard,  H.  Q.  Pham,            eral concept and the particular application in the context of
+  A.  Pulkin,  W.  Purwanto,  P.  J.  Robinson,  E.  Ronca,  E.  R.  Sayfutyarova,        PauliNet.
+  M. Scheurer, H. F. Schurkus, J. E. T. Smith, C. Sun, S.-N. Sun, S. Upad-                   Graph neural networks are constructed to represent func-
+  hyay, L. K. Wagner, X. Wang, A. White, J. D. Whitﬁeld, M. J. Williamson,                tions on graph domains34 and have become increasing popu-
+  S. Wouters, J. Yang, J. M. Yu, T. Zhu, T. C. Berkelbach, S. Sharma, A. Y.               lar for modeling chemical systems, as they can be designed
+  Sokolov,  and G. K.-L. Chan, J. Chem. Phys. 153, 024109 (2020).
+22T. Kinoshita, Phys. Rev. 115, 366 (1959).                                               to  comply  with  symmetries  of  molecules35.     The  graph-
+23B. P. Pritchard, D. Altarawy, B. Didier, T. D. Gibson,  and T. L. Windus, J.            convolutional  neural  network  of  PauliNet  is  a  modiﬁcation
+  Chem. Inf. Model. 59, 4814 (2019).                                                      of SchNet36,  an architecture developed to predict molecular
+24M.  Casalegno,  M.  Mella,   and  A.  M.  Rappe,  J.  Chem.  Phys. 118,  7193
+  (2003).                                                                                 properties from atom positions upon being trained in a super-
+25D. Tunega and J. Noga, Theor Chem Acc 100, 78 (1998).                                   vised setting, that is by repeated exposure to known pairs of
+26K. Gasperich, M. Deible,   and K. D. Jordan, J. Chem. Phys. 147, 074106                 input and output data. In SchNet a trainable embedding is as-
+  (2017).                                                                                 signed to each atom, which serves to give an abstract represen-
+27R. Livni, S. Shalev-Shwartz,  and O. Shamir, in Advances in Neural Infor-
+  mation Processing Systems, Vol. 27, edited by Z. Ghahramani, M. Welling,                tation of the atomic properties in a high-dimensional feature
+  C. Cortes, N. Lawrence,   and K. Q. Weinberger (Curran Associates, Inc.,                space and is successively updated to encode information about
+  2014) pp. 855–863.                                                                      the atomic environment. The updates are implemented as con-
+28W. Cencek and J. Rychlewski, Chemical Physics Letters 320, 549 (2000).                  volutions  over  the  graph  of  atomic  distances,  which  makes
+29B. K. Clark, M. A. Morales, J. McMinis, J. Kim,  and G. E. Scuseria, The
+  Journal of Chemical Physics 135, 244105 (2011).                                         the  architecture  invariant  to  translation,  rotation  and  equiv-
+30I. G. Gurtubay and R. J. Needs, J. Chem. Phys. 127, 124306 (2007).                      ariant with respect to the exchange of identical atoms.   The
+31I. G. Gurtubay, N. D. Drummond, M. D. Towler,  and R. J. Needs, J. Chem.                graph convolutions furthermore implement parameter sharing
+  Phys. 124, 024318 (2006).                                                               across the edges, such that the number of network parameters
+32B. J. Rosenberg and I. Shavitt, The Journal of Chemical Physics 63, 2162                does not depend on the number of interacting entities, hence
+  (1975).                                                                                 is constant with system size.  The ﬁnal features are then used
+33P.-O. Widmark, P.-Å. Malmqvist,  and B. O. Roos, Theoret. Chim. Acta 77,
+  291 (1990).                                                                             to predict the molecular properties respectively.
+34P. W. Battaglia, J. B. Hamrick, V. Bapst, A. Sanchez-Gonzalez, V. Zam-                     In quantum chemistry we consider modeling electrons and
+  baldi, M. Malinowski, A. Tacchetti, D. Raposo, A. Santoro, R. Faulkner,                 nuclei.  At this level a molecule can be represented as a com-
+  C.  Gulcehre,   F.  Song,   A.  Ballard,   J.  Gilmer,   G.  Dahl,   A.  Vaswani,       plete graph, where nodes correspond to electrons and nuclei
+  K. Allen, C. Nash, V. Langston, C. Dyer, N. Heess, D. Wierstra, P. Kohli,               and the distances of each pair of particles is assigned to the
+  M.  Botvinick,  O.  Vinyals,  Y.  Li,   and  R.  Pascanu,  “Relational  inductive       edge between their respective nodes. The graph-convolutional
+  biases, deep learning, and graph networks,”  (2018), arXiv:1806.01261.
+35J. Gilmer,  S. S. Schoenholz,  P. F. Riley,  O. Vinyals,   and G. E. Dahl, in           neural network at the core of PauliNet acts on this graph rep-
+  International Conference on Machine Learning (PMLR, 2017) pp. 1263–                     resentation of the system. Similar to the SchNet implementa-
+  1272.                                                                                   tion a representation in an abstract feature space is assigned
+36K. T. Schütt, H. E. Sauceda, P.-J. Kindermans, A. Tkatchenko,  and K.-R.
+  Müller, J. Chem. Phys. 148, 241722 (2018).                                              to each node by introducing electronic embeddings Xθ,si  and
+                                                                                          nuclear embeddings Yθ,I  respectively.   The embeddings are
+                                                                                          trainable arrays that are initialized randomly.  As same-spin
+                                                                                          electrons are indistinguishable they share representations and
+                                                                                          get initialized with a copy of the same electronic embedding,
+
+                                                                                                                            x(0)i    := Xθ,si                                 (14)
+
+                                                                                          The electronic embeddings constitute the latent-space repre-
+                                                                                          sentation, which serves to obtain Jastrow factor and backﬂow
+                                                                                          transformation in the later process of evaluating the trial wave-
+                                                                                          function.   In order to encode positional information of each
+                                                                                          electron with respect to the nuclei as well as electronic many-
+                                                                                          body correlation into the latent-space representation, the elec-
+                                                                                          tronic embeddings are updated in an interaction process.  In-
+                                                                                          formation is transmitted along the edges of the graph, by ex-
+                                                                                          changing messages that take the distances to the nuclei and
+                                                                                                                                                                  11
+
+the other electrons into account,
+
+       z(n,n)                 (e(|ri− RI|))⊙ Yθ,I
+        i      :=∑I w(n,n)θ
+                      ±           (e(|ri− r j|))⊙ h(n)(x(n))        (15)
+      z(n,±)i       :=∑j⁄=i w(n,±)θ                     θ      j
+
+
+Here  the  functions  wθ  and  hθ  are  implemented  by  fully-
+connected neural networks, e represents an expansion of the
+distances  in  a  basis  of  Gaussian  functions  and⊙  indicates
+element-wise multiplication.  For each two interacting parti-
+cles the ﬁlter generating function wθ  generates a mask that
+is applied to their respective embeddings.  Thereby the ﬁlter-
+generating function moderates interactions based on the dis-
+tance of the particles.  By summing up the messages of iden-
+tical particles their overall contribution is invariant under the
+exchange of these identical particles.  The transformation hθ
+serves  to  introduce  additional  ﬂexibility  to  the  architecture,
+by separating the latent-space representation from the inter-
+action space.   The superscripts of the neural networks indi-
+cate  that  different  functions  are  applied  at  each  subsequent
+interaction and the ﬁlter-generating functions for the interac-
+tions with spin-up electrons, spin-down electrons and nuclei
+are different.  The distance expansion e is truncated with an
+envelope that ensures it to be cusp-less, that is that all Gaus-
+sian features have a vanishing derivative at zero distance, and
+imposes a long-range cutoff.  The ﬁnal step in the interaction
+process is to update to the electronic embeddings
+
+     x(n+1)                            (z(n,±))+ g(n,n)(z(n,n))      (16)
+      i        := x(n)i   +∑± g(n,±)θ     i           θ       i                      FIG. 8.   Hyperparameter scan of the H4 square. The ﬁgure maps
+                                                                                     models with different combinations of hyperparameters in the space
+Therefore the messages are transformed from the interaction                          of  accuracy  with  respect  to  the  number  of  total  trainable  parame-
+space to the embedding space and added to the original em-                           ters.   The  exact  set  of  hyperparameters  of  each  model  can  be  de-
+bedding.    The  transformation  gθ  is  again  implemented  by                      coded via the accompanying legend.  In order to reduce the degrees
+fully-connected neural networks.  This interaction process is                        of freedom the embedding and kernel dimensions were joined and
+repeated L times, to successively encode increasingly complex                        varied together.  The models with increasing embedding and kernel
+many-body  information.   The  continuous-ﬁlter  convolutions                        dimensions can be distinguished by their number of total parameters,
+over  the  molecular  graph  and  the  initialization  of  electrons                 hence no explicit criterion is introduced.  The energy of the models
+with identical embeddings make the architecture equivariant                          is estimated from the ﬁnal steps of the optimization procedure.  The
+with respect to the exchange of same-spin electrons,                                 ﬁxed-node correlation energy is obtained with respect to FN-DMC
+                                                                                     results26, where a single-determinant trial wavefunction with a basis
+                                                                                     consisting of s functions from the cc-pV5Z basis set and the p and d
+                          Pi jxi(r) = x j(Pi jr)                          (17)       functions from the cc-pVTZ basis set was used. Increasing the num-
+                                                                                     ber of trainable parameters the ﬁxed-node limit can be approached.
+
+Overall  this  gives  a  latent-space  representation  that  can  ef-
+ﬁciently encode electronic many-body effects while intrinsi-
+cally  fulﬁlling  the  desired  permutation  equivariance.   Infor-
+mation about the hyperparameters of all of the components is
+collected in Table V.
+   A single-particle variant of the graph-convolutional neural-
+network architecture can be obtained by considering only in-
+teractions along edges between electrons and nuclei.  That is
+the overall architecture of the network remains identical but
+the electronic updates z(n,±)i       in (16) are removed.  Given that
+the convolution over the electronic distances is the only inter-
+action between electrons, the ﬁnal embeddings do not contain
+any many-body correlation.
+                                                                                                                                                                                                         12
+
+
+                                                               TABLE V. Components of the deep Jastrow factor.
+component                                                                                type                                      hyperparameter
+Xθ,si – electronic embedding                                                   trainable array                      embedding dimension
+Yθ,I – nuclear embeddings                                                      trainable array                      kernel dimension
+e – distance expansion                                                             ﬁxed function                       # distance features
+wθ  – ﬁlter generating function                                                 DNN                                    (# distance features→ kernel dimension), depth
+hθ  – transformation embedding to kernel space                      DNN                                    (embedding dimension→ kernel dimension), depth
+gθ  – transformation kernel to embedding space                      DNN                                    (kernel dimension→ embedding dimension), depth
+ηθ – Jastrow network                                                              DNN                                    (embedding dimension→ 1), depth
+full architecture                                                                        —                                         # interactions L
+
+
+
+
+                                                                                                            TABLE VI. Hyperparameters used in numerical calculations.
+                                                                                                           Hyperparameter                                                        Value
+                                                                                                           One-electron basis                                                     6-31G
+                                                                                                           Dimension of e (# distance features)                        16
+                                                                                                           Dimension of xi (embedding dimension)                 128
+                                                                                                           Number of interaction layers L                                 4
+                                                                                                           Number of layers in ηθ                                             3
+                                                                                                           Number of layers in wθ                                            1
+                                                                                                           Number of layers in hθ                                             2
+                                                                                                           Number of layers in gθ                                             2
+                                                                                                           Batch size                                                                  2000
+                                                                                                           Number of walkers                                                    2000
+                                                                                                                                                                                      H4: 5000
+                                                                                                                                                                                      H2: 10000
+                                                                                                           Number of training steps                                                   He: 10000
+                                                                                                                                                                                      Be: 10000
+                                                                                                                                                                                      LiH: 10000
+                                                                                                                                                                                      H2O: see Fig. 9
+                                                                                                           Optimizer                                                                  AdamW
+                                                                                                           Learning rate scheduler                                             CyclicLR
+                                                                                                           Minimum/maximum learning rate                            0.0001/0.01
+                                                                                                           Clipping window q                                                    5
+                                                                                                           Epoch size                                                                 100
+                                                                                                           Number of decorrelation sampling steps                  4
+                                                                                                           Target acceptance                                                      57%
+
+
+
+
+
+
+                                                                                                                             TABLE VII. Geometries of test systems.
+                                                                                                           Molecule                     Atom                             position [Å]
+                                                                                                           LiH                              Li                           (0.000, 0.000, 0.000)H                            (1.595, 0.000, 0.000)
+                                                                                                                                            H                           (-0.635, -0.635, 0.000)
+                                                                                                           H4 square                        H                           (-0.635, 0.635, 0.000)
+                                                                                                                                            H                           (0.635, -0.635, 0.000)
+FIG. 9.     Training curve for the H2O experiment.   Exponential                                                                            H                            (0.635, 0.635, 0.000)
+walking averages of the energy along the optimization process are                                                                           H                           (-0.900, -0.635, 0.000)
+shown for the ansatzes from Fig. 7. Upper panel depicts the percent-                                       H4 deformed                      H                           (-0.900, 0.635, 0.000)
+age of the recovered ﬁnite-basis-set error (BSE) for the mean-ﬁeld                                                                          H                           (0.900, -0.635, 0.000)
+ansatzes, given by the energy difference of the HF@6-311G baseline                                                                          H                            (0.900, 0.635, 0.000)
+from the complete-basis-set limit estimate.  The center panel gives                                                                         O                      (0.00000, 0.00000, 0.00000)
+the ﬁxed-node correlation energy of the Slater–Jastrow type versions                                       H2O                              H                      (0.75695, 0.58588, 0.00000)
+of PauliNet with respect to the DMC reference in the Roos-aug-DZ-                                                                           H                     (-0.75695, 0.58588, 0.00000)
+ANO basis set30. Lower panel shows the total correlation energy for
+the full PauliNet ansatzes.

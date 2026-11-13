@@ -1,0 +1,94 @@
+{
+  "model": "Molecule",
+  "lattice": "molecule",
+  "n_sites": 6,
+  "boundary": "O",
+  "n_electrons": 24,
+  "params": {
+    "formula": "CH3NO",
+    "charge": 0,
+    "N_up": 12,
+    "N_dn": 12,
+    "basis": "none",
+    "geometry": [
+      {
+        "el": "C",
+        "r": [
+          -0.8611774857192295,
+          0.00492693174648852,
+          -0.14782609376545144
+        ]
+      },
+      {
+        "el": "O",
+        "r": [
+          -2.4424756269320866,
+          1.045650943732065,
+          -1.5152196531781816
+        ]
+      },
+      {
+        "el": "N",
+        "r": [
+          -0.12106347113591985,
+          -2.2720156786603596,
+          0.41093697066420903
+        ]
+      },
+      {
+        "el": "H",
+        "r": [
+          1.2635037681187677,
+          -2.460759539769487,
+          1.744847550019662
+        ]
+      },
+      {
+        "el": "H",
+        "r": [
+          6.842784752020288,
+          3.6220747803324542,
+          -1.3834958023365818
+        ]
+      },
+      {
+        "el": "H",
+        "r": [
+          0.3420023127703437,
+          1.4445604879148222,
+          0.8907947853243127
+        ]
+      }
+    ],
+    "geometry_source": "Orbformer BBMEP set, Formamide C-H/N-H homolysis path image 16 (AutoNEB, 20 images), github.com/microsoft/oneqmc @ 46ddc5a data/bbmep/Formamide/16.yaml (ångström, converted)"
+  },
+  "instance_id": "Molecule/CH3NO-bbmep16_q0_s0_none",
+  "rows": [
+    {
+      "energy": -169.6918,
+      "sigma": 0.0002,
+      "energy_variance": null,
+      "dof": 24,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "NucleoNet",
+      "method_detail": "one multi-geometry model trained jointly on the 20 images of the path, (h1, h2) = (128, 32), 16 determinants, no HF pretraining",
+      "method_as_published": "NucleoNet [VMC, one multi-geometry model trained jointly on the 20 images of the path, (h1, h2) = (128, 32), 16 determinants, no HF pretraining]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "Q. Gao, Y. Huang, E. Hou, Y. Liu, J. Chen and H. Wang, NucleoNet: A Nuclear-Aware Determinant Ansatz for Multi-Geometry Neural Variational Monte Carlo, arXiv:2610.12985 (2026)",
+      "peer_reviewed": false,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2610.12985 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "−169.6918(2) (total energy, Hartree)",
+        "note": "arXiv:2610.12985 SI Table S7 (Formamide column), text line 1002 | Hartree, total energy, all-electron. Path image 16; N_up = N_dn (spin 0 in the data file): along the homolysis the computed sector is the singlet one, the lowest state of which may be an open-shell singlet.",
+        "secondary_of": null
+      }
+    }
+  ]
+}

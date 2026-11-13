@@ -885,7 +885,10 @@ What is common to all four:
 - Hamiltonian variants: all-electron and non-relativistic unless the id says otherwise.
   - A pseudopotential (effective core potential) replaces the core electrons and changes the
     Hamiltonian, so its energies go on an instance whose id ends in the potential's name in lower
-    case without punctuation (`_ccecp`, `_bfd`). Such an instance can be basis-free.
+    case without punctuation (`_ccecp`, `_bfd`). Such an instance can be basis-free. The plain name
+    means the potential the source uses on its heavier atoms, the others all-electron; which atoms
+    carry it is stored in `params.variant`. A molecule with the potential on every atom, hydrogen
+    excepted, is another Hamiltonian and takes `all` after the name (`_ccecpall`) (2026-11-12).
   - A frozen core (the core orbitals kept doubly occupied in their Hartree-Fock form) changes the
     Hamiltonian projected onto the basis, so frozen-core energies go on an instance with `_fc`: the
     standard chemical core (1s for Li to Ne, 1s2s2p for Na to Ar, and so on). A source that freezes
@@ -925,7 +928,10 @@ Each model:
     30°): `Molecule/CH4-g3_q0_s0_none`, `Molecule/C2H6-bbmep07_q0_s0_none`. The instance's
     `geometry_source` names the set and where its coordinates are;
   - otherwise `g<hash>`, the first six hexadecimal digits of a hash of the sorted interatomic
-    distances with their elements, rounded to 1e-4 bohr: `Molecule/H2O-g7c1a2e_q0_s0_sto3g`.
+    distances with their elements, rounded to 1e-4 bohr: `Molecule/H2O-g7c1a2e_q0_s0_sto3g`. The hash
+    (2026-11-12) is SHA-256 of the pairs written `<element>-<element>:<distance>` (the two elements in
+    alphabetical order, the distance in bohr with four decimals), sorted and joined by `;`. The
+    validator recomputes it from the stored positions.
   So one molecule label with several geometries gives several instances: the three full-CI values
   printed for "H2O in STO-3G" in three papers sit on three instances if their geometries differ.
   The instance stores every nucleus and its position (`params.geometry`, bohr).

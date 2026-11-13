@@ -1,0 +1,303 @@
+{
+  "model": "Molecule",
+  "lattice": "molecule",
+  "n_sites": 6,
+  "boundary": "O",
+  "n_electrons": 16,
+  "params": {
+    "formula": "C2H4",
+    "name": "Ethene",
+    "charge": 0,
+    "N_up": 8,
+    "N_dn": 8,
+    "basis": "none",
+    "geometry": [
+      {
+        "el": "C",
+        "r": [
+          0,
+          0,
+          1.26135
+        ]
+      },
+      {
+        "el": "C",
+        "r": [
+          0,
+          0,
+          -1.26135
+        ]
+      },
+      {
+        "el": "H",
+        "r": [
+          0,
+          1.7439,
+          2.33889
+        ]
+      },
+      {
+        "el": "H",
+        "r": [
+          0,
+          -1.7439,
+          2.33889
+        ]
+      },
+      {
+        "el": "H",
+        "r": [
+          0,
+          1.7439,
+          -2.33889
+        ]
+      },
+      {
+        "el": "H",
+        "r": [
+          0,
+          -1.7439,
+          -2.33889
+        ]
+      }
+    ],
+    "geometry_source": "arXiv:1909.02487 (PRR 2, 033429): positions of Table IX (journal lines 1187-1192), stated in a0; Appendix G says the structures come from the G3 database where available"
+  },
+  "instance_id": "Molecule/C2H4-g3fefc6_q0_s0_none",
+  "rows": [
+    {
+      "energy": -78.5844,
+      "sigma": 0.0001,
+      "energy_variance": null,
+      "dof": 16,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "FermiNet",
+      "method_detail": "16 determinants, KFAC",
+      "method_as_published": "FermiNet [VMC, 16 determinants, KFAC]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "D. Pfau, J. S. Spencer, A. G. D. G. Matthews and W. M. C. Foulkes, Ab initio solution of the many-electron Schrödinger equation with deep neural networks, Phys. Rev. Research 2, 033429 (2020), arXiv:1909.02487, doi:10.1103/PhysRevResearch.2.033429",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:1909.02487 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "−78.5844(1)",
+        "note": "PRR 2, 033429 Table II, journal text line 493; arXiv text line 411 (same digits) | Hartree, total energy with nuclear repulsion (all-electron; FermiNet and CCSD(T) agree to mEh, so the same Hamiltonian); closed-shell singlet, N_up = N_dn",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -78.5888,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 16,
+      "einf": null,
+      "v_score": null,
+      "method": "RCCSD(T)",
+      "ansatz": null,
+      "method_detail": "all-electron, RHF reference; aug-cc-pCVQZ/5Z correlation, X^-3; extrapolated: 1/M → 0 (complete basis)",
+      "method_as_published": "RCCSD(T) [all-electron, RHF reference; aug-cc-pCVQZ/5Z correlation, X^-3; extrapolated: complete basis set]",
+      "family": "FCIQMC / CC",
+      "bound_type": "approximate",
+      "bound_type_reason": "finite-order perturbation theory, GW, or a perturbative correction to coupled cluster (track 3, 2026-10-21); error of unknown sign (RULES.md 13.4; assigned during source reading)",
+      "reference": "D. Pfau, J. S. Spencer, A. G. D. G. Matthews and W. M. C. Foulkes, Ab initio solution of the many-electron Schrödinger equation with deep neural networks, Phys. Rev. Research 2, 033429 (2020), arXiv:1909.02487, doi:10.1103/PhysRevResearch.2.033429",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:1909.02487 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "−78.5888",
+        "note": "PRR 2, 033429 Table II, journal text line 493; arXiv text line 411 (same digits) | Hartree, total energy with nuclear repulsion (all-electron; FermiNet and CCSD(T) agree to mEh, so the same Hamiltonian); closed-shell singlet, N_up = N_dn",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -78.0705,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 16,
+      "einf": null,
+      "v_score": null,
+      "method": "HF",
+      "ansatz": null,
+      "method_detail": "restricted, E(X) = E_CBS + a exp(-bX); extrapolated: 1/M → 0 (complete basis)",
+      "method_as_published": "RHF [E(X) = E_CBS + a exp(-bX); extrapolated: complete basis set]",
+      "family": "mean field",
+      "bound_type": "extrapolated",
+      "bound_type_reason": "extrapolated to the complete basis set or to zero truncation error; not a bound (RULES.md 13.4; assigned during source reading)",
+      "reference": "D. Pfau, J. S. Spencer, A. G. D. G. Matthews and W. M. C. Foulkes, Ab initio solution of the many-electron Schrödinger equation with deep neural networks, Phys. Rev. Research 2, 033429 (2020), arXiv:1909.02487, doi:10.1103/PhysRevResearch.2.033429",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:1909.02487 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "−78.0705",
+        "note": "PRR 2, 033429 Table II, journal text line 493; arXiv text line 411 (same digits) | Hartree, total energy with nuclear repulsion (all-electron; FermiNet and CCSD(T) agree to mEh, so the same Hamiltonian); closed-shell singlet, N_up = N_dn",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -78.58701,
+      "sigma": 0.00006,
+      "energy_variance": null,
+      "dof": 16,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "FermiNet",
+      "method_detail": "large network (Table V), dense determinants, envelope of [50]",
+      "method_as_published": "FermiNet [VMC, large network (Table V), dense determinants, envelope of [50]]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "I. von Glehn, J. S. Spencer and D. Pfau, A Self-Attention Ansatz for Ab-initio Quantum Chemistry, The Eleventh International Conference on Learning Representations (ICLR 2023), arXiv:2211.13672",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2211.13672 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "-78.58701(6)",
+        "note": "arXiv:2211.13672v2 Table VII, text line 836 | Hartree, total energy, all-electron, basis-free; geometry of the FermiNet paper ([43] = arXiv:1909.02487, Appendix G and Table II), as Appendix A3 states; closed-shell singlet",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -78.58604,
+      "sigma": 0.00005,
+      "energy_variance": null,
+      "dof": 16,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "FermiNet",
+      "method_detail": "small network (Table V), dense determinants, envelope of [50]",
+      "method_as_published": "FermiNet [VMC, small network (Table V), dense determinants, envelope of [50]]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "I. von Glehn, J. S. Spencer and D. Pfau, A Self-Attention Ansatz for Ab-initio Quantum Chemistry, The Eleventh International Conference on Learning Representations (ICLR 2023), arXiv:2211.13672",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2211.13672 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "-78.58604(5)",
+        "note": "arXiv:2211.13672v2 Table VII, text line 836 | Hartree, total energy, all-electron, basis-free; geometry of the FermiNet paper ([43] = arXiv:1909.02487, Appendix G and Table II), as Appendix A3 states; closed-shell singlet",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -78.58794,
+      "sigma": 0.00003,
+      "energy_variance": null,
+      "dof": 16,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "Psiformer",
+      "method_detail": "large network (Table V), no LayerNorm (Table VI)",
+      "method_as_published": "Psiformer [VMC, large network (Table V), no LayerNorm (Table VI)]",
+      "family": "transformer / ViT",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "I. von Glehn, J. S. Spencer and D. Pfau, A Self-Attention Ansatz for Ab-initio Quantum Chemistry, The Eleventh International Conference on Learning Representations (ICLR 2023), arXiv:2211.13672",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2211.13672 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "-78.58794(3)",
+        "note": "arXiv:2211.13672v2 Table VII, text line 836 | Hartree, total energy, all-electron, basis-free; geometry of the FermiNet paper ([43] = arXiv:1909.02487, Appendix G and Table II), as Appendix A3 states; closed-shell singlet",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -78.58762,
+      "sigma": 0.00003,
+      "energy_variance": null,
+      "dof": 16,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "Psiformer",
+      "method_detail": "small network (Table V), no LayerNorm (Table VI)",
+      "method_as_published": "Psiformer [VMC, small network (Table V), no LayerNorm (Table VI)]",
+      "family": "transformer / ViT",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "I. von Glehn, J. S. Spencer and D. Pfau, A Self-Attention Ansatz for Ab-initio Quantum Chemistry, The Eleventh International Conference on Learning Representations (ICLR 2023), arXiv:2211.13672",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2211.13672 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "-78.58762(3)",
+        "note": "arXiv:2211.13672v2 Table VII, text line 836 | Hartree, total energy, all-electron, basis-free; geometry of the FermiNet paper ([43] = arXiv:1909.02487, Appendix G and Table II), as Appendix A3 states; closed-shell singlet",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -78.58721,
+      "sigma": 0.00004,
+      "energy_variance": null,
+      "dof": 16,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "LapNet",
+      "method_detail": "Forward Laplacian, KFAC",
+      "method_as_published": "LapNet [VMC, Forward Laplacian, KFAC]",
+      "family": "transformer / ViT",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "R. Li, H. Ye, D. Jiang, X. Wen, C. Wang, Z. Li, X. Li, D. He, J. Chen, W. Ren & L. Wang, A computational framework for neural network-based variational Monte Carlo with Forward Laplacian, Nat. Mach. Intell. 6, 209–219 (2024), arXiv:2307.08214, doi:10.1038/s42256-024-00794-x",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2307.08214 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "-78.58721(4)",
+        "note": "Nat. Mach. Intell. 6, 209, Supplementary Table 6, SI text line 226; same digits in the arXiv text | Hartree, all-electron total energy, basis-free; closed shell, N_up = N_dn. Geometry: FermiNet (PRR 2, 033429) geometry, SI Note 2 (\"configurations … in Refs. [2,3]\"); instance as staged in round 3",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -78.58799,
+      "sigma": 0.00003,
+      "energy_variance": null,
+      "dof": 16,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "NucleoNet",
+      "method_detail": "single-geometry model, (h1, h2) = (64, 16), 16 determinants, HF pretraining, SPRING",
+      "method_as_published": "NucleoNet [VMC, single-geometry model, (h1, h2) = (64, 16), 16 determinants, HF pretraining, SPRING]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "Q. Gao, Y. Huang, E. Hou, Y. Liu, J. Chen and H. Wang, NucleoNet: A Nuclear-Aware Determinant Ansatz for Multi-Geometry Neural Variational Monte Carlo, arXiv:2610.12985 (2026)",
+      "peer_reviewed": false,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2610.12985 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "-78.58799(3) (total energy, Hartree)",
+        "note": "arXiv:2610.12985 SI Table S3 (NucleoNet column), text line 883 | Hartree, total energy, all-electron. Geometry: \"taken from the FermiNet benchmark protocol [2]\" (SI Sec. III), i.e. PRR 2, 033429 Table II and Appendix G, the instance staged in round 3. Closed-shell singlet.",
+        "secondary_of": null
+      }
+    }
+  ]
+}

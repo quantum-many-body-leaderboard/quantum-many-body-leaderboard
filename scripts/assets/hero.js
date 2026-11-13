@@ -53,16 +53,22 @@
   addEventListener("resize", () => { measure(); place(); });
   narrow.addEventListener("change", () => { stage.querySelectorAll(".pk-node").forEach(n => { n.style.transform = ""; }); measure(); place(); });
 
-  // A formula wider than its box shrinks until it fits; one that fits keeps its size.
+  // A formula wider than its box shrinks until it fits; one that fits keeps its size. The picker's own
+  // formula shrinks no further than 15px and then scrolls sideways in its box, faded at the cut edge.
   function fit(root = document) {
-    for (const box of root.querySelectorAll(".pk-f, .pk-title > div")) {
+    for (const box of root.querySelectorAll(".pk-f, .pk-math")) {
       const m = box.querySelector("math"); if (!m) continue;
       m.style.fontSize = "";
-      const w = box.clientWidth, s = m.getBoundingClientRect().width;
-      if (w && s > w) m.style.fontSize = `${(parseFloat(getComputedStyle(m).fontSize) * (w / s) * 0.98).toFixed(2)}px`;
+      const scroll = box.classList.contains("pk-math"), w = box.clientWidth, s = scroll ? box.scrollWidth : m.getBoundingClientRect().width;
+      if (w && s > w) m.style.fontSize = `${Math.max(scroll ? 15 : 0, parseFloat(getComputedStyle(m).fontSize) * (w / s) * 0.98).toFixed(2)}px`;
+      if (scroll) fade(box);
     }
   }
+  const fade = box => box.classList.toggle("pk-ovf", box.scrollLeft + box.clientWidth < box.scrollWidth - 2);
   addEventListener("resize", () => fit());
+  // The chart is drawn at its box's width, so its labels keep their size on a phone; redrawn when the width changes.
+  let drawnW = 0;
+  addEventListener("resize", () => { const c = $("pk-chart"); if (state && c && Math.abs(c.clientWidth - drawnW) > 16) render(); });
   function hover(node) {
     stage.classList.toggle("hovering", !!node);
     stage.querySelectorAll(".pk-node").forEach(n => n.classList.toggle("on", n === node));
@@ -126,27 +132,47 @@
     return { pool, rows };
   }
 
+  // A chip row longer than 12 (the atom and molecule species) shows the 8 values with most energies and the chosen
+  // one; "+N more" opens the whole row, with a field that narrows it by name or formula.
+  const MANY = 12;
+  const chip = (dim, v, c, short) => `<button class="pk-chip" type="button" data-dim="${esc(dim)}" data-v="${esc(v)}" aria-pressed="${v === state.sel[dim]}"${short.get(v) !== v ? ` title="${esc(v)}"` : ""}>${esc(short.get(v))}<i>${c.get(v)}</i></button>`;
+  function chipRow([dim, vals, c, short]) {
+    const lab = `<span class="pk-lab">${esc(dim)}</span>`, sel = state.sel[dim];
+    if (vals.length <= MANY) return `<div class="pk-fg">${lab}${vals.map(v => chip(dim, v, c, short)).join("")}</div>`;
+    const open = state.open?.[dim];
+    let shown = [...vals].sort((a, b) => c.get(b) - c.get(a)).slice(0, 8);
+    if (!shown.includes(sel)) shown = [...shown.slice(0, 7), sel];
+    const list = open ? vals : vals.filter(v => shown.includes(v));
+    return `<div class="pk-fg">${lab}${list.map(v => chip(dim, v, c, short)).join("")}<button class="pk-chipmore" type="button" data-more="${esc(dim)}" aria-expanded="${!!open}">${open ? "Show fewer" : `+${vals.length - list.length} more`}</button>${open ? `<input class="pk-find" data-find="${esc(dim)}" placeholder="Find by name or formula" aria-label="Find a ${esc(dim)}">` : ""}</div>`;
+  }
+
   function render() {
     const { m, data, sel } = state, { pool, rows } = resolve();
     const choosing = rows.filter(([, v]) => v.length > 1), fixed = rows.filter(([, v]) => v.length === 1 && v[0] !== "—");
     const sub = M.sub.includes(m.model);
     view.innerHTML = `
 <div class="pk-crumb"><a href="#pick">← Pick another problem</a>${sub ? `<span>·</span><a href="#h-${m.slug}">Other ${esc(m.name)} lattices</a>` : ""}</div>
-<div class="pk-title">${m.glyph}<div><h2>${esc(m.name)}</h2>${m.formulaBlock}</div></div>
+<div class="pk-title">${m.glyph}<div><h2>${esc(m.name)}</h2><div class="pk-math">${m.formulaBlock}</div></div></div>
 <p class="pk-desc">${esc(m.about)} Each dot is one published result for the setting chosen below.</p>
 ${data.tabs.length > 1 ? `<div class="pk-tabs" role="tablist">${data.tabs.map((t, k) => `<button class="pk-tab${t.open ? "" : " pk-done"}" role="tab" type="button" data-k="${k}" aria-selected="${k === state.tab}">${t.glyph}<span>${esc(t.label)}</span><i>${t.count}</i>${t.open ? badge(t.openInst, k) : ""}</button>`).join("")}</div>` : ""}
-${choosing.length || fixed.length ? `<div class="pk-filters">${choosing.map(([dim, vals, c, short]) => `<div class="pk-fg"><span class="pk-lab">${esc(dim)}</span>${vals.map(v => `<button class="pk-chip" type="button" data-dim="${esc(dim)}" data-v="${esc(v)}" aria-pressed="${v === sel[dim]}"${short.get(v) !== v ? ` title="${esc(v)}"` : ""}>${esc(short.get(v))}<i>${c.get(v)}</i></button>`).join("")}</div>`).join("")}${fixed.length ? `<div class="pk-fg"><span class="pk-lab">setting</span><span class="pk-fixed">${fixed.map(([dim, v, , short]) => esc(dim === "boundary" || dim === "shape" || dim === "problem" || dim === "variant" ? v[0] : `${dim} = ${short.get(v[0])}`)).join(", ")}</span></div>` : ""}</div>` : ""}
+${choosing.length || fixed.length ? `<div class="pk-filters">${choosing.map(chipRow).join("")}${fixed.length ? `<div class="pk-fg"><span class="pk-lab">setting</span><span class="pk-fixed">${fixed.map(([dim, v, , short]) => esc(dim === "boundary" || dim === "shape" || dim === "problem" || dim === "variant" ? v[0] : `${dim} = ${short.get(v[0])}`)).join(", ")}</span></div>` : ""}</div>` : ""}
 <div class="pk-chart" id="pk-chart"></div>
 <div class="pk-lgd" id="pk-lgd"></div>
-<p class="pk-cap">${pool.length} instance${pool.length === 1 ? "" : "s"}, ${nE(pool.reduce((a, i) => a + i.r.length, 0))}. Horizontal: number of sites N, log scale. Vertical: ${esc(data.unit)}. Point at a dot to preview it; click it to open its table entry. <a href="/instances/${isOn() ? "?open" : ""}#${m.slug}">All ${esc(m.name)} rows in the table</a>.</p>`;
+<p class="pk-cap">${pool.length} instance${pool.length === 1 ? "" : "s"}, ${nE(pool.reduce((a, i) => a + i.r.length, 0))}. Horizontal: ${pool.length && pool.every(i => i.x != null) ? "bond length R in bohr" : data.xLabel ? `${data.xLabel}` : "number of sites N, log scale"}. Vertical: ${esc(data.unit)}. Point at a dot to preview it; click it to open its table entry. <a href="/instances/${isOn() ? "?open" : ""}#${m.slug}">All ${esc(m.name)} rows in the table</a>.</p>`;
     view.querySelectorAll(".pk-tab").forEach(b => b.addEventListener("click", () => {
       state.tab = +b.dataset.k; state.sel = {};
       history.replaceState(null, "", `#h-${m.slug}@${tabSlug(data.tabs[state.tab].label)}`);
       render();
     }));
     view.querySelectorAll(".pk-chip").forEach(b => b.addEventListener("click", () => { sel[b.dataset.dim] = b.dataset.v; render(); }));
+    view.querySelectorAll(".pk-chipmore").forEach(b => b.addEventListener("click", () => { (state.open ||= {})[b.dataset.more] = !state.open[b.dataset.more]; render(); }));
+    view.querySelectorAll(".pk-find").forEach(inp => inp.addEventListener("input", () => {
+      const q = inp.value.trim().toLowerCase();
+      inp.closest(".pk-fg").querySelectorAll(".pk-chip").forEach(b => { b.hidden = !!q && !b.textContent.toLowerCase().includes(q); });
+    }));
     draw(pool);
     fit(view);
+    view.querySelectorAll(".pk-math").forEach(b => b.addEventListener("scroll", () => fade(b), { passive: true }));
   }
 
   // ---------------------------------------------------------------------------------- chart
@@ -159,24 +185,32 @@ ${choosing.length || fixed.length ? `<div class="pk-filters">${choosing.map(([di
     return out;
   }
   function draw(pool) {
-    const W = 920, H = 420, mg = { l: 72, r: 20, t: 16, b: 46 };
-    const pts = pool.flatMap(i => i.r.map(r => ({ N: i.N, e: r[0], kind: r[2], filled: r[3], flagged: r[4], id: r[5], solved: !i.o })));
+    const box = $("pk-chart"), W = Math.max(300, Math.min(920, Math.round(box.clientWidth || 920))), narrow = W < 600;
+    const H = narrow ? Math.round(W * 0.78) : 420, mg = narrow ? { l: 60, r: 12, t: 12, b: 42 } : { l: 72, r: 20, t: 16, b: 46 }, nt = narrow ? 4 : 5;
+    drawnW = W;
+    // A diatomic's bond length where every instance in view has one (linear axis), else the size N (log axis).
+    const byR = pool.length && pool.every(i => i.x != null);
+    // Atoms and molecules at one setting are one column; its dots are spread out in energy order, highest first.
+    const strip = !byR && !!state.data.xLabel;
+    const pts = pool.flatMap(i => i.r.map(r => ({ N: byR ? +i.x : i.N, e: r[0], kind: r[2], filled: r[3], flagged: r[4], id: r[5], solved: !i.o })));
     const chart = $("pk-chart");
     if (!pts.length) { chart.innerHTML = `<p class="pk-cap">No results for this setting.</p>`; return; }
+    if (strip) [...pts].sort((a, b) => b.e - a.e).forEach((p, k) => { p.N = k + 1; });
     let x0 = Math.min(...pts.map(p => p.N)), x1 = Math.max(...pts.map(p => p.N));
-    if (x0 === x1) { x0 /= 1.6; x1 *= 1.6; } else { x0 /= 1.2; x1 *= 1.2; }
+    if (byR || strip) { const px = (x1 - x0 || 0.5) * 0.08 + (strip ? 0.5 : 0); x0 -= px; x1 += px; }
+    else if (x0 === x1) { x0 /= 1.6; x1 *= 1.6; } else { x0 /= 1.2; x1 *= 1.2; }
     let y0 = Math.min(...pts.map(p => p.e)), y1 = Math.max(...pts.map(p => p.e));
     const py = (y1 - y0 || Math.abs(y0) * 0.02 || 0.01) * 0.08; y0 -= py; y1 += py;
-    const X = v => mg.l + (Math.log(v) - Math.log(x0)) / (Math.log(x1) - Math.log(x0)) * (W - mg.l - mg.r);
+    const X = byR || strip ? v => mg.l + (v - x0) / (x1 - x0) * (W - mg.l - mg.r) : v => mg.l + (Math.log(v) - Math.log(x0)) / (Math.log(x1) - Math.log(x0)) * (W - mg.l - mg.r);
     const Y = v => H - mg.b - (v - y0) / (y1 - y0) * (H - mg.t - mg.b);
     const xt = [];
     for (let k = Math.floor(Math.log10(x0)); k <= Math.ceil(Math.log10(x1)); k++) for (const s of [1, 2, 5]) { const v = s * 10 ** k; if (v >= x0 && v <= x1) xt.push(v); }
     const sizes = [...new Set(pts.map(p => p.N))].sort((a, b) => a - b);
-    const xticks = xt.length >= 2 ? xt : sizes;
+    const xticks = byR ? niceTicks(x0, x1, nt) : xt.length >= 2 ? (narrow ? xt.filter(v => /^[15]/.test(String(v))) : xt) : sizes;
     let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Energy against the number of sites">`;
-    for (const v of niceTicks(y0, y1)) s += `<line class="pk-ax" x1="${mg.l}" x2="${W - mg.r}" y1="${Y(v).toFixed(1)}" y2="${Y(v).toFixed(1)}"/><text class="pk-tk" x="${mg.l - 8}" y="${(Y(v) + 4).toFixed(1)}" text-anchor="end">${+v.toPrecision(6)}</text>`;
-    for (const v of xticks) s += `<text class="pk-tk" x="${X(v).toFixed(1)}" y="${H - mg.b + 18}" text-anchor="middle">${v}</text>`;
-    s += `<text class="pk-axl" x="${(W + mg.l) / 2}" y="${H - 8}" text-anchor="middle">sites N</text>`;
+    for (const v of niceTicks(y0, y1, nt)) s += `<line class="pk-ax" x1="${mg.l}" x2="${W - mg.r}" y1="${Y(v).toFixed(1)}" y2="${Y(v).toFixed(1)}"/><text class="pk-tk" x="${mg.l - 8}" y="${(Y(v) + 4).toFixed(1)}" text-anchor="end">${+v.toPrecision(6)}</text>`;
+    if (byR || !state.data.xLabel) for (const v of xticks) s += `<text class="pk-tk" x="${X(v).toFixed(1)}" y="${H - mg.b + 18}" text-anchor="middle">${v}</text>`;
+    s += `<text class="pk-axl" x="${(W + mg.l) / 2}" y="${H - 8}" text-anchor="middle">${byR ? "bond length R (bohr)" : state.data.xLabel || "sites N"}</text>`;
     // flagged outlines last, over what they coincide with; exact dots over the bounds
     pts.sort((a, b) => b.solved - a.solved || a.flagged - b.flagged || a.filled - b.filled || (a.kind === 3) - (b.kind === 3));
     pts.forEach((p, k) => {

@@ -1,0 +1,70 @@
+{
+  "model": "Atom",
+  "lattice": "atom",
+  "n_sites": 1,
+  "boundary": "O",
+  "n_electrons": 5,
+  "params": {
+    "element": "C",
+    "Z": 6,
+    "charge": 1,
+    "N_up": 3,
+    "N_dn": 2,
+    "basis": "none"
+  },
+  "instance_id": "Atom/C_q1_s1_none",
+  "rows": [
+    {
+      "energy": -37.43061,
+      "sigma": 0.00001,
+      "energy_variance": null,
+      "dof": 5,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "FermiNet",
+      "method_detail": "the authors' modified FermiNet (PyTorch), 1e5 KFAC iterations, evaluated over 1e4 batches of 8096",
+      "method_as_published": "FermiNet* [VMC, the authors' modified FermiNet (PyTorch), 1e5 KFAC iterations, evaluated over 1e4 batches of 8096]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "M. Wilson, N. Gao, F. Wudarski, E. Rieffel and N. M. Tubman, Simulations of state-of-the-art fermionic neural network wave functions with diffusion Monte Carlo, arXiv:2103.12570 (2021)",
+      "peer_reviewed": false,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2103.12570 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "-37.43061(1)",
+        "note": "arXiv:2103.12570v2 Table II column 2, text line 581 | Hartree, total energy, all-electron, basis-free; error = standard error of the mean (caption); spin sector N_up - N_dn = 1: not stated; the ground-state term of the exact estimates the paper compares with ([32], Chakravorty et al.) | reader confidence medium",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -37.43086,
+      "sigma": 0.00006,
+      "energy_variance": null,
+      "dof": 5,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "FN-DMC",
+      "method_detail": "trial state: the authors' FermiNet* trial state (after 1e5 VMC iterations), all electrons and walkers moved together, time step at 99.9% acceptance (Table IV)",
+      "method_as_published": "FN-DMC [fixed-node DMC from the authors' FermiNet* trial state (after 1e5 VMC iterations), all electrons and walkers moved together, time step at 99.9% acceptance (Table IV)]",
+      "family": "DMC",
+      "bound_type": "projected",
+      "bound_type_reason": "AFQMC, fixed-node or lattice-regularised DMC, coupled cluster, MRCI+Q or an embedding method; not a bound (RULES.md 13.4; assigned during source reading)",
+      "reference": "M. Wilson, N. Gao, F. Wudarski, E. Rieffel and N. M. Tubman, Simulations of state-of-the-art fermionic neural network wave functions with diffusion Monte Carlo, arXiv:2103.12570 (2021)",
+      "peer_reviewed": false,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2103.12570 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "-37.43086(6)",
+        "note": "arXiv:2103.12570v2 Table II column 1, text line 581 | Hartree, total energy, all-electron, basis-free; error = standard error of the mean (caption); spin sector N_up - N_dn = 1: not stated; the ground-state term of the exact estimates the paper compares with ([32], Chakravorty et al.) | reader confidence medium",
+        "secondary_of": null
+      }
+    }
+  ]
+}

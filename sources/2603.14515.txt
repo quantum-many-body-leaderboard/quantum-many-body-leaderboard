@@ -1,0 +1,1829 @@
+                        Excited Pfaffians: Generalized Neural Wave Functions
+                                                  Across Structure and State
+
+
+
+                          Nicholas Gao * 1 2   Till Grutschus * 3   Frank No´e 3 4 5   Stephan G¨unnemann 1
+
+                              Abstract
+
+      Neural-network  wave  functions  in  Variational
+      Monte Carlo (VMC) have achieved great success
+      in accurately representing both ground and ex-
+      cited states. However, achieving sufficient numer-
+      ical accuracy in state overlaps requires increasing
+      the number of Monte Carlo samples, and conse-
+      quently the computational cost, with the number
+      of states.  We present a nearly constant sample-
+      size approach,Multi-State Importance Sampling
+      (MSIS), that leverages samples from all states to                        Figure 1.Computational scaling with the number of states. While
+      estimate pairwise overlap.  To efficiently evalu-                         previous  works  scale  superlinearly,  our  method  exhibits  near-
+      ate all states for all samples,  we introduceEx-                          constant scalingO(N                  s0.14  ).
+      cited Pfaffians.   Inspired by Hartree-Fock,  this                        properties is the electronic Schr¨odinger equation
+      architecture represents many states within a sin-
+      gle neural network. Excited Pfaffians also serve                                                      ˆHΨ    s =E   sΨs                               (1)
+      as generalized wave functions, allowing a single
+      model to represent multi-state potential energy                          where  ˆH:L     2 → L2 is the Hamiltonian operator encoding
+      surfaces.   On  the  carbon  dimer,  we  match  the                       the system’s total energy and Ψs :R Ne×3   →R     is the wave
+      O(N     s4)-scaling natural excited states while train-                   function describing the behavior of the system’s Ne elec-
+      ing >200×          faster and modeling 50% more states.                   trons (Schr  ¨odinger,1926). The eigenvalues                   E0 ≤E   1 ≤. . .
+      Our favorable scaling enables us to be the first                          are the system’s energy levels. While the ground state Ψ0,
+      to use neural networks to find all distinct energy                        associated with E0, represents the most stable electronic
+      levels of the beryllium atom. Finally, we demon-                          configuration, excited states Ψ1,Ψ 2, . . . govern photochem-
+      strate that a single wave function can represent                          ical processes, spectroscopic properties, and reaction path-
+      excited states across various molecules.                                 ways. Accurate computation of excited states is essential for
+                                                                                applications ranging from drug design to photovoltaics. Un-
+                                                                                fortunately, analytical solutions to the Schr¨odinger equation
+                                                                                exist only for the simplest systems.
+1. Introduction                                                                 Neural-network wave functions within the variational Monte
+Recently, thein-silicodesign of materials and molecules                         Carlo (VMC) framework have achieved unprecedented ac-
+has  attracted  significant  interest  for  accelerating  discov-               curacy for both ground and excited states (Hermann et al.,
+ery (Zhang et al.,2025). Central to assessing a molecule’s                      2023;Pfau et al.,2024;Hermann et al.,2020;Pfau et al.,
+
+   *Equal  contribution      1Department  of  Computer  Science  &              2020).   However,  a single calculation may take days on
+Munich  Data  Science  Institute,  Technical  University  of  Mu-               contemporary hardware, and the standard approach of per-
+nich    2CuspAI    3Free  University  of  Berlin    4Rice  University           forming independent calculations for each system and state
+5Microsoft Research AI4Science.  Correspondence to: Nicholas                    multiplies this cost drastically.  For ground states, recent
+Gao <nicholas@cusp.ai>,  Till  Grutschus <till.grutschus@fu-                   work has amortized training costs across molecular struc-
+berlin.de>.                                                                     tures by learning generalized wave functions (Scherbela
+Proceedings of the 43 rd  International Conference on Machine                   et al.,2024;Gao & G              ¨unnemann,2024;Foster et al.,2025).
+Learning, Seoul, South Korea. PMLR 306, 2026. Copyright 2026                    No such scheme exists for excited states,  where current
+by the author(s).                                                               methods scale superlinear to quartically with the number of
+
+                                                                            1
+                           Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+states. This unfavorable scaling has two roots: (1) estimat-                     so minimizing E[ψ    θ] over parameters θ  yields an upper
+ing pairwise overlaps ⟨Ψ  s|Ψ t⟩ requires more samples with                      bound on the ground-state energy. We denote unnormalized
+more states, and (2) representing many states demands either                     wave functions as ψ and normalized ones as Ψ =ψ/Z      with
+separate wave functions or prohibitively large networks.                         Z=∥ψ∥           . Excited states are obtained by minimizing energy
+In this work, we address both limitations.  To tackle the                        subject to orthogonality to all lower states.
+sampling problem, we introduceMulti-State Importance                             Hartree-Fock (HF)is an approximation, which restricts
+Sampling(MSIS), which pools samples from all states to                           ψ to a singleSlater determinantof one-electron functions
+estimate pairwise overlaps, reducing the average variance of                     {ϕ  p :R 3 →R}       Nop=1  , calledmolecular orbitals (MO). While
+the estimator from O(N     s/Nb) to O(1/N       b) for a fixed batch             No  molecular orbitals are optimized, Ne  of these are se-
+size of Nb. To tackle the representation problem, we intro-                      lected for the final wave function
+duceExcited Pfaffians, a neural wave-function architecture
+inspired by Hartree-Fock theory that shares most parameters                                          ψHF(r) = det [Φ     HF(r)Π    0],                   (4)
+across states, differing only in a lightweight state-specific                    where ΦHF(r)    ip  =ϕ   p(r  i) is the orbital matrix function
+selector. Together, these contributions enable near-constant                     and Π0 ∈R   No×N   e  is anorbital selector.  In the case of
+computational scaling with the number of states (Fig.1).                         energy-sorted MOs, Π0 corresponds to an identity matrix
+Moreover, Excited Pfaffians integrate seamlessly into the                        followed by a zero matrix.  The determinant enforces the
+generalized wave function framework (Gao & G  ¨unnemann,                         fermionic permutation antisymmetry.  The orbitals ϕp are
+2023a), yielding the first method capable of jointly general-
+izing across molecular structures, chemical compositions,                        linear combinations of basis functions{ξ                  µ :R 3 →R}       Noµ=1  :
+and electronic states within a single neural network.
+In our experiments, we find MSIS critical for stable conver-                                                ΦHF(r) = Ξ(r)C                          (5)
+
+gence. Without it, overlap estimates exhibit high variance,                      with Ξ(r)      iµ  =ξ   µ(r  i)  and  variational  parameters C∈
+causing  erratic  energy  optimization.   This  enables  us  to                  RNo×N   o.  The parameters C  minimize E[ψ     HF] under the
+match the accuracy of NES (Pfau et al.,2024) with 40          ×                  orthogonality constraints ⟨ϕ  p|ϕ q⟩=δ     pq (Roothaan,1951).
+fewer samples and 200×       less compute while modeling 12                      Importantly, a set of orthogonal wave functions ψHF,s     may
+instead of 8 states on the carbon dimer potential energy                         be constructed by replacing Π0 with Πs ∈R   No×N   e  such
+surface (PES). Our favorable scaling enables us to be the                        that det ΠTs Πt  =δ   st  for all s, t, see App.A(Szabo &
+first to compute all excited states of the beryllium atom                        Ostlund,2012).
+with neural networks.  For the first time, we demonstrate                        Variational Monte Carlo (VMC)recasts Eq. (3) as
+that a single model may approximate excited states across
+molecular compounds.  Lastly, we find that Excited Pfaf-                                          R ψθ(r)    ˆHψθ(r) dr                 Eloc(r)  ,    (6)
+fian improves ground-state performance at state crossings                             E[ψ    θ] =      R ψθ(r)    2 dr        =E   r∼ρ     θ
+compared to ground-state-only methods.
+2. Background                                                                    where Eloc(r) =      ( ˆHψθ)(r)ψθ(r)       is the local energy and ρθ(r)∝
+                                                                                 ψθ(r)    2 is sampled via Markov chain Monte Carlo (Ceperley
+We seek the Ns lowest-energy solutions of the electronic                         & Alder,1987).  Since minimization is done via gradient
+Schr¨odinger equation, Eq. (1), with Hamiltonian                                 descent, one can optimize any differentiable unnormalized
+              X                       Zm                      1                  wave function with VMC. See App.Bfor details.  Since
+   ˆH=−      12     ∇2i − X      |r i −R   m| + X        |r i −r   j|, (2)       Eloc’s variance vanishes for exact eigenstates (zero-variance
+                i           i,m                     i<j                          principle), splitting the sample budget across structures does
+                                                                                 not degrade energy accuracy (Gao & G  ¨unnemann,2022).
+comprising kinetic energy, electron-nuclear attraction, and                      Excited states in VMCcan be obtained via penalty-based
+electron-electron repulsion for Ne  =N   ↑ +N   ↓ electrons                      methods (Pathak et al.,2021;Entwistle et al.,2023) that
+(spin-up and spin-down) and nuclei at positions Rm with                          minimize the energy of wave functions Ψθ0, . . . ,Ψ θNs−1
+charges  Zm.    Electronic  wave  functions  must  be  anti-                     subject to⟨Ψ     s|Ψ t⟩=δ     st through the objective
+symmetric under permutation of same-spin electrons, i.e.,
+Ψ(π(r)) = sign(π)Ψ(r)                              for π∈S     N↑ ×S   N↓. Most meth-               Ns−1X
+ods exploit the variational principle: for any unnormalized                                  L=            E[Ψ   θs] + X     ωst|⟨Ψ   θs|Ψ θt⟩|2,       (7)
+trial wave functionψ:R                  Ne×3   →R,                                                   s=0                t̸=s
+                            R ψ(r)      ˆHψ(r)dr                                                    (
+                                R ψ2(r)dr          ≥E   0,               (3)               ωst =      > Et −E   s    ifE[Ψ      θs]< E[Ψ    θt],
+                E[ψ] =                                                                                = 0              else.                                    (8)
+
+
+                                                                             2
+                            Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+The triangular shape of ω ensures convergence to pure eigen-                      for PES. Generalized wave functions address this for multi-
+states rather than linear combinations that would share the                       structure (Scherbela et al.,2022;Gao & G               ¨unnemann,2022)
+same loss (Wheeler et al.,2024).  Since the lower bound                           and multi-molecule computations, using hand-crafted selec-
+requires true state energies, ωst is typically overestimated                      tors (Gao & G  ¨unnemann,2023a;Foster et al.,2025), or HF
+to avoid state collapse. See App.Cfor an estimator ofω               st.          orbitals (Scherbela et al.,2024). The Neural Pfaffian (Gao &
+The overlap can be written as an expectation in terms of                          G¨unnemann,2024) replaces the Slater determinant                       det(Φ)
+                                      Er∼ρ     s  Ψt(r)                   with  a  Pfaffian Pf(ΦAΦ        T )  (Bajdich  et  al., 2006;2008),
+                                                                                  where A∈R      No×N   o is skew-symmetric and Φ∈R      Ne×N   o
+          |O st|=|⟨Ψ       s|Ψ t⟩|=               Ψs(r)                           need not be square, enabling a fully-learnable generalization
+                    s             ψt(r)               ψs(r)             (9)       of Slater-type wave functions. Here, we extend the Neural
+                 =      Er∼ρ     s           Er∼ρ     t          .                Pfaffian to efficiently represent excited states.
+                                   ψs(r)               ψt(r)                      Excited statesare one of the big challenges in quantum
+The reformulation in the second line cancels the normaliz-                        chemistry (Mai & Gonz  ´alez,2020;Otis & Neuscamman,
+ers Zt/Z  s. Notably, for a fixed total batch size of Nb, the                     2023).   In VMC, excited states can be obtained through
+                                                                                  variance minimization (Otis et al.,2020;Zhao & Neuscam-
+variance of this estimator is  Ns(1−O       2st)        D. Further-               man,2016;Pineda Flores & Neuscamman,2019), by defini-
+                                        2N  b      , see App.
+more, the random variable  ψt(r)ψs(r)    isunboundedand diverges                  tion (Dash et al.,2021;Cuzzocrea et al.,2020), through sym-
+forψ     s(r)→0, leading to rare but extreme outliers.                            metry (Choo et al.,2018), or via overlap penalties (Pathak
+Neural wave functionsparameterize the trial wave func-                            et al.,2021), which were the first method applied to neural
+tion in VMC using a neural network.  Typically, a permu-                          wave functions (Entwistle et al.,2023). While most require
+tation equivariant neural network representsmany-electron                         a prioriknowledge about the target state, overlap penalties
+orbitals ϕNN                                                                      are flexible but require careful tuning (Wheeler et al.,2024).
+            p    :R 3 ×R   Ne×3   →R     that are combined in a                   Alternatively, natural excited states (NES) (Pfau et al.,2024)
+linear combination of Slater determinants to construct an an-                     avoids explicit orthogonalization but scales O(N     s4). When
+tisymmetric many-electron wave function (Hermann et al.,                          spin states are known, spin penalties may be used to target
+2020). Alternatives to the Slater determinant are antisym-                        specific states (Szab  ´o et al.,2024;Li et al.,2024b).  Re-
+metric geminal powers (Lou et al.,2023) or Pfaffians (Kim                         cent work extends penalty-based methods to PES (Sch  ¨atzle
+et al.,2024;Gao & G              ¨unnemann,2024).                                 et al.,2025). We extend the method further to generalization
+Generalized wave functionsapproximate the eigenstates                             across molecules and improve scaling inN   s.
+of  multiple  Hamiltonians  that  differ  in  nuclear  posi-                      Monte Carlo estimationquality depends critically on the
+tions  and  charges,   i.e.,   for  a  set  of  systems  M=                       sampling distribution (Otis & Neuscamman,2023). While
+{(R    m,Z m)}  Mm=1   ,  a  generalized  wave  function  Ψ  mini-                sampling from alternative distributions has reduced vari-
+mizes PMm=1   E[Ψ   θ(R   m,Z m)](Gao & G   ¨unnemann,2022).                      ance for energy gradients (Chen & Heyl,2024;Misery et al.,
+This is commonly accomplished by having the wave func-                            2025;Inui et al.,2021), overlap estimation remains problem-
+tions’ parameters θ be a function of the nuclear positions                        atic. Its sensitivity to sample size Nb degrades training (En-
+R and charges Z, typically through a meta-network that                            twistle et al.,2023),  and the standard remedy is scaling
+produces system-specific parameters (Gao & G  ¨unnemann,                          samples with Ns (Entwistle et al.,2023;Szab                ´o et al.,2024;
+2023a;Scherbela  et  al., 2024).   This  enables  amortized                       Sch¨atzle et al.,2025).  We propose pooling samples from
+training where the cost of adding new systems grows sub-                          all states via importance sampling to stabilize overlap esti-
+linearly, as the meta-network learns transferable representa-                     mates without increasing the batch size, an approach closely
+tions across chemical space (Foster et al.,2025). Note that                       related to the balance heuristic estimator in Monte Carlo
+the transfer to unseen structures has seen less success and is                    rendering (Veach & Guibas,1995;Owen & Zhou,2000).
+out of scope of this work (Scherbela et al.,2023).
+                                                                                  4. Method
+3. Related Work                                                                   We   train   a   neural   network  θ  :  R   Nn×3   ×N   Nn+   ×
+Neural wave functionsachieved high accuracy for single                            {1, . . . , N    s} →Ω     that maps nuclear positions R, charges
+structures (Carleo & Troyer,2017;Hermann et al.,2020;                             Z, and target state s to parameters θ(R,Z, s)              for a wave
+Pfau et al.,2020;Wilson et al.,2021;2023;Lou et al.,2023;                         function Ansatz Ψθ(R,Z,s)             approximating one of the Ns
+Kim et al.,2024), with further improvements in accuracy                           lowest eigenfunctions of  ˆHR,Z    . While previous works (Gao
+(Gerard et al.,2022;von Glehn et al.,2023) and efficiency                         & G¨unnemann,2022;2023a;Scherbela et al.,2024) demon-
+(Li et al.,2024a;Spencer et al.,2020;Scherbela et al.,2025),                      strated cost amortization for generalization over R and Z,
+but separate training per geometry is prohibitively expensive                     we demonstrate amortization for excited states.
+
+                                                                              3
+                            Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+                                                                                   bounded  to ≤   Ns2  ,  eliminating  the  heavy-tailed  outliers
+                                                                                   near wave function nodes.  (2) The average overlap vari-
+                                                                                   ance reduces from O(    NsNb ) to O(      1Nb ), removing the need to
+                                                                                   scale batch size with the number of states.  (3) For states
+                                                                                   with vanishingBhattacharyya coefficient           ⟨|Ψ   s||Ψ t|⟩ →0    ,
+                                                                                   i.e., low unsigned overlap, the variance vanishes, whereas
+                                                                                   the single-state estimator retains unit variance. We refer to
+                                                                                   App.Dfor proofs and App.Ffor gradients.
+                                                                                   However, since ψs are unnormalized, we need to estimate
+                                                                                   the  normalizer  ratios  κs   =   Z21
+                                                                                                                             Z2s   to  evaluate   Ψt(r)Ψ   s(r)ρmix(r)      .
+                                                                                   We  accomplish  this  via  multi-distribution  bridge  sam-
+                                                                                   pling (Meng & Wong,1996). In short,             κ can be estimated
+                                                                                   as the fixed point of the following system of equations:
+                                                                                                          (P
+                                                                                               B(κ)st   =       s′̸=s  Eρs′ [w (κ)s   ]   , ifs=t,
+                                                                                                             −E   ρs[w (κ)t   ]             , else,                (11)
+                                                                                                b(κ)s    =E   ρs[w (κ)1   ].                                         (12)
+Figure 2.Illustration of single-state importance sampling (Szab     ´o                                     P
+et al.,2024) and our Multi-State Importance Sampling (MSIS).                       where q(κ)mix =   1Ns       s κsqs, w(κ)s    =      qsNsq(κ)
+                                                                                                                                         mix , qs =ψ    2s.  We
+For favorable scaling, we keep the total number of samples                         initialize κ(0) =1    and iterate ˆκ(t+1)   = (B  (t)  )−1  b(t)    until
+Nb drawn from all wave functions {Ψ  θ(R,Z,s)        }R,Z,s       con-             reaching the fixed point.  For further details, we refer the
+stant,  so samples per wave function decrease with more                            reader to App.G. As the overlap, with or without MSIS,
+structures  and  states.    While  this  works  for  intra-wave                    requires evaluating all wave functions for all samples, MSIS
+function losses like energy (Foster et al.,2025), previous                         comes at no meaningful runtime cost (Sec.G.1).
+works (Entwistle et al.,2023) and our experiments (Sec.5)                          Excited Pfaffian.We seek to parametrize manyorthogonal
+show that naively applying it to the overlap degrades esti-                        wave functions that generalize to arbitrary molecules. We
+mates significantly. We tackle this challenge by introducing                       start by following the Neural Pfaffian architecture (Gao &
+Multi-State Importance Sampling(MSIS), which pools sam-                            G¨unnemann,2024) that defines the wave function as a linear
+ples from all states of a structure to estimate overlaps.                          combination of Pfaffian wave functions
+However, the overlap requires evaluating all Ns wave func-                                                     NkX                                           (13)
+tions per structure (R,Z)         . To accelerate this, we introduce                                ψ(r) =          Pf  Φ(r)       kAkΦ(r)       Tk
+theExcited Pfaffianarchitecture, inspired by Hartree-Fock                                                      k=1
+theory, that maximizes parameter reuse across states.  We                          where the elements of the orbital matrices Φ(r)       kip are linear
+additionally introduce a spin-state snapping loss to prevent                       readouts of the electron’s embeddings h(r)      i and exponen-
+convergence to linear combinations of states with different                        tially decaying envelope functionsχ                kp :R 3 →R:
+spin, and a pretraining scheme to ensure state continuity
+across geometric perturbations. We conclude by describing                                            Φ(r)       kip =h(r)          Ti wkp ·χ kp(r  i).              (14)
+how the architecture generalizes across molecules.
+Multi-State Importance Sampling (MSIS).The variance                                The electron embeddings are obtained through permutation
+of the single-state importance sampling estimator in Eq. (9)                       equivariant architectures like graph neural networks (Her-
+scales linearly in the number of states Ns. Previous works                         mann et al.,2020;Gao & G               ¨unnemann,2023a), transform-
+scaled the total number of walkers Nb ∝N   s to keep the                           ers (von Glehn et al.,2023), or deep sets (Pfau et al.,2020).
+variance constant, thereby increasing compute time.                                The skew-symmetric antisymmetrizer Ak, the weights wkj
+                                                                                   and the envelopes χkj are constructed on a per-nucleus ba-
+Instead of increasing Nb, we pool samples from all statesPNs                       sis and concatenated such that their number grows with the
+ρmix =   1Ns      s=1  ρs and rewrite the inner product as                         system size, ensuring thatN       o ≥N   e.
+                                          Ψt(r)Ψ    s(r)                           A trivial extension to many states is to expand Φskp and
+              ⟨Ψ  s|Ψ t⟩=E     r∼ρ     mix    ρmix(r)         .          (10)      consequently wskp, χskp with an additional dimension run-
+                                                                                   ning  over  the  number  of  states  Ns,  yielding  ψs(r)  =
+As depicted in Fig.2, this improves coverage yielding three                        PNkk=1  Pf  Φ(r)       skAskΦ(r)       Tsk (Sch  ¨atzle et al.,2025;Pfau
+crucial  benefits.   (1)  The  random  variable  Ψt(r)Ψ   s(r)ρmix(r)       is     et al.,2024).  While simple, this definition incurs a high
+
+                                                                               4
+                            Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 3.Overview of wave function architectures for excited states.  (a) Our Excited Pfaffian architecture shares a single backbone
+network across all states, producing shared orbitals ΦPf and state-specific selector matrices As that combine via Pf(ΦA     sΦT ). (b) The
+standard Slater determinant approach requires separate neural network passes and learned orbitalsΦ            s for each state.
+
+memory usage when applying approximate second-order                               S∗ = arg minS∈   N
+                                                                                                         2 |S(S+ 1)− ⟨Ψ|              ˆS2|Ψ⟩|of       ˆS2:
+methods due to the large number of parameters (Goldshlager                                                                                     2 .       (17)
+et al.,2024). For instance, for typical choices of hyperpa-                                   Lsnap =λ        ⟨Ψ|     ˆS2|Ψ⟩ −S       ∗(S  ∗ + 1)
+rameters (Tab.7), the Jacobian of the linear projection alone
+may require 1TB of VRAM, see App.H.                                               Note that naively computing ∇θLsnap requires differentiat-
+Fortunately, as we outlined in Sec.2, wave functions do not                       ing the wave function twice (Szab  ´o et al.,2024). Instead, we
+need to differ in many parameters to be orthogonal. In HF,                        use the spin-raising operator ˆS+ followingLi et al.(2024b),
+orthogonal wave functions can be constructed by simply                            exploiting the identity
+changing the orbital selector Πs. By applying the identity
+Pf(BAB  T )  =  det(B)Pf(A)              ,  one  can  see  that  we  may           ⟨Ψ|     ˆS2|Ψ⟩=      (N ↑ −N   ↓)(N   ↑ −N   ↓ + 2)
+represent these within the Neural Pfaffian framework                                                                  4                   +⟨   ˆS+Ψ|   ˆS+Ψ⟩.
+      ψHF,s = det (ΦHFΠs)∝Pf(Φ       HFΠsAΠ   Ts ΦTHF)      (15)                                                                                          (18)
+
+for any non-singular skew-symmetricA∈R                            Ne×N   e.       FollowingLi et al.(2024b), gradients of                 ⟨ ˆS+Ψ|   ˆS+Ψ⟩    can
+Thus, we generalize Hartree-Fock and Neural Pfaffian with                         be computed efficiently without second-order derivatives.
+our set of orthogonal wave functions                                              To avoid strong biases to states similar to the pretraining
+                                                                                  targets, we initialize λ as zero and ramp it up after 80k steps.
+                            NkX                                         (16)
+               ψs(r) =          Pf  Φ(r)       kAskΦ(r)       Tk                  Pretraining Excited Pfaffians.Neural-network VMC typ-
+                           k=1                                                    ically uses HF solutions as supervised pretraining targets,
+which only differ in their orbital selection Ask.  We drop                        as these already cover most of the total energy (Hermann
+the spin-shared orbitals (Gao & G  ¨unnemann,2023b) and                           et al.,2023).  For single-structure excited states, one typi-
+use separate parameters per spin for the orbitals to allow for                    cally chooses HF excited determinants (Pfau et al.,2024;
+non-symmetric excitations. Fig.3depicts our architecture.                         Szab´o et al.,2024).  Excited-state PESs introduce a novel
+As states only differ in Ask, most of the forward pass is                         challenge: matching excited determinants across structures
+shared, enabling the efficient evaluation of all states.  We                      to obtain smooth, orthogonal targets.  We achieve this by
+empirically compare the architectures in App.I.                                   organizing structures into a DAG and propagating canonical
+                                                                                  orbitals via basis projection, see App.J.
+Spin-state snapping.  The Hamiltonian commutes with                               When matching these targets {Ξ, C,Π      s}Nss=1   to our wave
+the total spin operator  ˆS2, thus, eigenstates of  ˆH are also                   function, we need to account for disagreement in orbital
+eigenstates of ˆS2 with the eigenvalues S(S+ 1)        for integer                ordering (Gao & G  ¨unnemann,2023a), which we discuss in
+or half-integer S (Szabo & Ostlund,2012). During initial                          the following for a single structure and determinant. Instead
+experimentation, we encountered linear combinations of                            ofGao & G    ¨unnemann(2024)’s alternating optimization
+singlet and triplet states.  While directly fitting the target                    loops,  we propose a closed-form solution to pretraining
+eigenvalue is possible and resolves this (Li et al.,2024b), the                   generalized Pfaffian wave functions. For the orbitals ΦHF =
+spin states of theN     s lowest states are generally unknown.                    ΞC, we minimize
+To resolve this without knowing the spin statesa priori, we                                               LMO =∥ΦR−Φ                    HF∥22                       (19)
+snap wave functions dynamically to their closest eigenvalue
+
+                                                                               5
+                            Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 4.Second-row atoms’ (left) and molecules’ (right) excitation energies. We trained an Excited Pfaffian for each group and compare
+to individual models (Pfau et al.,2024;Szab                ´o et al.,2024). References from NIST (Sansonetti,2003) or QUEST (V                                         ´eril et al.,2021).
+
+where R∈O(N           o) aligns the orbitals. This is an orthogonal               continuously (Yarkony,1996). Like previous works (Gerard
+Procrustes problem with solution R∗  =UV    T  from the                           et al.,2025;Foster et al.,2025), accuracy may degrade for
+SVD UΣV       T  = PNbn=1  Φ(r     n)T ΦHF(r  n). When rotating the               distinct, uncorrelated compounds in multi-structure train-
+orbitals, the orbital selector transforms to R∗Πs, represented                    ing, see Sec.5. Finally, while the spin-state snapping loss
+throughA             s in our Excited Pfaffians. We define                        resolves many linear combinations, snapping to the wrong
+                                                                                  spin state early in training may prevent convergence to lower
+                       NsX                                                        ones;  remaining  linear  combinations  of  near-degenerate
+              LA =         ∥RΠ     s ˜AHF,sΠTs RT −A   s∥22           (20)        states could be addressed by diagonalizing the Hamilto-
+                      s=1                                                         nian (Pfau et al.,2024).
+
+where  ˜AHF,s ∈R   Ne×N   e  is an orthogonal skew-symmetric
+matrix representing the order ambiguity of selected orbitals.                     5. Experiments
+This  Procrustes  problem  has  minimizer  ˜A∗HF,s  =   ˜Us ˜V Ts                 We evaluate Excited Pfaffian and MSIS across six aspects:
+from the SVD ˜Us ˜Σs ˜V Ts   = ΠTs RT AsRΠ   s. We differentiate                  (1) runtime scaling with the number of states,  (2) cross-
+through R∗ but not  ˜A∗HF,s    , as the repeated singular values (0               molecule  accuracy  on  second-row  atoms  and  molecules
+or 1) have no well-defined SVD gradient.                                          trained jointly, (3) now-feasiblemanystate computations,
+Generalizing over systems.Following the Neural Pfaf-                              (4) excited-state PES for the carbon dimer dissociation and
+fian framework (Gao & G  ¨unnemann,2024), we general-                             ethylene, (5) an ablation on MSIS, and (6) the benefits in
+ize  across  molecules  by  conditioning  a  subset  of  wave                     ground states when those cross other states.
+function parameters on the nuclear configuration (R,Z)         .                  Where possible, we compare our results with traditional
+A graph neural network operating on the nuclei predicts                           quantum-chemical methods, experimental baselines, and
+structure-dependent parameters: nuclear embeddings, enve-                         previous  works  (Pfau  et  al., 2024; Szab                ´o  et  al., 2024;
+lope decays and combinations, orbital projection weights                          Sch¨atzle et al.,2025). Gradients are preconditioned using
+wkp, and the antisymmetrizer Ask. Most parameters of the                          the SPRING optimizer (Goldshlager et al.,2024), and where
+electron embedding network remain shared across all sys-                          targeting specific spin sectors was necessary, we employed
+tems. To ensure the number of orbitals scales with system                         the S+-penalty (Li et al.,2024b). A more extensive descrip-
+size, we predict Norb/nuc       orbitals per nucleus and concate-                 tion of the experimental setup and hyperparameters is given
+nate them,  yielding No  =N   n ·N orb/nuc      .  The antisym-                   in App.O. Numerical results are available in App.P.
+metrizer Ask ∈R   No×N   o  is constructed from Nn2 blocks
+A(mn)                                                                             Computational scaling.LikePfau et al.(2024) andSzab                      ´o
+  sk    ∈R   Norb/nuc     ×N   orb/nuc      , one for each pair of nuclei.        et al.(2024), we measure the step time of Excited Pfaffian on
+Limitations.While we successfully reconstruct many-state                          a single Neon atom for 1 to 30 states. Where previous work
+PES, our pretraining scheme does not guarantee state conti-                       had to measure with a batch size of 64 to fit the large number
+nuity. Depending on the training dynamics, states may still                       of states (Pfau et al.,2024), we measured with a batch size
+exhibit rapidly changing electronic characteristics due to                        of 4096,  as used in practice,  and upscaled the runtimes
+small geometric perturbations, or be biased toward higher-                        fromPfau et al.(2024);Szab                        ´o et al.(2024). The results in
+energy states that are structurally more similar to the pre-                      Fig.1show that, in contrast to previous work, MSIS enables
+training  target.   More  generally,  perfect  state  continuity                  near-constant step-time scaling with the number of states.
+is unattainable near conical intersections, where adiabatic
+states become degenerate, and their character changes dis-
+
+                                                                              6
+                           Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 5.Potential energy surfaces for the lowest 12 states of C   2.
+Results compared against SHCI.           singlet,    triplet.
+
+Generalization across compounds.We train an Excited                             Figure 7.Potential energy surfaces of ethylene along torsion (  τ)
+Pfaffian on all second-row atoms (Li–Ne) targeting 10 states,                    and pyramidalization (ϕ). Top: rotation about the C–C bond. Bot-
+and on 12 molecules (6–24 electrons) with 5 states each. We                      tom: pyramidalization showing a state crossingϕ≈99                      ◦ (inset).
+use a fixed batch size of ∼4000, amounting to ∼50 samples
+per state per atom and ∼70 per state per molecule, compared                      tion potential. While higher states
+to 4096 (Pfau et al.,2024) and 2048 (Szab                ´o et al.,2024)         exist mathematically, beyond this threshold, a real electron
+samples in prior work, respectively.  To enforce pure spin                      would be ejected from the atom. In Fig.6, Excited Pfaffian
+eigenstates on molecules, we employed the spin-state snap                        recovers all 33 states from the NIST database (Sansonetti,
+loss. For elements heavier than neon, we use pseudopoten-                        2003) with errors<0.5 mHa.
+tials (Li et al.,2022).                                                          Excited-state potential energy surfaces.The carbon dimer
+On atoms (Fig.4,  left),  Excited Pfaffian captures all 10                       is a challenging benchmark due to strong correlation and nu-
+low-lying states across all atoms. All energies, except for                      merous low-lying state crossings along its dissociation curve.
+the 4 highest-lying states of lithium and the highest state of                  We compute the C2 PES from 0.995     ˚A to 1.87     ˚A across 10
+nitrogen and oxygen, match NIST experimental data (San-                          structures fromPfau et al.(2024), jointly training a single
+sonetti,2003) up to chemical accuracy (                 <1.6 mHa      ) and      Excited Pfaffian on 6 singlet and 6 triplet states enforced
+prior VMC results (Pfau et al.,2024;Szab                ´o et al.,2024).        via the S+ penalty. This amounts to only ∼32 samples per
+Compared toSzab    ´o et al.(2024) and NES requiring sepa-                       state and structure, yet we model 12 states compared to the
+rate optimizations per atom and spin sector (16B/64B total                       8 covered by previous neural VMC works (Pfau et al.,2024;
+samples), our joint training uses 800M samples, a ∼20-80×                        Sch¨atzle et al.,2025). In total, we use 800M samples during
+reduction.  In terms of accuracy, we match the theoretical                       optimization, compared to 32B for NES (Pfau et al.,2024)
+best estimates from QUEST (V  ´eril et al.,2021) for most                        and 3.2B forSch     ¨atzle et al.(2025).
+molecules. While fewer, we still observe Excited Pfaffian                        Fig.5compares our results against highly accurate stochas-
+converging to linear combinations of eigenstates on H2O,                         tic  heat-bath  configuration  interaction  (SHCI)  calcula-
+H2CSi, and C2H4.  Notably, on CH2O and HNO we find                               tions (Holmes et al.,2017), with energies relabeled to match
+states missed by previous methods. Joint training reduces                        the SHCI state ordering. Our accuracy is on par with the sig-
+samples from 12B and 48B to 800M (∼15-60×) compared                              nificantly more expensive NES method (Pfau et al.,2024),
+toSzab   ´o et al.(2024) and NES, respectively.                                 whileSch         ¨atzle et al.(2025) deviates from the baseline at
+Many excitations.Due to their un-                                                stretched geometries.  LikeSch  ¨atzle et al.(2025), we ob-
+favorable scaling, previous works                                                serve a single state swap between the structurally similar
+on  neural  network-based  excited                                               X1Σ+g  and B′1 Σ+g  states near 1.6     ˚A, which share the same
+states  were  limited  to  <10     ex-                                           symmetry and lie close in energy. This state swap reflects a
+cited  states.    Our  favorable  scal-                                          narrow avoided crossing (von Neumann & Wigner,1929) at
+ing  changes  this  and  enables  an                                            which the dominant electronic character of the two states ex-
+unprecedented number of excited                                                  changes over a small range of bond lengths. The two higher-
+states. We demonstrate this on the                                               lying singlet and triplet states not computed in previous
+beryllium atom by computingall                    Figure 6.32 excited           works also agree well with the SHCI baseline, demonstrat-
+32 excited states up to the ioniza-               states of Be.                  ing the extension to states beyond those previously studied.
+
+                                                                             7
+                           Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+
+
+
+
+
+
+
+
+
+
+Figure 8.Spatial overlap measured through Bhattacharyya coeffi-
+cients⟨|Ψ            s|||Ψ   t|⟩for all molecules in Fig.4.
+
+
+App.Kprovides detailed comparisons to previous works.                          Figure 10.Ablation study on MSIS for the 12-state C      2 PES and
+                                                                                the 33-state Be. The x-axis shows the number of VMC steps and
+Further,  we evaluate Excited Pfaffian on ethylene along                        the y-axis shows the total energy (left) and overlap (right).
+two coordinates: torsion about the C–C bond (τ) and pyra-
+midalization (ϕ).  We compute the 2 lowest singlet states,                      geometries. Fig.9shows that the Neural Pfaffian, being a
+enforcing spin via the S+ penalty, jointly across both pan-                     smooth function of nuclear coordinates, cannot discontin-
+els. We observe a loss of state tracking in the torsion PES                     uously switch character at the 1.3     ˚A crossing.  Once con-
+between 15◦ and 30◦, where a Rydberg state crosses the                         verged to the X1Σ+g  state on one side, it remains trapped.
+valence excited state resulting in a change in the electronic                  At an eigenstate, the energy gradient vanishes, providing
+character of the upper state,  see App.L(Barbatti et al.,                       no signal to descend to the true ground state.  In contrast,
+2004).  Fig.7shows all methods are in good agreement                            Excited Pfaffian correctly tracks individual electronic states
+along both coordinates. Along pyramidalization, we locate                       through the crossing, yielding the true ground-state energy
+the intersection atϕ≈98.3            ◦, matching NES.                           at all geometries by taking the minimum across all states.
+MSIS ablation.We investigate how MSIS performs across                           Compute time.So far, our discussion has focused on sam-
+different Bhattacharyya coefficients BCst regimes, where                        ple counts rather than compute time. ForSzab    ´o et al.(2024)
+BCst =⟨|Ψ      s|||Ψ    t|⟩ measures the similarity between ρs and              andSch      ¨atzle et al.(2025), compute cost is proportional to
+ρt. Fig.8plots the coefficients for all molecules in Fig.4,                     the number of samples, but NES scales between O(N     s2) and
+revealing a wide range of values across state pairs. MSIS                       O(N     s4). Direct comparisons are complicated by different
+performs well throughout this range due to two complemen-                       choices of second-order optimizer (Martens,2010;Goldsh-
+tary mechanisms.  For pairs with high similarity, samples                       lager et al.,2024) and implementation.  Direct wall-clock
+from one state remain informative for the other, effectively                    measurements at equal batch size (App.N) show that our
+increasing the sample size for overlap estimation. For dis-                     method achieves >30×        and >200×          per-step speedups
+tant pairs, our estimator’s variance vanishes, see App.D.                       over  NES  on  molecules  (Fig.4)  and  the  carbon  dimer
+We empirically confirm this variance reduction across all                      (Fig.5), respectively, when summed over per-structure base-
+systems in App.E. We ablate MSIS on the 12-state C           2 PES              line training.  For the 33 states of beryllium, we require
+and 33-state Be. Without MSIS, Fig.10shows that overlap                         >300×          less compute than NES. At our C2 compute budget,
+estimates exhibit high variance throughout training, leading                    NES is far from convergence (Sec.N.1).
+to oscillating loss and destabilizing energy optimization.
+With MSIS, the overlap loss drops rapidly within 5k itera-
+tions and remains stable thereafter, translating to consistent                  6. Discussion
+energy convergence.                                                            We addressed the superlinear time-scaling of excited states
+Ground-state accuracy                                                           in neural-network variational Monte Carlo via two main
+through state crossings.                                                        contributions. Multi-State Importance Sampling reduces the
+We demonstrate that Ex-                                                        variances of overlap estimates by pooling samples across
+cited   Pfaffian   can   im-                                                    states, and the Excited Pfaffian architecture efficiently en-
+prove ground-state accu-                                                        codes many states in a single model.  Jointly, these result
+racy when crossings oc-                                                         in sublinear, near-constant time scaling in the number of
+cur.     We  train  on  10                                                      excited states. Moreover, we made independently valuable
+equidistant   C2   geome-            Figure  9.Potential  energy  sur-          contributions to neural wave functions.   Spin-state snap-
+tries between 1.2     ˚A and         face of C2 near a state crossing.          ping provides the benefits of a spin penalty without requir-
+1.4     ˚A, targeting 3 states to account for the a3Πu state be-                ing prior knowledge of the correct spin sectors, and our
+ing degenerate.  For comparison, we train a ground-state                        improved pretraining procedure eases the initialization of
+Neural Pfaffian (Gao & G  ¨unnemann,2024) on the same                           generalized wave functions.
+
+                                                                            8
+                           Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+Taken together,  these contributions enabled us to match                           115112, March 2008. doi: 10.1103/PhysRevB.77.115112.
+the accuracy of up to 200× more expensive methods. We
+computed many-state potential energy surfaces with high                          Barbatti, M., Paier, J., and Lischka, H. Photochemistry of ethylene:
+accuracy  at  a  fraction  of  the  cost,  and  were  the  first  to                A multireference configuration interaction investigation of the
+identify all excitations of the beryllium atom using neural                         excited-state energy surfaces.The Journal of Chemical Physics,
+                                                                                   121(23):11614–11624, 2004.
+networks in VMC. We also demonstrated the first neural
+wave function that generalizes across molecules for excited                      Bradbury,  J.,  Frostig,  R.,  Hawkins,  P.,  Johnson,  M.  J.,  Leary,
+states. However, while strong synergies exist in modeling                           C.,  Maclaurin,  D.,  Necula,  G.,  Paszke,  A.,  VanderPlas,  J.,
+energy surfaces, like previous works (Gerard et al.,2025;                           Wanderman-Milne,  S.,  and  Zhang,  Q.    JAX:  composable
+Gao & G¨unnemann,2024), lossless generalization across                              transformations  of  Python+NumPy  programs,  2018.    URL
+chemical compounds remains an open challenge.                                       http://github.com/jax-ml/jax.
+
+Nonetheless,  the  advances  made  may  enable  new  appli-                      Carleo,  G. and Troyer,  M.   Solving the Quantum Many-Body
+cations of neural-network VMC in photochemical simula-                              Problem with Artificial Neural Networks.Science, 355(6325):
+                                                                                    602–606, February 2017.  ISSN 0036-8075, 1095-9203.  doi:
+tions (Tang et al.,2025) or in the modeling of absorption                          10.1126/science.aag2302.
+spectra (Liu et al.,2025). Beyond direct applications, gener-
+alized excited-state wave functions enable the generation of                     Ceperley, D. M. and Alder, B. J. Ground state of solid hydrogen at
+accurate reference data for training excited-state machine-                         high pressures.Physical Review B, 36(4):2092–2106, August
+learning force fields (Huang et al.,2025), or density func-                        1987. ISSN 0163-1829. doi: 10.1103/PhysRevB.36.2092.
+tionals (Cheng et al.,2025;Luise et al.,2025).                                   Chen,  A.  and  Heyl,  M.    Empowering  deep  neural  quantum
+                                                                                    states  through  efficient  optimization.Nature  Physics,  20
+Impact Statement                                                                    (9):1476–1481,  September  2024.    ISSN  1745-2481.    doi:
+                                                                                   10.1038/s41567-024-02566-1.
+Our work reduces the computational cost of simulating ex-                        Cheng, L., Szab´o, P. B., Sch¨atzle, Z., Kooi, D. P., K¨ohler, J., Gies-
+cited states.   We do not foresee negative societal conse-                          bertz, K. J. H., No´e, F., Hermann, J., Gori-Giorgi, P., and Foster,
+quences beyond those common to computational chemistry.                             A.  Highly accurate real-space electron densities with neural
+                                                                                    networks.The Journal of Chemical Physics, 162(3):034120,
+Acknowledgments                                                                     January 2025. ISSN 0021-9606. doi: 10.1063/5.0236919.
+
+TG   acknowledges   financial   support   from   Deutsche                        Choo,  K.,  Carleo,  G.,  Regnault,  N.,  and Neupert,  T.   Symme-
+Forschungsgemeinschaft (DFG) through grant CRC 1114                                 tries and Many-Body Excitations with Neural-Network Quan-
+                                                                                    tum States.Physical Review Letters, 121(16):167204, October
+“Scaling Cascades in Complex Systems”, Project Number                               2018. ISSN 0031-9007, 1079-7114. doi: 10.1103/PhysRevLett.
+235221301, Project B08 “Multiscale Boltzmann Genera-                               121.167204.    URL  https://link.aps.org/doi/10.
+tors”. Further, the authors gratefully acknowledge the scien-                       1103/PhysRevLett.121.167204.
+tific support and resources of the AI service infrastructure                     Cuzzocrea, A., Scemama, A., Briels, W. J., Moroni, S., and Fil-
+LRZ AI Systems, provided by the Leibniz Supercomput-                                ippi, C.  Variational Principles in Quantum Monte Carlo: The
+ing Centre (LRZ) of the Bavarian Academy of Sciences                                Troubled Story of Variance Minimization.Journal of Chemical
+and Humanities (BAdW), and funded by the Bayerisches                                Theory and Computation, 16(7):4203–4212, July 2020. ISSN
+Staatsministerium f¨ur Wissenschaft und Kunst (StMWK).                             1549-9618. doi: 10.1021/acs.jctc.0c00147.
+This research is in part funded by the Federal Ministry of Ed-                   Dash, M., Moroni, S., Filippi, C., and Scemama, A.  Tailoring
+ucation and Research (BMBF) and the Free State of Bavaria                           CIPSI  Expansions  for  QMC  Calculations  of  Electronic  Ex-
+under the Excellence Strategy of the Federal Government                             citations:  The Case Study of Thiophene.Journal of Chem-
+and the L¨ander. We thank Zeno Sch¨atzle for fruitful discus-                       ical Theory and Computation, 17(6):3426–3434, June 2021.
+sions and for providing reference data.                                             ISSN 1549-9618. doi: 10.1021/acs.jctc.1c00212. URL https:
+                                                                                    //doi.org/10.1021/acs.jctc.1c00212.
+References                                                                       DeepMind,  Babuschkin,  I.,  Baumli,  K.,  Bell,  A.,  Bhupatiraju,
+Bajdich, M., Mitas, L., Drobn´y, G., Wagner, L. K., and Schmidt,                    S., Bruce, J., Buchlovsky, P., Budden, D., Cai, T., Clark, A.,
+   K. E. Pfaffian Pairing Wave Functions in Electronic-Structure                    Danihelka,  I.,  Dedieu,  A.,  Fantacci,  C.,  Godwin,  J.,  Jones,
+   Quantum Monte Carlo Simulations.Physical Review Letters,                         C.,  Hemsley,  R.,  Hennigan,  T.,  Hessel,  M.,  Hou,  S.,  Kap-
+   96(13):130201, April 2006. ISSN 0031-9007, 1079-7114. doi:                       turowski,  S.,  Keck,  T.,  Kemaev,  I.,  King,  M.,  Kunesch,  M.,
+   10.1103/PhysRevLett.96.130201.                                                   Martens, L., Merzic, H., Mikulik, V., Norman, T., Papamakar-
+                                                                                    ios,  G.,  Quan,  J.,  Ring,  R.,  Ruiz,  F.,  Sanchez,  A.,  Sartran,
+                                                                                    L.,  Schneider,  R.,  Sezener,  E.,  Spencer,  S.,  Srinivasan,  S.,
+Bajdich, M., Mitas, L., Wagner, L. K., and Schmidt, K. E. Pfaffian                  Stanojevi´c, M., Stokowiec, W., Wang, L., Zhou, G., and Vi-
+   pairing and backflow wavefunctions for electronic structure                      ola, F.  The DeepMind JAX Ecosystem, 2020.  URL http:
+   quantum Monte Carlo methods.Physical Review B, 77(11):                           //github.com/google-deepmind.
+
+                                                                             9
+                            Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+Entwistle, M. T., Sch¨atzle, Z., Erdman, P. A., Hermann, J., and                   Huang, X., Zhou, Z., Song, H., and Qu, Z.  Machine Learning-
+   No´e, F.   Electronic excited states in deep variational Monte                     Based  Excited-State  Reactive  Force  Field:    A  New  Ap-
+   Carlo.Nature Communications, 14(1):274, January 2023. ISSN                         proach  for  Modeling  the  Photodissociation  Dynamics  of  2-
+   2041-1723. doi: 10.1038/s41467-022-35534-5.                                        Fluorothiophenol.Journal of Chemical Theory and Compu-
+                                                                                      tation, 21(20):10098–10107, October 2025. ISSN 1549-9618.
+Foster, A., Sch¨atzle, Z., Szab´o, P. B., Cheng, L., K¨ohler, J., Cas-                doi: 10.1021/acs.jctc.5c01320.
+   sella, G., Gao, N., Li, J., No´e, F., and Hermann, J. An ab initio              Inui, K., Kato, Y., and Motome, Y.  Determinant-free fermionic
+   foundation model of wavefunctions that accurately describes
+   chemical bond breaking, June 2025.                                                 wave function using feed-forward neural networks.Physical
+                                                                                      Review Research, 3(4):043126, November 2021.  ISSN 2643-
+Gao, N. and G¨unnemann, S. Ab-Initio Potential Energy Surfaces                        1564. doi: 10.1103/PhysRevResearch.3.043126.
+   by Pairing GNNs with Neural Wave Functions. InInternational                     Kim, J., Pescia, G., Fore, B., Nys, J., Carleo, G., Gandolfi, S.,
+   Conference on Learning Representations, April 2022.                                Hjorth-Jensen,  M.,  and  Lovato,  A.    Neural-network  quan-
+
+Gao, N. and G¨unnemann, S. Generalizing Neural Wave Functions.                        tum  states  for  ultra-cold  Fermi  gases.Communications
+   InInternational Conference on Machine Learning, February                           Physics,  7(1),  May 2024.   ISSN 2399-3650.   doi:  10.1038/
+   2023a. doi: 10.48550/arXiv.2302.04168.                                             s42005-024-01613-w.
+
+Gao, N. and G¨unnemann, S. Sampling-free Inference for Ab-Initio                   Kish, L.Survey Sampling. John Wiley & Sons, New York, 1965.
+   Potential Energy Surface Networks.   InThe Eleventh Inter-                      Li,  R.,  Ye,  H.,  Jiang,  D.,  Wen,  X.,  Wang,  C.,  Li,  Z.,  Li,  X.,
+   national Conference on Learning Representations, February                          He,  D.,  Chen,  J.,  Ren,  W.,  and Wang,  L.   A computational
+   2023b.                                                                             framework for neural network-based variational Monte Carlo
+Gao,  N. and G¨unnemann,  S.   Neural Pfaffians:  Solving Many                        with Forward Laplacian.Nature Machine Intelligence, 6(2):
+   Many-Electron Schr¨odinger Equations.  InThe Thirty-eighth                         209–219, February 2024a.  ISSN 2522-5839.  doi:  10.1038/
+   Annual Conference on Neural Information Processing Systems,                        s42256-024-00794-x.
+   September 2024.                                                                 Li, X., Fan, C., Ren, W., and Chen, J. Fermionic neural network
+Gerard, L., Scherbela, M., Marquetand, P., and Grohs, P.  Gold-                       with  effective  core  potential.Physical  Review  Research,  4
+   standard solutions to the Schr¨odinger equation using deep learn-                  (1):013021, January 2022.  ISSN 2643-1564.  doi:  10.1103/
+   ing: How much physics do we need?  In Koyejo, S., Mohamed,                         PhysRevResearch.4.013021.
+   S., Agarwal, A., Belgrave, D., Cho, K., and Oh, A. (eds.),Ad-                   Li, Z., Lu, Z., Li, R., Wen, X., Li, X., Wang, L., Chen, J., and Ren,
+   vances in Neural Information Processing Systems, volume 35,                        W. Symmetry enforced solution of the many-body Schr¨odinger
+   pp. 10282–10294. Curran Associates, Inc., 2022.                                    equation with deep neural network, June 2024b.
+
+Gerard, L., Scherbela, M., Sutterud, H., Foulkes, W. M. C., and                    Liu,  W.,  Bi,  R.-H.,  Zhao,  C.,  Wang,  Y.,  and  Dou,  W.    Ab-
+   Grohs, P.  Transferable neural wavefunctions for solids.Na-                        sorption  Spectra  with  Kernel  Polynomial  Neural  Quantum
+   ture Computational Science, 5(12):1147–1157, December 2025.                        States.The Journal of Physical Chemistry Letters, pp. 12216–
+   ISSN 2662-8457. doi: 10.1038/s43588-025-00872-z.                                   12222, November 2025.   ISSN 1948-7185, 1948-7185.   doi:
+Goldshlager,  G.,  Abrahamsen,  N.,  and  Lin,  L.   A  Kaczmarz-                     10.1021/acs.jpclett.5c02758.    URL  https://pubs.acs.
+   inspired approach to accelerate the optimization of neural net-                    org/doi/10.1021/acs.jpclett.5c02758.
+   work wavefunctions.Journal of Computational Physics, 516:                       Lou, W. T., Sutterud, H., Cassella, G., Foulkes, W. M. C., Knolle,
+   113351, November 2024. ISSN 0021-9991. doi: 10.1016/j.jcp.                         J.,  Pfau,  D.,  and Spencer,  J. S.   Neural Wave Functions for
+   2024.113351.                                                                       Superfluids, July 2023.
+
+Heek, J., Levskaya, A., Oliver, A., Ritter, M., Rondepierre, B.,                   Luise, G., Huang, C.-W., Vogels, T., Kooi, D. P., Ehlert, S., Lanius,
+   Steiner, A., and van Zee, M.  Flax:  A neural network library                      S., Giesbertz, K. J. H., Karton, A., Gunceler, D., Stanley, M.,
+   and ecosystem for JAX, 2024. URL http://github.com/                                Bruinsma, W. P., Huang, L., Wei, X., Torres, J. G., Katbashev,
+   google/flax.                                                                       A., Zavaleta, R. C., M´at´e, B., Kaba, S.-O., Sordillo, R., Chen,
+Hermann, J., Sch¨atzle, Z., and No´e, F. Deep-neural-network solu-                    Y., Williams-Young, D. B., Bishop, C. M., Hermann, J., van den
+   tion of the electronic Schr¨odinger equation.Nature Chemistry,                     Berg, R., and Gori-Giorgi, P. Accurate and scalable exchange-
+   12(10):891–897, October 2020. ISSN 1755-4330, 1755-4349.                           correlation with deep learning, June 2025.
+
+   doi: 10.1038/s41557-020-0544-y.                                                 Mai,  S. and Gonz´alez,  L.   Molecular Photochemistry:  Recent
+                                                                                      Developments in Theory. Angewandte Chemie International
+Hermann, J., Spencer, J., Choo, K., Mezzacapo, A., Foulkes, W.                        Edition,   59(39):16832–16846,   September   2020.       ISSN
+   M. C., Pfau, D., Carleo, G., and No´e, F.  Ab initio quantum                       1433-7851, 1521-3773.  doi:  10.1002/anie.201916381.  URL
+   chemistry with neural-network wavefunctions.Nature Reviews                         https://onlinelibrary.wiley.com/doi/10.
+   Chemistry, 7(10):692–709, October 2023.  ISSN 2397-3358.                           1002/anie.201916381.
+   doi: 10.1038/s41570-023-00516-8.
+                                                                                   Martens,  J.   Deep  learning  via  Hessian-free  optimization.   In
+Holmes, A. A., Umrigar, C. J., and Sharma, S. Excited states using                    Proceedings of the 27th International Conference on Interna-
+   semistochastic heat-bath configuration interaction.The Journal                     tional Conference on Machine Learning, ICML’10, pp. 735–
+   of Chemical Physics, 147(16):164111, October 2017.  ISSN                           742, Madison, WI, USA, June 2010. Omnipress. ISBN 978-1-
+   0021-9606. doi: 10.1063/1.4998614.                                                 60558-907-7.
+
+                                                                              10
+                            Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+Meng, X.-L. and Wong, W. H. Simulating Ratios of Normalizing                      Scherbela, M., Gerard, L., and Grohs, P. Variational Monte Carlo
+   Constants Via a Simple Identity:  A Theoretical Exploration.                      on a Budget — Fine-tuning pre-trained Neural Wavefunctions.
+   Statistica Sinica, 6(4):831–860, 1996. ISSN 1017-0405. URL                        InThirty-Seventh Conference on Neural Information Processing
+   https://www.jstor.org/stable/24306045.                                            Systems, November 2023.
+Misery, A., Gravina, L., Santini, A., and Vicentini, F.  Looking                  Scherbela, M., Gerard, L., and Grohs, P.  Towards a transferable
+   elsewhere: improving variational Monte Carlo gradients by im-                     fermionic neural wavefunction for molecules.Nature Com-
+   portance sampling, July 2025. URL http://arxiv.org/                               munications, 15(1):120, January 2024. ISSN 2041-1723. doi:
+   abs/2507.05352. arXiv:2507.05352 [quant-ph].                                      10.1038/s41467-023-44216-9.
+Otis,   L.  and  Neuscamman,   E.      A  promising  intersection                 Scherbela, M., Gao, N., Grohs, P., and G¨unnemann, S. Accurate
+   of  excited-state-specific  methods  from  quantum  chemistry                     Ab-initio Neural-network Solutions to Large-Scale Electronic
+   and  quantum  Monte  Carlo.WIREs  Computational  Molec-                           Structure Problems, April 2025. URL http://arxiv.org/
+   ular  Science,  13(5):e1659,  2023.    ISSN  1759-0884.    doi:                   abs/2504.06087. arXiv:2504.06087 [physics].
+   10.1002/wcms.1659.     URL  https://onlinelibrary.
+   wiley.com/doi/abs/10.1002/wcms.1659.                             eprint:       Schr¨odinger, E.  Quantisierung als Eigenwertproblem.Annalen
+   https://onlinelibrary.wiley.com/doi/pdf/10.1002/wcms.1659.                        der Physik, 385(13):437–490, 1926.
+Otis, L., Craig, I. M., and Neuscamman, E. A hybrid approach to                   Spencer, J. S., Pfau, D., Botev, A., and Foulkes, W. M. C. Better,
+   excited-state-specific variational Monte Carlo and doubly ex-                     Faster Fermionic Neural Networks.3rd NeurIPS Workshop on
+   cited states.The Journal of Chemical Physics, 153(23):234105,                     Machine Learning and Physical Science, November 2020.
+   December 2020.  ISSN 0021-9606.  doi:  10.1063/5.0024572.
+   URLhttps://doi.org/10.1063/5.0024572.                                          Sun, Q., Berkelbach, T. C., Blunt, N. S., Booth, G. H., Guo, S.,
+Owen, A. B. and Zhou, Y. Safe and effective importance sampling.                     Li, Z., Liu, J., McClain, J. D., Sayfutyarova, E. R., Sharma, S.,
+   Journal of the American Statistical Association, 95(449):135–                     Wouters, S., and Chan, G. K.-L.  PySCF: The Python-based
+   143, 2000.                                                                        simulations of chemistry framework.WIREs Computational
+Pathak,  S.,  Busemeyer,  B.,  Rodrigues,  J.  N.  B.,  and  Wagner,                 Molecular Science, 8(1):e1340, 2018.  ISSN 1759-0884.  doi:
+   L.  K.    Excited  states  in  variational  Monte  Carlo  using  a                10.1002/wcms.1340.
+   penalty method.The Journal of Chemical Physics,  154(3):                       Szabo, A. and Ostlund, N. S.Modern Quantum Chemistry:  In-
+   034101,  January  2021.   ISSN  0021-9606,  1089-7690.   doi:                     troduction to Advanced Electronic Structure Theory.  Courier
+   10.1063/5.0030949.                                                                Corporation, 2012.
+Pfau, D., Spencer, J. S., Matthews, A. G. D. G., and Foulkes, W.                  Szab´o,  P.  B.,  Sch¨atzle,  Z.,  Entwistle,  M.  T.,  and  No´e,  F.   An
+   M. C.   Ab initio solution of the many-electron Schr¨odinger                      Improved Penalty-Based Excited-State Variational Monte Carlo
+   equation with deep neural networks.Physical Review Research,                      Approach with Deep-Learning Ansatzes.Journal of Chemical
+   2(3):033429, September 2020. doi: 10.1103/PhysRevResearch.                        Theory and Computation, 20(18):7922–7935, September 2024.
+   2.033429.                                                                         ISSN 1549-9618. doi: 10.1021/acs.jctc.4c00678.
+Pfau, D., Axelrod, S., Sutterud, H., von Glehn, I., and Spencer, J. S.            Tang, Y., Andolina, G. M., Cuzzocrea, A., Mezera, M., Szab´o,
+   Accurate computation of quantum excited states with neural                        P. B., Sch¨atzle, Z., No´e, F., and Erdman, P. A. Deep quantum
+   networks.Science, 385(6711):eadn0137, August 2024.  doi:                          Monte Carlo approach for polaritonic chemistry.The Journal of
+   10.1126/science.adn0137.                                                          Chemical Physics, 163(3):034108, July 2025. ISSN 0021-9606.
+Pineda Flores, S. D. and Neuscamman, E. Excited State Specific                       doi: 10.1063/5.0272805.
+   Multi-Slater Jastrow Wave Functions.The Journal of Physical
+   Chemistry A, 123(8):1487–1497, February 2019.  ISSN 1089-                      Veach, E. and Guibas, L. J. Optimally combining sampling tech-
+   5639.  doi: 10.1021/acs.jpca.8b10671.  URL https://doi.                           niques for Monte Carlo rendering. InProceedings of the 22nd
+   org/10.1021/acs.jpca.8b10671.                                                     Annual Conference on Computer Graphics and Interactive Tech-
+Roothaan, C. C. J. New Developments in Molecular Orbital The-                        niques (SIGGRAPH ’95), pp. 419–428, 1995.
+   ory.Reviews of Modern Physics, 23(2):69–89, April 1951. doi:                   von Glehn, I., Spencer, J. S., and Pfau, D. A Self-Attention Ansatz
+   10.1103/RevModPhys.23.69.                                                         for Ab-initio Quantum Chemistry. InThe Eleventh International
+Sansonetti,   J.      Handbook  of  Basic  Atomic  Spectroscopic                     Conference on Learning Representations, February 2023.
+   Data,    NIST   Standard   Reference   Database   108,    2003.                von Neumann, J. and Wigner, E.  ¨Uber das Verhalten von Eigen-
+   URL     http://physics.nist.gov/PhysRefData/                                      werten  bei  adiabatischen  Prozessen.Phys.  Z.,  30:467–470,
+   Handbook/periodictable.htm.                                                       1929.
+Sch¨atzle, Z., Szab´o, P. B., Cuzzocrea, A., and No´e, F.  Ab-initio              V´eril,  M.,  Scemama,  A.,  Caffarel,  M.,  Lipparini,  F.,  Boggio-
+   simulation of excited-state potential energy surfaces with trans-                 Pasqua,  M.,  Jacquemin,  D.,  and Loos,  P.-F.   QUESTDB: A
+   ferable deep quantum Monte Carlo, March 2025.                                     database of highly accurate excitation energies for the elec-
+Scherbela, M., Reisenhofer, R., Gerard, L., Marquetand, P., and                      tronic  structure  community.  WIREs  Computational  Molec-
+   Grohs, P. Solving the electronic Schr¨odinger equation for mul-                   ular  Science,  11(5):e1517,  2021.    ISSN  1759-0884.    doi:
+   tiple nuclear geometries with weight-sharing deep neural net-                     10.1002/wcms.1517.     URL  https://onlinelibrary.
+   works.Nature Computational Science,  2(5):331–341,  May                           wiley.com/doi/abs/10.1002/wcms.1517.                              eprint:
+   2022. ISSN 2662-8457. doi: 10.1038/s43588-022-00228-x.                            https://onlinelibrary.wiley.com/doi/pdf/10.1002/wcms.1517.
+
+                                                                             11
+                            Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+Wheeler, W. A., Kleiner, K. G., and Wagner, L. K.   Ensemble
+   variational Monte Carlo for optimization of correlated excited
+   state wave functions.Electronic Structure, 6(2):025001, April
+   2024. ISSN 2516-1075. doi: 10.1088/2516-1075/ad38f8.
+
+Wilson, M., Gao, N., Wudarski, F., Rieffel, E., and Tubman, N. M.
+   Simulations of state-of-the-art fermionic neural network wave
+   functions with diffusion Monte Carlo, March 2021.
+
+Wilson, M., Moroni, S., Holzmann, M., Gao, N., Wudarski, F.,
+   Vegge, T., and Bhowmik, A. Neural network ansatz for periodic
+   wave functions and the homogeneous electron gas.Physical
+   Review B, 107(23):235139, June 2023. doi: 10.1103/PhysRevB.
+   107.235139.
+
+Yarkony, D. R. Diabolical conical intersections.Rev. Mod. Phys.,
+   68:985–1013, 1996. doi: 10.1103/RevModPhys.68.985.
+
+Zhang, X., Wang, L., Helwig, J., Luo, Y., Fu, C., Xie, Y., Liu, M.,
+   Lin, Y., Xu, Z., Yan, K., Adams, K., Weiler, M., Li, X., Fu,
+   T., Wang, Y., Strasser, A., Yu, H., Xie, Y., Fu, X., Xu, S., Liu,
+   Y., Du, Y., Saxton, A., Ling, H., Lawrence, H., St¨ark, H., Gui,
+   S., Edwards, C., Gao, N., Ladera, A., Wu, T., Hofgard, E. F.,
+   Tehrani, A. M., Wang, R., Daigavane, A., Bohde, M., Kurtin,
+   J., Huang, Q., Phung, T., Xu, M., K. Joshi, C., Mathis, S. V.,
+   Azizzadenesheli, K., Fang, A., Aspuru-Guzik, A., Bekkers, E.,
+   Bronstein, M., Zitnik, M., Anandkumar, A., Ermon, S., Li`o, P.,
+   Yu, R., G¨unnemann, S., Leskovec, J., Ji, H., Sun, J., Barzilay,
+   R., Jaakkola, T., Coley, C. W., Qian, X., Qian, X., Smidt, T., and
+   Ji, S. Artificial Intelligence for Science in Quantum, Atomistic,
+   and Continuum Systems.Foundations and Trends®in Machine
+   Learning, 18(4):385–912, 2025. ISSN 1935-8237, 1935-8245.
+   doi: 10.1561/2200000115.
+
+Zhao, L. and Neuscamman, E.  An Efficient Variational Princi-
+   ple for the Direct Optimization of Excited States.Journal of
+   Chemical Theory and Computation, 12(8):3436–3440, August
+   2016. ISSN 1549-9618. doi: 10.1021/acs.jctc.6b00508. URL
+   https://doi.org/10.1021/acs.jctc.6b00508.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                              12
+                              Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+A. Hartree-Fock excited-state construction
+In Hartree-Fock theory, the ground state occupies the Ne lowest-energy orbitals, selected by Π0 = [I Ne,0]    T ∈ {0,1}        No×N   e.
+Excited states are constructed by replacing occupied orbitals with virtual (unoccupied) orbitals. For a single excitation from
+orbitalpto orbitala > N                         e, the selectorΠ             p→a      is obtained by swapping thepth andath rows ofΠ                    0.
+More generally, let Πs,Π t ∈ {0,1}        No×N   e be two orbital selectors where each column contains exactly one 1. The resulting
+wave functions are orthogonal if and only if
+                                                            ⟨Ψ  HF,s   |Ψ  HF,t   ⟩= det  ΠTs Πt =δ   st.                                                             (21)
+This follows from the fact that for Slater determinants Ψs = det(ΦΠs) and Ψt = det(ΦΠt) with orthonormal orbitals
+ΦT Φ =I:
+                                                      ⟨Ψ  s|Ψ t⟩= det  ΠTs ΦT ΦΠt = det ΠTs Πt.                                                      (22)
+
+When Πs and Πt select disjoint sets of orbitals in at least one position, ΠTs Πt has a zero row, yielding det ΠTs Πt = 0.
+When they select identical orbitals,Π              Ts Πt is a permutation matrix withdet     ΠTs Πt =±1.
+More generally, this result extends to real-valued selectors Πs,Π t ∈R   No×N   e: the condition det ΠTs Πt =δ   st remains
+necessary and sufficient for orthogonality of the resulting wave functions.
+
+B. Variational Monte Carlo
+Variational Monte Carlo optimizes a parametrized wave functionψ              θ by minimizing the energy expectation
+                                                                   E[ψ    θ] =E   r∼ρ     θ [E loc(r)],                                                                     (23)
+
+whereρ          θ(r) =          ψθ(r)    2R ψθ(r ′)2dr  ′  andE      loc(r) =      ( ˆHψθ)(r)ψθ(r)      .
+
+Sampling.   Samples from  ρθ  are obtained via Markov Chain Monte Carlo (MCMC), typically using the Metropolis-
+Hastings algorithm. Starting from a configuration r, a proposal r′ is drawn from a proposal distribution q(r   ′|r)    and accepted
+with probability
+
+                                     A(r→r         ′) = min       1,   ρθ(r ′)q(r|r       ′)ρθ(r)q(r       ′|r)= min1,   Ψθ(r ′)2q(r|r      ′)Ψθ(r)    2q(r   ′|r).                                    (24)
+
+For symmetric proposalsq(r                ′|r) =q(r|r           ′), this simplifies to accepting based on the ratioψ         θ(r ′)2/ψθ(r)    2.
+
+Energy gradients.The gradient of the energy with respect to parametersθis given by
+                                              ∇θE[ψ    θ] = 2E  r∼ρ     θ [(E   loc(r)−E[ψ             θ])∇   θ log|ψ       θ(r)|],                                             (25)
+
+where the baseline E[ψ    θ] reduces variance without introducing bias. This expression is estimated using Nb samples {r  i}Nbi=1
+from the MCMC chain:
+
+                                                                         NbX Eloc(r  i)−   ¯E∇θ log|ψ       θ(r  i)|,                                               (26)
+                                                ∇θE[ψ    θ]≈    2Nb
+                                                                         i=1
+where  ¯E=       1    P
+                 Nb       i Eloc(r  i).
+
+Local energy computation.The local energy requires evaluating                     ˆHψθ/ψθ. For the electronic Hamiltonian, this involves:
+                                                           Eloc(r) =−      1     X     ∇2i ψθ(r)
+                                                                              2    i     ψθ(r)      +V(r),                                                            (27)
+
+whereV(r)contains the Coulomb potential terms. The kinetic term is computed as
+                                                          ∇2i ψθ
+                                                             ψθ    =∇   2i log|ψ       θ|+ (∇   i log|ψ       θ|) 2 .                                                          (28)
+
+                                                                                    13
+                             Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+C. Overlap penalty scale estimation
+As shown byPathak et al.(2021) and refined byWheeler et al.(2024), the penalty coefficients must satisfy
+
+                                                                      ωst >|E    t −E   s|                                                                             (29)
+
+to avoid collapse of the optimized states onto each other. While any value satisfying this constraint yields the correct global
+minimum, values closer to the bound can reduce training noise.
+FollowingSzab        ´o et al.(2024), we employ automatic scaling ofω                  st based on running estimates of the energies:
+
+                                                        ωst = ˜ω·max     | ¯Es −  ¯Et|, σ(E     s), ϵ  ,                                                           (30)
+
+where ˜ω >1      is a shared hyperparameter,  ¯Es denotes the exponentially weighted mean of the local energies for state s,
+and σ(E    s) is the standard deviation. The first term ensures the constraint is satisfied while adapting to the system-specific
+energy gaps. The second term prevents state collapse during early training when energy estimates are unreliable. The floor
+ϵ= 10 −3   Eh provides numerical stability.
+This parametrization significantly reduces system-dependence compared to manually tuning individual ωst values. Like
+Szab´o et al.(2024), we use             ˜ω= 4      for all systems in this work.  For PES calculations,Sch         ¨atzle et al.(2025) propose
+dynamical state reordering during training to maintain state continuity across geometries. We adopt the same approach.
+States are reordered by energy at each optimization step, ensuring that the penalty coefficients ωst consistently penalize
+high-energy states rather than states with fixed indices.
+
+D. Variance of the overlap estimator
+                                                                                                                                             qR ψs(x)    2dx   is
+We analyze Monte Carlo estimators for the normalized overlap integral Ost =⟨Ψ     s|Ψ t⟩, where Zs =
+the normalization constant, Ψs(x) =      ψs(x)Zs    is the normalized wave function and ρs(x) = Ψ    s(x)    2 is the corresponding
+probability density.  Estimator 2 requires the normalizing constant ratios κs  =Z    21/Z   2s ; these are estimated via bridge
+sampling as described inG. The variance analysis below is conditional on these ratios.
+
+D.1. Estimator 1: Single-state distribution.
+Sampling fromρ        s alone yields
+                                                                                  ψt(x)     Zs
+                                                                 Ost =E   ρs      ψs(x)      Zt .                                                                      (31)
+
+The integrand ψt(x)/ψ      s(x)     isunbounded: wherever                  ψs(x)→0          while ψt(x)̸= 0     , the ratio diverges. For orthogonal states,
+this occurs in extended regions where the nodal structures differ, leading to high-variance estimates.
+Denote the random variableg(x) =ψ                     t(x)/ψ      s(x). The second moment is
+                                                                 Z   ψ2s                 Z   ψ2t
+                                                   Eρs[g 2] =        Z2s · ψ2tψ2s dx=         Z2s dx=    Z2tZ2s ,                                                     (32)
+
+giving variance
+
+                                                   Varρs[g] =   Z2t                              1−O      2st .                                                      (33)
+                                                                    Z2s − Z2tZ2s O2st = Z2tZ2s
+
+Although this expression appears bounded, the random variable g(x) =ψ         t(x)/ψ      s(x)     itself isunbounded:  it diverges
+wherever ψs(x)→0           while ψt(x)̸= 0     . The finite variance arises only because such regions have measure zero under ρs. In
+practice, finite-sample estimates suffer from rare but extreme values when samples land near nodes of ψs, causing heavy
+tails and unreliable convergence.
+A further complication is that this estimator requires knowledge of the normalization ratio ZsZt . This can be circumvented by
+sampling from both ρs and ρt and using the geometric mean. Define A=E      ρs[g]    and B=E       ρt[g −1  ]. Then AB=O          2st, so
+
+                                                                                14
+                             Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+|O st|=  √AB with the normalization ratios canceling. Using the delta method with  NbNs  samples from each distribution, the
+per-pair variance is
+
+                                                                 Var[ ˆOst]≈  Ns(1−O        2st)2N  b      .                                                                     (34)
+
+This depends only on Ost, not the normalization ratio. However, the underlying random variables remain unbounded, and
+the delta method requires |O st| bounded away from zero, so this approximation may be unreliable for nearly orthogonal
+states.                                       pairs, the total variance is
+With sample reuse across all  Ns2
+                                                           X                             X
+                                                                Var[ ˆOst]≈   Ns2N  b         (1−O        2st).                                                             (35)
+                                                           s<t                           s<t
+For orthogonal states whereO          st ≈0, this becomes       Ns2(N  s−1)                                    .
+                                                                           4N  b      , scaling asO    Ns3Nb
+
+D.2. Estimator 2:N    s-state mixture.
+When optimizing Ns states simultaneously, we estimate all  Ns2                           pairwise overlaps from a single Ns-component mixture
+ρmix(x) =       1   PNs
+                Ns      s=1  Ψs(x)    2. The pairwise overlap becomes
+
+                                          Ost =E   ρmix[f st(x)],    wheref                  st(x) =     Ns ·Ψ s(x)Ψ    t(x)PNs
+                                                                                                         s′=1 Ψs′(x)    2  .                                         (36)
+By AM-GM, Ps′ Ψ2s′ ≥Ψ   2s + Ψ2t ≥2|Ψ       sΨt|, so|f      st(x)| ≤       Ns2   isbounded.
+
+Per-pair variance bound.The second moment off                st is
+                                                        Z    1    X                                         Z    Ψ2sΨ2t
+                                      Eρmix[f  2st] =        Ns        Ψ2u ·  Ns2Ψ2sΨ2t(P                        P
+                                                                    u               s′ Ψ2s′)2 dx=N        s         s′ Ψ2s′ dx.                                  (37)
+
+Using the AM-GM bound Ps′ Ψ2s′ ≥2|Ψ       s||Ψ  t|:
+                                                           Z  |Ψ s|2|Ψ t|2                   Z
+                                    Eρmix[f  2st]≤N     s       2|Ψ   s||Ψ  t| dx=     Ns2       |Ψ s||Ψ  t|dx=      Ns2  BCst,                                   (38)
+
+where BCst =⟨|Ψ      s|||Ψ    t|⟩ is the Bhattacharyya coefficient (overlap of unsigned wave functions). The per-pair variance
+withN        b samples is therefore bounded by
+
+                                                    Var[ ˆOst] = E[f     2st]−O     2stNb       ≤ Ns BCst −2O      2st2N  b         .                                                     (39)
+
+For orthogonal states (Ost = 0), this simplifies to Var[ ˆOst]≤   Ns BCst2N  b   .  States with low coefficients (spatially disjoint)
+have lower variance, states with high coefficients contribute more. Since Ost ≤BC   st ≤1   , the per-pair bound scales as
+O(N     s/Nb). However, analyzing all pairs jointly yields a tighter result.
+
+Joint variance bound.The sum of second moments is
+                                                        X                            X    Z    Ψ2sΨ2t
+                                                             Eρmix[f  2st] =N   s              P
+                                                        s<t                          s<t          s′ Ψ2s′ dx.                                                       (40)
+
+Using(      Ps′ Ψ2s′)2 = Ps′ Ψ4s′ + 2Ps<t Ψ2sΨ2t , we obtain
+                                    X                             Z   X                 P           !
+                                          Eρmix[f  2st] = Ns                            Ps′ Ψ4s′       dx=     Ns
+                                    s<t                       2           s′  Ψ2s′ −       s′ Ψ2s′               2  (N  s −P),                                   (41)
+
+
+                                                                                  15
+                            Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+where P:=  R PPs′ Ψ4s′                                                                                                                    s′(Ψ2s′)2 ·N s ≥
+                       s′ Ψ2s′ dx  . P  satisfies 1≤P≤N            s: the lower bound follows from Cauchy-Schwarz (P pairs gives the average
+(Ps′ Ψ2s′)2 applied pointwise), and the upper bound from Ψ4s′ ≤Ψ   2s′ Pt′ Ψ2t′. Dividing by  Ns2
+second moment:
+                                                         Ns21 X    Eρmix[f  2st] = Ns −P
+
+                                                               s<t                    Ns −1    ≤1.                                                            (42)
+
+WithN     b total samples ( NbNs  per state), the sum of Monte Carlo variances satisfies
+                        X                     P                                                    P
+                             Var[ ˆOst] =        s<t(E[f      2st]−O     2st)                          s<t O2st
+                        s<t                              Nb              = Ns(N  s −P)2N  b      −      Nb     ≤ Ns(N  s −1)2N  b      .                      (43)
+For orthogonal states, this scales asO    Ns2           , a factor of  Ns
+                                                    Nb                    2   improvement over Estimator 1.
+
+Effect of estimated normalization ratios.The analysis above conditions on the true ratios          κs = Z21
+                                                                                                                               Z2s . In practice, these are
+estimated via bridge sampling (App.G), introducing additional variance. For two states, bridge sampling quality degrades
+when the unsigned overlap BCst decreases, as the distributions have less overlapping support. However, with many states, a
+state only needs spatial overlap withanyof the others, not all. Even if            BCst is small, intermediate states can bridge the gap.
+
+E. Effective sample size of MSIS
+The MSIS effective sample size depends on the Bhattacharyya coefficient BCst =⟨|Ψ      s|||Ψ    t|⟩ between states. At BCst = 0,
+the wave functions have disjoint support and samples from Ψs do not contribute to overlap estimates involving Ψt.  At
+BCst = 1, the two distributions coincide and every sample contributes fully to both states. We investigate how this effective
+sample size scales with system size.  For each state s we use the Kish effective sample size (Kish,1965) of the MSIS
+reweighting factorw        s(r) =q       sκs/qmix:
+                                                                PNbn=1  ws(r  n) 2
+
+                                                   ESSs =        PNbn=1  ws(r  n)2   ,   r n ∼ρ   mix,                                                        (44)
+
+which counts how many of the Nb mixture samples effectively contribute to the MSIS estimate of Ost.  We report the
+normalized quantity ESS·N         s/Nb, chosen so that single-state importance sampling, which effectively yields Nb/Ns samples
+per pair, corresponds to 1, while maximal pooling, where every sample contributes equally to every pair, corresponds to Ns.
+Fig.11reports this quantity for the second-row atoms and the 12 molecules of Fig.4. For atoms (                Ns = 10), the normalized
+ESS ranges from ∼2.3       to ∼4.7      , and for molecules (Ns = 5) from ∼1.8       to ∼2.9      .  All systems remain well above the
+single-state baseline, empirically confirming the variance reduction of MSIS. Crucially, the observed variation reflects
+differences in electronic character rather than system size. Normalized ESS is flat with the number of atoms (right panel)
+and with valence electrons within each system class (middle panel). We leave the systematic study at larger system sizes for
+future work.
+
+F. Gradients of the overlap estimator
+The gradient of the pairwise overlap with respect to the network parametersθcan be written as (Entwistle et al.,2023)
+                                                       ψt(r)                ψt(r)                                ψs(r)
+                                 ∇θOst =E   ρs           ψs(r)   −E   ρs    ψs(r)        ∇θ lnψ    s(r)    Eρt    ψt(r)     .                                  (45)
+
+This expression requires accurate estimates of the overlap ratios Eρs[ ψtψs ] and Eρt[ ψsψt ]. When estimated from single-state
+samples, these ratios exhibit high variance early in training, leading to noisy gradients that destabilize optimization (see
+Sec.5). We address this by computing the expectation over the same pooled distribution         ρmix used for the overlap itself,
+replacing the single-state overlap estimates with our MSIS estimator from Eq. (10):
+                                                                    ψt(r)
+                                              ∇θOst =E   ρs          ψs(r)   −  ˆOst     ∇θ lnψ    s(r)     ˆOts,                                                 (46)
+
+
+                                                                             16
+                             Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 11.Normalized effective sample size     ESS·N         s/Nb of the MSIS overlap estimator across the second-row atoms (blue, Ns = 10)
+and 12 molecules (orange, Ns = 5). Left: per system, averaged over states with error bars indicating the standard deviation. Middle: as a
+function of the number of valence electrons. Right: as a function of the number of atoms. The dashed red line at 1 marks the effective
+sample size of single-state importance sampling.
+
+                           h ψt(r)ψ     s(r)κ     si
+where  ˆOst =E   ρmix             qmix         is the MSIS estimate of the single-state ratio Eρs[ψ t/ψs]. We also experimented with
+using ρmix  for the outer expectation, but found it made little difference in practice and was difficult to integrate with
+second-order preconditioners like SPRING (Goldshlager et al.,2024).
+
+G. Normalizing constant ratio estimation
+The MSIS estimator requires the ratios κs = Z2Z2s  for s∈ {2, . . . , N       s}. We estimate these via the iterative bridge sampling1
+algorithm ofMeng & Wong(1996).
+
+Bridge sampling.   Given unnormalized densities  qs =ψ    2s  and qt =ψ    2t  with unknown normalizing constants, bridge
+sampling estimates their ratio by introducing abridge function  α(r)       that connects expectations under both distributions. The
+key identity is
+
+                                                                κsEρs[α q t] =κ   tEρt[α q s],                                                                    (47)
+
+which holds for any α >0    and relates the ratio  κsκt  to computable expectations. The optimal bridge function that minimizes
+estimator variance isα  ∗ ∝         1κsqs+κ   tqt , which places more weight where both densities have support.
+
+Multi-state estimation.For                 Ns states, we use a shared bridge function α=       1                                           P
+                                                                                                             q(κ)           mix =   1Ns       s κsqs.  Defining
+                                                                                                               mix  with q(κ)
+responsibilities ws =     qsNsq(κ)
+                                  mix , the identity becomes κsEρs[w t] =κ   tEρt[w s]. Using all Ns(N  s −1)    pairwise identities with
+κ1 = 1yields a linear systemBκ=bforκ= (κ                                 2, . . . , κNs)T :
+                                                                   (P
+                                                         Bst =           s′̸=s  Eρs′ [w s]   , ifs=t,
+                                                                     −E   ρs[w t]             , else,                                                                     (48)
+                                                           bs =E   ρs[w 1].                                                                                               (49)
+
+Since ws depends on the unknown κ through q(κ)mix, we iterate: initialize ˆκ(0) =1   , then solve ˆκ(t+1)   = (B  (t)  )−1  b(t)   . We
+run 10 iterations per optimization step and clip updates to a factor of 2 for stability.
+
+G.1. Computational cost of bridge sampling
+We have found the impact of the normalizing constant ratio estimation on step time to be negligible. To confirm, we have
+measured the execution time of the iterative algorithm on an Nvidia H100 accelerator for a range of configurations. The
+step-time contribution is shown in Tab.1. At 16 states and 8 molecules, the algorithm takes around    0.83 ms   , which is less
+than0.015 %of the VMC step time for a comparable configuration.
+
+                                                                                17
+                           Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+Table 1.Step-time contribution of the iterative bridge sampling algorithm measured on an Nvidia H100 for state counts   Ns and molecule
+countsN            mol. The total batch size is kept constant at4096. Times are given inms.
+
+                                    Nmol         1            2            4            8           16          32          64
+                                       Ns
+                                         1     0.040     0.082     0.080     0.081     0.085     0.084     0.085
+                                         2     0.790     0.675     0.617     0.583     0.539     0.555     0.518
+                                         4     0.819     0.649     0.614     0.587     0.579     0.587     0.567
+                                         8     0.848     0.693     0.684     0.670     0.664     0.671     0.731
+                                       16     0.996     0.815     0.812     0.829     0.900     0.885     0.894
+                                       32     1.262     1.251     1.306     1.352     1.379     1.410     1.421
+                                       64     1.872     2.526     2.573     2.656     2.764     2.868     2.782
+
+H. Memory usage of separate orbitals per state
+
+A naive extension to multiple states expands the orbital matrices with a state dimension, i.e., Φskip, requiring separate orbital
+weights wskp and envelopes χskp for each state (Sch  ¨atzle et al.,2025;Pfau et al.,2024). While conceptually simple, this
+approach leads to prohibitive memory requirements when combined with approximate second-order optimizers such as
+SPRING (Goldshlager et al.,2024), which require storing the Jacobian of the network outputs with respect to parameters.
+For typical hyperparameters, batch size Nb = 4096, Norb/nuc       = 8 orbitals per nucleus, embedding dimension Nf = 256,
+Nk = 16 determinants, Ns = 32 states, and meta-network embedding dimension of 64, the Jacobian of the linear layer
+mapping nuclear embeddings to orbital projections alone requires
+
+                                             4096×8×256×16×32×64×4bytes≈1TB                                                  (50)
+
+of memory, far exceeding current GPU capacities.
+Previous works have addressed this limitation differently.Sch ¨atzle et al.(2025) compute and precondition gradients for each
+state separately, then average the updates.  However, generalized wave function methods have demonstrated that jointly
+preconditioning the total loss yields better optimization dynamics (Gao & G  ¨unnemann,2022;Scherbela et al.,2024). In
+Pfau et al.(2024), this issue does not arise because they use fewer orbitals, treat orbitals as direct parameters, and do not
+employ a meta-network for generalization.
+Our Excited Pfaffian architecture avoids this memory bottleneck entirely by sharing orbitals across states and varying only
+the lightweight antisymmetrizerA                            sk, whose parameter count is independent of the embedding dimension.
+
+I. Comparison to naive multi-state architecture
+App.Hestablishes that the naive multi-state extension is incompatible with second-order preconditioners at our standard
+scale (Nk = 16). For a direct empirical comparison nonetheless, we reduce the determinant count to Nk = 1, the largest
+configuration that fits in H100 memory for the naive architecture on 33-state beryllium.  Even at this reduced scale, the
+naive architecture requires 48 s per step, compared to 7.2 s    for an Excited Pfaffian at Nk  = 1 and 8 s for our standard
+Nk = 16 Excited Pfaffian. Fig.12plots the convergence of the total energy. Per step, the          Nk = 1 Excited Pfaffian and the
+naive Nk = 1 architecture follow nearly identical trajectories, confirming that our parametrization preserves expressivity
+at equal capacity. Per wall-clock hour, the standard Nk = 16 Excited Pfaffian reaches within ∼10   −5   Eh of its converged
+energy in under 40 h, while the naive architecture is still ∼2 orders of magnitude above this after 80 h. We estimate that full
+convergence of the naive architecture would require∼111 A100 GPU-days, exceeding our compute budget.
+
+J. Pretraining target construction
+
+Pretraining neural-network wave functions to Hartree-Fock solutions reduces the number of costly VMC optimization
+steps (Hermann et al.,2023), as HF captures approximately 99% of the total energy (Szabo & Ostlund,2012). However,
+constructing consistent pretraining targets for multi-structure excited states poses unique challenges: HF molecular orbital
+coefficients are only defined up to unitary transformations, and different structures yield independently computed solutions
+with arbitrary relative phases and orderings. We address this by (1) organizing structures into a directed acyclic graph, (2)
+
+                                                                            18
+                           Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 12.Convergence of the total energy on 33-state Be for the standard Excited Pfaffian (    Nk = 16), a single-determinant Excited
+Pfaffian (Nk = 1), and the naive multi-state architecture at Nk = 1 (the largest that fits in memory). Left: per training step. Right: per
+wall-clock hour. Energies are reported relative to the converged energy of the standardN               k = 16Excited Pfaffian.
+
+
+selecting consistent excitations at the root, and (3) propagating canonical orbitals between structures via basis projection and
+overlap maximization.
+
+Structure graph construction.To ensure smooth pretraining targets across structures, we must establish a canonical
+correspondence between molecular orbitals at different geometries.   Naively running independent HF calculations at
+each structure yields orbitals with arbitrary phases and orderings, causing discontinuous pretraining targets that hinder
+generalization.
+We observe that geometrically similar structures have similar electronic structure, so their HF orbitals can be aligned with
+small error. This motivates organizing structures into a graph where edges connect similar geometries. Specifically, we
+compute pairwise RMSD between all structures sharing the same nuclei Z and electronic configuration (N ↑, N↓), and
+construct a minimum spanning tree (MST) over this complete graph. The MST minimizes the total edge weight, which
+corresponds to minimizing the cumulative geometric dissimilarity along propagation paths.
+The MST defines connectivity but not direction. To obtain a rooted tree suitable for sequential propagation, we select the
+root as the node minimizing the tree’s diameter (maximum distance to any leaf).  This choice minimizes the worst-case
+propagation depth, reducing error accumulation for the most distant structures. The rooted tree naturally defines a DAG via
+parent-child relationships.
+Traversing this DAG in topological order yields a sequence where each non-root structure i has a unique predecessor p(i)
+whose orbitals have already been determined. This reduces the global N-structure matching problem to N−1       independent
+pairwise matchings, each between geometrically adjacent structures where alignment is most reliable.
+
+Excitation selection.FollowingPfau et al.(2024), we enumerate excited states via orbital selectors                              Πs ∈ {0,1}        No×N   e
+that specify which orbitals to occupy for each state s. To maintain consistency across structures, we determine the excitation
+pattern (i.e., which occupied orbitals are replaced by which virtual orbitals) at the root structure and apply the same Πs
+to all related structures.  This ensures that corresponding excited states across different geometries represent the same
+electronic transition, enabling smooth interpolation of potential energy surfaces.  However, this requires that molecular
+orbitals maintain consistent ordering and character across structures, which we address in the following paragraphs.
+
+Orbital propagation.We perform a single Hartree-Fock computation at the root structure, obtaining basis functions                Ξroot
+and molecular orbital coefficients Croot. For each non-root structure i with predecessor p(i)     , we propagate the orbitals by
+projecting Cp(i)     onto structure i’s basis Ξi. The projection must preserve orthonormality of the molecular orbitals. Given
+the overlap matrix  ˜Oi of structurei’s basis functions, where(                       ˜Oi)µν =⟨ξ     µ|ξ ν⟩, we compute:
+                                                                                            − 12 .                                                                (51)
+                                                         Ci =C   p(i)     CTp(i)    ˜OiCp(i)
+
+This symmetric orthogonalization ensures CTi  ˜OiCi =I   , preserving orthonormality while staying maximally close to the
+predecessor’s orbitals in a least-squares sense.
+
+                                                                            19
+                            Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+Block-wise overlap maximization.To ensure consistent orbital ordering, we seek an orthogonal transformation                      Qi ∈
+O(N     o)that minimizes the distance between the molecular orbitals of structureiand its predecessorp(i):
+                                                Q∗i  = arg    min         ΞiCiQi −Ξ   p(i)    Cp(i)   2
+                                                              Qi∈O(N        o)                            F .                                                    (52)
+
+Expanding the Frobenius norm and using the orthonormality of molecular orbitals, this simplifies to maximizing tr QTi  ¯Oi
+where  ¯Oi =C    Ti ⟨Ξ  i|Ξ p(i)   ⟩C  p(i)     is the inter-structure molecular orbital overlap matrix.  This is an orthogonal Procrustes
+problem with closed-form solution Q∗i  =  ˆUi ˆV Ti  , where ˆUi ˆΣi ˆV Ti   =  ¯Oi is the singular value decomposition. We then update
+Ci ←C    iQ∗i  to obtain the aligned orbitals.
+However, applying this global alignment over all orbitals can produce spurious matchings. Core orbitals have small spatial
+extent and may have higher overlap with spatially extended higher-energy orbitals from nearby atoms than with their true
+counterparts. To address this, we partition orbitals into groups based on their Hartree-Fock orbital energies ϵk (Szabo &
+Ostlund,2012) and solve independent Procrustes problems within each group.  This block-wise approach is physically
+motivated:  orbitals with degenerate or near-degenerate energies are not uniquely defined and may mix arbitrarily, so
+matching within energy shells respects this gauge freedom.
+We cluster orbitals using kernel density estimation on the orbital energies. Given energies {ϵ  k}Nok=1  , we estimate the densityP
+using a Gaussian kernel ˆf(ϵ) =             1Noh√2π   k exp     − (ϵ−ϵ      k)22h  2with bandwidth h. Local maxima of  ˆf define cluster centroids,
+and each orbital is assigned to its nearest centroid.  This approach has a single hyperparameter (the bandwidth h) and
+naturally adapts to the energy level structure of each system.
+
+K. Carbon dimer comparison
+
+Fig.13provides a side-by-side comparison of C           2 potential energy surfaces computed by Excited Pfaffian, NES (Pfau et al.,
+2024), andSch              ¨atzle et al.(2025), all benchmarked against SHCI reference calculations. To improve readability, we plot
+singlet states (left column) and triplet states (right column) separately, with each row corresponding to a single method. As
+we are interested in relative energies, all SHCI surfaces are normalized to the lowest energy of the respective method.
+Excited Pfaffian closely tracks the SHCI baseline across the full bond-length range from 0.995     ˚A to 1.87     ˚A. The curves
+maintain correct state ordering and accurate energy gaps throughout, including the challenging stretched-geometry regime
+where electron correlation is strongest, with two exceptions.  We observe the singlet state swap between the X1Σ+g  and
+B′1 Σ+g  discussed in the main body, and a state swap between one of the degeneracies inA   1Πu andB       1∆g.
+Analyzing the singlet state tracking in stretched geometries,Sch                   ¨atzle et al.(2025) suggest a state swap between the            X1Σ+g
+and A1Πu for their PES. We offer a different explanation for the lost state tracking. Noting that the X1Σ+g  ofSch    ¨atzle et al.
+(2025) follows a similar trajectory as in the Excited Pfaffian PES, we suggest that the state starts tracking         B′1 Σ+g  at longer
+bond lengths. The B1∆g state is twofold degenerate, but only captured once bySch    ¨atzle et al.(2025). Hence, one of the
+two degenerate A1Πu states drops to the lower B1∆g at bond lengths larger than ∼1.6        ˚A. Both states track the lost X1Σ+g
+surface, leading to the omission of the lowest singlet PES at stretched geometries.  This illustrates the need to compute
+larger numbers of excited states, as made possible by Excited Pfaffian. In the triplet spin sector, the method ofSch   ¨atzle et al.
+(2025) exhibits visible deviations, even in low-lying states, at longer bond lengths (>1.4                  ˚A).
+The single-point energies computed by NES closely match the SHCI baseline in all geometries across both spin sectors.
+Since the NES surfaces were computed in single-point calculations, automatic state tracking is not possible there.
+Notably, Excited Pfaffian achieves this accuracy using 800M samples compared to 32B for NES and 3.2B forSch     ¨atzle et al.
+(2025), representing a∼40×and∼4×reduction in sample cost, respectively.
+
+L. Ethylene state swap
+
+As discussed by Barbattiet al.(Barbatti et al.,2004), the torsion region between                            15◦ and 30◦ involves a crossing between a
+Rydberg state and the valence excited state, resulting in a change of electronic character of the upper state. We hypothesize
+that the Rydberg state’s diffuse excited electron contributes little to the valence electron density, potentially making it appear
+more similar to the ground state in the bonding region than to the valence excited state. As our model favors parameter
+closeness, this similarity may cause the observed swap, illustrated in Fig.14. Increasing the number of modeled states to
+
+                                                                             20
+                              Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 13.Comparison of C     2 potential energy surfaces across methods. Each row shows singlet (left) and triplet (right) states for Excited
+Pfaffian (top), the method ofSch   ¨atzle et al.(2025) (middle), and NES (Pfau et al.,2024) (bottom). For Excited Pfaffian and the method of
+Sch¨atzle et al.(2025), we give the raw energies before correcting state swaps and averaging degeneracies. Raw energies for NES were not
+available. SHCI reference curves are shown in red/orange; method results are in blue. All three methods capture the qualitative PES
+structure, but the method ofSch    ¨atzle et al.(2025) shows increased deviation from the SHCI baseline (Holmes et al.,2017) at stretched
+geometries.
+
+
+
+
+
+
+
+
+
+                                                                                    21
+                           Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+explicitly include the Rydberg state, as well as improved state-tracking methods, may resolve this issue. We leave a detailed
+investigation to future work.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 14.Potential energy surfaces of ethylene along torsion (    τ) and pyramidalization (ϕ). The Excited Pfaffian PES for both slices is
+computed in a single neural wave function. Left: rotation about the C–C bond. Right: pyramidalization showing a state crossing ϕ≈99       ◦
+(inset).
+
+M. Additional Bhattacharyya coefficients
+In addition to the unsigned wave function overlaps given in Fig.8, we provide the Bhattacharyya coefficients of the
+second-row atoms in Fig.15, and all 33 states of beryllium in Fig.16.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  Figure 15.Spatial overlap of atomic excited states measured as Bhattacharyya coefficients⟨|Ψ                   s|||Ψ   t|⟩.
+
+N. Empirical step-time comparison
+We compare per-step training cost against NES (Pfau et al.,2024) andSzab                     ´o et al.(2024) through direct wall-clock
+measurements on Nvidia A100 GPUs.  Fig.17visualizes the resulting scaling with          Ns  on Be and C2, where Excited
+Pfaffian stays near-flat while NES grows roughly quadratically. Tab.2consolidates total training sample counts and shows
+that Excited Pfaffian uses 2–80×     fewer samples than each baseline. Tables3and4report per-step training times for the
+second-row atoms and the 12 molecules of Fig.4, while Tab.5covers the C             2 PES (Fig.5) and the ethylene PES (Fig.7).
+For Adam and KFAC, step times are measured at 1000 walkers and scaled to 4000 walkers.  SPRING step times are
+measured directly at 4000 walkers. Since Excited Pfaffian trains a single model across all structures, we compare against
+the cumulative step time of per-structure baseline training, yielding7–208×speedups depending on system and optimizer.
+The SPRING preconditioner contributes an outsized overhead on small systems (16.8×over Adam on atoms) that shrinks
+
+                                                                            22
+                             Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   Figure 16.Spatial overlap of 33 states of beryllium measured as Bhattacharyya coefficients⟨|Ψ                   s|||Ψ   t|⟩.
+
+
+with system size (2.7×      on ethylene), as the cost of the rest of the VMC optimization grows faster than the cost of the
+preconditioner.
+
+ Table 2.Overview of total sample counts used in training in different experiments across works and improvement range for this work.
+
+                    Method                                     Atoms              Molecules            C2 PES         Ethylene PES
+                    Pfau et al. (2024)                       64B                     48B                    32B                  27.6B
+                    Szabo et al. (2024)                     16B                     12B                     8B                    9.2B
+                    Sch¨atzle et al. (2025)                   -                           -                      3.2B                   1.6B
+                    Ours                                          800M                  800M                 800M                 800M
+                    Sample reduction range20–80×fewer15–60×fewer4–40×fewer2–30×fewer
+
+
+N.1. NES at equal compute
+The per-step measurements above quantify the speed advantage.  We now verify that this advantage translates into a
+tractability gap. We allocate the same total compute we used for the 12-state C2 PES (10 geometries, 200k steps, ∼11 s   /step)
+to NES (Pfau et al.,2024), which trains one model per geometry. At NES’s per-step cost of           ∼50 s   , this budget supports
+only ∼4.5k optimization steps per geometry, far below the 200k steps NES typically requires. NES additionally required
+100k pretraining steps to avoid NaNs at initialization, while 1k pretraining steps sufficed for our method, so this comparison
+favors NES by excluding pretraining from the budget.Pfau et al.(2024) only train 8 states (ground state plus S1–S7) on C                         2.
+We trained NES for 12 states to match our setup but found the optimization to be very unstable. Tab.6reports the resulting
+excitation energies on C2 at 0.995     ˚A. At full convergence, NES reproduces our ground-state excitation to within 10−4    eV,
+cross-validating both methods on this benchmark. At the equal-compute budget, however, NES misses the ground-state
+excitation by ∼0.95 eV       and overestimates higher states by up to ∼9.6 eV      .  The per-step speedup therefore translates
+directly into accuracy at fixed compute, and NES cannot reach competitive energies within our budget.
+
+O. Experimental setup
+O.1. Hyperparameters
+The default hyperparameters used in all experiments are listed in Tab.7.  Most hyperparameters are directly taken from
+previous works (Gao & G  ¨unnemann,2024;Szab                           ´o et al.,2024). For the atomic systems in Fig.4, we used 16 orbitals per
+nucleus and disabled the snap spin penalty. Otherwise, the snap spin penalty was used in every experiment, except for the
+
+                                                                                23
+                               Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 17.Per-step training time as a function of the number of states     Ns on Be (left; 1, 10, 33 states) and C2 (right; 1, 8, 12 states).
+Top: time normalized to the single-state-per-structure cost. Bottom: absolute time per step. Excited Pfaffian (blue) and NES (Pfau et al.,
+2024) (orange) are compared with Adam (solid) and their native second-order preconditioner (dashed; SPRING for ours, KFAC for NES).
+For C2, filled markers show the per-structure cost. Hollow markers show the cumulative cost across the 10 dissociation geometries (one
+shared model for Excited Pfaffian, one model per geometry for NES). Excited Pfaffian maintains near-flat scaling, while NES grows
+roughly quadratically withN        s.
+
+
+
+Table 3.Measured training step time in s for 10 states of atomic systems. Measurements for Adam and KFAC are taken for 1000 walkers
+and up-scaled to 4000 walkers. Measurements for SPRING are directly taken for 4000 walkers.
+
+         Method                      Optimizer      Li        Be        B         C         N         O         F        Ne       P          ΣΣour
+
+         Pfau et al. (2024)       Adam              5.4       6.7       9.7      11.8     14.7     16.6     22.3     25.6     112.7113×KFAC             5.8       7.1      10.0     12.2     15.2     17.1     22.8     26.2     116.47×
+
+         Szabo et al. (2024)     Adam              3.3       3.8       4.3       5.8       7.0       7.6       9.3      10.1       51.251×KFAC            11.4     12.4     13.2     13.7     15.4     16.4     18.2     18.8     119.57×
+
+         This Work                  Adam               -          -          -          -          -          -          -          -          1.0   1×SPRING           -          -          -          -          -          -          -          -        16.8  1×
+
+
+
+
+
+Table 4.Measured training step time in s for 5 states of molecular systems. Measurements for Adam and KFAC are taken for 1000 walkers
+and up-scaled to 4000 walkers. Measurements for SPRING are directly taken for 4000 walkers.
+
+  Method        Optimizer  BH  HCl  H2O  H2S   BF    CO   C2H4   CH2O  CH2S  HNO  HCF  H2CSi     P      ΣΣour
+  Pfau et al.     Adam           3.5    4.9     7.3     4.8   12.3  12.3    14.8      14.7      12.4     14.6    14.6      9.4     125.432×
+  (2024)          KFAC          3.9    5.2     7.7     5.2   12.8  12.8    15.4      15.4      13.0     15.2    15.2      9.9     131.79×
+  Szabo et al.  Adam           3.4   15.2    5.6    15.2   9.2    9.4     10.6      10.4      24.8     10.4    11.2     21.2    146.637×
+  (2024)          KFAC          7.4   19.6    9.4    19.6  13.2  13.2    15.2      15.0      29.8     15.0    15.0     25.6    198.014×
+
+  This Work    Adam            -        -         -         -        -        -         -           -            -           -          -           -          3.91×SPRING        -        -         -         -        -        -         -           -            -           -          -           -        14.01×
+
+
+
+
+                                                                                       24
+                            Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+Table 5.Measured training step time in s for the PES reported in the main body. Measurements for Adam and KFAC are taken for 1000
+walkers and up-scaled to 4000 walkers. Measurements for SPRING are directly taken for 4000 walkers.
+
+                                                                                 C2                                   Ethylene
+                      Method                    Optimizer  Step            Total 10          total              Total 23          total
+                                                                  time    structures       our total   Steptimestructures       our total
+
+                      Pfau et al. (2024)     Adam           49.0           490.4208×  3.9             89.2 24×KFAC          49.9           499.246×  4.2             97.5   9×
+
+                      Szabo et al. (2024)  Adam           14.0           140.059×  5.5           125.633×KFAC          24.8           248.023×  7.4           170.216×
+
+                      This Work                Adam                -             2.4    1×      -             3.8    1×SPRING            -           11.0   1×      -           10.4   1×
+
+
+Table 6.Excitation energies (eV) for C   2 at a bond distance of 0.995     ˚A. “NES (paper)” lists the values reported inPfau et al.(2024), who
+only report energies averaged over degenerate states (entries repeated within each degeneracy here). “NES (4.5k)” is NES retrained from
+scratch at the per-geometry compute budget equivalent to our 12-state, 10-geometry C2 PES.
+
+       Method             S1         S2         S3         S4         S5         S6         S7          S8           S9          S10         S11
+       Ours               0.4294  2.0161  2.0438  3.0738  3.1192  3.2308  3.2352   4.3443    4.7957    5.3375    5.3634
+       NES (paper)  0.4293  2.0369  2.0369  3.1051  3.1051  3.2752  3.2752       —           —           —           —
+       NES (4.5k)    1.3817  3.5633  3.7173  4.4938  4.7929  5.1994  6.6696  12.7497  14.1597  14.6219  15.0104
+
+
+carbon dimer PES and the ethylene PES, where the spin states were enforced explicitly with the S+ penalty. Pretraining was
+only necessary for the carbon dimer PES; all other experiments were run without pretraining.
+
+O.2. Source code
+Our implementation is based on the source code of Neural Pfaffians (Gao & G  ¨unnemann,2024). It is publicly available on
+GitHub1.
+
+O.3. Computational details
+We report the total compute times for all experiments in Tab.8. Most experiments were run on 1-4 Nvidia A100 or Nvidia
+H100 accelerators, by parallelizing across the sample dimension. We convert H100 GPU-hours to A100 GPU-hours with a
+factor of 2.
+The VMC code is implemented in JAX (Bradbury et al.,2018) and neural networks are implemented using Flax (Heek et al.,
+2024). HF pretraining targets are computed using PySCF (Sun et al.,2018). For gradient updates, we employ the optimizer
+utilities provided by optax (DeepMind et al.,2020). For second-order optimization, i.e., gradient preconditioning, we use
+SPRING (Goldshlager et al.,2024). Preconditioning auxiliary gradients, such as the             S+ gradients, is not trivially supported
+by SPRING. FollowingScherbela et al.(2025), we split the gradient into a component inside the span of the Jacobian used
+in preconditioning, and one orthogonal component. Only the in-span component is preconditioned.
+
+P. Numerical results
+
+In tables9to13we provide numerical results for the experimental results presented in Sec.5.
+
+
+
+
+
+
+
+
+
+
+
+
+
+    1https://github.com/n-gao/neural-pfaffian
+
+                                                                               25
+   Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+
+
+
+
+
+                              Table 7.Hyperparameters used in all experiments.
+
+Category     Parameter                                                                 Value
+Wave Function Architecture
+                    Embedding network                                                   Moon
+                    Hidden dimension                                                        256
+                    Number of layers                                                           4
+                    Envelopes per nucleus                                                    8
+                    Orbitals per nucleus and determinant                            8
+                    Number of determinants                                               16
+                    Jastrow factor                                                 MLP[128,32]+ cusp
+Meta Network
+                    Message dimension                                                       32
+                    Embedding dimension                                                  64
+                    Number of layers                                                           3
+                    Radial basis functions                                                    6
+VMC Optimization
+                    Training epochs                                                        200,000
+                    MCMC steps per epoch                                                20
+                    Target acceptance rate                                                0.525
+                    Preconditioner                                                          SPRING
+                    Damping                                                10             −3
+                    Learning rate schedule                                                       0.021+    t
+                                                                                                          10000
+                    Gradient norm clipping                                              0.032
+                    Local energy clipping                     5×(95th percentile)
+Overlap Penalty
+                    Penalty scale                                                                 4.0
+                    Clipping                                       5×(95th percentile)
+Spin Penalty
+                    S+ Penalty scale                                                           8.0      t−100
+                    Snap Penalty Scale                     0.1 sigmoid                                        ,000
+                                                                                                         10,000/2 log(9.0)
+                    Clipping                                       5×(95th percentile)
+                    Masking                                      10×(95th percentile)
+Pretraining
+                    Epochs                                                                        2,000
+                    Basis set                                                               aug-cc-pVTZ
+                    Optimizer                                                                  LAMB
+                    Sampling distribution                                         Neural network
+                    MCMC steps per epoch                                                20
+                    Learning rate schedule                                                      0.0011+   t
+                                                                                                          1000
+Evaluation
+                    Samples per energy                                            10    6
+                    MCMC steps                                                                100
+
+
+
+
+
+
+                                                               26
+                            Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+
+
+
+                      Table 8.Total compute times. Nvidia H100 GPU-hours correspond to 2 Nvidia A100 GPU-hours.
+
+                                             Experiment                                   A100 GPU-hours
+                                             Atomic excitations (Fig.4, left)         640
+                                             Molecules (Fig.4, right)                 792
+                                             Carbon dimer PES (Fig.5)                    600
+                                             Ethylene PES (Fig.7)                           640
+                                             33 states of Be (Fig.6)                         231
+
+
+
+
+
+
+
+
+Table 9.Energies and excitation energies of the molecules in Fig.4(right) obtained from the jointly trained Excited Pfaffian in atomic
+units.
+
+                       Molecule     Energy (Ha) ∆E(Ha)                              Molecule     Energy (Ha) ∆E(Ha)
+                       BH        -25.28897(8)       -                               C2H4           -78.5842(2)         -
+                                       -25.24029(8)       0.04868(12)                               -78.4171(2)         0.1671(3)
+                                       -25.24021(8)       0.04876(12)                               -78.3136(2)         0.2706(3)
+                                       -25.18341(9)       0.10555(12)                               -78.3134(2)         0.2708(3)
+                                       -25.18336(9)       0.10561(12)                               -78.2867(2)         0.2975(3)
+                       HCl      -15.5959(4)         -                               CH2O      -114.5035(3)       -
+                                       -15.32415(18)     0.2717(4)                                  -114.3709(3)       0.1326(4)
+                                       -15.3239(2)         0.2719(4)                                -114.3565(3)       0.1470(4)
+                                       -15.3056(2)         0.2903(4)                                -114.2801(3)       0.2234(4)
+                                       -15.3054(2)         0.2905(5)                                -114.2360(4)       0.2675(5)
+                       H2O         -76.4366(2)         -                            CH2S        -49.45841(19)     -
+                                       -76.1663(2)         0.2703(3)                                -49.38641(19)     0.0720(3)
+                                       -76.1529(3)         0.2837(3)                                -49.37654(19)     0.0819(3)
+                                       -76.0909(2)         0.3458(3)                                -49.3326(2)         0.1258(3)
+                                       -76.0903(2)         0.3463(3)                                -49.2406(2)         0.2178(3)
+                       H2S           -11.38833(11)     -                            HNO  -130.4770(4)       -
+                                       -11.17652(11)     0.21181(15)                                -130.4433(4)       0.0337(5)
+                                       -11.17016(14)     0.21817(18)                                -130.4132(4)       0.0638(5)
+                                       -11.16364(12)     0.22469(16)                                -130.3178(3)       0.1591(5)
+                                       -11.15668(15)     0.23165(18)                                -130.2705(4)       0.2065(5)
+                       BF         -124.6739(3)       -                              HCF   -138.4130(3)       -
+                                       -124.5397(3)       0.1343(5)                                 -138.3780(4)       0.0350(5)
+                                       -124.5396(3)       0.1343(5)                                 -138.3209(4)       0.0921(5)
+                                       -124.4385(4)       0.2354(5)                                 -138.2015(4)       0.2114(5)
+                                       -124.4384(3)       0.2355(5)                                 -138.1613(4)       0.2517(5)
+                       CO        -113.3208(3)       -                               H2CSi   -43.10937(20)     -
+                                       -113.0885(3)       0.2323(5)                                 -43.03432(19)     0.0751(3)
+                                       -113.0881(3)       0.2327(4)                                 -43.03430(18)     0.0751(3)
+                                       -113.0060(3)       0.3148(4)                                 -43.01645(19)     0.0929(3)
+                                       -113.0044(3)       0.3164(4)                                 -43.00067(19)     0.1087(3)
+
+
+
+
+
+                                                                              27
+                            Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+
+
+
+
+
+
+
+Table 10.Energies and excitation energies of the atoms in Fig.4(left) obtained from the jointly trained Excited Pfaffian in atomic units.
+
+                            Atom     Energy (Ha) ∆E(Ha)                             Atom     Energy (Ha) ∆E(Ha)
+                            Li          -7.47807(3)         -                       N           -54.58886(14)     -
+                                       -7.41013(4)         0.06794(5)                          -54.50060(14)     0.0883(2)
+                                       -7.41005(4)         0.06802(5)                          -54.50056(15)     0.0883(2)
+                                       -7.40994(4)         0.06813(5)                          -54.50055(14)     0.0883(2)
+                                       -7.35424(3)         0.12382(4)                          -54.50033(15)     0.0885(2)
+                                       -7.33542(9)         0.14264(9)                          -54.50033(15)     0.0885(2)
+                                       -7.32980(18)       0.14827(18)                          -54.45705(15)     0.1318(2)
+                                       -7.3285(3)           0.1496(3)                          -54.45691(16)     0.1320(2)
+                                       -7.32391(19)       0.15416(19)                          -54.45680(15)     0.1321(2)
+                                       -7.3150(4)           0.1631(4)                          -54.20615(17)     0.3827(2)
+                            Be         -14.66733(5)       -                         O           -75.0661(2)         -
+                                       -14.56718(4)       0.10015(6)                           -75.0660(2)         0.0001(3)
+                                       -14.56712(4)       0.10021(6)                           -75.0659(2)         0.0001(3)
+                                       -14.56701(4)       0.10031(6)                           -74.9940(2)         0.0721(3)
+                                       -14.47336(5)       0.19397(7)                           -74.9939(2)         0.0722(3)
+                                       -14.47327(5)       0.19405(7)                           -74.9939(2)         0.0722(3)
+                                       -14.47322(5)       0.19411(7)                           -74.9935(2)         0.0725(3)
+                                       -14.42975(5)       0.23758(7)                           -74.9924(2)         0.0737(3)
+                                       -14.41709(5)       0.25024(7)                           -74.9127(2)         0.1533(3)
+                                       -14.40813(6)       0.25920(8)                           -74.7273(3)         0.3388(3)
+                            B           -24.65374(7)       -                        F            -99.7296(3)         -
+                                       -24.65372(9)       0.00002(11)                          -99.7281(3)         0.0016(4)
+                                       -24.65362(7)       0.00012(9)                           -99.7277(3)         0.0019(4)
+                                       -24.52204(6)       0.13171(9)                           -99.2631(3)         0.4665(4)
+                                       -24.52203(7)       0.13171(9)                           -99.2630(3)         0.4667(4)
+                                       -24.52197(6)       0.13177(9)                           -99.2628(3)         0.4668(4)
+                                       -24.47116(14)     0.18258(15)                           -99.2531(3)         0.4765(4)
+                                       -24.43550(8)       0.21825(11)                          -99.2530(3)         0.4767(4)
+                                       -24.43539(8)       0.21835(11)                          -99.2526(3)         0.4770(4)
+                                       -24.43508(9)       0.21866(11)                          -99.1956(3)         0.5341(4)
+                            C           -37.84474(9)       -                        Ne         -128.9337(3)       -
+                                       -37.84462(9)       0.00012(13)                          -128.3188(3)       0.6149(5)
+                                       -37.84448(9)       0.00026(13)                          -128.3186(3)       0.6151(5)
+                                       -37.79831(10)     0.04643(13)                           -128.3186(4)       0.6151(5)
+                                       -37.79826(10)     0.04647(14)                           -128.3185(3)       0.6152(5)
+                                       -37.79820(10)     0.04654(14)                           -128.3183(3)       0.6154(5)
+                                       -37.79799(9)       0.04674(13)                          -128.3183(3)       0.6154(5)
+                                       -37.79790(10)     0.04684(13)                           -128.2511(4)       0.6826(5)
+                                       -37.74588(10)     0.09885(14)                           -128.2488(3)       0.6849(5)
+                                       -37.69152(9)       0.15322(13)                          -128.2479(3)       0.6858(5)
+
+
+
+
+
+
+
+
+                                                                              28
+                            Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+
+
+Table 11.Absolute energies of the carbon dimer upon dissociation (Fig.5) obtained from a jointly trained Excited Pfaffian. We report raw
+energies as tracked by our generalized wave function, before averaging over degenerate states and correcting for state swaps. Energies are
+in Hartree, bond lengths in Angstrom.
+
+       lengthBond            X1Σ+g              A1Πu+               A1Πu−                B′1 Σ+g              B1∆(2)g               B1∆(1)g
+
+       0.9952       -75.77445(12)     -75.66149(12)     -75.65982(12)     -75.59821(14)     -75.57830(12)     -75.57735(12)
+       1.1204       -75.89580(11)     -75.82222(11)     -75.82083(11)     -75.76439(11)     -75.76767(11)     -75.76991(11)
+       1.1823       -75.91752(10)     -75.85855(10)     -75.85629(10)     -75.80813(11)     -75.81718(10)     -75.82005(10)
+       1.2431       -75.92326(10)     -75.87808(10)     -75.87552(10)     -75.83539(10)     -75.84666(10)     -75.84959(10)
+       1.3064       -75.91801(10)     -75.88474(10)     -75.88113(10)     -75.84960(10)     -75.86225(10)     -75.86555(10)
+       1.3685       -75.90679(10)     -75.88355(10)     -75.88037(10)     -75.85471(10)     -75.86803(10)     -75.87119(10)
+       1.4933       -75.87089(10)     -75.86346(10)     -75.86208(10)     -75.84603(10)     -75.86028(10)     -75.86090(10)
+       1.6165       -75.83451(10)     -75.83331(10)     -75.83790(10)     -75.82297(10)     -75.84134(10)     -75.83634(10)
+       1.7430       -75.79021(11)     -75.80243(10)     -75.81338(10)     -75.80548(10)     -75.81516(10)     -75.80486(11)
+       1.8651       -75.75787(11)     -75.77323(11)     -75.78945(11)     -75.78393(11)     -75.79125(11)     -75.77600(11)
+        Bond
+       length                  c3Σ+u               a3Πu−                a3Πu+                d3Πg−                d3Πg+                  b3Σ−g
+      0.9952       -75.75867(11)     -75.70036(11)     -75.69934(11)     -75.65572(12)     -75.65556(12)     -75.61480(11)
+      1.1204       -75.86615(11)     -75.85982(10)     -75.86010(10)     -75.79421(11)     -75.79491(11)     -75.80112(10)
+      1.1823       -75.88022(10)     -75.89555(10)     -75.89619(10)     -75.82135(11)     -75.82175(11)     -75.84883(10)
+      1.2431       -75.87916(10)     -75.91446(10)     -75.91454(10)     -75.83181(10)     -75.83160(11)     -75.87619(10)
+      1.3064       -75.86714(10)     -75.92032(10)     -75.91953(10)     -75.83021(10)     -75.83006(10)     -75.89065(10)
+      1.3685       -75.84896(11)       -75.91663(9)     -75.91721(10)     -75.82018(10)     -75.82144(11)     -75.89423(10)
+      1.4933       -75.80489(11)       -75.89452(9)     -75.89491(10)     -75.79243(11)     -75.79292(11)       -75.88361(9)
+      1.6165       -75.76506(13)     -75.86480(10)     -75.86443(10)     -75.76466(12)     -75.76485(12)     -75.86101(10)
+      1.7430       -75.73960(14)     -75.83002(10)     -75.83058(10)     -75.74462(13)     -75.74419(14)     -75.83308(10)
+      1.8651       -75.73037(14)     -75.79987(11)     -75.79916(11)     -75.72998(14)     -75.73083(15)     -75.80611(11)
+
+
+
+
+
+Table 12.Absolute energies of the two lowest singlet states of ethylene (Fig.7) under torsion and pyramidalization. A single Excited
+Pfaffian is trained jointly across both PES. Energies are in Hartree, angles in degrees.
+
+                  (a)Ethylene PES under torsionτ                                               (b)Ethylene PES under pyramidalizationϕ
+
+       τ(degrees)     State 0                 State 1                                     ϕ(degrees)     State 0                 State 1
+                  0.0     -78.58667(13)     -78.31829(14)                                            0.0     -78.38574(14)     -78.47418(12)
+                15.0     -78.58190(12)     -78.31864(14)                                           20.0     -78.38798(13)     -78.47309(12)
+                30.0     -78.33172(14)     -78.56958(12)                                           40.0     -78.39538(12)     -78.46763(12)
+                45.0     -78.35356(14)     -78.54934(12)                                           60.0     -78.40160(12)     -78.45390(12)
+                60.0     -78.36872(14)     -78.52137(12)                                           70.0     -78.40232(12)     -78.44202(12)
+                70.0     -78.37631(14)     -78.50073(12)                                           80.0     -78.40123(12)     -78.42718(12)
+                80.0     -78.37996(14)     -78.48113(12)                                           90.0     -78.39607(12)     -78.40817(12)
+                85.0     -78.38131(14)     -78.47387(12)                                           95.0     -78.39202(12)     -78.39694(12)
+                90.0     -78.38162(14)     -78.47169(12)                                           97.5     -78.39010(12)     -78.39132(12)
+                                                                                                 100.0     -78.38749(12)     -78.38542(12)
+                                                                                                 102.5     -78.38470(12)     -78.37920(12)
+                                                                                                 105.0     -78.38183(12)     -78.37284(12)
+                                                                                                 110.0     -78.37459(12)     -78.36005(12)
+                                                                                                 120.0     -78.35782(13)     -78.33403(13)
+
+
+
+                                                                             29
+                              Excited Pfaffians: Generalized Neural Wave Functions Across Structure and State
+
+
+
+
+
+
+
+
+
+
+
+
+Table 13.Absolute and excitation energies of the 33 states of beryllium (Fig.6). Reference energies from NIST             ∆E    exp (Sansonetti,2003)
+and errors∆∆E                  exp are also given. Energies are given in atomic units.
+
+                                     State     Energy (Ha)∆E(Ha)∆E                           exp (Ha)∆∆E                exp (Ha)
+                                          0     -14.66719(3)     -                                       -                          -
+                                          1     -14.56714(6)     0.10005(7)         0.100149             0.000100
+                                          2     -14.56707(3)     0.10012(4)         0.100149             0.000028
+                                          3     -14.56706(3)     0.10013(4)         0.100149             0.000020
+                                          4     -14.47333(3)     0.19386(4)         0.193942             0.000083
+                                          5     -14.47327(3)     0.19392(4)         0.193942             0.000020
+                                          6     -14.47300(3)     0.19419(4)         0.193942             0.000248
+                                          7     -14.43005(3)     0.23714(4)         0.237298             0.000155
+                                          8     -14.41846(3)     0.24873(4)         0.249128             0.000394
+                                          9     -14.40822(3)     0.25897(4)         0.259175             0.000205
+                                         10     -14.40822(3)     0.25897(4)         0.259175             0.000203
+                                         11     -14.40819(3)     0.25900(4)         0.259175             0.000175
+                                         12     -14.40818(3)     0.25901(4)         0.259175             0.000168
+                                         13     -14.40815(3)     0.25905(4)         0.259175             0.000130
+                                         14     -14.39924(3)     0.26795(4)         0.268403             0.000453
+                                         15     -14.39914(3)     0.26805(4)         0.268403             0.000352
+                                         16     -14.39907(4)     0.26812(5)         0.268403             0.000287
+                                         17     -14.39549(3)     0.27170(4)         0.271995             0.000293
+                                         18     -14.39547(2)     0.27172(4)         0.271995             0.000276
+                                         19     -14.39546(3)     0.27173(4)         0.271995             0.000267
+                                         20     -14.39330(3)     0.27390(4)         0.274234             0.000339
+                                         21     -14.39329(3)     0.27390(4)         0.274234             0.000332
+                                         22     -14.39323(4)     0.27396(5)         0.274234             0.000273
+                                         23     -14.38462(3)     0.28257(4)         0.282738             0.000170
+                                         24     -14.38462(3)     0.28257(4)         0.282738             0.000164
+                                         25     -14.38461(3)     0.28258(4)         0.282738             0.000159
+                                         26     -14.38457(3)     0.28262(4)         0.282738             0.000121
+                                         27     -14.38457(3)     0.28262(4)         0.282738             0.000115
+                                         28     -14.37392(3)     0.29327(4)         0.293557             0.000284
+                                         29     -14.37390(3)     0.29329(4)         0.293557             0.000265
+                                         30     -14.37388(3)     0.29331(4)         0.293557             0.000244
+                                         31     -14.37382(3)     0.29337(4)         0.293557             0.000183
+                                         32     -14.37377(4)     0.29343(5)         0.293557             0.000132
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                   30

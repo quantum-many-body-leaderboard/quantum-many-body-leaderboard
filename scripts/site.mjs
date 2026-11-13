@@ -17,7 +17,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
-import { perSiteDivisor, perSiteLabel, boundLabel, stochasticExact, publishedMethod, methodLabel, methodDetail, BEST_CLASSES, H_MODELS, classEligible } from "./units.mjs";
+import { perSiteDivisor, perSiteLabel, boundLabel, stochasticExact, publishedMethod, methodLabel, methodDetail, BEST_CLASSES, H_MODELS, MOL_MODELS, classEligible } from "./units.mjs";
 import { collectTDL, tdlLabel } from "./tdl.mjs";
 import { collect, classBest, shownBest, bestTagOf, lowestOf, noRecordKey, summarize, rowId, sameExactRows } from "./summary.mjs";
 import { THEMES, W } from "./chart.mjs";
@@ -771,6 +771,8 @@ const FIG_SCRIPT = `<script>
 // [energy per site, method, kind, can be best, flagged, row id], with the row's card; written
 // to picker/<model>.json and fetched when the reader opens that Hamiltonian.
 const KIND = { variational: 0, projected: 1, extrapolated: 2, approximate: 2, exact: 3 };
+// A diatomic molecule's bond length in bohr, from its id (RULES.md 13.1, R<R>); its picker axis.
+const diatomicR = i => i.model === "Molecule" ? (i.instance_id.match(/^Molecule\/[A-Za-z0-9]+-R([\d.]+)_/)?.[1] ?? null) : null;
 const PICKS = Map.groupBy(pickerFacets(instances), p => p.inst.model);
 // Built on first use: rowCard needs helpers defined further down.
 let pickerCache = null;
@@ -786,7 +788,7 @@ const picker = () => pickerCache ??= MODELS.filter(([m]) => PICKS.has(m)).map(([
   const inst = picks.map(({ inst: i, tab, dims: d }) => {
     const div = perSiteDivisor(i) ?? 1, b = classBest(i);
     return {
-      t: tabs.findIndex(x => x.label === tab), N: i.n_sites, o: +isOpen(i), d: Object.fromEntries(d.map(([k, l, o]) => [k, [l, o]])),
+      t: tabs.findIndex(x => x.label === tab), N: i.n_sites, ...(diatomicR(i) != null ? { x: diatomicR(i) } : {}), o: +isOpen(i), d: Object.fromEntries(d.map(([k, l, o]) => [k, [l, o]])),
       r: drawnRows(i).map(r => {
         const id = rowId(i, r), flagged = !!r.defect || b.below.includes(r);
         cards[id] = rowCard(r, i);
@@ -796,7 +798,7 @@ const picker = () => pickerCache ??= MODELS.filter(([m]) => PICKS.has(m)).map(([
   });
   const slug = pickerSlug(model);
   return {
-    file: { model, name, unit: perSiteLabel(picks[0].inst), tabs: tabs.map(x => ({ ...x, glyph: latticeGlyph(model, x.label) })), dims, inst, cards },
+    file: { model, name, unit: perSiteLabel(picks[0].inst), ...(MOL_MODELS.has(model) ? { xLabel: "results at the setting chosen above, highest energy first" } : {}), tabs: tabs.map(x => ({ ...x, glyph: latticeGlyph(model, x.label) })), dims, inst, cards },
     info: { model, slug, name, about: about(model), formula: formula(model), formulaBlock: formula(model, true), glyph: modelGlyph(model), glyphBig: modelGlyph(model, "pk-glyph pk-big"),
       energies: picks.reduce((a, p) => a + p.inst.rows.length, 0), drawn,
       open: picks.filter(p => isOpen(p.inst)).length, tabs: tabs.map(x => ({ ...x, glyph: latticeGlyph(model, x.label) })) },

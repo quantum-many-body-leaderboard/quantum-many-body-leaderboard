@@ -1,0 +1,65 @@
+{
+  "model": "Molecule",
+  "lattice": "molecule",
+  "n_sites": 2,
+  "boundary": "O",
+  "n_electrons": 8,
+  "params": {
+    "formula": "FH",
+    "name": "HF",
+    "charge": 0,
+    "N_up": 4,
+    "N_dn": 4,
+    "basis": "none",
+    "variant": "ccECP (Annaberdiyev et al.), from PySCF; on F only, H all-electron",
+    "core_electrons": 2,
+    "geometry": [
+      {
+        "el": "F",
+        "r": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "el": "H",
+        "r": [
+          0,
+          0,
+          1.7325009110012486
+        ]
+      }
+    ],
+    "geometry_source": "CCCBDB Release 22 experimental geometry for HF (Hydrogen fluoride) (cccbdb.nist.gov/expgeom2x.asp, formula HF; the paper cites the CCCBDB experimental dataset, ref. 40), Cartesian coordinates in ångström: F (0.0000, 0.0000, 0.0000); H (0.0000, 0.0000, 0.9168)"
+  },
+  "instance_id": "Molecule/FH-R1.7325_q0_s0_none_ccecp",
+  "rows": [
+    {
+      "energy": -24.92198,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "FermiNet",
+      "method_detail": "\"modified FermiNet\" (a recent FermiNet version, Sec. III), isotropic envelope, training iterations as in Appendix A, ECP ccECP on F",
+      "method_as_published": "FermiNet [VMC, \"modified FermiNet\" (a recent FermiNet version, Sec. III), isotropic envelope, training iterations as in Appendix A, ECP ccECP on F]",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "M. Wang, Y. Zhou & H. Wang, Performance assessment of the effective core potentials under the fermionic neural network: First and second row elements, J. Chem. Phys. 160, 204109 (2024), arXiv:2403.08287, doi:10.1063/5.0207853",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-12",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-12",
+        "method": "source text of arXiv:2403.08287 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading",
+        "reported_as": "−24.921 98 (Table XI, HF, column ccECP)",
+        "note": "J. Chem. Phys. 160, 204109 Table XI (Appendix F), journal text line 1162; same digits in the arXiv text | Hartree, total energy with ccECP on F (2 core electrons, 8 electrons treated); geometry from CCCBDB as cited (ruling of 2026-11-12); closed-shell singlet; no error bar printed",
+        "secondary_of": null
+      }
+    }
+  ]
+}
