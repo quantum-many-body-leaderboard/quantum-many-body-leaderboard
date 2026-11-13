@@ -1788,6 +1788,8 @@ td.record .num { font-weight: 600; color: var(--record); }
 .tag { white-space: nowrap; }
 .tag.tie { color: var(--muted); }
 .leaderboard td.kind { font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
+/* On a phone the instance name and the value kind wrap in narrower columns, so the energy is in view without scrolling the table. */
+@media (max-width: 640px) { .leaderboard th[scope="row"] { min-width: 0; width: 7rem; } .leaderboard td.kind { white-space: normal; width: 4.5rem; padding-left: 0.3rem; padding-right: 0.3rem; } .leaderboard td.record .num { font-size: 0.85em; } }
 .badges { margin-top: 0.3rem; display: flex; flex-wrap: wrap; gap: 0.3rem; }
 .badge {
   font-size: 0.7rem; color: var(--ink2); border: 1px solid var(--grid);
