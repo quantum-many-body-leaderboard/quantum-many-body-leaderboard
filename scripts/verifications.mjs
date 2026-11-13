@@ -55,13 +55,14 @@ export const VERIFICATIONS = [
     location: "checks/hubbard-u-labels/", reported_as: recomputed, conversion: "none",
     note: "Reproduced at the grid U the instance now carries, not at the U of VarBench's name (relabels.mjs).",
     source_entry: "B2-baseline-hubbard and E1-exact-recompute (qmbl-verify 2026-09-16)" })),
-  // The row stays on the instance named for U = 7.74264 since 2026-10-02 (relabels.mjs; ruling E6).
-  { match: { instance: "Hubbard/square_16_P_4_7.74264", method: "DMRG (MaxBondDim ~3200)", energy: -16.5091541 },
+  // The row sat on the instance named for U = 7.74264 from 2026-10-02 (ruling E6) until the merge of
+  // 2026-11-13 (relabels.mjs).
+  { match: { instance: "Hubbard/square_16_P_4_7.74263683", method: "DMRG (MaxBondDim ~3200)", energy: -16.5091541 },
     checked_on: "2026-09-16", scope: "config",
     method: "run script varbench/methods programs/dmrg_itensors_hubbard/square_16_P_4_7.74264.jl read in full",
     location: "line setting U", reported_as: "U = 10", conversion: "none",
-    note: "The linked script is a copy of the U = 10 file, so it did not produce this number. The energy sits 1.1e-7 above the ground state at U = 7.74264 and 7.3e-7 above the one at 7.74263683: a valid bound at either. The pass of 2026-09-16 kept it with the instance at 7.74263683; the pass of 2026-09-29 (VB2#46) placed it at 7.74264, where the sibling 5 + 5 script runs and where its variance-to-error ratio, 1.16, fits the 4 + 4 DMRG series (0.18 at 7.74263683), so it stays on the instance named for U = 7.74264 (ruling E6, 2026-10-02).",
-    source_entry: "B2-baseline-hubbard (qmbl-verify 2026-09-16); VB2-varbench-code-hubbard#46 (qmbl-verify 2026-09-29); ruling E6, 2026-10-02" },
+    note: "The linked script is a copy of the U = 10 file, so it did not produce this number. The energy sits 1.1e-7 above the ground state at U = 7.74264 and 7.3e-7 above the one at 7.74263683: a valid bound at either. The pass of 2026-09-16 kept it with the instance at 7.74263683; the pass of 2026-09-29 (VB2#46) placed it at 7.74264, where the sibling 5 + 5 script runs and where its variance-to-error ratio, 1.16, fits the 4 + 4 DMRG series (0.18 at 7.74263683), so it stayed on the instance named for U = 7.74264 (ruling E6, 2026-10-02). Since 2026-11-13 the two instances are one: the couplings differ by 3.2e-6 and the row is a valid bound at either (ruled 2026-11-13).",
+    source_entry: "B2-baseline-hubbard (qmbl-verify 2026-09-16); VB2-varbench-code-hubbard#46 (qmbl-verify 2026-09-29); ruling E6, 2026-10-02; merge ruled 2026-11-13" },
   // qmbl-verify 2026-09-18 (RA1): the t-V rows whose committed LCT-INT output reproduces the stored
   // total through the code's V (n - 1/2)(n - 1/2) shift, and the square V = 2 row, whose committed
   // output is a sibling run 0.75 sigma away (ruling 3a, 2026-09-19: the table's value stays).
@@ -1667,7 +1668,7 @@ export const VERIFICATIONS = [
   },
   {
     "match": {
-      "instance": "Hubbard/square_16_P_5_7.74264",
+      "instance": "Hubbard/square_16_P_5_7.74263683",
       "method": "DMRG (MaxBondDim = 7000)",
       "energy": -17.6037303
     },
@@ -1677,7 +1678,7 @@ export const VERIFICATIONS = [
     "location": "let block: 'U = 7.74264', 'nx = 4', 'ny = 4', 'yperiodic = true', 'xperiodic = true', spins alternating Up/Dn with sites 6:11 set to Emp -> 5 up + 5 down, dims [4,...,6000,7000], 2 sweeps each (32 sweeps), E and var printed after each maxdim on the optimized state",
     "reported_as": "-17.6037303 | | 3.5781e-6 | DMRG(MaxBondDim = 7000) (VarBench upload, J. Maxwell Silvester)",
     "conversion": "none (total). E - E0(U = 7.74264, 5+5) = 8.0e-8 (E0 = -17.603730380085874)",
-    "note": "4x4 torus (32 bonds), t = 1, U n_up n_dn with no shift, N_up = N_dn = 5: the instance at U = 7.74264. The energy is the reached DMRG energy at the final maxdim and lies above the exact energy at the script's U, as a variational energy must; variational correct. Temple check (E - E0 <= Var/(E1 - E), E1 = -16.482401761570816 the next level, lanczos ritz (no reorth)): E - E0 = 8.0e-8 vs bound 3.2e-6, consistent. History: uploaded 2022-09-12 (2f88471), unchanged; split instance at the named U. No output log (scope config).",
+    "note": "4x4 torus (32 bonds), t = 1, U n_up n_dn with no shift, N_up = N_dn = 5, run at U = 7.74264; since 2026-11-13 on the instance at U = 7.74263683, 3.2e-6 away, where it sits 1.26e-6 above the ground state (merge ruled 2026-11-13). The energy is the reached DMRG energy at the final maxdim and lies above the exact energy at the script's U, as a variational energy must; variational correct. Temple check (E - E0 <= Var/(E1 - E), E1 = -16.482401761570816 the next level, lanczos ritz (no reorth)): E - E0 = 8.0e-8 vs bound 3.2e-6, consistent. History: uploaded 2022-09-12 (2f88471), unchanged. No output log (scope config).",
     "source_entry": "VB2-varbench-code-hubbard#44 (qmbl-verify 2026-09-29)"
   },
   {
@@ -2684,21 +2685,6 @@ export const VERIFICATIONS = [
     "conversion": "none: the cost run works in the stored convention (Pauli totals for spin models, totals for fermions and impurity)",
     "note": "|reproduced - stored| = 7.46e-14 (relative 3.75e-15); within 1e-9 relative. Sector N_up = N_dn = 5, dimension 19079424, 111 Lanczos steps (the file states no residual). The stored value is the source's own ED (qmbl-verify-2026-09-16), so two codes agree; a third code, E1's node Lanczos (qmbl-runs/qmbl-verify/out/E1-exact-recompute/results/Hubbard__square_16_P_5_3.5981.json), gives -19.88822919445522 (3.38e-11 from the cost run). Also read by VP14-hubbard-j1j2-heisenberg-tfising#78 (scope value: checks/hubbard-u-labels/ed_results.jsonl line 20 (job square L = 4, n = 5, U = 3.5981); logs_fermions_16_5.log entry Hubbard/square_16_P_5_3.5981; checks/cost/ed/results/Hubbard--square_16_P_5_3.5981.json).",
     "source_entry": "VE-exact-recompute#26, VP14-hubbard-j1j2-heisenberg-tfising#78 (qmbl-verify 2026-09-29)"
-  },
-  {
-    "match": {
-      "instance": "Hubbard/square_16_P_5_7.74264",
-      "method": "Exact diagonalization",
-      "energy": -17.603730380085874
-    },
-    "checked_on": "2026-09-29",
-    "scope": "value",
-    "method": "QMBL ED cost run checks/cost/ed/results/Hubbard--square_16_P_5_7.74264.json (checks/cost/ed/run_ed.py: NetKet 3.22.4 operator, sparse CSR built in blocks, SciPy eigsh/ARPACK k=1 SA; commit 5763525; host eu-g5-041-1); results file read locally, no rerun",
-    "location": "checks/cost/ed/results/Hubbard--square_16_P_5_7.74264.json: fields energy, stored_exact, relative_difference, reproduces_stored",
-    "reported_as": "energy -17.603730380086017 (stored_exact -17.603730380085874, relative_difference 8.07e-15, reproduces_stored true)",
-    "conversion": "none: the cost run works in the stored convention (Pauli totals for spin models, totals for fermions and impurity)",
-    "note": "|reproduced - stored| = 1.42e-13 (relative 8.07e-15); within 1e-9 relative. Sector N_up = N_dn = 5, dimension 19079424, 151 Lanczos steps (the file states no residual). The stored value is the source's own ED (qmbl-verify-2026-09-16), so two codes agree; a third code, E1's node Lanczos (qmbl-runs/qmbl-verify/out/E1-exact-recompute/results/Hubbard__square_16_P_5_7.74264.json), gives -17.603730380008766 (7.73e-11 from the cost run). Also read by VP14-hubbard-j1j2-heisenberg-tfising#79 (scope value: checks/hubbard-u-labels/ed_results.jsonl line 23 (job square L = 4, n = 5, U = 7.74264); logs_fermions_16_5.log entry Hubbard/square_16_P_5_7.74264; checks/cost/ed/results/Hubbard--square_16_P_5_7.74264.json).",
-    "source_entry": "VE-exact-recompute#30, VP14-hubbard-j1j2-heisenberg-tfising#79 (qmbl-verify 2026-09-29)"
   },
   {
     "match": {
