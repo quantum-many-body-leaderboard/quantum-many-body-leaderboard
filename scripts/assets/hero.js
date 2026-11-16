@@ -149,7 +149,7 @@
   }
 
   // A chip row longer than 12 (the atom and molecule species) shows the 8 values with most energies and the chosen
-  // one; "+N more" opens the whole row, with a field that narrows it by name or formula.
+  // one; "+N more" opens the whole row, with a field that narrows it (by name or formula on a species row).
   const MANY = 12;
   // A chip's hover text: why it exists beside a near twin (an instance split at a rounded coupling), else its full value.
   const chip = (dim, v, c, short, note) => { const t = note?.get(v) ?? (short.get(v) !== v ? v : ""); return `<button class="pk-chip" type="button" data-dim="${esc(dim)}" data-v="${esc(v)}" aria-pressed="${v === state.sel[dim]}"${t ? ` title="${esc(t)}"` : ""}>${esc(short.get(v))}<i>${c.get(v)}</i></button>`; };
@@ -160,7 +160,7 @@
     let shown = [...vals].sort((a, b) => c.get(b) - c.get(a)).slice(0, 8);
     if (!shown.includes(sel)) shown = [...shown.slice(0, 7), sel];
     const list = open ? vals : vals.filter(v => shown.includes(v));
-    return `<div class="pk-fg">${lab}${list.map(v => chip(dim, v, c, short, note)).join("")}<button class="pk-chipmore" type="button" data-more="${esc(dim)}" aria-expanded="${!!open}">${open ? "Show fewer" : `+${vals.length - list.length} more`}</button>${open ? `<input class="pk-find" data-find="${esc(dim)}" placeholder="Find by name or formula" aria-label="Find a ${esc(dim)}">` : ""}</div>`;
+    return `<div class="pk-fg">${lab}${list.map(v => chip(dim, v, c, short, note)).join("")}<button class="pk-chipmore" type="button" data-more="${esc(dim)}" aria-expanded="${!!open}">${open ? "Show fewer" : `+${vals.length - list.length} more`}</button>${open ? `<input class="pk-find" data-find="${esc(dim)}" placeholder="${dim === "species" ? "Find by name or formula" : "Find a value"}" aria-label="Find a ${esc(dim)}">` : ""}</div>`;
   }
 
   function render() {
