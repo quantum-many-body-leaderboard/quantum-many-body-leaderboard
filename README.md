@@ -1018,30 +1018,30 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best variational | -3.2009084 (+1.6e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/TFIsing/square_36_P_3/dmrg.sh) |
 | square 8x8, open, h = 3 | best variational | -3.1641828 &#9675; | DMRG [Dao (2026)](https://doi.org/10.48550/arxiv.2606.25600) |  |
 | square 10x10, open, h = 3 | best variational | -3.16977 &#9675; | DMRG [Dao (2026)](https://doi.org/10.48550/arxiv.2606.25600) |  |
-| square 11x11, open, h = 2 | best variational | -2.40076(1) | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
-| square 11x11, open, h = 2.5 | best variational | -2.74243(1) | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
-| square 11x11, open, h = 2.8 | best variational | -2.99099(1) | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
-| square 11x11, open, h = 2.9 | best variational | -3.08073(1) | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
-| square 11x11, open, h = 3 | best variational | -3.17210(1) | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
-| square 11x11, open, h = 3.1 | best variational | -3.26457(1) | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
-| square 11x11, open, h = 3.2 | best variational | -3.35785(1) | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
-| square 11x11, open, h = 3.5 | best variational | -3.64116(1) | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
-| square 11x11, open, h = 4 | best variational | -4.12071(1) | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
+| square 11x11, open, h = 2 | best variational | -2.40076 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
+| square 11x11, open, h = 2.5 | best variational | -2.74243 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
+| square 11x11, open, h = 2.8 | best variational | -2.99099 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
+| square 11x11, open, h = 2.9 | best variational | -3.08073 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
+| square 11x11, open, h = 3 | best variational | -3.1721 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
+| square 11x11, open, h = 3.1 | best variational | -3.26457 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
+| square 11x11, open, h = 3.2 | best variational | -3.35785 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
+| square 11x11, open, h = 3.5 | best variational | -3.64116 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
+| square 11x11, open, h = 4 | best variational | -4.12071 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
 | square 12x12, open, h = 2 | best variational | -2.4096026 &#9675; | DMRG [Hibat-Allah et al. (2020)](https://doi.org/10.1103/physrevresearch.2.023358) |  |
 | square 12x12, open, h = 3 | exact (stochastic) | -3.17388(4) | QMC [Sharir et al. (2020)](https://doi.org/10.1103/physrevlett.124.020503) |  |
 |  | best variational | -3.1739018(2) (−2.2e-5) | VMC (2D RNN) [Hibat-Allah et al. (2020)](https://doi.org/10.1103/physrevresearch.2.023358) | [run script](https://github.com/varbench/methods/blob/main/scripts/TFIsing/square_144_O_3/vmc_2DRNN.sh) |
 | square 12x12, open, h = 4 | exact (stochastic) | -4.12178(4) | QMC [Sharir et al. (2020)](https://doi.org/10.1103/physrevlett.124.020503) |  |
 |  | best variational | -4.12179808(6) (−1.8e-5) | VMC (2D RNN) [Hibat-Allah et al. (2020)](https://doi.org/10.1103/physrevresearch.2.023358) | [mhibatallah/RNNwavefunctions](https://github.com/mhibatallah/RNNwavefunctions) |
 | square 20x20, open, h = 3 | best variational | -3.18197 &#9675; | DMRG [Ganahl et al. (2023)](https://doi.org/10.1103/prxquantum.4.010317) |  |
-| square 21x21, open, h = 2 | best variational | -2.45219(1) | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
-| square 21x21, open, h = 2.5 | best variational | -2.77346(1) | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
-| square 21x21, open, h = 2.8 | best variational | -3.00737(1) | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
-| square 21x21, open, h = 2.9 | best variational | -3.09287(1) | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
-| square 21x21, open, h = 3 | best variational | -3.18243(1) | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
-| square 21x21, open, h = 3.1 | best variational | -3.27406(1) | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
-| square 21x21, open, h = 3.2 | best variational | -3.36672(1) | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
-| square 21x21, open, h = 3.5 | best variational | -3.64873(1) | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
-| square 21x21, open, h = 4 | best variational | -4.12694(1) | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
+| square 21x21, open, h = 2 | best variational | -2.45219 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
+| square 21x21, open, h = 2.5 | best variational | -2.77346 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
+| square 21x21, open, h = 2.8 | best variational | -3.00737 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
+| square 21x21, open, h = 2.9 | best variational | -3.09287 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
+| square 21x21, open, h = 3 | best variational | -3.18243 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
+| square 21x21, open, h = 3.1 | best variational | -3.27406 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
+| square 21x21, open, h = 3.2 | best variational | -3.36672 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
+| square 21x21, open, h = 3.5 | best variational | -3.64873 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
+| square 21x21, open, h = 4 | best variational | -4.12694 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
 | square, infinite lattice, h = 3.04438 | best variational | -3.2342607 &#9675; | iPEPS [Rader & Läuchli (2018)](https://doi.org/10.1103/physrevx.8.031030) |  |
 |  | best extrapolated | -3.2342623 &#9675; | iPEPS [Rader & Läuchli (2018)](https://doi.org/10.1103/physrevx.8.031030) |  |
 

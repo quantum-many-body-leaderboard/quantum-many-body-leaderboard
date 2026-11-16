@@ -11,7 +11,7 @@
   "rows": [
     {
       "energy": -1402.94448,
-      "sigma": 0.02646,
+      "sigma": null,
       "energy_variance": null,
       "dof": 441,
       "einf": 0,
@@ -34,6 +34,20 @@
         "note": "Appendix C, Table VII (21 × 21, full update), row D = 2, column B = 3; sources/1405.3259.txt line 937; the bracket is printed after each energy; the paper does not say what it estimates (stored as the error bar as printed); version read: arXiv text (sources/1405.3259.txt, pypdf layout mode); journal version not yet read (second reading) | Appendix C: H = − sum_<l,m> σZ_l σZ_m − B sum_l σX_l (Pauli matrices), the instance's Hamiltonian with h = B; Tables VI-VIII print the energy per site, the stored per-site convention (E/N, Pauli; RULES.md 5). Plausibility: at fixed B the 21 x 21 energies lie below the 11 x 11 ones, as the smaller boundary fraction requires, and the D = 3 and 4 cells agree to the last printed digits.",
         "secondary_of": null
       },
+      "corrections": [
+        {
+          "field": "sigma",
+          "to": null,
+          "reported_as": "−3.18128(6) (energy per site, Pauli, H = −Σ σZσZ − B Σ σX)",
+          "location": "Appendix C, Table VII (21 × 21, FU), row D = 2, column B = 3.0; journal text line 945, arXiv v2 line 937",
+          "version_read": "Phys. Rev. B 90, 064425 (2014), APS publisher PDF fetched 2026-11-16 (sources/PRB.90.064425.pdf), pypdf layout mode; cross-checked against arXiv:1405.3259v2 PDF (sources/1405.3259v2.txt, identical to the project's sources/1405.3259.txt) and v1 (sources/1405.3259v1.txt)",
+          "conversion": "energy -3.18128 × 441 = -1402.94448 = stored -1402.94448 (agrees); bracket (6) = 6e-5 per site × 441 = 0.02646 = stored sigma; proposed null",
+          "checked_on": "2026-11-16",
+          "reason": "The bracket is not a statistical error bar: the energy is a deterministic boundary-MPO contraction of a stated PEPS (no sampling), and the bracket is the imaginary-time convergence estimate, |E(τ = 1e-4) − E(previous time step)|. Sec. IV A (journal p. 064425-8; arXiv v2 and v1 same wording): 'Energies and correlators reported here for a certain value of D correspond to the final PEPS for the smallest time step. The error in the corresponding observable was estimated via the difference to the expectation value calculated with the converged PEPS for the previous time step. All contractions were performed with boundary bond dimension D′ = 100, big enough to neglect contraction errors, as we explicitly checked by comparison to results from D′ = 200.' Sec. IV C: 'For each value of B, we converge the imaginary time evolution independently, using time steps τ = 10−2, 10−3, and 10−4.' RULES.md 6: 'A deterministic energy has no sigma. ... tensor-network contractions carry no statistical error.' Keep the bracket in the verification note as the time-step convergence estimate. Energy, lattice (21 × 21 square, open on all four sides: 'the two-dimensional square lattice geometry with open boundary conditions and size N = L×L considered throughout this work', Sec. II), h = B = 3, per-site Pauli convention (Sec. IV C: 'H = −Σ⟨l,m⟩ σZl σZm − B Σl σXl', the QMBL TFIsing form with h = B, no constant), own computation (Appendix C: 'precise energy values obtained with the PEPS ground state approximations considered in this paper'), peer_reviewed and reference all agree. bound_type variational stands (RULES.md 4 and the converged-contraction rule): the printed energy is the expectation value of the final PEPS, contracted at D′ = 100 and checked against D′ = 200; it is a strict bound only up to that contraction error, which the paper states is negligible but does not print. Footnote 16 (journal; arXiv v2 note 65): 'on the 11×11 lattice, we ran the FU with D′ = 8 for D = 2, D′ = 54 for D = 3, and D′ = 128 for D = 4, while on the 21×21 lattice, we ran the FU with D′ = 8 for D = 2, D′ = 36 for D = 3, and D′ = 128 for D = 4'; Sec. IV C: 'here, we have not performed such an extensive convergence analysis with D′ as we have done before for the Heisenberg Hamiltonian' (this refers to the update environment D′; the evaluation contraction is the D′ = 100 of Sec. IV A).. Effect on ranks: ties now go by energy alone (here D = 4 −3.18243 becomes the sole best, D = 3 −3.18242 no longer tied).",
+          "source_entry": "RP1-arxiv-1405-3259#48 (qmbl-verify 2026-11-16)",
+          "from": 0.02646
+        }
+      ],
       "compute": {
         "parameters": null,
         "gpu_hours": null,
@@ -53,7 +67,7 @@
     },
     {
       "energy": -1403.44722,
-      "sigma": 0.00441,
+      "sigma": null,
       "energy_variance": null,
       "dof": 441,
       "einf": 0,
@@ -76,6 +90,20 @@
         "note": "Appendix C, Table VII (21 × 21, full update), row D = 3, column B = 3; sources/1405.3259.txt line 938; the bracket is printed after each energy; the paper does not say what it estimates (stored as the error bar as printed); version read: arXiv text (sources/1405.3259.txt, pypdf layout mode); journal version not yet read (second reading) | Appendix C: H = − sum_<l,m> σZ_l σZ_m − B sum_l σX_l (Pauli matrices), the instance's Hamiltonian with h = B; Tables VI-VIII print the energy per site, the stored per-site convention (E/N, Pauli; RULES.md 5). Plausibility: at fixed B the 21 x 21 energies lie below the 11 x 11 ones, as the smaller boundary fraction requires, and the D = 3 and 4 cells agree to the last printed digits.",
         "secondary_of": null
       },
+      "corrections": [
+        {
+          "field": "sigma",
+          "to": null,
+          "reported_as": "−3.18242(1) (energy per site, Pauli, H = −Σ σZσZ − B Σ σX)",
+          "location": "Appendix C, Table VII (21 × 21, FU), row D = 3, column B = 3.0; journal text line 946, arXiv v2 line 938",
+          "version_read": "Phys. Rev. B 90, 064425 (2014), APS publisher PDF fetched 2026-11-16 (sources/PRB.90.064425.pdf), pypdf layout mode; cross-checked against arXiv:1405.3259v2 PDF (sources/1405.3259v2.txt, identical to the project's sources/1405.3259.txt) and v1 (sources/1405.3259v1.txt)",
+          "conversion": "energy -3.18242 × 441 = -1403.44722 = stored -1403.44722 (agrees); bracket (1) = 1e-5 per site × 441 = 0.00441 = stored sigma; proposed null",
+          "checked_on": "2026-11-16",
+          "reason": "The bracket is not a statistical error bar: the energy is a deterministic boundary-MPO contraction of a stated PEPS (no sampling), and the bracket is the imaginary-time convergence estimate, |E(τ = 1e-4) − E(previous time step)|. Sec. IV A (journal p. 064425-8; arXiv v2 and v1 same wording): 'Energies and correlators reported here for a certain value of D correspond to the final PEPS for the smallest time step. The error in the corresponding observable was estimated via the difference to the expectation value calculated with the converged PEPS for the previous time step. All contractions were performed with boundary bond dimension D′ = 100, big enough to neglect contraction errors, as we explicitly checked by comparison to results from D′ = 200.' Sec. IV C: 'For each value of B, we converge the imaginary time evolution independently, using time steps τ = 10−2, 10−3, and 10−4.' RULES.md 6: 'A deterministic energy has no sigma. ... tensor-network contractions carry no statistical error.' Keep the bracket in the verification note as the time-step convergence estimate. Energy, lattice (21 × 21 square, open on all four sides: 'the two-dimensional square lattice geometry with open boundary conditions and size N = L×L considered throughout this work', Sec. II), h = B = 3, per-site Pauli convention (Sec. IV C: 'H = −Σ⟨l,m⟩ σZl σZm − B Σl σXl', the QMBL TFIsing form with h = B, no constant), own computation (Appendix C: 'precise energy values obtained with the PEPS ground state approximations considered in this paper'), peer_reviewed and reference all agree. bound_type variational stands (RULES.md 4 and the converged-contraction rule): the printed energy is the expectation value of the final PEPS, contracted at D′ = 100 and checked against D′ = 200; it is a strict bound only up to that contraction error, which the paper states is negligible but does not print. Footnote 16 (journal; arXiv v2 note 65): 'on the 11×11 lattice, we ran the FU with D′ = 8 for D = 2, D′ = 54 for D = 3, and D′ = 128 for D = 4, while on the 21×21 lattice, we ran the FU with D′ = 8 for D = 2, D′ = 36 for D = 3, and D′ = 128 for D = 4'; Sec. IV C: 'here, we have not performed such an extensive convergence analysis with D′ as we have done before for the Heisenberg Hamiltonian' (this refers to the update environment D′; the evaluation contraction is the D′ = 100 of Sec. IV A).. Effect on ranks: ties now go by energy alone (here D = 4 −3.18243 becomes the sole best, D = 3 −3.18242 no longer tied).",
+          "source_entry": "RP1-arxiv-1405-3259#49 (qmbl-verify 2026-11-16)",
+          "from": 0.00441
+        }
+      ],
       "compute": {
         "parameters": null,
         "gpu_hours": null,
@@ -95,7 +123,7 @@
     },
     {
       "energy": -1403.45163,
-      "sigma": 0.00441,
+      "sigma": null,
       "energy_variance": null,
       "dof": 441,
       "einf": 0,
@@ -118,6 +146,20 @@
         "note": "Appendix C, Table VII (21 × 21, full update), row D = 4, column B = 3; sources/1405.3259.txt line 939; the bracket is printed after each energy; the paper does not say what it estimates (stored as the error bar as printed); version read: arXiv text (sources/1405.3259.txt, pypdf layout mode); journal version not yet read (second reading) | Appendix C: H = − sum_<l,m> σZ_l σZ_m − B sum_l σX_l (Pauli matrices), the instance's Hamiltonian with h = B; Tables VI-VIII print the energy per site, the stored per-site convention (E/N, Pauli; RULES.md 5). Plausibility: at fixed B the 21 x 21 energies lie below the 11 x 11 ones, as the smaller boundary fraction requires, and the D = 3 and 4 cells agree to the last printed digits.",
         "secondary_of": null
       },
+      "corrections": [
+        {
+          "field": "sigma",
+          "to": null,
+          "reported_as": "−3.18243(1) (energy per site, Pauli, H = −Σ σZσZ − B Σ σX)",
+          "location": "Appendix C, Table VII (21 × 21, FU), row D = 4, column B = 3.0; journal text line 947, arXiv v2 line 939",
+          "version_read": "Phys. Rev. B 90, 064425 (2014), APS publisher PDF fetched 2026-11-16 (sources/PRB.90.064425.pdf), pypdf layout mode; cross-checked against arXiv:1405.3259v2 PDF (sources/1405.3259v2.txt, identical to the project's sources/1405.3259.txt) and v1 (sources/1405.3259v1.txt)",
+          "conversion": "energy -3.18243 × 441 = -1403.45163 = stored -1403.45163 (agrees); bracket (1) = 1e-5 per site × 441 = 0.00441 = stored sigma; proposed null",
+          "checked_on": "2026-11-16",
+          "reason": "The bracket is not a statistical error bar: the energy is a deterministic boundary-MPO contraction of a stated PEPS (no sampling), and the bracket is the imaginary-time convergence estimate, |E(τ = 1e-4) − E(previous time step)|. Sec. IV A (journal p. 064425-8; arXiv v2 and v1 same wording): 'Energies and correlators reported here for a certain value of D correspond to the final PEPS for the smallest time step. The error in the corresponding observable was estimated via the difference to the expectation value calculated with the converged PEPS for the previous time step. All contractions were performed with boundary bond dimension D′ = 100, big enough to neglect contraction errors, as we explicitly checked by comparison to results from D′ = 200.' Sec. IV C: 'For each value of B, we converge the imaginary time evolution independently, using time steps τ = 10−2, 10−3, and 10−4.' RULES.md 6: 'A deterministic energy has no sigma. ... tensor-network contractions carry no statistical error.' Keep the bracket in the verification note as the time-step convergence estimate. Energy, lattice (21 × 21 square, open on all four sides: 'the two-dimensional square lattice geometry with open boundary conditions and size N = L×L considered throughout this work', Sec. II), h = B = 3, per-site Pauli convention (Sec. IV C: 'H = −Σ⟨l,m⟩ σZl σZm − B Σl σXl', the QMBL TFIsing form with h = B, no constant), own computation (Appendix C: 'precise energy values obtained with the PEPS ground state approximations considered in this paper'), peer_reviewed and reference all agree. bound_type variational stands (RULES.md 4 and the converged-contraction rule): the printed energy is the expectation value of the final PEPS, contracted at D′ = 100 and checked against D′ = 200; it is a strict bound only up to that contraction error, which the paper states is negligible but does not print. Footnote 16 (journal; arXiv v2 note 65): 'on the 11×11 lattice, we ran the FU with D′ = 8 for D = 2, D′ = 54 for D = 3, and D′ = 128 for D = 4, while on the 21×21 lattice, we ran the FU with D′ = 8 for D = 2, D′ = 36 for D = 3, and D′ = 128 for D = 4'; Sec. IV C: 'here, we have not performed such an extensive convergence analysis with D′ as we have done before for the Heisenberg Hamiltonian' (this refers to the update environment D′; the evaluation contraction is the D′ = 100 of Sec. IV A).. Effect on ranks: ties now go by energy alone (here D = 4 −3.18243 becomes the sole best, D = 3 −3.18242 no longer tied).",
+          "source_entry": "RP1-arxiv-1405-3259#50 (qmbl-verify 2026-11-16)",
+          "from": 0.00441
+        }
+      ],
       "compute": {
         "parameters": null,
         "gpu_hours": null,
@@ -137,7 +179,7 @@
     },
     {
       "energy": -1402.0272,
-      "sigma": 0.1764,
+      "sigma": null,
       "energy_variance": null,
       "dof": 441,
       "einf": 0,
@@ -160,6 +202,20 @@
         "note": "Appendix C, Table VIII (21 × 21, simple update, B = 3.0), row D = 2; sources/1405.3259.txt line 952; the bracket is printed after each energy; the paper does not say what it estimates (stored as the error bar as printed); version read: arXiv text (sources/1405.3259.txt, pypdf layout mode); journal version not yet read (second reading) | Appendix C: H = − sum_<l,m> σZ_l σZ_m − B sum_l σX_l (Pauli matrices), the instance's Hamiltonian with h = B; Tables VI-VIII print the energy per site, the stored per-site convention (E/N, Pauli; RULES.md 5). Plausibility: at fixed B the 21 x 21 energies lie below the 11 x 11 ones, as the smaller boundary fraction requires, and the D = 3 and 4 cells agree to the last printed digits.",
         "secondary_of": null
       },
+      "corrections": [
+        {
+          "field": "sigma",
+          "to": null,
+          "reported_as": "−3.1792(4) (energy per site, Pauli, H = −Σ σZσZ − B Σ σX)",
+          "location": "Appendix C, Table VIII (21 × 21, SU, B = 3.0), row D = 2; journal text line 958, arXiv v2 line 952",
+          "version_read": "Phys. Rev. B 90, 064425 (2014), APS publisher PDF fetched 2026-11-16 (sources/PRB.90.064425.pdf), pypdf layout mode; cross-checked against arXiv:1405.3259v2 PDF (sources/1405.3259v2.txt, identical to the project's sources/1405.3259.txt) and v1 (sources/1405.3259v1.txt)",
+          "conversion": "energy -3.1792 × 441 = -1402.0272 = stored -1402.0272 (agrees); bracket (4) = 4e-4 per site × 441 = 0.1764 = stored sigma; proposed null",
+          "checked_on": "2026-11-16",
+          "reason": "The bracket is not a statistical error bar: the energy is a deterministic boundary-MPO contraction of a stated PEPS (no sampling), and the bracket is the imaginary-time convergence estimate, |E(τ = 1e-4) − E(previous time step)|. Sec. IV A (journal p. 064425-8; arXiv v2 and v1 same wording): 'Energies and correlators reported here for a certain value of D correspond to the final PEPS for the smallest time step. The error in the corresponding observable was estimated via the difference to the expectation value calculated with the converged PEPS for the previous time step. All contractions were performed with boundary bond dimension D′ = 100, big enough to neglect contraction errors, as we explicitly checked by comparison to results from D′ = 200.' Sec. IV C: 'For each value of B, we converge the imaginary time evolution independently, using time steps τ = 10−2, 10−3, and 10−4.' RULES.md 6: 'A deterministic energy has no sigma. ... tensor-network contractions carry no statistical error.' Keep the bracket in the verification note as the time-step convergence estimate. Energy, lattice (21 × 21 square, open on all four sides: 'the two-dimensional square lattice geometry with open boundary conditions and size N = L×L considered throughout this work', Sec. II), h = B = 3, per-site Pauli convention (Sec. IV C: 'H = −Σ⟨l,m⟩ σZl σZm − B Σl σXl', the QMBL TFIsing form with h = B, no constant), own computation (Appendix C: 'precise energy values obtained with the PEPS ground state approximations considered in this paper'), peer_reviewed and reference all agree. bound_type variational stands (RULES.md 4 and the converged-contraction rule): the printed energy is the expectation value of the final PEPS, contracted at D′ = 100 and checked against D′ = 200; it is a strict bound only up to that contraction error, which the paper states is negligible but does not print. Footnote 16 (journal; arXiv v2 note 65): 'on the 11×11 lattice, we ran the FU with D′ = 8 for D = 2, D′ = 54 for D = 3, and D′ = 128 for D = 4, while on the 21×21 lattice, we ran the FU with D′ = 8 for D = 2, D′ = 36 for D = 3, and D′ = 128 for D = 4'; Sec. IV C: 'here, we have not performed such an extensive convergence analysis with D′ as we have done before for the Heisenberg Hamiltonian' (this refers to the update environment D′; the evaluation contraction is the D′ = 100 of Sec. IV A).. Effect on ranks: ties now go by energy alone.",
+          "source_entry": "RP1-arxiv-1405-3259#51 (qmbl-verify 2026-11-16)",
+          "from": 0.1764
+        }
+      ],
       "compute": {
         "parameters": null,
         "gpu_hours": null,
@@ -179,7 +235,7 @@
     },
     {
       "energy": -1402.6446,
-      "sigma": 0.1764,
+      "sigma": null,
       "energy_variance": null,
       "dof": 441,
       "einf": 0,
@@ -202,6 +258,20 @@
         "note": "Appendix C, Table VIII (21 × 21, simple update, B = 3.0), row D = 3; sources/1405.3259.txt line 953; the bracket is printed after each energy; the paper does not say what it estimates (stored as the error bar as printed); version read: arXiv text (sources/1405.3259.txt, pypdf layout mode); journal version not yet read (second reading) | Appendix C: H = − sum_<l,m> σZ_l σZ_m − B sum_l σX_l (Pauli matrices), the instance's Hamiltonian with h = B; Tables VI-VIII print the energy per site, the stored per-site convention (E/N, Pauli; RULES.md 5). Plausibility: at fixed B the 21 x 21 energies lie below the 11 x 11 ones, as the smaller boundary fraction requires, and the D = 3 and 4 cells agree to the last printed digits.",
         "secondary_of": null
       },
+      "corrections": [
+        {
+          "field": "sigma",
+          "to": null,
+          "reported_as": "−3.1806(4) (energy per site, Pauli, H = −Σ σZσZ − B Σ σX)",
+          "location": "Appendix C, Table VIII (21 × 21, SU, B = 3.0), row D = 3; journal text line 960, arXiv v2 line 953",
+          "version_read": "Phys. Rev. B 90, 064425 (2014), APS publisher PDF fetched 2026-11-16 (sources/PRB.90.064425.pdf), pypdf layout mode; cross-checked against arXiv:1405.3259v2 PDF (sources/1405.3259v2.txt, identical to the project's sources/1405.3259.txt) and v1 (sources/1405.3259v1.txt)",
+          "conversion": "energy -3.1806 × 441 = -1402.6446 = stored -1402.6446 (agrees); bracket (4) = 4e-4 per site × 441 = 0.1764 = stored sigma; proposed null",
+          "checked_on": "2026-11-16",
+          "reason": "The bracket is not a statistical error bar: the energy is a deterministic boundary-MPO contraction of a stated PEPS (no sampling), and the bracket is the imaginary-time convergence estimate, |E(τ = 1e-4) − E(previous time step)|. Sec. IV A (journal p. 064425-8; arXiv v2 and v1 same wording): 'Energies and correlators reported here for a certain value of D correspond to the final PEPS for the smallest time step. The error in the corresponding observable was estimated via the difference to the expectation value calculated with the converged PEPS for the previous time step. All contractions were performed with boundary bond dimension D′ = 100, big enough to neglect contraction errors, as we explicitly checked by comparison to results from D′ = 200.' Sec. IV C: 'For each value of B, we converge the imaginary time evolution independently, using time steps τ = 10−2, 10−3, and 10−4.' RULES.md 6: 'A deterministic energy has no sigma. ... tensor-network contractions carry no statistical error.' Keep the bracket in the verification note as the time-step convergence estimate. Energy, lattice (21 × 21 square, open on all four sides: 'the two-dimensional square lattice geometry with open boundary conditions and size N = L×L considered throughout this work', Sec. II), h = B = 3, per-site Pauli convention (Sec. IV C: 'H = −Σ⟨l,m⟩ σZl σZm − B Σl σXl', the QMBL TFIsing form with h = B, no constant), own computation (Appendix C: 'precise energy values obtained with the PEPS ground state approximations considered in this paper'), peer_reviewed and reference all agree. bound_type variational stands (RULES.md 4 and the converged-contraction rule): the printed energy is the expectation value of the final PEPS, contracted at D′ = 100 and checked against D′ = 200; it is a strict bound only up to that contraction error, which the paper states is negligible but does not print. Footnote 16 (journal; arXiv v2 note 65): 'on the 11×11 lattice, we ran the FU with D′ = 8 for D = 2, D′ = 54 for D = 3, and D′ = 128 for D = 4, while on the 21×21 lattice, we ran the FU with D′ = 8 for D = 2, D′ = 36 for D = 3, and D′ = 128 for D = 4'; Sec. IV C: 'here, we have not performed such an extensive convergence analysis with D′ as we have done before for the Heisenberg Hamiltonian' (this refers to the update environment D′; the evaluation contraction is the D′ = 100 of Sec. IV A).. Effect on ranks: ties now go by energy alone.",
+          "source_entry": "RP1-arxiv-1405-3259#52 (qmbl-verify 2026-11-16)",
+          "from": 0.1764
+        }
+      ],
       "compute": {
         "parameters": null,
         "gpu_hours": null,
@@ -221,7 +291,7 @@
     },
     {
       "energy": -1402.6887,
-      "sigma": 0.1764,
+      "sigma": null,
       "energy_variance": null,
       "dof": 441,
       "einf": 0,
@@ -244,6 +314,20 @@
         "note": "Appendix C, Table VIII (21 × 21, simple update, B = 3.0), row D = 4; sources/1405.3259.txt line 954; the bracket is printed after each energy; the paper does not say what it estimates (stored as the error bar as printed); version read: arXiv text (sources/1405.3259.txt, pypdf layout mode); journal version not yet read (second reading) | Appendix C: H = − sum_<l,m> σZ_l σZ_m − B sum_l σX_l (Pauli matrices), the instance's Hamiltonian with h = B; Tables VI-VIII print the energy per site, the stored per-site convention (E/N, Pauli; RULES.md 5). Plausibility: at fixed B the 21 x 21 energies lie below the 11 x 11 ones, as the smaller boundary fraction requires, and the D = 3 and 4 cells agree to the last printed digits.",
         "secondary_of": null
       },
+      "corrections": [
+        {
+          "field": "sigma",
+          "to": null,
+          "reported_as": "−3.1807(4) (energy per site, Pauli, H = −Σ σZσZ − B Σ σX)",
+          "location": "Appendix C, Table VIII (21 × 21, SU, B = 3.0), row D = 4; journal text line 961, arXiv v2 line 954",
+          "version_read": "Phys. Rev. B 90, 064425 (2014), APS publisher PDF fetched 2026-11-16 (sources/PRB.90.064425.pdf), pypdf layout mode; cross-checked against arXiv:1405.3259v2 PDF (sources/1405.3259v2.txt, identical to the project's sources/1405.3259.txt) and v1 (sources/1405.3259v1.txt)",
+          "conversion": "energy -3.1807 × 441 = -1402.6887 = stored -1402.6887 (agrees); bracket (4) = 4e-4 per site × 441 = 0.1764 = stored sigma; proposed null",
+          "checked_on": "2026-11-16",
+          "reason": "The bracket is not a statistical error bar: the energy is a deterministic boundary-MPO contraction of a stated PEPS (no sampling), and the bracket is the imaginary-time convergence estimate, |E(τ = 1e-4) − E(previous time step)|. Sec. IV A (journal p. 064425-8; arXiv v2 and v1 same wording): 'Energies and correlators reported here for a certain value of D correspond to the final PEPS for the smallest time step. The error in the corresponding observable was estimated via the difference to the expectation value calculated with the converged PEPS for the previous time step. All contractions were performed with boundary bond dimension D′ = 100, big enough to neglect contraction errors, as we explicitly checked by comparison to results from D′ = 200.' Sec. IV C: 'For each value of B, we converge the imaginary time evolution independently, using time steps τ = 10−2, 10−3, and 10−4.' RULES.md 6: 'A deterministic energy has no sigma. ... tensor-network contractions carry no statistical error.' Keep the bracket in the verification note as the time-step convergence estimate. Energy, lattice (21 × 21 square, open on all four sides: 'the two-dimensional square lattice geometry with open boundary conditions and size N = L×L considered throughout this work', Sec. II), h = B = 3, per-site Pauli convention (Sec. IV C: 'H = −Σ⟨l,m⟩ σZl σZm − B Σl σXl', the QMBL TFIsing form with h = B, no constant), own computation (Appendix C: 'precise energy values obtained with the PEPS ground state approximations considered in this paper'), peer_reviewed and reference all agree. bound_type variational stands (RULES.md 4 and the converged-contraction rule): the printed energy is the expectation value of the final PEPS, contracted at D′ = 100 and checked against D′ = 200; it is a strict bound only up to that contraction error, which the paper states is negligible but does not print. Footnote 16 (journal; arXiv v2 note 65): 'on the 11×11 lattice, we ran the FU with D′ = 8 for D = 2, D′ = 54 for D = 3, and D′ = 128 for D = 4, while on the 21×21 lattice, we ran the FU with D′ = 8 for D = 2, D′ = 36 for D = 3, and D′ = 128 for D = 4'; Sec. IV C: 'here, we have not performed such an extensive convergence analysis with D′ as we have done before for the Heisenberg Hamiltonian' (this refers to the update environment D′; the evaluation contraction is the D′ = 100 of Sec. IV A).. Effect on ranks: ties now go by energy alone.",
+          "source_entry": "RP1-arxiv-1405-3259#53 (qmbl-verify 2026-11-16)",
+          "from": 0.1764
+        }
+      ],
       "compute": {
         "parameters": null,
         "gpu_hours": null,
@@ -263,7 +347,7 @@
     },
     {
       "energy": -1402.9092,
-      "sigma": 0.2205,
+      "sigma": null,
       "energy_variance": null,
       "dof": 441,
       "einf": 0,
@@ -286,6 +370,20 @@
         "note": "Appendix C, Table VIII (21 × 21, simple update, B = 3.0), row D = 5; sources/1405.3259.txt line 955; the bracket is printed after each energy; the paper does not say what it estimates (stored as the error bar as printed); version read: arXiv text (sources/1405.3259.txt, pypdf layout mode); journal version not yet read (second reading) | Appendix C: H = − sum_<l,m> σZ_l σZ_m − B sum_l σX_l (Pauli matrices), the instance's Hamiltonian with h = B; Tables VI-VIII print the energy per site, the stored per-site convention (E/N, Pauli; RULES.md 5). Plausibility: at fixed B the 21 x 21 energies lie below the 11 x 11 ones, as the smaller boundary fraction requires, and the D = 3 and 4 cells agree to the last printed digits.",
         "secondary_of": null
       },
+      "corrections": [
+        {
+          "field": "sigma",
+          "to": null,
+          "reported_as": "−3.1812(5) (energy per site, Pauli, H = −Σ σZσZ − B Σ σX)",
+          "location": "Appendix C, Table VIII (21 × 21, SU, B = 3.0), row D = 5; journal text line 962, arXiv v2 line 955",
+          "version_read": "Phys. Rev. B 90, 064425 (2014), APS publisher PDF fetched 2026-11-16 (sources/PRB.90.064425.pdf), pypdf layout mode; cross-checked against arXiv:1405.3259v2 PDF (sources/1405.3259v2.txt, identical to the project's sources/1405.3259.txt) and v1 (sources/1405.3259v1.txt)",
+          "conversion": "energy -3.1812 × 441 = -1402.9092 = stored -1402.9092 (agrees); bracket (5) = 5e-4 per site × 441 = 0.2205 = stored sigma; proposed null",
+          "checked_on": "2026-11-16",
+          "reason": "The bracket is not a statistical error bar: the energy is a deterministic boundary-MPO contraction of a stated PEPS (no sampling), and the bracket is the imaginary-time convergence estimate, |E(τ = 1e-4) − E(previous time step)|. Sec. IV A (journal p. 064425-8; arXiv v2 and v1 same wording): 'Energies and correlators reported here for a certain value of D correspond to the final PEPS for the smallest time step. The error in the corresponding observable was estimated via the difference to the expectation value calculated with the converged PEPS for the previous time step. All contractions were performed with boundary bond dimension D′ = 100, big enough to neglect contraction errors, as we explicitly checked by comparison to results from D′ = 200.' Sec. IV C: 'For each value of B, we converge the imaginary time evolution independently, using time steps τ = 10−2, 10−3, and 10−4.' RULES.md 6: 'A deterministic energy has no sigma. ... tensor-network contractions carry no statistical error.' Keep the bracket in the verification note as the time-step convergence estimate. Energy, lattice (21 × 21 square, open on all four sides: 'the two-dimensional square lattice geometry with open boundary conditions and size N = L×L considered throughout this work', Sec. II), h = B = 3, per-site Pauli convention (Sec. IV C: 'H = −Σ⟨l,m⟩ σZl σZm − B Σl σXl', the QMBL TFIsing form with h = B, no constant), own computation (Appendix C: 'precise energy values obtained with the PEPS ground state approximations considered in this paper'), peer_reviewed and reference all agree. bound_type variational stands (RULES.md 4 and the converged-contraction rule): the printed energy is the expectation value of the final PEPS, contracted at D′ = 100 and checked against D′ = 200; it is a strict bound only up to that contraction error, which the paper states is negligible but does not print. Footnote 16 (journal; arXiv v2 note 65): 'on the 11×11 lattice, we ran the FU with D′ = 8 for D = 2, D′ = 54 for D = 3, and D′ = 128 for D = 4, while on the 21×21 lattice, we ran the FU with D′ = 8 for D = 2, D′ = 36 for D = 3, and D′ = 128 for D = 4'; Sec. IV C: 'here, we have not performed such an extensive convergence analysis with D′ as we have done before for the Heisenberg Hamiltonian' (this refers to the update environment D′; the evaluation contraction is the D′ = 100 of Sec. IV A).. Effect on ranks: ties now go by energy alone.",
+          "source_entry": "RP1-arxiv-1405-3259#54 (qmbl-verify 2026-11-16)",
+          "from": 0.2205
+        }
+      ],
       "compute": {
         "parameters": null,
         "gpu_hours": null,
@@ -305,7 +403,7 @@
     },
     {
       "energy": -1402.9092,
-      "sigma": 0.1764,
+      "sigma": null,
       "energy_variance": null,
       "dof": 441,
       "einf": 0,
@@ -328,6 +426,20 @@
         "note": "Appendix C, Table VIII (21 × 21, simple update, B = 3.0), row D = 6; sources/1405.3259.txt line 956; the bracket is printed after each energy; the paper does not say what it estimates (stored as the error bar as printed); version read: arXiv text (sources/1405.3259.txt, pypdf layout mode); journal version not yet read (second reading) | Appendix C: H = − sum_<l,m> σZ_l σZ_m − B sum_l σX_l (Pauli matrices), the instance's Hamiltonian with h = B; Tables VI-VIII print the energy per site, the stored per-site convention (E/N, Pauli; RULES.md 5). Plausibility: at fixed B the 21 x 21 energies lie below the 11 x 11 ones, as the smaller boundary fraction requires, and the D = 3 and 4 cells agree to the last printed digits.",
         "secondary_of": null
       },
+      "corrections": [
+        {
+          "field": "sigma",
+          "to": null,
+          "reported_as": "−3.1812(4) (energy per site, Pauli, H = −Σ σZσZ − B Σ σX)",
+          "location": "Appendix C, Table VIII (21 × 21, SU, B = 3.0), row D = 6; journal text line 963, arXiv v2 line 956",
+          "version_read": "Phys. Rev. B 90, 064425 (2014), APS publisher PDF fetched 2026-11-16 (sources/PRB.90.064425.pdf), pypdf layout mode; cross-checked against arXiv:1405.3259v2 PDF (sources/1405.3259v2.txt, identical to the project's sources/1405.3259.txt) and v1 (sources/1405.3259v1.txt)",
+          "conversion": "energy -3.1812 × 441 = -1402.9092 = stored -1402.9092 (agrees); bracket (4) = 4e-4 per site × 441 = 0.1764 = stored sigma; proposed null",
+          "checked_on": "2026-11-16",
+          "reason": "The bracket is not a statistical error bar: the energy is a deterministic boundary-MPO contraction of a stated PEPS (no sampling), and the bracket is the imaginary-time convergence estimate, |E(τ = 1e-4) − E(previous time step)|. Sec. IV A (journal p. 064425-8; arXiv v2 and v1 same wording): 'Energies and correlators reported here for a certain value of D correspond to the final PEPS for the smallest time step. The error in the corresponding observable was estimated via the difference to the expectation value calculated with the converged PEPS for the previous time step. All contractions were performed with boundary bond dimension D′ = 100, big enough to neglect contraction errors, as we explicitly checked by comparison to results from D′ = 200.' Sec. IV C: 'For each value of B, we converge the imaginary time evolution independently, using time steps τ = 10−2, 10−3, and 10−4.' RULES.md 6: 'A deterministic energy has no sigma. ... tensor-network contractions carry no statistical error.' Keep the bracket in the verification note as the time-step convergence estimate. Energy, lattice (21 × 21 square, open on all four sides: 'the two-dimensional square lattice geometry with open boundary conditions and size N = L×L considered throughout this work', Sec. II), h = B = 3, per-site Pauli convention (Sec. IV C: 'H = −Σ⟨l,m⟩ σZl σZm − B Σl σXl', the QMBL TFIsing form with h = B, no constant), own computation (Appendix C: 'precise energy values obtained with the PEPS ground state approximations considered in this paper'), peer_reviewed and reference all agree. bound_type variational stands (RULES.md 4 and the converged-contraction rule): the printed energy is the expectation value of the final PEPS, contracted at D′ = 100 and checked against D′ = 200; it is a strict bound only up to that contraction error, which the paper states is negligible but does not print. Footnote 16 (journal; arXiv v2 note 65): 'on the 11×11 lattice, we ran the FU with D′ = 8 for D = 2, D′ = 54 for D = 3, and D′ = 128 for D = 4, while on the 21×21 lattice, we ran the FU with D′ = 8 for D = 2, D′ = 36 for D = 3, and D′ = 128 for D = 4'; Sec. IV C: 'here, we have not performed such an extensive convergence analysis with D′ as we have done before for the Heisenberg Hamiltonian' (this refers to the update environment D′; the evaluation contraction is the D′ = 100 of Sec. IV A).. Effect on ranks: ties now go by energy alone.",
+          "source_entry": "RP1-arxiv-1405-3259#55 (qmbl-verify 2026-11-16)",
+          "from": 0.1764
+        }
+      ],
       "compute": {
         "parameters": null,
         "gpu_hours": null,
@@ -347,7 +459,7 @@
     },
     {
       "energy": -1402.9974,
-      "sigma": 0.2205,
+      "sigma": null,
       "energy_variance": null,
       "dof": 441,
       "einf": 0,
@@ -370,6 +482,20 @@
         "note": "Appendix C, Table VIII (21 × 21, simple update, B = 3.0), row D = 7; sources/1405.3259.txt line 957; the bracket is printed after each energy; the paper does not say what it estimates (stored as the error bar as printed); version read: arXiv text (sources/1405.3259.txt, pypdf layout mode); journal version not yet read (second reading) | Appendix C: H = − sum_<l,m> σZ_l σZ_m − B sum_l σX_l (Pauli matrices), the instance's Hamiltonian with h = B; Tables VI-VIII print the energy per site, the stored per-site convention (E/N, Pauli; RULES.md 5). Plausibility: at fixed B the 21 x 21 energies lie below the 11 x 11 ones, as the smaller boundary fraction requires, and the D = 3 and 4 cells agree to the last printed digits.",
         "secondary_of": null
       },
+      "corrections": [
+        {
+          "field": "sigma",
+          "to": null,
+          "reported_as": "−3.1814(5) (energy per site, Pauli, H = −Σ σZσZ − B Σ σX)",
+          "location": "Appendix C, Table VIII (21 × 21, SU, B = 3.0), row D = 7; journal text line 964, arXiv v2 line 957",
+          "version_read": "Phys. Rev. B 90, 064425 (2014), APS publisher PDF fetched 2026-11-16 (sources/PRB.90.064425.pdf), pypdf layout mode; cross-checked against arXiv:1405.3259v2 PDF (sources/1405.3259v2.txt, identical to the project's sources/1405.3259.txt) and v1 (sources/1405.3259v1.txt)",
+          "conversion": "energy -3.1814 × 441 = -1402.9974 = stored -1402.9974 (agrees); bracket (5) = 5e-4 per site × 441 = 0.2205 = stored sigma; proposed null",
+          "checked_on": "2026-11-16",
+          "reason": "The bracket is not a statistical error bar: the energy is a deterministic boundary-MPO contraction of a stated PEPS (no sampling), and the bracket is the imaginary-time convergence estimate, |E(τ = 1e-4) − E(previous time step)|. Sec. IV A (journal p. 064425-8; arXiv v2 and v1 same wording): 'Energies and correlators reported here for a certain value of D correspond to the final PEPS for the smallest time step. The error in the corresponding observable was estimated via the difference to the expectation value calculated with the converged PEPS for the previous time step. All contractions were performed with boundary bond dimension D′ = 100, big enough to neglect contraction errors, as we explicitly checked by comparison to results from D′ = 200.' Sec. IV C: 'For each value of B, we converge the imaginary time evolution independently, using time steps τ = 10−2, 10−3, and 10−4.' RULES.md 6: 'A deterministic energy has no sigma. ... tensor-network contractions carry no statistical error.' Keep the bracket in the verification note as the time-step convergence estimate. Energy, lattice (21 × 21 square, open on all four sides: 'the two-dimensional square lattice geometry with open boundary conditions and size N = L×L considered throughout this work', Sec. II), h = B = 3, per-site Pauli convention (Sec. IV C: 'H = −Σ⟨l,m⟩ σZl σZm − B Σl σXl', the QMBL TFIsing form with h = B, no constant), own computation (Appendix C: 'precise energy values obtained with the PEPS ground state approximations considered in this paper'), peer_reviewed and reference all agree. bound_type variational stands (RULES.md 4 and the converged-contraction rule): the printed energy is the expectation value of the final PEPS, contracted at D′ = 100 and checked against D′ = 200; it is a strict bound only up to that contraction error, which the paper states is negligible but does not print. Footnote 16 (journal; arXiv v2 note 65): 'on the 11×11 lattice, we ran the FU with D′ = 8 for D = 2, D′ = 54 for D = 3, and D′ = 128 for D = 4, while on the 21×21 lattice, we ran the FU with D′ = 8 for D = 2, D′ = 36 for D = 3, and D′ = 128 for D = 4'; Sec. IV C: 'here, we have not performed such an extensive convergence analysis with D′ as we have done before for the Heisenberg Hamiltonian' (this refers to the update environment D′; the evaluation contraction is the D′ = 100 of Sec. IV A).. Effect on ranks: ties now go by energy alone.",
+          "source_entry": "RP1-arxiv-1405-3259#56 (qmbl-verify 2026-11-16)",
+          "from": 0.2205
+        }
+      ],
       "compute": {
         "parameters": null,
         "gpu_hours": null,

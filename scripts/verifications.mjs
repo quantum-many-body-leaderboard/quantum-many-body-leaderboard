@@ -45555,4 +45555,665 @@ export const VERIFICATIONS = [
     "note": "Kept as printed (ruling 2026-11-12). The same paper's SM Table I prints the NNB relative error on this system as (1.156 ± 2 × 10−3)%, which against the exact -11.868 implies -0.7332 per site; -0.730 corresponds to 1.591%. One of the two cells is a misprint and the source does not say which; the discrepancy, 0.0032 per site, is 400 times the printed bar. Identical in arXiv:1807.10770v2 and the published SM.",
     "source_entry": "RP2-arxiv-1807-10770#1 (qmbl-verify 2026-11-11, quoted; ambiguous, kept)"
   },
+  // qmbl-verify 2026-11-16: second reading of the frustrated-lattice and TFIsing pass and the open 4x4 TFIsing exact rows (independent recompute).
+  {
+    "match": {
+      "instance": "TFIsing/square_16_O_1",
+      "method": "Exact diagonalization",
+      "energy": -26.8605046395278
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "independent recompute: ed_lib.mjs Lanczos (node, qmbl-verify 2026-09-15 code), full 2^16-state space, no symmetry, open 4x4 grid with 24 bonds, H = - sum sz sz - h sum sx (Pauli); a third code next to the two in checks/tfising-4x4-open-ed",
+    "location": "qmbl-runs/qmbl-verify-2026-11-16-frustrated/out/RE-exact-recompute/result.json",
+    "reported_as": "-26.860504639528013",
+    "conversion": "none (total energy)",
+    "note": "agrees to 2.1e-13 (residual 6.9e-13, 80 Lanczos steps)",
+    "source_entry": "RE-exact-recompute#0 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_16_O_2",
+      "method": "Exact diagonalization",
+      "energy": -35.9072576204089
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "independent recompute: ed_lib.mjs Lanczos (node, qmbl-verify 2026-09-15 code), full 2^16-state space, no symmetry, open 4x4 grid with 24 bonds, H = - sum sz sz - h sum sx (Pauli); a third code next to the two in checks/tfising-4x4-open-ed",
+    "location": "qmbl-runs/qmbl-verify-2026-11-16-frustrated/out/RE-exact-recompute/result.json",
+    "reported_as": "-35.90725762040928",
+    "conversion": "none (total energy)",
+    "note": "agrees to 3.8e-13 (residual 3.9e-13, 90 Lanczos steps)",
+    "source_entry": "RE-exact-recompute#1 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_16_O_3",
+      "method": "Exact diagonalization",
+      "energy": -50.1866238827776
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "independent recompute: ed_lib.mjs Lanczos (node, qmbl-verify 2026-09-15 code), full 2^16-state space, no symmetry, open 4x4 grid with 24 bonds, H = - sum sz sz - h sum sx (Pauli); a third code next to the two in checks/tfising-4x4-open-ed",
+    "location": "qmbl-runs/qmbl-verify-2026-11-16-frustrated/out/RE-exact-recompute/result.json",
+    "reported_as": "-50.186623882779074",
+    "conversion": "none (total energy)",
+    "note": "agrees to 1.5e-12 (residual 1.4e-12, 80 Lanczos steps)",
+    "source_entry": "RE-exact-recompute#2 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_16_O_3.5",
+      "method": "Exact diagonalization",
+      "energy": -57.8243697764037
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "independent recompute: ed_lib.mjs Lanczos (node, qmbl-verify 2026-09-15 code), full 2^16-state space, no symmetry, open 4x4 grid with 24 bonds, H = - sum sz sz - h sum sx (Pauli); a third code next to the two in checks/tfising-4x4-open-ed",
+    "location": "qmbl-runs/qmbl-verify-2026-11-16-frustrated/out/RE-exact-recompute/result.json",
+    "reported_as": "-57.82436977640346",
+    "conversion": "none (total energy)",
+    "note": "agrees to 2.4e-13 (residual 2.5e-13, 80 Lanczos steps)",
+    "source_entry": "RE-exact-recompute#3 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-12x12_432_P",
+      "method": "U(1) Dirac spin liquid with n.n.n. hopping (VMC)",
+      "energy": -740.8132992
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 97, 115127 (2018) publisher Supplemental Material PDF (journals.aps.org/prb/supplemental/10.1103/PhysRevB.97.115127/Supp_Mat.pdf, fetched 2026-11-16) and publisher main-text PDF, pypdf layout + plain mode; cross-read with arXiv:1712.04579 (latest version v2) cached text qmbl/sources/1712.04579.txt; journal and arXiv Tables S1/S2 agree digit for digit",
+    "location": "Supplemental Material Table S1, row J▽/J∆ = 1.0, column 432 (journal SM p. 2; arXiv text line 509)",
+    "reported_as": "−0.4287114(3)",
+    "conversion": "-0.4287114 x 4 x 432 = -740.8132992; sigma 3.0e-7 x 1728 = 0.0005184",
+    "note": "Eq. (1) H = J∆ Σ_∆ S_i·S_j + J▽ Σ_▽ S_i·S_j, S = 1/2 operators; at J▽/J∆ = 1.0 the nearest-neighbour kagome Heisenberg model; table prints 'variational ground-state energies per site E/J∆'; clusters 'T1 = La1 and T2 = La2 ... N = 3L^2', L = 12 for N = 432, the instance's rhombic torus; 'mixed boundary conditions, i.e., anti-periodic along a1 and periodic along a2' are those of the auxiliary fermionic Hamiltonian ('In order to have a nondegenerate ground state of the auxiliary Hamiltonian, we choose antiperiodic and periodic boundary conditions along a1 and a2', Sec. II A), the spin model is periodic. Pure VMC (no Lanczos step) of a Gutzwiller-projected state: variational. Next-nearest-neighbour hopping is a variational parameter of the auxiliary Hamiltonian, not a spin coupling. Bracket not defined in the paper (stored as printed). Journal SM = arXiv. No other row on the instance carries this number (duplicate check against data/Heisenberg/kagome-12x12_432_P.json).",
+    "source_entry": "RP2-heisenberg-tfising#0 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-12x12_432_P",
+      "method": "gapped Z2[0,π]β* spin liquid (VMC)",
+      "energy": -740.8395648
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 97, 115127 (2018) publisher Supplemental Material PDF (journals.aps.org/prb/supplemental/10.1103/PhysRevB.97.115127/Supp_Mat.pdf, fetched 2026-11-16) and publisher main-text PDF, pypdf layout + plain mode; cross-read with arXiv:1712.04579 (latest version v2) cached text qmbl/sources/1712.04579.txt; journal and arXiv Tables S1/S2 agree digit for digit",
+    "location": "Supplemental Material Table S2, row J▽/J∆ = 1.0, column 432 (journal SM p. 2; arXiv text line 530)",
+    "reported_as": "−0.4287266(4)",
+    "conversion": "-0.4287266 x 4 x 432 = -740.8395648; sigma 4.0e-7 x 1728 = 0.0006912",
+    "note": "Eq. (1) H = J∆ Σ_∆ S_i·S_j + J▽ Σ_▽ S_i·S_j, S = 1/2 operators; at J▽/J∆ = 1.0 the nearest-neighbour kagome Heisenberg model; table prints 'variational ground-state energies per site E/J∆'; clusters 'T1 = La1 and T2 = La2 ... N = 3L^2', L = 12 for N = 432, the instance's rhombic torus; 'mixed boundary conditions, i.e., anti-periodic along a1 and periodic along a2' are those of the auxiliary fermionic Hamiltonian ('In order to have a nondegenerate ground state of the auxiliary Hamiltonian, we choose antiperiodic and periodic boundary conditions along a1 and a2', Sec. II A), the spin model is periodic. Pure VMC (no Lanczos step) of a Gutzwiller-projected state: variational. Next-nearest-neighbour hopping is a variational parameter of the auxiliary Hamiltonian, not a spin coupling. Bracket not defined in the paper (stored as printed). Journal SM = arXiv. No other row on the instance carries this number (duplicate check against data/Heisenberg/kagome-12x12_432_P.json).",
+    "source_entry": "RP2-heisenberg-tfising#1 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-16x16_768_P",
+      "method": "U(1) Dirac spin liquid with n.n.n. hopping (VMC)",
+      "energy": -1317.015552
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 97, 115127 (2018) publisher Supplemental Material PDF (journals.aps.org/prb/supplemental/10.1103/PhysRevB.97.115127/Supp_Mat.pdf, fetched 2026-11-16) and publisher main-text PDF, pypdf layout + plain mode; cross-read with arXiv:1712.04579 (latest version v2) cached text qmbl/sources/1712.04579.txt; journal and arXiv Tables S1/S2 agree digit for digit",
+    "location": "Supplemental Material Table S1, row J▽/J∆ = 1.0, column 768 (journal SM p. 2; arXiv text line 509)",
+    "reported_as": "−0.4287160(6)",
+    "conversion": "-0.4287160 x 4 x 768 = -1317.015552; sigma 6.0e-7 x 3072 = 0.0018432",
+    "note": "Eq. (1) H = J∆ Σ_∆ S_i·S_j + J▽ Σ_▽ S_i·S_j, S = 1/2 operators; at J▽/J∆ = 1.0 the nearest-neighbour kagome Heisenberg model; table prints 'variational ground-state energies per site E/J∆'; clusters 'T1 = La1 and T2 = La2 ... N = 3L^2', L = 16 for N = 768, the instance's rhombic torus; 'mixed boundary conditions, i.e., anti-periodic along a1 and periodic along a2' are those of the auxiliary fermionic Hamiltonian ('In order to have a nondegenerate ground state of the auxiliary Hamiltonian, we choose antiperiodic and periodic boundary conditions along a1 and a2', Sec. II A), the spin model is periodic. Pure VMC (no Lanczos step) of a Gutzwiller-projected state: variational. Next-nearest-neighbour hopping is a variational parameter of the auxiliary Hamiltonian, not a spin coupling. Bracket not defined in the paper (stored as printed). Journal SM = arXiv. No other row on the instance carries this number (duplicate check against data/Heisenberg/kagome-16x16_768_P.json).",
+    "source_entry": "RP2-heisenberg-tfising#2 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-16x16_768_P",
+      "method": "gapped Z2[0,π]β* spin liquid (VMC)",
+      "energy": -1317.0290688
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 97, 115127 (2018) publisher Supplemental Material PDF (journals.aps.org/prb/supplemental/10.1103/PhysRevB.97.115127/Supp_Mat.pdf, fetched 2026-11-16) and publisher main-text PDF, pypdf layout + plain mode; cross-read with arXiv:1712.04579 (latest version v2) cached text qmbl/sources/1712.04579.txt; journal and arXiv Tables S1/S2 agree digit for digit",
+    "location": "Supplemental Material Table S2, row J▽/J∆ = 1.0, column 768 (journal SM p. 2; arXiv text line 530)",
+    "reported_as": "−0.4287204(7)",
+    "conversion": "-0.4287204 x 4 x 768 = -1317.0290688; sigma 7.0e-7 x 3072 = 0.0021504",
+    "note": "Eq. (1) H = J∆ Σ_∆ S_i·S_j + J▽ Σ_▽ S_i·S_j, S = 1/2 operators; at J▽/J∆ = 1.0 the nearest-neighbour kagome Heisenberg model; table prints 'variational ground-state energies per site E/J∆'; clusters 'T1 = La1 and T2 = La2 ... N = 3L^2', L = 16 for N = 768, the instance's rhombic torus; 'mixed boundary conditions, i.e., anti-periodic along a1 and periodic along a2' are those of the auxiliary fermionic Hamiltonian ('In order to have a nondegenerate ground state of the auxiliary Hamiltonian, we choose antiperiodic and periodic boundary conditions along a1 and a2', Sec. II A), the spin model is periodic. Pure VMC (no Lanczos step) of a Gutzwiller-projected state: variational. Next-nearest-neighbour hopping is a variational parameter of the auxiliary Hamiltonian, not a spin coupling. Bracket not defined in the paper (stored as printed). Journal SM = arXiv. No other row on the instance carries this number (duplicate check against data/Heisenberg/kagome-16x16_768_P.json). Record row: the Z2 value is the lower of the only two rows on this instance; the paper's own text says the Z2 pairing optimises to near zero at the isotropic point, so the two states are close, as printed.",
+    "source_entry": "RP2-heisenberg-tfising#3 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-20x20_1200_P",
+      "method": "U(1) Dirac spin liquid with n.n.n. hopping (VMC)",
+      "energy": -2057.84064
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 97, 115127 (2018) publisher Supplemental Material PDF (journals.aps.org/prb/supplemental/10.1103/PhysRevB.97.115127/Supp_Mat.pdf, fetched 2026-11-16) and publisher main-text PDF, pypdf layout + plain mode; cross-read with arXiv:1712.04579 (latest version v2) cached text qmbl/sources/1712.04579.txt; journal and arXiv Tables S1/S2 agree digit for digit",
+    "location": "Supplemental Material Table S1, row J▽/J∆ = 1.0, column 1200 (journal SM p. 2; arXiv text line 509)",
+    "reported_as": "−0.4287168(27)",
+    "conversion": "-0.4287168 x 4 x 1200 = -2057.84064; sigma 0.0000027 x 4800 = 0.01296",
+    "note": "Eq. (1) H = J∆ Σ_∆ S_i·S_j + J▽ Σ_▽ S_i·S_j, S = 1/2 operators; at J▽/J∆ = 1.0 the nearest-neighbour kagome Heisenberg model; table prints 'variational ground-state energies per site E/J∆'; clusters 'T1 = La1 and T2 = La2 ... N = 3L^2', L = 20 for N = 1200, the instance's rhombic torus; 'mixed boundary conditions, i.e., anti-periodic along a1 and periodic along a2' are those of the auxiliary fermionic Hamiltonian ('In order to have a nondegenerate ground state of the auxiliary Hamiltonian, we choose antiperiodic and periodic boundary conditions along a1 and a2', Sec. II A), the spin model is periodic. Pure VMC (no Lanczos step) of a Gutzwiller-projected state: variational. Next-nearest-neighbour hopping is a variational parameter of the auxiliary Hamiltonian, not a spin coupling. Bracket not defined in the paper (stored as printed). Journal SM = arXiv. No other row on the instance carries this number (duplicate check against data/Heisenberg/kagome-20x20_1200_P.json).",
+    "source_entry": "RP2-heisenberg-tfising#4 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-20x20_1200_P",
+      "method": "gapped Z2[0,π]β* spin liquid (VMC)",
+      "energy": -2057.84496
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 97, 115127 (2018) publisher Supplemental Material PDF (journals.aps.org/prb/supplemental/10.1103/PhysRevB.97.115127/Supp_Mat.pdf, fetched 2026-11-16) and publisher main-text PDF, pypdf layout + plain mode; cross-read with arXiv:1712.04579 (latest version v2) cached text qmbl/sources/1712.04579.txt; journal and arXiv Tables S1/S2 agree digit for digit",
+    "location": "Supplemental Material Table S2, row J▽/J∆ = 1.0, column 1200 (journal SM p. 2; arXiv text line 530)",
+    "reported_as": "−0.4287177(37)",
+    "conversion": "-0.4287177 x 4 x 1200 = -2057.84496; sigma 0.0000037 x 4800 = 0.01776",
+    "note": "Eq. (1) H = J∆ Σ_∆ S_i·S_j + J▽ Σ_▽ S_i·S_j, S = 1/2 operators; at J▽/J∆ = 1.0 the nearest-neighbour kagome Heisenberg model; table prints 'variational ground-state energies per site E/J∆'; clusters 'T1 = La1 and T2 = La2 ... N = 3L^2', L = 20 for N = 1200, the instance's rhombic torus; 'mixed boundary conditions, i.e., anti-periodic along a1 and periodic along a2' are those of the auxiliary fermionic Hamiltonian ('In order to have a nondegenerate ground state of the auxiliary Hamiltonian, we choose antiperiodic and periodic boundary conditions along a1 and a2', Sec. II A), the spin model is periodic. Pure VMC (no Lanczos step) of a Gutzwiller-projected state: variational. Next-nearest-neighbour hopping is a variational parameter of the auxiliary Hamiltonian, not a spin coupling. Bracket not defined in the paper (stored as printed). Journal SM = arXiv. No other row on the instance carries this number (duplicate check against data/Heisenberg/kagome-20x20_1200_P.json). Record row: the Z2 value is the lower of the only two rows on this instance; the paper's own text says the Z2 pairing optimises to near zero at the isotropic point, so the two states are close, as printed.",
+    "source_entry": "RP2-heisenberg-tfising#5 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-28x28_2352_P",
+      "method": "U(1) Dirac spin liquid with n.n.n. hopping (VMC)",
+      "energy": -4033.284864
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 97, 115127 (2018) publisher Supplemental Material PDF (journals.aps.org/prb/supplemental/10.1103/PhysRevB.97.115127/Supp_Mat.pdf, fetched 2026-11-16) and publisher main-text PDF, pypdf layout + plain mode; cross-read with arXiv:1712.04579 (latest version v2) cached text qmbl/sources/1712.04579.txt; journal and arXiv Tables S1/S2 agree digit for digit",
+    "location": "Supplemental Material Table S1, row J▽/J∆ = 1.0, column 2352 (journal SM p. 2; arXiv text line 509)",
+    "reported_as": "−0.428708(9)",
+    "conversion": "-0.428708 x 4 x 2352 = -4033.284864; sigma 0.0000090 x 9408 = 0.084672",
+    "note": "Eq. (1) H = J∆ Σ_∆ S_i·S_j + J▽ Σ_▽ S_i·S_j, S = 1/2 operators; at J▽/J∆ = 1.0 the nearest-neighbour kagome Heisenberg model; table prints 'variational ground-state energies per site E/J∆'; clusters 'T1 = La1 and T2 = La2 ... N = 3L^2', L = 28 for N = 2352, the instance's rhombic torus; 'mixed boundary conditions, i.e., anti-periodic along a1 and periodic along a2' are those of the auxiliary fermionic Hamiltonian ('In order to have a nondegenerate ground state of the auxiliary Hamiltonian, we choose antiperiodic and periodic boundary conditions along a1 and a2', Sec. II A), the spin model is periodic. Pure VMC (no Lanczos step) of a Gutzwiller-projected state: variational. Next-nearest-neighbour hopping is a variational parameter of the auxiliary Hamiltonian, not a spin coupling. Bracket not defined in the paper (stored as printed). Journal SM = arXiv. No other row on the instance carries this number (duplicate check against data/Heisenberg/kagome-28x28_2352_P.json).",
+    "source_entry": "RP2-heisenberg-tfising#6 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-28x28_2352_P",
+      "method": "gapped Z2[0,π]β* spin liquid (VMC)",
+      "energy": -4033.313088
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 97, 115127 (2018) publisher Supplemental Material PDF (journals.aps.org/prb/supplemental/10.1103/PhysRevB.97.115127/Supp_Mat.pdf, fetched 2026-11-16) and publisher main-text PDF, pypdf layout + plain mode; cross-read with arXiv:1712.04579 (latest version v2) cached text qmbl/sources/1712.04579.txt; journal and arXiv Tables S1/S2 agree digit for digit",
+    "location": "Supplemental Material Table S2, row J▽/J∆ = 1.0, column 2352 (journal SM p. 2; arXiv text line 530)",
+    "reported_as": "−0.428711(12)",
+    "conversion": "-0.428711 x 4 x 2352 = -4033.313088; sigma 0.000012 x 9408 = 0.112896",
+    "note": "Eq. (1) H = J∆ Σ_∆ S_i·S_j + J▽ Σ_▽ S_i·S_j, S = 1/2 operators; at J▽/J∆ = 1.0 the nearest-neighbour kagome Heisenberg model; table prints 'variational ground-state energies per site E/J∆'; clusters 'T1 = La1 and T2 = La2 ... N = 3L^2', L = 28 for N = 2352, the instance's rhombic torus; 'mixed boundary conditions, i.e., anti-periodic along a1 and periodic along a2' are those of the auxiliary fermionic Hamiltonian ('In order to have a nondegenerate ground state of the auxiliary Hamiltonian, we choose antiperiodic and periodic boundary conditions along a1 and a2', Sec. II A), the spin model is periodic. Pure VMC (no Lanczos step) of a Gutzwiller-projected state: variational. Next-nearest-neighbour hopping is a variational parameter of the auxiliary Hamiltonian, not a spin coupling. Bracket not defined in the paper (stored as printed). Journal SM = arXiv. No other row on the instance carries this number (duplicate check against data/Heisenberg/kagome-28x28_2352_P.json). Record row: the Z2 value is the lower of the only two rows on this instance; the paper's own text says the Z2 pairing optimises to near zero at the isotropic point, so the two states are close, as printed.",
+    "source_entry": "RP2-heisenberg-tfising#7 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-4x4_48_P",
+      "method": "gapped Z2[0,π]β* spin liquid (VMC)",
+      "energy": -82.4708352
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 97, 115127 (2018) publisher Supplemental Material PDF (journals.aps.org/prb/supplemental/10.1103/PhysRevB.97.115127/Supp_Mat.pdf, fetched 2026-11-16) and publisher main-text PDF, pypdf layout + plain mode; cross-read with arXiv:1712.04579 (latest version v2) cached text qmbl/sources/1712.04579.txt; journal and arXiv Tables S1/S2 agree digit for digit",
+    "location": "Supplemental Material Table S2, row J▽/J∆ = 1.0, column 48 (journal SM p. 2; arXiv text line 530)",
+    "reported_as": "−0.4295356(12)",
+    "conversion": "-0.4295356 x 4 x 48 = -82.4708352; sigma 0.0000012 x 192 = 0.0002304",
+    "note": "Eq. (1) H = J∆ Σ_∆ S_i·S_j + J▽ Σ_▽ S_i·S_j, S = 1/2 operators; at J▽/J∆ = 1.0 the nearest-neighbour kagome Heisenberg model; table prints 'variational ground-state energies per site E/J∆'; clusters 'T1 = La1 and T2 = La2 ... N = 3L^2', L = 4 for N = 48, the instance's rhombic torus; 'mixed boundary conditions, i.e., anti-periodic along a1 and periodic along a2' are those of the auxiliary fermionic Hamiltonian ('In order to have a nondegenerate ground state of the auxiliary Hamiltonian, we choose antiperiodic and periodic boundary conditions along a1 and a2', Sec. II A), the spin model is periodic. Pure VMC (no Lanczos step) of a Gutzwiller-projected state: variational. Next-nearest-neighbour hopping is a variational parameter of the auxiliary Hamiltonian, not a spin coupling. Bracket not defined in the paper (stored as printed). Journal SM = arXiv. No other row on the instance carries this number (duplicate check against data/Heisenberg/kagome-4x4_48_P.json).",
+    "source_entry": "RP2-heisenberg-tfising#9 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-8x8_192_P",
+      "method": "U(1) Dirac spin liquid with n.n.n. hopping (VMC)",
+      "energy": -329.2657152
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 97, 115127 (2018) publisher Supplemental Material PDF (journals.aps.org/prb/supplemental/10.1103/PhysRevB.97.115127/Supp_Mat.pdf, fetched 2026-11-16) and publisher main-text PDF, pypdf layout + plain mode; cross-read with arXiv:1712.04579 (latest version v2) cached text qmbl/sources/1712.04579.txt; journal and arXiv Tables S1/S2 agree digit for digit",
+    "location": "Supplemental Material Table S1, row J▽/J∆ = 1.0, column 192 (journal SM p. 2; arXiv text line 509)",
+    "reported_as": "−0.4287314(23)",
+    "conversion": "-0.4287314 x 4 x 192 = -329.2657152; sigma 0.0000023 x 768 = 0.0017664",
+    "note": "Eq. (1) H = J∆ Σ_∆ S_i·S_j + J▽ Σ_▽ S_i·S_j, S = 1/2 operators; at J▽/J∆ = 1.0 the nearest-neighbour kagome Heisenberg model; table prints 'variational ground-state energies per site E/J∆'; clusters 'T1 = La1 and T2 = La2 ... N = 3L^2', L = 8 for N = 192, the instance's rhombic torus; 'mixed boundary conditions, i.e., anti-periodic along a1 and periodic along a2' are those of the auxiliary fermionic Hamiltonian ('In order to have a nondegenerate ground state of the auxiliary Hamiltonian, we choose antiperiodic and periodic boundary conditions along a1 and a2', Sec. II A), the spin model is periodic. Pure VMC (no Lanczos step) of a Gutzwiller-projected state: variational. Next-nearest-neighbour hopping is a variational parameter of the auxiliary Hamiltonian, not a spin coupling. Bracket not defined in the paper (stored as printed). Journal SM = arXiv. No other row on the instance carries this number (duplicate check against data/Heisenberg/kagome-8x8_192_P.json).",
+    "source_entry": "RP2-heisenberg-tfising#10 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-8x8_192_P",
+      "method": "gapped Z2[0,π]β* spin liquid (VMC)",
+      "energy": -329.2905984
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 97, 115127 (2018) publisher Supplemental Material PDF (journals.aps.org/prb/supplemental/10.1103/PhysRevB.97.115127/Supp_Mat.pdf, fetched 2026-11-16) and publisher main-text PDF, pypdf layout + plain mode; cross-read with arXiv:1712.04579 (latest version v2) cached text qmbl/sources/1712.04579.txt; journal and arXiv Tables S1/S2 agree digit for digit",
+    "location": "Supplemental Material Table S2, row J▽/J∆ = 1.0, column 192 (journal SM p. 2; arXiv text line 530)",
+    "reported_as": "−0.4287638(23)",
+    "conversion": "-0.4287638 x 4 x 192 = -329.2905984; sigma 0.0000023 x 768 = 0.0017664",
+    "note": "Eq. (1) H = J∆ Σ_∆ S_i·S_j + J▽ Σ_▽ S_i·S_j, S = 1/2 operators; at J▽/J∆ = 1.0 the nearest-neighbour kagome Heisenberg model; table prints 'variational ground-state energies per site E/J∆'; clusters 'T1 = La1 and T2 = La2 ... N = 3L^2', L = 8 for N = 192, the instance's rhombic torus; 'mixed boundary conditions, i.e., anti-periodic along a1 and periodic along a2' are those of the auxiliary fermionic Hamiltonian ('In order to have a nondegenerate ground state of the auxiliary Hamiltonian, we choose antiperiodic and periodic boundary conditions along a1 and a2', Sec. II A), the spin model is periodic. Pure VMC (no Lanczos step) of a Gutzwiller-projected state: variational. Next-nearest-neighbour hopping is a variational parameter of the auxiliary Hamiltonian, not a spin coupling. Bracket not defined in the paper (stored as printed). Journal SM = arXiv. No other row on the instance carries this number (duplicate check against data/Heisenberg/kagome-8x8_192_P.json).",
+    "source_entry": "RP2-heisenberg-tfising#11 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/pyrochlore-2x2x2_32_P",
+      "method": "VMC, [0, 0, 0] flux state",
+      "energy": -47.616
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 78, 180410(R) (2008) publisher PDF (fetched 2026-11-16), pypdf layout; cross-read with arXiv:0807.2036 (latest v2) cached text; Table I identical",
+    "location": "Table I, row L = 2, column [0, 0, 0] (journal p. 3; arXiv line 134)",
+    "reported_as": "-0.372",
+    "conversion": "-0.372 x 4 x 32 = -47.616; no error bar printed",
+    "note": "Eq. (1) H = Σ_<ij> S_i·S_j (spin-1/2, J = 1); Table I 'Energy per site of various states obtained from VMC depending on the number of up tetrahedra L in each direction'; lattice generated by n1ê1 + n2ê2 + n3ê3 with ê1 = (2,0,0), ê2 = (1,√3,0), ê3 = (1,1/√3,√8/3) (FCC primitive vectors), 'L × L × L ≡ L^3 lattice with 4L^3 lattice sites': L = 2 is the 2x2x2 primitive-cell torus of 32 sites, VarBench's pyrochlore-2x2x2_32_P (8 unit cells x 4 sites). aPBC/PBC refer to the mean-field state ('Periodic boundary conditions (PBC) generate degenerate states at the Fermi level ... lifted by applying anti-periodic boundary conditions'). 'Statistical uncertainties lie below the digits shown': no sigma (stored null, precision 1e-3 per site). Projected fermionic VMC: variational. Journal = arXiv. Below-exact check (brief question 4): exact E0 on Heisenberg/pyrochlore-2x2x2_32_P is -66.15792523719963 = -0.5168588 per site; -0.372 lies above it, as do all four L = 2 values (-0.372, -0.478, -0.466, -0.374).",
+    "source_entry": "RP2-heisenberg-tfising#12 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/pyrochlore-2x2x2_32_P",
+      "method": "VMC, [π/2, π/2, 0] flux state",
+      "energy": -61.184
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 78, 180410(R) (2008) publisher PDF (fetched 2026-11-16), pypdf layout; cross-read with arXiv:0807.2036 (latest v2) cached text; Table I identical",
+    "location": "Table I, row L = 2, column [π/2, π/2, 0] (journal p. 3; arXiv line 134)",
+    "reported_as": "-0.478",
+    "conversion": "-0.478 x 4 x 32 = -61.184; no error bar printed",
+    "note": "Eq. (1) H = Σ_<ij> S_i·S_j (spin-1/2, J = 1); Table I 'Energy per site of various states obtained from VMC depending on the number of up tetrahedra L in each direction'; lattice generated by n1ê1 + n2ê2 + n3ê3 with ê1 = (2,0,0), ê2 = (1,√3,0), ê3 = (1,1/√3,√8/3) (FCC primitive vectors), 'L × L × L ≡ L^3 lattice with 4L^3 lattice sites': L = 2 is the 2x2x2 primitive-cell torus of 32 sites, VarBench's pyrochlore-2x2x2_32_P (8 unit cells x 4 sites). aPBC/PBC refer to the mean-field state ('Periodic boundary conditions (PBC) generate degenerate states at the Fermi level ... lifted by applying anti-periodic boundary conditions'). 'Statistical uncertainties lie below the digits shown': no sigma (stored null, precision 1e-3 per site). Projected fermionic VMC: variational. Journal = arXiv. Below-exact check (brief question 4): exact E0 on Heisenberg/pyrochlore-2x2x2_32_P is -66.15792523719963 = -0.5168588 per site; -0.478 lies above it, as do all four L = 2 values (-0.372, -0.478, -0.466, -0.374).",
+    "source_entry": "RP2-heisenberg-tfising#13 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/pyrochlore-2x2x2_32_P",
+      "method": "VMC, [π/2, −π/2, 0] flux state",
+      "energy": -59.648
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 78, 180410(R) (2008) publisher PDF (fetched 2026-11-16), pypdf layout; cross-read with arXiv:0807.2036 (latest v2) cached text; Table I identical",
+    "location": "Table I, row L = 2, column [π/2, −π/2, 0] (journal p. 3; arXiv line 134)",
+    "reported_as": "-0.466",
+    "conversion": "-0.466 x 4 x 32 = -59.648; no error bar printed",
+    "note": "Eq. (1) H = Σ_<ij> S_i·S_j (spin-1/2, J = 1); Table I 'Energy per site of various states obtained from VMC depending on the number of up tetrahedra L in each direction'; lattice generated by n1ê1 + n2ê2 + n3ê3 with ê1 = (2,0,0), ê2 = (1,√3,0), ê3 = (1,1/√3,√8/3) (FCC primitive vectors), 'L × L × L ≡ L^3 lattice with 4L^3 lattice sites': L = 2 is the 2x2x2 primitive-cell torus of 32 sites, VarBench's pyrochlore-2x2x2_32_P (8 unit cells x 4 sites). aPBC/PBC refer to the mean-field state ('Periodic boundary conditions (PBC) generate degenerate states at the Fermi level ... lifted by applying anti-periodic boundary conditions'). 'Statistical uncertainties lie below the digits shown': no sigma (stored null, precision 1e-3 per site). Projected fermionic VMC: variational. Journal = arXiv. Below-exact check (brief question 4): exact E0 on Heisenberg/pyrochlore-2x2x2_32_P is -66.15792523719963 = -0.5168588 per site; -0.466 lies above it, as do all four L = 2 values (-0.372, -0.478, -0.466, -0.374).",
+    "source_entry": "RP2-heisenberg-tfising#14 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/pyrochlore-2x2x2_32_P",
+      "method": "VMC, [0, 0, π] flux state",
+      "energy": -47.872
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 78, 180410(R) (2008) publisher PDF (fetched 2026-11-16), pypdf layout; cross-read with arXiv:0807.2036 (latest v2) cached text; Table I identical",
+    "location": "Table I, row L = 2, column [0, 0, π] (journal p. 3; arXiv line 134)",
+    "reported_as": "-0.374",
+    "conversion": "-0.374 x 4 x 32 = -47.872; no error bar printed",
+    "note": "Eq. (1) H = Σ_<ij> S_i·S_j (spin-1/2, J = 1); Table I 'Energy per site of various states obtained from VMC depending on the number of up tetrahedra L in each direction'; lattice generated by n1ê1 + n2ê2 + n3ê3 with ê1 = (2,0,0), ê2 = (1,√3,0), ê3 = (1,1/√3,√8/3) (FCC primitive vectors), 'L × L × L ≡ L^3 lattice with 4L^3 lattice sites': L = 2 is the 2x2x2 primitive-cell torus of 32 sites, VarBench's pyrochlore-2x2x2_32_P (8 unit cells x 4 sites). aPBC/PBC refer to the mean-field state ('Periodic boundary conditions (PBC) generate degenerate states at the Fermi level ... lifted by applying anti-periodic boundary conditions'). 'Statistical uncertainties lie below the digits shown': no sigma (stored null, precision 1e-3 per site). Projected fermionic VMC: variational. Journal = arXiv. Below-exact check (brief question 4): exact E0 on Heisenberg/pyrochlore-2x2x2_32_P is -66.15792523719963 = -0.5168588 per site; -0.374 lies above it, as do all four L = 2 values (-0.372, -0.478, -0.466, -0.374).",
+    "source_entry": "RP2-heisenberg-tfising#15 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/pyrochlore-4x4x4_256_P",
+      "method": "VMC, [0, 0, 0] flux state",
+      "energy": -382.976
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 78, 180410(R) (2008) publisher PDF (fetched 2026-11-16), pypdf layout; cross-read with arXiv:0807.2036 (latest v2) cached text; Table I identical",
+    "location": "Table I, row L = 4, column [0, 0, 0] (journal p. 3; arXiv line 135)",
+    "reported_as": "-0.374",
+    "conversion": "-0.374 x 4 x 256 = -382.976; no error bar printed",
+    "note": "Eq. (1) H = Σ_<ij> S_i·S_j (spin-1/2, J = 1); Table I 'Energy per site of various states obtained from VMC depending on the number of up tetrahedra L in each direction'; lattice generated by n1ê1 + n2ê2 + n3ê3 with ê1 = (2,0,0), ê2 = (1,√3,0), ê3 = (1,1/√3,√8/3) (FCC primitive vectors), 'L × L × L ≡ L^3 lattice with 4L^3 lattice sites': L = 4 is the 4x4x4 primitive-cell torus of 256 sites, VarBench's pyrochlore-4x4x4_256_P (64 unit cells x 4 sites). aPBC/PBC refer to the mean-field state ('Periodic boundary conditions (PBC) generate degenerate states at the Fermi level ... lifted by applying anti-periodic boundary conditions'). 'Statistical uncertainties lie below the digits shown': no sigma (stored null, precision 1e-3 per site). Projected fermionic VMC: variational. Journal = arXiv.",
+    "source_entry": "RP2-heisenberg-tfising#16 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/pyrochlore-4x4x4_256_P",
+      "method": "VMC, [π/2, π/2, 0] flux state",
+      "energy": -470.016
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 78, 180410(R) (2008) publisher PDF (fetched 2026-11-16), pypdf layout; cross-read with arXiv:0807.2036 (latest v2) cached text; Table I identical",
+    "location": "Table I, row L = 4, column [π/2, π/2, 0] (journal p. 3; arXiv line 135)",
+    "reported_as": "-0.459",
+    "conversion": "-0.459 x 4 x 256 = -470.016; no error bar printed",
+    "note": "Eq. (1) H = Σ_<ij> S_i·S_j (spin-1/2, J = 1); Table I 'Energy per site of various states obtained from VMC depending on the number of up tetrahedra L in each direction'; lattice generated by n1ê1 + n2ê2 + n3ê3 with ê1 = (2,0,0), ê2 = (1,√3,0), ê3 = (1,1/√3,√8/3) (FCC primitive vectors), 'L × L × L ≡ L^3 lattice with 4L^3 lattice sites': L = 4 is the 4x4x4 primitive-cell torus of 256 sites, VarBench's pyrochlore-4x4x4_256_P (64 unit cells x 4 sites). aPBC/PBC refer to the mean-field state ('Periodic boundary conditions (PBC) generate degenerate states at the Fermi level ... lifted by applying anti-periodic boundary conditions'). 'Statistical uncertainties lie below the digits shown': no sigma (stored null, precision 1e-3 per site). Projected fermionic VMC: variational. Journal = arXiv.",
+    "source_entry": "RP2-heisenberg-tfising#17 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/pyrochlore-4x4x4_256_P",
+      "method": "VMC, [π/2, −π/2, 0] flux state",
+      "energy": -466.944
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 78, 180410(R) (2008) publisher PDF (fetched 2026-11-16), pypdf layout; cross-read with arXiv:0807.2036 (latest v2) cached text; Table I identical",
+    "location": "Table I, row L = 4, column [π/2, −π/2, 0] (journal p. 3; arXiv line 135)",
+    "reported_as": "-0.456",
+    "conversion": "-0.456 x 4 x 256 = -466.944; no error bar printed",
+    "note": "Eq. (1) H = Σ_<ij> S_i·S_j (spin-1/2, J = 1); Table I 'Energy per site of various states obtained from VMC depending on the number of up tetrahedra L in each direction'; lattice generated by n1ê1 + n2ê2 + n3ê3 with ê1 = (2,0,0), ê2 = (1,√3,0), ê3 = (1,1/√3,√8/3) (FCC primitive vectors), 'L × L × L ≡ L^3 lattice with 4L^3 lattice sites': L = 4 is the 4x4x4 primitive-cell torus of 256 sites, VarBench's pyrochlore-4x4x4_256_P (64 unit cells x 4 sites). aPBC/PBC refer to the mean-field state ('Periodic boundary conditions (PBC) generate degenerate states at the Fermi level ... lifted by applying anti-periodic boundary conditions'). 'Statistical uncertainties lie below the digits shown': no sigma (stored null, precision 1e-3 per site). Projected fermionic VMC: variational. Journal = arXiv.",
+    "source_entry": "RP2-heisenberg-tfising#18 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/pyrochlore-4x4x4_256_P",
+      "method": "VMC, [0, 0, π] flux state",
+      "energy": -384
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 78, 180410(R) (2008) publisher PDF (fetched 2026-11-16), pypdf layout; cross-read with arXiv:0807.2036 (latest v2) cached text; Table I identical",
+    "location": "Table I, row L = 4, column [0, 0, π] (journal p. 3; arXiv line 135)",
+    "reported_as": "-0.375",
+    "conversion": "-0.375 x 4 x 256 = -384; no error bar printed",
+    "note": "Eq. (1) H = Σ_<ij> S_i·S_j (spin-1/2, J = 1); Table I 'Energy per site of various states obtained from VMC depending on the number of up tetrahedra L in each direction'; lattice generated by n1ê1 + n2ê2 + n3ê3 with ê1 = (2,0,0), ê2 = (1,√3,0), ê3 = (1,1/√3,√8/3) (FCC primitive vectors), 'L × L × L ≡ L^3 lattice with 4L^3 lattice sites': L = 4 is the 4x4x4 primitive-cell torus of 256 sites, VarBench's pyrochlore-4x4x4_256_P (64 unit cells x 4 sites). aPBC/PBC refer to the mean-field state ('Periodic boundary conditions (PBC) generate degenerate states at the Fermi level ... lifted by applying anti-periodic boundary conditions'). 'Statistical uncertainties lie below the digits shown': no sigma (stored null, precision 1e-3 per site). Projected fermionic VMC: variational. Journal = arXiv.",
+    "source_entry": "RP2-heisenberg-tfising#19 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/shuriken_96_P",
+      "method": "Gutzwiller projected FS (0, 0, 0)",
+      "energy": -164.02176
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 104, L220408 (2021) publisher PDF and Supplemental Material PDF (fetched 2026-11-16), pypdf layout + plain; cross-read with arXiv:2110.08198 (latest v3) cached text; Table I identical",
+    "location": "Table I, row 'FS (0, 0, 0)', column 'Proj. energy' (journal p. 3; arXiv line 151)",
+    "reported_as": "−0.42714(2)",
+    "conversion": "-0.42714 x 4 x 96 = -164.02176; sigma 0.000020 x 384 = 0.00768",
+    "note": "Eq. (1) H = J Σ_<i,j> S_i·S_j, S = 1/2, J = J∆ = J□ (isotropic shuriken); Table I 'Gutzwiller projected (proj) ground-state energy per site (in units of J) on the 4×4×6 cluster'; SM Sec. III: 'Our variational calculations are performed on 6×L×L clusters with periodic boundary conditions which respect the full symmetry of the shuriken lattice' — L = 4, 96 sites, VarBench's shuriken_96_P. Projected VMC, no Lanczos step: variational; all values above the instance's best (mVMC -0.4382599 per site). The journal caption says '(π, 0, 0) and (π, 0, π) Ansätze have extensively degenerate levels' yet prints a (π, 0, π) value and dashes for (π, 0, 0) and (π/2, π/2, 0), the two flat-band rows: a caption slip in the source, the printed cells are unaffected. Journal = arXiv. Bracket not defined. No duplicate on the instance.",
+    "source_entry": "RP2-heisenberg-tfising#20 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/shuriken_96_P",
+      "method": "Gutzwiller projected FS (0, 0, π)",
+      "energy": -160.2048
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 104, L220408 (2021) publisher PDF and Supplemental Material PDF (fetched 2026-11-16), pypdf layout + plain; cross-read with arXiv:2110.08198 (latest v3) cached text; Table I identical",
+    "location": "Table I, row 'FS (0, 0, π)', column 'Proj. energy' (journal p. 3; arXiv line 152)",
+    "reported_as": "−0.41720(3)",
+    "conversion": "-0.41720 x 4 x 96 = -160.2048; sigma 0.000030 x 384 = 0.01152",
+    "note": "Eq. (1) H = J Σ_<i,j> S_i·S_j, S = 1/2, J = J∆ = J□ (isotropic shuriken); Table I 'Gutzwiller projected (proj) ground-state energy per site (in units of J) on the 4×4×6 cluster'; SM Sec. III: 'Our variational calculations are performed on 6×L×L clusters with periodic boundary conditions which respect the full symmetry of the shuriken lattice' — L = 4, 96 sites, VarBench's shuriken_96_P. Projected VMC, no Lanczos step: variational; all values above the instance's best (mVMC -0.4382599 per site). The journal caption says '(π, 0, 0) and (π, 0, π) Ansätze have extensively degenerate levels' yet prints a (π, 0, π) value and dashes for (π, 0, 0) and (π/2, π/2, 0), the two flat-band rows: a caption slip in the source, the printed cells are unaffected. Journal = arXiv. Bracket not defined. No duplicate on the instance.",
+    "source_entry": "RP2-heisenberg-tfising#21 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/shuriken_96_P",
+      "method": "Gutzwiller projected FS (π, 0, π)",
+      "energy": -158.83008
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 104, L220408 (2021) publisher PDF and Supplemental Material PDF (fetched 2026-11-16), pypdf layout + plain; cross-read with arXiv:2110.08198 (latest v3) cached text; Table I identical",
+    "location": "Table I, row 'FS (π, 0, π)', column 'Proj. energy' (journal p. 3; arXiv line 154)",
+    "reported_as": "−0.41362(3)",
+    "conversion": "-0.41362 x 4 x 96 = -158.83008; sigma 0.000030 x 384 = 0.01152",
+    "note": "Eq. (1) H = J Σ_<i,j> S_i·S_j, S = 1/2, J = J∆ = J□ (isotropic shuriken); Table I 'Gutzwiller projected (proj) ground-state energy per site (in units of J) on the 4×4×6 cluster'; SM Sec. III: 'Our variational calculations are performed on 6×L×L clusters with periodic boundary conditions which respect the full symmetry of the shuriken lattice' — L = 4, 96 sites, VarBench's shuriken_96_P. Projected VMC, no Lanczos step: variational; all values above the instance's best (mVMC -0.4382599 per site). The journal caption says '(π, 0, 0) and (π, 0, π) Ansätze have extensively degenerate levels' yet prints a (π, 0, π) value and dashes for (π, 0, 0) and (π/2, π/2, 0), the two flat-band rows: a caption slip in the source, the printed cells are unaffected. Journal = arXiv. Bracket not defined. No duplicate on the instance.",
+    "source_entry": "RP2-heisenberg-tfising#22 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/shuriken_96_P",
+      "method": "Gutzwiller projected Chiral (π/2, π/2, π)",
+      "energy": -155.47776
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 104, L220408 (2021) publisher PDF and Supplemental Material PDF (fetched 2026-11-16), pypdf layout + plain; cross-read with arXiv:2110.08198 (latest v3) cached text; Table I identical",
+    "location": "Table I, row 'Chiral (π/2, π/2, π)', column 'Proj. energy' (journal p. 3; arXiv line 157)",
+    "reported_as": "−0.40489(3)",
+    "conversion": "-0.40489 x 4 x 96 = -155.47776; sigma 0.000030 x 384 = 0.01152",
+    "note": "Eq. (1) H = J Σ_<i,j> S_i·S_j, S = 1/2, J = J∆ = J□ (isotropic shuriken); Table I 'Gutzwiller projected (proj) ground-state energy per site (in units of J) on the 4×4×6 cluster'; SM Sec. III: 'Our variational calculations are performed on 6×L×L clusters with periodic boundary conditions which respect the full symmetry of the shuriken lattice' — L = 4, 96 sites, VarBench's shuriken_96_P. Projected VMC, no Lanczos step: variational; all values above the instance's best (mVMC -0.4382599 per site). The journal caption says '(π, 0, 0) and (π, 0, π) Ansätze have extensively degenerate levels' yet prints a (π, 0, π) value and dashes for (π, 0, 0) and (π/2, π/2, 0), the two flat-band rows: a caption slip in the source, the printed cells are unaffected. Journal = arXiv. Bracket not defined. No duplicate on the instance.",
+    "source_entry": "RP2-heisenberg-tfising#23 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/shuriken_96_P",
+      "method": "Gutzwiller projected Chiral (π/2, −π/2, 0)",
+      "energy": -148.61568
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 104, L220408 (2021) publisher PDF and Supplemental Material PDF (fetched 2026-11-16), pypdf layout + plain; cross-read with arXiv:2110.08198 (latest v3) cached text; Table I identical",
+    "location": "Table I, row 'Chiral (π/2, −π/2, 0)', column 'Proj. energy' (journal p. 3; arXiv line 158)",
+    "reported_as": "−0.38702(4)",
+    "conversion": "-0.38702 x 4 x 96 = -148.61568; sigma 0.000040 x 384 = 0.01536",
+    "note": "Eq. (1) H = J Σ_<i,j> S_i·S_j, S = 1/2, J = J∆ = J□ (isotropic shuriken); Table I 'Gutzwiller projected (proj) ground-state energy per site (in units of J) on the 4×4×6 cluster'; SM Sec. III: 'Our variational calculations are performed on 6×L×L clusters with periodic boundary conditions which respect the full symmetry of the shuriken lattice' — L = 4, 96 sites, VarBench's shuriken_96_P. Projected VMC, no Lanczos step: variational; all values above the instance's best (mVMC -0.4382599 per site). The journal caption says '(π, 0, 0) and (π, 0, π) Ansätze have extensively degenerate levels' yet prints a (π, 0, π) value and dashes for (π, 0, 0) and (π/2, π/2, 0), the two flat-band rows: a caption slip in the source, the printed cells are unaffected. Journal = arXiv. Bracket not defined. No duplicate on the instance.",
+    "source_entry": "RP2-heisenberg-tfising#24 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/shuriken_96_P",
+      "method": "Gutzwiller projected Chiral (π/2, −π/2, π)",
+      "energy": -154.3872
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 104, L220408 (2021) publisher PDF and Supplemental Material PDF (fetched 2026-11-16), pypdf layout + plain; cross-read with arXiv:2110.08198 (latest v3) cached text; Table I identical",
+    "location": "Table I, row 'Chiral (π/2, −π/2, π)', column 'Proj. energy' (journal p. 3; arXiv line 159)",
+    "reported_as": "−0.40205(3)",
+    "conversion": "-0.40205 x 4 x 96 = -154.3872; sigma 0.000030 x 384 = 0.01152",
+    "note": "Eq. (1) H = J Σ_<i,j> S_i·S_j, S = 1/2, J = J∆ = J□ (isotropic shuriken); Table I 'Gutzwiller projected (proj) ground-state energy per site (in units of J) on the 4×4×6 cluster'; SM Sec. III: 'Our variational calculations are performed on 6×L×L clusters with periodic boundary conditions which respect the full symmetry of the shuriken lattice' — L = 4, 96 sites, VarBench's shuriken_96_P. Projected VMC, no Lanczos step: variational; all values above the instance's best (mVMC -0.4382599 per site). The journal caption says '(π, 0, 0) and (π, 0, π) Ansätze have extensively degenerate levels' yet prints a (π, 0, π) value and dashes for (π, 0, 0) and (π/2, π/2, 0), the two flat-band rows: a caption slip in the source, the printed cells are unaffected. Journal = arXiv. Bracket not defined. No duplicate on the instance.",
+    "source_entry": "RP2-heisenberg-tfising#25 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/shuriken_96_P",
+      "method": "Gutzwiller projected L6-VBC",
+      "energy": -165.15456
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 104, L220408 (2021) publisher PDF and Supplemental Material PDF (fetched 2026-11-16), pypdf layout + plain; cross-read with arXiv:2110.08198 (latest v3) cached text; Table I identical",
+    "location": "Table I, row 'L6-VBC', column 'Proj. energy' (journal p. 3; arXiv line 161)",
+    "reported_as": "−0.43009(1)",
+    "conversion": "-0.43009 x 4 x 96 = -165.15456; sigma 0.000010 x 384 = 0.00384",
+    "note": "Eq. (1) H = J Σ_<i,j> S_i·S_j, S = 1/2, J = J∆ = J□ (isotropic shuriken); Table I 'Gutzwiller projected (proj) ground-state energy per site (in units of J) on the 4×4×6 cluster'; SM Sec. III: 'Our variational calculations are performed on 6×L×L clusters with periodic boundary conditions which respect the full symmetry of the shuriken lattice' — L = 4, 96 sites, VarBench's shuriken_96_P. Projected VMC, no Lanczos step: variational; all values above the instance's best (mVMC -0.4382599 per site). The journal caption says '(π, 0, 0) and (π, 0, π) Ansätze have extensively degenerate levels' yet prints a (π, 0, π) value and dashes for (π, 0, 0) and (π/2, π/2, 0), the two flat-band rows: a caption slip in the source, the printed cells are unaffected. Journal = arXiv. Bracket not defined. No duplicate on the instance.",
+    "source_entry": "RP2-heisenberg-tfising#26 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/shuriken_96_P",
+      "method": "Gutzwiller projected PW-VBC",
+      "energy": -166.39872
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 104, L220408 (2021) publisher PDF and Supplemental Material PDF (fetched 2026-11-16), pypdf layout + plain; cross-read with arXiv:2110.08198 (latest v3) cached text; Table I identical",
+    "location": "Table I, row 'PW-VBC', column 'Proj. energy' (journal p. 3; arXiv line 161)",
+    "reported_as": "−0.43333(1)",
+    "conversion": "-0.43333 x 4 x 96 = -166.39872; sigma 0.000010 x 384 = 0.00384",
+    "note": "Eq. (1) H = J Σ_<i,j> S_i·S_j, S = 1/2, J = J∆ = J□ (isotropic shuriken); Table I 'Gutzwiller projected (proj) ground-state energy per site (in units of J) on the 4×4×6 cluster'; SM Sec. III: 'Our variational calculations are performed on 6×L×L clusters with periodic boundary conditions which respect the full symmetry of the shuriken lattice' — L = 4, 96 sites, VarBench's shuriken_96_P. Projected VMC, no Lanczos step: variational; all values above the instance's best (mVMC -0.4382599 per site). The journal caption says '(π, 0, 0) and (π, 0, π) Ansätze have extensively degenerate levels' yet prints a (π, 0, π) value and dashes for (π, 0, 0) and (π/2, π/2, 0), the two flat-band rows: a caption slip in the source, the printed cells are unaffected. Journal = arXiv. Bracket not defined. No duplicate on the instance.",
+    "source_entry": "RP2-heisenberg-tfising#27 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-2r3x2r3-4x4_576_P",
+      "method": "U(1) Dirac state [0, π] (n.n.)",
+      "energy": -987.63264
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 83, 100404(R) (2011) publisher PDF (fetched 2026-11-16), pypdf layout + plain; cross-read with arXiv:1011.3954 (latest v2) cached text; identical numbers",
+    "location": "p. 2, 'Its energy per site is E/J1 = −0.42866(1)' (n.n. [0,π] U(1) Dirac state) (journal PRB 83, 100404 plain text lines 139-191; arXiv lines 111-183)",
+    "reported_as": "−0.42866(1)",
+    "conversion": "-0.42866 x 4 x 576 = -987.63264; sigma 0.000010 x 2304 = 0.02304",
+    "note": "Eq. (1) H = J1 Σ_<ij> S_i·S_j + J2 Σ_<<ij>> S_i·S_j with 'all energies ... in units of J1'; these four values are the n.n. model (J2 = 0). '576-site (i.e., 36× 4× 4) cluster with mixed periodic-antiperiodic boundary conditions' (mean-field state; 576 is not 3L^2, so it is the 4 x 4 torus of the 36-site 2√3 x 2√3 supercell, the instance's cluster as defined from Fig. 4(c) and arXiv:1203.3421 Sec. 2.2). Gutzwiller-projected hopping-only states, VMC: variational. Journal = arXiv. Bracket not defined. The same digits -0.42866 appear in Ran et al. for the 8x8x3 (192-site) cluster with a bar of 2e-5; here the bar is 1e-5 on 576 sites and arXiv:1203.3421 credits the 576-site value to this paper ([35]): own computation, not a duplicate (different instance).",
+    "source_entry": "RP2-heisenberg-tfising#28 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-2r3x2r3-4x4_576_P",
+      "method": "uniform PFS [0, 0] (n.n.)",
+      "energy": -949.17888
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 83, 100404(R) (2011) publisher PDF (fetched 2026-11-16), pypdf layout + plain; cross-read with arXiv:1011.3954 (latest v2) cached text; identical numbers",
+    "location": "p. 2, 'its energy per site is E/J1 = −0.41197(1).17,18' (n.n. uniform PFS [0,0]) (journal PRB 83, 100404 plain text lines 139-191; arXiv lines 111-183)",
+    "reported_as": "−0.41197(1)",
+    "conversion": "-0.41197 x 4 x 576 = -949.17888; sigma 0.000010 x 2304 = 0.02304",
+    "note": "Eq. (1) H = J1 Σ_<ij> S_i·S_j + J2 Σ_<<ij>> S_i·S_j with 'all energies ... in units of J1'; these four values are the n.n. model (J2 = 0). '576-site (i.e., 36× 4× 4) cluster with mixed periodic-antiperiodic boundary conditions' (mean-field state; 576 is not 3L^2, so it is the 4 x 4 torus of the 36-site 2√3 x 2√3 supercell, the instance's cluster as defined from Fig. 4(c) and arXiv:1203.3421 Sec. 2.2). Gutzwiller-projected hopping-only states, VMC: variational. Journal = arXiv. Bracket not defined. The superscripts 17,18 (Ran et al. PRL 98, 117205; Hermele et al. PRB 77, 224413) credit the state: neither paper has a 576-site cluster (Ran: 8x8x3 and 12x12x3; Hermele et al. print no energies), and arXiv:1203.3421 (same authors) attributes the 576-site values to this paper ([35]).",
+    "source_entry": "RP2-heisenberg-tfising#29 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-2r3x2r3-4x4_576_P",
+      "method": "extended Dirac [0, π; 0, π] (n.n.n. hopping)",
+      "energy": -987.77088
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 83, 100404(R) (2011) publisher PDF (fetched 2026-11-16), pypdf layout + plain; cross-read with arXiv:1011.3954 (latest v2) cached text; identical numbers",
+    "location": "p. 3, 'these extended wave functions with n.n.n. hoppings lead to slightly lower energies, namely E/J1 = −0.42872(1) for the [0,π; 0,π] state' (journal PRB 83, 100404 plain text lines 139-191; arXiv lines 111-183)",
+    "reported_as": "−0.42872(1)",
+    "conversion": "-0.42872 x 4 x 576 = -987.77088; sigma 0.000010 x 2304 = 0.02304",
+    "note": "Eq. (1) H = J1 Σ_<ij> S_i·S_j + J2 Σ_<<ij>> S_i·S_j with 'all energies ... in units of J1'; these four values are the n.n. model (J2 = 0). '576-site (i.e., 36× 4× 4) cluster with mixed periodic-antiperiodic boundary conditions' (mean-field state; 576 is not 3L^2, so it is the 4 x 4 torus of the 36-site 2√3 x 2√3 supercell, the instance's cluster as defined from Fig. 4(c) and arXiv:1203.3421 Sec. 2.2). Gutzwiller-projected hopping-only states, VMC: variational. Journal = arXiv. Bracket not defined. Record row: lowest of the four rows on the instance; J2 = 0 (the n.n.n. term is a hopping of the projected state, 'we find a finite χn.n.n. even for the n.n. spin-1/2 QHAF', points F and G of Fig. 2b).",
+    "source_entry": "RP2-heisenberg-tfising#30 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-2r3x2r3-4x4_576_P",
+      "method": "extended uniform PFS [0, 0; π, π] (n.n.n. hopping)",
+      "energy": -949.45536
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 83, 100404(R) (2011) publisher PDF (fetched 2026-11-16), pypdf layout + plain; cross-read with arXiv:1011.3954 (latest v2) cached text; identical numbers",
+    "location": "p. 3, 'and E/J1 = −0.41209(1) for the [0, 0;π,π] state' (journal PRB 83, 100404 plain text lines 139-191; arXiv lines 111-183)",
+    "reported_as": "−0.41209(1)",
+    "conversion": "-0.41209 x 4 x 576 = -949.45536; sigma 0.000010 x 2304 = 0.02304",
+    "note": "Eq. (1) H = J1 Σ_<ij> S_i·S_j + J2 Σ_<<ij>> S_i·S_j with 'all energies ... in units of J1'; these four values are the n.n. model (J2 = 0). '576-site (i.e., 36× 4× 4) cluster with mixed periodic-antiperiodic boundary conditions' (mean-field state; 576 is not 3L^2, so it is the 4 x 4 torus of the 36-site 2√3 x 2√3 supercell, the instance's cluster as defined from Fig. 4(c) and arXiv:1203.3421 Sec. 2.2). Gutzwiller-projected hopping-only states, VMC: variational. Journal = arXiv. Bracket not defined.",
+    "source_entry": "RP2-heisenberg-tfising#31 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_16_O_2",
+      "method": "Exact diagonalization",
+      "energy": -35.9072576204089
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "qmbl/checks/tfising-4x4-open-ed/ed_tfim_4x4.py and results.txt (read only; no ED run on this machine)",
+    "location": "checks/tfising-4x4-open-ed/results.txt, block h=2.0",
+    "reported_as": "-35.907257620408934 (code A) | -35.9072576204089 (code B)",
+    "conversion": "printed total energy, stored as printed: -35.9072576204089",
+    "note": "Code read (ed_tfim_4x4.py): 24 open bonds (3 x 4 horizontal + 4 x 3 vertical, assert), diagonal −Σ sz sz with sz = ±1 (Pauli), off-diagonal −h on every single bit flip (σx), full 2^16 space, lowest eigenvalue by ARPACK (A) and full-reorthogonalised Lanczos (B); results.txt prints A -35.907257620408934, stored -35.9072576204089 (15 significant digits) — matches. Independent check: Dektor et al.'s block-MPS reference −35.90725762 agrees to its eighth decimal. The docstring says the codes share no Hamiltonian code, but both use the same 'diag' array and 'states' index, so A and B are independent only in the off-diagonal part and the eigensolver; the external block-MPS agreement covers the shared part. No ED rerun here (brief rule 7); the remote recompute group owns that.",
+    "source_entry": "RP2-heisenberg-tfising#33 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_16_O_3.5",
+      "method": "Exact diagonalization",
+      "energy": -57.8243697764037
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "qmbl/checks/tfising-4x4-open-ed/ed_tfim_4x4.py and results.txt (read only; no ED run on this machine)",
+    "location": "checks/tfising-4x4-open-ed/results.txt, block h=3.5",
+    "reported_as": "-57.8243697764037 (code A) | -57.82436977640359 (code B)",
+    "conversion": "printed total energy, stored as printed: -57.8243697764037",
+    "note": "Code read (ed_tfim_4x4.py): 24 open bonds (3 x 4 horizontal + 4 x 3 vertical, assert), diagonal −Σ sz sz with sz = ±1 (Pauli), off-diagonal −h on every single bit flip (σx), full 2^16 space, lowest eigenvalue by ARPACK (A) and full-reorthogonalised Lanczos (B); results.txt prints A -57.8243697764037, stored -57.8243697764037 (15 significant digits) — matches. Independent check: Dektor et al.'s block-MPS reference −57.82436977 agrees to its eighth decimal. The docstring says the codes share no Hamiltonian code, but both use the same 'diag' array and 'states' index, so A and B are independent only in the off-diagonal part and the eigensolver; the external block-MPS agreement covers the shared part. No ED rerun here (brief rule 7); the remote recompute group owns that.",
+    "source_entry": "RP2-heisenberg-tfising#34 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_16_O_3",
+      "method": "Exact diagonalization",
+      "energy": -50.1866238827776
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "qmbl/checks/tfising-4x4-open-ed/ed_tfim_4x4.py and results.txt (read only; no ED run on this machine)",
+    "location": "checks/tfising-4x4-open-ed/results.txt, block h=3.0",
+    "reported_as": "-50.18662388277763 (code A) | -50.18662388277779 (code B)",
+    "conversion": "printed total energy, stored as printed: -50.1866238827776",
+    "note": "Code read (ed_tfim_4x4.py): 24 open bonds (3 x 4 horizontal + 4 x 3 vertical, assert), diagonal −Σ sz sz with sz = ±1 (Pauli), off-diagonal −h on every single bit flip (σx), full 2^16 space, lowest eigenvalue by ARPACK (A) and full-reorthogonalised Lanczos (B); results.txt prints A -50.18662388277763, stored -50.1866238827776 (15 significant digits) — matches. Independent check: Dektor et al.'s block-MPS reference −50.18662388 agrees to its eighth decimal. The docstring says the codes share no Hamiltonian code, but both use the same 'diag' array and 'states' index, so A and B are independent only in the off-diagonal part and the eigensolver; the external block-MPS agreement covers the shared part. No ED rerun here (brief rule 7); the remote recompute group owns that.",
+    "source_entry": "RP2-heisenberg-tfising#35 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_16_O_1",
+      "method": "block MPS alternating optimization (reference, bond dimension up to 5000)",
+      "energy": -26.86050464
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "arXiv:2510.20063v1 (only version; abs page 2026-11-16 shows no journal reference), cached text qmbl/sources/2510.20063.txt read with grep -a (the file carries non-UTF-8 bytes)",
+    "location": "Table 2, row g = 1, α = 0, column 'reference' (arXiv v1 p. 14; text line 824)",
+    "reported_as": "−26.86050464",
+    "conversion": "printed total energy, stored as printed: -26.86050464",
+    "note": "Eq. (34) H_TFI = − Σ_<i,j> σz_i σz_j − g Σ_i σx_i with 'Pauli matrices', on 'a two-dimensional square lattice of side length Lx = Ly ... with open boundary conditions' (Sec. 5): QMBL's TFIsing with h = g, open on all four sides; Table 2 prints total energies of the '4×4 TFI model' (−57.8 for 16 sites). What the reference is (brief question 5): 'reference eigenvalues E_α,ref for the TFI model (34) were computed using the block MPS alternating optimization algorithm described in [23]' ([23] = Dolgov, Khoromskij, Oseledets & Savostyanov, Comput. Phys. Commun. 185, 1207 (2014)); 'With a maximum bond dimension of 5000, reference energies for the TFI model were obtained with relative accuracy of order 10−6 for Lx ≤ 8'. It is a variational MPS energy, not an exact reference; on 4 x 4 the bond dimension cap 5000 exceeds the largest Schmidt rank 2^8 = 256, so the MPS can represent the state exactly. Against QMBL's ED (-26.86050463952785): printed − ED = -4.72e-10, i.e. the printed value lies 4.7e-10 below exact, inside its eighth-decimal rounding (tolerance 5e-9); not a bound violation. bound_type variational is right; peer_reviewed false (v1 only). The α = 1 cells are excited states, not rows. Not a duplicate of the exact row (different source and computation). Record row (best variational).",
+    "source_entry": "RP2-heisenberg-tfising#36 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_16_O_2",
+      "method": "block MPS alternating optimization (reference, bond dimension up to 5000)",
+      "energy": -35.90725762
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "arXiv:2510.20063v1 (only version; abs page 2026-11-16 shows no journal reference), cached text qmbl/sources/2510.20063.txt read with grep -a (the file carries non-UTF-8 bytes)",
+    "location": "Table 2, row g = 2, α = 0, column 'reference' (arXiv v1 p. 14; text line 822)",
+    "reported_as": "−35.90725762",
+    "conversion": "printed total energy, stored as printed: -35.90725762",
+    "note": "Eq. (34) H_TFI = − Σ_<i,j> σz_i σz_j − g Σ_i σx_i with 'Pauli matrices', on 'a two-dimensional square lattice of side length Lx = Ly ... with open boundary conditions' (Sec. 5): QMBL's TFIsing with h = g, open on all four sides; Table 2 prints total energies of the '4×4 TFI model' (−57.8 for 16 sites). What the reference is (brief question 5): 'reference eigenvalues E_α,ref for the TFI model (34) were computed using the block MPS alternating optimization algorithm described in [23]' ([23] = Dolgov, Khoromskij, Oseledets & Savostyanov, Comput. Phys. Commun. 185, 1207 (2014)); 'With a maximum bond dimension of 5000, reference energies for the TFI model were obtained with relative accuracy of order 10−6 for Lx ≤ 8'. It is a variational MPS energy, not an exact reference; on 4 x 4 the bond dimension cap 5000 exceeds the largest Schmidt rank 2^8 = 256, so the MPS can represent the state exactly. Against QMBL's ED (-35.907257620408934): printed − ED = 4.09e-10 (above, as a variational value must). bound_type variational is right; peer_reviewed false (v1 only). The α = 1 cells are excited states, not rows. Not a duplicate of the exact row (different source and computation). Record row (best variational).",
+    "source_entry": "RP2-heisenberg-tfising#37 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_16_O_3.5",
+      "method": "block MPS alternating optimization (reference, bond dimension up to 5000)",
+      "energy": -57.82436977
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "arXiv:2510.20063v1 (only version; abs page 2026-11-16 shows no journal reference), cached text qmbl/sources/2510.20063.txt read with grep -a (the file carries non-UTF-8 bytes)",
+    "location": "Table 2, row g = 3.5, α = 0, column 'reference' (arXiv v1 p. 14; text line 818)",
+    "reported_as": "−57.82436977",
+    "conversion": "printed total energy, stored as printed: -57.82436977",
+    "note": "Eq. (34) H_TFI = − Σ_<i,j> σz_i σz_j − g Σ_i σx_i with 'Pauli matrices', on 'a two-dimensional square lattice of side length Lx = Ly ... with open boundary conditions' (Sec. 5): QMBL's TFIsing with h = g, open on all four sides; Table 2 prints total energies of the '4×4 TFI model' (−57.8 for 16 sites). What the reference is (brief question 5): 'reference eigenvalues E_α,ref for the TFI model (34) were computed using the block MPS alternating optimization algorithm described in [23]' ([23] = Dolgov, Khoromskij, Oseledets & Savostyanov, Comput. Phys. Commun. 185, 1207 (2014)); 'With a maximum bond dimension of 5000, reference energies for the TFI model were obtained with relative accuracy of order 10−6 for Lx ≤ 8'. It is a variational MPS energy, not an exact reference; on 4 x 4 the bond dimension cap 5000 exceeds the largest Schmidt rank 2^8 = 256, so the MPS can represent the state exactly. Against QMBL's ED (-57.8243697764037): printed − ED = 6.40e-9 (above, as a variational value must). bound_type variational is right; peer_reviewed false (v1 only). The α = 1 cells are excited states, not rows. Not a duplicate of the exact row (different source and computation). Record row (best variational).",
+    "source_entry": "RP2-heisenberg-tfising#38 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_16_O_3",
+      "method": "block MPS alternating optimization (reference, bond dimension up to 5000)",
+      "energy": -50.18662388
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "arXiv:2510.20063v1 (only version; abs page 2026-11-16 shows no journal reference), cached text qmbl/sources/2510.20063.txt read with grep -a (the file carries non-UTF-8 bytes)",
+    "location": "Table 2, row g = 3, α = 0, column 'reference' (arXiv v1 p. 14; text line 820)",
+    "reported_as": "−50.18662388",
+    "conversion": "printed total energy, stored as printed: -50.18662388",
+    "note": "Eq. (34) H_TFI = − Σ_<i,j> σz_i σz_j − g Σ_i σx_i with 'Pauli matrices', on 'a two-dimensional square lattice of side length Lx = Ly ... with open boundary conditions' (Sec. 5): QMBL's TFIsing with h = g, open on all four sides; Table 2 prints total energies of the '4×4 TFI model' (−57.8 for 16 sites). What the reference is (brief question 5): 'reference eigenvalues E_α,ref for the TFI model (34) were computed using the block MPS alternating optimization algorithm described in [23]' ([23] = Dolgov, Khoromskij, Oseledets & Savostyanov, Comput. Phys. Commun. 185, 1207 (2014)); 'With a maximum bond dimension of 5000, reference energies for the TFI model were obtained with relative accuracy of order 10−6 for Lx ≤ 8'. It is a variational MPS energy, not an exact reference; on 4 x 4 the bond dimension cap 5000 exceeds the largest Schmidt rank 2^8 = 256, so the MPS can represent the state exactly. Against QMBL's ED (-50.18662388277763): printed − ED = 2.78e-9 (above, as a variational value must). bound_type variational is right; peer_reviewed false (v1 only). The α = 1 cells are excited states, not rows. Not a duplicate of the exact row (different source and computation). Record row (best variational).",
+    "source_entry": "RP2-heisenberg-tfising#39 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-12x12_432_P",
+      "method": "U(1) Dirac spin liquid, 0-LS (VMC)",
+      "energy": -740.717568
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 89, 020407(R) (2014) publisher PDF (fetched 2026-11-16), pypdf layout + plain; cross-read with arXiv:1311.5038 (latest v2) cached text qmbl/sources/1311.5038.txt; Table I row 432 identical in both",
+    "location": "Table I, row 432, column 0-LS (journal p. 2; arXiv line 70)",
+    "reported_as": "−0.428656(1)",
+    "conversion": "-0.428656 x 4 x 432 = -740.717568; sigma 0.0000010 x 1728 = 0.001728",
+    "note": "Eq. (1) H = J Σ_<ij> S_i·S_j, spin-1/2 operators, 'All energies will be given in units of J'; 'square (i.e., 3×L×L) clusters with periodic boundaries', L = 12 for 432. 0-LS is the bare Gutzwiller-projected U(1) Dirac state (no variational parameter): variational. The 432-site row is new in this paper (arXiv:1209.1858 Table I stops at 192 sites; the 48/108/192 rows of this table reprint 1209.1858). Journal = arXiv. Bracket not defined. No duplicate on data/Heisenberg/kagome-12x12_432_P.json.",
+    "source_entry": "RP2-heisenberg-tfising#40 (qmbl-verify 2026-11-16)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-12x12_432_P",
+      "method": "U(1) Dirac spin liquid, 1-LS (VMC)",
+      "energy": -747.392832
+    },
+    "checked_on": "2026-11-16",
+    "scope": "value",
+    "method": "PRB 89, 020407(R) (2014) publisher PDF (fetched 2026-11-16), pypdf layout + plain; cross-read with arXiv:1311.5038 (latest v2) cached text qmbl/sources/1311.5038.txt; Table I row 432 identical in both",
+    "location": "Table I, row 432, column 1-LS (journal p. 2; arXiv line 70)",
+    "reported_as": "−0.432519(1)",
+    "conversion": "-0.432519 x 4 x 432 = -747.392832; sigma 0.0000010 x 1728 = 0.001728",
+    "note": "Eq. (1) H = J Σ_<ij> S_i·S_j, spin-1/2 operators, 'All energies will be given in units of J'; 'square (i.e., 3×L×L) clusters with periodic boundaries', L = 12 for 432. 1-LS is one Lanczos step on the Dirac state, a variational state (Eq. 4): variational. The 432-site row is new in this paper (arXiv:1209.1858 Table I stops at 192 sites; the 48/108/192 rows of this table reprint 1209.1858). Journal = arXiv. Bracket not defined. No duplicate on data/Heisenberg/kagome-12x12_432_P.json.",
+    "source_entry": "RP2-heisenberg-tfising#41 (qmbl-verify 2026-11-16)"
+  },
 ];
