@@ -171,7 +171,7 @@ function datasetLd() {
       { "@type": "Person", givenName: "Juan", familyName: "Carrasquilla", name: "Juan Carrasquilla" },
     ],
     version: VERSION,
-    citation: { "@type": "ScholarlyArticle", name: CITE_TITLE, url: `https://arxiv.org/abs/${ARXIV}` },
+    citation: CITATION,
     variableMeasured: ["ground-state energy", "ground-state energy per site", "statistical error (sigma)", "energy variance", "V-score"],
     measurementTechnique: ["variational Monte Carlo", "neural quantum states", "DMRG", "tensor networks", "quantum Monte Carlo", "exact diagonalization"],
     distribution: [
@@ -193,7 +193,7 @@ function instanceLd(inst, label, lede) {
     license: "https://www.apache.org/licenses/LICENSE-2.0", isAccessibleForFree: true, dateModified: PAGE_DATE,
     keywords: ["ground-state energy", `${modelName(inst.model)} model`, inst.lattice, "benchmark"],
     variableMeasured: "ground-state energy",
-    citation: papers.map(r => ({ "@type": "CreativeWork", name: r.text, url: r.url })),
+    citation: papers.map(r => `${r.text} ${r.url}`),
     distribution: [{ "@type": "DataDownload", encodingFormat: "application/json", contentUrl: `https://qmbl.org${jsonUrl(inst)}` }],
   };
 }
