@@ -52,7 +52,7 @@ const REF = {
   "0807.2036": { pr: true, ref: "Kim & Han, Chiral spin states in the pyrochlore Heisenberg magnet: Fermionic mean-field theory and variational Monte Carlo calculations, Phys. Rev. B 78, 180410(R) (2008), doi:10.1103/PhysRevB.78.180410, arXiv:0807.2036" },
   "2110.08198": { pr: true, ref: "Astrakhantsev, Ferrari, Niggemann, Müller, Chauhan, Kshetrimayum, Ghosh, Regnault, Thomale, Reuther, Neupert & Iqbal, Pinwheel valence bond crystal ground state of the spin-1/2 Heisenberg antiferromagnet on the shuriken lattice, Phys. Rev. B 104, L220408 (2021), doi:10.1103/PhysRevB.104.L220408, arXiv:2110.08198" },
 };
-const VERSION = id => id === "2510.20063" ? "version read: arXiv 2510.20063v1 text (sources/2510.20063.txt); no journal version (arXiv metadata, 2026-11-12)" : `version read: arXiv text (sources/${id}.txt, pypdf layout mode); journal version not yet read (second reading)`;
+const VERSION = id => id === "2510.20063" ? "version read: arXiv 2510.20063v1 text (sources/2510.20063.txt); no journal version (arXiv metadata, 2026-11-12)" : `version read: arXiv text (sources/${id}.txt, pypdf layout mode); journal version not read in this reading (it was read in the second reading of 2026-11-16)`;
 
 // --- instances ----------------------------------------------------------------------------
 const I = {
@@ -73,14 +73,14 @@ const I = {
 };
 
 const CONV = {
-  tfi1405: "Appendix C: H = − sum_<l,m> σZ_l σZ_m − B sum_l σX_l (Pauli matrices), the instance's Hamiltonian with h = B; Tables VI-VIII print the energy per site, the stored per-site convention (E/N, Pauli; RULES.md 5). Plausibility: at fixed B the 21 x 21 energies lie below the 11 x 11 ones, as the smaller boundary fraction requires, and the D = 3 and 4 cells agree to the last printed digits.",
+  tfi1405: "Sec. IV C: H = − sum_<l,m> σZ_l σZ_m − B sum_l σX_l (Pauli matrices), the instance's Hamiltonian with h = B; Tables VI-VIII print the energy per site, the stored per-site convention (E/N, Pauli; RULES.md 5). Plausibility: at fixed B the 21 x 21 energies lie below the 11 x 11 ones, as the smaller boundary fraction requires.",
   tfi2510: "Eq. (34): H_TFI = − sum_<i,j> σz_i σz_j − g sum_i σx_i (Pauli matrices), the instance's Hamiltonian with h = g; Table 2 prints total energies of the 4 x 4 cluster, converted here to per site (/16).",
   kagome: "H = J sum_<ij> S_i.S_j with spin-1/2 operators, nearest neighbours only; energies printed as E/J per site, the S.S convention per site (RULES.md 5). Plausibility: every value lies above the 192-site variational records (about -0.4359) and, for the Dirac state, within 1e-4 of its 192-site value (-0.4286749), as a gapless state's energy should.",
   pyro: "Eq. (1): H = sum_<ij> S_i.S_j on the pyrochlore lattice, spin-1/2 operators; Table I prints the energy per site, the S.S convention per site. Plausibility: on L = 2 every value lies above QMBL's exact 32-site energy (-0.516859 per site), as variational energies must.",
   shuriken: "Eq. (1): H = J sum_<ij> S_i.S_j with J = J_Δ = J_□ (isotropic shuriken lattice), spin-1/2 operators; Table I prints the ground-state energy per site in units of J, the S.S convention per site. Plausibility: every value lies above the 96-site record (-0.43826 per site).",
 };
 
-const BR = "the bracket is printed after each energy; the paper does not say what it estimates (stored as the error bar as printed)";
+const BR = "the bracket after each energy is the paper's imaginary-time convergence estimate, the difference to the energy of the converged PEPS at the previous time step (Sec. IV A); a deterministic contraction at D' = 100, checked against D' = 200, so it is not a sigma (RULES.md 6; correction of 2026-11-16)";
 // [instance key, source, line, printed, method, method_as_published, bound, sampled, where, extra]
 const R = [];
 // arXiv:1311.5038 Table I, row '432' (line 70). Columns 2-4 the Dirac state with p = 0, 1, 2 Lanczos
