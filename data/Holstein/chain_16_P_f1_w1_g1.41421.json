@@ -26,7 +26,7 @@
       "family": "other",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "H. Fehske, private communication: exact diagonalization of the 16-site chain, printed in Bonča, Trugman & Batistić, Holstein polaron, Phys. Rev. B 60, 1633 (1999), Table I and Ref. [26], doi:10.1103/PhysRevB.60.1633, arXiv:cond-mat/9812252",
+      "reference": "H. Fehske, private communication: exact diagonalization of the 16-site chain, printed in Bonča, Trugman & Batistić, Holstein polaron, Phys. Rev. B 60, 1633 (1999), Table I and Ref. 28 (Ref. [26] in arXiv:cond-mat/9812252v1), doi:10.1103/PhysRevB.60.1633, arXiv:cond-mat/9812252",
       "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-16",
       "provenance": "secondary",
@@ -35,8 +35,32 @@
         "method": "source text of arXiv:cond-mat/9812252 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-11-16)",
         "reported_as": "-2.99882816",
         "note": "Table I, λ/ω = √2, column ED N=16 (H. Fehske, private communication, Ref. [26]) (line 1147); version read: arXiv text (sources/cond-mat-9812252.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eq. (1), line 154: H = -t sum (c+_j c_j+1 + H.c.) - λ sum c+_j c_j (a_j + a+_j) + ω sum a+a, one electron; λ has units of energy (lines 157-163), so the instance's g is λ; t = 1 (lines 1050-1051); Table I at λ = ω = 1 and λ = √2, ω = 1. The ED column is H. Fehske's 16-site chain (Ref. [26], lines 1261-1264) with periodic boundaries (line 283: finite chains of N sites with periodic boundary conditions).",
-        "secondary_of": "arXiv:cond-mat/9812252"
-      }
+        "secondary_of": "arXiv:cond-mat/9812252",
+        "journal_read": {
+          "checked_on": "2026-11-18",
+          "scope": "value",
+          "method": "arXiv:cond-mat/9812252v1 (qmbl sources/cond-mat-9812252.txt) and journal Phys. Rev. B 60, 1633 (1999), APS PDF (run sources/J-PhysRevB.60.1633.txt, pypdf layout; old font: '2' is the minus sign)",
+          "location": "Table I (arXiv line 1146-1147; journal p. 1636) and the footnote naming the ED: journal Ref. 28, arXiv Ref. [26]",
+          "reported_as": "−2.99882816 (column 'ED N=16', λ/ω = √2)",
+          "conversion": "total for one electron, t = 1 ('assumed here and throughout this work'), ω = 1, H = −t Σ(c†c + H.c.) − λ Σ c†c(a+a†) + ω Σ a†a: λ is the instance g; no shift",
+          "note": "Value, boundaries, filling and couplings agree; the journal prints the same digits as the arXiv text. Corrected on the same pass: reference (corrections.mjs).",
+          "source_entry": "SP1-holstein#30 (qmbl-verify 2026-11-18)"
+        }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "from": "H. Fehske, private communication: exact diagonalization of the 16-site chain, printed in Bonča, Trugman & Batistić, Holstein polaron, Phys. Rev. B 60, 1633 (1999), Table I and Ref. [26], doi:10.1103/PhysRevB.60.1633, arXiv:cond-mat/9812252",
+          "to": "H. Fehske, private communication: exact diagonalization of the 16-site chain, printed in Bonča, Trugman & Batistić, Holstein polaron, Phys. Rev. B 60, 1633 (1999), Table I and Ref. 28 (Ref. [26] in arXiv:cond-mat/9812252v1), doi:10.1103/PhysRevB.60.1633, arXiv:cond-mat/9812252",
+          "reported_as": "−2.99882816 (column 'ED N=16', λ/ω = √2)",
+          "location": "Table I (arXiv line 1146-1147; journal p. 1636) and the footnote naming the ED: journal Ref. 28, arXiv Ref. [26]",
+          "version_read": "arXiv:cond-mat/9812252v1 (qmbl sources/cond-mat-9812252.txt) and journal Phys. Rev. B 60, 1633 (1999), APS PDF (run sources/J-PhysRevB.60.1633.txt, pypdf layout; old font: '2' is the minus sign)",
+          "conversion": "total for one electron, t = 1 ('assumed here and throughout this work'), ω = 1, H = −t Σ(c†c + H.c.) − λ Σ c†c(a+a†) + ω Σ a†a: λ is the instance g; no shift",
+          "checked_on": "2026-11-18",
+          "reason": "Value, cluster and couplings verified; the journal prints the same digits. The footnote that names H. Fehske's unpublished ED ('12 phonons, 3.0 × 10^7 basis states') is Ref. 28 in the journal (Ref. 26 there is Trugman in Plenum Press), Ref. [26] only in arXiv v1; the journal reference wins (RULES.md 8). Boundary: Bonča et al. state that finite-N ED energies are for chains 'with periodic boundary conditions' and the ED basis is 'symmetrized'; the basis size matches one electron on 16 sites with total phonon number ≤ 12 (C(28,12) = 30,421,755), so the truncation is in the total phonon number. bound_type variational (truncated ED) agrees.",
+          "source_entry": "SP1-holstein#30 (qmbl-verify 2026-11-18)"
+        }
+      ]
     }
   ]
 }

@@ -46458,4 +46458,581 @@ export const VERIFICATIONS = [
     "source_entry": "journal read of arXiv:2112.08394 (qmbl-verify follow-up 2026-11-18)",
     "journal": true
   },
+  // qmbl-verify 2026-11-18: second reading of the Holstein pass (sweep-rows-2026-11-16-holstein) against the journal versions of all eight papers, one entry per row; every energy and sigma reproduced to 1e-9, the (n - rho) shift re-derived.
+  {
+    "match": {
+      "instance": "Holstein/chain_16_A_f8_w1_g1.5",
+      "method": "VMC1 (no P_e-ph)",
+      "energy": -21.3712
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:1403.4150v2 (qmbl sources/1403.4150.txt, pypdf layout) and journal Phys. Rev. B 89, 195139 (2014), APS PDF fetched 2026-11-18 (run sources/J-PhysRevB.89.195139.txt, pypdf layout)",
+    "location": "Table II, row VMC1, column N = 16 (arXiv lines 500-501; journal p. 195139-8)",
+    "reported_as": "−0.7732(4) energy per site, units of t (t = ω, g = 1.5ω)",
+    "conversion": "-0.7732 × 16 = -12.3712; coupling −g Σ(b†+b)(n_i − 1/2), Eq. (37): shift −g²N/(4ω) = -9; total -21.3712; sigma 0.0004 × 16 = 0.0064",
+    "note": "Identical in arXiv v2 and the journal. Spinless fermions at half filling, periodic/antiperiodic boundaries for odd/even fermion number (N_f = 8 → A); phonon cutoff mmax_q = 10 (Fig. 3 caption). Shift re-derived: displacing b by gρ/ω gives E_instance = E_source + g²ρ²N/ω − 2g²ρN_e/ω. bound_type variational agrees. Note: arXiv:2405.08701 (both versions) quotes this paper's N = 8 Jastrow value as −0.8424(3); Ohgoe & Imada print −0.8484(3) in both versions.",
+    "source_entry": "SP1-holstein#0 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_16_A_f8_w1_g1.5",
+      "method": "VMC2 (with P_e-ph)",
+      "energy": -22.4208
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:1403.4150v2 (qmbl sources/1403.4150.txt, pypdf layout) and journal Phys. Rev. B 89, 195139 (2014), APS PDF fetched 2026-11-18 (run sources/J-PhysRevB.89.195139.txt, pypdf layout)",
+    "location": "Table II, row VMC2, column N = 16 (arXiv lines 500-501; journal p. 195139-8)",
+    "reported_as": "−0.8388(5) energy per site, units of t (t = ω, g = 1.5ω)",
+    "conversion": "-0.8388 × 16 = -13.4208; coupling −g Σ(b†+b)(n_i − 1/2), Eq. (37): shift −g²N/(4ω) = -9; total -22.4208; sigma 0.0005 × 16 = 0.008",
+    "note": "Identical in arXiv v2 and the journal. Spinless fermions at half filling, periodic/antiperiodic boundaries for odd/even fermion number (N_f = 8 → A); phonon cutoff mmax_q = 10 (Fig. 3 caption). Shift re-derived: displacing b by gρ/ω gives E_instance = E_source + g²ρ²N/ω − 2g²ρN_e/ω. bound_type variational agrees. Note: arXiv:2405.08701 (both versions) quotes this paper's N = 8 Jastrow value as −0.8424(3); Ohgoe & Imada print −0.8484(3) in both versions.",
+    "source_entry": "SP1-holstein#1 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_4_A_f2_w1_g1.5",
+      "method": "VMC1 (no P_e-ph)",
+      "energy": -5.3828
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:1403.4150v2 (qmbl sources/1403.4150.txt, pypdf layout) and journal Phys. Rev. B 89, 195139 (2014), APS PDF fetched 2026-11-18 (run sources/J-PhysRevB.89.195139.txt, pypdf layout)",
+    "location": "Table II, row VMC1, column N = 4 (arXiv lines 500-501; journal p. 195139-8)",
+    "reported_as": "−0.7832(7) energy per site, units of t (t = ω, g = 1.5ω)",
+    "conversion": "-0.7832 × 4 = -3.1328; coupling −g Σ(b†+b)(n_i − 1/2), Eq. (37): shift −g²N/(4ω) = -2.25; total -5.3828; sigma 0.0007 × 4 = 0.0028",
+    "note": "Identical in arXiv v2 and the journal. Spinless fermions at half filling, periodic/antiperiodic boundaries for odd/even fermion number (N_f = 2 → A); phonon cutoff mmax_q = 10 (Fig. 3 caption). Shift re-derived: displacing b by gρ/ω gives E_instance = E_source + g²ρ²N/ω − 2g²ρN_e/ω. bound_type variational agrees. Note: arXiv:2405.08701 (both versions) quotes this paper's N = 8 Jastrow value as −0.8424(3); Ohgoe & Imada print −0.8484(3) in both versions.",
+    "source_entry": "SP1-holstein#2 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_4_A_f2_w1_g1.5",
+      "method": "VMC2 (with P_e-ph)",
+      "energy": -5.8116
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:1403.4150v2 (qmbl sources/1403.4150.txt, pypdf layout) and journal Phys. Rev. B 89, 195139 (2014), APS PDF fetched 2026-11-18 (run sources/J-PhysRevB.89.195139.txt, pypdf layout)",
+    "location": "Table II, row VMC2, column N = 4 (arXiv lines 500-501; journal p. 195139-8)",
+    "reported_as": "−0.8904(5) energy per site, units of t (t = ω, g = 1.5ω)",
+    "conversion": "-0.8904 × 4 = -3.5616; coupling −g Σ(b†+b)(n_i − 1/2), Eq. (37): shift −g²N/(4ω) = -2.25; total -5.8116; sigma 0.0005 × 4 = 0.002",
+    "note": "Identical in arXiv v2 and the journal. Spinless fermions at half filling, periodic/antiperiodic boundaries for odd/even fermion number (N_f = 2 → A); phonon cutoff mmax_q = 10 (Fig. 3 caption). Shift re-derived: displacing b by gρ/ω gives E_instance = E_source + g²ρ²N/ω − 2g²ρN_e/ω. bound_type variational agrees. Note: arXiv:2405.08701 (both versions) quotes this paper's N = 8 Jastrow value as −0.8424(3); Ohgoe & Imada print −0.8484(3) in both versions.",
+    "source_entry": "SP1-holstein#3 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_4_P_f1_w0.5_g1",
+      "method": "VMC, no e-ph correlation factor",
+      "energy": -2.501
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:1403.4150v2 (qmbl sources/1403.4150.txt, pypdf layout) and journal Phys. Rev. B 89, 195139 (2014), APS PDF fetched 2026-11-18 (run sources/J-PhysRevB.89.195139.txt, pypdf layout)",
+    "location": "Table I, column 'No rc' (arXiv line 412; journal p. 195139-7)",
+    "reported_as": "−2.501(1) total energy, units of t, (Ne, N, U/t, ω/t, λ) = (1, 4, 0, 0.5, 1)",
+    "conversion": "total, no shift (coupling −g Σ(b†+b) n_i, Eq. (34), no zero-point term); λ = g²/(2tω) = 1 at ω/t = 0.5 gives g = 1; sigma 1e-3",
+    "note": "Identical in arXiv v2 and the journal. One electron on the 4-site periodic chain (Sec. IV A), U = 0, VMC phonon cutoff mmax_q = 40. bound_type variational agrees. The same table prints a quoted ED energy −2.8343 (F. Marsiglio, Physica C 244, 21 (1995), Mmax up to 40), lower than every VMC row; it is not in the table (see report). method_detail 'BCS state' follows Eqs. (2)-(5) and the description in arXiv:2405.08701; the paper does not state the one-body part it used for a single electron.",
+    "source_entry": "SP1-holstein#4 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_4_P_f1_w0.5_g1",
+      "method": "VMC, P_e-ph, rc = 0",
+      "energy": -2.775
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:1403.4150v2 (qmbl sources/1403.4150.txt, pypdf layout) and journal Phys. Rev. B 89, 195139 (2014), APS PDF fetched 2026-11-18 (run sources/J-PhysRevB.89.195139.txt, pypdf layout)",
+    "location": "Table I, column 'rc = 0' (arXiv line 412; journal p. 195139-7)",
+    "reported_as": "−2.775(2) total energy, units of t, (Ne, N, U/t, ω/t, λ) = (1, 4, 0, 0.5, 1)",
+    "conversion": "total, no shift (coupling −g Σ(b†+b) n_i, Eq. (34), no zero-point term); λ = g²/(2tω) = 1 at ω/t = 0.5 gives g = 1; sigma 2e-3",
+    "note": "Identical in arXiv v2 and the journal. One electron on the 4-site periodic chain (Sec. IV A), U = 0, VMC phonon cutoff mmax_q = 40. bound_type variational agrees. The same table prints a quoted ED energy −2.8343 (F. Marsiglio, Physica C 244, 21 (1995), Mmax up to 40), lower than every VMC row; it is not in the table (see report). method_detail 'BCS state' follows Eqs. (2)-(5) and the description in arXiv:2405.08701; the paper does not state the one-body part it used for a single electron.",
+    "source_entry": "SP1-holstein#5 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_4_P_f1_w0.5_g1",
+      "method": "VMC, P_e-ph, rc = 1",
+      "energy": -2.795
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:1403.4150v2 (qmbl sources/1403.4150.txt, pypdf layout) and journal Phys. Rev. B 89, 195139 (2014), APS PDF fetched 2026-11-18 (run sources/J-PhysRevB.89.195139.txt, pypdf layout)",
+    "location": "Table I, column 'rc = 1' (arXiv line 412; journal p. 195139-7)",
+    "reported_as": "−2.795(1) total energy, units of t, (Ne, N, U/t, ω/t, λ) = (1, 4, 0, 0.5, 1)",
+    "conversion": "total, no shift (coupling −g Σ(b†+b) n_i, Eq. (34), no zero-point term); λ = g²/(2tω) = 1 at ω/t = 0.5 gives g = 1; sigma 1e-3",
+    "note": "Identical in arXiv v2 and the journal. One electron on the 4-site periodic chain (Sec. IV A), U = 0, VMC phonon cutoff mmax_q = 40. bound_type variational agrees. The same table prints a quoted ED energy −2.8343 (F. Marsiglio, Physica C 244, 21 (1995), Mmax up to 40), lower than every VMC row; it is not in the table (see report). method_detail 'BCS state' follows Eqs. (2)-(5) and the description in arXiv:2405.08701; the paper does not state the one-body part it used for a single electron.",
+    "source_entry": "SP1-holstein#6 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_4_P_f1_w0.5_g1",
+      "method": "VMC, P_e-ph, rc = 2",
+      "energy": -2.796
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:1403.4150v2 (qmbl sources/1403.4150.txt, pypdf layout) and journal Phys. Rev. B 89, 195139 (2014), APS PDF fetched 2026-11-18 (run sources/J-PhysRevB.89.195139.txt, pypdf layout)",
+    "location": "Table I, column 'rc = 2' (arXiv line 412; journal p. 195139-7)",
+    "reported_as": "−2.796(1) total energy, units of t, (Ne, N, U/t, ω/t, λ) = (1, 4, 0, 0.5, 1)",
+    "conversion": "total, no shift (coupling −g Σ(b†+b) n_i, Eq. (34), no zero-point term); λ = g²/(2tω) = 1 at ω/t = 0.5 gives g = 1; sigma 1e-3",
+    "note": "Identical in arXiv v2 and the journal. One electron on the 4-site periodic chain (Sec. IV A), U = 0, VMC phonon cutoff mmax_q = 40. bound_type variational agrees. The same table prints a quoted ED energy −2.8343 (F. Marsiglio, Physica C 244, 21 (1995), Mmax up to 40), lower than every VMC row; it is not in the table (see report). method_detail 'BCS state' follows Eqs. (2)-(5) and the description in arXiv:2405.08701; the paper does not state the one-body part it used for a single electron.",
+    "source_entry": "SP1-holstein#7 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_6_P_f3_w1_g1.5",
+      "method": "VMC1 (no P_e-ph)",
+      "energy": -8.0244
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:1403.4150v2 (qmbl sources/1403.4150.txt, pypdf layout) and journal Phys. Rev. B 89, 195139 (2014), APS PDF fetched 2026-11-18 (run sources/J-PhysRevB.89.195139.txt, pypdf layout)",
+    "location": "Table II, row VMC1, column N = 6 (arXiv lines 500-501; journal p. 195139-8)",
+    "reported_as": "−0.7749(2) energy per site, units of t (t = ω, g = 1.5ω)",
+    "conversion": "-0.7749 × 6 = -4.6494; coupling −g Σ(b†+b)(n_i − 1/2), Eq. (37): shift −g²N/(4ω) = -3.375; total -8.0244; sigma 0.0002 × 6 = 0.0012",
+    "note": "Identical in arXiv v2 and the journal. Spinless fermions at half filling, periodic/antiperiodic boundaries for odd/even fermion number (N_f = 3 → P); phonon cutoff mmax_q = 10 (Fig. 3 caption). Shift re-derived: displacing b by gρ/ω gives E_instance = E_source + g²ρ²N/ω − 2g²ρN_e/ω. bound_type variational agrees. Note: arXiv:2405.08701 (both versions) quotes this paper's N = 8 Jastrow value as −0.8424(3); Ohgoe & Imada print −0.8484(3) in both versions.",
+    "source_entry": "SP1-holstein#8 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_6_P_f3_w1_g1.5",
+      "method": "VMC2 (with P_e-ph)",
+      "energy": -8.5248
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:1403.4150v2 (qmbl sources/1403.4150.txt, pypdf layout) and journal Phys. Rev. B 89, 195139 (2014), APS PDF fetched 2026-11-18 (run sources/J-PhysRevB.89.195139.txt, pypdf layout)",
+    "location": "Table II, row VMC2, column N = 6 (arXiv lines 500-501; journal p. 195139-8)",
+    "reported_as": "−0.8583(3) energy per site, units of t (t = ω, g = 1.5ω)",
+    "conversion": "-0.8583 × 6 = -5.1498; coupling −g Σ(b†+b)(n_i − 1/2), Eq. (37): shift −g²N/(4ω) = -3.375; total -8.5248; sigma 0.00030000000000000003 × 6 = 0.0018",
+    "note": "Identical in arXiv v2 and the journal. Spinless fermions at half filling, periodic/antiperiodic boundaries for odd/even fermion number (N_f = 3 → P); phonon cutoff mmax_q = 10 (Fig. 3 caption). Shift re-derived: displacing b by gρ/ω gives E_instance = E_source + g²ρ²N/ω − 2g²ρN_e/ω. bound_type variational agrees. Note: arXiv:2405.08701 (both versions) quotes this paper's N = 8 Jastrow value as −0.8424(3); Ohgoe & Imada print −0.8484(3) in both versions.",
+    "source_entry": "SP1-holstein#9 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_8_A_f4_w1_g1.5",
+      "method": "VMC1 (no P_e-ph)",
+      "energy": -10.6912
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:1403.4150v2 (qmbl sources/1403.4150.txt, pypdf layout) and journal Phys. Rev. B 89, 195139 (2014), APS PDF fetched 2026-11-18 (run sources/J-PhysRevB.89.195139.txt, pypdf layout)",
+    "location": "Table II, row VMC1, column N = 8 (arXiv lines 500-501; journal p. 195139-8)",
+    "reported_as": "−0.7739(2) energy per site, units of t (t = ω, g = 1.5ω)",
+    "conversion": "-0.7739 × 8 = -6.1912; coupling −g Σ(b†+b)(n_i − 1/2), Eq. (37): shift −g²N/(4ω) = -4.5; total -10.6912; sigma 0.0002 × 8 = 0.0016",
+    "note": "Identical in arXiv v2 and the journal. Spinless fermions at half filling, periodic/antiperiodic boundaries for odd/even fermion number (N_f = 4 → A); phonon cutoff mmax_q = 10 (Fig. 3 caption). Shift re-derived: displacing b by gρ/ω gives E_instance = E_source + g²ρ²N/ω − 2g²ρN_e/ω. bound_type variational agrees. Note: arXiv:2405.08701 (both versions) quotes this paper's N = 8 Jastrow value as −0.8424(3); Ohgoe & Imada print −0.8484(3) in both versions.",
+    "source_entry": "SP1-holstein#10 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_8_A_f4_w1_g1.5",
+      "method": "VMC2 (with P_e-ph)",
+      "energy": -11.2872
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:1403.4150v2 (qmbl sources/1403.4150.txt, pypdf layout) and journal Phys. Rev. B 89, 195139 (2014), APS PDF fetched 2026-11-18 (run sources/J-PhysRevB.89.195139.txt, pypdf layout)",
+    "location": "Table II, row VMC2, column N = 8 (arXiv lines 500-501; journal p. 195139-8)",
+    "reported_as": "−0.8484(3) energy per site, units of t (t = ω, g = 1.5ω)",
+    "conversion": "-0.8484 × 8 = -6.7872; coupling −g Σ(b†+b)(n_i − 1/2), Eq. (37): shift −g²N/(4ω) = -4.5; total -11.2872; sigma 0.00030000000000000003 × 8 = 0.0024",
+    "note": "Identical in arXiv v2 and the journal. Spinless fermions at half filling, periodic/antiperiodic boundaries for odd/even fermion number (N_f = 4 → A); phonon cutoff mmax_q = 10 (Fig. 3 caption). Shift re-derived: displacing b by gρ/ω gives E_instance = E_source + g²ρ²N/ω − 2g²ρN_e/ω. bound_type variational agrees. Note: arXiv:2405.08701 (both versions) quotes this paper's N = 8 Jastrow value as −0.8424(3); Ohgoe & Imada print −0.8484(3) in both versions.",
+    "source_entry": "SP1-holstein#11 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_12_P_e4_w1_g1",
+      "method": "SC-VAED",
+      "energy": -10.77
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:1306.4751v2 (qmbl sources/1306.4751.txt) and journal Phys. Rev. B 89, 035146 (2014), APS PDF (run sources/J-PhysRevB.89.035146.txt, pypdf layout)",
+    "location": "Table I, 12 sites, column E4 (SC-VAED) (arXiv lines 118-121; journal p. 035146-2)",
+    "reported_as": "−10.77 total, units of t, four electrons (2 up, 2 down), ω = 1.0, λ = 0.5",
+    "conversion": "total, no shift: H has + gω Σ f_j(i) n_i,σ (a†_j + a_j) and ω Σ a†a without zero-point term; Holstein f_j(i) = δ_ij; λ = ωg²Σf²/(2t) = 0.5 at ω = 1 gives g = 1 and coefficient gω = 1 = instance g",
+    "note": "Identical in arXiv v2 and the journal. SC-VAED 'was done in the periodic boundary condition' (Sec. III); basis limited to total spin S = 0 with N_up = N_dn (Sec. II), all translations included; truncated variational basis → variational. Printed to two decimals only.",
+    "source_entry": "SP1-holstein#13 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_16_P_e4_w1_g1",
+      "method": "SC-VAED",
+      "energy": -10.81
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:1306.4751v2 (qmbl sources/1306.4751.txt) and journal Phys. Rev. B 89, 035146 (2014), APS PDF (run sources/J-PhysRevB.89.035146.txt, pypdf layout)",
+    "location": "Table I, 16 sites, column E4 (SC-VAED) (arXiv lines 118-121; journal p. 035146-2)",
+    "reported_as": "−10.81 total, units of t, four electrons (2 up, 2 down), ω = 1.0, λ = 0.5",
+    "conversion": "total, no shift: H has + gω Σ f_j(i) n_i,σ (a†_j + a_j) and ω Σ a†a without zero-point term; Holstein f_j(i) = δ_ij; λ = ωg²Σf²/(2t) = 0.5 at ω = 1 gives g = 1 and coefficient gω = 1 = instance g",
+    "note": "Identical in arXiv v2 and the journal. SC-VAED 'was done in the periodic boundary condition' (Sec. III); basis limited to total spin S = 0 with N_up = N_dn (Sec. II), all translations included; truncated variational basis → variational. Printed to two decimals only.",
+    "source_entry": "SP1-holstein#15 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_24_P_e4_w1_g1",
+      "method": "SC-VAED",
+      "energy": -10.83
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:1306.4751v2 (qmbl sources/1306.4751.txt) and journal Phys. Rev. B 89, 035146 (2014), APS PDF (run sources/J-PhysRevB.89.035146.txt, pypdf layout)",
+    "location": "Table I, 24 sites, column E4 (SC-VAED) (arXiv lines 118-121; journal p. 035146-2)",
+    "reported_as": "−10.83 total, units of t, four electrons (2 up, 2 down), ω = 1.0, λ = 0.5",
+    "conversion": "total, no shift: H has + gω Σ f_j(i) n_i,σ (a†_j + a_j) and ω Σ a†a without zero-point term; Holstein f_j(i) = δ_ij; λ = ωg²Σf²/(2t) = 0.5 at ω = 1 gives g = 1 and coefficient gω = 1 = instance g",
+    "note": "Identical in arXiv v2 and the journal. SC-VAED 'was done in the periodic boundary condition' (Sec. III); basis limited to total spin S = 0 with N_up = N_dn (Sec. II), all translations included; truncated variational basis → variational. Printed to two decimals only.",
+    "source_entry": "SP1-holstein#17 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_16_A_f8_w1_g1.5",
+      "method": "MLP (this work)",
+      "energy": -22.656
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:2405.08701v2 (qmbl sources/2405.08701.txt) and journal Phys. Rev. B 112, 184310 (2025), APS PDF (run sources/J-PhysRevB.112.184310.txt, pypdf layout)",
+    "location": "Table II (arXiv 'TABLE 2'), Nsites = 16, column 'MLP (this work)' (journal p. 184310-10)",
+    "reported_as": "−0.8535(2) ground-state energy per site, ω0 = 1, g = 1.5, half filling",
+    "conversion": "-0.8535 × 16 = -13.656; H_eph = g Σ(c†c − 1/2)(b†+b), Eq. (23), Hν = ω0 Σ b†b with no zero-point term (Eq. (2)): shift −g²N/(4ω) = -9; total -22.656; sigma 0.0002 × 16 = 0.0032",
+    "note": "Identical in arXiv v2 and the journal (journal table numbered II, GFMC reference [110]). Periodic BC for odd and antiperiodic for even fermion number → A. Variational NQS, bound_type agrees. The journal adds that the RBM column of Ref. [66] (Nomura, JPSJ 89, 054706 (2020)) 'were estimated from Fig. 4 of this paper'; that RBM value is lower than this row for N = 6, 8, 16 (see report).",
+    "source_entry": "SP1-holstein#19 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_4_A_f2_w1_g1.5",
+      "method": "MLP (this work)",
+      "energy": -5.82576
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:2405.08701v2 (qmbl sources/2405.08701.txt) and journal Phys. Rev. B 112, 184310 (2025), APS PDF (run sources/J-PhysRevB.112.184310.txt, pypdf layout)",
+    "location": "Table II (arXiv 'TABLE 2'), Nsites = 4, column 'MLP (this work)' (journal p. 184310-10)",
+    "reported_as": "−0.89394(7) ground-state energy per site, ω0 = 1, g = 1.5, half filling",
+    "conversion": "-0.89394 × 4 = -3.57576; H_eph = g Σ(c†c − 1/2)(b†+b), Eq. (23), Hν = ω0 Σ b†b with no zero-point term (Eq. (2)): shift −g²N/(4ω) = -2.25; total -5.82576; sigma 0.00007000000000000001 × 4 = 0.00028",
+    "note": "Identical in arXiv v2 and the journal (journal table numbered II, GFMC reference [110]). Periodic BC for odd and antiperiodic for even fermion number → A. Variational NQS, bound_type agrees. QMBL ED of this instance (checks/holstein-ed-2026-11) gives −5.8259502 in instance convention; the row is 0.7σ above it. The journal adds that the RBM column of Ref. [66] (Nomura, JPSJ 89, 054706 (2020)) 'were estimated from Fig. 4 of this paper'; that RBM value is lower than this row for N = 6, 8, 16 (see report).",
+    "source_entry": "SP1-holstein#20 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_6_P_f3_w1_g1.5",
+      "method": "MLP (this work)",
+      "energy": -8.5794
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:2405.08701v2 (qmbl sources/2405.08701.txt) and journal Phys. Rev. B 112, 184310 (2025), APS PDF (run sources/J-PhysRevB.112.184310.txt, pypdf layout)",
+    "location": "Table II (arXiv 'TABLE 2'), Nsites = 6, column 'MLP (this work)' (journal p. 184310-10)",
+    "reported_as": "−0.8674(2) ground-state energy per site, ω0 = 1, g = 1.5, half filling",
+    "conversion": "-0.8674 × 6 = -5.2044; H_eph = g Σ(c†c − 1/2)(b†+b), Eq. (23), Hν = ω0 Σ b†b with no zero-point term (Eq. (2)): shift −g²N/(4ω) = -3.375; total -8.5794; sigma 0.0002 × 6 = 0.0012",
+    "note": "Identical in arXiv v2 and the journal (journal table numbered II, GFMC reference [110]). Periodic BC for odd and antiperiodic for even fermion number → P. Variational NQS, bound_type agrees. The journal adds that the RBM column of Ref. [66] (Nomura, JPSJ 89, 054706 (2020)) 'were estimated from Fig. 4 of this paper'; that RBM value is lower than this row for N = 6, 8, 16 (see report).",
+    "source_entry": "SP1-holstein#21 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_8_A_f4_w1_g1.5",
+      "method": "MLP (this work)",
+      "energy": -11.3848
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:2405.08701v2 (qmbl sources/2405.08701.txt) and journal Phys. Rev. B 112, 184310 (2025), APS PDF (run sources/J-PhysRevB.112.184310.txt, pypdf layout)",
+    "location": "Table II (arXiv 'TABLE 2'), Nsites = 8, column 'MLP (this work)' (journal p. 184310-10)",
+    "reported_as": "−0.8606(1) ground-state energy per site, ω0 = 1, g = 1.5, half filling",
+    "conversion": "-0.8606 × 8 = -6.8848; H_eph = g Σ(c†c − 1/2)(b†+b), Eq. (23), Hν = ω0 Σ b†b with no zero-point term (Eq. (2)): shift −g²N/(4ω) = -4.5; total -11.3848; sigma 0.0001 × 8 = 0.0008",
+    "note": "Identical in arXiv v2 and the journal (journal table numbered II, GFMC reference [110]). Periodic BC for odd and antiperiodic for even fermion number → A. Variational NQS, bound_type agrees. The journal adds that the RBM column of Ref. [66] (Nomura, JPSJ 89, 054706 (2020)) 'were estimated from Fig. 4 of this paper'; that RBM value is lower than this row for N = 6, 8, 16 (see report).",
+    "source_entry": "SP1-holstein#22 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_16_A_f8_w1_g1.5",
+      "method": "GFMC (Δτ → 0)",
+      "energy": -22.664
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:cond-mat/9512046v2 (qmbl sources/cond-mat-9512046.txt) and journal Phys. Rev. B 53, 9676 (1996), APS PDF (run sources/J-PhysRevB.53.9676.txt, pypdf layout; old font: '2' is the minus sign, '6' is ±)",
+    "location": "Table I, row N = 16, column E0(N)/N (arXiv lines 874-877; journal p. 9683, Table I)",
+    "reported_as": "−0.854 ± 0.001 per site, units of ω (t = ω, g = 1.5ω)",
+    "conversion": "-0.854 × 16 = -13.664; Eq. (4): −g Σ(c†c − 1/2)(a+a†) + ω Σ a†a (Eq. (1) carries −Nω/2, which cancels the oscillator zero point, so no zero-point shift): shift −g²N/(4ω) = -9; total -22.664; sigma 0.001 × 16 = 0.016",
+    "note": "Identical in arXiv v2 and the journal. Spinless, half filling, antiperiodic (periodic) BC for even (odd) fermion number. GFMC in continuous phonon coordinates (no phonon cutoff), positive ground state for 1D spinless fermions with these BCs (mapping to periodic spin/boson model, stated), two time steps linearly extrapolated to Δτ = 0; RULES.md §4 keeps Δτ → 0 QMC exact (stochastic) with sigma. ± from block averages (1024 iterations), taken as 1σ. Table I also prints N = 2 (−1.143 ± 0.001), not in the table.",
+    "source_entry": "SP1-holstein#23 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_4_A_f2_w1_g1.5",
+      "method": "GFMC (Δτ → 0)",
+      "energy": -5.83
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:cond-mat/9512046v2 (qmbl sources/cond-mat-9512046.txt) and journal Phys. Rev. B 53, 9676 (1996), APS PDF (run sources/J-PhysRevB.53.9676.txt, pypdf layout; old font: '2' is the minus sign, '6' is ±)",
+    "location": "Table I, row N = 4, column E0(N)/N (arXiv lines 874-877; journal p. 9683, Table I)",
+    "reported_as": "−0.895 ± 0.001 per site, units of ω (t = ω, g = 1.5ω)",
+    "conversion": "-0.895 × 4 = -3.58; Eq. (4): −g Σ(c†c − 1/2)(a+a†) + ω Σ a†a (Eq. (1) carries −Nω/2, which cancels the oscillator zero point, so no zero-point shift): shift −g²N/(4ω) = -2.25; total -5.83; sigma 0.001 × 4 = 0.004",
+    "note": "Identical in arXiv v2 and the journal. Spinless, half filling, antiperiodic (periodic) BC for even (odd) fermion number. GFMC in continuous phonon coordinates (no phonon cutoff), positive ground state for 1D spinless fermions with these BCs (mapping to periodic spin/boson model, stated), two time steps linearly extrapolated to Δτ = 0; RULES.md §4 keeps Δτ → 0 QMC exact (stochastic) with sigma. ± from block averages (1024 iterations), taken as 1σ. Table I also prints N = 2 (−1.143 ± 0.001), not in the table.",
+    "source_entry": "SP1-holstein#24 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_6_P_f3_w1_g1.5",
+      "method": "GFMC (Δτ → 0)",
+      "energy": -8.583
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:cond-mat/9512046v2 (qmbl sources/cond-mat-9512046.txt) and journal Phys. Rev. B 53, 9676 (1996), APS PDF (run sources/J-PhysRevB.53.9676.txt, pypdf layout; old font: '2' is the minus sign, '6' is ±)",
+    "location": "Table I, row N = 6, column E0(N)/N (arXiv lines 874-877; journal p. 9683, Table I)",
+    "reported_as": "−0.868 ± 0.001 per site, units of ω (t = ω, g = 1.5ω)",
+    "conversion": "-0.868 × 6 = -5.208; Eq. (4): −g Σ(c†c − 1/2)(a+a†) + ω Σ a†a (Eq. (1) carries −Nω/2, which cancels the oscillator zero point, so no zero-point shift): shift −g²N/(4ω) = -3.375; total -8.583; sigma 0.001 × 6 = 0.006",
+    "note": "Identical in arXiv v2 and the journal. Spinless, half filling, antiperiodic (periodic) BC for even (odd) fermion number. GFMC in continuous phonon coordinates (no phonon cutoff), positive ground state for 1D spinless fermions with these BCs (mapping to periodic spin/boson model, stated), two time steps linearly extrapolated to Δτ = 0; RULES.md §4 keeps Δτ → 0 QMC exact (stochastic) with sigma. ± from block averages (1024 iterations), taken as 1σ. Table I also prints N = 2 (−1.143 ± 0.001), not in the table.",
+    "source_entry": "SP1-holstein#25 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_8_A_f4_w1_g1.5",
+      "method": "GFMC (Δτ → 0)",
+      "energy": -11.388
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:cond-mat/9512046v2 (qmbl sources/cond-mat-9512046.txt) and journal Phys. Rev. B 53, 9676 (1996), APS PDF (run sources/J-PhysRevB.53.9676.txt, pypdf layout; old font: '2' is the minus sign, '6' is ±)",
+    "location": "Table I, row N = 8, column E0(N)/N (arXiv lines 874-877; journal p. 9683, Table I)",
+    "reported_as": "−0.861 ± 0.002 per site, units of ω (t = ω, g = 1.5ω)",
+    "conversion": "-0.861 × 8 = -6.888; Eq. (4): −g Σ(c†c − 1/2)(a+a†) + ω Σ a†a (Eq. (1) carries −Nω/2, which cancels the oscillator zero point, so no zero-point shift): shift −g²N/(4ω) = -4.5; total -11.388; sigma 0.002 × 8 = 0.016",
+    "note": "Identical in arXiv v2 and the journal. Spinless, half filling, antiperiodic (periodic) BC for even (odd) fermion number. GFMC in continuous phonon coordinates (no phonon cutoff), positive ground state for 1D spinless fermions with these BCs (mapping to periodic spin/boson model, stated), two time steps linearly extrapolated to Δτ = 0; RULES.md §4 keeps Δτ → 0 QMC exact (stochastic) with sigma. ± from block averages (1024 iterations), taken as 1σ. Table I also prints N = 2 (−1.143 ± 0.001), not in the table.",
+    "source_entry": "SP1-holstein#26 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_51_O_f25_w1_g0.5",
+      "method": "PP-2DMRG, n_ph = 63",
+      "energy": -36.159999563
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:2011.07412v4 (qmbl sources/2011.07412.txt) and journal Comput. Phys. Commun. 269, 108106 (2021), ScienceDirect HTML in Safari from the ETH network (Safari Find matched each full energy string once; Fig. 12/13 legends read on screen)",
+    "location": "Sec. 3.1, paragraph on parameter set (P.1) (arXiv line 851)",
+    "reported_as": "Emin/t0 = −36.15999956298296 (L = 51, N = 25, ω0/t0 = 1.0, γ/t0 = 0.5)",
+    "conversion": "total in units of t0, no shift (Eqs. (1)-(4): γ Σ n_j (b†+b), ω0 Σ b†b, no zero point); stored -36.159999563 is the printed value at 12 significant digits",
+    "note": "Same digits in arXiv v4 and the journal (Safari Find matched the full string). Open boundaries (arXiv line 142: 'We investigate the Holstein model with open boundary conditions'). Emin is the lowest ⟨ψ|H|ψ⟩ of all runs, not the variance extrapolation the paper also discusses → variational. PP-2DMRG with n_ph = 63: Fig. 12 legend 'PP-2DMRG m_max/3, n_ph = 63' and Sec. 2.4.5 'the number of phonons is bound by nph = 63'.",
+    "source_entry": "SP1-holstein#27 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_51_O_f25_w1_g1.5",
+      "method": "DMRG3S+LBO, n_ph = 63",
+      "energy": -70.8626288747
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:2011.07412v4 (qmbl sources/2011.07412.txt) and journal Comput. Phys. Commun. 269, 108106 (2021), ScienceDirect HTML in Safari from the ETH network (Safari Find matched each full energy string once; Fig. 12/13 legends read on screen)",
+    "location": "Sec. 3.1, paragraph on parameter set (P.2) (arXiv line 864)",
+    "reported_as": "Emin/t0 = −70.862628874727 (L = 51, N = 25, ω0/t0 = 1.0, γ/t0 = 1.5)",
+    "conversion": "total in units of t0, no shift (Eqs. (1)-(4): γ Σ n_j (b†+b), ω0 Σ b†b, no zero point); stored -70.8626288747 is the printed value at 12 significant digits",
+    "note": "Same digits in arXiv v4 and the journal (Safari Find matched the full string). Open boundaries (arXiv line 142: 'We investigate the Holstein model with open boundary conditions'). Emin is the lowest ⟨ψ|H|ψ⟩ of all runs, not the variance extrapolation the paper also discusses → variational. DMRG3S+LBO with n_ph = 63: Fig. 13 legend 'DMRG3S+LBO m_max, n_ph = 63, d_o = 10' (journal figure).",
+    "source_entry": "SP1-holstein#28 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_51_O_f25_w1_g2",
+      "method": "PP-2DMRG, n_ph = 63",
+      "energy": -107.32209423
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:2011.07412v4 (qmbl sources/2011.07412.txt) and journal Comput. Phys. Commun. 269, 108106 (2021), ScienceDirect HTML in Safari from the ETH network (Safari Find matched each full energy string once; Fig. 12/13 legends read on screen)",
+    "location": "Sec. 3.1, paragraph on parameter set (P.3) (arXiv line 869-870)",
+    "reported_as": "Emin/t0 = −107.32209423031215 (L = 51, N = 25, ω0/t0 = 1.0, γ/t0 = 2)",
+    "conversion": "total in units of t0, no shift (Eqs. (1)-(4): γ Σ n_j (b†+b), ω0 Σ b†b, no zero point); stored -107.32209423 is the printed value at 12 significant digits",
+    "note": "Same digits in arXiv v4 and the journal (Safari Find matched the full string). Open boundaries (arXiv line 142: 'We investigate the Holstein model with open boundary conditions'). Emin is the lowest ⟨ψ|H|ψ⟩ of all runs, not the variance extrapolation the paper also discusses → variational. PP-2DMRG with n_ph = 63: Sec. 3.1 'for all three methods tested, we use Nph = 63' and Sec. 2.4.5.",
+    "source_entry": "SP1-holstein#29 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_32_P_f1_w1_g1.41421",
+      "method": "Global-Local variation",
+      "energy": -2.99802
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:cond-mat/9710321v2 (qmbl sources/cond-mat-9710321.txt) and journal J. Chem. Phys. 109, 6540 (1998), AIP PDF in Safari, accessibility text dump (run sources/safari-JCP-6540-dump-s6.txt; minus signs not exposed there, digits and row labels are)",
+    "location": "Table 2 (journal Table II), row 'Global-Local variation, Figure 1, this paper' (arXiv line 290)",
+    "reported_as": "- 2.99802 in units of ħω, (J/ħω, g) = (1, √2)",
+    "conversion": "total, no shift: H_el-ph = −għω Σ a†a (b†+b), H_ph = ħω Σ b†b; J/ħω = 1 so t = ω = 1 and the instance g = printed g",
+    "note": "Same digits in arXiv v2 and the journal table. Cluster inferred: 'We presume periodic boundary conditions on a one-dimensional lattice of N sites' and 'We typically computed complete energy band structures on 32-site lattices for every parameter set' (arXiv Sec. 2; the journal page text with this sentence was not exposed by the Safari dump); journal Fig. 3 caption ties the Table I value to the complete GL band. Own variational computation → variational. Bonča et al. 1999 Table I quotes the same two values (no duplicate row in data/).",
+    "source_entry": "SP1-holstein#32 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_32_P_f1_w1_g1",
+      "method": "Global-Local variation",
+      "energy": -2.46931
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:cond-mat/9710321v2 (qmbl sources/cond-mat-9710321.txt) and journal J. Chem. Phys. 109, 6540 (1998), AIP PDF in Safari, accessibility text dump (run sources/safari-JCP-6540-dump-s6.txt; minus signs not exposed there, digits and row labels are)",
+    "location": "Table 1 (journal Table I), row 'Global-Local variation, Figure 1, this paper' (arXiv line 245)",
+    "reported_as": "- 2.46931 in units of ħω, (J/ħω, g) = (1, 1)",
+    "conversion": "total, no shift: H_el-ph = −għω Σ a†a (b†+b), H_ph = ħω Σ b†b; J/ħω = 1 so t = ω = 1 and the instance g = printed g",
+    "note": "Same digits in arXiv v2 and the journal table. Cluster inferred: 'We presume periodic boundary conditions on a one-dimensional lattice of N sites' and 'We typically computed complete energy band structures on 32-site lattices for every parameter set' (arXiv Sec. 2; the journal page text with this sentence was not exposed by the Safari dump); journal Fig. 3 caption ties the Table I value to the complete GL band. Own variational computation → variational. Bonča et al. 1999 Table I quotes the same two values (no duplicate row in data/).",
+    "source_entry": "SP1-holstein#33 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_4_P_e4_w4_g2",
+      "method": "CP-AFQMC/TP-LLF(2)",
+      "energy": -10.293
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:2012.13473v1 (qmbl sources/2012.13473.txt) and journal Phys. Rev. B 103, 115123 (2021), APS PDF (run sources/J-PhysRevB.103.115123.txt, pypdf layout)",
+    "location": "Sec. VI B '1D 4-site model at half-filling' (arXiv lines 664-672; journal p. 115123-10/11)",
+    "reported_as": "'With AFQMC/TP-LLF(2), a ground-state energy of −10.293(2) is obtained'",
+    "conversion": "total in units of t, no shift: H = −t Σ a†a + U Σ nn + ω Σ b†b − g Σ n_i(b_i + b†_i), Eqs. (1)-(8), U = 0; λ = g²/(2dtω) = 0.5 with d = 1, ω = 4t gives g = 2t (printed)",
+    "note": "Identical in arXiv v1 and the journal. CP-AFQMC is constrained (the paper states it is no longer exact and shows trial-dependent bias here) → projected agrees. sigma from blocking (pyblock); 6400 walkers, Δτ = 0.0005/t. Half filling = 4 electrons; N_up = N_dn = 2 is not stated in words (spin-restricted trial).",
+    "source_entry": "SP1-holstein#34 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_4_P_e4_w4_g2",
+      "method": "DMRG (iTensor)",
+      "energy": -10.292
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:2012.13473v1 (qmbl sources/2012.13473.txt) and journal Phys. Rev. B 103, 115123 (2021), APS PDF (run sources/J-PhysRevB.103.115123.txt, pypdf layout)",
+    "location": "Sec. VI B '1D 4-site model at half-filling' (arXiv lines 664-672; journal p. 115123-10/11)",
+    "reported_as": "'the exact result of −10.292 (obtained from DMRG using iTensor, although ED can also be done here)'",
+    "conversion": "total in units of t, no shift: H = −t Σ a†a + U Σ nn + ω Σ b†b − g Σ n_i(b_i + b†_i), Eqs. (1)-(8), U = 0; λ = g²/(2dtω) = 0.5 with d = 1, ω = 4t gives g = 2t (printed)",
+    "note": "Identical in arXiv v1 and the journal. DMRG with a finite boson cutoff is variational; the bond dimension and boson cutoff for this 4-site run are not stated (the 20-site runs used m = 1000, 60 bosons). The authors' own computation (ITensor).",
+    "source_entry": "SP1-holstein#35 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_12_O_e4_w1_g1",
+      "method": "DMRG, m = 400",
+      "energy": -10.782
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:1306.4751v2 (qmbl sources/1306.4751.txt) and journal Phys. Rev. B 89, 035146 (2014), APS PDF (run sources/J-PhysRevB.89.035146.txt, pypdf layout)",
+    "location": "Table I, 12 sites, column E4 (DMRG) (arXiv lines 118-121; journal p. 035146-2)",
+    "reported_as": "−10.782 total, units of t, four electrons (2 up, 2 down), ω = 1.0, λ = 0.5",
+    "conversion": "total, no shift: H has + gω Σ f_j(i) n_i,σ (a†_j + a_j) and ω Σ a†a without zero-point term; Holstein f_j(i) = δ_ij; λ = ωg²Σf²/(2t) = 0.5 at ω = 1 gives g = 1 and coefficient gω = 1 = instance g",
+    "note": "Value, boundaries, filling and couplings agree; the journal prints the same digits as the arXiv text. Corrected on the same pass: method_detail (method_names.mjs).",
+    "source_entry": "SP1-holstein#12 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_16_O_e4_w1_g1",
+      "method": "DMRG, m = 400",
+      "energy": -10.797
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:1306.4751v2 (qmbl sources/1306.4751.txt) and journal Phys. Rev. B 89, 035146 (2014), APS PDF (run sources/J-PhysRevB.89.035146.txt, pypdf layout)",
+    "location": "Table I, 16 sites, column E4 (DMRG) (arXiv lines 118-121; journal p. 035146-2)",
+    "reported_as": "−10.797 total, units of t, four electrons (2 up, 2 down), ω = 1.0, λ = 0.5",
+    "conversion": "total, no shift: H has + gω Σ f_j(i) n_i,σ (a†_j + a_j) and ω Σ a†a without zero-point term; Holstein f_j(i) = δ_ij; λ = ωg²Σf²/(2t) = 0.5 at ω = 1 gives g = 1 and coefficient gω = 1 = instance g",
+    "note": "Value, boundaries, filling and couplings agree; the journal prints the same digits as the arXiv text. Corrected on the same pass: method_detail (method_names.mjs).",
+    "source_entry": "SP1-holstein#14 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_24_O_e4_w1_g1",
+      "method": "DMRG, m = 400",
+      "energy": -10.828
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:1306.4751v2 (qmbl sources/1306.4751.txt) and journal Phys. Rev. B 89, 035146 (2014), APS PDF (run sources/J-PhysRevB.89.035146.txt, pypdf layout)",
+    "location": "Table I, 24 sites, column E4 (DMRG) (arXiv lines 118-121; journal p. 035146-2)",
+    "reported_as": "−10.828 total, units of t, four electrons (2 up, 2 down), ω = 1.0, λ = 0.5",
+    "conversion": "total, no shift: H has + gω Σ f_j(i) n_i,σ (a†_j + a_j) and ω Σ a†a without zero-point term; Holstein f_j(i) = δ_ij; λ = ωg²Σf²/(2t) = 0.5 at ω = 1 gives g = 1 and coefficient gω = 1 = instance g",
+    "note": "Value, boundaries, filling and couplings agree; the journal prints the same digits as the arXiv text. Corrected on the same pass: method_detail (method_names.mjs).",
+    "source_entry": "SP1-holstein#16 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_60_O_e4_w1_g1",
+      "method": "DMRG, m = 400",
+      "energy": -10.846
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:1306.4751v2 (qmbl sources/1306.4751.txt) and journal Phys. Rev. B 89, 035146 (2014), APS PDF (run sources/J-PhysRevB.89.035146.txt, pypdf layout)",
+    "location": "Table I, 60 sites, column E4 (DMRG) (arXiv lines 118-121; journal p. 035146-2)",
+    "reported_as": "−10.846 total, units of t, four electrons (2 up, 2 down), ω = 1.0, λ = 0.5",
+    "conversion": "total, no shift: H has + gω Σ f_j(i) n_i,σ (a†_j + a_j) and ω Σ a†a without zero-point term; Holstein f_j(i) = δ_ij; λ = ωg²Σf²/(2t) = 0.5 at ω = 1 gives g = 1 and coefficient gω = 1 = instance g",
+    "note": "Value, boundaries, filling and couplings agree; the journal prints the same digits as the arXiv text. Corrected on the same pass: method_detail (method_names.mjs).",
+    "source_entry": "SP1-holstein#18 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_16_P_f1_w1_g1.41421",
+      "method": "ED, 12 phonons",
+      "energy": -2.99882816
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:cond-mat/9812252v1 (qmbl sources/cond-mat-9812252.txt) and journal Phys. Rev. B 60, 1633 (1999), APS PDF (run sources/J-PhysRevB.60.1633.txt, pypdf layout; old font: '2' is the minus sign)",
+    "location": "Table I (arXiv line 1146-1147; journal p. 1636) and the footnote naming the ED: journal Ref. 28, arXiv Ref. [26]",
+    "reported_as": "−2.99882816 (column 'ED N=16', λ/ω = √2)",
+    "conversion": "total for one electron, t = 1 ('assumed here and throughout this work'), ω = 1, H = −t Σ(c†c + H.c.) − λ Σ c†c(a+a†) + ω Σ a†a: λ is the instance g; no shift",
+    "note": "Value, boundaries, filling and couplings agree; the journal prints the same digits as the arXiv text. Corrected on the same pass: reference (corrections.mjs).",
+    "source_entry": "SP1-holstein#30 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_16_P_f1_w1_g1",
+      "method": "ED, 10 phonons",
+      "energy": -2.46968477
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "arXiv:cond-mat/9812252v1 (qmbl sources/cond-mat-9812252.txt) and journal Phys. Rev. B 60, 1633 (1999), APS PDF (run sources/J-PhysRevB.60.1633.txt, pypdf layout; old font: '2' is the minus sign)",
+    "location": "Table I (arXiv line 1146-1147; journal p. 1636) and the footnote naming the ED: journal Ref. 28, arXiv Ref. [26]",
+    "reported_as": "−2.46968477 (column 'ED N=16', λ/ω = 1)",
+    "conversion": "total for one electron, t = 1 ('assumed here and throughout this work'), ω = 1, H = −t Σ(c†c + H.c.) − λ Σ c†c(a+a†) + ω Σ a†a: λ is the instance g; no shift",
+    "note": "Value, boundaries, filling and couplings agree; the journal prints the same digits as the arXiv text. Corrected on the same pass: reference (corrections.mjs).",
+    "source_entry": "SP1-holstein#31 (qmbl-verify 2026-11-18)",
+    "journal": true
+  },
 ];

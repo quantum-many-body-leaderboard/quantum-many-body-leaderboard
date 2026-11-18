@@ -35,7 +35,17 @@
         "method": "source text of arXiv:2405.08701 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-11-16)",
         "reported_as": "-0.89394(7)",
         "note": "Table 2, Nsites = 4, column MLP (this work) (line 669); version read: arXiv text (sources/2405.08701.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eq. (23), line 679: H_eph = g sum_i (c+_i c_i - 1/2)(b+_i + b_i), spinless fermions; H_nu = ω0 sum b+b without zero-point energy (lines 151-159); t = 1 (line 164). Table 2 (lines 665-672): energy per site at half filling, ω0 = 1, g = 1.5, antiperiodic boundaries for an even and periodic for an odd fermion number (lines 681-682). Coupling to n_i - 1/2: E_instance = E_source - g^2 N / (4ω) at half filling (RULES.md 2.1). QMBL's diagonalization of the 4-site chain in the source's convention gives -0.8939876 per site, the printed MLP -0.89394(7) and GFMC -0.895(1) (checks/holstein-ed-2026-11/).",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-11-18",
+          "scope": "value",
+          "method": "arXiv:2405.08701v2 (qmbl sources/2405.08701.txt) and journal Phys. Rev. B 112, 184310 (2025), APS PDF (run sources/J-PhysRevB.112.184310.txt, pypdf layout)",
+          "location": "Table II (arXiv 'TABLE 2'), Nsites = 4, column 'MLP (this work)' (journal p. 184310-10)",
+          "reported_as": "−0.89394(7) ground-state energy per site, ω0 = 1, g = 1.5, half filling",
+          "conversion": "-0.89394 × 4 = -3.57576; H_eph = g Σ(c†c − 1/2)(b†+b), Eq. (23), Hν = ω0 Σ b†b with no zero-point term (Eq. (2)): shift −g²N/(4ω) = -2.25; total -5.82576; sigma 0.00007000000000000001 × 4 = 0.00028",
+          "note": "Identical in arXiv v2 and the journal (journal table numbered II, GFMC reference [110]). Periodic BC for odd and antiperiodic for even fermion number → A. Variational NQS, bound_type agrees. QMBL ED of this instance (checks/holstein-ed-2026-11) gives −5.8259502 in instance convention; the row is 0.7σ above it. The journal adds that the RBM column of Ref. [66] (Nomura, JPSJ 89, 054706 (2020)) 'were estimated from Fig. 4 of this paper'; that RBM value is lower than this row for N = 6, 8, 16 (see report).",
+          "source_entry": "SP1-holstein#20 (qmbl-verify 2026-11-18)"
+        }
       },
       "converted": {
         "from": "coupling to n_i - 0.5",
@@ -66,7 +76,17 @@
         "method": "source text of arXiv:cond-mat/9512046 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-11-16)",
         "reported_as": "-0.895  ±  0.001",
         "note": "Table I, N = 4, column E0(N)/N (line 874); version read: arXiv text (sources/cond-mat-9512046.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eq. (4), line 72: H = -t sum (c+_i c_i+1 + h.c.) - g sum (c+_i c_i - 1/2)(a_i + a+_i) + ω sum a+_i a_i, spinless fermions, Eq. (1) with the zero-point energy -Nω/2 removed (line 52); Table I (lines 866-877): E0(N)/N in units of ω at t = ω, g = 1.5ω, half filling; antiperiodic (periodic) boundaries for an even (odd) fermion number (lines 153-154). The sign of g is a gauge choice (b -> -b). Coupling to n_i - 1/2: E_instance = E_source - g^2 N / (4ω). GFMC with a guiding function chosen positive everywhere (line 379), time steps extrapolated linearly to Δτ = 0 (lines 548-553). QMBL's diagonalization of the 4-site chain reproduces -0.895 ± 0.001 (-0.8939876, checks/holstein-ed-2026-11/).",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-11-18",
+          "scope": "value",
+          "method": "arXiv:cond-mat/9512046v2 (qmbl sources/cond-mat-9512046.txt) and journal Phys. Rev. B 53, 9676 (1996), APS PDF (run sources/J-PhysRevB.53.9676.txt, pypdf layout; old font: '2' is the minus sign, '6' is ±)",
+          "location": "Table I, row N = 4, column E0(N)/N (arXiv lines 874-877; journal p. 9683, Table I)",
+          "reported_as": "−0.895 ± 0.001 per site, units of ω (t = ω, g = 1.5ω)",
+          "conversion": "-0.895 × 4 = -3.58; Eq. (4): −g Σ(c†c − 1/2)(a+a†) + ω Σ a†a (Eq. (1) carries −Nω/2, which cancels the oscillator zero point, so no zero-point shift): shift −g²N/(4ω) = -2.25; total -5.83; sigma 0.001 × 4 = 0.004",
+          "note": "Identical in arXiv v2 and the journal. Spinless, half filling, antiperiodic (periodic) BC for even (odd) fermion number. GFMC in continuous phonon coordinates (no phonon cutoff), positive ground state for 1D spinless fermions with these BCs (mapping to periodic spin/boson model, stated), two time steps linearly extrapolated to Δτ = 0; RULES.md §4 keeps Δτ → 0 QMC exact (stochastic) with sigma. ± from block averages (1024 iterations), taken as 1σ. Table I also prints N = 2 (−1.143 ± 0.001), not in the table.",
+          "source_entry": "SP1-holstein#24 (qmbl-verify 2026-11-18)"
+        }
       },
       "converted": {
         "from": "coupling to n_i - 0.5",
@@ -97,7 +117,17 @@
         "method": "source text of arXiv:1403.4150 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-11-16)",
         "reported_as": "-0.7832(7)",
         "note": "Table II, N = 4, row VMC1 (line 500); version read: arXiv text (sources/1403.4150.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eq. (37), lines 489-494, spinless, -g sum (b+_i + b_i)(n_i - 1/2), t = ω, g = 1.5ω (lines 507-508), energy per site at half filling, antiperiodic (periodic) boundaries for an even (odd) fermion number (lines 432-433): E_instance = E_source - g^2 N / (4ω). The sign of g is a gauge choice (b -> -b).",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-11-18",
+          "scope": "value",
+          "method": "arXiv:1403.4150v2 (qmbl sources/1403.4150.txt, pypdf layout) and journal Phys. Rev. B 89, 195139 (2014), APS PDF fetched 2026-11-18 (run sources/J-PhysRevB.89.195139.txt, pypdf layout)",
+          "location": "Table II, row VMC1, column N = 4 (arXiv lines 500-501; journal p. 195139-8)",
+          "reported_as": "−0.7832(7) energy per site, units of t (t = ω, g = 1.5ω)",
+          "conversion": "-0.7832 × 4 = -3.1328; coupling −g Σ(b†+b)(n_i − 1/2), Eq. (37): shift −g²N/(4ω) = -2.25; total -5.3828; sigma 0.0007 × 4 = 0.0028",
+          "note": "Identical in arXiv v2 and the journal. Spinless fermions at half filling, periodic/antiperiodic boundaries for odd/even fermion number (N_f = 2 → A); phonon cutoff mmax_q = 10 (Fig. 3 caption). Shift re-derived: displacing b by gρ/ω gives E_instance = E_source + g²ρ²N/ω − 2g²ρN_e/ω. bound_type variational agrees. Note: arXiv:2405.08701 (both versions) quotes this paper's N = 8 Jastrow value as −0.8424(3); Ohgoe & Imada print −0.8484(3) in both versions.",
+          "source_entry": "SP1-holstein#2 (qmbl-verify 2026-11-18)"
+        }
       },
       "converted": {
         "from": "coupling to n_i - 0.5",
@@ -128,7 +158,17 @@
         "method": "source text of arXiv:1403.4150 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-11-16)",
         "reported_as": "-0.8904(5)",
         "note": "Table II, N = 4, row VMC2 (line 501); version read: arXiv text (sources/1403.4150.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eq. (37), lines 489-494, spinless, -g sum (b+_i + b_i)(n_i - 1/2), t = ω, g = 1.5ω (lines 507-508), energy per site at half filling, antiperiodic (periodic) boundaries for an even (odd) fermion number (lines 432-433): E_instance = E_source - g^2 N / (4ω). The sign of g is a gauge choice (b -> -b).",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-11-18",
+          "scope": "value",
+          "method": "arXiv:1403.4150v2 (qmbl sources/1403.4150.txt, pypdf layout) and journal Phys. Rev. B 89, 195139 (2014), APS PDF fetched 2026-11-18 (run sources/J-PhysRevB.89.195139.txt, pypdf layout)",
+          "location": "Table II, row VMC2, column N = 4 (arXiv lines 500-501; journal p. 195139-8)",
+          "reported_as": "−0.8904(5) energy per site, units of t (t = ω, g = 1.5ω)",
+          "conversion": "-0.8904 × 4 = -3.5616; coupling −g Σ(b†+b)(n_i − 1/2), Eq. (37): shift −g²N/(4ω) = -2.25; total -5.8116; sigma 0.0005 × 4 = 0.002",
+          "note": "Identical in arXiv v2 and the journal. Spinless fermions at half filling, periodic/antiperiodic boundaries for odd/even fermion number (N_f = 2 → A); phonon cutoff mmax_q = 10 (Fig. 3 caption). Shift re-derived: displacing b by gρ/ω gives E_instance = E_source + g²ρ²N/ω − 2g²ρN_e/ω. bound_type variational agrees. Note: arXiv:2405.08701 (both versions) quotes this paper's N = 8 Jastrow value as −0.8424(3); Ohgoe & Imada print −0.8484(3) in both versions.",
+          "source_entry": "SP1-holstein#3 (qmbl-verify 2026-11-18)"
+        }
       },
       "converted": {
         "from": "coupling to n_i - 0.5",

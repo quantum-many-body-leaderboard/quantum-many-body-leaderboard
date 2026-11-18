@@ -36,7 +36,17 @@
         "method": "source text of arXiv:2012.13473 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-11-16)",
         "reported_as": "−10.293(2)",
         "note": "text: AFQMC with the TP-LLF(2) trial wave function, 4-site chain, PBC, half filling, λ = 0.5, ω = 4t, g = 2t (line 671); version read: arXiv text (sources/2012.13473.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eqs. (1)-(8), lines 77-92: H = -t sum a+a + U sum n n + ω sum b+b - g sum n_i (b_i + b+_i), coupling to n_i, no zero-point energy; λ = g^2/(2dtω) (line 119). Lines 664-672: 1D 4-site chain, periodic boundaries, half filling (4 electrons), λ = 0.5, ω = 4t, g = 2t, U = 0; total energies in units of t. The sign of g is a gauge choice.",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-11-18",
+          "scope": "value",
+          "method": "arXiv:2012.13473v1 (qmbl sources/2012.13473.txt) and journal Phys. Rev. B 103, 115123 (2021), APS PDF (run sources/J-PhysRevB.103.115123.txt, pypdf layout)",
+          "location": "Sec. VI B '1D 4-site model at half-filling' (arXiv lines 664-672; journal p. 115123-10/11)",
+          "reported_as": "'With AFQMC/TP-LLF(2), a ground-state energy of −10.293(2) is obtained'",
+          "conversion": "total in units of t, no shift: H = −t Σ a†a + U Σ nn + ω Σ b†b − g Σ n_i(b_i + b†_i), Eqs. (1)-(8), U = 0; λ = g²/(2dtω) = 0.5 with d = 1, ω = 4t gives g = 2t (printed)",
+          "note": "Identical in arXiv v1 and the journal. CP-AFQMC is constrained (the paper states it is no longer exact and shows trial-dependent bias here) → projected agrees. sigma from blocking (pyblock); 6400 walkers, Δτ = 0.0005/t. Half filling = 4 electrons; N_up = N_dn = 2 is not stated in words (spin-restricted trial).",
+          "source_entry": "SP1-holstein#34 (qmbl-verify 2026-11-18)"
+        }
       }
     },
     {
@@ -62,7 +72,17 @@
         "method": "source text of arXiv:2012.13473 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-11-16)",
         "reported_as": "−10.292",
         "note": "text: 'the exact result of −10.292 (obtained from DMRG using iTensor)', same system (line 672); version read: arXiv text (sources/2012.13473.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eqs. (1)-(8), lines 77-92: H = -t sum a+a + U sum n n + ω sum b+b - g sum n_i (b_i + b+_i), coupling to n_i, no zero-point energy; λ = g^2/(2dtω) (line 119). Lines 664-672: 1D 4-site chain, periodic boundaries, half filling (4 electrons), λ = 0.5, ω = 4t, g = 2t, U = 0; total energies in units of t. The sign of g is a gauge choice.",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-11-18",
+          "scope": "value",
+          "method": "arXiv:2012.13473v1 (qmbl sources/2012.13473.txt) and journal Phys. Rev. B 103, 115123 (2021), APS PDF (run sources/J-PhysRevB.103.115123.txt, pypdf layout)",
+          "location": "Sec. VI B '1D 4-site model at half-filling' (arXiv lines 664-672; journal p. 115123-10/11)",
+          "reported_as": "'the exact result of −10.292 (obtained from DMRG using iTensor, although ED can also be done here)'",
+          "conversion": "total in units of t, no shift: H = −t Σ a†a + U Σ nn + ω Σ b†b − g Σ n_i(b_i + b†_i), Eqs. (1)-(8), U = 0; λ = g²/(2dtω) = 0.5 with d = 1, ω = 4t gives g = 2t (printed)",
+          "note": "Identical in arXiv v1 and the journal. DMRG with a finite boson cutoff is variational; the bond dimension and boson cutoff for this 4-site run are not stated (the 20-site runs used m = 1000, 60 bosons). The authors' own computation (ITensor).",
+          "source_entry": "SP1-holstein#35 (qmbl-verify 2026-11-18)"
+        }
       }
     }
   ]

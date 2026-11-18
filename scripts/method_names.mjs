@@ -1086,7 +1086,7 @@ Object.assign(NAMES, {
   "VMC, P_e-ph, rc = 2": ["VMC", `${VMC_OI} and the electron-phonon correlation factor of range 2, phonon cutoff 40`, { family: "classic VMC" }],
   "PP-2DMRG, n_ph = 63": ["DMRG", "projected purification, two-site update, 63 phonons per site", { family: "tensor network" }],
   "DMRG3S+LBO, n_ph = 63": ["DMRG", "DMRG3S with local basis optimization, 63 phonons per site", { family: "tensor network" }],
-  "DMRG, m = 400": ["DMRG", "pseudo-site phonons", { bond_dimension: 400 }],
+  "DMRG, m = 400": ["DMRG", "up to 2^5 − 1 = 31 phonons per site, up to 400 density-matrix eigenstates kept", { bond_dimension: 400 }],
   "DMRG (iTensor)": ["DMRG", "ITensor"],
   "SC-VAED": ["ED", "self-consistently grown variational basis (SC-VAED)"],
   "CP-AFQMC/TP-LLF(2)": ["CP-AFQMC", "trial state: TP-LLF(2), two Lang-Firsov states", { family: "AFQMC / GFMC" }],
