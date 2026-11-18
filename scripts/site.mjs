@@ -199,9 +199,9 @@ function instanceLd(inst, label, lede) {
 }
 
 // `css` is a page's own stylesheet, after the site's (open-problems.css). `ogTitle` is the
-// link-preview title; by default a subpage's title followed by " · QMBL".
+// link-preview title; by default a subpage's title followed by " · " and the full name.
 function page({ url, title, description, body, wide = false, jsonld = null, css = null, ogTitle = null }) {
-  const head = title === null ? "QMBL: the Quantum Many-Body Leaderboard" : `${title} &middot; QMBL`;
+  const head = title === null ? CITE_TITLE : `${title} &middot; ${CITE_TITLE}`;
   return `<!doctype html>
 <html lang="en">
 <meta charset="utf-8">
@@ -213,7 +213,7 @@ function page({ url, title, description, body, wide = false, jsonld = null, css 
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any">
 <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta property="og:title" content="${esc(ogTitle ?? (title === null ? "QMBL: the Quantum Many-Body Leaderboard" : `${title} · QMBL`))}">
+<meta property="og:title" content="${esc(ogTitle ?? (title === null ? CITE_TITLE : `${title} · ${CITE_TITLE}`))}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://qmbl.org${url}">
