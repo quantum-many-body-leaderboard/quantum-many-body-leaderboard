@@ -46216,4 +46216,21 @@ export const VERIFICATIONS = [
     "note": "Eq. (1) H = J Σ_<ij> S_i·S_j, spin-1/2 operators, 'All energies will be given in units of J'; 'square (i.e., 3×L×L) clusters with periodic boundaries', L = 12 for 432. 1-LS is one Lanczos step on the Dirac state, a variational state (Eq. 4): variational. The 432-site row is new in this paper (arXiv:1209.1858 Table I stops at 192 sites; the 48/108/192 rows of this table reprint 1209.1858). Journal = arXiv. Bracket not defined. No duplicate on data/Heisenberg/kagome-12x12_432_P.json.",
     "source_entry": "RP2-heisenberg-tfising#41 (qmbl-verify 2026-11-16)"
   },
+  // qmbl-verify 2026-11-16, follow-up 2026-11-18: journal version of Ran et al. PRL 98, 117205 read.
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-12x12_432_P",
+      "method": "U(1) Dirac SL (NN)",
+      "energy": -740.67264
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "published PDF, Phys. Rev. Lett. 98, 117205 (2007), journals.aps.org/prl/pdf/10.1103/PhysRevLett.98.117205, opened in a browser on 2026-11-18 (a script fetch of the same URL returned 401 on 2026-11-16); PDF text layer read and kept as the reading's evidence; arXiv compared: cond-mat/0611414",
+    "location": "Table I (p. 117205-2), row SL-[0, π], column '12 × 12 × 3 lattice'; repeated in Table II (p. 117205-3), row 'U(1)-Dirac spin liquid'",
+    "reported_as": "−0.42863(2) (energy per site, units of J)",
+    "conversion": "-0.42863 x 432 x 4 = -740.67264 (S.S to the stored Pauli convention) = stored; sigma 0.00002 x 1728 = 0.03456",
+    "note": "Journal and arXiv identical in this cell, and in the 8 × 8 × 3 cell (−0.42866(2)). The same table prints SL-[0, 0] on 12 × 12 × 3 as −0.4121(1), the coarser value the note on the uniform RVB row cites. Ran et al. are the reference since the correction of 2026-11-16 (ruled 2026-11-16); the row stays secondary of PRB 84, 020407(R), where the value was read.",
+    "source_entry": "RP2-heisenberg-tfising#43 journal read (qmbl-verify 2026-11-16)",
+    "journal": true
+  },
 ];
