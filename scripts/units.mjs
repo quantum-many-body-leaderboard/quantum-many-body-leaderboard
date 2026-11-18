@@ -54,7 +54,9 @@ export const noErrorMetrics = r =>
 // digits (RULES.md 4): such a row must state sigma, and every surface prints its class as
 // "exact (stochastic)". The method name (AFQMC, DQMC, SSE QMC, QMC) tells it
 // apart from exact diagonalization and exact solutions.
-const STOCHASTIC = /\bqmc\b|\bafqmc\b|\bdqmc\b|monte carlo|stochastic series/i;
+// GFMC: the sign-free GFMC of the spinless Holstein chain (arXiv:cond-mat/9512046, 2026-11-16); a fixed-node
+// GFMC row is projected, never exact.
+const STOCHASTIC = /\bqmc\b|\bafqmc\b|\bdqmc\b|\bgfmc\b|monte carlo|stochastic series/i;
 export const stochasticExact = r => r.bound_type === "exact" && STOCHASTIC.test(r.method || "");
 
 // A row's bound_type as the site, the figures and records.mjs print it.
@@ -176,6 +178,8 @@ export function perSiteDivisor(inst) {
   if (SPIN_MODELS.has(inst.model)) return 4 * inst.n_sites;
   // tJ (RULES.md 5, 2026-10-22): totals in units of t, papers quote per site.
   if (inst.model === "Hubbard" || inst.model === "tV" || inst.model === "tJ") return inst.n_sites;
+  // Holstein and Hubbard-Holstein (RULES.md 5, 2026-11-16): totals in units of t, per site E/N.
+  if (inst.model === "Holstein" || inst.model === "HubbardHolstein") return inst.n_sites;
   return null; // Impurity: no meaningful per-site energy
 }
 
@@ -195,6 +199,9 @@ export function expectedDof(inst) {
   if (inst.model === "tV") return inst.params?.Nf ?? null;
   // tJ carries N_up and N_dn (the hole count fixes N_up + N_dn; RULES.md 2.1).
   if (inst.model === "tJ") return inst.params?.N_up != null && inst.params?.N_dn != null ? inst.params.N_up + inst.params.N_dn : null;
+  // Holstein and Hubbard-Holstein: the electron count (RULES.md 5); phonons are not counted.
+  if (inst.model === "Holstein" || inst.model === "HubbardHolstein")
+    return inst.params?.N ?? (inst.params?.N_up != null && inst.params?.N_dn != null ? inst.params.N_up + inst.params.N_dn : null);
   if (inst.params?.Nf != null) return 2 * inst.params.Nf;
   return null;
 }

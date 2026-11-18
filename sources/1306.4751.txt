@@ -1,0 +1,437 @@
+                            Interacting Holstein and  extended-Holstein  bipolarons
+
+                                  Monodeep  Chakraborty1,∗  Masaki  Tezuka2,†  and  B.  I.  Min1‡
+              1Department  of  Physics,  Pohang  University  of  Science  and  Technology,  Pohang,  790-784,  Korea  and
+                                  2Department  of  Physics,  Kyoto  University,  Kyoto  606-8502,  Japan
+                                                             (Dated:  March 1, 2018)
+                   Employing  the  recently  developed  self-consistent  variational  basis  generation  scheme,  we  have
+                investigated  the  bipolaron-bipolaron  interaction  within  the  purview  of  Holstein-Hubbard  and  the
+                extended-Holstein-Hubbard (F2H) model on a discrete one-dimensional lattice.  The density-matrix
+                renormalization  group  (DMRG)  method  has  also  been  used  for  the  Holstein-Hubbard  model.   We
+                have shown that there exists no bipolaron-bipolaron  attraction in the Holstein-Hubbard model.  In
+                contrast,  we have obtained clear-cut  bipolaron-bipolaron  attraction  in  the F2H  model.  Composite
+                bipolarons  are  formed  above  a  critical  electron-phonon  coupling  strength,  which  can  survive  the
+                ﬁnite Hubbard U  eﬀect.  We have constructed the phase diagram  of F2H polarons  and bipolarons,
+                and discussed the phase separation in terms of the formation of composite bipolarons.
+
+                PACS numbers:  74.50.+r, 74.20.Rp, 72.25.-b, 74.70.Tx
+
+
+                     I.     INTRODUCTION                                      polarons.  However, above a critical e-ph coupling,  both
+                                                                              the inter-bipolaron and intra-bipolaron bindings survive
+  Bipolarons  play  an  important  role  in  many  areas  of                  inﬁnite  U.   We  have  constructed  the  phase  diagram  of
+material  science  and  biological  science.1–3  Many  body                   F2H  polarons  and  bipolarons  with  respect  to  e-ph  and
+techniques  such  as  the  density  matrix  renormalization                   e-e interactions, and discussed the phase separation phe-
+group  (DMRG)  and  the  quantum  Monte-Carlo  (QMC)                          nomenon in terms of the b-composite formation.
+have been employed successfully to investigate bipolarons                        This  paper  is  organized  as  follows.   In  section  II,  we
+in Holstein and Fr¨ohlich systems at half-ﬁlling or quarter-                  introduce  the  Hamiltonian,  which  incorporates  the  e-e
+ﬁlling.2,4–9 The continuum Fr¨ohlich bipolarons were also                     and  e-ph  interactions  within  the  one-dimensional  (1D)
+investigated.10–13  On  the  other  hand,  a  proper  descrip-                Holstein-Hubbard  and  F2H  models.    We  also  provide
+tion of bipolaron-bipolaron (b-b) interaction in the dilute                   computational details here.  In section III, we have exam-
+limit is also very important, as it gives rich information                    ined the bipolaron binding for the four-electron Holstein-
+from entirely diﬀerent perspective.  However, studies  on                     Hubbard  model,  using  the  SC-VAED  and  the  DMRG
+the  b-b  interaction  in  the  dilute  limit  are  still  lacking.           methods.  In section IV, we have made a detailed analy-
+The primary reason is that variational approaches based                       sis of the four-electron F2H model on the basis of calcu-
+on  the  exact  diagonalization (VAED),  which  have  been                    lated binding energies and correlation functions in diﬀer-
+very successful for polaron and bipolaron problems,14–20                      ent parameter regimes.  We have also discussed results of
+can not be applied to even four-electron (two bipolarons)                     six-electron system within the F2 model.  Then we have
+problems.  Chakraborty et al.21  has recently developed a                     constructed the phase diagram of bipolarons with respect
+new  self-consistent scheme  of  generating  variational ba-                  to  e-ph  interaction  strength  λ  and  the  on-site  Hubbard
+sis based on the exact diagonalization (SC-VAED), which                       U.  Conclusion follows in Section V.
+makes the b-b interaction problem tractable in the dilute
+limit.
+  In  this  paper,  we  have  applied  the  SC-VAED  scheme                      II.     HAMILTONIAN  AND  COMPUTATIONAL
+to   Holstein-Hubbard   and   extended-Holstein-Hubbard                                                     DETAILS
+(F2H)19  systems  with  four  and  six  electrons.   We  have                    The  Fr¨ohlich-Hubbard  Hamiltonian  on  a  discrete  1D
+also employed the DMRG method to a four-electron Hol-                         lattice22,23  is deﬁned as follows:
+stein system to check the results of the SC-VAED scheme.
+Our calculations reveal that the Holstein type of electron-
+phonon  (e-ph)  interaction  does  not  yield  the  attractive                         H   =  − ∑(tc†                                    a†
+interaction  between  two  bipolarons.   In  contrast,  the  e-                                           i,σci+1,σ + h.c.) + ω ∑          jaj
+ph interaction of extended-Holstein F2 type produces the                                           i,σ                                j
+b-b attractive interaction above a certain e-ph coupling to                                +  gω ∑       fj(i)ni,σ(a†j + aj)
+form composite bipolarons.  Hereafter, we name this com-                                            i,j,σ
+posite  bipolarons  as  b-composite.   The  on-site  Hubbard                               +  U ∑      ni,↑ni,↓,                                              (1)
+electron-electron  (e-e)  interaction,  U,  when  it  is  small,
+weakens the inter-bipolaron binding as well as the intra-                                           i
+bipolaron  binding,15,19  producing  a  lighter  b-composite.                 where  c†
+Increase in U leads to the dissociation of the b-composite                              i,σ(ci,σ)  creates (annihilates)  an  electron of  spin
+into  two  repelling  bipolarons,  and  then  into  individual                σ  at site i and a†j  (aj) creates (annihilates) a phonon at
+                                                                                                                                                                  2
+
+site  j.   We  take  spin   12  electron  (Sz=+ 12  or  − 12).   The                                             4 electron Holstein
+third term represents the coupling of an electron at site                                                             ω=1.0, λ=0.5
+i  with  an  ion  at  site  j  with  g  being  the  dimensionless                          0.2
+e-ph  coupling  parameter.    fj(i)  is  the  long-range  e-ph
+interaction, the actual form of which is given by23                                        0.1
+
+                     fj(i) =             1        3                                          0
+                                (|i − j|2 + 1)2 .                          (2)                                                                       12 site
+                                                                                           0.4                                                       16 site
+The e-ph coupling strength λ is deﬁned by15,23                                             0.3                                                       24 site
+
+                                                                                         −−−>
+                                                                                           0.2
+                        λ =  ωg2 ∑l f 2l (0)
+                                      2t          .                              (3)       0.1
+If fj(i)=0 for i ⁄= j, the Fr¨ohlich-Hubbard model becomes                                   0-12       -10       -8         -6         -4         -2         0          2          4          6          8         10        12
+the  Holstein-Hubbard  model.   In  our  study,  Fr¨ohlich  e-                                                              (i-j)
+ph interaction is approximated by the extended-Holstein                             FIG. 1:  (Color online) The e-e correlation function C↑,σ(i−j)
+interaction of F2-type, which corresponds to the case of                            for  the  four-electron  Holstein  lattice  (U  =  0).   The  position
+fi± 1
+    2 (i)=1  and zero otherwise, as  deﬁned by  Bonˇca and                          i and spin of the electron  ↑ is ﬁxed, since the basis has been
+Trugman15  and  Chakraborty  et  al.19  F2-model  couples                           generated  with  respect  to  it.   C↑,σ(i − j)  ’s  for  12,  16,  and
+an electron with two nearest-neighbor ions placed in the                            24-site  Holstein  lattices  are  compared.   It  should  be  noted,
+interstitial.15,19  We set the electron hopping t=1 for nu-                         that ±L/2 for diﬀerent system sizes are the same point.
+merical  calculations,  and  so  all  energy  parameters  are
+expressed in units of t.
+   The variational basis is generated starting with a state                                                ∆6 = E6 − E4 − E2,                             (5)
+of bare electrons and adding new states by repeated ap-
+plication  of  the  Hamiltonian.14,16,18–20  The  oﬀ-diagonal                       where E2, E4, and E6  are ground state energies of two-
+terms  of  the  Hamiltonian  generate  diﬀerent  conﬁgura-                          electron  (one  up-spin  electron  and  one  down-spin  elec-
+tions of phonons and electrons for a speciﬁc up-spin elec-                          tron), four-electron (two up-spin electrons and two down-
+tron (↑) at position i.14                                                           spin electron) , and six-electron (three up-spin electrons
+   All translations of these states on the periodic 1D lat-                         and  three  down-spin  electrons)  systems,   respectively.
+tice are included.  In the SC-VAED scheme, we ﬁrst gen-                             C↑,σ(i − j)  is  deﬁned  by  the  probability  of  ﬁnding  the
+erate a  relatively small basis  set  and obtain the  ground                        other electron(s) with respect to one up-spin electron, at
+state energy and the wave function.  Then the states with                           the position of which the basis is generated.14,19
+highest probability are identiﬁed, and new basis is gener-
+ated  by  application of  the  Hamiltonian on  these chosen                                         C↑,σ(i − j) = ⟨Ψ0|ni,↑nj,σ|Ψ0⟩.                    (6)
+highly probable states.  Accordingly the size of the basis
+is increased.  The ground state energy and the wave func-                           where,  nj,σ  is  the  number  operator  with  spin  σ  at  the
+tion  is  calculated  again.   This  process  is  continued  in  a                  site  j.    In  Eq.    (6),  when  i=j,  σ=↑  is  not  considered
+self-consistent way, by increasing the basis size at each cy-                       due to Pauli exclusion principle.  |Ψ0⟩ is the ground state
+cle till the desired accuracy in the ground state energy is                         wavefunction.   Note  that,  in  this  work,  we  have  always
+obtained.21 At each step, the weight of m-phonon states                             considered the  same  numbers  of  up-spin  and  down-spin
+for the ground state, |Cm0  |2, as deﬁned by Fehske et al.23                        electrons  and  limited  the  basis  states  in  SC-VAED  to
+is calculated.  The convergence of |Cm0  |2 is checked to en-                       ones with total spin S=0.
+sure that the basis contains adequate number of phonons
+required at the given parameter regime.  We have consid-
+ered lattice size up to L=24 for the four-electron case and                         TABLE I: Ground state energies of the four-electron Holstein
+L=12  for  six-electron case.   In  principle,  for  4-electrons                    lattice (E4) for diﬀerent numbers of lattice sites obtained us-
+case, we can go beyond L=24, probably up to L=32, but                               ing the SC-VAED and the DMRG method.  ω=1.0 and λ=0.5
+that would take much more computation time.24 For the                               are  ﬁxed.    Converged  energy  is  still  higher  than  twice  the
+6-electron  case,  we  can  go  up  to  L=18,  but  again  that                     ground state energy of the Holstein bipolaron, −10.8493.  En-
+would take much more computation time.                                              ergies are in units of t.
+   With  obtained  ground  state  energies  and  wave  func-                         Sites                        E4  (SC-VAED)                        E4  (DMRG)
+tions,   we  discuss  the  b-b  interaction  in  terms  of  the
+binding  energy  (∆)  and  the   e-e  correlation  function                           12                                  −10.77                                    −10.782
+(C↑,σ(i − j)).   ∆  for  four-  and  six-electron  systems  are                       16                                  −10.81                                    −10.797
+deﬁned by14,19                                                                        24                                  −10.83                                    −10.828
+                        ∆4 = E4 − 2 × E2,                              (4)            60                                       −                                         −10.846
+                                                                                                                                                             3
+
+
+                                                                                      0.2
+         III.     HOLSTEIN-HUBBARD  MODEL                                                                       4 electron F2                             (a)
+
+                                                                                     0.15                          ω=1.0, λ=0.1
+   We   have  calculated  ground  state  energies  of  four-
+electron (2  up-spin and  2  down-spin electrons) Holstein                            0.1
+lattice using both the SC-VAED and the DMRG method.
+The former was done in the periodic boundary condition,                              0.05
+while the latter25 was done in the open-boundary condi-                                0
+tion.   Results  of  both  methods  for  diﬀerent  ω  and  λ  do                                                                                    12 site
+not show any signature of binding of the two bipolarons                              0.15                                                           24 site
+i.e., two onsite spin-antiparallel (S=0) bipolarons repels
+each other.  For all parameter regimes, the ground state                           −−−>0.1
+energies  of  the  four-electron Holstein  system  are  higher
+than twice the ground state energy of individual Holstein                            0.05
+bipolaron.
+   Let us look at the obtained ground state energies and                               0-12       -10       -8         -6         -4         -2         0          2          4          6          8         10        12
+correlation functions for ω=1.0, λ = 0.5 as a typical ex-
+ample.  Twice the ground state energy of a Holstein bipo-                             0.5 4 electron F2                                                 (b)
+laron at  this  regime is  −10.8493 and  Table  I  shows  the                         0.4 ω=1.0, λ=1.0
+calculated  energies  for  four  electron  system  at  this  pa-
+rameter regime for  diﬀerent lattice  sizes.  Note  that  the                         0.3
+converged energy  is  higher  than  twice  the  ground  state                         0.2
+energy  of  the  Holstein  bipolaron.    This  result  is  quite
+expected  because  an  intersite  spin-parallel  (S=1)  bipo-                         0.1
+laron, which is formed of two nearest-neighbour electrons                              0
+with  the  same  spin,  is  not  favored  within  the  Holstein                                                                                   12 site
+paradigm.15,19  The  spin-antiparallel  bond  helps  forma-                           0.8                                                         24 site
+tion  of  two  bipolarons  by  binding  up-spin  and  down-                           0.6
+spin electrons (hence two spin-antiparallel bipolarons are                          −−−>
+                                                                                      0.4
+formed from 2 up-spin and 2 down-spin electrons).  How-
+ever  the  absence  of  spin-parallel  bond  in  the  Holstein                        0.2
+model obliterates the  possibility of two bipolarons glue-                             0
+ing together.                                                                          -12       -10       -8         -6         -4         -2         0          2          4          6          8         10        12(i-j)
+   Figure 1 provides the e-e correlation function C↑,σ(i −
+j)  for  ground state  of the  four-electron Holstein  system                     FIG. 2:  (Color online) The e-e correlation function C↑,σ(i−j)
+at  λ=0.5  and  ω=1.0.   C↑,σ(i − j)’s  calculated  for  three                    for  the  four-electron  F2  lattice.   Two  diﬀerent  system  sizes
+diﬀerent  system  size  (12,  16  and  24-site)  show  that  the                  (12 and 24) are considered.  (a) ω=1.0, λ=0.1 and (b) ω=1.0,
+two bipolarons tend to maintain the maximum separation                            λ=1.0.   It  should  be  noted,  that  ±L/2  for  diﬀerent  system
+as  far  as  the  system  size  allows.    It  should  be  noted,                 sizes are the same point.
+that ±L/2 for diﬀerent system sizes are the same point.
+Hence, the sum-rule is satisﬁed for −L/2 + 1 to L/2 (to
+avoid double counting for the end-point).                                          IV.     EXTENDED-HOLSTEIN-HUBBARD  (F2H)
+   As  shown  in  Table  I,  the  ground  state  energy  of  the                                                  MODEL
+four-electron  system  is  lowered with  increasing  the  sys-
+tem  size,  which  indicates  the  repulsive  nature  of  inter-                     According to  earlier calculations,15,19  a longer-ranged
+action between the two bipolarons.  The ﬁnite size eﬀect                          e-ph interaction facilitates the binding of the spin-parallel
+is evident in this  case, as two bipolarons want to be  far                       bipolaron above a critical e-ph coupling strength λbc.  Here
+apart  from  each  other,  but  the  ﬁnite  size  of  our  lattice                we have studied the four-electron F2H lattice,15,19  using
+limits that.  Hence, the bigger the lattice size is, the closer                   the  SC-VAED  method.   First,  we  have  considered  the
+the ground state energy is to twice the energy of the in-                         case  of  U=0.   Figure  2(a)  shows  C↑,σ(i − j)  for  λ=0.1
+dividual  bipolarons.   The  60-site  result  by  the  DMRG                       at  ω=1.0.   In  this  case,  we  do  not  obtain  b-b  binding.
+method  validates  this  conjecture  further  (see  Table  I).                    Indeed, as shown in Table II, converged ground state en-
+Therefore the formation of spin-parallel bipolaron is un-                         ergy  of  the  four-electron  F2  lattice  for  λ=0.1,  −8.6024
+stable within the  Holstein paradigm,15  and the scenario                         (L=24), is higher than twice the ground state energy of
+remains  the  same  for  the  four-electron  case  too.    The                    the  F2  bipolaron,  −8.6215.   On  the  contrary,  at  larger
+on-site Hubbard U  has the same eﬀect on the individual                           λ=1.0 in Fig.  2(b), C↑,σ(i − j) clearly demonstrates the
+bipolarons,  as  reported  earlier,14,19  and  would  not  lead                   formation of a strongly bound b-composite, which is seen
+to binding between the two bipolarons.                                            to  be  valid  independently  of  the  system  size.    In  this
+                                                                                                                                                          4
+
+
+
+
+           0                                                                    action  between  bipolarons  is  repulsive  and  the  ground
+                                                        12 site                 state energy of the system with four fermions should con-
+          -1     ω=1.0                                  16 site                 verge to twice the ground state energy of the system with
+              4-electron F2 model                       20 site                 two  fermions  (bipolaron);  ∆  should  converge to  zero  as
+          -2                                            24 site
+                2                                                               L → ∞.
+
+          -3                                                                       As λ increases from zero, our numerical calculation suf-
+                0
+          -4                                                                    fers from two types of diﬃculties:
+                -2                                                              a) Because of the ﬁnite extent (rather large) of the bipo-
+
+          -5    -4       4 site                                                 laron, two bipolarons can interact with each other along
+                         6 site                                                 the  opposite  path  as  well  as  along  the  confronted path,
+          -6    -6       8 site
+                         12 site                                                when  the  system  size  is  small  under  periodic  boundary
+                   0.2      0.4      0.6      0.8        1                      condition.  This eﬀect can produce a false binding.
+          -7     0.2                       0.4                       0.6                       0.8                         1
+                                       λ                                        b)  When  two  bipolarons  are  actually  not  binding,  sig-
+                                                                                niﬁcantly  larger  basis  size  is  required  to  get  the  same
+FIG.  3:    (Color  online)  The  binding  energy  (∆4)  of  four-              accuracy when the system size increases.
+electron F2 b-composite as a function of e-ph coupling strength                 Therefore,  within  a  realistic  computational eﬀort,  it  re-
+λ for diﬀerent system sizes.  Inset shows ∆4’s for small system                 mains  very  diﬃcult  to  obtain  a  universal  scaling  law  of
+sizes.  ω=1.0, U=0, and energies are in units of t.                             the value of ∆ with respect to L.
+                                                                                   On  the  other  hand,  for  λ ≥ 0.4  where  the  bipolarons
+                                                                                attract each other,  while  we  observe an  over-estimation
+case, converged ground state energy is −24.5293 (L=24),                         of  ∆  for  very  small  lattice  sizes,  the  addition  of  lattice
+which is lower than twice the ground state energy of the                        sites in the periodic boundary condition does not signiﬁ-
+F2 bipolaron, −18.3669.                                                         cantly increase the numerical complexity.  In other words,
+   Figure  3  shows  the  binding  energy  ∆4  of  the  four-                   the eﬀect we have described above is less signiﬁcant and
+electron  b-composite  as  a  function  of  λ.   We  see  no  b-b               consequently  we  can  observe  that  electron-electron  cor-
+binding for small λ, while, above λb−bc     ≈ 0.3, ∆4 becomes                   relation  function  for  λ=1.0  shown  in  Fig  2(b)  shows  a
+negative, signaling the formation of b-composite.  It is no-                    very good convergence between L=12 and L=24 and so
+table that, for large λ, ∆4  becomes almost independent,                        do their corresponding ground state energies.  For values
+at least up to two decimal places, of the system size (see                      of  λ  at  which  we  get  a  bipolaron  composite,  the  states
+Table II). Inset of Fig.  3 shows ∆4’s for smaller system                       with phonon and electrons far away from the composite
+sizes.  For small systems of L = 4 − 8, b-composite is ap-                      centre contribute insigniﬁcantly to the ground state, and
+parently  formed  even  for  λ  <  λb−bc    .   This  is  attributed            ∆ (which is negative) would show a convergence similar
+to  the  ﬁnite  size  eﬀect.  With  the  increase in λ,  the  po-               to that of the ground state energies.  This situation is the
+laronic nature of the individual bipolaron increases, and                       same as in the bipolaron (bound state of two polarons),
+due to the small size of the lattice, their wave functions                      where  the  ground  state  energy  (and  hence  the  ∆)  con-
+are forced to overlap to exhibit a spurious binding.                            verges up to seven decimal places with L=37 and remains
+   Table  II  presents  the  ground  state  energies  of  four-                 the same even for higher L.15,19
+electron F2 lattices (E4) for diﬀerent system sizes and λ.                         Bonˇca and Trugman15 showed through their analytical
+Bipolaron  (two-electron)  ground  state  energies  (E2)  at                    and  numerical  considerations  that  the  F2  spin-parallel
+the  same  parameters  are  also  provided  for  comparison.                    (S=1)  bipolaron  is  stabilized  above  λbc=0.76  at  ω=1.0.
+At λ=0.1, as the system size increases, the ground state                        On  the  other  hand,  we  have  found,  that  in  the  above
+energy approaches twice  the  bipolaron energy, −8.6215.                        case  of  four-electron  system,  the  two  bipolarons  binds
+This suggests that the interaction between the two bipo-                        above λb−bc    =0.3, which is much lower than λbc=0.76.  The
+larons is repulsive.  Increase in λ renders more polaronic                      reason why the b-b binding takes place at lower λ is due
+nature to these repulsive bipolarons, and makes the nu-                         to  the  presence  of  intersite  (S1)  spin-antiparallel  bond
+merical task more diﬃcult.  Note that, above λb−bc     ≈ 0.3,                   between the two adjacent on-site (S0) bipolarons which
+the binding energy becomes negative for all system sizes,                       stabilizes the spin-parallel bond between them.
+and the  ground state energy is  converged at least up to                          We  substantiate  this  behavior  with  our  six-electron
+two decimal places.  The ﬁnite size eﬀect is signiﬁcant in                      F2  lattice  calculations.  Figure  4  shows  ∆6’s  of  the  six-
+F2  system  as well  for  small λ,  for  which there  is  no  b-b               electron F2 system as a function of λ.  It is seen that a b-
+binding for the same reason as mentioned for the Holstein                       composite of three bipolarons is to be formed for λ /greaterorsimilar 0.3.
+system.  However, for large λ the ﬁnite size eﬀect becomes                      The numerical precision is not as high as the four-electron
+much smaller because spatial extent of constituent bipo-                        case,  and  especially  lower  for  the  region marked  by  the
+larons and that of b-composite (formed out of coaleasing                        ellipse.   Once  there  occurs  a  b-b  binding,  the  numerical
+of  two  bipolarons)  are  small.    Table  II  amply  demon-                   precision is improved, but at best up to one−two decimal
+strates this fact.                                                              places.  Better numerical precision can be  obtained, but
+   The  energy  behaves  non-monotonically  with   L  for                       that would be too expensive (basis states of the order of
+some  values  of  λ  in  Table  II.  For  λ  ≲  0.3,  the  inter-               2 − 3 × 107) and time consuming (few weeks to a month).
+                                                                                                                                                                          5
+
+
+TABLE II:  Ground state energies of four-electron F2 lattices (E4) at diﬀerent λ for diﬀerent system sizes (L) (ω=1.0 is ﬁxed).
+Twice the F2 bipolaron energies are also given in the last column.  Energy parameters are in unit of t.
+
+                    E4                                                                                                                                         2 × E2
+ λ                L=4                       L=8                      L=12                     L=16                     L=20                     L=24            L=39
+0.1             −7.3136                 −8.3763                 −8.5402                 −8.5831                 −8.5996                 −8.6024              −8.62147
+0.2             −8.9795                 −9.3858                 −9.4028                 −9.3840                 −9.3835                 −9.3776              −9.41269
+0.3            −10.6475               −10.4364              −10.3432               −10.2867              −10.2917               −10.2698                     −10.31085
+0.4            −12.3300               −11.6105              −11.5521               −11.5469              −11.5586               −11.5578                     −11.28980
+0.5            −14.0364               −13.2887              −13.2831               −13.2876              −13.2882               −13.2902                     −12.33584
+0.6            −15.8017               −15.3675              −15.3668               −15.3714              −15.3715               −15.3722                     −13.44075
+0.7            −17.7584               −17.5801              −17.5891               −17.5956              −17.5956               −17.5960                     −14.59928
+0.8            −19.9535               −19.8156              −19.8709               −19.8791              −19.8792               −19.8793                     −15.80812
+0.9            −22.2382               −22.0267              −22.1811               −22.1942              −22.1944               −22.1945                     −17.06493
+1.0            −24.5580               −24.5270              −24.5292               −24.5279              −24.5292               −24.5293                     −18.36692
+
+
+In any way, the six-electron result qualitatively validates                              the two resulting neighboring S1 bipolarons would have
+the fact that the bipolarons glue into a b-composite above                               either only one S1 spin-antiparallel bond or only one S1
+a certain λ ∼ 0.3 (for ω=1.0).                                                           spin-parallel bond, which will not be suﬃcient to stabilize
+   The  on-site  Hubbard  e-e  interaction  U  has  an  inter-                           the b-b binding.  Therefore, with increasing U, the  indi-
+esting consequence in the formation of b-composite.  Due                                 vidual bipolaron transforms from S0 to S1, which would
+to the on-site nature of U, it is tempting to expect that                                result in the weakening of b-b binding between the bipo-
+U  does not aﬀect the spin-parallel wave function that is                                larons.  Therefore, on-site U  interaction really inﬂuences
+responsible  for  the  b-b  binding.   However  physics  is  not                         the b-b binding, i.e.,  with increasing U, the b-composite
+so simple.  Let us recall the case of spin-antiparallel bipo-                            already formed above a certain λb−bc     would dissociate into
+laron formation for the two-electron case of F2H model.                                  individual S1 bipolarons, and these individual bipolarons
+As  shown  in  Fig.   5,  with  increasing  U,  the  on-site  S0                         would  break  up  into  individual  polarons  with  a  further
+bipolaron  formed  at  U=0  transforms  into  intersite  S1                              increase in U.15,19
+bipolaron.   Now  consider  two  cases  of  b-b  bindings  be-
+tween  S0  bipolarons  and  between  S1  bipolarons.   Two
+S0 bipolarons, once they are bound, would produce two                                           0.5
+spin-antiparallel  S1  bonds,  which  stabilizes  the  two  S1                                      2 electron F2H model
+spin-parallel bond.  On the other hand, above a ﬁnite U,                                        0.4
+                                                                                                                                                   U=0
+                                                                                                                                                   U=6
+
+
+                                                                                                0.3                                         S0 bipolaron
+
+            3                                                                                 −−>       ω=1.0, λ=0.5                     −−>
+
+            2                                                 6 site                            0.2
+                                                              12 site
+
+            1                                                                                                                                     S1 bipolaron
+
+            0                                                                                   0.1                                            −−>
+
+
+
+           -1
+
+                                                                                                 0               -5                                     0                                     5
+           -2                                                                                                                       i-j
+               6 electron F2
+           -3     ω=1.0
+                                                                                         FIG.  5:  (Color  online)  The  e-e  correlation  function  C↑,↓(i −
+           -40.1                0.2                0.3                0.4                0.5                0.6j)  for  two-electron  F2H  lattice.   Two  values  of  Hubbard  U
+                                           λ                                             are  considered  at  ω=1.0  and  λ=0.5.    Red  line  with  circles
+                                                                                         represents the formation of an on-site S0 bipolaron for U=0,
+FIG.  4:   (Color  online)  Binding  energies  for  six-electron  F2                     while  blue  line  with  squares  represents  the  formation  of  an
+lattices (∆6’s) as a function of λ (ω=1.0 and U=0 are ﬁxed).                             intersite S1 bipolaron for U=6.0.  The b-composite formed of
+Two  system  sizes  (L=6  and  L=12)  are  considered.  The  nu-                         two S0 bipolarons would have two spin-parallel bonds, while
+merical  precision  is  rather  low  in  the  region  marked  by  the                    that formed of two S1 bipolarons would have either only one
+ellipse.  Energies are in units of t.                                                    S1 spin-parallel bond or only one S1 spin-antiparallel bond.
+                                                                                                                                                                6
+
+   Figure  6  shows  the  ground  state  energies  of  F2H  po-
+laron,  bipolaron,  and  b-composite  of  four-electron  sys-                                -11
+tems as a function of U.  We have discussed above that,
+for  λ  >  λbc=0.76,  an  individual  spin-parallel  bipolaron                               -12  (a)                                  b            4*E1
+can be formed.  For λ=0.65 (< λbc) in Fig.  6(a), the en-                                                   ω=1.0,λ=0.65 (< λ  )c                   2*E2
+ergy  of  four-electron  b-composite  is  the  lowest  at  small                                                                                    E4
+U.  However, with  increasing U, it becomes higher than                                      -130                             10                            20                            30                            40
+twice the energy of bipolaron and then even higher than                                      -12
+four times the energy of polaron.  In contrast, for λ=0.85
+                                                                                             -13
+(> λbc) in Fig.  6(b), it is observed that the four-electron                                      (b)
+b-composite  is  always  lower  in  energy  than  individual                                 -14                       ω=1.0,λ=0.85 (> λ  )cb
+bipolarons and polarons.  This feature indicates that the
+b-composite formed above λbc remains glued even for very                                     -150                             10                            20                            30                            40
+large U.                                                                                                                    U
+
+   Figure  7 displays  the  phase  diagram of F2H polarons                          FIG.  6:  (Color  online)  Ground  state  energies  of  b-composite
+with respect to λ and U.  There are three distinct regimes,                         of  four-electron  (E4),  bipolaron  (E2),  and  polaron  (E1)  in
+(i)  individual  polarons,  (ii)  individual  bipolarons,  and                      the  F2H  lattice  (L=6)  as  a  function  of  U.   Blue  solid  line
+                                                                                    represents  the  energy  of  b-composite,  red  dotted  line  repre-
+(iii)  b-composite.   Independent  bipolarons  at  very  small                      sents  twice  the  energy  of  bipolaron,  and  the  ﬂat  black  line
+λ  break  into  repulsive  polarons  with  increasing  U.   At                      represents  four  times  the  energy  of  polaron.  (a)  Energies  at
+larger λ and U=0, repulsive bipolarons coalesce into the                            λ=0.65, which is less than λbc = 0.76.  (b) Energies at λ=0.85
+b-composite.   With  increasing  U,  this  again  dissociates                       (>  λbc).   Energy  parameters  are  in  unit  of  t,  and  ω=1.0  is
+into repulsive bipolaron, and then into repulsive polarons                          ﬁxed.
+with a further increase in U.  However, beyond a certain                                                                                     b
+critical λbc  = 0.76, the  b-composite  survives the  eﬀect of                                                                                cλ  = 0.76
+inﬁnite U.  Higher U  results in lighter b-composite, as U                                   15
+would signiﬁcantly bring down the  eﬀective mass of the                                          ω=1.0
+system and make it more mobile.
+
+                                                                                             10               Polarons
+   While  the  dashed  line  in  Fig.7  is  qualitative  in  na-
+ture  because  its  numerical  accuracy is  not  very  high,  it
+should  be  noted  that  the  phase  boundary  between  the
+polarons  and  bipolarons  (represented  by  red  solid  line)                                5
+is quite accurate as it is obtained from the bipolaron (2-
+electron) calculation.15,19 Also the vertical line represent-                                                  Bipolaron            Bipolaron-composite
+ing the critical λ, above which the stability of b-composite                                  0
+is unaﬀected by U, is an analytical result by Bonˇca and                                       0                 0.2                0.4                0.6                0.8                 1λ
+Trugman.15  The  change  of  curvature of  the  dashed  line
+is more of numerical artifact.                                                      FIG.  7:  (Color  online)  Phase  diagram  of  F2H  polarons  with
+                                                                                    respect to e-ph coupling strength λ and on-site e-e interaction
+   We  conjecture  that  the  formation  of  b-composite  and                       U  (ω = 1.0  is  ﬁxed).  The blue dashed line  separating  the b-
+its  evolution  with  U  are  closely  related  to  phenomena                       composite from bipolarons is a qualitative guide for the eye.
+of phase separation observed in various systems, such as
+CMR manganites and high Tc superconductors27.  Bonˇca                                                      V.     CONCLUSIONS
+and Trugman15 suggested that, for a system with λ > λbc,
+a third electron (polaron) could stick to  already formed
+bipolaron,  which  would  bring  about  the  phase  separa-                            We  have  investigated  four  and  six-electron  Holstein-
+tion.  Recently,  Hohenadler  et  al.8  also showed that  the                       Hubbard and F2H systems, treating the electron-electron
+extended  e-ph  interaction  yields  the  phase  separation.                        and  electron-phonon  interactions  on  an  equal  footing
+Our  study  corroborates this  scenario.   We  have  demon-                         in  the  framework  of  the  SC-VAED  method.   The  Hol-
+strated  through  calculations  for  four-electron  and  six-                       stein  type  of  on-site  e-ph  interaction  does  not  support
+electron  F2H  systems  that  the  longer  range  e-ph  inter-                      the  formation  of  b-composite,  as  conﬁrmed  by  both  the
+action induces the glueing of bipolarons so as to produce                           SC-VAED  and  the  DMRG  calculations.    In  contrast,
+a  stable  b-composite,  which  is  reminiscent of  phase  sep-                     the F2H type  of e-ph interaction leads to  the  formation
+aration phenomenon.  Our study thus sheds light on the                              of  b-composite  above  a  certain  e-ph  coupling  strength
+microscopic description of  phase  separation in  the pres-                         λb−bc      ≈  0.3  (at  ω=1.0).   We  have  shown  that,  with  in-
+ence of both e-ph and e-e interactions.                                             creasing Hubbard U, this b-composite is dissociated into
+                                                                                                                                                            7
+
+individual bipolarons and then into individual polarons.                          work  of  M.T.  was  partially  supported  by  the  Grant-in-
+However,  above  a  critical  λbc  =  0.76  (at  ω=1.0),  the  b-                 Aid for the Global COE Program “The Next Generation
+composite survives the eﬀect of U, forming coalesced S1                           of Physics, Spun from Universality and Emergence” from
+bipolarons.   Our  unbiased  study  of  e-ph  and  e-e  inter-                    MEXT  of  Japan.    Stimulating  discussions  with  Beom
+acting systems would provide an insight into the under-                           Hyun Kim, Bongjae Kim, and Holger Fehske are greatly
+standing of phase separation physics, which is central to                         appreciated.
+many areas of condensed matter physics.
+
+
+                         Acknowledgments
+
+   This   work   was   supported   by   the   NRF   (No.2009-
+0079947) and  the  POSTECH  Physics  BK21  fund.   The
+
+
+
+
+
+
+
+ ∗  Corresponding Author:  monodeep@postech.ac.kr                                    B 63, 184307 (2001).
+ †  tezuka@scphys.kyoto-u.ac.jp                                                   14  J.     Bonˇca,     T.     Katrasnik,     and     S.     A.     Trugman,
+ ‡  bimin@postech.ac.kr                                                              Phys. Rev. Lett. 84, 3153 (2000).
+ 1  M.  Hohenadler,   M.  Aichorn,   and  W.  von  der  Linden,                   15  J.  Bonˇca  and  S.  A.  Trugman,  Phys.  Rev.  B  64,  094507
+   Phys. Rev. B 71, 014302 (2005).                                                   (2001).
+ 2  H.  Fehske,  G.  Wellein,  G.  Hager,  A.  Weisse,  and  A.R.                 16  J. Bonˇca, S. A. Trugman, and I. Batistic, Phys. Rev. B 60,
+   Bishop, Phys. Rev. B 69, 165115 (2004).                                           1633 (1999).
+ 3  Numerical  solution  of  the  Holstein  polaron  problem,  H.                 17  Li-Chung Ku, S.A. Trugman  and J.  Bonˇca,  Phys. Rev. B
+   Fehske and S.A. Trugman:  Polarons  in  Advanced  Materi-                         65, 174306 (2002).
+   als  edited  by  A.  S.  Alexandrov,  Springer  Series  in  Mate-              18  A. Chakrabarti, M. Chakraborty and A. Mookerjee, Phys-
+   rial  Sciences  103  pp.  393-461,  Springer  Verlag,  Dordrecht                  ica B 388, 63 (2007).
+   (2007).                                                                        19  M. Chakraborty, B. I. Min, A. Chakrabarti, and A. N. Das,
+ 4  M.  Tezuka,  R.  Arita,  and  H.  Aoki,  Phys.  Rev.  Lett.  95,                 Phys. Rev. B 85, 245127 (2012).
+   226401 (2005); Phys. Rev. B 76, 155114 (2007).                                 20  M. Chakraborty, A. N. Das, and A. Chakrabarti, J. Phys.:
+ 5  R.  P.  Hardikar  and  R.  T.  Clay,  Phys.  Rev.  B  75,  245103                Condens. Matter 23, 025601 (2011).
+   (2007).                                                                        21  M.  Chakraborty  and  B.  I.  Min,  Phys.  Rev. B  88,  024302
+ 6  K.-M. Tam, S.-W. Tsai, D. K. Campbell, and A. H. Castro                          (2013).
+   Neto, Phys. Rev. B 75, 161103 (R) (2007).                                      22  A. S. Alexandrov and P. E. Kornilovitch, Phys. Rev. Lett.
+ 7  H.  Fehske, G.  Hager,  and  E.  Jeckelmann,  EPL  84,  57001                    82, 807 (1999).
+   (2008).                                                                        23  H. Fehske, J. Loos, and G. Wellein, Phys. Rev. B 61, 8016
+ 8  M.     Hohenadler,      F.F.     Assaad,      and     H.     Fehske,             (2000).
+   Phys. Rev. Lett. 109, 116407 (2012).                                           24  For L=24 case, it takes typically 6-7 days CPU time.
+ 9  M. Hohenadler and F. F. Assaad, Phys. Rev. B 87, 075149                       25  The DMRG calculation considered up to 25-1 phonons per
+   (2013).                                                                           site  and  up  to  400  density  matrix  eigenstates  retained  at
+10  G.  Verbist, F. M.  Peeters and  J.  T. Devreese,  Phys. Rev.                    each step of the iteration.
+   B 43, 2712 (1991).                                                             26  A.  S.  Alexandrov  and  V.  V.  Kabanov,  Sov.  Phys.  Solid
+11  G.  Verbist,  M.  A.  Smondyrev,  F.  M.  Peeters,  and  J.  T.                  State 28, 631 (1986).
+   Devreese, Phys. Rev. B 45, 5262 (1992).                                        27  V.   B.   Shenoy,    D.   D.   Sarma,    and   C.   N.   R.   Rao,
+12  F.  Luczak,  F.  Brosens,  and  J.  T.  Devreese,  Phys.  Rev. B                 ChemPhysChem, 7, 2053 (2006).
+   52, 12743 (1995).
+13  J. T. Devreese, S. N. Klimin, and V. M. Fomin, Phys. Rev.

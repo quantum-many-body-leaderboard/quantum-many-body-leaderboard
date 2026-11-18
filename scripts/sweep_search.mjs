@@ -53,6 +53,11 @@ const Q = [
  // diagonalization and DMRG, and the pre-2019 literature is where most of them are.
  ["tj-energy",  `(abs:"t-J model" OR abs:"t-J ladder" OR abs:"t-J chain" OR abs:"t-t'-J") AND (abs:"ground-state energy" OR abs:"ground state energy" OR abs:"variational energy" OR abs:"energy per site" OR abs:"energy per hole" OR abs:"benchmark")`],
  ["tj-methods", `abs:"t-J" AND (abs:"exact diagonalization" OR abs:"Lanczos" OR abs:"DMRG" OR abs:"density matrix renormalization" OR abs:"variational" OR abs:"neural" OR abs:"tensor network" OR abs:"PEPS" OR abs:"Monte Carlo" OR abs:"finite cluster" OR abs:"numerical")`],
+ // Holstein and Hubbard-Holstein families (2026-11-16). Electron-phonon papers rarely say
+ // "ground-state energy" in the abstract; the polaron, bipolaron and Peierls-CDW vocabulary
+ // carries them, and the reference energies sit in the pre-2010 ED, DMRG and QMC literature.
+ ["holstein-model", `(abs:"Holstein" OR abs:"Hubbard-Holstein" OR abs:"Holstein-Hubbard") AND (abs:"polaron" OR abs:"bipolaron" OR abs:"electron-phonon" OR abs:"charge density wave" OR abs:"Peierls")`],
+ ["holstein-methods", `(abs:"Holstein" OR abs:"Hubbard-Holstein" OR abs:"Holstein-Hubbard") AND (abs:"exact diagonalization" OR abs:"Lanczos" OR abs:"DMRG" OR abs:"density matrix renormalization" OR abs:"variational" OR abs:"neural" OR abs:"tensor network" OR abs:"Monte Carlo" OR abs:"ground-state energy" OR abs:"ground state energy")`],
  // A broad net for the ansatz literature, which names its lattice only in the body.
  ["nqs-any",        `abs:"neural network quantum state" OR abs:"neural quantum states" OR abs:"neural-network wave function" OR abs:"neural network wavefunction"`],
 ];
@@ -231,6 +236,7 @@ const FAM = [
   ["Hubbard", /hubbard/i], ["TFIsing", /transverse[- ]field ising|\bTFIM\b/i],
   ["tV", /spinless fermion|\bt-V\b|extended hubbard/i],
   ["tJ", /\bt-J\b|\bt-t'-J\b|\bt-t′-J\b/i],
+  ["Holstein", /holstein/i],
   ["Impurity", /anderson impurity|impurity solver|quantum impurity|dynamical mean[- ]field|\bDMFT\b/i],
   ["Heisenberg", /heisenberg/i],
 ];
@@ -250,7 +256,7 @@ function record({ id, d, ti, ab, jr, doi }, tag) {
   if (/\b(neural|RNN|transformer|PEPS|DMRG|AFQMC|VMC|backflow)/i.test(ab)) sc += 1;
   // a family with no post-2024 row at all is worth more attention per hit
   if (fam.some(f => f === "tV" || f === "tJ" || f === "Impurity" || f === "TFIsing" ||
-                    f === "pyrochlore" || f === "shuriken")) sc += 2;
+                    f === "pyrochlore" || f === "shuriken" || f === "Holstein")) sc += 2;
 
   const prev = seen.get(id);
   if (!prev) newThisRun++;

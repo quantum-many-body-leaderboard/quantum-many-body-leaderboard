@@ -1070,6 +1070,30 @@ Object.assign(NAMES, {
   "|Ψ_±1⟩_2h": ["phase string", "two-hole phase-string state, m = ±1", { family: "classic VMC" }],
   "|Ψ̃_±1⟩_2h": ["phase string", "two-hole phase-string state, m = ±1, with longitudinal spin-polaron factor", { family: "classic VMC" }],
 });
+
+// Pass 2026-11-16-holstein (SWEEP.md): the first rows of the Holstein family, the labels its generator
+// writes (scripts/holstein_2026_11_16.mjs). The phonon cutoff of a truncated boson space is detail
+// (RULES.md 2.1); a bond dimension is compute.
+const VMC_OI = "BCS state with electron-electron and phonon Jastrow factors"; // arXiv:1403.4150
+Object.assign(NAMES, {
+  "MLP (this work)": ["MLP", "complex neural-network correlator on a Hartree-Fock reference", { family: "other NQS" }],
+  "GFMC (Δτ → 0)": ["GFMC", "positive guiding function; extrapolated: Δτ → 0 (linear in two time steps)", { family: "AFQMC / GFMC" }],
+  "VMC1 (no P_e-ph)": ["VMC", `${VMC_OI}, no electron-phonon correlation factor, phonon cutoff 10`, { family: "classic VMC" }],
+  "VMC2 (with P_e-ph)": ["VMC", `${VMC_OI} and the electron-phonon correlation factor, phonon cutoff 10`, { family: "classic VMC" }],
+  "VMC, no e-ph correlation factor": ["VMC", `${VMC_OI}, no electron-phonon correlation factor, phonon cutoff 40`, { family: "classic VMC" }],
+  "VMC, P_e-ph, rc = 0": ["VMC", `${VMC_OI} and the electron-phonon correlation factor of range 0, phonon cutoff 40`, { family: "classic VMC" }],
+  "VMC, P_e-ph, rc = 1": ["VMC", `${VMC_OI} and the electron-phonon correlation factor of range 1, phonon cutoff 40`, { family: "classic VMC" }],
+  "VMC, P_e-ph, rc = 2": ["VMC", `${VMC_OI} and the electron-phonon correlation factor of range 2, phonon cutoff 40`, { family: "classic VMC" }],
+  "PP-2DMRG, n_ph = 63": ["DMRG", "projected purification, two-site update, 63 phonons per site", { family: "tensor network" }],
+  "DMRG3S+LBO, n_ph = 63": ["DMRG", "DMRG3S with local basis optimization, 63 phonons per site", { family: "tensor network" }],
+  "DMRG, m = 400": ["DMRG", "pseudo-site phonons", { bond_dimension: 400 }],
+  "DMRG (iTensor)": ["DMRG", "ITensor"],
+  "SC-VAED": ["ED", "self-consistently grown variational basis (SC-VAED)"],
+  "CP-AFQMC/TP-LLF(2)": ["CP-AFQMC", "trial state: TP-LLF(2), two Lang-Firsov states", { family: "AFQMC / GFMC" }],
+  "Global-Local variation": ["Global-Local variation", "", { family: "other" }],
+  "ED, 10 phonons": ["ED", "10 phonons (5.3 × 10^6 states)"],
+  "ED, 12 phonons": ["ED", "12 phonons (3.0 × 10^7 states)"],
+});
 for (const [p, d] of [[1, "0.20"], [2, "0.55"]]) {
   NAMES[`FLST, p = ${p}, Δ_BCS = ${d}`] = ["VMC", `projected BCS + Jastrow, Δ_BCS = ${d}, ${LANCZOS(p)} (statistical, FLST)`, { family: "classic VMC" }];
 }
@@ -1253,6 +1277,9 @@ const NO_ANSATZ = new Set(["DMRG", "ED", "SSE QMC", "QMC", "CT-QMC", "DQMC", "Ex
   // The power-Lanczos projection of arXiv:cond-mat/0104067, which names its RVB start state in
   // the detail.
   "Power-Lanczos",
+  // Holstein (2026-11-16): sign-free GFMC with a positive guiding function, and the Global-Local
+  // variational state of the polaron, which is not sampled.
+  "GFMC", "Global-Local variation",
   // Track 3 (RULES.md 13): basis-set quantum chemistry, embedding and Green's-function methods,
   // DMRG variants and the quantum-flow algorithms carry no ansatz.
   "FCI", "CASCI", "CCSD(T)", "RCCSD", "RCCSD(T)", "UCCSD", "UCCSD(T)", "MkMRCCSD", "MkMRCCSD(T)", "MRCI", "MRCI+Q",

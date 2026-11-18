@@ -1,0 +1,1354 @@
+                                      The Holstein  Polaron
+
+
+                          Janez Bonˇcaa, S. A. Trugmanb, and I. Batisti´cc
+
+aFMF, University of Ljubljana and J. Stefan Institute, 1000,  Slovenia,  bTheory Division, Los
+
+Alamos National Laboratory,  Los Alamos,  NM 87545,  cInstitute of Physics of the University,
+
+                                          HR-1000, Zagreb, Croatia
+
+                                             (September 11, 2018)
+
+
+
+                                                   Abstract
+
+
+
+
+               We describe a variational method to solve the Holstein model for an elec-
+
+          tron  coupled  to  dynamical,  quantum  phonons  on  an  inﬁnite  lattice.    The
+
+          variational  space  can  be  systematically  expanded  to  achieve  high  accuracy
+
+          with  modest  computational  resources  (12-digit  accuracy  for  the  1d  polaron
+
+          energy at intermediate coupling).  We compute ground and low-lying excited
+
+          state  properties  of  the  model  at  continuous  values  of  the  wavevector  k  in
+
+          essentially  all  parameter  regimes.   Our  results  for  the  polaron  energy  band,
+
+          eﬀective mass and correlation functions compare favorably with those of other
+
+          numerical techniques including DMRG, Global Local and exact diagonaliza-
+
+          tion.  We  ﬁnd a phase transition  for the  ﬁrst excited  state  between  a  bound
+
+          and unbound system of a polaron and an additional phonon excitation.  The
+
+          phase transition is also treated in strong coupling perturbation theory.
+          PACS: 71.38.+i, 72.10.Di, 71.35.Aa
+
+
+
+
+
+
+
+                                                                                       Typeset using REVTEX
+
+                                                         1
+                                           I.  INTRODUCTION
+
+
+    Polaron formation as a consequence  of electron-phonon  coupling appears in many  con-
+
+texts  in  condensed  matter  physics,  including  charge  carriers  in  colossal  magnetoresistance
+
+materials [1,2] and in high-temperature superconductors [3,4].  As theoretical research in this
+
+ﬁeld spans over ﬁve decades, many analytical techniques have been applied to this problem
+
+[5].  The applicability of these methods is usually limited to a particular parameter regime,
+
+frequently far from the physically  most interesting crossover regime.  Despite extensive  an-
+
+alytical  work  in  this  ﬁeld,  there  remain  many  open  problems  including  the  nature  of  the
+
+crossover to large polaron mass, the form of various correlation functions, the nature of the
+
+polaron excited states, and dynamic properties of the polaron.
+
+    Constantly  growing  computer  capabilities  have  allowed  research  in  this  ﬁeld  to  take
+
+advantage  of  various  numerical  methods,  including  exact  diagonalization  techniques  (ED)
+
+[6–12], quantum Monte Carlo calculations (QMC) [13,14], variational methods including the
+Global-Local method (GL) [15,16], and recently  developed  density  matrix renormalization
+
+group techniques (DMRG) [17].  A comparison of results obtained by diﬀerent methods for
+
+energy bands and eﬀective masses is contained in the work of Romero et al. [15].  Although
+
+most of these methods give reliable results in a wide range of parameter regimes, each suﬀers
+
+from diﬀerent  shortcomings.  The  ED  technique  gives  reliable  results  on small  lattices  (up
+
+to 20 sites [8]) for ground and excited state properties.  Results are limited to discrete mo-
+
+mentum k−points.  QMC methods can treat large system sizes (over 1000 lattice sites) and
+
+provide accurate results for thermodynamic  polaron properties.  Dynamic properties, how-
+
+ever, require analytic continuation from imaginary time, which is an ill-posed problem that
+
+is extremely  sensitive  to statistical noise.  The GL method gives  reliable results  for energy
+bands and the polaron eﬀective  mass on reasonably  large system  sizes  (32 sites),  however,
+
+it is limited to ground state properties.  The DMRG method seems to be most successful in
+
+computing ground state properties including various correlation functions.  Despite the lack
+
+of translational symmetry, it provides reasonably accurate results for energy bands and the
+
+
+                                                         2
+eﬀective  mass.  It can deal with large system  sizes  (e.g.  80 sites and 30 phonons per site),
+
+delivering  reliable  results  in  the  intermediate  and  strong  coupling  regime.   DMRG  is  less
+
+reliable in the weak coupling regime.  It generally treats large systems with open boundary
+
+conditions  and  does  not  allow  the  calculation  of  dynamic  or  large k  properties  or  excited
+
+states, although there are some exceptions to these rules [18].
+
+    In this paper we focus on several issues of the Holstein problem.  We present a simple and
+
+computationally  eﬃcient  method  based  on the  exact  diagonalization technique.  We  apply
+
+the method to the one-dimensional, single-electron Holstein model.  Among the advantages
+
+of our method are the simplicity of our approach, the eﬃciency in selecting the variational
+
+space, and the ability to compute both ground and excited state physical properties of the
+system  at  continuous  total  wavevector k.   We  deﬁne  the  variational  space  on  an  inﬁnite
+
+lattice.  Even  though most of our calculations  were  done on a workstation,  our results  are
+
+often  superior  to  those  of  other  numerically  more  intensive  methods  [8,9,17].  We  test  the
+
+method by comparing results for the energy band, eﬀective mass, quasiparticle weight and
+
+correlation functions with some of the most successful recent numerical methods.
+
+    The second part of this paper is devoted to the investigation of the ﬁrst excited state of
+
+the  model.  Using  our numerical  method as  well  as  a strong coupling  analytical  approach,
+
+we ﬁnd a phase transition between a state where the polaron forms a bound state with an
+
+additional phonon excitation, and one where there is no bound state.
+
+    Generalizations of this method can even be used to calculate coherent quantum dynamics
+
+far from equilibrium, including those of a polaron driven by a strong electric ﬁeld [19], and
+
+of an electron tunneling across a potential drop while coupled to phonons [20].
+    We consider the Holstein Hamiltonian [21]
+
+                                 H= −t∑          jcj+1 +H.c.)
+                                            j  (c†
+                                    −λ∑       jcj(aj +a†j) +ω∑          jaj,                                                (1)
+                                          j c†                      j a†
+where c†j  creates an electron and a†j  creates a phonon on site j.  We consider the case where
+
+a single electron hops between nearest neighbor Wannier orbitals in 1d, and interacts with
+
+                                                         3
+dispersionless  optical phonons.  The electron-phonon coupling strength is λ, and is local in
+
+real  space  (k-independent).  The  parameters t, ω,  and λ  all  have  units  of  energy,  and  can
+
+be  used  to  form  two  dimensionless  ratios.   (Diﬀerent  conventions  for  the  parameters  are
+
+sometimes used in other papers.)
+
+    It is clear at the outset that for any ﬁnite values of the parameters, the exact groundstate
+
+will be a delocalized state with momentum⃗k, and not a “self-trapped” solution that breaks
+
+translation-invariance.  The simple argument is that if the ground state were self-trapped, its
+
+center could be shifted and a degenerate ground state obtained.  If the Hamiltonian has any
+
+nonzero  matrix  element  between  states  with  diﬀerent  centers,  a lower  energy  state  can be
+
+obtained by a phased superposition of wavefunctions with diﬀerent centers (a Bloch state).
+The  only  known  way  that  this  argument  can  fail  is  with  (unphysically)  strong  electron-
+
+phonon coupling asω → 0 to a gapless phonon spectrum, in which case the matrix element
+
+between diﬀerent centers can vanish [22].  In that case, an exact ground state can be written
+
+as  either  self-trapped  or  as  a  Bloch  state.   Self-trapping  cannot  occur  here  because  the
+
+phonon  spectrum  has  a  gap.   Although  the  exact  ground  state  is  a  Bloch  state,  for  some
+
+parameters (e.g. very largeλ), a self-trapped solution can have a low variational energy [23].
+
+It  has  indeed  been  proven  that polaron ground  state  properties,  including  the  energy  and
+
+eﬀective mass, are analytic functions of the Hamiltonian parameters [24].  We will see below
+
+that such a theorem cannot be extended to include excited states.
+
+
+
+                                             II. THE  METHOD
+
+
+    A complete set of basis states for the many-body Hilbert space can be written
+
+                                    |M⟩ = |j;...,nj−1,nj,nj+1,...⟩,                                                (2)
+
+where j  is the electron site and there are nm  phonons on site m.  A variational subspace is
+
+constructed  beginning  with an  initial state,  taken  to be an electron  on site j  = 0 with no
+
+phonons, and operating repeatedly (Nh-times) with the oﬀ-diagonal pieces of the Hamilto-
+
+nian,  Eq.  (1).  At  each  step,  a  basis  state  is  added  when  there  is  a  nonzero t  or λ  matrix
+
+                                                          4
+element to a state previously in the space.  These states and all of their translations on an
+
+inﬁnite lattice are included in the variational space.  (A translation moves the electron and
+
+all phonon excitations m sites to the right.)  If a basis state can be generated in more than
+
+one way, only one copy is retained.  All nonzero matrix elements of the Hamiltonian between
+
+retained basis states are included.
+
+    A  small  variational  Hilbert  space  is  shown  in  Fig.  (1).   The  dots  may  be  thought  of
+
+as  basis  states  in  the  many-body  Hilbert  space,  or  alternatively  as  Wannier  orbitals  in  a
+
+periodic (one-body) tight-binding model, with hopping matrix elements given by the bonds.
+
+The variational space shown in Fig. (1) is still inﬁnite, since the lattice repeats periodically
+
+to inﬁnity.  It is  clear  from Bloch’s  theorem,  however,  that each  eigenstate  can  be  written
+as  eikjΨm,  where k  is  the  momentum, j  is  the  unit  cell,  and  Ψm  is  a  set  of M  complex
+
+amplitudes,  one  for  each  state  in  the  unit  cell  (M  =  7  for  the  example  of  Fig.  1).   For  a
+
+given momentum k, the resulting numerical problem is to ﬁnd the eigenstates of anM ×M
+
+(sparse) hermitian matrix using Lanczos or another method.
+
+    Figure (2) plots the energy eigenvalues for a larger variational space containing a maxi-
+
+mum of 9 phonon excitations.  The ﬁgure superﬁcially resembles a “band structure”, which
+
+however  encodes  ground and excited  state information for the many-body  (many phonon)
+
+polaron problem.  The AC  conductivity  of the polaron, for example,  appears as an “inter-
+
+band” transition in this mapping.
+
+    The largest variational basis that we have used  has Nh = 22, or M  = 1.2 × 107  states.
+
+It  is  usually  unnecessary  to  use  such  a  large  basis  for  intermediate-coupling  ground  state
+
+properties,  even  to  obtain  12-digit  accuracy  for  the  energy.   The  variational  Hilbert  space
+we  construct  is  not  a  standard  one,  and  appears  to  add  basis  states  more  eﬃciently  than
+
+some other methods.  A basis state is included if it can be reached usingNλ phonon creation
+
+operators  and Nt  electron  hops  in  any  order  with Nt +Nλ  ≤ Nh.   For  a  given Nh,  there
+
+is  a  basis  state  with Nh  phonon  quanta  on  the  same  site  as  the  electron  and  no  phonon
+
+excitations  elsewhere.  There  is also a basis state  with Nh − 1 quanta on the site  adjacent
+
+to  the  electron  and  no  phonon  excitations  elsewhere.   For Nh  odd,  there  is  a  basis  state
+
+                                                          5
+with  (Nh − 1)/2  quanta  on  the  electron  site  and  an  equal  number  simultaneously  on  a
+
+ﬁrst  neighbor  site.  The  maximum  distance  that a phonon  excitation  can  appear from the
+
+electron  is l  = Nh − 1,  but  then  only  a  single  quantum  and  only  if  there  are  no  phonons
+
+excited elsewhere in the system [25].  Only the basis states from a single unit cell (a single
+
+electron position) are stored in computer memory.
+
+    The energy of a polaron for a ﬁnite chain of N  sites with periodic boundary conditions
+
+is lower than that for an inﬁnite lattice with the same parameters.  (This is easily to verify
+
+in weak-coupling perturbation theory, or numerically.)  Thus, previous exact diagonalization
+
+and most other variational approaches produce energies that are variational for the particular
+
+lattice size N  that they treat, but are not variational in the thermodynamic limit N  → ∞.
+The energy we calculate is, in contrast, variational in the thermodynamic limit.  (The quoted
+
+DMRG  energies  are  extrapolated  and  not  variational,  although  they  are  generally  rather
+
+accurate.)
+
+    Having  the capability  to compute  the polaron energy E(k) at any k  rather than being
+
+limited to multiples of 2π/N  makes our method more accurate for computing the eﬀective
+
+mass of the polaron using the standard formula
+
+                                           m0          ∂2E(k)
+                                           m∗  =  12t    ∂k2    |k=0,                                                          (3)
+
+wherem0 = 1/(2t) is the eﬀective mass of a free electron.  The second derivative is evaluated
+
+by small ﬁnite diﬀerences in the neighborhood of k = 0.  Note that although the calculated
+
+energyE(k) is a variational bound for the exact energy, there is no such control on the mass,
+
+which may be either above or below the exact answer, and is expected to be more diﬃcult
+
+to obtain accurately.  Nevertheless,  in the intermediate  coupling regime where our method
+at Nh  =  20  gives  an  energy  accuracy  of  12 decimal  places,  one  can  calculate  the  eﬀective
+
+mass extremely accurately (6-8 decimal places) by letting ∆k → 0.
+
+    Further  information about the  quasiparticle  may  be obtained  by  computing  the  quasi-
+
+particle residue, the overlap (squared) between a bare electron and a polaron,
+
+                                             Zk = |⟨ψk|c†k|0⟩|2,                                                             (4)
+
+                                                          6
+where |0⟩ is the state with no electron and no phonon excitations,  and |ψk⟩ is the polaron
+
+wavefunction  at  momentum k.   The  numerical  results  for Zk=0  given  in  the  next  section
+
+diﬀer  by  less  than  1%  from  results  for the  reciprocal  eﬀective  mass m0/m∗  obtained  from
+
+Eq. (3).  At ﬁnitek,Zk provides information about the electronic character of the polaronic
+
+state.  The phonon contribution to the quasiparticle can be measured by the k−dependent
+
+mean phonon number
+
+                                         N phk   =∑           iai|ψk⟩|2.                                                      (5)
+                                                    i   |⟨ψk|a†
+    To  describe  the  polaron  at  diﬀerent k  we  have  also  computed  the  static  correlation
+
+function between the electron position and the oscillator displacement
+
+                                    χ(i −j) = ⟨ψk|c†ici(aj +a†j)|ψk⟩,                                                 (6)
+
+and the distribution of the number of excited phonons in the vicinity of the electron
+
+                                        γ(i −j) = ⟨ψk|c†icia†jaj|ψk⟩.                                                    (7)
+
+
+
+
+                                    III. GROUND  STATE  RESULTS
+
+
+    In  this  section,  we  compare  our  results  for the  ground  state  properties  of  the  Holstein
+
+model to those obtained by other numerical methods.  We also calculate polaron correlation
+
+functions at ﬁnite values of the Bloch wavevector k.
+
+    We start by comparing energy  bands E(k) for two diﬀerent sets  of parameters.  Figure
+
+(3) compares the present  method to the DMRG [15,17], GL [15] and the ﬁnite cluster  ED
+technique  [8].   Using Nh  =  20  we  achieve  an  accuracy  in  the  thermodynamic  limit  of  12
+
+decimal  places  for small k  and  at  least  4  decimal  places  for  large k.  Our  results  for E(k)
+
+are presented as continuous curves.  Agreement of our results with DMRG and ED is good,
+
+however there is a slight disagreement with the Global-Local method at largerk, which also
+
+disagrees with the DMRG method.  There is also a slight disagreement with the ED at larger
+
+k  which  we  attribute to the  smaller  system  size  used  in  ﬁnite cluster  ED  calculations.  As
+
+                                                           7
+we  will  demonstrate  later  in  this  paper,  the  extent  of  the  lattice  deformation  (the  size  of
+
+the polaron) increases ask approaches the Brillouin-zone boundary, which makes ﬁnite-size
+
+calculations more susceptible to ﬁnite size eﬀects.
+
+    In  table  (I)  we  compare  the  polaron  ground  state  energy  at k  =  0  for  two  diﬀerent
+
+parameter  sets  obtained  by  our and  three  other  numerical  methods,  exact  diagonalization
+
+(ED)  [26],  DMRG  [17],  and  Global-Local  variational  [15].    Comparisons  with  a  greater
+
+variety  of  methods  can  be  found  in  Romero  et  al.  [15].   We  have  limited  our  comparison
+
+to  those  methods  that  are  accurate  to  at  least  4  decimal  places.   Our  method  converges
+
+to  all  of  the  digits  shown  using Nh  =  15  or M  =  88052  basis  states  for λ  = ω  =  1,  and
+
+Nh = 18 orM  = 731027 basis states forλ = √2,ω = 1.  The ground state energy appears to
+
+converge  exponentially  with Nh,  with the accuracy  improving  by  approximately  one order
+
+of  magnitude  as Nh  is  increased  by  1.   The  larger  (Nh  =  18)  calculation  runs  in  under  a
+minute on a modest workstation.
+
+    Figure  (4)  shows  our  results  for  the  eﬀective  mass  Eq.  (3)  computed  with Nh  =  20  in
+
+comparison with GL and DMRG methods.  The parameters span diﬀerent physical regimes
+
+including weak and strong coupling (respectively small and largeλ/ω), and adiabatic (ω/t ≪
+
+1) and antiadiabatic (ω/t ≫ 1) regimes.  We ﬁnd good agreement with GL away from strong
+
+coupling and good agreement in all regimes with DMRG. DMRG calculations are not based
+
+on ﬁnite-k calculations due to a lack of periodic boundary conditions, so they extrapolate the
+
+eﬀective mass from the ground state data using chains of diﬀerent sizes, which leads to larger
+
+error bars and more computational eﬀort.  Notice that their discrete data is slightly scattered
+
+around our curves.  Nevertheless, both methods agree well.  A closer look at eﬀective masses
+in the antiadiabatic regime (ω/t = 5.0) andλ/ω< 2 reveals a slight systematic disagreement
+
+of our results with both methods in comparison.  We have compared our results for eﬀective
+
+mass obtained on diﬀerent systems from Nh = 16 with M  = 178617 states to Nh = 20 with
+
+M  = 2975104 states and obtained convergence of results to at least 4 decimal places in all
+
+parameter  regimes  presented  in  Fig.  (4).   Our  error  is  therefore  well  below  the  linewidth.
+
+Even  though  there  is  no  phase  transition  in  the  ground  state  of  the  model,  the  polaron
+
+                                                          8
+becomes extremely heavy in the strong coupling regime.  The crossover to a regime of large
+
+polaron mass is more rapid in adiabatic regime (smaller ω/t).
+
+    Figure  (5)  shows  the  quasiparticle  residue Zk  and  the  mean  phonon  number N phk    as
+
+a  function  of k  for  the  case  of  small λ0   ≡ λ2/2ωt  (λ2   =  0.4,ω  =  0.8)  and  large λ0
+
+(λ2  =  3.2,ω  =  0.8).   The  two  sets  of  parameters  correspond  to  the  large  and  small  po-
+
+laron regime respectively  [9].  The DMRG cannot straightforwardly compute this quantity,
+
+and we compare our results with cluster calculations.  Open symbols represent the results of
+
+Wellein and Fehske [8] obtained on aN  = 14 site cluster for the same choice of parameters.
+
+Except for the fact that their results are limited to discrete k−points deﬁned by the size of
+
+their  system,  we  ﬁnd  excellent  agreement  between  the  two  methods  in  the  weak  coupling
+
+case.  In the strong coupling regime there is an approximately 1% disagreement in N phk    due
+
+to a lack of phonon degrees of freedom in the variational space of the ED calculation.  Our
+results  in  the  weak  coupling  case  show  a  smooth  crossover  from  predominantly  electronic
+
+character  of the  wavefunction  for small k  (large Zk  and  small N phk    ≈ 0) to  predominantly
+
+phonon  character  around k  = π  characterized  by Zk  ≈  0  and N phk    ≈  1.   In  the  strong
+
+coupling  regime  there  is  less k−dependence.   The Zk  is  already  close  to  zero  at  small k,
+
+indicating strong electron-phonon interactions that lead to a large polaron mass.
+
+    Jeckelmann and White have calculated the electron-phonon correlations atk = 0 for the
+
+1d and 2d polaron using the DMRG method [17].  We compare our results with theirs for the
+
+1d case.  There is good agreement in Fig. (6a) for intermediate coupling parameters ω = 1
+
+and λ = 0.5.  Figure (6b) plots correlations for ω = 0.1 and λ = 0.1, which corresponds to
+
+weak coupling in the adiabatic limit.  In this regime the DMRG method gives less  reliable
+results.  The size of the polaron is underestimated, possibly due to ﬁnite-size eﬀects in open
+
+boundary  conditions.   Note  also  that  the  DMRG  method  does  not  give  symmetric  results
+
+as it should,  i.e. χ(l) ⁄= χ(−l).  In this parameter regime our results  have fully converged,
+
+as we can see  from the perfect overlap  of results  of systems  with  two diﬀerent  sizes  of the
+
+Hilbert space Nh = 17, 18.  Figure (6c) plots correlations for ω = 0.1 and λ = 0.435, which
+
+belongs to the strong coupling, small polaron regime.  The DMRG produces superior results
+
+                                                         9
+in  this  regime,  where  our  calculation  at Nh  =  21  has  not  fully  converged  to  the  large Nh
+
+limit.  Our results are, nevertheless, in qualitative agreement with the DMRG. We conclude
+
+that both techniques give reliable results in the intermediate coupling regime, and that they
+
+complement each other in the weak and strong coupling regimes.
+
+    A thorough investigation of correlation functions using ED and the variational Lanczos
+
+method was performed by Wellein and Fehske [9].  Although we do not show a direct com-
+
+parison with their work,  our results for correlation functions agree qualitatively  with their
+
+calculations.
+
+    While the strength of the DMRG calculation is exhibited in its ability to compute ground
+
+state  properties  of  large  systems,  it  is  limited  in  its  computation  of  excited  states.    In
+Figure  (5)  we  have  shown  how  the  nature  of  the  polaron  transforms  from  predominantly
+
+electronic  character  at k  =  0  to  phononic  around k  = π.   We  follow  this  transformation
+
+by computing the correlation function χ for four diﬀerent values of k, shown in Figure (7).
+
+These  parameters  correspond  to  the  weak  coupling  case  in  Figure  (5).   At k  =  0,  where
+
+the group velocity is zero, the deformation is limited to only a few lattice sites around the
+
+electron.  It is always positive and exponentially decaying.  At ﬁnite but small k =π/4, the
+
+deformation around the electron increases in amplitude and rings (oscillates in sign) as the
+
+polaron acquires a ﬁnite group velocity.  At k =π/2 the ringing is strongly enhanced.  Note
+
+also that the spatial extent of the deformation increases in comparison tok = 0.  The range
+
+of  the  deformation  is  maximum  at k  = π,  where  it  extends  over  the  entire  region  shown
+
+in the ﬁgure.  In keeping  with the larger extent  of the lattice deformation near k = π, the
+
+ground state energy E(π) converges more slowly with the size of the Hilbert space.
+    We have also computedχ for the strong-coupling caseω = 0.8,λ2 = 3.2 (not shown).  We
+
+ﬁnd only weakk−dependence, which is a consequence of the crossover to the small polaron
+
+regime.  The lattice deformation is localized predominantly on the electron site.
+
+
+
+
+
+
+
+                                                        10
+           IV.  WHAT  IS THE  NATURE  OF  THE  FIRST  EXCITED STATE?
+
+
+    In  this  section,  we  focus  on  the  question  of  whether  an  extra  phonon  excitation  forms
+
+a bound state with the polaron, or instead remain as two widely separated entities.  Using
+
+numerical and analytical approaches we will show that there exists a sharp phase transition
+
+between these two states.  Although the ground state energyE0 is an analytic function of the
+
+parameters in the Hamiltonian, there are points at which the energy E1 of the ﬁrst excited
+
+state  is  nonanalytic.   In  previous  work,  Gogolin  has  found  bound  states  of  the  polaron
+
+and  additional  phonon(s),  but  he  does  not  obtain  a  phase  transition  between  bound  and
+
+unbound  states  because  his  approximations  are  limited  to  strong  coupling λ/ω  ≫  1  [27].
+
+A  phase  transition  between  a  bound  and  unbound  ﬁrst  excited  state  has  been  calculated
+
+for dimension d = 3 using a dynamical CPA approximation [28] and dynamical mean ﬁeld
+
+theory [29].
+
+
+
+                                           A. Numerical  results
+
+
+    We begin by computing the energy diﬀerence ∆E =E1 −E0, where E1  and E0  are the
+
+ﬁrst excited state and the ground state energies at k = 0 (the two lowest bands in Fig. (2)
+
+).   In  the  case  where  the  ﬁrst  excited  state  of  a  polaron  can  be  described  as  a  polaron
+
+ground state and an unbound extra phonon excitation, this energy diﬀerence should in the
+
+thermodynamic limit equal the phonon frequency, ∆E =ω.  In Fig. (8) we plot the binding
+
+energy ∆ = ∆E −ω forω = 0.5 as a function of the electron-phonon coupling λ for various
+
+sizes  of  the  variational  space.   We  see  two  distinct  regimes.   Below λc  ∼  0.95,  ∆  varies
+
+with  the  system  size  but  remains  positive  (∆ > 0).  Physically,  for λ < λc,  the  additional
+
+phonon excitation would prefer to be inﬁnitely separated from the polaron, but is conﬁned
+to a distance  no greater than Nh − 1 by the variational Hilbert space.  As  the system  size
+
+increases, ∆ slowly approaches zero from above as the “particle in a box” conﬁnement energy
+
+decreases.  In the other regime, λ >λc, our data has clearly converged and ∆ < 0.  This is
+
+
+
+                                                        11
+the regime where the extra phonon excitation is absorbed by the polaron forming an excited
+
+bound polaron.  Since the excited polaron forms an exponentially decaying bound state, the
+
+method already converges atNh = 14.  In the inset of Figure (8) we show the binding energy
+
+∆ in a larger interval of electron-phonon couplingλ.  Although the results cease to converge
+
+at  larger λ,  we  notice  that  the  binding  energy  ∆  reaches  a  minimum  as  a  function  of λ.
+
+As we will demonstrate within the strong coupling approximation, the true binding energy
+
+approaches  zero exponentially  from below  with  increasing  lambda.  In  Figure (9) we  show
+
+the phase diagram, valid fork = 0, separating the two regimes.  The phase boundary, given
+
+by ∆ = 0, was obtained numerically and using strong coupling perturbation theory in t to
+
+ﬁrst  and  second  order.   Details  of  the  latter  calculation  are  given  in  the  next  subsection.
+The phase transition where ∆ becomes negative at suﬃciently large λ is also seen in exact
+
+diagonalization calculations [30].
+
+    In  Figure  (10)  we  compute  the  distribution  of  the  number  of  excited  phonons  in  the
+
+vicinity of the electronγ(i −j), Eq. (7), for the ground stateγ0 and the ﬁrst excited stateγ1
+
+slightly below (λ = 0.9), and above (λ = 1.0) the transition for ω = 0.5.  The central peak
+
+of the correlation function γ1  below the transition point is comparable in magnitude to γ0
+
+(Figs. (10a,b)).  The main diﬀerence between the two curves is the long range decay ofγ1 as
+
+a function of distance from the electron, onto which the central peak is superimposed.  The
+
+extra phonon that is represented by this long-range tail extends throughout the whole system
+
+and is not bound to the polaron.  See also the diﬀerence γ1 −γ0  in the inset of Fig. (10b).
+
+The existence of an unbound, free phonon is conﬁrmed by computing the diﬀerence of total
+
+phonon  number N ph0,1  = ∑lγ0,1(l).   This  diﬀerence  should  equal  one  below  the  transition
+point.  Our numerical  values  give N ph1   −N ph0    ∼ 1.02.  We attribute the deviation  from the
+
+exact result to ﬁnite-size eﬀects.
+
+    Correlation functions above the transition point (Figs. (10c,d)) are physically diﬀerent.
+
+First, phonon correlations inγ1 decay exponentially, which also explains why the convergence
+
+in this region is excellent.  Second, the size of the central peak inγ1 is 3 times higher thanγ0.
+
+(Note that to match scales in Figure (10d) we dividedγ1 by 3).  The diﬀerence in total phonon
+
+                                                        12
+number givesN ph1   −N ph0   ∼ 2.33.  We are thus facing a totally diﬀerent physical picture:  the
+
+excited state is composed of a polaron which contains several extra phonon excitations (in
+
+comparison  to the  ground state  polaron) and  the binding  energy  of the  excited  polaron is
+∆ < 0.  The  extra phonon excitations  are located  almost entirely  on the  electron  site (see
+
+the inset  of Fig. (10d)).  The  value of γ1 −γ0  at j  = 0 is  2.16, which  almost exhausts  the
+
+phonon sum.
+
+
+
+                               B.  Strong-coupling  perturbation  theory
+
+
+    In this section, we calculate the ground and excited state energies of the polaron pertur-
+batively in the hoppingt.  Fort = 0, the Hamiltonian Eq. (1) describes a harmonic oscillator
+
+with a shifted origin (due to the λ force term) on the site with the electron, and unshifted
+
+oscillators  on the  other sites.  The  Hamiltonian  in  the new  basis  is  given  by  the  canonical
+
+transformation  ˜H =eSHe−S, where
+
+                                          S = −g∑                    j),                                                        (8)
+                                                      j nj(aj −a†
+and g  = λ/ω   [31].   After  some  algebra  (see  also  Ref.  [12]),  the  transformed  Hamiltonian
+
+takes the following form:
+
+                      ˜H =H0 +V
+
+                     H0 =ω∑          jaj −ωg2∑
+                                j a†      (        j nj                                )
+                      V  = −te−g2∑          c†jcj+1eg(a†j−a†j+1)e−g(aj−aj+1) + h.c.        ,                              (9)
+                                       j
+
+wherenj =c†jcj.  The operatora†j  in Eq. (9) creates a phonon excitation on sitej relative to
+
+the shifted oscillator if there is an electron on sitej, and relative to an unshifted oscillator on
+
+the other sites.  The ﬁrst term inH0 is the energy of the phonon excitations, and the second
+
+is the energy gained by the oscillator that is displaced by the force of the electron.  In strong
+
+coupling  perturbation theory, V  in  Eq.  (9) is  considered  a perturbation.  It represents  the
+
+hopping of an electron, including possible creation and destruction of phonon excitations.
+
+                                                         13
+    The lowest energy eigenstates of the unperturbed HamiltonianH0 have no extra phonon
+
+excitations,  and  an  energy E(0)0    =  −λ2/ω.   They  can  be  written  |φ0(j)⟩  = c†j|O⟩,  where
+
+|O⟩  represents  vacuum  for electron  and  phonon  degrees  of  freedom.  This  state  represents
+
+a polaron localized on the site j.  Evidently  the ground state is N−fold degenerate,  where
+
+N  is the number of sites in the system.  The perturbation lifts this degeneracy.  The matrix
+
+elements V0(i,j) = ⟨φ0(i)|V |φ0(j)⟩ can be readily computed since the exponential factors in
+
+V  are not eﬀective in this case,
+
+                                      V0(i,j) = −te−g2; j =i ± 1.                                                  (10)
+
+This  describes  a  translation-invariant  tight-binding  model  in  one  dimension  with  nearest
+
+neighbor hopping.  To ﬁrst order int, the ground state energy of a polaron with momentum
+k is
+
+                                     E0(k) = −λ2/ω − 2te−g2 cosk.                                                 (11)
+
+    Excited  states:  The lowest energy states of H0  are the N  degenerate states of energy
+
+−λ2/ω, considered above.  The next lowest energy sector contains the N 2 degenerate states
+
+of energy  −λ2/ω   + ω, of the  form |ψ1(j,l)⟩ = c†ja†l |O⟩.  The electron  is on site j  and the
+
+additional  phonon  excitation  is  on  site l.   We  do  degenerate  perturbation  theory  to O(t)
+
+in  this  excited  sector.   Using  the  total  momentum k  as  a  good  quantum  number,  the  2d
+
+tight-binding problem in (j,l) becomes a 1d tight-binding problem.  The 1d basis functions
+
+are |φ1(j)⟩ = |ψ1(0,j)⟩, where j  is the distance between the phonon and the electron.  The
+
+nonzero matrix elements V1(i,j) = ⟨φ1(i)|V |φ1(j)⟩ are
+
+                                V1(0, 0) = −2tg2e−g2 cosk
+
+                              V1(0, ±1) = −t(1 −g2)e−g2
+
+                              V1(−1, 1) = −tg2e−g2eik
+
+                                 V1(i,j) = −te−g2; j =i ± 1;i,j ⁄= 0.                                          (12)
+
+This is a 1d tight-binding model that is translation-invariant except near the origin, where
+
+there  is  a  second-neighbor  hopping  term  and  other  modiﬁcations.   The  matrix V1(i,j)  is
+
+                                                          14
+Hermitian.  Matrix elements in Eq. (12) deﬁne a secular equation |V (k) −E(k)| = 0 for the
+
+energies that can easily be solved numerically for a large system.  For each total wavevector
+
+k, there areN  independent solutions.  The lowest energy ﬁrst excited state at momentum k
+
+is
+
+
+                                    E1(k) = −λ2/ω +ω +E(1)1   (k),                                                 (13)
+
+
+where E(1)1   (k) is the lowest energy solution of the secular equation.
+
+    The numerical and analytic solution of the secular equation reveals that there is a true
+
+phase  transition  (energy  nonanalytic  in  the  parameters)  for  the  ﬁrst  excited  state.   This
+
+is perhaps surprising  in light of the theorem  that there can be no phase  transition for the
+
+ground state [24],  and demonstrates  the impossibility  of extending  the theorem  to include
+
+excited states.  We consider ﬁrst a total momentumk = 0.  Forg>g1 = 1, the lowest energy
+ﬁrst excited state is found to be a bound state of a polaron and an additional phonon.  The
+
+bound state is raman active.  For g <g1, the ﬁrst excited state is unbound, with an energy
+
+exactly ω higher than the ground state.  This energy is in fact an upper bound for the ﬁrst
+
+excited  state  in  any  dimension  and  at  any ⃗k,  since  one  can  construct  a  variational  state
+
+with  a  zero  momentum  polaron  and  a  momentum ⃗k  phonon  at  inﬁnite  separation.   The
+
+energy of the ﬁrst excited state is nonanalytic (discontinuous ﬁrst derivative) atg =g1.  The
+
+bound state formation is unusual for several (related) reasons:  (a) For g > g1, the binding
+
+energy is linear in (g −g1) for small (g −g1), rather than the (g −g1)2  dependence that is
+
+typical  for  1d  bound  state  problems.   (b)  For g < g1,  the  phase  shift  is  zero  between  the
+
+polaron and an additional unbound phonon of relative momentum q → 0.  The polaron and
+additional phonon pass through each other transparently, in contrast to the usual repulsive
+
+phase  shift.   (c)  At g  = g1,  even  for  ﬁnite N  (periodic  boundary  conditions),  there  are
+
+two  exactly  degenerate  ground  states,  in  contrast  to  the  usual  avoided  crossing.   These
+
+unexpected properties result in part from the fact that the central site in the tight-binding
+
+model  (Eq.  12)  becomes  uncoupled  from  the  rest  of  the  lattice  precisely  at g  = g1.   The
+
+binding  energy  in 1d can in fact be determined  analytically  from Eq.  (12).  One can show
+
+                                                         15
+that for g ≥g1, E(1)1   (k) = −te−g2(x2 + 1)/x, where
+                                                  √
+                               x = 3g2 − 1 +         (9g2 − 1)(g2 − 1)
+                                                       2                           ; k = 0
+                               x =g2   ; k =π .                                                                              (14)
+
+
+    TheO(t) strong-coupling analysis can be extended to higher dimensions and to nonzero
+
+total momentum⃗k.  The⃗k = 0 state always has an energy less than or equal to that at any
+
+other ⃗k.  We  ﬁnd  that for g < g1,  the  ﬁrst  excited  state  at any  momentum ⃗k  is  unbound,
+
+with g1  =  1  in  any  dimension d  ≥  1.   The k  =  0  phase  shift  also  vanishes  for g < g1
+
+in  any  dimension.   For g > g2,  the  ﬁrst  excited  state  at  any  momentum  is  bound  [32].
+
+For g1 < g < g2,  there  is  a  phase  transition  on  a  surface  in ⃗k-space  such  that  inside  the
+surface (including⃗k = 0) the ﬁrst excited state is bound, and outside the surface (including
+⃗k  =  (π,π,...)  )  the  ﬁrst  excited  state  is  unbound.  The  location  of the  surface  in ⃗k-space
+
+is g-dependent.  The  numerically  obtained  values  are g2  = 2.1 in  3d, g2  = 1.66 in  2d,  and
+
+g2 =g1 = 1 in 1d.  (1d is special in that there is no intermediate phase.  However, asg →g+1
+
+in 1d, the k = π  state is very  weakly  bound compared to k = 0;  see  Eq. (14).  The k  = π
+
+state has zero amplitude to have the electron and the additional phonon on the same site.)
+
+The binding energy at⃗k = 0 is linear in (g −g1) for higher dimensions, as it is in 1d.
+
+    Strong coupling perturbation theory is carried to O(t2) in the appendix.
+
+
+
+                                             V.  CONCLUSIONS
+
+
+    In summary, we have presented a variational approach for solving the Holstein model with
+
+dynamical,  quantum  phonons  based  on  an  exact  diagonalization  method.  The  variational
+
+space is deﬁned on an inﬁnite lattice.  It is constructed by successive  application of the oﬀ
+
+diagonal  terms  of  the  Hamiltonian  starting  from  a  single  electron  state.   This  leads  to  a
+
+systematically improvable variational basis that turns out to be eﬃcient for calculating the
+
+ground state and low-lying excited state properties of the model.  The method can compute
+
+properties in all parameter regimes, but it is at its best in the intermediate coupling regime,
+
+                                                          16
+where strong and weak coupling perturbation theories, and other variational methods have
+
+problems.
+
+    The  method  allows  the  computation  of  energy  bands  and  other  physical  properties  at
+
+continuous wavevectors.  For intermediate coupling strengths we are able to reach an accu-
+
+racy  of  12  digits  for  the  ground  state  energy  at  small k  with  as  few  as M  =  88052  basis
+
+states and only a few seconds of CPU time on a workstation.  Our results for energy bands
+
+presented in Fig. (3) compare well with other numerically more intensive methods and are
+
+more  precise  at  both  large  and  small k  than  some  of  them.   Our  energies  are  variational
+
+in the thermodynamic  limit for any k.  We believe  that all results shown  for energy  bands
+
+computed with M  = 3 × 106   states converge to at least 4 digits for arbitrary k.
+    The  accuracy  of  our  method  can  be  seen  from  the  comparison  of  eﬀective  masses  in
+
+Fig.  (4).   While  our  results  have  converged  to  at  least  4  digits  in  all  parameter  regimes
+
+presented  in  Fig. (4),  GL and  DMRG methods  give  less  reliable  results.  While  deviations
+
+of  DMRG  are  insigniﬁcant,  deviations  of  GL  results  near  strong  coupling  seem  to  be  sys-
+
+tematic.  Results  for the  quasiparticle  residue  as  a function  of the  wavevector  in the  weak
+
+coupling  regime  show  a  smooth  crossover  between  the  predominantly  electronic  character
+
+to a predominantly phononic character of the polaron.  Our results agree with previous ED
+
+calculations.
+
+    The correlation functions χ agree well with DMRG results in the intermediate coupling
+
+regime.    In  the  weak  coupling  regime  our  method  gives  more  reliable  results.    Close  to
+
+the extreme strong coupling and adiabatic regime, our correlation functions have not fully
+
+converged  as  a  function  of Nh  for Nh  =  21, M  =  6 × 106.  Our  results  in  this  regime  are
+qualitatively  similar  to,  but  less  accurate  than  those  of  the  DMRG.  Correlation  functions
+
+χ computed at diﬀerent k  provide detailed information on how the weak coupling polaron
+
+transforms as k increases from k = 0 to k =π.
+
+    Using numerical and strong-coupling approaches, we ﬁnd a true phase transition (rather
+
+than  a  crossover)  in  the  ﬁrst  excited  state,  where  a  polaron  plus  phonon  system  changes
+
+from unbound at weak  coupling to bound at strong coupling.  The  ﬁrst excited  state does
+
+                                                         17
+not contribute to the optical conductivity, but rather is Raman active.
+
+    There are a number of extensions to this work that we have not included in this paper.  It
+
+is straightforward to consider anharmonic phonons.  (In fact, the extreme double-well limit
+
+where only the lowest two states are retained is numerically less demanding than the linear
+
+case.)   The  AC  conductivity  and  spectral  function  of  a  polaron  can  be  calculated  by  the
+
+same methods.  Properties of other Hamiltonians, including those with SSH-type couplings
+
+where  phonons  modify  the  hopping t  can  be  calculated.    Extensions  that  allow  certain
+
+phonon excitations  to be inﬁnitely  far from the electron are possible.  Properties  in higher
+
+spatial  dimensions  can  be calculated.  One  can  also calculate  the  properties  of bipolarons,
+
+including Hubbard onsite and longer range interactions between electrons.  And ﬁnally, one
+can  calculate  the  coherent  quantum  dynamics  of  electron-phonon  coupled  systems  driven
+
+far from equilibrium using similar methods [19,20].
+
+
+
+    We  would  like  to  acknowledge  valuable  conversations  with  A.  Alexandrov,  A.  Bishop,
+
+H. Fehske,  E. Jeckelmann,  L. C. Ku,  K. Lindenberg,  S. Marianer,  F. Marsiglio,  H. R¨oder,
+
+and  S.  White.    J.B.  would  like  to  acknowledge  the  hospitality  of  Los  Alamos  National
+
+Laboratory where the major part of this work was performed.  This work was supported by
+
+the US Department of Energy.
+
+
+
+                                                 APPENDIX:
+
+
+    For simplicity we have limited our calculation of the energy corrections in second order
+
+strong-coupling perturbation theory to 1d and zero momentum, k = 0.  Following the work
+of Marsiglio [12], the ground state correction to second order in the hopping t is given by
+                                                                                     
+                    E(2)                   ∑      g2(m+n)      1               g2n 1 .                            (A1)
+                      0    = −2t2e−2g2ω              n!m!    n +m + 3∑          n!  n
+                                            n,m=1                          n=1
+
+Calculation  of  the  energy  corrections  of  the  excited  state  energy E1  involves  degenerate
+
+perturbation theory, where matrix elements between degenerate states |φ1(j)⟩ are computed
+
+
+                                                        18
+to  second  order  in t.   After  a  straightforward  but  tedious  calculation  we  obtain  for  the
+
+non-zero matrix elements
+
+     V1(0, 0) =  − 2tg2e−g2                                                                             
+                                     ∑       g2(m+n)    (1 −   ng2 )2        g2n  (1 −   ng2 )2 + 2              (A2)
+                   + 2t2g2e−2g2ω               n!m!     1 −n −m +∑             n!       1 −n        + 2
+                                      n,m=1                              n=2
+
+    V1(0, 1) =  −t(1 −g2)e−g2                                                                            
+                                   ∑      g2(m+n)   (1 −   ng2 )(1 −  mg2 )         g2n  (1 −   ng2 )            (A3)
+                  −t2g2e−2g2ω                n!m!        1 −n −m      + 3∑            n!    1 −n   + 2
+                                    n,m=1                                       n=2
+                                            [ ∑       g2(m+n)   (g2(1 −   n                   )
+                   V1(1, 1) =t2e−2g2                                        g2 )2
+                                      ω       n,m=1     n!m!       1 −n −m  −      1n +m
+                                                   g2n  2g2 − 2n +   n                     ]
+                                           +∑                           g2 (n + 2)                                (A4)
+                                              n=2   n!            1 −n               +g2
+                                                                [∑    g2n  (1 −   n         ]
+                    V1(−1, 1) = −tg2e−g2 +t2g2e−2g2                               g2 )2                           (A5)
+                                                         ω       n=2   n!    1 −n    + 1
+
+                                                                     ∑    g2n  1
+                                V1(0, 2) = −t2(1 −g2)e−2g2ω                n!  n                                           (A6)
+                                                                     n=1
+
+                                                             ∑    g2n 1
+                              V1(j,j + 2) = −t2e−2g2ω             n!  n;  j ≥ 1                                       (A7)
+                                                             n=1
+                                                                                     
+              V1(j,j) = −2t2e−2g2         ∑      g2(m+n)      1               g2n  1  ;  j ≥ 2                  (A8)
+                                    ω      n,m=1    n!m!    n +m + 2∑n=1        n!  n
+
+                                    V1(j,j + 1) = −te−g2;  j ≥ 1.                                                (A9)
+
+For k  =  0, V1(i,j)  = V1(j,i)  = V1(−i, −j).   We  numerically  solve  the  secular  equation
+
+|V  −E| = 0.  The lowest eigenvalueE(1,2)1      of the secular equation gives us corrections to the
+excited state energy E1 to second order in the hopping t,
+
+                                       E1 = −λ2/ω +ω +E(1,2)1  .                                                   (A10)
+
+The binding energy to second order at k = 0 is given by Eqs. (11), (A1), and (A10),
+
+                                      ∆ =E(1,2)1      + 2te−g2 −E(2)0 .                                                  (A11)
+
+The second order results are used to calculate the phase boundary in Fig. (9).
+
+                                                          19
+                                                         FIGURES
+    FIG. 1.  The  small  variational  Hilbert  space  shown  for  the  polaron  is  a  subset  of  the  Nh  = 3
+
+space.     Basis  states  in  the  many-body  Hilbert  space  are  represented  by  dots,   and  nonzero
+
+oﬀ-diagonal  matrix elements by lines.  The x-coordinate of the dots is (aside from small displace-
+
+ments)  the  coordinate  of  the  electron.   Vertical  bonds  create  phonons,  and  horizontal  or  nearly
+
+horizontal bonds are electron hops.  State |1⟩ is an electron on site 0 and no phonons.  State |2⟩ is
+
+an electron and phonon, both on site 0.  State |4⟩ is an electron on site 1 and a phonon on site 0,
+
+which is reached  from state |2⟩ by  hopping the electron  to the right.  State |5⟩ is a translation  of
+
+state  |2⟩.  The Hamiltonian  is  sparse in  this  basis,  with  at  most  4  bonds attached  to  a  dot.  The
+
+dots can also be thought of as Wannier orbitals in a one-body periodic tight-binding model.
+
+
+    FIG. 2.     The  ground  and  excited  state  energy  eigenvalues  (those  Ej  ≤  0)  are  plotted  as  a
+
+function  of  k  (in  units  of  π)  for  λ  =  ω  =  1,  Nh  =  9,  M  =  1185.   Excited  states  consist  of  the
+
+polaron  with  additional  bound or  unbound phonon excitations.  The hopping parameter  t = 1 is
+
+assumed here and throughout this work wherever t is not explicitly speciﬁed.
+
+
+    FIG.  3.   Polaron  energy  as  a  function  of  k  (in  units  of  π).    Lines  represent  our  results  for
+
+two  diﬀerent  sets  of  parameters  obtained  by  calculating  E(k)  at  100  k-points.   Circles,  squares
+
+and diamonds are results obtained with Global-Local [15], DMRG [15,17] and ED [8] calculations
+
+respectively.
+
+
+    FIG.  4.   The  logarithm  of  the  eﬀective  mass  m∗/m0  as  a  function  of  λ/ω.   Our  results  are
+
+plotted  as  full lines,  and Global-Local  results  as  dashed lines  [15].  Open symbols,  indicating  the
+
+value of ω, are DMRG results [17].
+
+
+    FIG. 5.  The  quasiparticle  weight  Zk  and  in  the  inset  the  total  number  of  phonons  N phk    as  a
+
+function of the wavevector  k.  Results by Wellein and Fehske [8] are represented by open circles.
+
+
+
+
+
+
+
+                                                               20
+    FIG. 6.  Lattice deformation χ as a function of (i − j) for (a) ω = 1.0 and λ = 0.5, (b) ω = 0.1
+
+and  λ =  0.1,  and  (c)  ω  =  0.1  and  λ =  0.435.   Our  results  are  represented  by  ﬁlled  symbols  and
+
+those of Jeckelmann and White [17] by open circles.  In case c) our results for Nh = 21 have not yet
+
+reached the large Nh limit.  The star represents an extrapolation of our data (assuming exponential
+
+convergence) to Nh → ∞, χ(0) = 5.5 ± 0.1.
+
+
+    FIG. 7.  Lattice  deformation χ as a function of (i − j) for ω = 0.8, λ2 = 0.4 and Nh = 18,  for
+
+four  diﬀerent  values  of  momentum  k.   The  variational  Hilbert  space  for  Nh  =  18  allows  nonzero
+
+correlations to a maximum distance |i − j|max = 17.  Only distances up to 15 are plotted.
+
+
+    FIG. 8.  First excited state binding energy ∆ = E1 − E0 − ω as a function of λ.  Results are for
+
+ω = 0.5 and various Hilbert space sizes Nh.  Inset:  binding energy over a wider range of λ.
+
+
+    FIG.  9.   The  phase  diagram  for  the  bound  to  unbound  transition  of  the  ﬁrst  excited  state,
+
+obtained using the condition ∆(ω, λ) = 0.  The corresponding phase diagram for the ground state
+
+would be blank—there is no phase transition in the ground state, only a crossover.
+
+
+    FIG. 10.  The phonon number γ as a function of the distance from the electron position (i − j)
+
+for  the  ground  state  (a)  and  the  ﬁrst  excited  state  (b)  both  computed  at  λ =  0.9  and  the  same
+
+in  (c)  and  (d)  for  λ  =  1.0.   All  data  are  computed  at  phonon  frequency  ω  =  0.5  and  Nh  =  18.
+
+Note that (d) is a plot of γ1/3.  Insets in (b) and (d) represent diﬀerences γ1 − γ0  as a function of
+
+the distance (i − j).  In (b), γ1 − γ0  drops to zero around |i − j| = 15.  This is a ﬁnite-size eﬀect.
+
+Computing  the  same  quantity  with  larger  Nh  below  the  phase  transition  would  lead  to  a  larger
+
+extent of the correlation function indicating that the extra phonon excitation  is not bound to the
+
+polaron.
+
+
+
+
+
+
+
+
+
+
+
+                                                              21
+                                                                  TABLES
+
+
+                                                                 TABLE I.
+
+λ/ω                        Present                          ED N=16                   DMRG N=32                 Global-Local
+
+  1                 -2.469684723933                 -2.46968477                      -2.46968                          -2.46931
+√2                  -2.998828186867                 -2.99882816                      -2.99883                          -2.99802
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                        22
+                                           REFERENCES
+
+
+ [1] M.  Jaime,  H.  T.  Hardner,  M.  B.  Salamon,  M.  Rubinstein,  P.  Dorsey,  and  D.  Emin,
+
+     Phys. Rev. Lett. 78, 951 (1997).
+
+ [2] A. P. Ramirez, J. Phys. Condens. Matter 9, 8171 (1997).
+
+ [3] Lattice Eﬀects in High-Tc Superconductors, edited by Y. Bar-Yam, T. Egami, J. Mustre
+
+     de Leon, and A. R. Bishop (World Scientiﬁc, Singapore, 1992).
+
+ [4] A. S. Alexandrov and N. F. Mott, Rep. Progr. Phys. 57, 1197 (1994).
+
+ [5] A. S. Alexandrov and N. F. Mott, Polarons and Bipolarons (World Scientiﬁc, Singapore,
+     1995).
+
+ [6] A. S. Alexandrov, V. V. Kabanov, and D. E. Ray, Phys. Rev. B 49, 9915 (1994).
+
+ [7] G. Wellein, H. R¨oder, and H. Fehske, Phys. Rev. B 53, 9666 (1996).
+
+ [8] G. Wellein and H. Fehske, Phys. Rev. B 56, 4513 (1997).
+
+ [9] G. Wellein and H. Fehske, Phys. Rev. B 58, 6208 (1998).
+
+[10] E. V. L. de Mello and J. Ranninger, Phys. Rev. B 55, 14872 (1997).
+
+[11] M. Capone, W. Stephan, and M. Grilli, Phys. Rev. B 56, 4484 (1997).
+
+[12] F. Marsiglio, Physica C 244, 21 (1995).
+
+[13] H. De Raedt and A. Langedijk, Phys. Rev. Lett 49, 1522 (1982); H. De Raedt and A.
+     Langedijk, Phys. Rev. B 27, 6097 (1983); 30, 1671 (1984).
+
+[14] P. E. Kornilovitch and E. R. Pike, Phys. Rev. B 55, R8634 (1997).
+
+[15] A. W. Romero, D. W. Brown and K. Lindenberg, J. Chem. Phys. 109, 6540 (1998).
+
+[16] A. W. Romero, D. W. Brown and K. Lindenberg, cond-mat/9806032.
+
+[17] E. Jeckelmann and S. R. White, Phys. Rev. B 57, 6375 (1998).
+
+                                                     23
+[18] E. Jeckelmann, private communication.
+
+[19] Janez Bonˇca and S. A. Trugman, Phys. Rev. Lett. 79, 4874 (1997).
+
+[20] Janez Bonˇca and S. A. Trugman, Phys. Rev. Lett. 75, 2566 (1995).
+
+[21] G. D. Mahan, Many-Particle Physics, Plenum, New York (1981).
+
+[22] A. J. Leggett, S. Chakravarty, A. T. Dorsey, M. P. A. Fisher, A. Garg, and W. Zwerger,
+
+     Rev. Mod. Phys. 59, 1 (1987).
+
+[23] T. Holstein, Annals of Phys. 8, 325 (1959).
+
+[24] B. Gerlach and H. Lowen, Rev. Mod. Phys. 63, 63, (1991).
+
+[25] It is possible to construct a variational space with a diﬀerent tradeoﬀ between phonon
+     number and phonon distance. It is sometimes useful at very strong coupling to add to
+
+     the Hilbert space states with a very large number of phonon quanta on the electron site.
+
+[26] H. Fehske, private communication. Theλ/ω = 1 ED results are for 16 sites, 10 phonons,
+
+     with 5.3 × 106 basis states in the symmetrized Hamiltonian. The λ/ω = √2 results are
+
+     for 16 sites,  12 phonons  (3.0 × 107  basis  states).  These  ED  results  are quite  accurate,
+
+     although we believe that we obtain 5 signiﬁcant ﬁgures greater accuracy with a Hilbert
+
+     space that is 50 times smaller.
+
+[27] A. A. Gogolin, Phys. Stat. Sol. (B) 109, 95 (1982).
+
+[28] H. Sumi, J. Phys. Soc. Japan 36, 770 (1974).
+
+[29] S. Ciuchi, F. de Pasquale, S. Fratini, and D. Feinberg, Phys. Rev. B 56, 4494 (1997).
+
+[30] H. Fehske, private communication.
+
+[31] I. G. Lang and Yu. A. Firsov, Sov. Phys. JETP 16, 1301 (1963); Sov. Phys. Solid State
+
+     5, 2049 (1964).
+
+[32] The ﬁrst excited state at nonzero momentum⃗k is a bound state ifE1(⃗k)−E0(⃗k = 0)<ω,
+
+
+                                                       24
+so that decay into a polaron and a phonon is energetically forbidden.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                 25
+
+E(k)
+
+
+
+
+
+
+
+
+

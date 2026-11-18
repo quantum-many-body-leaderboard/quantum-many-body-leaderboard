@@ -1,0 +1,140 @@
+{
+  "model": "Holstein",
+  "lattice": "chain",
+  "n_sites": 6,
+  "boundary": "P",
+  "params": {
+    "t": 1,
+    "w": 1,
+    "g": 1.5,
+    "spinless": true,
+    "N": 3
+  },
+  "instance_id": "Holstein/chain_6_P_f3_w1_g1.5",
+  "rows": [
+    {
+      "energy": -8.5794,
+      "sigma": 0.0012,
+      "energy_variance": null,
+      "dof": 3,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "MLP",
+      "method_detail": "complex neural-network correlator on a Hartree-Fock reference",
+      "method_as_published": "MLP (this work)",
+      "family": "other NQS",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Mahajan, Robinson, Lee & Reichman, Structure and dynamics of electron-phonon coupled systems using neural quantum states, Phys. Rev. B 112, 184310 (2025), doi:10.1103/p8qz-p45d, arXiv:2405.08701",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-16",
+        "method": "source text of arXiv:2405.08701 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-11-16)",
+        "reported_as": "-0.8674(2)",
+        "note": "Table 2, Nsites = 6, column MLP (this work) (line 670); version read: arXiv text (sources/2405.08701.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eq. (23), line 679: H_eph = g sum_i (c+_i c_i - 1/2)(b+_i + b_i), spinless fermions; H_nu = ω0 sum b+b without zero-point energy (lines 151-159); t = 1 (line 164). Table 2 (lines 665-672): energy per site at half filling, ω0 = 1, g = 1.5, antiperiodic boundaries for an even and periodic for an odd fermion number (lines 681-682). Coupling to n_i - 1/2: E_instance = E_source - g^2 N / (4ω) at half filling (RULES.md 2.1). QMBL's diagonalization of the 4-site chain in the source's convention gives -0.8939876 per site, the printed MLP -0.89394(7) and GFMC -0.895(1) (checks/holstein-ed-2026-11/).",
+        "secondary_of": null
+      },
+      "converted": {
+        "from": "coupling to n_i - 0.5",
+        "shift": -3.375,
+        "note": "E_instance = E_source - 2 g^2 rho N_e / w + g^2 rho^2 N / w (rho = 0.5, N_e = 3, N = 6), in units of t (RULES.md 2.1)"
+      }
+    },
+    {
+      "energy": -8.583,
+      "sigma": 0.006,
+      "energy_variance": null,
+      "dof": 3,
+      "einf": null,
+      "v_score": null,
+      "method": "GFMC",
+      "ansatz": null,
+      "method_detail": "positive guiding function; extrapolated: Δτ → 0 (linear in two time steps)",
+      "method_as_published": "GFMC (Δτ → 0)",
+      "family": "AFQMC / GFMC",
+      "bound_type": "exact",
+      "bound_type_reason": "numerically exact reference as stated by the source (assigned during source reading)",
+      "reference": "McKenzie, Hamer & Murray, Quantum Monte Carlo study of the one-dimensional Holstein model of spinless fermions, Phys. Rev. B 53, 9676 (1996), doi:10.1103/PhysRevB.53.9676, arXiv:cond-mat/9512046",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-16",
+        "method": "source text of arXiv:cond-mat/9512046 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-11-16)",
+        "reported_as": "-0.868  ±  0.001",
+        "note": "Table I, N = 6, column E0(N)/N (line 875); version read: arXiv text (sources/cond-mat-9512046.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eq. (4), line 72: H = -t sum (c+_i c_i+1 + h.c.) - g sum (c+_i c_i - 1/2)(a_i + a+_i) + ω sum a+_i a_i, spinless fermions, Eq. (1) with the zero-point energy -Nω/2 removed (line 52); Table I (lines 866-877): E0(N)/N in units of ω at t = ω, g = 1.5ω, half filling; antiperiodic (periodic) boundaries for an even (odd) fermion number (lines 153-154). The sign of g is a gauge choice (b -> -b). Coupling to n_i - 1/2: E_instance = E_source - g^2 N / (4ω). GFMC with a guiding function chosen positive everywhere (line 379), time steps extrapolated linearly to Δτ = 0 (lines 548-553). QMBL's diagonalization of the 4-site chain reproduces -0.895 ± 0.001 (-0.8939876, checks/holstein-ed-2026-11/).",
+        "secondary_of": null
+      },
+      "converted": {
+        "from": "coupling to n_i - 0.5",
+        "shift": -3.375,
+        "note": "E_instance = E_source - 2 g^2 rho N_e / w + g^2 rho^2 N / w (rho = 0.5, N_e = 3, N = 6), in units of t (RULES.md 2.1)"
+      }
+    },
+    {
+      "energy": -8.0244,
+      "sigma": 0.0012,
+      "energy_variance": null,
+      "dof": 3,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "Gutzwiller",
+      "method_detail": "BCS state with electron-electron and phonon Jastrow factors, no electron-phonon correlation factor, phonon cutoff 10",
+      "method_as_published": "VMC1 (no P_e-ph)",
+      "family": "classic VMC",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Ohgoe & Imada, Variational Monte Carlo method for electron-phonon coupled systems, Phys. Rev. B 89, 195139 (2014), doi:10.1103/PhysRevB.89.195139, arXiv:1403.4150",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-16",
+        "method": "source text of arXiv:1403.4150 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-11-16)",
+        "reported_as": "-0.7749(2)",
+        "note": "Table II, N = 6, row VMC1 (line 500); version read: arXiv text (sources/1403.4150.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eq. (37), lines 489-494, spinless, -g sum (b+_i + b_i)(n_i - 1/2), t = ω, g = 1.5ω (lines 507-508), energy per site at half filling, antiperiodic (periodic) boundaries for an even (odd) fermion number (lines 432-433): E_instance = E_source - g^2 N / (4ω). The sign of g is a gauge choice (b -> -b).",
+        "secondary_of": null
+      },
+      "converted": {
+        "from": "coupling to n_i - 0.5",
+        "shift": -3.375,
+        "note": "E_instance = E_source - 2 g^2 rho N_e / w + g^2 rho^2 N / w (rho = 0.5, N_e = 3, N = 6), in units of t (RULES.md 2.1)"
+      }
+    },
+    {
+      "energy": -8.5248,
+      "sigma": 0.0018,
+      "energy_variance": null,
+      "dof": 3,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "Gutzwiller",
+      "method_detail": "BCS state with electron-electron and phonon Jastrow factors and the electron-phonon correlation factor, phonon cutoff 10",
+      "method_as_published": "VMC2 (with P_e-ph)",
+      "family": "classic VMC",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Ohgoe & Imada, Variational Monte Carlo method for electron-phonon coupled systems, Phys. Rev. B 89, 195139 (2014), doi:10.1103/PhysRevB.89.195139, arXiv:1403.4150",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-16",
+        "method": "source text of arXiv:1403.4150 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-11-16)",
+        "reported_as": "-0.8583(3)",
+        "note": "Table II, N = 6, row VMC2 (line 501); version read: arXiv text (sources/1403.4150.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eq. (37), lines 489-494, spinless, -g sum (b+_i + b_i)(n_i - 1/2), t = ω, g = 1.5ω (lines 507-508), energy per site at half filling, antiperiodic (periodic) boundaries for an even (odd) fermion number (lines 432-433): E_instance = E_source - g^2 N / (4ω). The sign of g is a gauge choice (b -> -b).",
+        "secondary_of": null
+      },
+      "converted": {
+        "from": "coupling to n_i - 0.5",
+        "shift": -3.375,
+        "note": "E_instance = E_source - 2 g^2 rho N_e / w + g^2 rho^2 N / w (rho = 0.5, N_e = 3, N = 6), in units of t (RULES.md 2.1)"
+      }
+    }
+  ]
+}

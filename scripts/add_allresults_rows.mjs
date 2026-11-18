@@ -54,7 +54,11 @@ for (const [id, rows] of Object.entries(byInst)) {
     // Jd = 1 or t = 1, RULES.md 2.1, 2026-10-21) prints energies times that factor: `scale` is the
     // factor, and the row keeps it with the source's own couplings in `normalised`.
     const k = r0.scale ?? 1;
-    const r = k === 1 ? r0 : { ...r0, eps: r0.eps / k, tol: r0.tol / Math.abs(k), sigma_per_site: r0.sigma_per_site == null ? null : r0.sigma_per_site / Math.abs(k),
+    // A source whose Hamiltonian differs from the instance's by a constant (a Holstein coupling to
+    // n_i - rho, or the phonon zero-point energy, RULES.md 2.1, 2026-11-16) carries `shift`: the
+    // total, in the instance's units, that the loader adds after any scale; DATA.md `converted`.
+    const sh = r0.shift?.total ?? 0;
+    const r = k === 1 && sh === 0 ? r0 : { ...r0, eps: r0.eps / k + sh / div, tol: r0.tol / Math.abs(k), sigma_per_site: r0.sigma_per_site == null ? null : r0.sigma_per_site / Math.abs(k),
       var_per_site: r0.var_per_site == null ? null : r0.var_per_site / (k * k),
       precision_per_site: r0.precision_per_site == null ? null : r0.precision_per_site / Math.abs(k) };
     // A source without an arXiv version is named by its DOI (doi:...), and a pass row may say how
@@ -104,6 +108,7 @@ for (const [id, rows] of Object.entries(byInst)) {
     };
     if (k !== 1) row.normalised = { factor: k, source_couplings: r.source_couplings,
       note: `the source's Hamiltonian is ${k} times the instance's; its printed energy (reported_as) is divided by ${k}` };
+    if (sh !== 0) row.converted = { from: r0.shift.from, shift: sh, note: r0.shift.note };
     if (r.compute) row.compute = r.compute;
     // The row's own code, as its source prints it, with where it was read (DATA.md, "The code
     // behind a row"); add_code_links.mjs adds to it.

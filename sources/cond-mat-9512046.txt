@@ -1,0 +1,939 @@
+      Quantum  Monte  Carlo study  of  the one-dimensional  Holstein model  of spinless
+                                                                     fermions
+
+                                         Ross H. McKenzie∗, C. J. Hamer, and D. W. Murray
+                               School  of Physics,  University  of New South  Wales, Sydney  2052,  Australia
+                                                          (Received 29 November 1995)
+                    The Holstein model of spinless fermions interacting with dispersionless phonons in one dimension
+                is  studied  by  a  Green’s  function  Monte  Carlo  technique.  The  ground  state  energy,  ﬁrst  fermionic
+                excited state, density wave correlations, and mean lattice displacement are calculated for lattices of
+                up to 16 sites, for one fermion per two sites, i.e., a half-ﬁlled band.  Results are obtained for values
+                of  the fermion  hopping parameter of  t = 0.1ω,  ω, and 10ω  where  ω  is the phonon  frequency.  At a
+                ﬁnite fermion-phonon coupling g there is a transition from a metallic phase to an insulating phase in
+                which there is charge-density-wave order.  Finite size scaling  is found to hold in the metallic  phase
+                and is used to extract the coupling dependence of the Luttinger liquid parameters, uρ  and Kρ, the
+                velocity  of charge excitations and the correlation  exponent, respectively.  For free fermions (g = 0)
+                and for strong coupling (g2 ≫ tω) our results agree well with known analytic results.  For t = ω and
+                t = 10ω  our results are inconsistent with the metal-insulator transition being a Kosterlitz-Thouless
+                transition.
+
+                To appear in Physical Review B, April 15, 1996.
+
+
+                PACS numbers:71.38.+i, 02.70.Lq, 71.45.Lr, 71.30.+h, 63.20.Kr
+
+
+
+                                                             I.  INTRODUCTION
+
+   A  wide  range  of  quasi-one-dimensional materials  have  electronic  properties  that  are  dominated  by  the  Peierls  or
+charge-density-wave instability  caused by  the electron-phonon interaction1.  For  a  half-ﬁlled band  it is  energetically
+favourable for the lattice to dimerize and open an energy gap at the Fermi surface.  Although the lattice distortion in-
+creases the lattice energy, opening the electronic energy gap preferentially lowers the total energy for highly anisotropic
+systems2.  These systems are often modelled by the one-dimensional Holstein3 or Su-Schrieﬀer-Heeger (SSH)4 models.
+Most  treatments  of  the  Peierls  instability  treat  the  phonons  in  the  mean-ﬁeld  or  rigid  lattice  approximation.  This
+is  questionable  in  one-dimension  and  furthermore,  in  a  wide-range  of  materials  the  lattice  distortion  is  comparable
+to  the  zero-point motion  of  the  lattice5.  It  has  recently  been  shown that  the  quantum  lattice  ﬂuctuations  must  be
+taken into account to satisfactorily describe optical properties6,7.  Several authors have previously considered the role
+of quantum lattice ﬂuctuations for the SSH model8  and the Holstein model9–12  at half-ﬁlling.  Voit and Schulz have
+considered  the  interplay  of  quantum  lattice  ﬂuctuations  and  electron-electron  interactions  away  from  half-ﬁlling13.
+Recently the Holstein model, also known as the molecular crystal model, has received considerable attention because
+the challenge of high-Tc and fullerene superconductors has revealed deﬁciencies in our understanding of the electron-
+phonon  interaction  and  the  competition  between  superconductivity  and  charge-density-wave instabilities.   This  has
+motivated  studies  of  the  Holstein  model  in  inﬁnite  dimensions14,  two  dimensions15,  one  dimension16  and  on  just  a
+few sites17.
+   We consider the Holstein model in one dimension at half ﬁlling and only with spinless fermions, for simplicity.  The
+spinless  fermions  hop  along  a  one-dimensional chain  and  interact with  a  phonon  mode  located  on  each  lattice  site.
+The  creation operator for  a  fermion on site  i  is  denoted  ci.  The  fermions  can hop  between neighbouring sites  with
+amplitude  t.  In the  absence of interactions the phonons all have the same frequency ω, i.e., they are dispersionless.
+The electron-phonon coupling, in units of energy, is g.  Phonon position and momentum operators are denoted by qi
+and pi, respectively.  The Hamiltonian for the Holstein model (at half ﬁlling) is9
+                               (                    )                                                 1
+               H = −t∑           c†i ci+1 + c†i+1ci   − g(2Mω)1/2∑(c†i ci − 12)qi +∑                 2M p2i  + 12Mω2q2i  − N2 ω                     (1)
+                            i                                             i                      i
+
+for a system of N  lattice sites.  This Hamiltonian has particle-hole symmetry since the transformation ci → (−1)ic†i ,
+qi  →  −qi  leaves  H  invariant.   This  discrete  symmetry  is  broken  in  the  charge-density-wave  phase  which  has  the
+electronic order parameter
+
+
+                                                                           1
+                                                                    ∑
+                                                        me ≡  1N        (−1)i < c†i ci >                                                                            (2)
+                                                                      i
+and the phonon order parameter
+                                                         mp ≡  1     ∑(−1)i < qi >                                                                              (3)
+                                                                  N    i
+
+which is a measure of the dimerization.
+   If phonon creation and annihilation operators are denoted by a†i  and ai, respectively, the  Hamiltonian (1) can be
+written
+                                            (                    )                        (          )
+                            H = −t∑           c†i ci+1 + c†i+1ci   − g∑(c†i ci − 12)        ai + a†i    + ω∑      a†i ai.                                      (4)
+                                         i                                i                                    i
+Thus ground state properties will be determined by two independent parameters, which we will take to be  t/ω  and
+g/ω.  It is also useful to deﬁne the dimensionless electron-phonon coupling
+
+                                                                    λ ≡   g2πtω .                                                                                           (5)
+
+   Although for simplicity we conﬁne ourselves to the case of spinless fermions this model is still of physical relevance
+in at least two situations.  The ﬁrst situation concerns strongly correlated electron systems.  In the inﬁnite U  limit the
+Hubbard model is known to map onto the case of spinless fermions18.  This may be realized in the 1:2 TCNQ salts19.
+The second situation concerns the spin-Peierls transition20.  Using a Jordan-Wigner transformation21 this model can
+be mapped onto a XX  spin chain in zero ﬁeld with the Hamiltonian:
+                                                (Sxi Sxi+1 + Sy         ) − g∑          (          )
+                               H = −2t∑                         i Syi+1             Szi  ai + a†i    + ω∑      a†i ai.                                          (6)
+                                             i                                   i                          i
+It should be pointed out that this is not the standard Hamiltonian used to study the spin-Peierls transition.  However,
+it does  have the  same qualitative features:  i.e.,  a dimerization of the  phonons results in a  spin singlet ground state
+with an energy gap.
+   It was recently shown22  rigorously that for the  one-dimensional Holstein model of spinless fermions  at half-ﬁlling
+there  is  no  long  range  order  for  suﬃciently  small  coupling  g.   Hirsch  and  Fradkin9  studied  the  Holstein  model  at
+half-ﬁlling using a world-line Monte Carlo technique and a strong coupling expansion.  The expansion suggested that
+for  spinless  fermions  quantum  lattice  ﬂuctuations  destroy  the  dimerized  state  if  the  fermion-phonon  coupling  was
+suﬃciently weak and the phonon frequency suﬃciently high.  The quantum Monte Carlo simulations were performed
+for 0.5ω < t < 3ω and gave a phase diagram qualitatively consistent with the strong coupling expansion.  In contrast,
+for  fermions  with  spin  their  results  were  consistent  with  dimerization  for  ﬁnite  phonon  frequency  and  all  non-zero
+couplings.
+   Zheng, Feinberg, and Avignon11 used a variational polaron wave function to study the Holstein model at half-ﬁlling.
+For spinless  fermions the  ground state is  a charge-density wave for  all  parameter values.  Most of their  results were
+consistent  with  Hirsch  and  Fradkin.   However,  they  found  that  for  large  phonon  frequencies  (t  >  0.3ω)  there  was
+a  ﬁrst-order  phase  transition,  with  a  very  large  jump  in  the  CDW  order  parameter,  between  CDW  phases  when
+g2  ∼  10ω.   They  point  out  that  this  transition  may  be  an  artefact  of  the  variational  treatment  since  it  is  known
+that in small-polaron theory of a single electron a similar two-minimum structure, leading to non-analytic behaviour
+sometimes referred to as “self-trapping,” occurs and is known to be an artefact of the variational teatment23,24.
+   This  paper  presents  a  study  of  the  Holstein  model  using  a  Green’s  Function  Monte  Carlo  technique.   Section  II
+reviews  how  the  metallic  phase  should  be  a  Luttinger  liquid  and  how  ﬁnite-size  scaling  can  be  used  to  extract  the
+Luttinger liquid parameters.  Section III brieﬂy summarizes known analytic results of the Holstein model that can be
+used to check and help understand our Monte Carlo results.  Section IV contains a detailed description of the Green’s
+Function Monte Carlo technique that we use.  Our results are presented and interpreted in Section V.  The physical
+picture that emerges from our results is discussed in the ﬁnal section.
+
+
+                                   II.  LUTTINGER  LIQUIDS  AND  FINITE-SIZE  SCALING
+
+
+
+
+                                                                           2
+                                                      A.  The  Luttinger  liquid conjecture
+
+   For  weak  coupling  and  high  frequency  the  system  is  in  a  metallic,  i.e.,  gapless  phase.   According  to  Haldane’s
+“Luttinger  liquid”  conjecture18,25  this  phase  should  be  in  the  same  universality  class  as  the  Tomonaga-Luttinger
+model  of  interacting  spinless  fermions.   This  means  the  low-energy  properties  of  the  metallic  phase  are  completely
+described by an eﬀective Luttinger model with two parameters uρ, the velocity of charge excitations or renormalized
+Fermi velocity, and Kρ, the renormalized eﬀective coupling (stiﬀness) constant.  Important properties of the Luttinger
+model, quite distinct from those of a conventional Fermi liquid, are (i) there are no quasi-particle excitations at the
+Fermi surface and (ii) all correlation functions have non-universal exponents that can be written in terms of the single
+parameter Kρ.  For example, Kρ determines the singularity of the momentum distribution function close to the Fermi
+surface26:
+
+                                                       n(k) ≃  12 − sign(k − kF )|k − kF |α                                                                      (7)
+
+and of the single-particle density of states
+
+                                                                     ρ(E) ∼ |E|α                                                                                         (8)
+
+where
+
+                                                               α ≡  12 (Kρ +   1Kρ  − 2).                                                                                (9)
+
+For free fermions Kρ = 1 and α = 0.  For attractive (repulsive) interactions Kρ > 1 (Kρ < 1).  It is remarkable that,
+as  explained  below,  the  parameters  uρ  and  Kρ  can  be  determined  from  numerical  calculations  on  systems  of  ﬁnite
+size.
+
+
+                                                                 B.  Finite  size  scaling
+
+   The ground state energy E0(N) of a conformally invariant system of N  sites is, to leading order in 1/N 27,
+
+                                                              E0(N)
+                                                                 N      = ǫ∞ − πuρC6N 2                                                                                 (10)
+where  ǫ∞  is  the  ground state  energy  per  site  of  the  inﬁnite  system,  uρ  is  the  velocity  of  charge excitations,  and  C
+is  the  conformal charge.  Care  must  be  taken  with  boundary  conditions.  We  use  anti-periodic  (periodic)  boundary
+conditions for the fermions when there is an even (odd) number of fermions.  This corresponds to periodic boundary
+conditions  for  the  associated  spin  or  bosonic  models21.   If  the  system  is  a  Luttinger  liquid  it  belongs  to  the  same
+universality class as the Gaussian model and C = 118.  The slope of a plot of E0(N)/N  versus 1/N 2 (compare Figure
+1) can then be used to determine uρ.
+   The energy of the ﬁrst excited state is, to leading order in 1/N,
+
+                                                           E1(N) − E0(N) =  2πuρxN                                                                                (11)
+
+where  x  is  the  scaling  dimension28.   A  Luttinger  liquid  has  the  unusual  property  that  x  depends  on  the  coupling
+constants.
+   In  the  presence of particle-hole  symmetry  x  can be  related to  the  correlation exponent  Kρ  which determines  the
+asymptotic decay of all correlation functions.  Let E±1(N) denote the ground state energy of N/2 ± 1 fermions on N
+sites.  By particle-hole symmetry E+1(N) = E−1(N). In a general Luttinger liquid of spinless fermions18 with charge
+density n the compressibility κ is given by
+
+                                                               1
+                                                             n2κ  ≡  ∂2ǫ∞(n)∂n2      =  πuρKρ                                                                               (12)
+
+Since particle-hole symmetry implies   ∂ǫ∞(n)∂n     = 0 it follows that
+                                                                                ( 1   )2
+                                                 E±1(N) = E0(N) + 12               N      N ∂2ǫ∞(n)∂n2                                                                   (13)
+
+
+                                                                               3
+which with (12) implies that to leading order in 1/N
+
+                                                          E±1(N) − E0(N) =    πuρ2KρN                                                                            (14)
+
+This is identical to (11) with Kρ = 1/4x.  Hence, if uρ is known a plot of the energy gap versus 1/N  (compare Figure
+2) can be used to determine Kρ.
+
+
+                                                           III.  ANALYTIC  RESULTS
+
+   Certain  limits  of  the  Holstein  model  for  which  analytic  results  can  be  obtained  are  now  brieﬂy  reviewed.   These
+results will be compared to the appropriate numerical results.
+
+
+                                                          A.  Localized  fermions  (t = 0)
+
+   The  fermions  cannot  move  between  sites  and  the  Hamiltonian  reduces  to  N  independent  Hamiltonians.    The
+Hamiltonian for the ith site is
+
+                                        Hi =    12M p2i  + 12Mω2q2i  − (ni − 12 )g(2Mω)1/2qi − 12ω                                                    (15)
+
+where  ni  ≡  c†i ci  is  the  fermion  occupation  at  site  i.   The  presence  or  absence  of  a  fermion  shifts  the  equilibrium
+position of the oscillator to +qe  or −qe, respectively, where
+                                                               ( M   ) 12  =< qi(2ni − 1) >                                                                       (16)
+                                                      qe = g     2ω
+
+
+This Hamiltonian can be diagonalized by the Lang-Firsov transformation29:  ci → ci exp(qe(a†i − ai)), ai → ai − (2ni −
+1)qe.  The mean square lattice displacement is
+
+                                                               < q2i  >= q2e +     12Mω .                                                                                (17)
+
+The ground state energy per site is
+
+                                                                    ǫ∞ = − g24ω .                                                                                        (18)
+
+
+
+
+                                                           B.  Small  Polarons  (g2 ≫ tω)
+
+   This corresponds to the case of a narrow band of small polarons3.  The intersite hopping represents a small pertur-
+bation  on the  situation  considered in  the  previous  section.  Hirsch and  Fradkin9  derived an eﬀective  Hamiltonian30
+involving the new fermion operator C†i  that creates a fermion at site i and changes the oscillator ground state from
+one centered at −qe  to one centered at +qe.
+                                                   (                         )             (              )(                      )
+                   Heff  = −N g24ω  − J∑             C†i Ci+1 + C†i+1Ci        + V∑          C†i Ci − 12       C†i+1Ci+1 − 12                            (19)
+                                                i                                      i
+
+The ﬁrst term is the polaron binding energy (compare equation (18)) and dominates the ground state energy (Figure
+3).  The second term describes hopping between neighbouring sites with the bandwidth reduced by the overlap of the
+oscillator ground state centered at −qe  and +qe:
+                                                                          (     ( g )2)
+                                                             J = t exp       −    ω       .                                                                               (20)
+
+
+
+                                                                              4
+The  third term describes the  second order process (of order t2/ω) where a fermion hops to a neighbouring site and
+back again.  This term is repulsive because this process is not possible if the neighbouring site is occupied.
+                                                                       ∫   (g/ω)2
+                                                          V  =  2J 2ω                      x                                                                                (21)
+                                                                         0           dxe2x − 1
+There is an additional term, of second order in t2/ω, involving next nearest neighbour inteactions but it is smaller by
+a factor of order 1/λ and so the eﬀective Hamiltonian should accurately describe the physics in the strong coupling
+limit,  λ  ≫  1  or  g2  ≫  tω.   Note  that  the  limit  ω  →  ∞  corresponds  to  free  fermions,  as  pointed  out  by  Hirsch  and
+Fradkin9.
+   The  eﬀective Hamiltonian (19) is, after a  Jordan Wigner transformation, of the  same form as that of the  exactly
+soluble antiferromagnetic XXZ quantum spin chain21.  For convenience we now brieﬂy summarize some of the known
+results for this model.  It can be exactly solved by Bethe ansatz31,32.  The system is metallic for V  < 2J, i.e., there is
+no energy gap or long range order and so it is a Luttinger liquid.  It is in an insulating charge-density-wave state for
+V  > 2J.  The metal-insulator transition is an inﬁnite order, i.e.  Kosterlitz-Thouless, transition and has been discussed
+in detail by Shankar33.
+   Deﬁne a new variable µ by
+
+                                                                      cos µ =  V2J                                                                                         (22)
+
+where 0 < µ < π/2.  As V  increases from 0 to the transition at V  = 2J, µ decreases from π/2 to zero.  The velocity
+of charge excitations is given by25
+
+                                                                    uρ = πJ sin µµ   .                                                                                      (23)
+
+As V  increases from 0 to the transition at V  = 2J, the velocity increases from 2J  to πJ.  However, as the coupling g
+increases J  rapidly decreases and so uρ  rapidly decreases (compare Figure 4 (a)).  The Luttinger liquid exponent Kρ
+is
+                                                                   Kρ =        12(1 −  µ
+                                                                                    π ) .                                                                                     (24)
+As  V  increases from 0 to  the  transition at V  = 2J, Kρ  decreases from 1 to  1/2 (compare Figure 4 (b)).  The value
+Kρ = 1/2 is a universal feature of a Kosterlitz-Thouless transition for one-dimensional fermions33,34.
+   For V  larger than 2J  deﬁne a new variable γ  by
+
+                                                                     cosh γ =  V2J .                                                                                       (25)
+
+The charge-density-wave order parameter (2) is35
+
+                                                            me =  12Π∞m=1 tanh2(mγ).                                                                            (26)
+
+The coupling dependence is shown in Figure 5 (a) for t = 0.1ω.  The metal-insulator transition is Kosterlitz-Thouless
+although it does not appear so on the scale shown.  The energy gap in the insulating phase is
+                                                                             m=∞∑       (−1)m
+                                                        ∆ = 2J sinh γ                cosh(mγ)                                                                        (27)
+                                                                            m=−∞
+and turns out to be very small (compare Figure 5 (b)).
+
+
+                                                               C.  Free  fermions  (g = 0)
+
+   The fermion states are plane waves with energy dispersion
+                                                                 E(k) = −2t cos(k).                                                                                  (28)
+These states are occupied for |k| < kF  ≡ π/2.  Near the Fermi surface at k = ±kF  we have E(k) = ±2t(k ∓ kF ) and
+so the Fermi velocity is vF  = 2t.  The ground state energy per site is
+                                                                    ∫  π/2   dk
+                                                      ǫ∞ = −2t               2π cos(k) = − 2tπ .                                                                     (29)
+                                                                      −π/2
+
+
+                                                                                5
+                                              D.  Adiabatic  or  mean-ﬁeld  limit (ω ≪ te−1/λ)
+
+   It  is  assumed  that  the  ﬂuctuations  of  the  lattice  about  its  dimerized  value  can  be  neglected  and  the  quantum
+operator qi  in the Hamiltonian (1) is replaced by its mean value:  qi →< qi >= (−1)imp.  The fermionic Hamiltonian
+can then be diagonalized by a Bogoliubov transformation and the fermionic energies are
+
+                                                       E(k) = ±((2t cos(k))2 + ∆2) 12                                                                         (30)
+
+where  ∆  ≡  g(2Mω)1/2mp  is  the  energy  gap  at  the  Fermi  surface  due  to  the  dimerization.   ∆  is  then  treated  as  a
+variational parameter and the total energy of the system is minimized to give the self consistent equation
+                                                            ∫   π/2
+                                                   1 = λt                                         1
+                                                              −π/2 dk                 1((2t cos(k))2 + ∆2)2 .                                                                  (31)
+
+The system is dimerized for all coupling strengths and for weak coupling (λ < 1) the energy gap is
+                                                                              (−1)
+                                                               ∆ = 8t exp         λ     .                                                                                  (32)
+
+The charge-density-wave order parameter is
+                                                                                      (−1)
+                                                        me =    ∆2πλt  =   4πλ exp       λ     .                                                                         (33)
+
+The corrections to the mean-ﬁeld equation (31), to next order in ωλ/∆, were recently calculated12.
+
+
+                                 IV.   THE  GREEN’S  FUNCTION  MONTE  CARLO  METHOD
+
+   At ﬁrst we tried simulating the model using a discrete basis of free phonon eigenstates on each site and employing
+a “stochastic truncation”36 technique appropriate to this basis.  This method gave accurate results for small coupling
+g, but not at or beyond the metal-insulator transition.  In this region the staggered displacement mp  becomes large,
+corresponding to  the  presence  of  highly  excited  states  in  the  free  phonon  eigenstate  basis.  It  was  thus  found  more
+appropriate to use a continuous “position space” basis with variables {qi}, and use a diﬀerent Monte Carlo technique
+as described below.
+
+
+                                                             A.  Ground  state  energy
+
+   To  simulate  the  model,  we  use  a  Green’s  Function  Monte  Carlo  (GFMC)  method,  as  developed  by  Kalos  and
+collaborators37,38, and applied to lattice gauge theory by Chin, Negele and Koonin39  and others40–42.  Let us review
+the method brieﬂy.
+   The Hamiltonian for the Holstein model (1) can be rescaled to the dimensionless form
+                                                     (                     )
+                                     H = −˜t∑          c†i ci+1 + c†i+1ci     +∑      p2i  + q2i  − ˜gqi(ni − 12 )                                                 (34)
+                                                  i                               i
+
+where ˜t ≡ 2t/ω, ˜g ≡ 2√2g/ω.  The imaginary-time Schrodinger equation for the system reads
+
+                                                     −  ∂∂τ |Φ(τ) >= (H − ET )|Φ(τ) >                                                                      (35)
+
+where  ET  is  a  trial  energy,  representing  a  constant  shift  in  the  zero  of  energy.  Evolving this  equation  for  time  ∆τ
+yields
+
+                                              |Φ(τ + ∆τ) >= exp (∆τ(ET  − H)) |Φ(τ) > .                                                            (36)
+
+At large times τ  the ground state will dominate:
+
+                                                                              6
+                                         |Φ(τ) >∼ c0 exp (−(E0 − ET )τ) |Φ0 >      as     τ  → ∞                                                    (37)
+
+where |Φ0 > is the (time-independent) ground state of H  with energy E0.
+   We shall work in a position-space representation, where the wave function
+
+                                                         Φ({q, n}, τ) =< {q, n}|Φ(τ) >                                                                         (38)
+
+and |{q, n} > represents an eigenstate of the positions {qi} and fermion occupation numbers {ni} at each site.  In this
+representation,
+
+                                                                     H = H0 + H1                                                                                       (39)
+
+where
+                                                                           (                      )
+                                                         H1 = −˜t∑           c†i ci+1 + c†i+1ci                                                               (40)
+                                                                        i
+is the fermion hopping term, and
+                                                           H0 = −∑           ∂2
+
+                                                                        i   ∂q2i  + V ({q, n})                                                                          (41)
+
+with
+
+                                                     V ({q, n}) =∑          q2i  − ˜g∑    qi(ni − 12)                                                                   (42)
+                                                                         i             i
+as the “potential” term.
+   The evolution equation (35) now has the form of a diﬀusion equation in conﬁguration space.  It is assumed that the
+ground-state wave function can be chosen positive everywhere, and it is simulated by the density distribution of an
+ensemble of random walkers in conﬁguration space, whose time evolution mimics that of equation (36).
+   To  obtain  good  accuracy,  one  needs  to  introduce  some  variational  guidance,  which  can  be  done  as  follows.   Let
+|ΨT  > be a trial vector, e.g., some variational approximation to the true ground-state eigenvector with wave function:
+
+                                                          ΨT ({q, n}) =< {q, n}|ΨT  > .                                                                         (43)
+
+Then carry out a similarity transformation
+
+                                                        |Φ(τ) >→ |Φ′(τ) >= ΨT |Φ(τ) >                                                                       (44)
+
+                                                                H → H′ = ΨT HΨ−1T                                                                                   (45)
+
+where  the  transformation  matrix  ΨT  is  diagonal  in  {q, n}  space,  with  diagonal  entries  ΨT ({q, n}).   The  modiﬁed
+evolution equation will be
+
+                                               |Φ′(τ + ∆τ) >= exp (∆τ(ET  − H′)) |Φ′(τ) >                                                            (46)
+
+Let us now separate the fermion hopping term from the rest of the Hamiltonian, and write for small ∆τ
+
+                                  exp (∆τ(ET  − H′)) ≃ exp (∆τ(ET  − H′0)) [1 − ∆τH′1] + O(∆τ 2)                                          (47)
+
+(All our calculations from here on will only be accurate to O(∆τ)).
+   Now H0  transforms to
+
+                                   H′0 = ΨT [−∑           ∂2
+                                                         ∂q2i  + V ({q, n})]Ψ−1T
+                                                     i
+                                                                    (∂Ψ−1      )   ∂            (∂2Ψ−1       )
+                                        = −∑[ ∂2                           T                             T     ] + V ({q, n})
+                                                i   ∂q2i  + 2ΨT         ∂qi       ∂qi  + ΨT          ∂q2i
+                                                                                (               )
+                                        = Ψ−1T  H0ΨT  +∑[p2i  + 2ipi               Ψ−1T   ∂ΨT∂qi  ]                                                                          (48)
+                                                               i
+
+                                                                                 7
+as  shown  by  Chin,  Negele,  and  Koonin39  where  the  operator  pi  =  −i   ∂∂qi  acts  on  everything  to  the  right  of  it  as
+usual.  Then the matrix element between position eigenstates corresponding to the  time-step ∆τ  at iteration m can
+be written39
+
+                  < {q, n}(m+1)| exp (∆τ(ET  − H′0)) |{q, n}(m) >(                                                                     )
+                  ≃          1              −   1     ∑[q(m+1)
+                     (4π∆τ)N/2 exp             4∆τ          i         − q(m)i     − 2∆τΨ−1T   ∂ΨT∂qi  ]2 − ∆τ[Ψ−1T  (H0ΨT ) − ET ]
+                                                       i
+                  + O(∆τ 2)                                                                                                                                                           (49)
+
+   Representing the wave function Φ′ by a distribution of random walkers in position space, the Monte Carlo simulation
+proceeds as  follows.  Each iteration corresponds to  a time  step ∆τ,  and involves a  sweep through each site  in turn.
+The ﬁrst term in the exponential (49) is simulated by a displacement of each position variable
+
+                                                          ∆qi = 2∆τΨ−1T   ∂ΨT∂qi   + χ                                                                             (50)
+
+where χ is  randomly chosen from a Gaussian distribution with  standard deviation √2∆τ.  The  ﬁrst term in  (50) is
+the  “drift”  term,  and  the  second  is  the  “diﬀusion”  term.   The  second  term  in  the  exponential  (49)  is  simulated  by
+multiplying the ”weight” of each walker by an equivalent amount.
+   We also need to simulate the fermion hopping term:
+
+                       < {q, n}(m+1)|[1 − ∆τH′1]|{q, n}(m) >
+                                                                                     (                    )
+                       =  ΨT ({q, n}(m+1))ΨT ({q, n}(m))    < {q, n}(m+1)|[1 + ˜t∆τ∑   c†i ci+1 + c†i+1ci   ]|{q, n}(m) >                                 (51)
+                                                                                  i
+The factor in front produces a “reweighting” of the walkers in the ensemble; while the hopping term itself produces
+new conﬁgurations on walkers with diﬀerent fermion occupation numbers.
+   At  the  end  of  each  iteration,  the  trial  energy  ET  is  adjusted  to  compensate  for  any  change  in  the  total  weight
+of  all  walkers  in  the  ensemble;  and  a  “branching”  process  is  carried  out,  so  that  walkers  with  weight  greater  than
+(say) 2 are split into two new walkers, while any two walkers with weight less than (say) 0.5 are combined into one;
+chosen randomly according to weight from the originals.  This procedure of “Runge smoothing”43 maximises statistical
+accuracy  by  keeping  the  weights  of  all  walkers  within  ﬁxed  bounds,  while  minimizing  any  ﬂuctuations  in  the  total
+weight due to the branching process.  When equilibrium is reached after many sweeps through the lattice, the average
+value of the trial energy ET  will give an estimate of the ground-state energy E0, from equation (37); and the density of
+the ensemble in conﬁguration space will be proportional to Φ0ΨT .  Various corrections due to the ﬁnite time interval
+∆τ  have  been  ignored  in  this  discussion,  and  the  limit  ∆τ  →  0  must  be  taken  in  some  fashion  to  eliminate  such
+corrections.
+   As a trial wave function, we choose a Gaussian, displaced by an amount q0 at each site depending whether the site
+is occupied or unoccupied:
+                                                                    [                                  ]
+                                            ΨT ({q, n}) = exp        −c∑(qi − 2q0(ni − 12))2                                                          (52)
+                                                                           i
+where c and q0  are variational parameters.  Then the local “trial energy”
+
+                   EL({q, n}) ≡ Ψ−1T  H0ΨT  =∑[q2i  − ˜gqi(ni − 12)] −∑[4c2(qi − 2q0(ni − 12 ))2 − 2c]                            (53)
+                                                         i                              i
+and the “drift” term is
+
+                                                   2Ψ−1T   ∂ΨT∂qi   = −4c(qi − 2q0(ni − 12))                                                                    (54)
+
+while the “reweighting factor” in equation (51) is
+                                                                       [       ∑                            ]
+                                        ΨT ({q, n}(m+1))                 4cq0       qi(n(m+1)                                                         (55)
+                                         ΨT ({q, n}(m))    = exp                         i         − n(m)i    )
+                                                                                 i
+
+                                                                             8
+   If the choice of trial function is a good one, and ET  is adjusted to approximately equal E0  , then we will have
+
+                                                                    EL ≃ ET  ≃ E0                                                                                      (56)
+
+so  that  the  weight  of  each  walker  changes  very  little  at  each  time  step,  according  to  equation  (51),  so  that  the
+ﬂuctuations in the weights are small, and consequently the accuracy of the calculation is maximised.
+
+
+                                                                B.  Expectation  Values
+
+   Ground-state  expectation  values  can  also  be  measured,  using  a  “secondary  amplitude”  technique  discussed  by
+Hamer  et  al.36,41,42.   Let  <  Q  >0  be  the  expectation  value  to  be  measured,  where  we  assume  the  operator  Q  is
+diagonal in the {q, n} representation.  Use Q as a perturbation to the Hamiltonian:
+
+                                                                    H′ = H + xQ.                                                                                      (57)
+
+Let E′0(x)  denote  the  ground state expectation value  of this  Hamiltonian.  By  the  Hellmann-Feynman theorem, the
+required expectation value is given by
+                                                                                     ⏐⏐⏐⏐x=0.                                                                                 (58)
+                                                                 < Q >0=  dE′0dx
+
+Taylor expand the eigenvector and eigenvalue
+
+                                                 |Φ(τ, x) >= |Φ0(τ) > +x|Φ1(τ) > +O(x2)                                                              (59)
+
+
+                                                           E′0(x) = E0 + xE1 + O(x2)                                                                           (60)
+
+substitute  in the  evolution equation (36) (ignoring any variational guidance for the  time being),  and equate  powers
+of x to obtain:
+
+                                              |Φ0(τ + ∆τ) >= exp (∆τ(ET  − H)) |Φ0(τ) >                                                            (61)
+
+and
+
+                             |Φ1(τ + ∆τ) >= exp (∆τ(ET  − H)) |Φ1(τ) > +∆τ(E1 − Q)|Φ0(τ) > .                                     (62)
+
+Equation (61) is just the original evolution equation (36) for the unperturbed system.  Equation (62) is an evolution
+equation of similar structure for the ﬁrst-order wave function |Φ1 >.  It is simulated by giving a “secondary” weight to
+each walker in the ensemble, and evolving it according to (62); while a secondary trial energy E′T  is used to estimate
+E1  ,  and  is  adjusted  after  each  iteration  to  compensate  for  any  change  in  the  total  of  all  secondary  weights.   At
+equilibrium, the average value of E′T  gives an estimate of E1, which is equivalent to < Q >0 by equation (58).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                9
+            V.  RESULTS  AND  DISCUSSION                                      E0(N) versus 1/N  (compare Figure 2).  To allow for the
+                                                                              corrections to scaling this was ﬁtted to
+  GFMC  runs  were  performed  for  a  range  of  diﬀer-                                                                      1
+ent  couplings  g/ω  at  hopping  parameter  values  t   =                            E−1(N) − E0(N) = ∆ +  πuρ2Kρ           N  +   bN 3 .           (64)
+0.1ω, ω  and  10ω,  for  lattice  sizes  of  2,  4,  6,  8,  and  16
+sites.  In  each  case,  the  variational parameters c  and  q0               Again,the  higher  order  term  O(N −3)  was  chosen  to  be
+(compare equation (52)) were adjusted to their optimum                        consistent  with  known  results  for  free  fermions  and  the
+values  by  a  series  of  trial  runs.   Production  runs  typi-             XXZ  model  with  weak  interactions.   To  extract  Kρ  we
+cally  employed  an  ensemble  of  2000  walkers  for  20,000                 need  to  use  the  value  of  uρ  extracted  earlier.   (Strictly
+iterations.   The  ﬁrst  2000  iterations  were  discarded  to                speaking equation (64) is only valid when ∆ = 0 but we
+allow for  equilibrium,  and  the  remainder  were  averaged                  use ∆ as a parameter in our ﬁts to check that we are in
+over blocks of 1024 iterations before estimating the error                    the critical regime.  Also, the derivation of equation (64)
+to  minimize  correlation  eﬀects.   Calculations  were  per-                 requires particle-hole symmetry, i.e., E−1(N) = E+1(N).
+formed on a cluster of six HP735 workstations.  A typical                     We checked for several parameter values that the Monte
+run for 16 sites took 1-2 hours of CPU time.  Two diﬀer-                      Carlo results were consistent with this.)
+ent time steps were used in each case, namely ∆τ  = 0.005                        Figure  4  (a)  shows  the  dependence  of  the  charge  ve-
+and 0.01 at  t = 0.1ω, ∆τ  = 0.0005 and 0.001 at t = ω,                       locity uρ on the fermion-phonon coupling g for t = 0.1ω.
+and ∆τ  = 0.001 and 0.002 at t = 10ω.  The results were                       The  results  are  in  good  agreement  with  equations  (20)
+then linearly extrapolated to ∆τ  = 0.                                        and  (23)  (solid  line  in  Figure  4(a)).   The  charge  veloc-
+  The  quantities  measured  were  the  ground-state  en-                     ity is signiﬁcantly reduced by polaronic band narrowing.
+ergy  (in  the  half-ﬁlled  sector),  E0(N),  the  energy  gap                The  correlation  exponent  Kρ  is  shown  in  Figure  4  (b)
+(to   the   “one  hole”  sector  with   one  fewer   fermions),               as  a  function  of  the  fermion  phonon  coupling.   The  de-
+E−1(N) − E0(N),  and  ground-state  expectation  values                       pendence  of  Kρ  on  the  coupling  is  consistent  with  the
+for  the  mean  displacement  <  qi(2ni − 1)  >,  the  mean                   metallic phase being a Luttinger liquid.  The fact Kρ < 1
+square displacement < q2i  >, and two correlated fermion                      indicates  repulsive  interactions  in  the  Luttinger  liquid.
+expectation values, < nini+N/2 > and < nini−1+N/2 >,                          Kρ is not plotted for g > 1.5ω because the relative error
+where N  is the lattice size.  The diﬀerence between these                    is very large.  This is because its determination depends
+last  two  values  provides  an  estimate  of  the  amount  of                on the value of uρ which has a very large relative error for
+“staggering,” or dimerization, in the fermion occupation                      g > 1.5ω (see Figure 4 (a)).  For t = 0.1ω, equations (20)
+numbers.  (Compare equation (65) below).  A  sample of                        and (21), for the small polaronic model together with the
+results is shown in Table I.                                                  criterion V  = 2J can be used to determine that the tran-
+  The charge velocity uρ was extracted from a ﬁnite size                      sition  from  the  Luttinger  liquid  to  the  insulating  phase
+scaling plot of the ground state energy per site E0(N)/N                      occurs when g = 2.075ω.
+versus 1/N 2 (compare Figure 1).  According to equation                          The charge-density-wave order parameter me, deﬁned
+(10) this should be a straight line for large N.  To allow                    by (2), must be zero for any ﬁnite size system.  However,
+for  the  small  curvature  of  our  plots,  because  we  used                in the dimerized phase we also have for j  large
+only moderately large system sizes (N  = 2, 4, 6, 8, and
+16 sites), the data was ﬁtted to                                                               < nini+j >=  1
+                E0(N)                                                                                            4 + (−1)jm2e                      (65)
+                   N      = ǫ∞ −  πuρ6N 2  +   aN 4 .                     (63)and so
+
+The  correction-to-scaling  term  O(N −4)  matches  that                           m2e =  12| < nini+N/2 > − < nini−1+N/2 > |.       (66)
+predicted  to  hold  for  the  XXZ  model31,32,  at  least  for
+weak  interactions  (i.e.,  small  µ).    For  stronger  inter-               This equation was used to determine m2e from the results
+actions  the  exponent  is  interaction  dependent.   At  the                 for N  = 16 sites.
+metal-insulator transition the  correction-to-scaling term                       Figure  5  (a)  shows  the  coupling  constant dependence
+is O((N ln N)−2).  However, we found that using such a                        of  m2e  for  t  =  0.1ω.   The  quantum  Monte  Carlo  data
+form did not improve the quality of the least square ﬁts                      suggests  there  is  a  transition  near  g  =  1.8ω.    This  is
+near the transition.                                                          consistent  with  the  small  polaron  theory  prediction  of
+  For  free  fermions  (g  =  0)  the  values  of  ǫ∞  and  uρ                g = 2.075ω  since the latter theory is only valid to order
+extracted from the ﬁts were found to agree well with the                      1/λ ∼ πtω/g2  , i.e., about 10%.  Figure 5 (b) shows the
+known analytic results ǫ∞  = −2t/π  and uρ  = 2t (Table                       energy gap as a function of coupling.  It is not possible to
+II).   For  t  =  0.1ω  the  dependence  of  the  ground  state               detect the  transition in the  energy gap data.  Small  po-
+energy on the  coupling is in good agreement with small                       laron theory predicts an energy gap smaller than typical
+polaron theory (Figure 3).                                                    uncertainties in the Monte Carlo data.
+  The energy gap ∆ of the inﬁnite system was extracted                           Figure 6 shows the coupling strength dependence of the
+from ﬁnite size scaling plots of the hole energy E−1(N)−                      mean lattice displacement < qi(2ni − 1) > and the mean
+
+
+                                                                          10
+square  lattice  displacement  <  q2i  >  for  t  =  0.1ω  and  a              laron  theory  and  the  XXZ  model  predict  a  Kosterlitz-
+system of 16 sites.  The results are very close to those an-                   Thouless  transition  at  g  =  2.075ω  and  the  solid  curve
+ticipated for localized fermions (compare equations (16)                       in  Figure  5  (a)  shows  there  is  very  little  ambiguity  as-
+and (17)).  For  t = ω  and t = 10ω  the mean lattice dis-                     sociated with  this  transition point.  For  comparison the
+placement  was  also  non-zero,  i.e.,  the  ground  state  was                boundary  points  found  by  Hirsch  and  Fradkin9  (Figure
+polaronic  for  all  couplings,  although  the  magnitude  of                  11  in  their  paper)  are  also  shown.  For  t = ω  there  is  a
+the  displacement decreased signiﬁcantly with  increasing                      discrepancy between our results and theirs:  they observe
+t.  Similar trends are seen for the Holstein model on two                      the transition at smaller coupling than we do.  We have
+sites44.                                                                       no explanation for this discrepancy.
+   For t = ω  the charge velocity is again reduced by po-
+laronic eﬀects  (Figure  7  (a))  but  not  by  as  much  as  for
+t  =  0.1ω.   The  interactions  in  the  Luttinger  liquid  are                                      VI.  CONCLUSIONS
+now attractive (Kρ > 1).  Both the order parameter and
+the energy gap show a transition to the insulating phase                          We have shown that the Green’s function Monte Carlo
+near g = 1.7ω  (Figure 8).  Clearly our results are incon-                     technique  can  be  successfully  used  to  investigate  a  one
+sistent with the universal value Kρ = 1/2 expected for a                       dimensional  fermion-phonon  model.    As  far  as  we  are
+Kosterlitz-Thouless transition33,34.                                           aware this is the ﬁrst application of this technique to this
+   For t = 10ω the charge velocity decreases by less than                      important class of models.  The results were of suﬃciently
+ten  per  cent  with  increasing  g/ω  (Figure  9).   This  is  in             high  precision  that  a  ﬁnite  size  scaling  analysis  of  the
+contrast  to  the  cases  of  t  =  0.1ω  and  t  =  ω  for  which             results could be performed.  For the case of free fermions
+the charge velocity decreases by about an order of mag-                        (g  =  0)  and  the  strong  coupling  limit  (g2  >>  tω)  our
+nitude.  The  correlation function exponent Kρ  increases                      results agree with known analytic results.
+by  about  ﬁfty  per  cent.  As  for  t = ω,  Kρ  ⁄= 1/2  at the                  Our results  are  consistent with  the  following physical
+transition  and  so  the  transition  cannot  be  a  Kosterlitz-               picture of the Holstein model of spinless fermions at half-
+Thouless transition.  The order parameter me and energy                        ﬁlling.   For  suﬃciently  weak  coupling  the  system  is  in
+gap ∆ become nonzero about g = 3.5ω (Figure 10).  This                         a  metallic,  i.e.,  gapless  phase,  with  the  properties  of  a
+is quite diﬀerent from what is anticipated by Hirsch and                       Luttinger  liquid,  i.e.,  the  exponents associated with  the
+Fradkin9.  They performed simulations from t = 0.5ω up                         decay  of  correlation  functions  depend  on  the  coupling
+to t = 3.1ω.  They found a smooth decrease in the critical                     strength.  The  fermions  are  polaronic,  i.e.,  there  is  a  ﬁ-
+value of λc = g2c/πωt with increasing t/ω, and anticipated                     nite phonon displacement qe associated with the occupa-
+a  smooth  crossover to  λc  = 0  for  ω  = 0.  Extrapolating                  tion of a site by a fermion and the velocity of excitations,
+their  results  to  t  =  10ω  gives  λc  ∼  0.01  and  gc  ∼  0.6ω            uρ,  is  reduced  below  the  free  electron  value  2t.   As  the
+compared to our value of gc ≃ 3.5ω.  Note that the ratio                       coupling  g  increases  and t/ω  decreases qe  increases and
+of the energy gap to its mean ﬁeld value (Figure 10 (b))                       uρ (which is a measure of the polaronic band width) de-
+is much smaller than the ratio of the charge-density-wave                      creases.   Qualitatively  similar  behaviour  is  seen  for  the
+order  parameter to  its  mean  ﬁeld  value.  This  is  consis-                two-site  Holstein  model44.    In  the  anti-adiabatic  limit
+tent with work showing that the zero point motion of the                       (t ≪ ω) the eﬀective interaction between polarons is re-
+lattice can reduce the magnitude of the order parameter                        pulsive  and  for  strong  coupling  the  Holstein  model  can
+by a small amount but produce a substantial subgap tail                        be  mapped  onto  the  XXZ  antiferromagnetic  spin  chain
+in the fermionic density of states5.  (For example, results                    (Section  III B).   However,  as  t/ω  increases  the  eﬀective
+on  the  continuum  version  of  the  SSH  model  shown  in                    interaction  becomes  attractive.   This  is  indicated  by  a
+Figures  1  and  3  of  Reference5  show  that  for  one  set  of              change in the value of the stiﬀness constant Kρ from val-
+parameter  values  the  energy  gap  can  be  about  60  %  of                 ues  less  than  one  to  values  larger  than  one.   When  the
+the  mean-ﬁeld  value  while  the  order  parameter  is  only                  fermion-phonon coupling is  suﬃciently  large the  system
+reduced by about 5 %).                                                         undergoes  a  transition  to  an  insulating  phase,  i.e.,  an
+   The phase boundary as a function of t/ω and g/ω be-                         energy  gap  opens  at  the  Fermi  surface.   There  is  long-
+tween the metallic and insulating phases is shown in Fig-                      range  charge-density-wave  order  and  a  dimerization  of
+ure  11.   The  solid  curve  is  the  boundary  predicted  by                 the  phonons  in  this  phase.   Our  results  for  t  =  ω  and
+small polaron theory and the XXZ model (Section III B).                        t = 10ω are inconsistent with the metal-insulator transi-
+This  curve  is  only  shown  for  t  <  ω  since  this  model  is             tion  being  inﬁnite  order.  On  the  other  hand  we  do  not
+only valid in the strong coupling limit (t ≪ g2/ω).  The                       see  any  evidence  of  the  ﬁrst-order  transition  suggested
+crosses are the boundary points deduced from Figures 5,                        by Zheng, Feinberg, and Avignon11  and by Wu, Huang,
+8, and 10.  It should be stressed that there is some ambi-                     and Sun12  for certain parameter values.
+guity  in determining  the  phase boundary.  According to                         This  work  suggests  several  possible  future  investiga-
+mean-ﬁeld theory the transition occurs at g = 0 but the                        tions  which  we  plan  to  pursue:   (a)  The  adiabatic  re-
+solid curves in Figures 8 and 10 suggest that the transi-                      gion  of  the  phase  diagram  (t  ≫  ω),  in  which  we  found
+tion is actually only detectable at g ∼ 0.6ω  and g ∼ 2ω,                      a larger region of the metallic phase than anticipated by
+respectively.  On the  other hand,  for t = 0.1ω  small po-
+
+                                                                           11
+Hirsch and Fradkin, needs to be investigated further.  (b)                       10 C. Bourbonnais and L. G. Caron, J. Phys. France 50, 2751
+The relative importance of superconducting and charge-                              (1989).
+density-wave  correlations  should  be  investigated  in  the                    11 H. Zheng, D. Feinberg, and M. Avignon, Phys. Rev. B 39,
+region of the metallic phase for which the eﬀective inter-                          9405 (1988).
+actions  are attractive.  (c)  Alternative  variational wave-                    12 C.  Q.  Wu,  Q.  F.  Huang,  and  X.  Sun,  Phys.  Rev.  B  52,
+functions, such as the double Gaussian proposed by Shore                            15683 (1995).
+                                                                                 13 J. Voit and H. J. Schulz, Phys. Rev. 36 968, (1987).
+and Sander23, could be used instead of the single Gaus-                          14 J. R. Freericks, M. Jarrell, and D. J. Scalapino, Phys. Rev.
+sian  (52)  used  for  the  variational guidance.   Finally,  we                    B 48, 6302 (1993), and references therein.
+plan to use this method to investigate the Holstein model                        15 P. Niyaz, J. E. Gubernatis, R. T. Scalettar, and C. Y. Fong,
+with  spin,  and away from half-ﬁlling,  as  well as the Su-                        Phys. Rev. B 48, 16011 (1993), and references therein.
+Schrieﬀer-Heeger model, and the spin-Peierls problem.                            16 F. Marsiglio,  Physica C 244, 21 (1995).
+
+                                                                                 17 A.  S.  Alexandrov,  V.  V.  Kabanov,  and  D.  K.  Ray,  Phys.
+                   ACKNOWLEDGMENTS                                                  Rev. B 49, 9915 (1994), and references therein.
+                                                                                 18 J. Voit, Rep. Prog. Phys. 58, 977 (1995).
+                                                                                 19 M. J. Rice and E. J. Mele, Phys. Rev. B 25, 1339 (1982).
+   Work at UNSW was supported by the Australian Re-                              20 M. Hase, I. Terasaki, and K. Uchinokura, Phys. Rev. Lett.
+search Council.  We thank J. Voit for a critical reading of                         70, 3651 (1993), and references therein.
+the manuscript and many helpful suggestions.  We thank                           21 E.  Fradkin,  Field  Theories  of  Condensed  Matter  Systems
+M. Gulacsi, J. Oitmaa, and R. Singh for helpful  discus-                            (Addison Wesley, Redwood City, 1991).
+sions.   Computer  time  was  provided  by  the  Centre  for                     22 G. Benfatto, G. Gallavotti, and J. L. Lebowitz, Helv. Phys.
+Advanced  Numerical  Computation  in  Engineering  and                              Acta 68, 312 (1995).
+Science (CANCES) at UNSW.                                                        23 H. B. Shore and L. M. Sander, Phys. Rev. B 7, 4537 (1973).
+                                                                                 24 B. Gerlach and H. L¨owen, Rev. Mod. Phys. 63 63 (1991).
+                                                                                 25 F. D. M. Haldane, Phys. Rev. Lett. 45, 1358 (1980).
+                                                                                 26 J. Voit, J. Phys. Cond. Matter 5, 8305 (1993).
+                                                                                 27 I. Aﬄeck, Phys. Rev. Lett. 56, 746 (1986); H. W. J. Bl¨ote,
+                                                                                    J.  L.  Cardy,  and  M.  P.  Nightingale,  Phys.  Rev.  Lett.  56,
+                                                                                    742 (1986).
+∗   electronic address:  ross@newt.phys.unsw.edu.au                              28 J. L. Cardy, J. Phys. A 17, L385 (1984).
+ 1 G.  Gr¨uner,   Density  Waves  in  Solids,   (Addison-Wesley,                 29 G.   D.   Mahan,   Many-Particle   Physics,   Second   edition,
+   Redwood City, 1994).                                                             (Plenum, New York, 1990) p.285ﬀ.
+ 2 R.  Peierls,  Quantum  Theory  of  Solids,  (Oxford,  1955),  p.              30 Similar calculations were made by G. Beni, P. Pincus, and
+   108.                                                                             J. Kanamori [Phys. Rev. B 10, 1896 (1974)] for the case of
+ 3 T. Holstein, Ann. Phys. 8, 325, 343 (1959).                                      electrons with spin.
+ 4 A.  J.  Heeger,  S.  Kivelson,  J.R.  Schrieﬀer,  and  W.P.  Su,              31 C.  N.  Yang  and  C.  P.  Yang,  Phys.  Rev.  150,  321,  327
+   Rev. Mod. Phys. 60, 781 (1988).                                                  (1966).
+ 5 R.  H.  McKenzie  and  J.  W.  Wilkins,  Phys.  Rev.  Lett.  69,              32 C. J. Hamer, J. Phys. A 19, 3335 (1986).
+                                                                                 33 R. Shankar, Int. J. Mod. Phys. B 4, 2371 (1990).
+   1085 (1992), and references therein.                                          34 T. Giamarchi, Phys. Rev. B 44, 2905 (1991).
+ 6 K.  Kim,  R.  H.  McKenzie,  and  J.  W.  Wilkins,  Phys.  Rev.
+                                                                                 35 R. J. Baxter, Exactly Solved Models in Statistical  Mechan-
+   Lett. 71, 4015 (1993).
+ 7 F. H. Long, S. P. Love, B. I. Swanson, and R. H. McKenzie,                       ics (Academic, London, 1982).
+                                                                                 36 P.  F.  Price,  C.  J.  Hamer  and  D.  O’Shaughnessy,  J.  Phys.
+   Phys. Rev. Lett. 71,  762  (1993);  L. Degiorgi,  St. Thieme,                    A 26, 2855 (1993).
+   B. Alavi, G. Gr¨uner, R.H. McKenzie, K. Kim, and F. Levy,                     37 D. M. Ceperley and M. H. Kalos, in “Monte Carlo Methods
+   Phys. Rev. B 52, 6203 (1995), and references therein.
+ 8 W. P. Su, Solid  State Commum.  42, 497  (1982);  E. Frad-                       in  Statistical  Mechanics,”  ed.  K. Binder  (Springer-Verlag,
+   kin  and  J.  E.  Hirsch,  Phys.  Rev.  B  27,  1680  (1983);  D.                New York, 1979), p.145.
+                                                                                 38 M.  H.  Kalos,  D. Levesque and  L.  Verlet,  Phys.  Rev. A  9,
+   Schmeltzer,  R.  Zeyher,  and  W.  Hanke,  Phys.  Rev.  B  33,                   2178 (1974).
+   5141  (1986);  A.  Auerbach  and  S.  Kivelson,  Phys.  Rev.  B               39 S.  A.  Chin,  J.  W.  Negele,  and  S.  E.  Koonin,  Ann.  Phys.
+   33,  8171  (1986);  Z.  B.  Su, Y. X.  Wang,  and  L.  Yu, Com-                  (N.Y.) 157, 140 (1984).
+   mun. Theor. Phys. (Beijing) 6, 313 (1986); J. Yu, H. Mat-                     40 D.  W.  Heys  and  D.  R.  Stump,  Phys.  Rev.  D  28,  2067
+   suoka, and W. P. Su, Phys. Rev. B 37, 10367 (1988); G. C.                        (1983).
+   Psaltakis and N. Papanicolaou, Solid State Commum. 66,                        41 C.  J.  Hamer,  K.  C.  Wang,  and  P.  F.  Price,  Phys.  Rev. D
+   87  (1992);  A.  Takahashi,  Phys.  Rev.  B  46,  11550  (1992);                 50, 4693 (1994).
+   H. Zheng, Phys. Rev. B 50, 6717 (1994); C. Q. Wu, Q. F.                       42 C. J. Hamer,  M. Sheppeard, Z. Weihong, and D. Sch¨utte,
+   Huang, and X. Sun, Phys. Rev. B 52, 7802 (1995).
+ 9 J. E. Hirsch and E. Fradkin, Phys. Rev. B 27, 4302 (1983).                       submitted to Phys. Rev. D .
+                                                                                 43 K. J. Runge, Phys. Rev. B 45, 7229 (1992).
+   To compare our results with theirs set K = Mω2  and λ =                       44 M.  Sonnek,  T.  Frank,  and  M.  Wagner,  Phys.  Rev.  B  49,
+   g(2Mω)1/2.                                                                       15637 (1994).
+
+
+
+                                                                             12
+                                                                                          FIG. 3.     Dependence  of  the  ground  state  energy  per  site
+   FIG.  1.       Finite-size  scaling  of  the  ground  state  energy                 ǫ∞  on the fermion-phonon coupling g for t = 0.1ω.  The solid
+E0(N)  for  diﬀerent  values  of  the  fermion-phonon  coupling                        lines are the predictions of the small  polaron model (Section
+g.    The  data  shown  are  for  N   =  4,  6,  8,  and  16  lattice                  III B).  The  error  bars  are  smaller  than  the  symbol  size.  All
+sites.   All  data  are  for  a  fermion  hopping  parameter  t  equal                 energies  are in  units of ω.  (a)  ǫ∞  is deduced from  the inter-
+to the phonon frequency ω and for a half-ﬁlled band (i.e., one                         cept of the ﬁnite-size scaling  plot of the ground state energy
+fermion  per two  sites).  All energies  are  in  units of  ω.  If  the                (compare  Figure  1).  The  dashed  line  is  the  polaron  binding
+system is critical for a particular g value then the data for N                        energy −g2/4ω and clearly represents almost all of the ground
+large  should  lie  on  a  straight  line  (see  equation  (10)).   The                state  energy.  (b)  The  polaron  binding  energy  has  been  sub-
+lines are least square ﬁts to a parabola (see text).  The errors                       tracted from the ground state energy to make a more accurate
+in the Monte Carlo data are smaller than the symbol sizes.                             comparison with small polaron theory.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                          FIG.  4.      Dependence  of  Luttinger  liquid  parameters  on
+                                                                                       the  fermion-phonon  coupling  g  for  t = 0.1ω.  The  solid  lines
+   FIG. 2.    Finite-size scaling of the hole energy for diﬀerent                      are the predictions of the small polaron model (Section III B).
+values of the fermion-phonon coupling g.  The data shown are                           (a) The velocity of charge excitations uρ  is deduced from the
+for  N  =  4,  6,  8,  and  16  lattice  sites.   E0(N)  is  the  ground               slope of the ﬁnite-size scaling plot of the ground state energy
+state energy of a system of N/2 fermions and E−1(N) is the                             (compare  Figure  1)  and  is  normalized  by  the  free  fermion
+ground state energy of a system of N/2−1 fermions.  All data                           value 2t.  The  decrease  of  uρ  with  increasing  g  is  due to  the
+are  for  a  fermion  hopping  parameter  t  equal  to  the  phonon                    narrowing  of  the  bandwidth  by  polaronic  eﬀects.    (b)  The
+frequency  ω.  All  energies  are  in  units of  ω.  If  the  system  is               correlation function exponent Kρ is deduced from the ratio of
+critical  then  for  that  g  value the  data for  large  N  should  lie               the slopes of the ﬁnite-size scaling plots in Figures 1 and 2 (see
+on a straight line through the origin (see equation (11)).  The                        equation (11)).  The error bars are based on the uncertainties
+lines are least square ﬁts to a cubic (see text).                                      in the least-squares ﬁts to the ﬁnite size scaling data (compare
+                                                                                       ﬁgures 1 and 2).
+
+
+                                                                                  13
+  FIG. 5.    Dependence on the fermion-phonon coupling g of                             FIG.  7.       Same  as  Figure  4  but  with  t  =  ω.    The  fact
+(a) the square of the charge-density-wave order parameter me                         that  Kρ  depends  on  g  and  is  larger  than  one  is  consistent
+and (b) the energy gap ∆.  The solid lines are the predictions                       with the metallic phase being a Luttinger liquid with attrac-
+of the small polaron model (Section III B).  It predicts an in-                      tive interactions.  If the metal-insulator transition was Koster-
+ﬁnite  order  transition  at  g  = 2.075ω.  m2e  was  deduced  from                  litz-Thouless Kρ  would equal 0.5 at the transition.
+equation (66) for a system of 16 sites.  The energy gap was de-
+duced from the N  = ∞ extrapolation of the ﬁnite size scaling
+plot  of  the  hole  energy  (compare  Figure  2).   Both  the  order
+parameter  and  the  energy  gap  become  non-zero  for  g  >  1.8
+marking the transition into the insulating phase.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                        FIG. 8.    Same as Figure 5 but with t = ω.  The solid curves
+                                                                                     are the predictions of mean ﬁeld theory (Section III D).
+
+
+
+  FIG. 6.    Dependence on the fermion-phonon coupling g of
+the mean lattice displacement < qi(2ni − 1) > and the mean
+square lattice displacement < q2i  > for t = 0.1ω and a system
+of 16 sites.  The displacements are in units of (Mω)−1/2.  The
+solid  lines  are  the predictions  for  localized  fermions  (Section
+III A).
+
+
+
+
+
+
+
+                                                                                14
+  FIG. 9.    Same as Figure 4 but with t = 10ω.  Note that the                         FIG. 11.     Phase  diagram  showing  the  boundary  between
+vertical scale is expanded compared to Figures 4 and 7.  Since                      the metallic and insulating phase.  The solid curve is the pre-
+Kρ  ⁄=  0.5  near  the  transition  the  transition  is  not  Koster-               diction of small polaron  theory and the XXZ model (Section
+litz-Thouless.                                                                      III B).  The crosses are the results of this study and the solid
+                                                                                    squares the results of Hirsch and Fradkin9.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  FIG. 10.     Same  as  Figure  5  but  with  t = 10ω.  The  solid
+curves are the predictions of mean ﬁeld theory (Section III D).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                15
+    TABLE I.   Monte Carlo results for diﬀerent quantities for t = ω and g = 1.5ω and for various system sizes.  The energies are
+in units of ω  and displacements in units of (Mω)−1/2.
+
+N                 E0(N)/N                           E−1(N) − E0(N)                < qi(2ni − 1) >                < q2i  >                              < nini+M/2  >                < nini−1+M/2  >
+2                  -1.143  ±  0.001                1.158  ±  0.004                        0.313  ±  0.005                     0.748  ±  0.008                0.000  ±  0.000                   0.500  ±  0.000
+4                  -0.895  ±  0.001                0.416  ±  0.004                        0.446  ±  0.001                     0.864  ±  0.004                0.260  ±  0.001                   0.120  ±  0.0004
+6                  -0.868  ±  0.001                0.268  ±  0.009                        0.470  ±  0.005                     0.883  ±  0.007                0.217  ±  0.001                   0.244  ±  0.001
+8                  -0.861  ±  0.002                0.200  ±  0.015                        0.484  ±  0.002                     0.902  ±  0.003                0.240  ±  0.002                   0.229  ±  0.001
+16                -0.854  ±  0.001                0.064  ±  0.027                        0.488  ±  0.004                     0.904  ±  0.005                0.247  ±  0.002                   0.246  ±  0.002
+
+
+
+    TABLE II.    Comparison  of  Monte  Carlo  results  with  known  results  for  free  fermions.  The  ground  state  energy  per  site  of
+the inﬁnite system, ǫ∞, and the velocity of charge excitations, uρ, are normalised to their free fermion values.  The correlation
+exponent Kρ  is one for free fermions.
+ t                                                                       πǫ∞                                                                                uρ
+ ω                                                                         2t                                                                                2t                                                                                         Kρ
+0.1                                                                       0.999  ±  0.001                                                                       0.98  ±  0.03                                                                       1.00  ±  0.06
+ 1                                                                         1.000  ±  0.001                                                                       0.96  ±  0.02                                                                       1.00  ±  0.04
+10                                                                       0.999  ±  0.003                                                                       1.00  ±  0.01                                                                       0.95  ±  0.02
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                         16

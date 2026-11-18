@@ -75,6 +75,8 @@ export const MODELS = [
   ["Hubbard", "Hubbard"],
   ["tV", "Spinless t-V"],
   ["tJ", "t-J"],
+  ["Holstein", "Holstein"],
+  ["HubbardHolstein", "Hubbard-Holstein"],
   ["TFIsing", "Transverse-field Ising"],
   ["Impurity", "Impurity"],
   ["HEG3D", "Electron gas, 3D"],
@@ -138,6 +140,8 @@ export function molGeometry(g, inst) {
 // goes unsaid, as in the frontier labels.
 // A: antiperiodic along a ladder's legs, open across them (the t-J three-leg ladder, RULES.md 2.1).
 export const BOUNDARY = { O: "open", PO: "periodic/open", PA: "periodic/antiperiodic", A: "antiperiodic legs" };
+// A chain has no legs: its antiperiodic boundary is just that (Holstein, 2026-11-16).
+export const boundaryLabel = inst => inst.boundary === "A" && inst.lattice === "chain" ? "antiperiodic" : BOUNDARY[inst.boundary];
 
 export function geometry(inst) {
   const n = inst.n_sites;
@@ -175,7 +179,7 @@ export function instanceLabel(inst) {
       m.basis === "none" ? "basis-free" : String(p.basis ?? m.basis), ...(m.variants.length ? [coreLabel(m.variants)] : [])].filter(Boolean).join(", ");
   }
   const parts = [geometry(inst)];
-  if (BOUNDARY[inst.boundary]) parts.push(BOUNDARY[inst.boundary]);
+  if (BOUNDARY[inst.boundary]) parts.push(boundaryLabel(inst));
   // t-J (RULES.md 2.1, 2026-10-22): t = 1; J, t' (t2) and t'' (t3); the hole count; and whether the
   // exchange term carries -n_i n_j / 4.
   if (inst.model === "tJ") {
@@ -185,6 +189,15 @@ export function instanceLabel(inst) {
     if (p.t3 != null) parts.push(`t&Prime; = ${p.t3}`);
     parts.push(`${holes} hole${holes === 1 ? "" : "s"}`);
     if (p.nn_term === false) parts.push("without n<sub>i</sub>n<sub>j</sub>/4");
+    return parts.join(", ");
+  }
+  // Holstein and Hubbard-Holstein (RULES.md 2.1, 2026-11-16): t = 1; U, ω and g; the electron count,
+  // spinless or spin-1/2.
+  if (inst.model === "Holstein" || inst.model === "HubbardHolstein") {
+    if (p.U != null) parts.push(`U = ${p.U}`);
+    parts.push(`&omega; = ${+(+p.w).toPrecision(6)}`, `g = ${+(+p.g).toPrecision(6)}`); // as in the id (√2 prints as 1.41421)
+    const ne = p.N ?? p.N_up + p.N_dn;
+    parts.push(`${ne} ${p.spinless ? "spinless fermion" : "electron"}${ne === 1 ? "" : "s"}`);
     return parts.join(", ");
   }
   // Kitaev: K, J, Gamma; Shastry-Sutherland: J (inter-dimer) and Jd (dimer); J3 on honeycomb J1-J2.

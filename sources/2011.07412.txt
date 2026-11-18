@@ -1,0 +1,1350 @@
+ Comparative Study of State-of-the-Art Matrix-Product-State Methods for
+  Lattice Models with Large Local Hilbert Spaces without U(1) symmetry
+
+
+  Jan Stolppa, Thomas K¨ohlerb, Salvatore R. Manmanaa,1, Eric Jeckelmannc, Fabian Heidrich-Meisnera,
+                                                      Sebastian Paeckeld,∗
+
+             aInstitut f¨ur Theoretische Physik, Georg-August-Universit¨at G¨ottingen, 37077 G¨ottingen, Germany
+              bDepartment of Physics and Astronomy, Uppsala University, Box 516, S-751 20 Uppsala, Sweden
+                 cLeibniz Universit¨at Hannover, Institut f¨ur Theoretische Physik, 30167 Hannover, Germany
+ dDepartment of Physics, Arnold Sommerfeld Center for Theoretical Physics (ASC), Munich Center for Quantum Science
+              and Technology (MCQST), Ludwig-Maximilians-Universit¨at M¨unchen, 80333 M¨unchen, Germany
+
+
+
+
+Abstract
+Lattice models consisting of high-dimensional local degrees of freedom without global particle-number con-
+servation  constitute  an  important  problem  class  in  the  ﬁeld  of  strongly  correlated  quantum  many-body
+systems.  For instance, they are realized in electron-phonon models, cavities, atom-molecule resonance mod-
+els,  or superconductors.  In general,  these systems elude a complete analytical treatment and need to be
+studied using numerical methods where matrix-product states (MPS) provide a ﬂexible and generic ansatz
+class.  Typically, MPS algorithms scale at least quadratic in the dimension of the local Hilbert spaces.  Hence,
+tailored methods, which truncate this dimension, are required to allow for eﬃcient simulations.  Here, we
+describe and compare three state-of-the-art MPS methods each of which exploits a diﬀerent approach to
+tackle the computational complexity.  We analyze the properties of these methods for the example of the
+Holstein  model,  performing  high-precision  calculations  as  well  as  a  ﬁnite-size-scaling  analysis  of  relevant
+ground-state obervables.  The calculations are performed at diﬀerent points in the phase diagram yielding a
+comprehensive picture of the diﬀerent approaches.
+
+
+
+1.  Introduction
+
+    In the past two decades, tensor-network state (TNS) based methods have become very successful tools
+to study strongly correlated, low-dimensional quantum systems in and out of equilibrium [1–7].  In princi-
+ple,  these methods can reach a very high accuracy that is controlled by a successive scaling in the bond
+dimensions.  The prerequisites are a suﬃciently small amount of entanglement encoded in the wave function
+and an eﬃcient means of computing energies and expectation values [6].  Re-expressing the early algorithms
+of the density-matrix renormalization group (DMRG) [1, 2] using matrix-product state (MPS) [3, 8] rep-
+resentations paved the way for the formulation of new eﬃcient and ﬂexible variational algorithms to study
+correlated quantum systems with excellent precision in one dimension [5, 6, 9, 10].  Exploring the tensor-
+product structure of the many-body Hilbert space to decompose the coeﬃcients of a quantum state into
+local  tensors yields a powerful formulation of DMRG and allows the exploitation of ideas from quantum-in-
+formation theory [5, 11, 12].  Thereby, numerical optimization schemes that work on the local tensors can
+be formulated, which is at the heart of their high eﬃciency.
+    Unfortunately, such a decomposition becomes numerically very costly if the local quantum systems have
+a large number of internal degrees of freedom that do not obey conservation laws.  Indeed, these situations
+are not too exotic as may be illustrated by the simple example of lattice fermions locally coupled to Einstein
+
+
+
+   ∗Corresponding author
+    Email address:  sebastian.paeckel@physik.uni-muenchen.de (Sebastian Paeckel)
+   1Present Address:  Fachbereich Physik, Philipps-Universit¨at Marburg, 35032 Marburg, Germany
+
+Preprint submitted to Elsevier                                                                                                                                       October 4, 2021
+phonons,  the  Holstein  model  [13].   Describing  such  a  system  by  means  of  MPS  requires,  in  principle,  an
+inﬁnite number of local degrees of freedom, while in practice, one needs to introduce a cutoﬀ in the local
+Hilbert space dimension [14, 15].  As is well known, these systems can feature rich physics.  Modeling the
+inﬂuence  of  phonons  on  interacting  fermions  on  a  numerically  unbiased  footing  [16–22]  is  an  important
+problem  with  many  intensively  studied  questions,  such  as  the  formation,  stability,  and  dynamics  of  (bi-
+)polarons in the (Hubbard-)Holstein model [23–30].  Various numerical approaches have been employed to
+study these systems ranging from exact diagonalization [31, 32] over quantum Monte-Carlo methods [33, 34]
+to dynamical mean-ﬁeld theory (DMFT) [35–37].
+    Ultracold atoms provide another relevant platform in which large local Hilbert spaces play an important
+role for the theoretical description.  For instance, models involving Feshbach-resonances feature a molecular
+and an atomic channel as well as a term that converts two atoms into one molecule.  As a consequence, the
+particle numbers of molecules and atoms are not conserved individually.  These models are called Bose-Fermi
+or Bose-Bose resonance models [38–41].  Models of single atoms coupled to optical cavities [42–44] have to
+account  for  the  bosonic  nature  of  the  light  ﬁeld  and  are  important  systems  to  understand  the  interplay
+between  light  and  matter  on  the  atomic  scale.   Finally,  in  heterostructures  of  proximity-coupled  s-wave
+superconductors, the condensate can be described separately, yielding an eﬀective bosonic bath with pairwise
+creation and annihilation of particles.  Recently, these systems have been suggested as promising candidates
+for an experimental realization of Majorana quasi particles, potential building blocks of topological qubits
+[45–48].
+    Here, we discuss three state-of-the-art MPS methods that can be utilized to eﬃciently deal with such
+a  large  number  of  required  local  degrees  of  freedom:   The  pseudosite  DMRG  (PS-DMRG)  method  [23],
+DMRG with local basis optimization (DMRG-LBO) [26, 49–52], and the projected puriﬁed two-site DMRG
+(PP-2DMRG) [53].  The ﬁrst method was introduced by Jeckelmann and White to extend the applicability
+of DMRG to describe electrons coupled to phonons [23].  Local basis optimization (LBO) proposed by Zhang
+et  al. [49] is based on a rotation into the eigenbasis of the single-site reduced density-matrix (1RDM). It
+allows for a faithful truncation yielding an optimal approximation of the 1RDM. The PP-2DMRG developed
+recently by some of the authors consists of a mapping of the initial problem into a puriﬁed Hilbert space with
+a subsequent projection into an invariant subspace to generate an artiﬁcialU(1) symmetry that collapses the
+local dimensions of the bosonic degrees of freedom and allows to exploit canonical MPS truncation schemes
+[53].
+    We compare the methods by applying them to the Holstein model at half ﬁlling.  This system undergoes a
+phase transition from a gapless Luttinger-liquid (LL) phase to a gapped charge-density wave (CDW) phase
+upon  changing  the  electron-phonon-coupling  strength[18,  54–56].   To  this  end,  we  conduct  high-precision
+calculations at an intermediate system size ofL = 51 (whereL is the number of sites) and perform a ﬁnite-size
+extrapolation of the ground-state energy and the CDW order parameter from data at L = 51, 101, 151, 201
+with relaxed precision demands.  According to our analysis, all three methods agree within their anticipated
+error margins.  We further ﬁnd that the PS-DMRG and the PP-2DMRG require a larger bond dimension
+in  order  to  reach  a  comparable  precision  as  DMRG-LBO.  However,  the  eﬃcient  representation  of  states
+using the DMRG-LBO method comes at the cost of additional numerical control parameters in which the
+calculations have to be converged.  Here, the PS-DMRG and PP-2DMRG beneﬁt from being conceptually
+simpler approaches.  PS-DMRG can be converged with respect to a scaling analysis in the bond dimension
+and comparative calculations using diﬀerent local Hilbert-space dimensions.  Finally, using PP-2DMRG, it
+suﬃces to converge the calculations in the discarded weight, only.  On the one hand, this comes at the cost
+of the largest growth in bond dimension compared to the other methods, but, on the other hand, this can
+be compensated by exploiting the restored global U(1) symmetries.
+    The paper is organized as follows:  In section 1.1,  we brieﬂy review the Holstein model and its phase
+diagram  at  half  ﬁlling.   In  section  2,  we  introduce  the  diﬀerent  numerical  methods.   After  recapitulating
+some basic facts about MPSs in section 2.1, we introduce the PS-DMRG in section 2.2, the strictly single-
+site  DMRG  with  LBO  (DMRG3S+LBO)  in  section  2.3,  and  the  PP-2DMRG  in  section  2.4.   Section  3
+is  devoted  to  the  comparison  between  the  methods,  where  section  3.1  and  section  3.2  contain  the  high-
+precision calculations, while section 3.3 contains the ﬁnite-size extrapolations.  Finally, in section 5, we give
+a conclusion of our work.
+                                                                  2
+Figure 1:    Schematic reproduction of the phase diagram of the 1D Holstein model computed in [55].  The transition between
+the CDW and the metallic LL phase is controlled by the coupling γ between the local oscillator displacement and the fermion
+density as well as the phonon frequency ω0.  Marked points indicate the position of the parameter sets studied in this paper
+and we always chose ω0 = 1 in our calculations.
+
+
+1.1.  Holstein Model
+    In order to demonstrate the applicability of the diﬀerent methods, we conduct numerical ground-state
+calculations of the half-ﬁlled 1D Holstein model with spinless fermions [13].  The model is deﬁned by a set
+of spinless fermions with creation/annihilation operators ˆc[†]j   on a lattice, where every lattice site possesses
+an  associated  harmonic  oscillator  with  bosonic  creation/annihilation  operators  ˆb[†]j  .   The  oscillators  are
+decoupled from each other and play the role of a single Einstein-phonon branch.  The density of the fermions
+ˆnfj  = ˆc†jˆcj  at a speciﬁc site j couples to the displacement (ˆb†j + ˆbj) of the associated harmonic oscillator:
+
+                                                          ˆH =  ˆHf +  ˆHph +  ˆHf−ph                                                            (1)
+                                                        ˆHf =−t0     ∑    (                   )
+                                                                            ˆc†jˆcj+1 + h.c.                                                   (2)
+                                                                       j
+                                                       ˆHph =ω0     ∑ˆb†
+                                                                          jˆbj                                                                          (3)
+                                                                     j     (ˆb†       )
+                                                    ˆHf−ph =γ∑         ˆnfj    j + ˆbj    .                                                            (4)
+
+                                                                    j
+
+An important exact relation between the diﬀerent particle species and for eigenstates is given by [54, 57]
+
+                                                          ⟨ˆb†j + ˆbj⟩ = 2 γω0⟨ˆnfj⟩ .                                                              (5)
+
+At half ﬁlling, the ground-state phase diagram of this model exhibits a transition from a metallic LL phase
+into a CDW insulating phase when increasing the ratio γ/t0 for ﬁxed t0/ω0⁄= 0 [18, 54–56] (see ﬁgure 1).
+    We investigate the Holstein model with open boundary conditions at diﬀerent points in its parameter
+
+
+
+                                                                        3
+space.  In particular, we ﬁxed t0≡ 1.0 as unit of energy and chose the following sets of parameters
+
+                                   ω0/t0 = 1.0,                        γ/t0 = 0.5,                                     (P.1)
+
+                                   ω0/t0 = 1.0,                        γ/t0 = 1.5,                                     (P.2)
+
+                                   ω0/t0 = 1.0,                        γ/t0 = 2.0,                                     (P.3)
+
+so that we expect the ground state to realize a LL for the parameter set (P.1), (P.2) is close to the phase
+boundary, and a CDW is realized for (P.3) (cf., ﬁgure 1).
+    An important aspect is the absence of particle-number conservation in the phonon system.  As a con-
+sequence,  techniques  to  decompose  tensors  into  irreducible  representations  with  respect  to  global U(1)-
+symmetries [58–60] cannot be applied to the phononic degrees of freedom in order to reduce the numerical
+complexity.   Combined  with  the  large  dimension  of  the  local  Hilbert  spaces,  this  paradigmatic  model  is
+particularly challenging for standard MPS methods and specialized algorithms have to be utilized, which
+are discussed in the next section.
+
+2.  Methods
+
+    The applicability of the MPS ansatz is rooted in the fact that in one dimension, an eﬃcient parameter-
+ization of so-called area-law states is possible by means of mixed-canonical representations, exploiting the
+inherent gauge freedom of MPS [6, 9, 10].  In area-law states, the entanglement entropy
+
+                                                 SN =− Tr{ˆρA/B log(ρA/B)}                                                         (6)
+
+scales only with the surface area of the partitioned subsystems [61]. For instance, for gapped one-dimensional
+(1D) systems,SN is bounded by a constant.  Here,ρA/B is the reduced density matrix of a bipartition of the
+many-particle Hilbert spaceH =HA⊗HB.  There has been great eﬀort to characterize the entanglement
+properties  of  generic  models  and  it  has  been  shown  that  for  a  wide  range  of  gapped  systems  with  local
+couplings, the ground states obey the area law and thus can be represented eﬃciently using MPS [62–64].
+    For pure fermion or small-spin systems, the dominating numerical costs are caused by contracting the
+site tensors along the auxiliary index between two lattice sites.  However, in typical algorithms such as a
+ground-state search, the local dimensiond enters the numerical complexity asd2 ord3 in case of a single- or
+two-site algorithm [6, 65].  Therefore, a generic representation allowing to numerically treat large d values is
+essential, particularly in the intermediate coupling regime.  A loophole is to exploit global U(1) symmetries,
+decomposing the local degrees of freedom into 1D representations [58, 60].  However, in the Holstein model,
+the number of phonons is not conserved, which is one major reason for the numerically challenging situation.
+
+2.1.  Matrix-Product States
+    MPSs supply both a ﬂexible and numerically eﬃcient ansatz class for quantum many-body states.  The
+coeﬃcients ψσ1,...,σL∈ C of a wave function representing a state|ψ⟩∈H in a Hilbert spaceH composed of
+the tensor product of L∈ N d-dimensional local degrees of freedom are expanded in terms of d·L matrices
+Mσj∈ Cmj−1×mj  [6]
+
+                      |ψ⟩ = ∑          ψσ1,...,σL|σ1,...,σL⟩≡ ∑               Mσ1···MσL|σ1,...,σL⟩ .                        (7)
+                              σ1,...,σL                              σ1,...,σL
+
+Encoding the information of the wave function locally in rank 3 site tensors Mj  (i.e., the set of matrices
+{
+ Mσj}     per site) provides direct access to the Schmidt coeﬃcients if the site tensors are expressed in the
+                                                                                                       (            )†Aσj
+canonical gauge [6].  Site tensorsAj are called left canonical if they fulﬁll∑σj,mj−1                    Aσjmj−1,m′j      mj−1,mj =
+                                                                                                      (            )† = 1mj−1,m′j−1.
+1m′j,mj and site tensorsBj are called right canonical if they fulﬁll∑σj,mjBσjmj−1,mj                    Bσjm′j−1,mj
+The singular-value decomposition (SVD) is one way of obtaining these canonical tensors (see ﬁgure 2).
+                                                                  4
+Figure 2:   SVD of a site tensorM into a right orthonormal tensorU (red triangle), a diagonal matrix Σ (grey diamond), and a
+left orthonormal tensor V  (green triangle).  This operation is used to bring a site tensor M  into left canonical form via setting
+Aσjmj−1,mj  =U(σ,mj−1),sj  and contracting Σ and V  with the following site tensor.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 3:    Sketch of local Hilbert space unfolded into pseudosites encoding npseudo  local degrees of freedom.  Using a binary
+number representation, the local dimension is 2npseudo− 1.  The fermionic degree of freeom is indicated by a circle while the
+squares denote the introduced pseudo sites.
+
+
+    Expanding the site tensors of a canonically gauged state by means of a SVD
+
+                                    Mσj =M(σj,mj−1),mj =∑               U(σj,mj−1),sjΣsjVsj,mj                                         (8)
+                                                                     sj
+
+allows  for  an  optimal  approximation  with  respect  to  the  reduced  density  matrix  ˆρ  =  Trk≤j|ψ⟩⟨ψ|  by
+truncating the series of Schmidt values Σsj  below a certain thresholdδ0, leading to a cutoﬀ bond dimension
+mmax.   The  squared  and  summed  discarded  parts  of  the  Schmidt  spectrum  are  commonly  referred  to  as
+discarded weight δ(mmax)
+                                                          δ =  ∑         Σ2sj .                                                                  (9)
+                                                               sj>mmax
+Rapidly decaying Schmidt values Σsj  are thus a necessary condition for a compact approximation of a state
+by means of a MPS and small truncation error controlled by δ.
+    Further numerical beneﬁts can be achieved if|ψ⟩ transforms under a global symmetry group G.  In this
+situation, the Wigner-Eckhardt theorem ensures a decomposition of the site tensors in terms of irreducible
+representations Γ(g) of the elements in the symmetry group g∈ G [58–60].  The dimensions of the tensor
+indices decompose under the action of G: mj =∑gjmgj  so that by working on each block separately, the
+computational costs typically are reduced by an order of magnitude in the case of a global U(1) symmetry.
+
+2.2.  Pseudosite Method
+    In this section, we summarize the PS-DMRG method for large local dimensions d.  Details can be found
+in [23, 31].  The pseudosite approach is based on the original two-site DMRG method [1, 2].  Without special
+techniques for large sites, the complexity of the two-site DMRG method scales as SLd3m3max, where L is
+the  number  of  sites  in  the  lattice  and mmax  is  the  maximum  bond  dimension.   In  the  spinless  Holstein
+model, d = 2(nph + 1), where nph is the maximum number of phonons per site. S represents the number of
+iterations required to achieve convergence and combines both the iterative diagonalization of the superblock
+Hamiltonian at each DMRG step and the repeated DMRG sweeps through the lattice.
+    The key idea of the PS-DMRG method is to substitute npseudo = log2(nph + 1) pseudosites of dimension
+2 for the phonon site of dimensionnph + 1.  As the computational cost increases linearly with the number of
+sites but with the cube of the site dimension, PS-DMRG can handle this representation more eﬃciently.  The
+exact mapping between the truncated phonon Hilbert space and the Hilbert space spanned by the npseudo
+                                                                    5
+Figure  4:     Relative  deviation  of  the  ground-state  energy  obtained  with  PS-DMRG  from  reference  values  as  a  function  of
+the maximum bond dimension mmax  and varying phonon cutoﬀ nph.  The reference values are obtained by taking the best
+approximations to the ground state from high-precision calculations using the DMRG3S+LBO and PP-2DMRG methods, as
+discussed in section 3.1.
+
+
+pseudosites  can  be  implemented  using  the  binary  number  representation  of  the  boson  number n  (0 ≤
+n≤ nph) on a site.  An occupied pseudosite corresponds to the binary digit 1 while an empty pseudosite
+corresponds to the binary digit 0 (cf., ﬁgure 3). Boson operators have to be represented in terms of pseudosite
+operators to perform PS-DMRG calculations.
+
+2.2.1.  Number of Pseudosites
+    For  the  Holstein  model,  the  pseudosite  Hamiltonian  contains∼ nph  many-particle  terms  acting  over
+a  range  of  up  to npseudo  pseudosites.   Thus,  the  computational  cost  of  the  PS-DMRG  method  scales  as
+SL(nph + 1) log2(nph + 1)m3max, which is signiﬁcantly more eﬃcient than the usual DMRG method applied
+to large phonon sites.  Due to the longer interaction range in the pseudosite representation, however, the
+PS-DMRG method requires a larger bond dimension mmax and a larger number of iterations S  to reach a
+given accuracy.  The diﬀerence becomes more pronounced for larger site dimensions.  Thus,  the precision
+increases ﬁrst with increasing the number of pseudosites,  but may deteriorate for too large npseudo  if the
+number of sweeps and the bond dimension are kept constant, as observed in ﬁgure 4(b).  Nonetheless, the
+PS-DMRG method allows much larger numbers of bosons than the usual DMRG method [66–68].  It was
+successfully used to study the metal-insulator transition in various Holstein-type models [14, 57, 69–71].
+
+2.2.2.  Benchmark Setup
+    For the high-precision calculations presented in section 3.1, we use npseudo from 3 to 6 (7≤nph≤ 63).
+The PS-DMRG calculation always starts with a small bond dimension m, which is increased progressively
+up to mmax.  Three to six DMRG sweeps (back and forth) through the full lattice are carried out for each
+bond dimension for a total of up to 30 sweeps.  The bond dimensions are so large that the discarded weightδ
+vanishes within double precision (10−16).  Thusδ is not a helpful quantity to decide whether a calculation has
+converged and extrapolations of observables to vanishing discarded weights are not used [31].  The accuracy
+of the calculated energies is limited by the slow convergence with the number of iterations rather than by
+the DMRG truncation error or the phonon Hilbert-space truncation.
+    For the study of the ﬁnite-size scaling of the order parameter in section 3.3, we use several bond dimen-
+sions m up to mmax = 200 or 400 with 3 to 6 sweeps for each value of m.  From the scaling with varying
+bond dimension m,  we estimate the relative errors of the ﬁnite-system energies to be smaller than 10−6,
+while the absolute errors of the ﬁnite-system order parameters are smaller than 10−5.
+
+
+                                                                  6
+2.3.  DMRG with local basis optimization
+    Here, we recapitulate the DMRG3S+LBO introduced in [30] (see also [72]).  The method is based on the
+LBO introduced by Zhang et al.  [49].  At the core, the DMRG3S+LBO is a combination of the variational
+matrix-product state (VMPS) method originally formulated for spin-boson models and introduced by Guo
+et  al.   [73]  (see  also  [74–76])  with  the  single-site  DMRG  method  with  subspace  expansion  introduced  by
+Hubig et al.  [65].
+
+2.3.1.  LBO
+    The LBO tackles the problem of large local Hilbert spaces by dynamically ﬁnding an optimized local
+basis for the problem at hand.  The optimized basis at site j can by found by computing the 1RDM:
+
+                                                       ˆρj = Trk⁄=j|ψ⟩⟨ψ| ,                                                               (10)
+
+where the trace is over all degrees of freedom σk that are not on site j.  Upon diagonalization of  ˆρj, a local
+basis transformation matrixUl as well as the spectrum of ˆρj is found.  Along the lines of the DMRG strategy,
+the local basis can be truncated according to the spectrum of  ˆρj  and the state can be transformed into the
+new local basis.  If only a few of the eigenvalues of ˆρj have considerable magnitude, the truncation will retain
+most of the information in the state.  In case of the Holstein model, this strategy can be motivated by the
+insight that the ground state of the Holstein model in the atomic limit (t0 = 0) needs just a single state at
+every site [54].  In the ground state of the Holstein-polaron model, an exponential decay of the spectrum
+was found numerically for several sets of parameters [49, 77].  A similar behavior in the spectrum of  ˆρj  was
+also found in the Bose-Bose resonance model [41].
+    A MPS with LBO takes the form:
+
+                                  |ψ⟩≈ ∑           M ˜σ1R˜σ1,σ1···M ˜σLR˜σL,σL|σ1,...,σL⟩ ,                                    (11)
+                                          σ1,...,σL
+                                          ˜σ1,...,˜σL
+
+where truncated local basis transformations Rj  (with entries R˜σjσj) are attached to every local tensor Mj{
+(i.e., the set of matrices      M ˜σj}) (cf., ﬁgure 5 left).  The matricesRj have dimensiondo×d, wheredo is the
+number of optimal modes, i.e., the number of local basis states that are kept after the truncation.
+
+2.3.2.  DMRG3S+LBO
+    The DMRG3S+LBO method consists of two stages, an optimization of the local basis matrix Rj and an
+optimization of the local site tensor Mj.  Both of these are performed by a DMRG-like optimization step.
+The tensor manipulations necessary are sketched in ﬁgure 5.  Consider a MPS with LBO in mixed-canonical
+form where all site tensors left of site j are left canonical and all tensors to the right are right canonical.  In
+the ﬁrst step, a SVD of the site tensor is performed such that [cf., ﬁgure 5(1)]:
+
+                                        M(mj−1,mj),˜σj =∑         U(mj−1,mj),sjΣsjVsj,˜σj .                                            (12)
+                                                              sj
+
+Subsequently, Σ andV  are contracted withRj and a DMRG optimization of the resulting matrix is performed
+[cf.,  ﬁgure  5(2)].   The  original  form  of  the  MPS  is  then  restored  by  a  SVD  of  the  optimized  matrix  [cf.,
+ﬁgure 5(3)].  In this step, a truncation of the optimal basis may be done.  However, note that the optimized
+basis dimension cannot grow throughout the optimization step.  A truncation is therefore only necessary if
+the left dimension of the matrix Rj  is larger than the desired do before the optimization.  In practice, it is
+more common that the dimension has to be enlarged artiﬁcially (e.g., in the ﬁrst sweep if the initial state
+has a simple structure) so that future optimization steps can explore the full do local states.  Note further
+that we utilize particle-number conservation of the fermions in the Holstein model so that the local-basis-
+transformation matrices consist of two symmetry blocks.  The maximal number of optimal modes do refers
+to the maximal number per block.  In the truncation step, the singular values from both blocks are combined
+                                                                   7
+Figure 5:   Sketch of the diﬀerent steps in the DMRG3S+LBO method to optimize the local basis matrix Rj and the local site
+tensor Mj  (see also [30, 73]).
+
+in one list and the blocks are ﬁlled according to the size of the singular values until one of the blocks reaches
+the maximal size do.  The smaller block is then ﬁlled with zeros so that both blocks have the same size.
+    The second step is a DMRG optimization of the local site tensorMj [cf., ﬁgure 5(4)].  These two steps of
+optimizing the local basis and then the site tensor can be done in a loop until no further improvements are
+detected [73].  However, in the implementation of the DMRG3S+LBO algorithm used for this work, every
+optimization is done for a ﬁxed number of two times.
+    After the optimization of both, the local basis and the site tensor is ﬁnished, the center of the mixed-
+canonical MPS is moved to the next site.  To prevent the algorithm from getting stuck in local minima of the
+energy landscape, an enrichment step on the bonds has to be implemented.  For this purpose, the subspace
+expansion described in [65] is used.
+
+2.3.3.  Convergence of the DMRG3S+LBO method
+    In  a  single-site  DMRG  method,  the  bond  dimension  does  not  grow  on  its  own  during  the  algorithm.
+Therefore, it is crucial to implement a procedure that enhances the bond dimension artiﬁcially.  This proce-
+dure has the second purpose of preventing the algorithm from getting stuck in local energy minima.  In the
+DMRG3S+LBO, we choose the subspace expansion developed by Hubig et al.  in [65] (see also [58, 78] for
+earlier work on single-site DMRG algorithms).  The crucial steps of the method are recapitulated here.  In a
+left-to-right sweep, after the DMRG optimization of the local tensor Mj, the tensor is enlarged by Pj  with
+entries:
+                             P ˜σ′j                              Lkj−1,lj−1,mj−1M ˜σjmj−1,mjH ˜σj,˜σ′j
+                               kj−1,(lj,mj) =α  ∑                                                  lj−1,lj ,                              (13)
+                                                   lj−1,mj−1,˜σj
+
+
+                                     j
+whereHj (with entriesH ˜σj,˜σ′lj−1,lj) is the local matrix-product operator (MPO) site tensor of the Hamiltonian
+transformed into the optimal basis:
+
+
+                                                   j                           j        j,˜σ′j                                                 (14)
+                                            H ˜σj,˜σ′lj−1,lj = ∑R˜σj,σjHσj,σ′lj−1,lj(R†)σ′
+                                                          σj,σ′j
+
+                                                                    8
+and the tensor Lj−1 is recursively deﬁned as having entries:
+
+
+                                                                                                      j−1        l−1
+          Lkj−1,lj−1,mj−1 =     ∑                           Lkj−2,lj−2,mj−2A˜σl−1mj−2,mj−1H ˜σj−1,˜σ′lj−2,lj−1  (A†)˜σ′kj−2,kj−1 ,       (15)
+                                kj−2,lj−2,mj−2,˜σj−1,˜σ′j−1
+
+where theAj are the left-canonical site tensors of the MPS andL0 = 1.  The parameterα is a mixing factor
+that has to be chosen appropriately.  The tensor on site j  is enlarged by Pj  and the MPS tensor on the
+following site j + 1 is enlarged by zeros in such a way that the tensors ﬁt together:
+                                                                            [Bj+1]
+                                              ˜Mj = [MjPj],     ˜Bj+1 =                 .                                                   (16)
+                                                                                 0
+This enrichment step can be interpreted as an expansion of the local site tensor into a two-dimensional Krylov
+space, as Pj  provides the left-contraction of the current state multiplied by the system’s Hamiltonian.  If
+the  MPS  is  already  close  to  the  global  ground  state,  the  site  tensors  are  essentially  eigenstates  of  the
+eﬀective single-site HamiltonianHj, contracted with the proper left- and right-contractions Lj−1 andRj+1,
+respectively.  In this case, the mixing factor should be chosen as α≡ 0.
+    The previous step of enlarging the tensor Mj byPj does not change the state at all, since the expansion
+tensor Pj  is multiplied by zeros on the next site.  However, the bond dimension between site j and j + 1 is
+increased byw·χ, wherew is the bond dimension of the MPO andχ is the bond dimension of the MPS. In
+most cases, it is therefore necessary to truncate the bond dimension to the maximal bond dimension mmax
+immediately after the enrichment step.  After the truncation, the change done to the state becomes manifest
+and in most cases, the subspace enlargement and subsequent truncation increases the energy.
+    To monitor the eﬀect of the subspace expansion on the state, one compares the energy after the truncation
+on the last bondElast with the energy after the DMRG optimization on the current siteEopt and the energy
+after the truncation on the current bondEtrunc.  This provides the energy diﬀerences ∆opt =Elast−Eopt and
+∆trunc =Etrunc−Eopt.  On the one hand, it is, of course, important to keep ∆opt > ∆trunc, as otherwise the
+energy actually grows and one does not approach the ground state.  On the other hand, one has to apply a
+strong enough mixing so that the global energy minimum can be found.  Comparing both energy diﬀerences
+provides  a  measure  for  the  competing  eﬀects  of  the  subspace  expansion.   An  optimal  expansion  strategy
+maximizes the energy gain when optimizing the current site tensor (measured by ∆opt), while at the same
+time it minimizes the perturbation of the optimized site tensor when expanding the next bond (measured
+by ∆trunc).  It  also needs to  account for the  previously described situation,  in which the  site tensors are
+eigenstates of the eﬀective Hamiltonian in which no expansion should occur, or, the mixing factor should be
+decreased, at least.
+    As  suggested  in  [65],  we  update  the  mixing  factor  with  a  multiplicative  adaption  factor η  such  that
+α′ = ηα.  This allows for a gradual change of the expansion rates that mimics the increase or decrease of
+correlations throughout the system. The overall strategy is to increase the mixing factor if the ratio ∆trunc/∆opt
+is very small (or even negative) but to decrease it if the ratio exceeds 0.3.  The exact procedure to choose
+the adaption factor η is given in algorithm 1.  Further, the adaption factor is restricted to 0.99≤η≤ 1.01
+and the mixing factor to 10−8≤α≤ 100.  If the mixing factor falls below 10−8 this is interpreted as a signal
+for the site tensor being an eigenstate of the eﬀective single-site Hamiltonian and the subspace expansion is
+suspended entirely.
+    To achieve convergence of our DMRG3S+LBO method,  it turns out to be beneﬁcial to postpone the
+adaptation of the mixing factor α in the ﬁrst few sweeps to keep it at a relatively high value.  Furthermore,
+we noticed that the algorithm is still prone to getting stuck despite the use of the subspace expansion.  This
+behavior is especially common in the CDW phase of the Holstein model when polarons become heavy and
+hard to move around in the lattice.  It is therefore beneﬁcial to use initial states that are already close to the
+targeted ground state and possess key features of it.  We therefore pursue the strategy of ﬁrst calculating
+the ground state at γ = 0 for a relatively small maximal bond dimension, in an initialization run.  In the
+following, we increase the couplingγ from run to run while keeping the maximal bond dimension ﬁxed, until
+the desired coupling strength is reached.  Then, the bond dimension is increased from run to run until the
+desired precision is reached.
+                                                                  9
+Algorithm 1   Procedure to choose the adaption factor η for the update of the mixing factor α from the
+energy diﬀerences ∆opt and ∆trunc.
+  δopt =   ∆opt|Eopt|
+  δtrunc =  ∆trunc|Eopt|
+  if (|δopt|< 10−14    or |δtrunc|< 10−14) then
+       η = 1
+  else if δtrunc < 0 then
+       η = 2(1 +|δtrunc||δopt|  )
+  else if |δtrunc||δopt| < 0.05 then
+       η = 1.2−|δtrunc||δopt|
+  else if |δtrunc||δopt| > 0.3 then
+       η =    11.01
+  else
+       η = 1
+  end if
+
+
+    We  illustrate  potential  pitfalls  of  our  method  in  ﬁgure  6.   In  this  example,  three  runs  with L  =  51,
+ω0/t0 = 1, and γ/t0 = 2, which corresponds to the CDW phase, are compared.  The maximal bond dimension
+is set to mmax  = 20, the maximum phonon number per site to nph  = 31, and do  = 5 optimal modes per
+symmetry  block  are  considered.   In  the  ﬁrst  runR1,  the  initial  state  is  the  ground  state  at ω0/t0  =  1,
+γ/t0 = 1.5, mmax = 20, nph = 31, and do = 5 (|Ψin,1⟩).  Furthermore, the mixing factor α is ﬁxed to 1 in the
+ﬁrst 30 sweeps (sα=1 = 30).  In the second runR2, the initial state is the same as in the ﬁrst run (|Ψin,1⟩),
+but the ﬁxation of α is only done in the ﬁrst sweep (sα=1 = 1).  For the third runR3, the initial state is
+chosen to be the ground state atγ = 0 andmmax = 15 (|Ψin,2⟩), whileα is again ﬁxed for the ﬁrst 30 sweeps
+(sα=1 = 30).
+    The inset of ﬁgure 6(a) shows the electron density on the sites in the diﬀerent initial states.  As expected,
+the density proﬁle is ﬂatter in the ground state at γ  = 0 (|Ψin,2⟩) and has more structure in the ground
+state at γ/t0  = 1.5 (|Ψin,1⟩).  In the main panel of ﬁgure 6(a),  the mixing factor α is plotted against the
+sweeps.  After the ﬁrst 30 sweeps where α is ﬁxed, the mixing factor falls oﬀ quickly to≈ 10−7  inR1.  In
+R2, the mixing factor falls oﬀ immediately with a small peak at around the 40th sweep beforeα also settles
+at≈ 10−7.  InR3, the decay of α is more gradual but after the 160th sweep, it also has a value of≈ 10−7
+with small ﬂuctuations.
+    In ﬁgure 6(b),  the relative energy diﬀerence between the lowest energy found during the run and the
+current energy estimate in the middle of a speciﬁc sweep is presented:
+
+                                                  δselfE = Esweep−Emin,run|Emin,run|   .                                                        (17)
+
+The  evolution  of δselfE  can  be  extracted  from  a  single  run.   In  contrast,  ﬁgure  6(c)  displays  the  energy
+diﬀerence between the current energy estimate in the middle of a sweep and the lowest energy between all
+three runs:
+
+                                                      δE = Esweep−Emin|Emin|   .                                                             (18)
+
+It can, of course, only be extracted from a comparison between diﬀerent runs.
+    The runsR1 andR2 show a plateau in δselfE in ﬁgure 6(b) until approximately the 40th sweep.  Then,
+the energy quickly drops over the course of about 20 sweeps and δselfE  stays below 10−10  after the 60th
+sweep.  In contrast, the energy drops slower inR3, but after the 300th sweep, δselfE also stays below 10−10.
+    While ﬁgure 6(b) suggests that all three runs are converged, the data for δE in ﬁgure 6(c) gives evidence
+that this is not the case.  The data forR1 is the same in ﬁgure 6(b) and ﬁgure 6(c) since inR1 the lowest
+                                                                  10
+Figure 6:    (a) Evolution of the subspace-expansion mixing factor during the sweeping.  (b) Evolution of the relative energy
+distance during the sweeping to the best energy estimate in the runs.  (c) Evolution of the relative energy distance during the
+sweeping to the best energy estimate in the run with the initial state|ψin,1⟩ and sα=1 = 30.  Inset of (a):  Electron density in
+the initial states.  Inset of (b):  Electron density in the ﬁnal state.  The system parameters are L = 51, N = 25, ω0/t0 = 1, and
+γ/t0 = 2.  In all runs, χ = 20, Mph = 31, and d0 = 5.
+
+
+energy was found. R2  ﬁnds an energy that is about δE≈ 10−6  above the one found byR1.  The energy
+found inR3 is δE≈ 10−2 above the one ofR1.
+    The inset of ﬁgure 6(b) shows the real-space electron-density proﬁle in the ﬁnal states of the runs.  The
+ﬁnal states ofR1 andR2 have the expected proﬁle of a charge-density wave.  The ﬁnal state ofR3 does not
+have such a structure in the electron density at all.
+    This example illustrates the impact of initial states and the choice of the mixing factor on the convergence
+of the DMRG3S+LBO. Choosing an initial state that already possesses structural features of the ground
+state one is trying to ﬁnd can prevent the algorithm from getting stuck in local minima.  This can be achieved
+by gradually changing the parameters in the Hamiltonian (here γ) by performing several runs of complete
+ground-state searches.  In this procedure, the initial state of the subsequent run is chosen to be the optimized
+ground state of the previous parameter set.  Finally, the mixing factor should be ﬁxed at a large value for
+the ﬁrst few runs to explore a large enough portion of the Hilbert space before it can be lowered to achieve
+
+                                                                    11
+Figure 7:    (a) Relative deviation of the ground-state energy obtained with DMRG3S+LBO from the smallest energy found,
+plotted against the maximal bond dimension mmax.  (b) Variance of the energy plotted against the maximal bond dimension
+mmax.
+
+
+convergence.
+
+2.3.4.  Impact of nph  and do  on the precision of the ground state in the DMRG3S+LBO method
+    In the DMRG3S+LBO method, the maximal bond dimension mmax, the maximal number of phonons
+per  site nph,  and  the  maximal  number  of  optimal  modes  per  block do  determine  the  reachable  precision
+of the ground states.  All of these parameters have a diﬀerent inﬂuence.  The maximal number of phonons
+per site nph changes the dimension of the Hilbert space and, in principle, the nature of the whole system.
+The  ultimate  goal  is  to  get  results  that  do  not  change  upon  further  increase  of nph  and  are  therefore
+indistinguishable from the case nph =∞.  For smaller nph, results can be converged to a certain precision
+with respect tommax anddo, but an increase ofnph will still improve the precision substantially with respect
+to the nph =∞ limit.
+    In ﬁgure 7, we compare the precision of the ground-state energy for diﬀerent choices of mmax, nph, and
+do.  The system parameters are L = 51, N  = 25, ω0/t0 = 1, and γ/t0 = 1.5.  Figure 7(a) shows the relative
+diﬀerence between the energies at the end of each run to the best energy found:
+
+                                              δE = E0(mmax,nph,do)−Emin|Emin|       .                                                    (19)
+
+As a function of mmax, the energy decreases as expected.  For a certain choice of nph  and do, the energy
+can,  however,  only  reach  a  certain  precision  that  does  not  substantially  improve  as  the  bond  dimension
+is  increased  further.   With nph  =  31  and do  =  10,  the  maximal  precision  of  our  implementation  of  the
+DMRG3S+LBO method can be reached, which turns out to be a relative energy diﬀerence of about 10−12.
+Further increasing nph does not improve the energies.
+    Figure 7(b) shows the variance of the energy
+
+                     Var[ ˆH] =⟨ψ(mmax,nph,do)| (H−E0(mmax,nph,do))2|ψ(mmax,nph,do)⟩                     (20)
+
+versus the maximal bond dimensionmmax.  The variance can be taken as a measure of proximity of a certain
+state to an eigenstate of the Hamiltonian.  As expected, a small choice of do limits the reachable precision
+in the variance.  However,  limiting nph  does not limit the precision in such a way.  As mentioned earlier,
+changing nph  alters  the  Hilbert  space  and  the  system  altogether  and,  therefore,  one  can  be  close  to  the
+ground state in the case of a small nph, but the state is still substantially diﬀerent from the ground state in
+the limit nph =∞.  This diﬀerence, however, does not manifest itself in the variance.
+                                                                  12
+2.4.  Projected Puriﬁcation
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                               (a)                                                                            (b)
+
+Figure 8:   (a) A schematic representation of the local Hilbert space doubling via the introduction of a bath site for each local
+degree of freedom as used in PP-2DMRG is shown.  (b) The decomposition and projection of a general MPS tensor (top) into
+the  subspaceP  enforcing  the local  gauge  conditions  is  depicted.   The decomposition  of the  introduced  auxiliary index  into
+irreducible representations of the local conservation law generated by ˆnP;j + ˆnB;j as described in [53] is sketched by the double
+bond (nP;j,αj−1).
+
+    In the following, we describe the projected-puriﬁcation ansatz [53], which is based on a doubling of the
+Hilbert space and a subsequent projection into an invariant subspace.  This scheme allows us to formulate
+operators and states that transform under a restored global U(1) symmetry and to eﬃciently represent and
+truncate the local phononic degrees of freedom.  A simple pictorial representation of the ansatz is sketched
+in ﬁgure 8(a).  Every physical site with electron and phonon degrees of freedom is accompanied by a phonon
+bath site that acts as a reservoir.  Creating or annihilating a phonon on the physical site means that it hops
+from or to the bath site.  This way, an artiﬁcial U(1) symmetry is generated, namely the combined number
+of phonons on the physical and bath site is conserved.
+
+2.4.1.  Projected Puriﬁed Operators
+    Consider  a  Hilbert  spaceH  =H⊗Ld     with  basis  states  labeled  by  the  eigenvalues  of  the  local  density
+operators ˆnj = diag(0, 1,...,d− 1).  We deﬁne a doublingHPB =HP⊗HB, introducing two copiesHP/B
+of the original Hilbert spaceH as shown in ﬁgure 8(a) and refer toHP  andHB  as the physical and bath
+Hilbert space, respectively.  Operators acting on (local) Hilbert spacesHP/B(;d)  will be equipped with an
+additional  label,  for  instance,  ˆnP/B;j  denotes  the  density  operators  acting  on  the  local  physical  or  bath
+degrees of freedom at site j.  A projected puriﬁed operator  ˆOPP  :P→P  acts on a subspaceP⊂HPB  of
+the puriﬁed Hilbert space and satisﬁes the constraints
+                                                       [ ˆOPP, ˆnP;j + ˆnB;j]
+                                                                                 = 0                                                            (21)
+
+for  every j.   Deﬁning  global  operators   ˆNP/B  = ∑j ˆnP/B;j,  any  projected  puriﬁed  operator  manifestly
+conserves the global U(1) symmetry generated by  ˆNP +  ˆNB:
+                                                       [ ˆOPP,  ˆNP +  ˆNB]
+                                                                               = 0.                                                            (22)
+
+                                                                     13
+An explicit construction scheme for the subspaceP  can be found by ﬁxing gauge constraints between the
+physical and bath site to
+
+                                                      ˆnP;j + ˆnB;j≡ (d− 1).                                                            (23)
+
+In [53], we showed that this choice implies dimP = dimH and that there is a one-to-one mapping between
+states  and  operators  in  these  Hilbert  spaces.   It  follows  that  for  any  operator   ˆO  acting  on  the  original
+Hilbert space, an analogous projected puriﬁed operator can be constructed.  This is achieved by introducing
+balancing operators  ˆβ[†]B;j
+
+
+                                                 d−1∑
+                                      ˆβB;j =          |nB;j− 1⟩⟨nB;j|, |nB;j⟩∈HB;d .                                        (24)
+
+                                               nB;j=1
+
+Writing  ˆO in terms of ladder operators ˆb[†]j  , the mapping to the corresponding projected puriﬁed operator
+ˆOPP  is achieved by pairing up ladder operators with conjugated balancing operators:
+
+                                                ˆb†j→ ˆb†P;j ˆβB;j,    ˆbj→ ˆbP;j ˆβ†B;j .                                                     (25)
+
+The phononic part of the Holstein model breaking the global U(1) symmetry inH is then represented by a
+projected puriﬁed operator  ˆHPP;f−ph acting only onP
+                                         ˆHPP;f−ph =γ∑             (ˆb†                       )
+                                                                ˆnfj  P;j ˆβB;j + ˆbP;j ˆβ†B;j   .                                           (26)
+                                                            j
+
+Note that  ˆHPP;f  and  ˆHPP;ph remain unaltered except for a formal replacement of local operators acting on
+Hd with their counterparts acting onP:
+
+                             ˆc[†]j → ˆc[†]P;jˆ1B;j,    ˆnfj→ ˆnfP;jˆ1B;j    and   ˆb†jˆbj→ ˆb†P;jˆbP;jˆ1B;j .                             (27)
+
+2.4.2.  Projected Puriﬁed MPS
+    The gauge-ﬁxing condition (23) allows us to construct a projector toP.  Using the action of this projector
+on MPSs in the enlarged Hilbert space, we derived a condition on the combined physical and bath system’s
+site tensors [53].  In a practical ground-state-search calculation, it suﬃces to create an initial state whose
+physical  indices  reﬂect  the  gauge  ﬁxing.   For  instance,  let TnP;jj;αj−1,γj  and TnB;jj;γj,αj  be U(1)-invariant  MPS
+site tensors with physical and bath local degrees of freedom labeled by nP;j  and nB;j,  respectively.  The
+condition for the MPS to represent a projected puriﬁed state|ψ⟩PP∈P  is then given by
+                                    ∑
+                                         TnP;jj;αj−1,γjTnB;jj;γj,αj⁄= 0⇔nP;j +nB;j≡ (d− 1),                                      (28)
+                                     γj
+
+and shown graphically in ﬁgure 8(b).  SinceP  is a subspace of the enlarged Hilbert spaceHPB, projected
+puriﬁed operators acting on such states conserve this condition.  This is an important point as it minimizes
+the implementational eﬀort.  In fact, by doubling the Hilbert space and using projected puriﬁed operator
+representations only, DMRG codes that are able to initialize states|ψ⟩PP  obeying (28) can readily work in
+P  and thereby exploit restored global U(1) symmetries.  For the dimensions of the indices representing the
+local degrees of freedom, this implies dimnP/B;j≡ 1.
+
+2.4.3.  Truncation and Connection to 1RDM
+    Projected puriﬁed states|ψ⟩PP∈P  exhibit an intimate relation to the 1RDM  ˆρj = Trk⁄=j|ψ⟩⟨ψ| of the
+corresponding state in the original Hilbert spaceH, which is displayed graphically in ﬁgure 9.  The crucial
+
+
+                                                                   14
+Figure 9:   Schematic representation of the connection between the irreducible representations of tensor blocks TnP;j  and the
+diagonal elements of the 1RDMρnj,nj .  On the right-hand side, the blue boxes indicate irreducible representations of the tensor
+
+blocks TnP;j  with nP;j = 0, 1, 2,... constituting the site tensor TP;j.  Note that if ρnj,nj  is smaller than the given truncation
+threshold, complete tensor blocks TnP;j  can be discarded.
+
+
+observation is that in a mixed-canonical MPS representation, when tracing out the auxiliary indices of the
+physical Hilbert spaceHP  at the orthogonality center j, one obtains the diagonal elements
+                                                                                 [             ]† ,                                            (29)
+                                           ρnP;j,nP;j = ∑           TnP;jj;αj−1,γj TnP;jj;αj−1,γj
+                                                           αj−1,γj
+
+of ρnj,n′j.  A truncation scheme across the auxiliary bond γj:
+
+                                                 TnP;jj;αj−1,γj =∑    UnP;jj;αj−1,σΛσVσ,γj ,                                                   (30)
+                                                                   σ
+discarding only the smallest singular values Λ˜σ so that the truncated weight fulﬁlls∑˜σ Λ2˜σ <δ, approximates
+the single-site reduced density-matrix in an optimal way with respect to the 1-norm
+
+                                                            Tr(ˆρj− ˆ˜ρj)<δ.                                                                 (31)
+
+Such a truncation can discard complete tensor blocks TnP/B;j  if ρnP;j,nP;j <δ as follows immediately from
+(29) and thus reduces the number of local degrees of freedom nP/B;j  in the state representation.
+    Finally,  the  full  1RDM  can  be  obtained  from  contracting  physical  and  bath  site  tensors  in  a  mixed-
+canonical representation
+
+                                       Mnjj;αj−1,αj =∑        TnP;jj;αj−1,γjTnB;jj;γj,αjδnj,nP;j                                                    (32)
+                                                          γj
+                                                                                   [               ]† .                                        (33)
+                                         ⇒ρnj,n′j =  ∑               Mnj             Mn′j
+                                                                        j;αj−1,αj       j;αj−1,αj
+                                                         αj−1,αj−1
+
+    Taking  operators  and  states  into  their  projected  puriﬁed  representation  implies  certain  numerical  ad-
+vantages in MPS calculations when the local dimension d of the problem is large and the system does not
+conserve global U(1) symmetries, initially.  When re-establishing a global U(1)-symmetry in the subspace
+P,  local  degrees  of  freedom  ˆnP/B;j  decompose  into  one-dimensional  representations.   As  a  consequence,
+contractions scaling as dl for some exponent l∈ N can be parallelized over the local degrees of freedom.
+    Additionally,  the  connection  to  the  1RDM  reveals  that  if  for  some n0 ∈{0,...,d− 1}  the  diagonal
+elementsρn±n0,n±n0 are decaying fast enough, the number of relevant tensor blocks can be reduced drastically
+upon truncation.  An important conclusion is that having restored the globalU(1) symmetry w.r.t. phononic
+degrees of freedom allows us to employ a local solver based on two-site tensors, which is less prone of getting
+                                                                      15
+Figure 10:   Weightwo of optimal modesdo as a function of the maximal bond dimension at the auxiliary bondsγ25 (a) and (b)
+using the projected puriﬁcation.  Data is extracted from the single-site reduced density matrix ρn25/24,n′25/24  at the center site
+(j = 25/24) in the calculated ground state of the Holstein model withL = 51 sites andN = 25 fermions, ω/t0 = 1.0,γ/t0 = 1.5.
+The inset shows the diagonal elements ρn25,n25  indicating the immediate eﬀect of truncations.  For comparison, the phonon
+excitation probabilities obtained for t0 = 0 at occupied sites (left) are overlayed, indicated by yellow crosses.
+
+
+stuck in local minima (PP-2DMRG). Furthermore, the truncation argument implies that the dimension of
+the auxiliary bond γj  between physical and bath site tensors controls the quality of the approximation of
+ρnj,n′j.
+    As  a  consequence,  the  same  scaling  analysis  in  terms  of  auxiliary  bond  dimensions,  which  is  usually
+employed in DMRG algorithms to extrapolate observables towards their exact value, can be used for the
+projected puriﬁcation.  This is demonstrated in ﬁgure 10(a), where we show the weight wo  of the optimal
+modesdo of the single-site reduced density-matrix as a function of the auxiliary bond dimension γj used to
+approximate the ground state of the Holstein model near the phase boundary (P.2).  Upon increasing the
+bond dimension we ﬁnd a well-converging behavior for the weights wo(do).  Note that in these calculations,
+we allowed for a maximum number of nph = 63 phonons per lattice site.  However, as shown in the inset,
+the  maximum  occupation  number  for  the  phonons  kept  after  truncation  is nph ≤  20,  i.e.,  a  signiﬁcant
+amount of tensor blocks is discarded due to the vanishing contribution of high-occupation phonon modes.
+Therein, we also indicate the diagonal elements calculated for the atomic limit t0 = 0 using the Lang-Firsov
+transformation of the Holstein Hamiltonian [79].  It can be seen that the phonon excitation probability (i.e.,
+ρnj,nj), obtained from projected puriﬁcation, is already very close to the limit of decoupled fermions, which
+is the asymptotic distribution when sending t0→ 0.
+
+2.4.4.  Eﬀects of Truncation
+    Performing ground-state searches using PP-2DMRG allows to monitor the actual discarded weight δj
+on a bond     j  = (j,j + 1) after each¸ local-optimization step as a function of the maximally allowed bond
+dimension mmax.  As a consequence, an estimate for the quality of the obtained ground-state energy can be
+
+
+
+                                                                   16
+Figure 11:    Truncation eﬀects in the PP-2DMRG method at three diﬀerent points in parameter space, i.e., in the LL phase
+(P.3) (green), near the phase boundary (P.2) (blue), and in the CDW phase (P.3) (yellow).  In (a), the maximal discarded weight
+δmax as a function of the maximally allowed bond dimension mmax is shown demonstrating the impact of strong ﬂuctuations
+near the phase boundary on the required bond dimensions to achieve a particular accuracy.  (b) shows the scaling of the relative
+distance ∆E  to the minimally found ground-state energies with the maximal discarded weight revealing that near the phase
+boundary, the maximally allowed number of statesmmax = 2000 is not suﬃcient to achieve the same numerical precision as in
+the LL and CDW phase.
+
+
+constructed from the maximally found discarded weight per bond
+
+                                                   ∆ = 2L max       j≡ 2Lδmax .                                                         (34)
+                                                               j δ
+
+This provides an alternative convergence test for the approximation of the ground state as we expect the
+diﬀerence of the approximated energy E to the exact ground-state energy Eex to scale as E−EexEex ∼ ∆.  For
+PP-2DMRG, this is important, since the phonon correlations are encoded into the auxiliary bond between
+the physical- and bath-site tensors.  If the number of phonons is large and their excitation probability is
+broadly distributed, this implies the requirement of signiﬁcantly larger auxiliary bond dimensions to keep
+the discarded weight below a certain threshold [53].
+    The necessity to monitor the discarded weight can be illustrated by studying the system near the phase
+boundary where strong ﬂuctuations in both the fermionic and phononic subsystem are present, which have
+to be captured by the auxiliary bonds.  The bond dimensions between the original lattice sites are multiplied
+by the additional number of states required to capture the phononic degrees of freedom on the auxiliary
+bonds γj.  Thus,  near the phase boundary,  where we have strong ﬂuctuations on large length scales also
+in  the  fermionic  systems,  the  value  of mmax  on  the  auxiliary  bonds  between  physical  and  bath  sites  has
+to be chosen comparably large in order to achieve a certain quality ∆ of the approximated ground states.
+We demonstrate this observation in ﬁgure 11(a) (blue curve) where the chosen cutoﬀ mmax = 2000 is not
+suﬃcient to reach the desired discarded weight per bond δj  = 10−14.  However,  it should be pointed out
+that using the restored global U(1) symmetries, mmax = 2000 is not ﬁxed because of numerical limitations,
+but only to allow consistent comparisons.
+
+2.4.5.  Benchmark Setup
+    For the benchmark simulations, the maximum allowed bond dimensions are varied from mmax = 100 up
+to mmax = 2000 and the number of phonons is bound by nph = 63.  The initial state for the ground-state
+searches are constructed as a Fermi sea of non-interacting, spinless fermions and no phonons in the physical
+system (nP;j≡ 0).  In order to achieve convergence, the maximally allowed number of sweeps for a single
+ground-state calculation was set to 200 (which is never reached) and the calculations were terminated once
+                                                                  17
+the relative ﬂuctuations in the approximated ground-state energy as a function of the number of sweeps fell
+below a certain threshold.  For the high-precision calculations, this threshold was set to 10−14 while in case
+of the ﬁnite-size extrapolation the condition to terminate the ground-state search was relaxed to a threshold
+of 10−8.
+
+3.  Comparing the Methods
+
+    The  Holstein  model  provides  an  excellent  testing  platform  to  compare  the  numerical  behavior  of  the
+presented DMRG methods with respect to two important problem settings:  numerical high-precision cal-
+culations  at  intermediate  system  sizes  and  ﬁnite-size  extrapolations,  thereby  relaxing  conditions  on  the
+numerical precision as a tradeoﬀ for reaching larger system sizes.  For the high-precision calculations, we ﬁx
+the system size to L = 51 lattice sites at nearly half ﬁlling with N  = 25 fermions.  The ﬁnite-size extrapo-
+lation is performed for systems with L = 51, 101, 151, 201 lattice sites where the fermion number is set to
+N  = L−12   .  Note that we always use an odd number of lattice sites.  One reason for this is the observation
+that in the CDW phase, the sublattice symmetry between even and odd sites is broken and the unit cell
+is enlarged to consist of two lattice sites.  In a system with an even L, this yields two diﬀerent possibilities
+of arranging the unit cells.  These two choices will hybridize to form the ground state.  For DMRG, this
+is a delicate situation as the site tensors are optimized in a way to minimize entanglement entropy while
+sweeping through the system.  In such situations, an often encountered consequence is that algorithms get
+stuck in low-lying excited states, which minimize the entanglement entropy but not the global energy.  To
+circumvent this problem, we use odd system sizes, thereby ﬁxing the arrangement of the unit cells in the
+CDW phase.  This has the pleasant side eﬀect that the CDW order parameter actually acquires a ﬁnite value
+in the CDW phase, which is not the case in ﬁnite systems with an even number of sites.
+
+3.1.  Convergence Analysis of Ground-State Energies
+    In order to compare the methods’ capabilities of approximating the ground state, we perform a scaling
+analysis in the maximum bond dimension mmax.  We calculate the relative distance of the approximated
+ground-state  energies E0(mmax)  =⟨ψ(mmax)| ˆH|ψ(mmax)⟩  to  the  lowest  energy  found  from  all  methods,
+Emin,
+
+                                             ∆E(mmax) = Emin−E0(mmax)Emin     .                                                    (35)
+
+For the DMRG3S+LBO and PP-2DMRG methods, we also systematically evaluated the variance for the
+found ground-state approximations|ψ(mmax)⟩
+
+                                   Var[ ˆH] =⟨ψ(mmax)|( ˆH−E0(mmax))2|ψ(mmax)⟩ .                                       (36)
+
+In practice, a systematic dependency of the variance on the ground-state energy allows us to extrapolate
+toward the limit of inﬁnite bond dimension E0(mmax→∞) [80].
+    During the numerical calculations, the maximally allowed discarded weight per bond is set to δ = 10−14
+for  the  DMRG3S+LBO  and  PP-2DMRG  methods.   The  PS-DMRG  calculations  were  not  limited  with
+respect to δ.  Here, for the given parameter sets, the discarded weight is not a helpful quantity to decide
+whether a calculation converges or not and therefore, for PS-DMRG, we focus on the bond dimension as
+the sole control parameter.
+    Having discussed each method’s peculiarities in sections 2.2 to 2.4, in the following, we only show one
+dataset  per  method  and  parameter  set.   For  the  comparison,  we  pick  those  datasets  yielding  the  lowest
+ground-state energies for the largest bond dimension.
+
+
+
+
+
+
+                                                                18
+Figure 12:    Relative deviations from the minimal ground-state energy found (a) and their scaling w.r.t. the relative variance
+(b) using PS-DMRG (∆E  only), PP-2DMRG and DMRG3S+LBO for the parameter set (P.1).  We vary the maximal bond
+dimensions and for the case of PS-DMRG and DMRG3S+LBO, we only show data points belonging to those datasets that
+yield the lowest ground-state energies.  The maximal bond dimensions mmax in (a) are rescaled by a factor of 3 in the case of
+the PS-DMRG and PP-2DMRG calculations.
+
+
+LL  phase.  Figure  12  displays  the  results  of  the  scaling  analysis  in  the  LL  phase  (P.1).   The  maximum
+bond  dimension mmax  used  during  the  PS-DMRG  and  PP-2DMRG  calculations  are  rescaled  by  a  factor
+of  3.   For  the  latter,  this  yields  a  dependency  of  the  ground-state  energies  on mmax  comparable  to  the
+data obtained using DMRG3S+LBO, as shown in ﬁgure 12(a).  The smallest ground-state energy reached
+is Emin/t0  =−36.15999956298296  obtained  by  PP-2DMRG  with  a  relative  precision∼  10−13,  which  is
+consistent with the chosen discarded weight δ = 10−14.
+    The relative variance     Var[ ˆH]E20(mmax)  as a function of the relative distance ∆E  is shown in ﬁgure 12(b).  For
+both the DMRG3S+LBO and PP-2DMRG methods, we ﬁnd a similar systematic dependence up to a very
+high precision.  Note that the saturation of     Var[ ˆH]E20(mmax)  at ∆E(mmax)< 10−12 is numerically consistent with
+the overall truncation error∝L·δ introduced by the chosen discarded weight per bond δ = 10−14.
+
+Phase  boundary.  Figure 13 shows the results near the phase boundary between the LL and CDW phase.
+The scaling of ∆E(mmax) displayed in ﬁgure 13(a) reveals that the appearance of heavy polarons and strong
+ﬂuctuations in the fermion system require a much larger bond dimension to approximate the ground state
+with a high precision.  This is reﬂected by a rescaling ofmmax with a factor of 1.5 for the PS-DMRG method
+and a factor of 5 for PP-2DMRG in order to achieve a convergence behavior similar to the one observed in
+DMRG3S+LBO. Here, the ground-state approximations obtained using DMRG3S+LBO yield the smallest
+energy, which is given by Emin/t0 =−70.862628874727 with a relative precision of ≲ 10−11 as can be seen
+by the variance displayed in ﬁgure 13(b).
+
+CDW  phase.  In ﬁgure 14, the scaling analysis is shown for the parameter set (P.3) for which the system
+is  in  the  CDW  phase.   All  tested  methods  are  capable  of  faithfully  representing  the  ground  state  with  a
+very  high  precision  and  comparably  small  bond  dimensions  with  the  lowest  energy  given  by Emin/t0  =
+−107.32209423031215 with a relative precision of 10−14 using PP-2DMRG. For the PS-DMRG method, we
+rescaled the maximally allowed bond dimension by a factor of 4 while a factor of 7.5 was required for the
+PP-2DMRG method in order to achieve a similar scaling behavior of ∆E for the three methods.  This large
+rescaling factor is based on the broadly distributed excitation probabilities of the phonons requiring a larger
+local  Hilbert-space  dimension.   Here,  for  all  three  methods  tested,  we  use Nph  =  63  to  achieve  the  best
+results.
+                                                                 19
+Figure 13:    Relative deviations from the minimal ground-state energy found (a) and their scaling w.r.t. the relative variance
+(b) using PS-DMRG (∆E  only), PP-2DMRG and DMRG3S+LBO for the parameter set (P.2).  We vary the maximal bond
+dimensions and for the case of PS-DMRG and DMRG3S+LBO, we only show data points belonging to those datasets that
+yield the lowest ground-state energies.  The maximal bond dimensions mmax in (a) are rescaled by a factor of 1.5 in the case
+of the PS-DMRG calculations and a factor of 5 in the case of the PP-2DMRG calculations.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 14:    Relative deviations from the minimal ground-state energy found (a) and their scaling w.r.t. the relative variance
+(b) using PS-DMRG (∆E  only), PP-2DMRG and DMRG3S+LBO for the parameter set (P.3).  We vary the maximal bond
+dimensions and for the case of PS-DMRG and DMRG3S+LBO, we only show data points belonging to those datasets that
+yield the lowest ground-state energies.  The maximal bond dimensions mmax in (a) are rescaled by a factor of 4 in the case of
+the PS-DMRG calculations and a factor of 7.5 in the case of the PP-2DMRG calculations.
+
+
+3.2.  Local Observables - Oscillator Displacement
+    Having studied the convergence of the ground-state approximation for the diﬀerent methods,  we turn
+to physical observables next.  In the Holstein model, the CDW phase is characterized by the formation of
+lattice distortions with a period of twice the lattice constant, i.e., the translation symmetry of the lattice
+is  broken  into  two  translational  invariant  sublatticesA/B  with  even/odd  lattice  sites.   We  evaluate  the
+oscillator displacement of the jth lattice site for diﬀerent maximum bond dimensions mmax near the phase
+
+
+                                                                     20
+Figure 15:    Oscillator displacement xph(j) =⟨ˆb†j + ˆbj⟩ in the ground state near the phase boundary.  The data shown here
+is taken from the calculations with the largest bond dimension for each method.  For convenience, even-(a) and odd-site (b)
+expectation  values  are  plotted  separately.   Insets  display  diﬀerences  of  the  calculated  oscillator  displacements  between  the
+diﬀerent methods.
+
+boundary (P.2)
+
+                                                           xph(j) =⟨ˆb†j + ˆbj⟩ ,                                                               (37)
+
+breaking  translational  symmetry.   In  ﬁgure  15,  the  results  are  shown  for ω0/t0  =  1.0  and γ/t0  =  1.5.   We
+separately plot even-(ﬁgure 15(a)) and odd-site (ﬁgure 15(b)) expectation values to illustrate the behavior
+of xph(j)  in  the  two  sublattices.   All  methods  yield  the  same  behavior,  i.e.,  we  ﬁnd  developing  CDW
+modulations  in  the  two  sublattices  caused  by  ﬁnite  displacements  with  larger  values xph(j)  for j ∈ B
+compared  to  those xph(j)  for j ∈ A.   In  order  to  visualize  the  numerical  deviations,  in  the  insets,  we
+plot the diﬀerence ∆xph(j) between the displacements obtained from the datasets with the largest mmax
+for  each  method,  as  they  exhibit  the  highest  precision  (mmax  =  2000  for  PP-2DMRG, mmax  =  440  for
+DMRG3S+LBO  and mmax  =  200  for  PS-DMRG).  In  the  analyzed  data,  the  deviations  ∆xph(j)  rapidly
+decrease and, for the largest bond dimensions, are located around 10−6 as shown in ﬁgure 15.
+
+3.3.  Finite-Size Extrapolation
+    Practically, one is often interested in a ﬁnite-size extrapolation of intensive quantities such as the energy
+density E0L  or the order parameter
+                                                                      ∑
+                                                   Odisp(L) =  1L          (−1)jxph(j),                                                      (38)
+                                                                        j
+where the extrapolation towardsL→∞ allows us to approach the thermodynamic limit.  Here, we perform
+a  scaling  analysis  of  the  ground-state  energy  density ϵ(L)  = E0L   in  units  of t0 ≡  1  andOdisp(L).   The
+extrapolations are done using ﬁtting functions
+
+                                                       ϵ(L) = AϵL  +ϵ∞                                                                         (39)
+
+                                                 Odisp(L) = AOL   + BOL2  +Odisp,∞ .                                                   (40)
+
+For the order parameter, we add a contribution∝   1L2  to account for boundary eﬀects, which are important
+for the parameter sets (P.1) and (P.2).
+                                                                      21
+Figure 16:   (a) Finite-size scaling of the ground-state energy of the Holstein model.  (b) Finite-size scaling for the CDW order
+parameter of the Holstein model.  The model is evaluated for parameters ω0/t0 = 1.0, γ/t0 = 1.5 at nearly half ﬁlling where we
+set N = L−12   .
+
+
+   Table 1:   Energy densities ε∞ = limL→∞ε(L) in units of t0 obtained from ﬁnite-size scaling of ground-state energies.
+                    PS-DMRG                         DMRG3S+LBO                    PP-2DMRG
+          (P.1) −0.71862± (2· 10−5)  −0.718616± (5· 10−6)   −0.71863± (1· 10−5)
+          (P.2) −1.41606± (1· 10−5)  −1.416048± (7· 10−6)   −1.416047± (3· 10−6)
+          (P.3) −2.1462830± (1· 10−7) −2.146283452± (2· 10−9) −2.146283443± (2· 10−9)
+
+
+Energy  density.  The  extrapolated  energy  density  in  the  thermodynamic  limit  is  shown  in  table  1.   All
+methods  agree  within  their  conﬁdence  intervals  for  the  investigated  parameter  sets  (P.1)  and  (P.2).   For
+illustrational purposes, in ﬁgure 16(a), the ﬁnite-size extrapolation is displayed for the parameter set (P.2).
+In the CDW phase (P.3), the ﬁnite-size extrapolations seem to underestimate the ﬁtting error.  We attribute
+this to the fact that in the CDW phase, and at weakened conditions on the precision, the formation of heavy
+polarons eﬀectively suppresses the energy gains due to fermion delocalization.  As a consequence, domain
+walls in the fermionic system are harder to resolve and the calculations can get stuck in a local minimum.
+In our calculations, it appears that all three methods are aﬀected by this problem, though in a diﬀerent way
+owing to their diﬀerent approximations, and practically, convergence has to be checked very carefully.
+
+Order  parameter.  The extrapolated values for the CDW order-parameter in the thermodynamic limit are
+shown in table 2; and the explicitly calculated system-size dependencies are plotted in ﬁgure 16(b) for the
+
+
+
+    Table 2:   Order parametersOdisp,∞ = limL→∞Odisp(L) obtained from the ﬁnite-size scaling of ground-state values.
+                         PS-DMRG                       DMRG3S+LBO              PP-2DMRG
+               (P.1)    (−2.2± 0.4)· 10−5           (−3± 6)· 10−6                (−5.3± 0.9)· 10−6
+               (P.2)    (−1.09± 0.06)· 10−2       (−1.24± 0.03)· 10−2       (−1.21± 0.04)· 10−2
+               (P.3) −1.678313± (5· 10−6) −1.678221± (4· 10−6) −1.678244± (5· 10−6)
+
+
+                                                                  22
+                                           PS-DMRG                     DMRG3S+LBO                    PP-2DMRG
+    System enlargement    × log2(nph + 1)        ×1          ×2
+    Local Hilbert space                                                                              w.r.t.  diagonal elements
+          truncation                              none                       w.r.t.  eigenvalues of1RDM  ˆρj of 1RDM  ˆρj
+ Convergence parameter      nph, δ(mmax)        nph, δ(mmax), do        nph, δ(mmax)
+    Phonon symmetries                       none                                   none               U(1)
+                                                                      1RDM computation,
+      Additional code                                                   diagonalization &
+        requirements               pseudo-site operators             DMRG optimization of               balancing operators
+                                                                     1RDM trafo, MPS and
+                                                                      MPO transformation
+
+Table 3:   Comparison of method speciﬁc properties when applied to the Holstein model.  Local Hilbert space truncation refers
+to the possibility of reducing the local Hilbert space dimension of the phononic degrees of freedom.  Listed, additional code
+requirements assume that the given implementation is capable of dealing with long-ranged couplings.  It is also assumed that
+the implementation is capable to truncate site tensors w.r.t.  control parameters such as the maximal bond dimension mmax
+or the discarded weight δ per bond.
+
+
+parameter set (P.2).  In the LL phase (P.1), we expectOdisp,∞≡ 0.  With a relative precision∼O(10−5), this
+is found for the PS-DMRG method, whereas the PP-2DMRG and DMRG3S+LBO calculations are about
+an order of magnitude smaller∼O(10−6).  Near the phase boundary (P.2), all methods yield a small but
+ﬁnite value coinciding with a relative precision of∼O(10−2), which is comparably small and most probably
+a signature of the strong ﬂuctuations.  Note that it is not too surprising that near the phase boundary, the
+methods may produce diﬀerent outcomes for the order parameter.  In the CDW phase, the three methods
+coincide up to 4 signiﬁcant digits yielding a ﬁnite value of the order parameter, as expected.  In particular,
+the DMRG3S+LBO and PP-2DMRG methods coincide up to a relative precision of 10−5.  However, at (P.3)
+all methods do not agree with respect to their error bounds obtained from the ﬁnite-size scaling, which was
+also found in the ground-state energy extrapolation.
+    A more careful convergence analysis is essential to achieve consistent extrapolations, which, however, is
+not the goal of this comparison.  Instead, we want to point out that for the case of heavy polarons, ensuring
+the convergence with respect to all numerical control parameters is of particular importance.
+
+4.  Discussion
+
+    The technical properties of the discussed methods are summarized and compared in table 3.  It should
+be noted that both PS-DMRG and PP-2DMRG require fewer modiﬁcations to an existing code compared to
+an implementation of DMRG3S+LBO. In particular, PS-DMRG can be readily used if the implementation
+supports combined fermionic and hardcore-bosonic lattice degrees of freedom.  In order to use PP-2DMRG,
+the most relevant required modiﬁcation is the implementation of the balancing operators which, however, are
+only local operators, i.e., they can be realized in a straightforward manner.  In contrast, the implementation
+of DMRG3S+LBO is more involved and requires the evaluation, optimization and truncation of the 1RDM
+during each site update as well as a transformation of the local Hilbert space representation for both, the
+MPS and MPO site tensors.  The technical prerequisites in table 3 are put in the context of the numerical
+behavior of the diﬀerent approaches, described in section 3.
+
+PS-DMRG.  The extension of the system size by introducing pseudo sites controls the numerical behavior.
+There are long-ranged couplings between the fermionic sites and the pseudo sites,  as well as long-ranged
+hoppings between the fermionic sites with a maximum range spanning log2(nph + 1) + 2 lattice sites.  The
+situation  can  be  analyzed  by  considering  a  bipartition  of  the  system  right  in  the  middle  of  the  chain  of
+pseudo sites.  In such a bipartition, the cut bond has to account for both, fermionic correlations between
+the  physical  lattice  sites  and  oﬀ-diagonal  phonon  correlations  on  the  current,  physical  lattice  site.   For
+                                                                 23
+the latter,  strong phonon ﬂuctuations contribute to the entanglement entropy with a scaling that can be
+estimated asSPS∼NPS/2 whereNPS = log2(nph+1) is the number of pseudo sites.  This contribution to the
+entanglement entropy superimposes the fermionic correlations.  The convergence behavior of the PS-DMRG
+high-precision calculations in the LL phase (c.f. ﬁgure 12) and near the phase boundary (c.f. ﬁgure 13) can
+be related to this picture.  In both regions, the fermionic degrees of freedom exhibit critical behavior that
+translates to very long-ranged correlations when introducing pseudo sites.  A local DMRG-optimization step
+in the middle of the chain of pseudo sites,  subject to a ﬁnite bond dimension,  then preferably optimizes
+with  respect  to  the  local  correlations.   If  the  maximally  allowed  bond  dimension mmax  is  not  suﬃcient,
+this  results  in  a  situation  in  which  the  optimization  is  mainly  constrained  to  the  phonon  system.   Upon
+increasing mmax, at some point the bond dimension is large enough to reproduce the long-ranged fermionic
+correlations with high ﬁdelity.  A similar reasoning can be employed to interpret the behavior of the PS-
+DMRG when increasing the number of pseudo sites (c.f. ﬁgure 4).  Here, larger values of SPS in the middle
+of the chain of pseudo sites yield a slower convergence with respect to the bond dimension.  Note that this
+behavior can also serve as a convergence criterion, i.e., if the maximum phonon number nph is large enough
+so thatSPS saturates, the convergence of the ground-state energy when scaling the bond dimension becomes
+independent ofnph.  Finally, once the system is in the CDW phase, the fermions localize, allowing for a very
+fast convergence of the PS-DMRG as seen in ﬁgure 14.
+
+DMRG3S+LBO.  In comparison to the other methods, the DMRG3S+LBO method achieves excellent con-
+vergence  of  the  ground-state  energy  with  the  smallest  required  bond  dimensions.   This  is  achieved  by
+representing  on-site  phonon-correlations  in  terms  of  the  truncated  transformation  matrices Rj  acting  on
+the physical legs.  A careful optimization of the Rj’s in order to ﬁnd the optimal modes representing the
+phononic 1RDM is thus a necessary condition for a well-behaved simulation.  For that reason, a convergence
+analysis with respect to the number of optimal modesdo is crucial and requires various ground-state searches,
+since do cannot be increased in the current implementation of the groundstate search (an adaptive increase
+ofdo is possible, though, see [26, 30, 81]).  During a DMRG sweep one has to perform various optimizations
+per lattice site.  A single site optimization updates both, the site tensor and the transformation matrix.  In
+the current setup, two subsequent optimizations are suﬃcient to achieve converged results, but dynamic and
+more involved convergence criteria may become necessary for more complicated systems.
+    Using  a  single-site  DMRG-solver  [65],  the  convergence  behavior  during  DMRG-sweeps  does  not  only
+depend on the maximally allowed bond dimension and the chosen optimal modes but also the initial state,
+as  well  as  the  subspace  expansion  mixing  factor.   A  reasonable  choice  of  the  initial  state  is  of  particular
+importance (c.f. ﬁgure 6).  Here, the separation of the optimization of the transformation matrix, updating
+the 1RDM approximation of the phononic degrees of freedom, from the local site-tensor optimization, appears
+to be an important contribution to the tendency of the ground-state search to get stuck.  In the scope of our
+investigations, a Fermi sea with power-law correlations has proven to be a reliable initial guess state in the
+three investigated regions of the phase diagram.
+
+PP-2DMRG.  The projected puriﬁcation combines the ideas of the other methods and, thus, inherits some
+of their properties.  The convergence behavior is dominated by the oﬀ-diagonal correlations that build up in
+the phononic system, which control the growth of the bond dimension between physical and bath sites.  Since
+these bonds carry both, fermionic and phononic correlations, the number of states required to approximate
+the ground-state to a given precision is in general larger than in the case of the DMRG3S+LBO method.
+As already discussed for the case of the PS-DMRG method, this may translate to convergence problems,
+if the available maximal number of states mmax  between physical and bath sites is not suﬃcient so that
+mainly  the  phononic  degrees  of  freedom  are  optimized.   However,  since  the  coupling  range  between  the
+fermions is only increased from nearest-neighbor to next-to-nearest-neighbor,  convergence issues typically
+are not drastic and can be overcome by warm-up sweeps in which the fermion-phonon coupling is increased
+gradually.  Notably, in our implementations the PP-2DMRG is the only method that allows for a faithful
+extrapolation in terms of the discarded weightδ.  On the one hand, this is based on the fact that by restoring
+the global U(1)-symmetry, the 1RDM can be truncated according to its diagonal elements and thereby the
+approximation  quality  of  the  phonon  system  is  only  controlled  by δ.   On  the  other  hand,  a  small  bond
+
+                                                                 24
+dimension yields local optimizations to be biased towards the phononic degrees of freedom as observed in
+the PS-DMRG method.  However, in our calculations we found these eﬀects to be less prominent, since the
+coupling range between the fermions is increased only moderately.  Since the approximation quality of the
+phononic 1RDM crucially depends on the discarded weight, a scaling analysis with respect to this control
+parameter is nevertheless of particular importance.
+
+5.  Conclusion
+
+    We  discussed  three  state-of-the-art  matrix-product-state  methods  to  simulate  numerically  challenging
+systems with large local Hilbert spaces and brokenU(1)-symmetries that appear in various physical problem
+settings [13, 38–48].  The presented methods exploit diﬀerent representations and optimization schemes to
+reduce the computational costs.  The pseudosite method (PS-DMRG) unfolds the large local Hilbert space
+into additional sites using a compact binary encoding of the local degrees of freedom.  Eﬃciently representing
+large local Hilbert spaces by means of the local basis optimization (DMRG3S+LBO) directly operates on the
+physical degrees of freedom.  These are rotated into an optimal basis in which the 1RDM is diagonal and can
+be truncated faithfully.  The recently developed projected puriﬁcation (PP-2DMRG) interpolates between
+both approaches in the sense that the system is extended by pairing up each lattice site with a bath site,
+and truncated according to the diagonal elements of the 1RDM. Being conceptually very diﬀerent, it is not
+immediately clear which method is best suited for a given problem setting.  For that reason, we applied these
+methods  to  the  Holstein  model  at  half  ﬁlling,  which  is  a  prototypical  system  featuring  Einstein  phonons
+with large local Hilbert spaces and brokenU(1)-symmetries.  We performed two diﬀerent common numerical
+analyses:  a high-precision scaling analysis of the model’s ground-state energy as a function of the maximally
+allowed bond dimension at an intermediate system size (L = 51 sites) as well as ﬁnite-size extrapolations
+for intensive quantities such as the CDW order parameter in the ground state up to systems with L = 201
+sites.  Our comparisons demonstrate that, in general, all methods characterize the diﬀerent phases with high
+numerical precision and allow for an extrapolation of observables towards the thermodynamic limit.
+    Analyzing the diﬀerent methods in more detail, we also identify situations in which it can be beneﬁcial
+to use a particular method.  For instance, in the case of broadly distributed phonon-excitation probabilities,
+the DMRG3S+LBO and PP-2DMRG methods beneﬁt from their capability of truncations on the phononic
+degrees of freedom.  Here, in particular, the DMRG3S+LBO method achieves very compact representations
+with  the  smallest  bond  dimensions  found  in  our  calculations  (ﬁgures  12  to  14).   This  comes  at  the  cost
+of  a  larger  amount  of  numerical  control  parameters  such  as  the  number  of  phonons  per  lattice  site  in
+combination with the amount of optimal modes kept, or the mixing factor used in the ground-state search.
+As discussed in section 2.3.3, using improper conﬁgurations can produce a strong dependency on the initial
+state, which becomes particularly important in the CDW phase, where heavy polarons slow down the overall
+convergence of the ground-state search.  In these situations, the 2-site solvers used in the PS-DMRG and
+PP-2DMRG methods together with the fact that the only relevant control parameter is the maximum bond
+dimension seem to be easier to control.  Finally,  it should be pointed out that PP-2DMRG is capable of
+exploiting  restored  global U(1)  symmetries,  which  reduces  computational  costs  associated  with  the  local
+degrees of freedom.  Therefore,  even though larger maximal bond dimensions are required to achieve the
+same numerical precision as the PS-DMRG and DMRG3S+LBO methods, this is compensated by the more
+eﬃcient representation of matrix-product states and operators as can be seen in ﬁgures 12 and 14 where
+the most accurate ground-state approximations are found by PP-2DMRG. However,  since the maximally
+allowed bond dimension is limited to mmax≤ 2000 in our calculations,  close to the phase boundary,  the
+more compact representation of DMRG3S+LBO yields the best approximation (see ﬁgure 13).
+    Another important aspect is the question of the applicability of the described methods to study out-
+of-equilibrium setups.  The DMRG-LBO already proved its capability to simulate the dynamics of systems
+with  small  fermion  densities  coupled  to  lattice  phonons  [26,  82],  global  quenches  [27,  30]  and  also  ﬁnite-
+temperature  simulations  [81]  by  using  a  Trotter  decomposition  of  the  time-evolution  operator.   A  very
+natural, further development would be to employ time-evolution schemes such as the time-dependent vari-
+ational  principle  (TDVP)  [83,  84]  or  the W II-representation  [85]  for  time-evolution  allowing  the  eﬃcient
+
+                                                                25
+treatment of long-ranged interactions and larger time-steps (TDVP). From our previous discussion, we ex-
+pect the DMRG-LBO as well as the projected puriﬁcation to be well-suited for an adoption of TDVP as the
+time-evolution scheme (see [86] for developments to combine LBO with TDVP), while due to the continu-
+ously required basis transformations of the Hamiltonian, the W II method seems to be more suitable for the
+projected puriﬁcation.
+
+6.  Acknowledgments
+
+    We thank K. Harms and D. Jansen for insightful discussions.  TK acknowledges ﬁnancial support by the
+ERC Starting Grant from the European Union’s Horizon 2020 research and innovation program under grant
+agreement  No.   758935.   This  work  was  funded  by  the  Deutsche  Forschungsgemeinschaft  (DFG,  German
+Research Foundation) – 207383564; 217133147, via FOR 1807 (projects P4 and P7) and CRC 1073 (projects
+B03  and  B09),  respectively.   SP  acknowledges  support  by  the  Deutsche  Forschungsgemeinschaft  (DFG,
+German Research Foundation) under Germany’s Excellence Strategy-426 EXC-2111-390814868.  We thank
+the TU Clausthal for providing access to the Nuku computational cluster.
+
+
+References
+
+ [1]White S R 1992     Phys. Rev. Lett. 69 2863–2866 URL https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.69.2863
+ [2]White S R 1993     Phys. Rev. B  48 10345–10356 URL https://link.aps.org/doi/10.1103/PhysRevB.48.10345
+ [3]   ¨Ostlund S and Rommer S 1995 Phys. Rev. Lett. 75(19) 3537–3540 URL http://link.aps.org/doi/10.1103/PhysRevLett.75.3537
+ [4]Vidal G 2004     Phys. Rev. Lett. 93(4) 040502 URL http://link.aps.org/doi/10.1103/PhysRevLett.93.040502
+ [5]Verstraete F and Cirac J I 2006     Phys. Rev. B 73(9) 094423 URL https://link.aps.org/doi/10.1103/PhysRevB.73.094423
+ [6]Schollw¨ock   U   2011        Annals   of   Physics   326   96   –   192   ISSN   0003-4916   january   2011   Special   Issue   URL
+     http://www.sciencedirect.com/science/article/pii/S0003491610001752
+ [7]Paeckel S, K¨ohler T, Swoboda A, Manmana S R, Schollw¨ock U and Hubig C 2019      Annals  of  Physics  411 167998 ISSN
+     0003-4916 URL http://dx.doi.org/10.1016/j.aop.2019.167998
+ [8]Verstraete      F,      Porras      D      and      Cirac      J      I      2004          Phys.      Rev.      Lett.      93(22)      227205      URL
+     https://link.aps.org/doi/10.1103/PhysRevLett.93.227205
+ [9]Verstraete      F,      Murg      V      and      Cirac      J      2008           Advances       in       Physics      57      143–224      URL
+     https://doi.org/10.1080/14789940801912366
+[10]Schuch    N,    Wolf    M    M,    Verstraete    F    and    Cirac    J    I    2008          Phys.    Rev.    Lett.    100(4)    040501    URL
+     https://link.aps.org/doi/10.1103/PhysRevLett.100.040501
+[11]Vidal G 2007       Phys. Rev. Lett. 99(22) 220405 URL https://link.aps.org/doi/10.1103/PhysRevLett.99.220405
+[12]Or´us R 2014       The European Physical Journal B 87 ISSN 1434-6036 URL http://dx.doi.org/10.1140/epjb/e2014-50502-9
+[13]Holstein T 1959       Ann. Phys. 8 325–342 ISSN 0003-4916 URL http://www.sciencedirect.com/science/article/pii/0003491659900028
+[14]Tezuka       M,       Arita       R       and       Aoki       H       2005              Phys.       Rev.       Lett.       95(22)       226401       URL
+     https://link.aps.org/doi/10.1103/PhysRevLett.95.226401
+[15]Matsueda  H  and  Ishihara  S  2007         Journal   of   the   Physical   Society   of   Japan   76  083703  ISSN  1347-4073  URL
+     http://dx.doi.org/10.1143/JPSJ.76.083703
+[16]Marsiglio      F      1995             Physica       C:       Superconductivity       244      21      –      34      ISSN      0921-4534      URL
+     http://www.sciencedirect.com/science/article/pii/0921453495000461
+[17]Wellein      G,       R¨oder       H      and      Fehske       H      1996             Phys.       Rev.       B       53(15)      9666–9675       URL
+     https://link.aps.org/doi/10.1103/PhysRevB.53.9666
+[18]Weiße A and Fehske H 1998       Phys. Rev. B 58(20) 13526–13533 URL https://link.aps.org/doi/10.1103/PhysRevB.58.13526
+[19]Bonˇca      J,      Trugman      S      A      and      Batisti´c      I      1999            Phys.      Rev.      B      60(3)      1633–1642      URL
+     https://link.aps.org/doi/10.1103/PhysRevB.60.1633
+[20]Weiße    A,    Fehske    H,    Wellein    G    and    Bishop    A    R    2000           Phys.    Rev.    B    62(2)    R747–R750    URL
+     https://link.aps.org/doi/10.1103/PhysRevB.62.R747
+[21]Hohenadler    M,    Evertz    H    G    and    von    der    Linden    W    2004           Phys.     Rev.     B     69(2)    024301    URL
+     https://link.aps.org/doi/10.1103/PhysRevB.69.024301
+[22]Wall      M      L,      Safavi-Naini      A      and      Rey      A      M      2016            Phys.      Rev.      A     94(5)      053637      URL
+     https://link.aps.org/doi/10.1103/PhysRevA.94.053637
+[23]Jeckelmann        E        and        White        S        R        1998              Phys.        Rev.        B        57(11)        6376–6385        URL
+     https://link.aps.org/doi/10.1103/PhysRevB.57.6376
+[24]Loos  J,  Hohenadler  M,  Alvermann  A  and  Fehske  H  2006        Journal  of  Physics:   Condensed  Matter  18  7299–7312  ISSN
+     1361-648X URL http://dx.doi.org/10.1088/0953-8984/18/31/023
+[25]Heidrich-Meisner     F,     Feiguin     A     E     and     Dagotto     E     2009            Phys.      Rev.      B      79     235336     URL
+     https://journals.aps.org/prb/abstract/10.1103/PhysRevB.79.235336
+
+
+                                                                           26
+[26]Brockt  C,  Dorfner  F,  Vidmar  L,  Heidrich-Meisner  F  and  Jeckelmann  E  2015        Phys.  Rev.  B  92(24)  241106  URL
+      https://link.aps.org/doi/10.1103/PhysRevB.92.241106
+[27]Hashimoto H and Ishihara S 2017       Phys. Rev. B 96(3) 035154 URL https://link.aps.org/doi/10.1103/PhysRevB.96.035154
+[28]Weber      M,      Assaad      F      F      and      Hohenadler      M      2018            Phys.      Rev.      B      98(23)      235117      URL
+      https://link.aps.org/doi/10.1103/PhysRevB.98.235117
+[29]Kloss     B,     Reichman     D     R     and     Tempelaar     R     2019            Phys.     Rev.     Lett.     123(12)     126601     URL
+      https://link.aps.org/doi/10.1103/PhysRevLett.123.126601
+[30]Stolpp  J,  Herbrych  J,  Dorfner  F,  Dagotto  E  and  Heidrich-Meisner  F  2020         Phys.   Rev.   B   101(3)  035134  URL
+      https://link.aps.org/doi/10.1103/PhysRevB.101.035134
+[31]Jeckelmann E and Fehske H 2007       Riv. Nuovo Cimento 30 259–292 URL https://www.sif.it/riviste/sif/ncr/econtents/2007/030/06/article/0
+[32]Weiße A and Fehske H 2008       Exact Diagonalization Techniques (Berlin, Heidelberg: Springer Berlin Heidelberg) pp 529–544
+      ISBN 978-3-540-74686-7 URL https://doi.org/10.1007/978-3-540-74686-7                               18
+[33]Assaad   F   and   Evertz   H   2008          World-line   and   Determinantal   Quantum   Monte   Carlo   Methods   for   Spins,
+      Phonons  and  Electrons  (Berlin,  Heidelberg:   Springer  Berlin  Heidelberg)  pp  277–356  ISBN  978-3-540-74686-7  URL
+      https://doi.org/10.1007/978-3-540-74686-7                   10
+[34]Hohenadler   M   and   Lang   T   C   2008          Autocorrelations   in   Quantum   Monte   Carlo   Simulations   of   Electron-
+      Phonon   Models   (Berlin,   Heidelberg:     Springer   Berlin   Heidelberg)   pp   357–366   ISBN   978-3-540-74686-7   URL
+      https://doi.org/10.1007/978-3-540-74686-7                   11
+[35]Werner P and Millis A J 2007       Phys. Rev. Lett. 99(14) 146404 URL https://link.aps.org/doi/10.1103/PhysRevLett.99.146404
+[36]Aoki   H,   Tsuji   N,   Eckstein   M,   Kollar   M,   Oka   T   and   Werner   P   2014         Rev.   Mod.   Phys.  86(2)   779–837   URL
+      https://link.aps.org/doi/10.1103/RevModPhys.86.779
+[37]Kemper    A    F,    Sentef    M    A,    Moritz    B,    Devereaux    T    P    and    Freericks    J    K    2017           Annalen    der
+      Physik     529     1600235     (Preprint      https://onlinelibrary.wiley.com/doi/pdf/10.1002/andp.201600235)     URL
+      https://onlinelibrary.wiley.com/doi/abs/10.1002/andp.201600235
+[38]Bloch I 2005       Nat Phys 1 23–30 URL https://doi.org/10.1038/nphys138
+[39]Heidrich-Meisner   F,   Feiguin   A   E,   Schollw¨ock   U   and   Zwerger   W   2010         Phys.   Rev.   A   81(2)   023629   URL
+      https://link.aps.org/doi/10.1103/PhysRevA.81.023629
+[40]Ejima S, Bhaseen M J, Hohenadler M, Essler F H L, Fehske H and Simons B D 2011       Phys. Rev. Lett. 106(1) 015303 URL
+      https://link.aps.org/doi/10.1103/PhysRevLett.106.015303
+[41]Dorfner        F        and        Heidrich-Meisner        F        2016               Phys.        Rev.        A        93(6)        063624        URL
+      https://link.aps.org/doi/10.1103/PhysRevA.93.063624
+[42]Purdy T P, Brooks D W C, Botter T, Brahms N, Ma Z Y and Stamper-Kurn D M 2010       Phys. Rev. Lett. 105(13) 133602
+      URL https://link.aps.org/doi/10.1103/PhysRevLett.105.133602
+[43]Thompson J D, Tiecke T G, de Leon N P, Feist J, Akimov A V, Gullans M, Zibrov A S, Vuleti´c V and Lukin M D 2013
+      Science 340 1202–1205 ISSN 0036-8075 URL https://science.sciencemag.org/content/340/6137/1202
+[44]Ritsch    H,    Domokos    P,    Brennecke    F    and    Esslinger    T    2013          Rev.    Mod.    Phys.    85(2)    553–601    URL
+      https://link.aps.org/doi/10.1103/RevModPhys.85.553
+[45]Brouwer   P   W,   Duckheim   M,   Romito   A   and   von   Oppen   F   2011          Phys.    Rev.    B    84(14)   144526   URL
+      https://link.aps.org/doi/10.1103/PhysRevB.84.144526
+[46]Cook A and Franz M 2011       Phys. Rev. B  84(20) 201105 URL https://link.aps.org/doi/10.1103/PhysRevB.84.201105
+[47]Hui   H   Y,   Brydon   P   M   R,   Sau   J   D,   Tewari   S   and   Sarma   S   D   2015         Scientiﬁc   Reports   5   8880   URL
+      https://doi.org/10.1038/srep08880
+[48]Keselman     A,     Murthy     C,     van     Heck     B     and     Bauer     B     2019            SciPost     Phys.     7(4)     50     URL
+      https://scipost.org/10.21468/SciPostPhys.7.4.050
+[49]Zhang     C,     Jeckelmann     E     and     White     S     R     1998            Phys.     Rev.     Lett.     80(12)     2661–2664     URL
+      https://link.aps.org/doi/10.1103/PhysRevLett.80.2661
+[50]Bursill R J 1999       Phys. Rev. B  60(3) 1643–1649 URL https://link.aps.org/doi/10.1103/PhysRevB.60.1643
+[51]Friedman B 2000       Phys. Rev. B  61(10) 6701–6705 URL https://link.aps.org/doi/10.1103/PhysRevB.61.6701
+[52]Wong H and Chen Z D 2008       Phys. Rev. B 77(17) 174305 URL https://link.aps.org/doi/10.1103/PhysRevB.77.174305
+[53]K¨ohler T, Stolpp J and Paeckel S 2021       SciPost Phys. 10(3) 58 URL https://scipost.org/10.21468/SciPostPhys.10.3.058
+[54]Hirsch J E and Fradkin E 1983       Phys. Rev. B 27(7) 4302–4316 URL https://link.aps.org/doi/10.1103/PhysRevB.27.4302
+[55]Bursill    R    J,    McKenzie    R    H    and    Hamer    C    J    1998           Phys.     Rev.     Lett.    80(25)    5607–5610    URL
+      https://link.aps.org/doi/10.1103/PhysRevLett.80.5607
+[56]Creﬃeld C E, Sangiovanni G and Capone M 2005        The  European  Physical  Journal  B  -  Condensed  Matter  and  Complex
+      Systems 44 175–181 URL https://doi.org/10.1140/epjb/e2005-00112-9
+[57]Jeckelmann     E,     Zhang     C     and     White     S     R     1999            Phys.      Rev.      B      60(11)     7950–7955     URL
+      https://link.aps.org/doi/10.1103/PhysRevB.60.7950
+[58]McCulloch    I    P    2007          Journal    of    Statistical    Mechanics:       Theory    and    Experiment    2007    P10014    URL
+      http://stacks.iop.org/1742-5468/2007/i=10/a=P10014
+[59]Singh      S,      Pfeifer      R      N      C      and      Vidal      G      2010             Phys.      Rev.      A      82(5)      050301      URL
+      https://link.aps.org/doi/10.1103/PhysRevA.82.050301
+[60]Singh      S,      Pfeifer      R      N      C      and      Vidal      G      2011            Phys.      Rev.      B      83(11)      115125      URL
+      https://link.aps.org/doi/10.1103/PhysRevB.83.115125
+[61]Vidal G 2003       Phys. Rev. Lett. 91(14) 147902 URL https://link.aps.org/doi/10.1103/PhysRevLett.91.147902
+[62]Peschel     I     2004           Journal     of     Statistical     Mechanics:         Theory     and     Experiment     2004     P12005     URL
+
+                                                                             27
+      https://iopscience.iop.org/article/10.1088/1742-5468/2004/12/P12005
+[63]Calabrese      P      and      Cardy      J      2004             J.      Stat.      Mech.:            Theor.      and      Exp.      P06002      URL
+      http://stacks.iop.org/1742-5468/2004/P06002
+[64]Eisert      J,      Cramer      M      and      Plenio      M      B      2010            Rev.      Mod.      Phys.      82(1)      277–306      URL
+      https://link.aps.org/doi/10.1103/RevModPhys.82.277
+[65]Hubig    C,    McCulloch    I    P,    Schollw¨ock    U    and    Wolf    F    A    2015          Phys.    Rev.    B    91(15)    155115    URL
+      https://link.aps.org/doi/10.1103/PhysRevB.91.155115
+[66]Pai   R   V,   Pandit   R,   Krishnamurthy   H   R   and   Ramasesha   S   1996         Phys.   Rev.   Lett.   76(16)   2937–2940   URL
+      https://link.aps.org/doi/10.1103/PhysRevLett.76.2937
+[67]Caron       L       G       and       Moukouri       S       1996              Phys.        Rev.        Lett.       76(21)       4050–4053       URL
+      https://link.aps.org/doi/10.1103/PhysRevLett.76.4050
+[68]Caron       L       G       and       Moukouri       S       1997              Phys.        Rev.        B       56(14)       R8471–R8474       URL
+      https://link.aps.org/doi/10.1103/PhysRevB.56.R8471
+[69]Tezuka       M,       Arita       R       and       Aoki       H       2007              Phys.       Rev.       B       76(15)       155114       URL
+      https://link.aps.org/doi/10.1103/PhysRevB.76.155114
+[70]Fehske       H,       Hager       G       and       Jeckelmann       E       2008              Europhys.       Lett.       84       57001       URL
+      https://iopscience.iop.org/article/10.1209/0295-5075/84/57001
+[71]Ejima S and Fehske H 2009       Europhys. Lett. 87 27001 URL https://iopscience.iop.org/article/10.1209/0295-5075/87/27001
+[72]Dorfner F 2017       Numerical methods for strongly correlated many-body systems with bosonic degrees of freedom Ph.D. thesis
+      Ludwig-Maximilians-Universit¨at M¨unchen URL http://nbn-resolving.de/urn:nbn:de:bvb:19-205528
+[73]Guo    C,    Weichselbaum    A,    von    Delft    J    and    Vojta    M    2012          Phys.    Rev.    Lett.    108(16)    160401    URL
+      https://link.aps.org/doi/10.1103/PhysRevLett.108.160401
+[74]Bruognolo B, Weichselbaum A, Guo C, von Delft J, Schneider I and Vojta M 2014        Phys.  Rev.  B  90(24) 245130 URL
+      https://link.aps.org/doi/10.1103/PhysRevB.90.245130
+[75]Blunden-Codd Z, Bera S, Bruognolo B, Linden N O, Chin A W, von Delft J, Nazir A and Florens S 2017       Phys. Rev. B
+      95(8) 085104 URL https://link.aps.org/doi/10.1103/PhysRevB.95.085104
+[76]Bruognolo B, Linden N O, Schwarz F, Lee S S B, Stadler K, Weichselbaum A, Vojta M, Anders F B and von Delft J 2017
+      Phys. Rev. B  95(12) 121115 URL https://link.aps.org/doi/10.1103/PhysRevB.95.121115
+[77]Dorfner  F,  Vidmar  L,  Brockt  C,  Jeckelmann  E  and  Heidrich-Meisner  F  2015        Phys.  Rev.  B  91(10)  104302  URL
+      http://link.aps.org/doi/10.1103/PhysRevB.91.104302
+[78]White S R 2005       Phys. Rev. B  72(18) 180403 URL https://link.aps.org/doi/10.1103/PhysRevB.72.180403
+[79]Lang I and Firsov Y A 1963       Sov. Phys. JETP 16 1301 URL http://www.jetp.ac.ru/cgi-bin/e/index/e/16/5/p1301?a=list
+[80]Hubig      C,      Haegeman      J      and      Schollw¨ock      U      2018             Phys.      Rev.      B      97(4)      045125      URL
+      https://link.aps.org/doi/10.1103/PhysRevB.97.045125
+[81]Jansen      D,      Bonˇca      J      and      Heidrich-Meisner      F      2020            Phys.      Rev.      B      102(16)      165155      URL
+      https://link.aps.org/doi/10.1103/PhysRevB.102.165155
+[82]Brockt C and Jeckelmann E 2017       Phys. Rev. B 95(6) 064309 URL https://link.aps.org/doi/10.1103/PhysRevB.95.064309
+[83]Haegeman J, Cirac J I, Osborne T J, Piˇzorn I, Verschelde H and Verstraete F 2011       Phys. Rev. Lett. 107(7) 070601 URL
+      https://link.aps.org/doi/10.1103/PhysRevLett.107.070601
+[84]Haegeman  J,  Lubich  C,  Oseledets  I,  Vandereycken  B  and  Verstraete  F  2016        Phys.  Rev.  B  94(16)  165116  URL
+      https://link.aps.org/doi/10.1103/PhysRevB.94.165116
+[85]Zaletel  M  P,  Mong  R  S  K,  Karrasch  C,  Moore  J  E  and  Pollmann  F  2015        Phys.  Rev.  B  91(16)  165112  URL
+      https://link.aps.org/doi/10.1103/PhysRevB.91.165112
+[86]Schr¨oder      F      A      Y      N      and      Chin      A      W      2016             Phys.      Rev.      B      93(7)      075105      URL
+      https://link.aps.org/doi/10.1103/PhysRevB.93.075105
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                              28

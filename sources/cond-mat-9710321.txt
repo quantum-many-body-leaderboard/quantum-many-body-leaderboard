@@ -1,0 +1,1162 @@
+Converging toward a practical solution of the Holstein
+                             molecular crystal model
+
+          A. H. Romero1,3, David W. Brown2 and Katja Lindenberg3
+                                   1 Department of Physics,
+        University of California, San Diego, La Jolla, CA 92093-0354
+                             2 Institute for Nonlinear Science,
+        University of California, San Diego, La Jolla, CA 92093-0402
+                   3 Department of Chemistry and Biochemistry,
+        University of California, San Diego, La Jolla, CA 92093-0340
+                                        November 4, 2018
+
+
+
+                                               Abstract
+        We  present  selected  results  for  the  Holstein  molecular  crystal  model  in  one  space
+    dimension as determined by the Global-Local variational method, including complete
+    polaron energy bands, ground state energies,  and eﬀective  masses.  We  juxtapose our
+    results  with  speciﬁc  comparable  results  of  numerous  other  methodologies  of  current
+    interest, including quantum Monte Carlo, cluster diagonalization, dynamical mean ﬁeld
+    theory,  density  matrix  renormalization  group,  semiclassical  analysis,  weak-coupling
+    perturbation theory, and strong-coupling perturbation theory.  Taken as a whole, these
+    methodologies are mutually conﬁrming and provide a comprehensive and quantitatively
+    accurate description of polaron properties in essentially any regime.  In particular, this
+    comparison  conﬁrms  the  Global-Local  variational  method  as  being  highly  accurate
+    over a wide range of the polaron parameter space, from the non-adiabatic limit to the
+    extremes  of  high  adiabaticity,  from  weak  coupling  through  intermediate  coupling  to
+    strong coupling.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                    1
+1    Introduction
+
+Great progress has been made in the last few years toward achieving the practical solution
+of  the  Holstein  molecular  crystal  model,1, 2  a  practical  solution  being  one  which  yields  a
+suﬃciently complete spectrum of information to a suﬃciently high accuracy to satisfy most
+purposes.  A number of diﬀerent methodologies, each important for the particular strength
+they lend to the problem, are proving increasingly mutually consistent if not always straight-
+forwardly  convergent  in  their  conclusions.   In  this  paper,  we  compare  a  suite  of  our  own
+recent  results3–7  obtained  using  the  Global-Local  variational  method  with  comparable  re-
+sults of other contemporary approaches, including quantum Monte Carlo (QMC),8–14 cluster
+diagonalization,15–27 dynamical mean ﬁeld theory (DMFT),28–33 density matrix renormaliza-
+tion  group  (DMRG),34–39  as  well  as  both  weak-coupling  perturbation  theory  (WCPT)38, 40
+and  strong-coupling  perturbation  theory  (SCPT).21, 41–45   Every  such  comparison  we  have
+been able to implement has shown the Global-Local results to be among the best currently
+available, and where a better result obtains by another method, the quantitative discrepancy
+involved tends to be satisfyingly small.  Thus, although it is not the case that our methods
+are necessarily the most accurate possible in every instance, our methods are valid over large
+enough  a  region  of  the  polaron  parameter  space,  and  accurate  enough  over  their  region  of
+validity to be suﬃcient to a wealth of practical purposes.
+    In  several  recent  works  (I46  -  II47  -  III4)  we  have  presented  a  sequence  of  increasingly
+reﬁned variational approaches to the problem of determining the lowest polaron energy band
+and the associated energy-momentum eigenfunctions for the Holstein molecular crystal model
+in  one  space  dimension.   The  Global-Local method  generalizes  those  of  Toyozawa47–53  and
+Merriﬁeld46, 54  by including local electron-phonon correlation channels under-represented  in
+the former and global electron-phonon correlation channels under-represented in the latter,
+both of which are of particular signiﬁcance in the local structure of the polaron.  While in the
+present work we lean heavily on the results of Paper III because of its superior accuracy, this
+sequential approach has proven instrumental in motivating our present study and presaging
+some of our conclusions.
+    This paper is organized as follows:  In Section 2, we present the model and states upon
+which the present work is based, and set down notation.  In Section 3, we focus on the global
+ground state energy, displaying speciﬁc results according to our own method and comparing
+our results with those of other authors and certain approximate formulas.  In Section 4, we
+present  some  particular  examples  of  complete  polaron  energy  bands  and  compare  Global-
+Local  results  with  speciﬁc  results  obtained  by  the  DMRG  method  and  by  direct  cluster
+diagonalization.   In  Section  5,  we  turn  to  the  polaron  eﬀective  mass,  computing  eﬀective
+mass curves cutting swaths through the polaron parameter space in several regimes, and make
+speciﬁc comparisons of Global-Local results with those of a variety of competing approaches.
+Conclusions are summarized in Section 6.
+
+2    Model, States, Method
+
+As our system Hamiltonian, we choose the traditional Holstein Hamiltonian.1, 2
+                                          ˆH =  ˆHel +  ˆHph +  ˆHel−ph ,                                                   (1)
+                                  ˆHel = E ∑
+                                              n  a†nan − J ∑n  a†n(an+1 + an−1) ,                                      (2)
+                                                 ˆHph = ¯hω ∑
+                                                               n  b†nbn ,                                                         (3)
+                                       ˆHel−ph = −g¯hω ∑
+                                                             n  a†nan(b†n + bn) ,                                            (4)
+in  which  a†n  creates  an  electron  in  the  rigid-lattice  Wannier  state  at site  n,  and  b†n  creates
+a  quantum  of vibrational  energy  in  the  Einstein  oscillator  at site  n.  We  presume  periodic
+boundary  conditions  on  a  one-dimensional  lattice  of  N  sites.   The  electron  transfer  inte-
+gral  between  nearest-neighbor  sites  is  denoted  by  J,  ω  is  the  Einstein  frequency,  and  g  is
+the  dimensionless  local  coupling  strength.   (Except  where  displayed  for  formulaic  clarity,
+the  reference  energy  E  is  set  to  zero  throughout.)   The  lattice  constant  does  not  appear
+explicitly  in  this  formulation  provided  wave  vectors  are  measured  relative  to  it,  as  will  be
+our  convention.   Two  dimensionless  control  parameters  can  be  constructed  from  the  three
+principal Hamiltonian parameters in diﬀerent ways.  One such non-dimensionalizing scheme
+involves  selecting  the phonon quantum ¯hω  as the unit of energy;  in these  terms,  the natu-
+ral  dimensionless  parameters  are  the  remaining  coeﬃcients  of  the  electronic  hopping  term
+(J/¯hω) and  electron-phonon  interaction  term  (g).  This  scheme  is  particularly  appropriate
+when considering dependences on J  and/or g at ﬁxed ω, such as we shall be concerned with
+in most of this paper.  This  scheme  is not so convenient  near the adiabatic limit,  however,
+where both J/¯hω and g diverge in a certain ﬁxed relationship.  In the adiabatic regime, it is
+convenient to non-dimensionalize by selecting the electron half-bandwidth 2J  as the unit of
+energy; in these terms, the natural dimensionless  parameters are the remaining coeﬃcients
+of the phonon energy (γ  = ¯hω/2J) and the electron-phonon interaction term, expressed  in√
+the form       λ/γ, where λ = g2¯hω/2J.  (Here, we follow the convention  of including the site
+coordination number z  in the deﬁnition of λ, such that λ = g2¯hω/zJ.)  The adiabatic limit
+is reached  by allowing γ  to vanish at arbitrarily ﬁxed  λ.  We distinguish  these  two options
+as  non-adiabatic  and  adiabatic  scaling  conventions,  respectively.   Except  where  explicitly
+noted, we conform to the non-adiabatic scaling convention.
+    Our central interest in this paper is in the polaron energy band, computed as
+
+                                             E(κ) = ⟨Ψ(κ)| ˆH|Ψ(κ)⟩ ,                                                    (5)
+
+wherein  ˆH  is the total system Hamiltonian and κ is the total joint crystal momentum label
+of the electron-phonon system.
+    All of our calculations are performed using normalized Bloch states
+
+                                              |Ψ(κ)⟩ = |κ⟩/⟨κ|κ⟩1/2 .                                                      (6)
+
+These states are eigenfunctions of the appropriate total momentum operator and orthogonal
+for distinct κ, making variations for distinct κ independent.55  Since selected κ values such as
+the global polaron ground state (κ = 0) are generally insuﬃcient to convey a very complete
+picture  of  polaron  structure,  we  have  found  it  important  to  examine  complete  variational
+solutions both for quality assurance and to extract the best description of polaron structure.
+By  “complete”  variational  solutions,  we  mean  a  set  of  N  variational  energies  E(κ)  and
+
+                                                            2
+N  polaron  Bloch  states  |Ψ(κ)⟩;  the  latter  being  described  by  a  distinct  set  of  variational
+parameters for each κ.  The set of E(κ) so produced constitute an estimate (upper bound)
+for the polaron energy band.48, 55
+    The  Global-Local method4  represents  polaron  structure  through  three  classes  of  varia-
+tional parameters {ακn, βκq , γκq }.
+                     ∑                         {                                                     }
+         |κ⟩   =                                 −N − 12 ∑                                             |0⟩ .        (7)
+                     nna eiκnακna−na†na exp                q  [(βκq e−iqn − γκq e−iqna)b†q − H.c.]
+We note here for later emphasis that a solution of the Global-Local method for any particular
+κ  is  contained  in  the  3N  complex  quantities  {ακn, βκq , γκq },  and  that  a  complete  solution
+is  contained  in  3N 2  complex  quantities,  reducible  to  O{ 32N 2}  independent  real  quantities
+utilizing Hamiltonian symmetries.  We typically computed complete energy band structures
+on 32-site lattices for every parameter set (J/¯hω, g) we considered; thus, the solution for any
+particular κ is encoded  in 96 independent  real numbers  (48 for the ground state),  and the
+complete solution (all κ′s) in 1536 independent real numbers (see, e.g., Figure 3 in Section
+4).
+    Since  our  solutions  are  encoded  in  a  relatively  small  number  of  variational  parameters
+(compared  to  some  other  calculations  we  shall  consider),  even  “complete”  band  structure
+solutions  can  be  stored  compactly,  allowing  a  “library”  of  polaron  band  structures  to  be
+archived and revisited at leisure.
+    We solve the variational equations by relaxation techniques3, 56, 57  through which an ini-
+tializing state is iteratively reﬁned toward the self-consistent target state.  Unlike many other
+methods, nearby solutions can be used to initialize new calculations, accelerating convergence
+and reducing the need to obtain new solutions from scratch.  Such initializing solutions might
+be obtained from nearby points in parameter space, for example, or might be lower-precision
+solutions  obtained from prior calculations  at the same  parameters  and κ.  A library  of po-
+laron structures sampling the polaron parameter space thus facilitates the acquisition of new
+solutions.
+    The computational time required for our calculation varies according to the region of the
+parameter space examined, the error tolerance required, and the “scope” of the calculation.
+In the intermediate  coupling regime, complete  band structures  computed to tolerances  ad-
+equate  for this  paper  take  one  to two  hours  on a  single-processor  Sun  Microsystems  Ultra
+Sparc I workstation; optimized to compute only the eﬀective mass, only a few minutes per
+eﬀective mass value are required.
+    More intensive  calculation is required as one moves  out from the intermediate coupling
+region, but in no reasonably general case for which we have achieved converged results has
+a complete set of N  band energies and N  Bloch states required more than two to four hours
+for  one  (J/¯hω, g)  point.   Some  special  cases  presented  greater  diﬃculty;  e.g.,  the  limit  of
+weak coupling for J/¯hω ∼ 1/4 proved inaccessible due to deteriorating numerical precision,
+and  convergence  in  the  vicinity  of  the  self-trapping  transition  grew  more  challenging  with
+increasing adiabaticity.
+    The self-consistency equations that follow from applying the variational principle to this
+class  of  trial  states,  the  method  of  solving  those  equations,  and  sample  results  have  been
+detailed in Paper III.4  In the following sections, we compare polaron energy band character-
+istics as determined by the Global-Local method with a variety of alternative descriptions,
+
+                                                          3
+but apart from the one complete solution illustrated in Figure 3, we  defer to a subsequent
+work7  any detailed discussion of the particulars of internal polaron structure as reﬂected in
+the variational parameters themselves.
+
+3    Ground State Energy
+
+Without  question,  the  single  most  important  state  in  any  quantum  system  is  the  ground
+state,  and  by  association,  the  single  most  important  energy  is  the  ground  state  energy.
+That being said, we emphasize quickly that a particular numerical value of the ground state
+energy in itself contains very little information about the system that is of practical use.  For
+most purposes, we require relationships between energies; e.g., eﬀective masses, bandwidths,
+densities of states.  For such purposes we require multiple energies, all but one of which are
+excited states in the global sense.  Variational approaches such as ours divide the total space
+of the problem into subspaces of the total crystal momentum within which the ground state
+of each κ sector is determined  independently.  In this sense,  the global ground state energy
+E(0) is only one of N independent κ-sector ground state energies E(κ) computed on an equal
+footing.  There  is  no  guarantee  that  the  numerical  value  of  E(0)  constitutes  any  more  (or
+less) accurate an estimate of its particular target value than any other E(κ) so determined.
+    Nonetheless, it is the global ground state energy E(0) that is the most common denom-
+inator of diverse  variational approaches,  including  those  based  on localized  states  or other
+states that may not be well adapted to the properties expected of energy-momentum eigen-
+functions.  Thus, we have compiled in Tables 1 and 2 a number of ground state energies from
+our own calculations together with a sampling of others for two particular sets of parameters
+of the Holstein Hamiltonian.
+    We have chosen the parameter sets (J/¯hω, g) = (1, 1) and (1, √2) largely because these
+points  are  commonly  transected  by  the  ground  state  curves  of  diﬀerent  approaches  in  the
+literature and thus permit the widest possible comparisons to be made.  We have also chosen
+these parameters values because they are moderate, falling in a regime where no particular
+limiting theory is favored.  Indeed, several results included in our tabulations (indicated by
+dagger symbols)  are  well-known  asymptotic  results  not strictly  valid  in these  intermediate
+scenarios.
+    In making the selection of data to display in Tables 1 and 2, we have not attempted to be
+exhaustive,  but  to present  a sampling  of results  from  diﬀering  methodologies,  highlighting
+more recent examples.  With the exception of the DMFT values, all tabulated data have been
+computed  directly  by  us,  obtained  from  cited  analytic  formulae,  or  obtained  directly  from
+the original authors by private communication.  The values shown for dynamical mean ﬁeld
+theory have been measured from published ﬁgures, and are believed by us to fairly represent
+the published data to the number of signiﬁcant digits displayed.
+    Since  not  all  of  the  approaches  sampled  in  Tables  1  and  2  are  variational  calculations,
+we should note that a comparison of a variational energy Evar  with a lower non-variational
+energy  Enon  (Evar  > Enon)  in  itself  yields  no  conclusion  regarding  which  value  is  “better”
+unless there exists independent proof that the non-variational energy lies above the ground
+state.  In the opposite circumstance (Enon > Evar), however,  the variational principle alone
+assures that the variational energy is the better estimate.
+
+
+                                                         4
+Table  1:   Ground  State  Energies  as  computed  by  various  methods  for  (J/¯hω, g)  =  (1, 1),
+(γ, λ)  =  ( 12,  12).   The  table  is  broken  at  the  most  likely  location  of  the  true  ground  state
+energy.   Values  indicated  by  dagger  symbols  are  obtained  from  limiting  formulae  that  at
+these parameter values are clearly beyond their limits of validity.
+     Value [¯hω]      Type of Method                            Source
+     - 1.73575 †      Non-adiabatic small polaron               Holstein,2  Eq.  9
+     - 1.97           QMC N  = 32 β = 1 m = 10                  De Raedt and Lagendijk8, 10
+     - 2.00000 †      Adiabatic strong coupling                 Gogolin,43 Eq.  10
+     - 2.08614        Semiclassical variation                   Kalosakas, Aubry, and Tsironis58, 59
+     - 2.35           QMC N  = 32 β = 5 m = 32                  De Raedt and Lagendijk8, 10
+     - 2.40           Dynamical Mean Field                      Ciuchi, et al.31
+     - 2.44721        2nd order WCPT                            Eq.  8
+     - 2.45611        Merriﬁeld variation                       Zhao, Brown, and Lindenberg46
+     - 2.46           QMC N  = 32 β = 20 m = 256                De Raedt10
+     - 2.46869        Toyozawa variation                        Zhao, Brown, and Lindenberg47
+     - 2.46931        Global-Local variation                    Figure 1, this paper
+     - 2.46968        DMRG N  = 32                              Jeckelmann and White37, 38
+     - 2.471          Cluster diagonalization, N  = 6           Alexandrov, et al.17, 19, 60
+     - 3.08959 †      2nd order SCPT                            Marsiglio,21  Stephan,44  Eq.  11
+
+
+    The most probable value of the true ground state energy can be sorted out from the data
+in Tables 1 and 2 as follows:  In view of the fact that the uncertainties in the best QMC values
+tabulated are of the order of one percent or greater,10 the QMC values cannot be viewed as
+any more deﬁnitive than the Global-Local, DMRG, and cluster values that are all determined
+to higher precision and fall within the QMC uncertainties.  Further, since the density matrix
+renormalization group method has been shown to have a variational realization,34–39 it would
+appear that the true ground state energy should lie below the DMRG values.  On the other
+hand, as is discussed in greater detail in Section 4, cluster energies appear to converge upward
+with increasing cluster size, suggesting that the true bulk ground state energy lies above the
+N  = 6 cluster  values.  Thus,  each  of the tables  shown  has been  broken  at the  point where
+the  best  apparent  upper  bound  to  the  ground  state  energy  meets  the  best  apparent  lower
+bound.
+    Turning our attention to the broader landscape of the system parameter space, Figure 1
+shows  the dependence  of the global ground state energy E(0) on the coupling strength for
+assorted  values of J/¯hω  from 1/4 to 5.  The  overall  behavior of the  ground state  energy is
+to trend between two asymptotic g2 dependences with diﬀering coeﬃcients and oﬀsets.  The
+crossover between these asymptotic trends occurs at the self trapping transition (g ≈ gST ),
+which  through analyses  presented  elsewhere5–7  has been found to be accurately located by√
+the relation gST  = 1 +        J/¯hω.
+    Using weak-coupling perturbation theory, one can show that the leading dependence of
+
+
+
+
+                                                        5
+Table  2:  Ground State  Energies  as computed  by  various methods  for (J/¯hω, g) = (1, √2),
+(γ, λ)  =  ( 12, 1).   The  table  is  broken  at  the  most  likely  location  of  the  true  ground  state
+energy.   Values  indicated  by  dagger  symbols  are  obtained  from  limiting  formulae  that  at
+these parameter values are clearly beyond their limits of validity.
+     Value [¯hω]      Type of Method                              Source
+     - 2.27067 †      Non-adiabatic small polaron                 Holstein,2  Eq.  9
+     - 2.50000 †      Adiabatic strong coupling                   Gogolin,43 Eq.  10
+     - 2.51815        Semiclassical variation                     Kalosakas, Aubry, and Tsironis58, 59
+     - 2.73           QMC N  = 32 β = 1 m = 10                    De Raedt and Lagendijk8, 10
+     - 2.86           QMC N  = 32 β = 5 m = 32                    De Raedt and Lagendijk8, 10
+     - 2.89           Dynamical Mean Field                        Ciuchi, et al.31
+     - 2.89442        2nd order WCPT                              Eq.  8
+     - 2.93301        Merriﬁeld variation                         this paper
+     - 2.99172        Toyozawa variation                          this paper
+     - 2.99802        Global-Local variation                      Figure 1, this paper
+     - 2.99883        DMRG N  = 32                                Jeckelmann and White37, 38
+     - 3.000          Cluster diagonalization, N  = 6             Alexandrov, et al.17, 19, 60
+     - 3.00           QMC N  = 32 β = 20 m = 256                  De Raedt10
+     - 3.05279 †      2nd order SCPT                              Marsiglio,21  Stephan,44  Eq.  11
+
+
+the ground state energy on the coupling constant is given for any J  by
+
+                                        E(0) ≈ −2J −        g2¯hω√
+                                                              1 + 4J/¯hω  .                                                (8)
+
+This is, in fact, what we ﬁnd to within numerical precision within the weak coupling regime
+of the Global-Local method (see Figure 1).
+    The  weak-coupling  estimate  (8)  is  superior  to  the  non-adiabatic  small  polaron  esti-
+mate2, 41, 42
+                                           E(0) ≈ −g2¯hω − 2Je−g2                                                     (9)
+for  most  J  provided  the  coupling  strength  is  not  too  large  (g  <  gST ),  though  the  two
+approximations agree when both J/¯hω and g are small.  When extrapolated into the adiabatic
+regime, however, (9) is not even qualitatively sensible at weak coupling for J/¯hω > 1/2, and
+does  not  even  approach  the  weak-coupling  estimate  until  g  ≈  gST .   At  strong  coupling
+(g  ≫ gST ),  (9) approaches  −g2¯hω  for any  J,  which  generally  diﬀers  signiﬁcantly  from  the
+true value of the ground state energy.  Thus, it appears that there is nowhere in the adiabatic
+regime where the non-adiabatic small polaron approximation provides a meaningful estimate
+of the ground state energy.
+    On the other hand, the adiabatic strong-coupling perturbation result (in one dimension)43
+                                                 (           )
+                               E(0) ≈ −2Jλ         1 +   14λ2   = −g2¯hω −   J 2g2¯hω                                   (10)
+
+
+                                                          6
+                                    0.0
+
+                                   −2.0                                Global−Local
+                                                                       2nd Order SCPT
+                                                                       2nd Order WCPT
+                                   −4.0
+
+
+                                   −6.0
+
+
+                                   −8.0
+
+
+                                 −10.0
+
+
+                                 −12.0
+
+
+                                 −14.00.0            2.0            4.0            6.0            8.0           10.0          12.0
+                                                                 g2
+
+
+
+
+Figure  1:     The  global  ground  state  energy  E(0)  vs.   g2  for  J/¯hω  =  1/4,  1/2,  1,  2,  3,  4,
+and  5  in  order  from  top  to  bottom  (note  that  limg→0 E(0)  =  −2J).   The  straight  dotted
+lines asymptoting each Global-Local curve at small g2 are given by the second-order WCPT
+formula (8).  The arched dashed  lines asymptoting  each Global-Local curve  at large g2  are
+given by the second-order SCPT formula (10).
+
+correctly  describes  the  asymptotic  behavior  at  strong  coupling  for  g  ≫  gST .   Both  this
+adiabatic  result  and  the  non-adiabatic  result  (9)  can  be  recovered  from  the  second-order
+strong-coupling perturbation result21, 44
+
+                                   E(0)   ≈   −g2¯hω − 2Je−g2
+                                                  −  2¯hω J 2e−2g2[f(2g2) + f(g2)] ,                                     (11)
+
+                                             f(x) = Ei(x) − γ − ln(x) ,                                                 (12)
+in  which  Ei(x)  is  the  exponential  integral  and  γ  is  the  Euler  constant.   Examples  of  this
+strong-coupling  result  are  plotted  in  Figure  1  together  with  comparable  Global-Local  and
+weak-coupling results.  The second order SCPT result is good for all g provided J/¯hω < 1/4,
+and for all J  provided g ≫ gST , but breaks down rather dramatically otherwise.
+    Thus, while both weak- and strong-coupling perturbation theories are clearly limited in
+scope,  both  are  in  quantitative  agreement  with  results  of  the  Global-Local  method  in  the
+appropriate  regimes,  suggesting  that  a  quite  complete  picture  is  available  in  the  results  of
+the Global-Local method augmented by the leading-orders of perturbation theory.  Indeed,
+this  blended  approach  proves  to  be  broadly  useful,  as  is  borne  out  in  results  presented
+elsewhere.5–7
+
+
+
+
+
+                                                               7
+4    Energy Bands
+
+The archetypical result of polaron theory in the strong coupling limit is the band form2, 21, 41, 42, 44
+
+                               E(κ) = (E − 2J) − EB − 12B[1 − cos(κ)] .                                   (13)
+
+The detailed dependence of the binding energy EB  and bandwidth B on J  and g depend on
+regime, and it is through this dependence that changes in polaron structure are manifested in
+this limiting result.  The binding energy and bandwidth are related quite simply in the non-
+adiabatic regime (EB ∼ g2¯hω, B ∼ 4Je−g2), and less simply in the adiabatic regime.  When
+this band form is valid, the polaron is heavily dressed by phonons and the polaron bandwidth
+B  is small relative to both the bare electron bandwidth 4J  and the bare phonon energy ¯hω;
+i.e., B ≪ Min{4J,  ¯hω}.  This narrowing of the polaron band and the related increase in the
+eﬀective mass are commonly characterized as aspects of polaron band distortion.
+    More generally, however, away from the strong coupling limit, polaron energy bands are
+not simple narrowed and shifted replicas of the bare band, but are more strongly distorted
+shapes whose non-sinusoidal dependence on κ is a crucial reﬂection of polaron structure.  For
+such  bands,  the  polaron  binding  energy,  eﬀective  mass,  and  polaron  bandwidth  no  longer
+stand in any simple relationship to each other.
+    In  the  limit  g  →  0+  of the  adiabatic  regime  (J/¯hω  >  1/4),  one  ﬁnds  that  the  polaron
+energy band assumes a clipped form,
+
+                          E(κ)   =   (E − 2J) + 2J[1 − cos(κ)]       |κ| < κc ,                             (14)
+                                   =   (E − 2J) + ¯hω                          |κ| > κc ,                             (15)
+
+reﬂecting the diﬀerence in the character of polaron states above and below the wave vector
+κc  (given by 2J[1 − cos(κc)] = ¯hω) at which the bare electron energy band crosses into the
+one-phonon continuum.  Although this crisply clipped band form is strictly valid only in the
+limit g → 0+, its essential characteristics persist to non-trivial values of the electron-phonon
+coupling strength.  Figures 2 and 4, for example, demonstrate the persistence of the clipped
+band form and of κc as the relevant scale parameter for g of order unity.
+    Figure 2 compares a complete Global-Local energy band with a comparable energy band
+as computed independently by the DMRG method37, 38 for the case J/¯hω = 1, g = 1.  As was
+the case in the ground state energy comparisons of Tables 1 and 2, the DMRG energies are
+slightly  lower than the GL energies,  the diﬀerence  ranging from about 0.015% at κ = 0 to
+about 0.46% at κ = π; no ﬁtting or numerical adjustment of any kind was made to normalize
+these two results.
+    The several  surfaces completely  detailing the electron-phonon structure underlying this
+energy band are shown in Figure 3.
+    These  surfaces  show  polaron  structure  to  be  composed  of  multiple  distinguishable  and
+characteristic  features and correlations.  It is not our purpose here  to analyze  this internal
+structure in depth;4, 46, 47, 61–64  however,  a few outstanding features are worth noting.  First,
+in all components of the solution, there exist distinguishable characters in the inner Brillouin
+zone (|κ| < κc) and the outer Brillouin zone (|κ| > κc).  These  distinct characters are least
+evident  in the electron amplitudes ακq , and most evident  in the primary phonon amplitude
+
+                                                         8
+                                −1.5
+
+                                −1.6
+
+                                −1.7
+
+                                −1.8
+
+                                −1.9
+
+                                −2.0                               Global−Local
+                                                                   DMRG
+                                −2.1
+
+                                −2.2
+
+                                −2.3
+
+                                −2.4
+
+                                −2.50.0               0.2               0.4               0.6               0.8               1.0
+                                                            κ/π
+
+
+
+Figure 2:  Comparison of Global-Local (GL) energy band results with comparable results of
+the density matrix renormalization group (DMRG) method for J/¯hω = 1, g = 1.  κc = π/3.
+DMRG data kindly provided by E. Jeckelmann.38.
+
+βκq .  In the inner zone, phonon structure consists of phonon amplitudes correlated with the
+electronic component in a manner that is structured,  but largely local in character.  In the
+outer zone, phonon structure continues to have a localized component, but this component is
+dominated by a strong, momentum-rich, largely-delocalized component reﬂecting the strong
+inﬂuence of the one-phonon continuum on “clipped” polaron energy bands.  Although these
+inner and outer zone features become muted with increasing coupling strength and become
+nearly indistinguishable above the self-trapping transition, their qualitative character is per-
+vasive.
+    Figure 4 overlays the appropriate variational energy band computed by the Global-Local
+method upon data from several ﬁnite-cluster  diagonalization results for the particular case
+J/¯hω  =  1.25  and  g  =  √0.5 · 1.25  ≈  0.79....   No  ﬁtting  has  been  performed  to  achieve  the
+impressive degree of agreement evident in these independent results.  The variational results
+and the N  = 20 cluster results agree to multiple signiﬁcant digits across the entire Brillouin
+zone, the relative diﬀerence being approximately 0.01% at κ = 0 and 0.4% at κ = π.  This
+degree of agreement is actually even better than it appears at ﬁrst glance, as may be inferred
+from the convergence trends in the cluster data:
+    Unlike  variational bounds  that  converge  downward toward  the  exact  target  energy,  the
+trends evident in the data of Wellein and Fehske25, 26  suggest that cluster energies converge
+upward  with  increasing  cluster  size.   Figure  5  displays  the  ratio  EM=10N      (κ)/|EGLN=32(κ)|  for
+several  κ  and  N,  where  EMN (κ) is  the  band  energy  determined  by  Lanczos  diagonalization
+on a cluster  of N  sites allowing up to M  total phonons,  and EGLN=32(κ) is the Global-Local
+variational results computed for 32 sites as throughout this paper.  The κ = 0 cluster energy
+is clearly well converged to a value slightly lower than, but nearly identical to the variational
+
+
+                                                          9
+     1.4                                                                0.2
+     1.21                                                                 0
+     0.8                                                               -0.2
+     0.6                                                               -0.4
+     0.4
+     -pi                                                               -pi
+                                                          pi                                                                pi
+
+        a        q                                                            K00b        q                                                            K00
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      30                                                                  1
+      20                                                                0.5
+      10                                                                  0
+       0                                                               -0.5
+                                                                         -1
+     -pi                                                               -pi
+                                                          pi                                                                pi
+
+                 0                           0                                     0                           0
+        c        q                                                            Kd        q                                                            K
+
+
+
+
+
+Figure 3:    Complete Global-Local solutions for the case J/¯hω = 1, g = 1 corresponding to
+the ground state energy tabulation in Table 1 and energy band presentation in Figure 2; a)
+βκq , b) γκq , c) Re{ακn}, d) Im{ακn}.  κc = π/3.
+
+
+
+energy.  (That the κ = 0 cluster energy is nearly independent of N  suggests that the N  = 6
+cluster  energies17, 19  included  in  Tables  1  and  2 are  probably  also  well-converged.)   Cluster
+energies are less well-converged away from the Brillouin zone center, where the evident trends
+suggest  that  the  bulk  limits  of  the  ﬁnite-κ  energies  lie  near  the  variational  value.   Thus,
+though in principle and through suﬃciently comprehensive computation on suﬃciently large
+clusters,  cluster  diagonalization methods  should  best our variational approach at any κ,  it
+appears  that  cluster  sizes  and  retained  phonon  numbers  must  be  signiﬁcantly  larger  than
+those attempted to date in order improve signiﬁcantly upon the Global-Local results for the
+polaron energy band as a whole.
+    One conclusion that can be drawn from these comparisons (considering,  for example,  a
+ﬁxed N) is that the outer Brillouin zone (|κ| > κc) displays a greater sensitivity to contribu-
+tions from higher phonon numbers than does the inner zone (|κ| < κc).  This is exactly what
+is  to  be  expected  from  the  κ-dependence  of  the  mean  phonon  number,  which  is  typically
+
+
+                                                                10
+                                 −1.8
+
+
+                                 −2.0
+
+
+                                 −2.2                               Global−Local
+                                                                    N = 10
+                                                                    N = 14
+                                 −2.4                               N = 18
+                                                                    N = 20
+
+                                 −2.6
+
+
+                                 −2.80.0               0.2               0.4               0.6               0.8               1.0
+                                                             κ/π
+
+
+
+Figure 4:  Comparison of our variational energy band with results of cluster diagonalizations
+for  cluster  sizes  N   =  10,  14,  18,  and  20;  J/¯hω  =  1.25  and  g  =  √0.5 · 1.25  =  0.79...,
+corresponding  to  (γ, λ)  =  (0.4, 0.25).   κc  ≈  0.2952π.   Cluster  data  kindly  provided  by  G.
+Wellein.26.
+
+considerably  smaller  in  the  inner  zone  than in  the  outer  zone  (see,  e.g.,  Figure  1 of Paper
+II47).
+    Owing to ultimate limitations of computing time and physical limitations of data storage,
+cluster  diagonalizations  generally  are limited  by  the maximum  dimension  of the truncated
+Hilbert space that can be addressed  by a particular computer.  For a one-electron problem
+on a lattice of N  sites, the dimension of the electronic subpace is Del = N and the dimension
+Dph  of  a  truncated  phonon  subspace  containing  at  most  M  phonons  is  given  by  Dph  =
+(N +M)!/N!M!.  Calculations have been reported for various combinations of N and M from
+N  = 2 to N  = 20 and M up to 50, each such calculation striking a unique balance between N
+and M  consistent with computational resources.  Table 3 presents values conveying the scale
+of the diagonalization problem for clusters  sizes  and phonon numbers  up to N  = M  = 32.
+Clearly, the scenarios represented by the lower right half of the tabulated values lie beyond
+the scope of machine diagonalization.
+    Implementation of the density matrix renormalization group method also involves a trun-
+cation of the total quantum Hilbert space;  however,  the limitations imposed by such trun-
+cations  appear  to  be  less  onerous  than  in  the  case  of  cluster  diagonalization,  permitting
+relatively  large  calculations  to  be  accomplished  in  reasonable  time  on  desktop  platforms,
+much as the global local method.
+    By contrast,  the “size” of a Global-Local variation does not scale directly  with phonon
+number, since the nature of the Global-Local approximation is not to truncate the phonon
+Hilbert space but to characterize  the phonon distribution for M  = ∞ through a relatively
+small  number  of  parameters.   For  example,  in  all  the  calculations  presented  in  this  paper,
+only 3N  independent variational parameters were required to ﬂexibly represent the polaron
+
+                                                           11
+                                −1.000
+
+
+                                −1.002
+
+
+                                −1.004
+
+
+                                −1.006
+
+                                −1.008           κ = π
+                                                 κ = π/2
+                                                 κ = 0
+                                −1.010
+
+
+                                −1.0120.00         0.02         0.04         0.06         0.08         0.10         0.12
+                                                              1/N
+
+
+
+Figure  5:      Cluster  energies  for  κ  =  0,  π/2,  and  π  and  cluster  sizes  N  =  10  to  20  for
+J/¯hω = 1.25 and g  = √0.5 · 1.25 ≈ 0.79....  Each cluster  energy  is divided  by the absolute
+value of our variational energy appropriate to that particular κ, so that −1 indicates identical
+results under the two methods.  Cluster data kindly provided by G. Wellein.26
+
+state to high precision at any κ (96 for |κ| ∈ (0, π), 48 for |κ| = 0, π) with no restriction on
+phonon numbers, vastly fewer than comparable cluster diagonalizations.
+    It  is  also  the  case  that  the  Global-Local  method  is  not  at  its  best  for  small  clusters,
+but improves in quality with increasing N  (though not without limit).  This improvement is
+realized because the total phonon state is represented by a superposition of N distinct phonon
+coherent states; such a superposition becomes more ﬂexible as the number of coherent states
+in the superposition increases.
+    Our  own  comparisons  with  6-cluster  ground  state  energies  in  Tables  1  and  2  proved
+mutually  favorable,  as  has  our  comparison  with  the  N  = 10 − 20  cluster  ground  states  as
+computed by  Wellein and Fehske.25, 26  However,  we  are more generally  concerned  with the
+complete band structure of the polaron, which is not well captured by calculations on small
+clusters as can be seen from the following:
+    From weak-coupling nearly up to the self-trapping transition, polaron bands exhibit dis-
+tinct  character  for  wave  vectors  above  and  below  κc  that  must  be  resolved  if  one  is  to
+faithfully represent polaron structure.  This underscores the importance in any ﬁnite-lattice
+calculation of maintaining the lattice size  N  in relation to the tunneling matrix element  J
+such  that  at  least  one  ﬁnite-κ  point  is  sampled  on  both  the  high  and  low  sides  of κc.  For
+a given N, this implies that only for J  ∈ (Jmin, Jmax) can both the inner and outer polaron
+band structure be characterized independently, where
+
+                                     Jmax    =                ¯hω2[1 − cos(2π/N)]  ,                                                    (16)
+
+
+
+                                                            12
+                                            Table 3:  Cluster Facts
+          Cluster      Jmin/¯hω     Jmax/¯hω      Dtot, M  = 10       Dtot, M  = 16       Dtot, M  = 32
+           2 sites     no value      no value                  132                306               1122
+           4 sites      0.5000         0.500           4.0 × 103           1.9 × 104           2.4 × 105
+           6 sites      0.3333         1.000           4.8 × 104           4.5 × 105           1.7 × 107
+          10 sites      0.2764         2.618           1.8 × 106           5.3 × 107          1.5 × 1010
+          16 sites      0.2599         6.569           8.5 × 107           9.6 × 109          3.6 × 1013
+          20 sites      0.2563         10.22           6.0 × 108          1.5 × 1011          2.5 × 1015
+          32 sites      0.2524         26.02          4.7 × 1010          7.2 × 1013          5.9 × 1019
+
+
+                                    Jmin    =                      ¯hω2[1 − cos((N − 2)π/N)]  .                                         (17)
+
+Most  crucially,  for  J  > Jmax,  it  is  not  possible  to  resolve  the  parabolic  band  bottom  that
+is characteristic of small κ from which to extract a meaningful eﬀective mass.  To illustrate
+the gravity of this restriction, the values of Jmin and Jmax so deﬁned have been presented in
+Table 3 for each of the cluster sizes there considered.  It is clear from these values that cluster
+size imposes a signiﬁcant limitation on one’s ability to describe polaron band structure over
+a meaningful interval of J.
+
+5    Eﬀective Mass
+
+The  ground  state  energy  as  considered  in  Section  3  permitted  a  fair  comparison  of  many
+diﬀerent approaches in part because in many cases approximate methodologies are at their
+“best” when applied to the global ground state; excited states almost universally pose greater
+challenges.  In energy  band theory,  the minimal  excursion  beyond  the  ground state  is con-
+tained in the eﬀective mass, since in principle the determination of the eﬀective mass requires
+knowledge of only an inﬁnitesimal excitation to ﬁnite κ.  In this section we compare eﬀective
+masses as yielded by a number of diﬀerent approaches.
+    Our eﬀective mass computations were based on the formula
+                                               m∗
+                                               m0  =       2J∂2E(κ)
+                                                          ∂κ2   |κ=0  ,                                                        (18)
+using a discrete representation of the κ derivative at the Brillouin zone center.  We note that
+the m0 used in our calculations was obtained by computing its value using the same discrete
+diﬀerentiation as was applied to compute m∗  rather than using the limiting N  → ∞ value.
+Not only does this minimize any dependence of the computed eﬀective mass ratio on lattice
+size, but is technically necessary in order to properly normalize our results; e.g., to exactly
+recover the limit limg→0 m∗/m0 = 1.  For all cases presented, J < Jmax according to (17) for
+lattices of 32 sites, so that our discrete diﬀerentiation yields the physically-meaningful value.
+    In Figure 6, we ﬁrst consider the simultaneous comparison of our Global-Local eﬀective
+masses ( actually, ln(m∗/m0) ) with comparable DMRG results and with second-order strong-
+
+
+                                                         13
+coupling perturbation theory as contained in the relation21, 44
+
+                                         m∗
+                                         m0  =                  eg21 + (4J/¯hω)e−g2f(g2)  ,                                              (19)
+
+for which f(x) has been deﬁned in (12).
+
+
+
+
+                                1000
+                                               J = 0+
+                                               GL, J = 0.25
+                                               GL, J = 1
+                                               GL, J = 5.0
+                                               DMRG, J = 0.25
+                                 100           DMRG, J = 1
+                                               DMRG, J = 5.0
+                                               SPT, J = 0.25
+                                               SPT, J = 1.0
+                                               SPT, J = 5.0
+
+
+                                  10
+
+
+
+
+
+
+                                   10.0        0.5        1.0        1.5        2.0        2.5        3.0        3.5
+                                                              g
+
+
+
+Figure 6:   Eﬀective mass ratio.  Bold curves:  Global-Local results for J/¯hω = 1/4, 1, and 5.
+Faint curves:  Second-order strong-coupling perturbation theory (see Eq.  19).  Points:  Den-
+sity matrix renormalization group (DMRG) results as kindly provided by E. Jeckelmann37, 38.
+
+    The Global-Local and DMRG results agree quite well, especially considering that these
+particular DMRG data do not represent actual ﬁnite-κ calculations, but estimations based
+on  DMRG  ground  state  data.37, 38    Given  the  very  favorable  energy  band  comparison  in
+Figure 2,  it is reasonable  to expect  that a future comparison  based  on direct excited-state
+DMRG calculations would show even better agreement (e.g., see Figure 2).  What deviations
+there are between the GL and DMRG results are greatest above the self-trapping transition
+(g > gST ); it is unclear at present whether this is a discrepancy of lasting signiﬁcance.
+    On the other hand, comparison of both GL and DMRG eﬀective masses with the results
+of  second-order  SCPT  are  far  less  favorable.   Agreement  is  excellent  for  J/¯hω  =  1/4  and
+g > gST ; however,  deviations appear even at this small J  value for g < gST .  At J/¯hω = 1,
+it is evident that both the GL and DMRG masses asymptote to the SCPT result, but that
+this convergence of results does not materialize until well above the self-trapping transition
+(g  ≫  gST ).   At  J/¯hω  =  5,  the  disagreement  between  the  SCPT  result  and  both  the  GL
+and  DMRG  masses  is  so  severe  as  to  render  the  SCPT  estimation  useless.   We  note  that
+although we have explicitly  compared only selected  J  values,  it can be safely inferred that
+the second-order SCPT mass estimation ceases to be relevant in practical terms by the time
+J/¯hω ∼ 2.7
+
+
+                                                           14
+    In  Figure  7  we  make  a  more  narrow  comparison  with  a  broader  range  of  approaches.
+Here, we again compare GL and DMRG results, this time including as well:65
+    i) data from direct quantum Monte Carlo calculations of the polaron mass,13, 14
+    ii) the second-order SCPT estimate as contained in (19),
+    iii) the second-order WCPT estimate as contained in38
+
+                                        m0
+                                        m∗    =   1 −  g2(1 + 2J/¯hω)(1 + 4J/¯hω)3/2                                                (20)
+
+    and iv) the weak-coupling Migdal estimate as contained in40, 45
+
+                                       m∗
+                                       m0  = 1 + g2   (1 + 2J/¯hω)(1 + 4J/¯hω)3/2  .                                              (21)
+
+    It is clear that all the presented results except the SCPT are mutually consistent at suf-
+ﬁciently weak coupling; however, divergences between results appear quickly with increasing
+coupling  strength,  such  that  only  the  GL,  DMRG,  and  WCPT  masses  remain  mutually
+consistent to nontrivial coupling.
+    We  note  that  the  agreement  between  the  GL,  DMRG,  and  WCPT  masses  is  actually
+better than it may appear.  As in Figure 6, the DMRG data indicated by diamond symbols
+is the result of an estimation procedure based on the global DMRG ground state only.  The
+near-perfect  agreement  between  the  GL  and  DMRG  energy  bands  as  shown  in  Figure  2
+assures  that  the  eﬀective  masses  computed  directly  from  the  complete  energy  bands  are
+essentially identical.  The same high degree of agreement can be inferred from the comparison
+of GL and cluster diagonalization bands in Figure 4.  The small apparent discrepancy between
+the  indirect  DMRG  estimate  and  the  GL  and  SCPT  results  is  thus  essentially  eliminated,
+showing  GL,  DMRG,  and  WCPT  to  be  in  essentially  complete  agreement  up  to  at  least
+g ∼ 1.
+    At  strong  coupling,  the  GL,  DMRG,  and  SCPT  masses  are  again  mutually  consistent,
+while each of the remaining results presented deviates signiﬁcantly.
+
+6    Conclusion
+
+In  this  paper,  we  have  presented  results  for  the  Holstein  molecular  crystal  model  in  one
+space dimension as determined by the Global-Local variational method, including complete
+polaron energy bands, ground state energies, and eﬀective masses.  We have juxtaposed our
+results with speciﬁc comparable results of numerous other methodologies of current interest,
+including quantum Monte Carlo, cluster diagonalization, dynamical mean ﬁeld theory, den-
+sity matrix renormalization group, semiclassical analysis, weak-coupling perturbation theory,
+and strong-coupling perturbation theory.
+    Through these comparisons, we have been able to conclude that
+    i) perturbation theory, while deﬁnitive in limits, is clearly superceded by more accurate
+methods in the intermediate-coupling regime,
+    ii) semiclassical analysis, while consistent with perturbation theory in the strong-coupling
+limit, does not improve signiﬁcantly over perturbation theory away from this limit,
+
+                                                        15
+                                                                      Global−Local
+                                                                      DMRG
+                                  1.0                                 QMC
+                                                                      2nd Order SCPT
+                                                                      2nd Order WCPT
+                                  0.8                                 Migdal Approx.
+
+
+
+                                  0.6
+
+
+                                  0.4
+
+
+                                  0.2
+
+
+                                  0.00.0            0.5            1.0            1.5            2.0            2.5            3.0
+                                                              g
+
+
+
+Figure  7:     Inverse  eﬀective  mass  ratio  for  J/¯hω  =  1.   Solid  curve:   Global-Local  result.
+Diamond symbols:  DMRG results as kindly provided by E. Jeckelmann37, 38.  Bullet symbols:
+QMC results as kindly provided by P. Kornilovitch13, 14.  Dotted curve:  Weak-coupling Migdal
+approximation  (see  Eq.    21).    Dashed  curve:   Second-order  strong-coupling  perturbation
+theory  (see  Eq.   19).   Dot-dashed  curve:  Second-order  weak-coupling  perturbation  theory
+(see Eq.  20).
+
+    iii)  quantum  Monte  Carlo  for  the  ground  state  energy  is  consistent  with  its  best  com-
+petitors, but owing to limitations of precision is in the present context more conﬁrmatory of
+other approaches than determinative in itself,
+    iv)  quantum  Monte  Carlo  for  the  eﬀective  mass  is  consistent  with  more  accurate  ap-
+proaches at weak coupling, but at present is inconsistent with the best estimates at strong
+coupling,
+    v)  dynamical  mean  ﬁeld  theory,  while  exceptionally  complete  qualitatively,  does  not
+deliver superior quantitative accuracy in the regimes considered in this paper.
+    On  the  positive  side,  very  favorable  comparisons  were  found  between  the  Global-Local
+method, the density matrix renormalization group method, and cluster diagonalization meth-
+ods.  Of these, however, only the GL and DMRG methods could be compared in a broad way.
+Both  GL  and  DMRG  were  found  to  be  consistent  with  perturbation  theory  at  both  weak
+and strong coupling,  and in the weak-coupling  case,  at least,  consistent  to higher coupling
+strengths than any other method.  Where GL and DMRG depart from perturbation theoretic
+results, in the intermediate coupling regime, GL and DMRG remain mutually consistent to
+an impressive degree, and where direct comparison has been possible, consistent with cluster
+diagonalization.
+    We take these results as a whole to conﬁrm the Global-Local variational method as being
+highly  accurate  over  a wide  range of the  polaron parameter  space,  from the  non-adiabatic
+limit to the extremes of high adiabaticity, from weak coupling through intermediate coupling
+
+
+                                                           16
+to strong coupling.
+    In  succeeding  works,5–7  we  shall  present  a  comprehensive  analysis  of  polaron  structure
+and properties as determined  in the Global-Local method over essentially  the whole of the
+polaron parameter space.
+
+Acknowledgment
+
+This work was supported in part by the U.S. Department of Energy under Grant No.  DE-
+FG03-86ER13606.  The authors gratefully acknowledge the cooperation of H. De Raedt and
+A. Lagendijk,8, 10  P. E. Kornilovitch and E. R. Pike,13, 14  A. S. Alexandrov, V. V. Kabanov,
+and D. E. Ray,17, 19 G. Wellein and H. Fehske,25, 26  E. Jeckelmann and S. White,37, 38 and G.
+Kalosakas, S. Aubry, and G. P. Tsironis,58, 59  for providing numerical values of data used in
+parts of this paper.
+
+References
+
+ [1]  T. Holstein, Ann. Phys. 8, 325 (1959).
+
+ [2]  T. Holstein, Ann. Phys. 8, 343 (1959).
+
+ [3]  Y. Zhao, Ph.D. thesis, University of California, San Diego, 1994.
+
+ [4]  D. W. Brown, K. Lindenberg, and Y. Zhao, J. Chem. Phys. 107, 3179 (1997).
+
+ [5]  A. H. Romero, D. W. Brown, and K. Lindenberg, submitted to Phys. Rev. B (1998).
+
+ [6]  A. H. Romero, D. W. Brown, and K. Lindenberg, submitted to Phys. Rev. Lett. (1998).
+
+ [7]  A. H. Romero, D. W. Brown, and K. Lindenberg, in preparation (1998).
+
+ [8]  H. D. Raedt and A. Lagendijk, Phys. Rev. B 27, 6097 (1983).
+
+ [9]  H. D. Raedt and A. Lagendijk, Phys. Rev. B 30, 1671 (1984).
+
+[10]  H. D. Raedt, private communication (1998).
+
+[11]  A. Lagendijk and H. D. Raedt, Phys. Lett. A 108A, 91 (1985).
+
+[12]  R. H. McKenzie, C. J. Hamer, and D. W. Murray, Phys. Rev. B 53, 9676 (1996).
+
+[13]  P. E. Kornilovitch and E. R. Pike, Phys. Rev. B 55, R8634 (1997).
+
+[14]  P. E. Kornilovitch, private communication (1997).
+
+[15]  A. K¨ongeter and M. Wagner, J. Chem. Phys. 92, 4003 (1990).
+
+[16]  J. Ranninger and U. Thibblin, Phys. Rev. B 45, 7730 (1992).
+
+[17]  A. S. Alexandrov, V. V. Kabanov, and D. E. Ray, Phys. Rev. B 49, 9915 (1994).
+
+                                                      17
+[18]  A.  S.  Alexandrov  and  S.  N.  Mott,  Polarons  &  Bipolarons  (World  Scientiﬁc,  London,
+     1995).
+
+[19]  V. V. Kabanov, private communication (1997).
+
+[20]  F. Marsiglio, Phys. Lett. A 180, 280 (1993).
+
+[21]  F. Marsiglio, Physica C 244, 21 (1995).
+
+[22]  M. I. Salkola, A. R. Bishop, V. M. Kenkre, and S. Raghavan, Phys. Rev. B 52, R3824
+     (1995).
+
+[23]  H. Eiermann and M. Wagner, J. Chem. Phys. 105, 6713 (1996).
+
+[24]  G. Wellein, H. R¨oder, and H. Fehske, Phys. Rev. B 53, 9666 (1996).
+
+[25]  G. Wellein and H. Fehske, Phys. Rev. B 56, 4513 (1997).
+
+[26]  G. Wellein, private communication (1997).
+
+[27]  H. Feshke, J. Loos, and G. Wellein, Z. Phys. B 104, 619 (1997).
+
+[28]  S.  Ciuchi,  F.  de  Pasquale,  C.  Masciovecchio,  and  D.  Feinberg,  Euro.  Lett.  24,  575
+     (1993).
+
+[29]  S. Ciuchi, F. D. Pasquale, and D. Feinberg, Physica C 235-240, 2389 (1994).
+
+[30]  S. Ciuchi, F. D. Pasquale, and D. Feinberg, Euro. Lett. 30, 151 (1995).
+
+[31]  S. Ciuchi, F. de Pasquale, S. Fratini, and D. Feinberg, Phys. Rev. B 56, 4494 (1997).
+
+[32]  J. K. Freericks, M. Jarrell, and D. J. Scalapino, Phys. Rev. B 48, 6302 (1993).
+
+[33]  J. K. Freericks, M. Jarrell, and D. J. Scalapino, Euro. Lett. 25, 37 (1994).
+
+[34]  S. R. White, Phys. Rev. Lett. 69, 2863 (1992).
+
+[35]  S. R. White, Phys. Rev. B 48, 10345 (1993).
+
+[36]  S.  ¨Ostlund and S. Rommer, Phys. Rev. Lett. 75, 3537 (1995).
+
+[37]  E. Jeckelmann and S. R. White, Phys. Rev. B 57, 6376 (1998).
+
+[38]  E. Jeckelmann, private communication (1998).
+
+[39]  S. Rommer and S.  ¨Ostlund, Phys. Rev. B 55, 2164 (1997).
+
+[40]  A. B. Migdal, Sov. Phys. JETP 34, 996 (1958).
+
+[41]  S. V. Tyablikov, Zh. Eksp. Teor. Fiz. 23, 381 (1952).
+
+[42]  I. G. Lang and Y. A. Firsov, Sov. Phys. JETP 16, 1301 (1963).
+
+
+                                                       18
+[43]  A. A. Gogolin, Phys. Stat. Sol. (b) 109, 95 (1982).
+
+[44]  W. Stephan, Phys. Rev. B 54, 8981 (1996).
+
+[45]  M. Capone, W. Stephan, and M. Grilli, Phys. Rev. B 56, 4484 (1997-II).
+
+[46]  Y. Zhao, D. W. Brown, and K. Lindenberg, J. Chem. Phys. 106, 5622 (1997).
+
+[47]  Y. Zhao, D. W. Brown, and K. Lindenberg, J. Chem. Phys. 107, 3159 (1997).
+
+[48]  Y. Toyozawa, Prog. Theor. Phys. 26, 29 (1961).
+
+[49]  Y.  Toyozawa,  in  Polarons  and  Excitons,  edited  by  C.  G.  Kuper  and  G.  D.  Whitﬁeld
+     (Plenum, New York, 1963), p. 211.
+
+[50]  A. Sumi and Y. Toyozawa, J. Phys. Soc. Japan 35, 137 (1973).
+
+[51]  Y. Toyozawa, in Relaxation of Elementary Excitations, edited by R. Kubo and E. Hana-
+     mura (Springer-Verlag, Berlin, 1980), p. 3.
+
+[52]  D. Emin, Ann. Phys. 22, 57 (1973).
+
+[53]  B. Schopka, Ph.D. thesis, Technische Universit¨at M¨unchen, 1991.
+
+[54]  R. E. Merriﬁeld, J. Chem. Phys. 40, 4450 (1964).
+
+[55]  T. D. Lee, F. E. Low, and D. Pines, Phys. Rev. 90, 297 (1953).
+
+[56]  W. H. Press, S. A. Teukolsky, B. P. Flannery, and W. T. Vetterling, Numerical Recipes
+     (Cambridge University Press, New York, 1992).
+
+[57]  N. J. Giordano, Computational Physics (Prentice Hall, Upper Saddle River, N.J., 1997).
+
+[58]  G. Kalosakas, S. Aubry, and G. P. Tsironis, submitted to Phys. Rev. B (1997).
+
+[59]  G. Kalosakas, private communication (1997).
+
+[60]  Cluster  data  for  N  >  6  exist,  as  discussed  in  some  detail  in  Section  4;  however,  the
+     N  = 6 calculation by Alexandrov, et al.17, 19 is the largest such calculation we could ﬁnd
+     for the parameter values considered in Tables 1 and 2.
+
+[61]  D.  W.  Brown,  in  Nonlinear  Excitations  in  Biomolecules,  Centre  de  physique,  Les
+     Houches, France (Springer-Verlag, Berlin ; New York, 1995), Vol. 2, p. 279.
+
+[62]  D. W. Brown, in Proceedings of the SPIE (The International Society for Optical Engi-
+     neering, Bellingham, Wash., 1995), Vol. 2526, p. 40.
+
+[63]  D. W. Brown and K. Lindenberg, Physica D 113, 267 (1997).
+
+[64]  K.  Lindenberg,  Y.  Zhao,  and  D.  W.  Brown,  in  Computational  Physics,  edited  by  P.
+     Garrido and J. Marro (Springer, Berlin, 1997), p. 3.
+
+
+                                                        19
+[65]  Eﬀective mass estimates can also be obtained from dynamical mean ﬁeld theory; how-
+     ever, the second-order estimate given in Ref. 31, Eq. 43 does not compare favorably with
+     the other results in Figure 6. Higher-order DMFT masses appear to compare more favor-
+     ably (S. Ciuchi, private communication, 1997); however, data permitting a quantitative
+     comparison are not available to us at the time of this writing.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                       20
+Value [¯hω]    Type of Method                           Source
+- 1.73575 †    Non-adiabatic small polaron              Holstein,2  Eq.  9
+- 1.97         QMC N  = 32 β = 1 m = 10                 De Raedt and Lagendijk8, 10
+- 2.00000 †    Adiabatic strong coupling                Gogolin,43 Eq.  10
+- 2.08614      Semiclassical variation                  Kalosakas, Aubry, and Tsironis58, 59
+- 2.35         QMC N  = 32 β = 5 m = 32                 De Raedt and Lagendijk8, 10
+- 2.40         Dynamical Mean Field                     Ciuchi, et al.31
+- 2.44721      2nd order WCPT                           Eq.  8
+- 2.45611      Merriﬁeld variation                      Zhao, Brown, and Lindenberg46
+- 2.46         QMC N  = 32 β = 20 m = 256               De Raedt10
+- 2.46869      Toyozawa variation                       Zhao, Brown, and Lindenberg47
+- 2.46931      Global-Local variation                   Figure 1, this paper
+- 2.46968      DMRG N  = 32                             Jeckelmann and White37, 38
+- 2.471        Cluster diagonalization, N  = 6          Alexandrov, et al.17, 19, 60
+- 3.08959 †    2nd order SCPT                           Marsiglio,21  Stephan,44  Eq.  11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                21
+Value [¯hω]     Type of Method                          Source
+- 2.27067 †     Non-adiabatic small polaron             Holstein,2  Eq.  9
+- 2.50000 †     Adiabatic strong coupling               Gogolin,43 Eq.  10
+- 2.51815       Semiclassical variation                 Kalosakas, Aubry, and Tsironis58, 59
+- 2.73          QMC N  = 32 β = 1 m = 10                De Raedt and Lagendijk8, 10
+- 2.86          QMC N  = 32 β = 5 m = 32                De Raedt and Lagendijk8, 10
+- 2.89          Dynamical Mean Field                    Ciuchi, et al.31
+- 2.89442       2nd order WCPT                          Eq.  8
+- 2.93301       Merriﬁeld variation                     this paper
+- 2.99172       Toyozawa variation                      this paper
+- 2.99802       Global-Local variation                  Figure 1, this paper
+- 2.99883       DMRG N  = 32                            Jeckelmann and White37, 38
+- 3.000         Cluster diagonalization, N  = 6         Alexandrov, et al.17, 19, 60
+- 3.00          QMC N  = 32 β = 20 m = 256              De Raedt10
+- 3.05279 †     2nd order SCPT                          Marsiglio,21  Stephan,44  Eq.  11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                22
+Cluster     Jmin/¯hω     Jmax/¯hω      Dtot, M  = 10      Dtot, M  = 16      Dtot, M  = 32
+ 2 sites    no value     no value                  132                306              1122
+ 4 sites     0.5000        0.500            4.0 × 103          1.9 × 104          2.4 × 105
+ 6 sites     0.3333        1.000            4.8 × 104          4.5 × 105          1.7 × 107
+10 sites     0.2764        2.618            1.8 × 106          5.3 × 107         1.5 × 1010
+16 sites     0.2599        6.569            8.5 × 107          9.6 × 109         3.6 × 1013
+20 sites     0.2563        10.22            6.0 × 108         1.5 × 1011         2.5 × 1015
+32 sites     0.2524        26.02           4.7 × 1010         7.2 × 1013         5.9 × 1019
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                             23

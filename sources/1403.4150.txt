@@ -1,0 +1,690 @@
+            Variational  Monte Carlo  Method  for  Electron-Phonon Coupled  Systems
+
+                                                 Takahiro  Ohgoe  and  Masatoshi  Imada
+                                          Department  of  Applied  Physics,  University  of  Tokyo,
+                                            7-3-1  Hongo,  Bunkyo-ku,  Tokyo  113-0033,  Japan
+                                                              (Dated:  June 3, 2022)
+                   We develop a variational Monte Carlo (VMC) method for electron-phonon coupled systems.  The
+                VMC method has been extensively used for investigating strongly correlated electrons over the last
+                decades.  However, its applications to electron-phonon coupled systems have been severely restricted
+                because of its large Hilbert space.  Here, we propose a variational wave function with a large number
+                of variational parameters which is suitable and tractable for systems with electron-phonon coupling.
+                In the proposed wave function, we implement an unexplored electron-phonon correlation factor which
+                takes  into  account  the  eﬀect  of  the  entanglement  between  electrons  and  phonons.  The  method  is
+                applied  to  systems  with  diagonal  electron-phonon  interactions,  i.e.    interactions  between  charge
+                densities  and  lattice  displacements  (phonons).    As  benchmarks,  we  compare  VMC  results  with
+                previous  results  obtained  by  the  exact  diagonalization,  the  Green  function  Monte  Carlo  and  the
+                density  matrix  renormalization  group  for  the  Holstein  and  Holstein-Hubbard  model.   From  these
+                benchmarks,  we  show  that  the  present  method  oﬀers  an  eﬃcient  way  to  treat  strongly  coupled
+                electron-phonon systems.
+
+                PACS numbers:  63.20.kd, 71.10.Fd
+
+
+                    I.     INTRODUCTION                                       gions (dilute  limit,  at half-ﬁlling,  or small system sizes)
+                                                                              due to the notorious negative sign problem.  In addition
+  The electron-phonon coupling plays an important role                        to these numerical methods, some variational approachs
+in  various  classes  of  materials.   In  the  conventional  su-             have been successful in one dimensions[33–40] or inﬁnite
+perconductors,  it  is  the  origin  of  the  eﬀective  attrac-               dimensions[41].  For polaron systems, even two and three
+tion  between  electrons,  which  leads  to  the  formation                   dimensions are accessible[42–44].
+of   Cooper   pairs[1].     Even   for   high-Tc   cuprates,   the               Since the variational Monte Carlo (VMC) method does
+ARPES (angle-resolved photoemission spectroscopy) ex-                         not suﬀer from the negative sign problem, it has been ex-
+periments  demonstrated  indications  of  strong  electron-                   tensively  used for  investigating  strongly correlated elec-
+phonon  coupling[2].    Apart  from  the  superconductors,                    trons  over  the  last  decades.   However,  most  of  its  ap-
+in quasi-one-dimensional materials, the electron-phonon                       plications are restricted to systems without the electron-
+coupling sometimes drives the Peierls transition[3], where                    phonon coupling or eﬀective electron models in the antia-
+the lattice is deformed and the electrons become insulat-                     diabatic limit[38].  The main reason for this may be  the
+ing with charge density wave (CDW).                                           diﬃculty  of  constructing  a  suitable  and  tractable  varia-
+  There  are  several  numerical  methods  to  tackle  the                    tional wave functions with a small number of variational
+problems  of  electron-phonon  coupled  systems  such  as                     parameters  for  such  systems.    To  our  knowledge,  the
+the  exact  diagonalization  (ED)[4,  5],  the  density  ma-                  only  attempt  was  made  by  Alder  et  al.[45]  who  specif-
+trix  renormalization  group  (DMRG)[6–12],   the  quan-                      ically  treated  the  model  with  the  oﬀ-diagonal  electron-
+tum  Monte  Carlo  (QMC)  method[13–23],  the  dynami-                        phonon interaction, namely the hopping amplitude which
+cal  mean-ﬁeld  theory  (DMFT)[24–29],  and  so  on.   Al-                    depends  on the lattice displacement[31].  However, their
+though   the   ED   provides   exact   results,   it   is   limited           variational wave function does not take into account the
+to  ﬁnite  clusters.    The  DMRG  is  the  most  successful                  excited states of phonons which are not negligible for sys-
+method to investigate the ground-state properties of one-                     tems with strong electron-phonon interactions.  Further-
+dimensional  systems  with  short-range  interactions.   By                   more, the one-body part of their electron wave function
+using  the  DMRG,  ground-state  phase  diagrams  of  the                     is  similar  to  a  Fermi  sea  which  lacks  the  accuracy  and
+Holstein-Hubbard  model  in  one  dimension  have  been                       ﬂexibility enough to describe diﬀerent phases.
+obtained[10,  11].   In  contrast,  the  DMFT  becomes  ex-                      Although the VMC method allows us to perform sim-
+act in iniﬁnite dimensions[24].  Since the DMFT neglects                      ulations of large systems of electrons, the main drawback
+the spatial correlation, the DMFT studies have been de-                       is the presence of the bias which the assumed variational
+voted to the model with on-site (Holstein-type) electron-                     wave function inherently has.  However, in recent years, it
+phonon interactions[30].  The QMC method provides nu-                         has become possible to reduce the bias by largely increas-
+merically  exact results  and  various QMC  methods  have                     ing  the  number  of  variational  parameters  in  the  wave
+been  developed  for  models  such  as  the  Su-Schrieﬀer-                    functions and by optimizing them simultaneously[46–50].
+Heeger  (SSH)  model[31]  and  the  Fr¨ohlich  model[32]  as                     In  this  paper,  we  show  that  this  development  also
+well as the Holstein model.  However, the applications of                     opens  a  way  of  applying  the  VMC  method  to  electron-
+the  QMC methods  are restricted to some parameter re-                        phonon  coupled  systems  by  proposing  a  suitable  and
+                                                                                                                                                      2
+
+tractable  variational  wave  function  with  a  large  num-                  where  the   one-body  part  is  the   singlet  paring  wave
+ber of variational parameters.  To treat the eﬀect of the                     function[50–52] given by
+entanglement  between  electrons  and  phonons  in  an  ef-                                                              
+ﬁcient  way,  we  include  an  unexplored  electron-phonon                                                 N∑                Ne/2
+correlation factor in the proposed variational wave func-                                  |φpair⟩ =          fijc†i↑c†j↓        |0⟩,                 (3)
+tion.  The benchmark results compared with numerically                                                   i,j=1
+exact  results  demonstrate  the  accuracy  of  the  method.
+Since the present method can be ﬂexibly applied to large                      and the projection operators are the Gutzwiller factor[53]
+systems with any lattice structure and spatial dimension-                     and the Jastrow factor[54] given by
+ality,  the  method  will  oﬀer  a  way  of  treating  so  far  dif-                                           (∑                 )
+ﬁcult  problems  in  systems  with  strong  electron-phonon
+and electron-electron interactions.                                                            P G   =  exp           αGi ni↑ni↓    ,                   (4)
+  The paper is organized as follows.  In Sec.  II, we intro-                                                      i            
+duce a variational wave function with a large number of
+variational parameters  for  electron-phonon coupled sys-                                       P J   =  exp   ∑αJijninj,                     (5)
+tems.   Sec.   III  describes  how  to  implement  the  VMC                                                      i<j
+based on  our  variational wave function.  In Sec.  IV,  we
+present  benchmark  results  to  show  the  accuracy  of  our                 respectively.  Here,N  andNe are the number of sites and
+variational wave function.  Finally, we summarize our re-                     electrons,  respectively. ciσ(c†iσ)  represents  the  annihila-
+sults in Sec.  V.                                                             tion  (creation)  operator  of  an  electron  with  spin σ  (=↑
+                                                                              or ↓) at a site i.  The particle number operatorsniσ  and
+   II.     VARIATIONAL  WAVE  FUNCTION  FOR                                   ni  are deﬁned by niσ  = c†iσciσ  and ni  = ni↑ +ni↓.  The
+   ELECTRON-PHONON  COUPLED  SYSTEMS                                          variational  parameters  are fij, αGi   and αJi .   The  num-
+                                                                              ber of variational parameters for |φpair⟩, P G, and P J are
+  In  this  section,  we  propose  a  variational  wave  func-                O(N 2), O(N),  and O(N 2),  respectively.   However,  one
+tion  for  electron-phonon  coupled  systems.   The  general                  can reduce to O(N), O(1), andO(N), respectively if we
+wave  function  can  be  constructed  as  a  superposition  of                assume a sub-lattice structure.
+the tensor product states of all electron Fock states and                        The paring wave function |φpair⟩ has an extended form
+all phonon Fock states.  In general, such a wave function                     of  the  Hartree-Fock-Bogoliubov-type  one  with  the  an-
+is not tractable because the number of basis grows expo-                      tiferromagnetic  and  superconducting  orders  which  was
+nentially  as  the  system  size  increases.  Instead,  we  take              introduced  in  Ref.   [51].   Therefore,  it  can  ﬂexibly  de-
+the way of constructing a varitational wave function as a                     scribe paramagnetic metals, the antiferromagnetic states,
+tensor product state of an electron wave function and a                       and  the  superconducting  states.    The  Gutzwiller  fac-
+phonon wave function with variational parameters.  How-                       tor  and  the  Jastrow  factor  take  into  account  the  cor-
+ever, such a wave function does not take into account the                     relation  eﬀects  and  thus  we  can  include  many-body  ef-
+eﬀect of the entanglement due to the electron-phonon in-                      fects  beyond  the  mean-ﬁeld  level[55].    In  the  limit  of
+teractions.  To include this eﬀect, we introduce a correla-                   αGi   → −∞, the paring wave function with the Guztwiller
+tion factor between electrons and phonons.  Namely, our                       factor  can  describe  the  resonating  valence  bond  (RVB)
+variatonal wave function takes the following form:                            wave function[56].  If necessary, we  can extend the  vari-
+                                                                              ational wave function  by  adding the  doublon-holon cor-
+                  |ψ⟩ = P e−ph(|ψph⟩|ψele⟩),                        (1)       relation factor[57, 58] and by  introducing the  quantum-
+where  P e−ph  is  the  electron-phonon  correlation  factor,                 number projection[50].
+|ψele⟩ is an electron wave function and |ψph⟩ is a phonon
+wave  function.    In  the  subsections  below,  we  present                      B.     Variational  wave functions  for  phonon  part
+the  explicit  form  of  |ψele⟩,   |ψph⟩,   and  P e−ph,   which
+are  suitable  for  the  Hubbard  model  with  the  diagonal                     We  consider  the  Hamiltonian  for  phonons  which  is
+electron-phonon interactions, i.e.  the interaction between                   given by
+charge densities and lattice displacements.  The Holstein-
+Hubbard model[30] and the Fr¨ohlich-Hubbard model[32]                                                    ∑
+belong to this class.                                                                   Hph   =     12M      (ΠqΠ−q +M 2ω2qQqQ−q)        (6)
+                                                                                                          q
+                                                                                                           (             )
+   A.     Variational  wave functions  for  electron  part                                     = ∑     ωq     b†qbq + 12    ,                               (7)
+                                                                                                    q
+  For an electron variational wave function, we adopt the                     where M  is  the  mass  of  atoms,  q  is  the  wave  number
+following form:                                                               vector,ωq  is the phonon frequency,Qq  is the normal co-
+                    |ψele⟩ = P JP G|φpair⟩,                            (2)    ordinate operator of  the  lattice  displacements,  Πq  is  its
+                                                                                                                                                    3
+
+conjugate momentum operator and bq(b†q) is the annihi-                          In order to include  the  eﬀect of the  entanglement be-
+lation(creation) operator.  Throughout this paper, we set                    tween electrons and phonons, we introduce the following
+ℏ  to 1.  When there is  no electron-phonon coupling, the                    correlation factor (projection operator)
+ground  state  is  simply  written  as ∏q |mq  =  0⟩,  where                                                                     
+|mq⟩  represents  the  Fock  state  of  phonons.    However,                                                     ∑               ,               (12)
+in  the  presence  of  a  electron-phonon  couping,  phonons                                  P e−ph   =  exp           αijxinj
+occupy  the  excited  states  as  well  as  the  lowest  energy                                                     i,j
+states.  In order to describe such excitations of phonons,
+we  adopt  the  following  form  as  the  phonon  variational                where  the  coeﬃcients  {αij}  are  variational  parameters.
+wave function:                                                               The number of the variational parameters isO(N 2), but
+               |ψph⟩  = ∏       |ψph                                         one can reduce toO(N) if we assume a sub-lattice struc-
+                                   q  ⟩                                        (8)ture.  For  systems with  strong local electron-phonon in-
+                             q                                               teractions, the electron-displacement correlation function
+                                mmax               
+                                     q∑                                      decays exponentially[7,  33, 34,  42].  In such  a  case, it  is
+                        = ∏              cmq|mq⟩,                (9)       expected that long-range part ofαij  is negligible and the
+                             q     mq=0                                      number  of  variational parameters  reduce  from O(N)  to
+                                                                             O(1).   This  correlation  factor  is  similar  to  the  conven-
+where  {cmq}  are  coeﬃcients  of  a  superposition  of  the                 tional correlation factors such as the Gutzwiller factor in
+Fock  states  with  a  wave  vector q  and mmaxq      is  the  cut-          the  sense  that  it  can  impose  smaller  weights  on  conﬁg-
+oﬀ in mq.  We treat the coeﬃcients {cmq} as variational                      urations  with  higher  interaction  energy.   Therefore,  we
+parameters.   The  number  of  the  variational  parameters                  expect that we can reasonably include the correlation ef-
+is O(Nmmax) if mmaxq      =mmax.  In practice, we can take                   fect arising from the electron-phonon coupling.
+diﬀerent values of the cutoﬀs depending on the wave vec-                        The   extension   to   systems   with   several   diﬀerent
+tors  q,  because  a  large  value  of  the  cutoﬀ  is  sometimes            branches   of   phonon   dispersions   is   straightforward.
+required for  a  particular wave vector q.  Here,  Eq.(9)  is                Namely,  we  can  extend  the  phonon  wave  functions  and
+formulated for systems with a single branch of phonons,                      the electron-phonon correlation factor to
+while the possible extension to systems with several dif-                                                                       
+ferent branches of phonons will be discussed later.                                                          mmaxqλ∑
+  As described later in Sec.  III, we use the eigenstates of                              |ψph⟩ =∏                 cmqλ|mqλ⟩,               (13)
+the  normal coordinate operators as  the  basis of  phonon                                            qλ    mqλ=0
+Hilbert space in the VMC. However, the normal coordi-
+nate  operators  are  non-Hermitian  and  thus  a  set  of  the              and
+eigenstates  does  not  form  a  complete  basis.  Because of                                                                     
+this,  we  use  modiﬁed  normal  coordinates.   Correspond-                                                    ∑                  ,             (14)
+ingly,  we  modify  our  phonon  variational wave  function.                                P e−ph   =  exp            αijλxiλnj
+These details are described in Appendix.                                                                          i,j,λ
+
+                                                                             respectively.  Here,λ represents of a branch of the phonon
+         C.     Electron-phonon  correlation  factor                         dispersion.  The number of the variational parameters in-
+                                                                             creases linearly as the number of the branches increases.
+  We  consider the  diagonal electron-phonon interaction
+of the following form                                                         III.     VARIATIONAL  MONTE  CARLO  METHOD
+
+                     He−ph   = ∑        gijxinj,                       (10)
+                                    i,j                                         The  VMC  method  is  a  variational  method  where  we
+wheregij  is the strength of the electron-phonon (lattice)                   perform the Markov-chain Monte Carlo sampling to opti-
+interaction  and xi  is  the  lattice  displacement  at  site i.             mize the variational parameters such that the variational
+This interaction can also be written in terms of the nor-∑                   wave function has the minimum energy.  In this  section,
+mal coordinates {Qq} throughxi =     1√                                      we explain how to implement  the  VMC  method for  our
+                                               N     qQqeiq·ri.  Es-         variational wave function.
+pecially for systems with a translational symmetry, they
+can be simply written as
+                  He−ph   =  √N∑gqn−qQq                  (11)                                           A.     Overview
+
+                                       q
+where gq  and nq  are  the  Fourier  transformations  of gij                    In the variational Monte Carlo method, we estimate an
+and ni,  respectively.  Eq.  (11)  is  equivalent  to  more fa-              expectation value ⟨A⟩ =  ⟨ψ|A|ψ⟩⟨ψ|ψ⟩   for a given wave function
+                            √     1                                          |ψ⟩ by using the Markov-chain Monte Carlo method.  To
+miliar form of∑q,kgq            2Mωqc†k+qck(bq +b†−q).                       make it clear, we transform ⟨A⟩ as follows:
+                                                                                                                                                      4
+
+                                                                                 We next present the expression for ⟨Q|ψph⟩.  Since the
+                                                                              inner  product  ⟨Qq|mq⟩  is  nothing  but  an  eigenfunction
+           ⟨A⟩  =   ⟨ψ|A|ψ⟩⟨ψ|ψ⟩                                                 (15)of a harmonic oscillator, it can be written in terms of the
+                      ∫            ⟨ψ|Q,ν⟩⟨Q,ν|A|ψ⟩                           Hermite polynomialHn(x).  Therefore, the inner product
+                  =      dQ∑                                                  ⟨Q|ψph⟩ can be written in the following way:
+                               ν           ⟨ψ|ψ⟩                       (16)                                                 
+                      ∫                                                                                mmaxq∑
+                  =      dQ∑       ρ(Q,ν)F [A, (Q,ν)].         (17)            ⟨Q|ψph⟩  = ∏                 cmq⟨Qq|mq⟩
+
+                               ν                                                                 q    mq=0
+Here,    we   have   inserted   the   completeness   relation                                       mmax                                         
+∫ dQ∑                                                                                                    q∑                                   ¯Q2q
+          ν |Q,ν⟩⟨Q,ν|    =   1   in   the   second   line.      We                        = ∏              cmqNmqHmq( ¯Qq) exp(−                ,
+choose  the  real  space  conﬁguration  of  electrons  |ν⟩  =                                    q    mq=0                                    2  )
+c†r1σ1c†r2σ2 · · ·c†rNσN |0⟩ as the basis on the electron Hilbert
+space.  On the other hand, we choose the normal coordi-                       where Nn  =  (√π2nn!)−1/2  is  the  normalization  factor,
+nate conﬁguration |Q⟩ as a basis on the phonon Hilbert                        which we can calculate in advance and  ¯Qq  =√MωqQq
+space  (See  Appendix).  The  probability ρ(Q,ν)  and  the                    is  the  dimensionless  normal coordinate.  In  practice,  we
+quantity F [A, (Q,ν)] are deﬁned as                                           calculate the values of the Hermite polynomials sequen-
+                                                                              tially according to the following relation:
+                       ρ(Q,ν) =  |⟨Q,ν|ψ⟩|2⟨ψ|ψ⟩  ,                      (18)          Hn(x) = 2nHn−1(x) − 2(n − 1)Hn−2(x).         (23)
+
+                 F [A, (Q,ν)] =  ⟨Q,ν|A|ψ⟩⟨Q,ν|ψ⟩ ,                     (19)  Thus,    the   calculation   of   the   inner   product   takes
+                                                                              O(Nmmax) time if mmaxq      =mmax.
+respectively.  For our variational wave function, the inner
+product is given by
+⟨Q,ν|ψ⟩ =P e−ph(Q,ν)P G(ν)P J(ν)⟨Q|ψph⟩⟨ν|φpair⟩.(20)                                      C.     Monte  Carlo  update  schemes
+
+By  performing  the  Monte  Carlo  sampling  of  (Q,ν)  ac-                      In this subsection, we describe update schemes of con-
+cording  to  the  probability ρ(Q,ν),  we  can estimate  ⟨A⟩                  ﬁgurations (Q,ν).  We begin with the update of electron
+from the average of samples (Qi,νi):                                          conﬁgurations.  We ﬁrst choose one of the electrons ran-
+                              NMC∑                                            domly.  In this update, we try to hop the chosen electron
+              ⟨A⟩ ≃     1           F [A, (Qi,νi)],                 (21)      from a  site i  to  another site j  which is  also chosen ran-
+                       NMC     i=1                                            domly.    If  we  adopt  the  standard  Metropolis-Hastings
+                                                                              algorithm[60,  61]  for  transition  probabilities,  the  accep-
+where NMC  is  the  number  of  samples.   We  usually  es-                   tance probability paccept is given by
+timate  the  energy,  its  derivatives and  some other  quan-                                   [⏐⏐⏐⏐                                            ⏐⏐⏐⏐  ]
+tities  for  the  wave  function  |ψα⟩  and  update  the  varia-                                   P e−ph(Q,ν′)P G(ν′)P J(ν′)⟨ν′|φpair⟩           2
+tional  parameters  by  using  a  minimization  method.   As                  paccept = min          P e−ph(Q,ν)P G(ν)P J(ν)⟨ν|φpair⟩               , 1  .
+the  minimization  method,  we  adopt  the  stochastic  re-
+conﬁguration (SR) method which enables us to optimize                         Except  for  the  ﬁrst  update,   we  do  not  need  to  cal-
+many variational parameters stably[46–49].                                    culate P e−ph(Q,ν), P G(ν), P J(ν),  and  ⟨ν|φpair⟩  again
+                                                                              because  we  have  calculated  them  in  the  previous  up-
+                       B.     Inner  products                                 date.   By  updating  the  values  of  them,  the  calculations
+                                                                              of P e−ph(Q,ν′), P G(ν′), P J(ν′),  and  ⟨ν′|φpair⟩  can  be
+  As  shown in the  previous subsection, the calculations                     performed eﬃciently in the computational time ofO(N),
+of the probabilityρ(Q,ν) involves those of the inner prod-                    O(1),O(N), andO(N 2e )[50], respectively.  We usually re-
+ucts ⟨ν|φpair⟩ and ⟨Q|ψph⟩.  In this subsection, we present                   peat this updateNe-times.  Then, we move to the update
+the prescription to calculate these inner products.                           of the normal coordinates.
+  For  the  inner  product  ⟨ν|φpair⟩,  it  is  simply  propor-                  Next,  we  explain  updates  of  the  normal  coordinates.
+tional to the determinant of the (Ne/2) × (Ne/2) matrix                       In  this  update,  we  randomly  choose  one  of  the  normal
+frirj [50, 59]:                                                               coordinates {Qq} which  will be  updated.  A new  candi-
+                                                                              dateQ′q can be generated according to some distribution
+                     ⟨ν|φpair⟩ ∝ det[frirj ].                          (22)   function W (Q′q).   If  we  adopt  the  Metropolis-Hastings
+                                                                              algorithm, the acceptance probability paccept is given by
+Here, ri  and rj  represent  the  sites  of  the i-th  electron                                             ⏐⏐⏐⏐⏐                         ⏐⏐⏐⏐⏐
+with  up  spin  and  the j-th  electron  with  down  spin,  re-                                               P e−ph(Q′,ν)⟨Q′q|ψph          2
+spectively.   The  calculation  of  the  determinant  requires                paccept = minW (Qq)                                    q  ⟩    , 1.
+O(N 3e ) time.                                                                                    W (Q′q)     P e−ph(Q,ν)⟨Qq|ψphq  ⟩
+                                                                                                                                                     5
+
+To  calculate P e−ph(Q′,ν),  we  ﬁrst  transform  {Q′}  to                                       E.     Measured  quantities
+{x′}.   This  can  be  performed  in O(N)  time  by  updat-
+ing  the  values  of  {x}.   Then,  we  calculate P e−ph(Q′,ν)                   As  described  in  Sec.   III D,  we  need  to  estimate  the
+in O(N 2)  time,  while  it  reduces  to O(N),  if  we  keep                  expectation  values  ⟨Ok⟩,  ⟨H⟩,  ⟨HOk⟩,  and  ⟨OkOl⟩  for
+only  short-range  part  of  {αij}.     On  the  other  hand,                 updating the variational parameters.  To estimate them,
+the  calculation  of  ⟨Q′q|ψphq  ⟩  requires O(mmaxq    )  time  as           we measure the quantitiesF [Ok, (Q,ν)] andF [H, (Q,ν)]
+described  in  Sec.    III B.  As  the  distribution  function                for each sample (Q,ν).  In this subsection, we present the
+W (Q′q),  we  choose  the  Gaussian  distribution W (Q′q)  =                  expression of F [Ok, (Q,ν)]  and F [H, (Q,ν)].  Since  the
+√  1              q                                                           expressions  for  electrons  are  presented  in  Ref.   [50],  we
+  2πσ2 exp(−Q′22σ2 ).    Here,  the  variance σ2  is  treated  as             focus only on the phonon-related terms.
+a  tuning  parameter.  We  usually  repeat  this  update N-                      We  ﬁrst  explain  the  expression of F [H, (Q,ν)]  which
+times.  Then, we perform measurements.                                        is written as
+
+
+                  D.     Minimization method                                     F [H, (Q,ν)]  =   ⟨Q,ν|H|ψ⟩⟨Q,ν|ψ⟩
+                                                                                                      ∫
+  In  this  subsection,  we  brieﬂy  review  the  SR  method                                      =       dQ′∑                         ⟨Q,ν|ψ⟩ .
+which  is  similar  to  the  standard  steepest  decent  (SD)                                                   ν′  ⟨Q,ν|H|Q′,ν′⟩⟨Q′,ν′|ψ⟩
+method but enables us to optimize many variational pa-                        Among  the  terms  in  the  Hamilotian  H,  the  phonon-
+rameters more eﬃciently and stably.                                           related  terms  are  the  following:  the  kinetic  term  Π2q  =
+  In both the SD and the SR method, we update varia-                          − ∂2
+tional parametersαk  (k = 1, · · ·,Np) to                                       ∂Q2q ,  the  potential  term Q2q  and  the  electron-phonon
+                        α′k =αk +δαk,                               (24)      interaction gijxinj.     For  the  potential  term  and  the
+                                                                              electron-phonon interaction term, we obtain
+where                                                                                              F[Q2q, (Q,ν)]  = Q2q,                       (29)
+                                   Np∑
+                   δαk = −∆t            S−1                                                    F [gijxinj, (Q,ν)]  = gijxinj.                (30)
+                                         kk′gk′.                        (25)
+                                  k′=1                                        Since  we  have  already  transformed  {Q}  to  {x}  during
+Here, ∆t is a small constant, Skk′  is a matrix described                     the MC update,  we can calculate Eq.  (30) immediately
+below and gk  is the energy gradient which is given by                        as well as Eq.  (29).  For the kinetic term, we obtain
+                                 ⟨ψα|H|ψα⟩                                            [                  ]
+                  gk   =  ∂∂αk     ⟨ψα|ψα⟩                                          F   − ∂2∂Q2q, (Q,ν)
+                       =  2⟨HOk⟩ − 2⟨H⟩⟨Ok⟩.                  (26)                             ∫
+Here, the operator Ok  is deﬁned by                                             =         1⟨Q,ν|ψ⟩ dQ′∑                ∂Q2q |Q′,ν′⟩⟨Q′,ν′|ψ⟩
+       ∫            (        1                       )                                                   ν′  ⟨Q,ν| − ∂2
+Ok =       dQ∑                       ∂                 |Q,ν⟩⟨Q,ν|.              =  −                 1            ∂2
+
+                 ν    ⟨Q,ν|ψα⟩     ∂αk ⟨Q,ν|ψα⟩                                       P e−ph(Q,ν)⟨Q|ψph⟩         ∂Q2qP e−ph(Q,ν)⟨Q|ψph⟩.
+The diﬀerence between the SD and the SR method is the                           =  −          1        ∂2P e−ph(Q,ν)                      ∂2⟨Qq|ψph⟩
+choice  of  the  matrix Skk′.   In  the  SD  method,  we  sim-                        P e−ph(Q,ν)            ∂Q2q          −        1⟨Qq|ψph⟩  ∂Q2q
+ply  choose Skk′  = δkk′.  However, a  small change in the                                                        ∂P e−ph(Q,ν)      ∂⟨Qq|ψph⟩
+variational parameters sometimes  causes a  large  change                           −                  2P e−ph(Q,ν)⟨Qq|ψph⟩∂Qq          ∂Qq  . (31)
+in the variational wave function.  This sometimes induces
+a numerical instability in the optimization.  Although we                     The expressions of ∂P e−ph(Q,ν)
+can suppress this instability by taking a suﬃciently small                                                 ∂Qq        and ∂2P e−ph(Q,ν)∂Q2q         are given
+∆t,  it  slows  down  the  convergence.  In  the  SR  method,                 by
+to suppress this instability, we choose                                                                                                          
+                                                                               ∂P e−ph(Q,ν)                          1√   ∑αijQknjeik·ri
+                Skk′  = ⟨OkOk′⟩ − ⟨Ok⟩⟨Ok′⟩                    (27)                  ∂Qq           =  ∂∂Qq exp          N
+based  on  the  fact  that  it  relates  to  the  squared  norm                                                            ijk   
+of  the  variation  of  the  normalized  wave  function  ∆2  =                                            1    ∑                 P e−ph(Q,ν),
+‖| ¯ψα⟩ − | ¯ψα+δα⟩‖2 as[47, 50]                                                                   =      √N        αijnjeiq·ri
+                                                                                                                 ij
+                    ∆2 =∑
+                            kk′ δαkδαk′Skk′.                         (28)     and
+Here,  | ¯ψα⟩  is  deﬁned  by  | ¯ψα⟩  =  |ψα⟩/‖|ψα⟩‖.   The  SR                                                                 2
+method  requires  the  computational  time  of O(N 3p )  be-                  ∂2P e−ph(Q,ν)               1√   ∑                 
+                                                                                    ∂2Qq           =        N        αijnjeiq·ri       P e−ph(Q,ν),
+cause we need to obtain the inverse matrix S−1.                                                                  ij
+                                                                                                                                                    6
+
+respectively.     Since P e−ph(Q,ν)  cancels  with  the  de-                                           IV.     RESULTS
+nominator   in   Eq   (31),    we   only   have   to   calculate
+∑
+   ijαijnjeiq·ri  which requiresO(N 2) time.  It reduces to                     In this section, we present benchmark results to show
+O(N) if we have only short-range ones of {αij}.  On the                      the  eﬃciency  and  the  accuracy  of  our  variational  wave
+other  hand,  the  expressions  of ∂⟨Qq|ψphq   ⟩                    q   ⟩    function  for  electron-phonon  coupled  systems.   In  Sec.
+                                            ∂Qq       and ∂2⟨Qq|ψph∂Q2q      IV A, we compare our results with that obtained by the
+are given by                                                                 ED[5]  for  the  Holstein-Hubbard  model[30]  with  4  site
+      ∂⟨Qq|ψphq  ⟩                                                           chains.   In  Sec.    IV B,  to  check  the  validity  for  larger
+          ∂Qq                                                                sizes, we compare our results with that obtained by the
+      mmax                                                             ]     Green  function  Monte  Carlo  (GFMC)[62]  for  the  Hol-
+        q∑
+                                                                             stein model of spinless fermion.  Finally, in Sec.  IV C, we
+ =          λqcmqNmqe− ¯Q2q/2[∂Hmq( ¯Qq)∂ ¯Qq       −  ¯QqHmq( ¯Qq)      ,   show that our variational wave function can describe the
+     mq=0                                                                    Peierls CDW state by presenting the  data of the charge
+and                                                                          structure factor.
+      ∂2⟨Qq|ψphq  ⟩
+          ∂Q2q                                                                   A.     Comparison  with  the  exact  diagonalization
+
+      mmaxq∑
+ =          λ2qcmqNmqe− ¯Q2q/2                                                  In  this  section,  we  show  comparisons  of  the  ground-
+     mq=0                                                                    state  energy  between  the  ED[5]  and  the  VMC  for  our
+        [∂2Hmq( ¯Qq)                                                        ]variational  wave  function.   The  Hamiltonian  considered
+     ×         ∂ ¯Q2q        − 2 ¯Qq∂Hmq( ¯Qq)∂ ¯Qq       + ( ¯Q2q − 1)Hmq( ¯Qq)here is the Holstein-Hubbard model which is written by,
+
+respectively.  Here, λq  is deﬁned by λq  =√Mωq.  Since                              H  =  −t ∑         (c†iσcjσ + h.c.) +U∑         ni↑ni↓    (34)
+                                                                                                  ⟨i,j⟩,σ                         i
+we have already calculatedHmq( ¯Qq) as well as ⟨Qq|ψphq  ⟩                                    −g∑(b†                          b†
+during the MC update, we can calculate its derivatives by                                                i +bi)ni +ω∑           ibi,
+using  the  relations ∂Hn(x)                                                                        i                      i
+                            ∂x     = 2nHn−1(x)  and ∂2Hn(x)∂x2      =
+4n(n − 1)Hn−2(x).  The calculations of the derivatives of                    where t, U, and g  represent the hopping amplitude, the
+the inner product requireO(mmaxq    ) time.                                  strength of the  on-site intraction between  electrons and
+  Next,  we  derive the  expression for F [Ok, (Q,ν)].  For                  the  strength  of  the  electron-phonon interaction,  respec-
+the  variational  parameters  {cmq}  in  the  phonon  wave                   tively.  We consider a one-dimensional system withN  = 4
+function, we obtain                                                          sites under the periodic boundary condition.  In the ED
+F [Ok, (Q,ν)]  =         1          ∂                                        calculations, the phonon Hilbert space was truncated by
+                       ⟨Q,ν|ψ⟩    ∂cmq ⟨Q,ν|ψ⟩                               keeping  the  basis  (Fock  states)  |{mq}⟩  with  the  total
+                                    ∂                                        number of phonons∑qmq ≤M max[5].  The largest value
+                  =         1⟨Q|ψph⟩∂cmq ⟨Q|ψph⟩                             ofM max which the author of Ref.  [5] took isM max = 40.
+                                                                           In  our  VMC  calculations,  we  set  the  cutoﬀ mmaxq      to  40
+                                    ∂    ∏      mmaxq′∑                      for  all q  in  order  to  ensure  that  the  possible  number  of
+                  =         1⟨Q|ψph⟩∂cmq              cmq′ ⟨Qq′|mq′⟩       phonons in the VMC is not smaller than that in the ED.
+                                          q′    mq′=0                        We conﬁrmed that this cutoﬀ is suﬃciently large to rep-
+                                                                             resent the physical limit mmaxq     → ∞.
+                  =   ⟨Qq|mq⟩                                                   Figure 1 shows comparisons of the ground-state ener-
+                       ⟨Qq|ψphq  ⟩.                                                (32)gies E  between  the  ED  and  the  VMC  at U  =  0.   We
+Since  the  calculations of  both  the  denominator  and  the                consider  the  cases  of  a  single  electron  (Ne  =  1)  or  two
+numerator have already been performed during the MC                          electrons with opposite spins (Ne = 2) at ω/t = 2.0 and
+updates, we can calculate this quantity immediately.  For                    0.5.  In the horizontal axis, a dimensionless quantity λ is
+the variational parameters {αij} in the electron-phonon                      deﬁned byλ =g2/(2tω).  In these ﬁgures, we have shown
+correlation factor, we obtain                                                two  kinds  of  VMC  results  obtained  by  the  variational
+                                    ∂                                        wave function with the electron-phonon correlation factor
+F [Ok, (Q,ν)]  =         1⟨Q,ν|ψ⟩ ∂αij ⟨Q,ν|ψ⟩                               P e−ph and without it, respectively.  Even without P e−ph,
+                                                                           our  variational  wave  function  can  describe  the  ground-
+                                         ∂                                   state  wave function  precisely  at λ = U  = 0  or  at t = 0
+                  =            1P e−ph(Q,ν)∂αij  exp∑                      where  electrons  are  localized.   We  see  good  agreement
+                                                     i′j′ αi′j′xi′nj′        between the results of the VMC without P e−ph  and the
+                  = xinj,                                                      (33)ED for largeλ as well.  This is because electrons are self-
+                                                                             trapped and nearly localized[18].  For moderate values of
+which is equal to Eq.  (30) except for the coeﬃcientgij.                     λ, however we clearly observe discrepancies between the
+                                                                                                                                                               7
+
+VMC  without  P e−ph  and  the  ED.  In  this  intermediate                                  -4
+coupling  region,  we  ﬁnd  that  the  introduction of  P e−ph                                           Ne=2, N=4, λ=1, ω/t=0.2
+remarkably  improves  the  accuracy  of  the  ground-state
+energy as seen in the ﬁgures.
+                                                                                             -6
+
+                                                                                                                            ED (Mmax      =10)
+                                                                                                                            ED (Mmax      =20)
+                                                                                             -8                             ED (Mmax      =30)
+       0                                                                    0                                               ED (Mmax      =40)
+             Ne=1, N=4, U/t=0, ω/t=2.0         Ne=1, N=4, U/t=0, ω/t=0.5                                                    VMC1
+                                                                                                                            VMC2
+                                                                                           -10
+      -5                                                                   -5                     0                           4                          8
+             ED (Mmax      =6)                 ED (Mmax      =6)
+             ED (Mmax      =10)                ED (Mmax      =10)
+             ED (Mmax      =20)                ED (Mmax      =20)                                                          U/t
+             ED (Mmax      =30)                ED (Mmax      =30)
+             VMC1                              VMC1
+    -10      VMC2                              VMC2                        -10     FIG.  2:    (Color  online)  Comparisons  of  U   dependence  of
+         0              2.5             5  0              2.5             5        ground-state  energies  between  ED[5]  (lines)  and  VMC  (col-
+                        λ                                 λ                        ored  open  symbols)  for  two  electrons  at  (λ, ω/t)=(1,  0.2).
+       0                                                                    0      VMC1  and  VMC2  represent  the  VMC  results  without  and
+             Ne=2, N=4, U/t=0, ω/t=2.0         Ne=2, N=4, U/t=0, ω/t=0.5           with P e−ph, respectively.
+
+
+      -5                                                                    -5
+                                                                                      We next show how the results depend on the range of
+
+                                               ED (Mmax      =10)                  the  variational  parameters αij.   In  Table  I,  we  present
+    -10      ED (Mmax      =10)                ED (Mmax      =20)          -10     an example of cutoﬀ dependence of the ground-state en-
+             ED (Mmax      =30)                ED (Mmax      =30)
+             ED (Mmax      =40)                ED (Mmax      =40)                  ergy.  By introducing the electron-phonon correlation fac-
+             VMC1                              VMC1                                tor P e−ph only with thei =j part ofαij, we have already
+             VMC2                              VMC2
+    -15 0                1              2                                  -15     obtained the result with a few percent accuracy (“rc=0”
+                                           0               1               2       in Table I). The accuracy of the ground-state energy can
+                        λ                                 λ                        be  slightly improved if we include  the  nearest-neighbor-
+FIG. 1:  (Color  online) Comparisons  of ground-state energies                     sites part ofαij (“rc=1” in Table I). However, we did not
+between  results obtained  from  ED  [5] (lines)  and VMC (col-                    ﬁnd improvement within the error bar even if we increase
+ored  open  symbols)  at  U  =  0.   VMC1  and  VMC2  represent                    the cutoﬀ in the range ofα(“rc=2” in Table I).
+the VMC results without and with P e−ph, respectively.
+                                                                                                  No rc         rc=0         rc=1         rc=2          ED
+                                                                                     Energy  -2.501(1)  -2.775(2)  -2.795(1)  -2.796(1)  -2.8343
+
+                                                                                   TABLE I: Range rc dependence of VMC ground-state energy
+                                                                                   along  with  ED  ground-state energy[5]  at  (Ne, N, U/t, ω/t, λ)
+                                                                                   = (1, 4, 0, 0.5, 1).  Here, the range rc (in the unit of the lattice
+                                                                                   constant)  represents  the  cutoﬀ  in  the  varitaional  parameter
+   In Fig.  2, we compare the results of the VMC with the                          αij.   We  keep  αij  only  within  the  distance  rij  ≤  rc  in  the
+ED forU  ≥ 0.  We consider two electrons atλ = 1.0 and                             electron-phonon  correlation  factor  P e−ph.  “No  rc”  indicates
+ω = 0.2t.  For small values of U < 4.0, the ground-state                           the result obtained by the VMC without P e−ph.
+energies obtained by the ED have not converged yet as a
+function of the cutoﬀ M max.  Since  the deﬁnition of the
+cutoﬀ  in  the  number  of  phonons  in  the  ED  is  diﬀerent                        Finally, we discuss the structure of our variational wave
+from  that  in  the  VMC,  it  is  allowed  that  the  ground-                     function to clarify the role of the electron-phonon corre-
+state  energies by  the  VMC  are  lower than  those by  the                       lation factor.  For simplicity,  we  consider only  the i = j
+ED. For U  ≥ 4.0, the ground-state energies obtained by                            part ofαij  in the electron-phonon correlation factor and
+the ED have converged well and those by the VMC well                               the  case  of Ne  =  2.   In  addition,  we  focus  on  the  zero-
+reproduce  them  if  we  include  P e−ph  in  the  variational                     phonon state |0⟩ph  in the phonon variational wave func-
+wave function.                                                                     tion which is  most relevant in  the  antiadiabatic regime.
+                                                                                                                                                       8
+
+In this situation, the focused part of our variational wave                    We  consider  one-dimensional  systems  with N   sites  at
+function is written as                                                         half  ﬁlling.  The  periodic/anti-periodic boundary  condi-
+                                                                           tion  is  applied,  if  the  number  of  fermions  is  odd/even.
+       ∑                            N∑                                         For the Tomonaga-Luttinger-liquid (TLL) in the confor-
+      e  lα(b†l +bl)nl |0⟩ph           fijc†i↑c†j↓ |0⟩ele                  mally invariant system under these boundary conditions,
+
+                                   i,j=1                                       the ground-state energyE(N) scales in the leading order
+               N∑      [               ][                 ]                    as[64]
+          =        fij   eα(b†i +bi)c†i↑   eα(b†j +bj)c†j↓  |0⟩.      (35)
+
+             i,j=1                                                                                   E(N)
+Here, α  is  the  variational  parameter, b†                                                           N     =ǫ∞ − πuρ6N 2,                           (38)
+                                                     l   indicates  the
+creation  operator  of  a  phonon  at  the  site l,  |0⟩ele  is                where ǫ∞  is the ground-state energy density  of the  inﬁ-
+the  electron  vaccuum  state,  and  |0⟩  is  deﬁned  by  |0⟩  =               nite systems anduρ is the velocity of charge excitations.
+|0⟩ph|0⟩ele.   In  the  above  equation,  we  can  replace  the
+operatoreα(b†i +bi) by the displacement operatoreα(b†i −bi)                       In  Fig.   3,  we  show  the  comparisons  of  the  ground-
+with an additional factor eα2.  This  is  immediately  seen                    state  energy  density  in  the  TLL  phase.    According  to
+
+                             i +bi)  = eα2/2eαb†ieαbi, eα(b†i −bi)  =          the DMRG study, the Peierls transition occurs atg/ω =
+from the  relations eα(b†                                                      1.61(1)[8].  For N  = 4, we  observe the  good agreements
+e−α2/2eαb†ie−αbi,  and eαbi|0⟩  =  |0⟩.   The  ﬁrst  and  the                  between  the  VMC  and  the  GFMC  for  all  values  of g
+second relations are obtained from the Baker-Campbell-                         presented here.  For larger systems with N  = 6, 8, 16, we
+Hausdorﬀ formula.  The additional factoreα2 is unimpor-                        clearly see that the deviation of the VMC results from the
+tant,  because  we  can  remove it  by  redeﬁning  the  varia-                 GFMC results becomes larger as the value ofg increases.
+tional parameter fij  by  ˜fij  =fijeα2.  Thus, it turns out                   However, the discrepancy is still within 2 %.
+that the focused part of our variational wave function is                         In  order  to  show  how  the  correlation  factor  P e−ph
+written as                                                                     improves  the  accuracy  of  the  ground-state  energy,  we
+
+                          N∑                                                   present  the  data  obtained  by  the  VMC  without  P e−ph
+                               ˜fij˜c†i↑˜c†j↓|0⟩.                              (36)(VMC1) and the VMC with it (VMC2) along with that
+                        i,j=1                                                  by  the  GFMC[62]  in  Table  II.  From  these  data,  we  see
+                                                                               that the introduction of P e−ph improves the accuracy of
+Here,  ˜c†iσ   = eα(b†i −bi)c†iσ  describes  an  electron  tied  to            the ground-state energy signiﬁcantly for all system sizes
+the  lattice  displacement,  i.e.   a  polaron.   This  transfor-              presented here.
+mation is  known as the  Lang-Firsov transformation[63].
+If  we  include  the  short-range  part  of αij,  the  varita-                              -0.65
+tional  wave  function  clearly  takes  into  account  the  ef-
+fect  of  an  electron  displacing  the  neighbor  lattices  in
+addition  to  the  lattice  where  it  occupies.   For  systems                              -0.7          t=ω                         g=0.5ω
+with  strong  local (Holstein-type)  electron-phonon inter-
+actions, it has been numerically shown that the electron-
+displacement correlation function decays exponentially at                                   -0.75                                      g=1.0ω
+long  distance[7,  33,  34,  42].   In  such  a  case,  long-range
+part of αij  should be negligible.
+                                                                                             -0.8                                      g=1.25ω
+
+                      B.     Size  dependence
+                                                                                            -0.85                                      g=1.5ω
+   In  the  previous  section,  we  have  shown  benchmarks
+for  small  systems  with  only  4  sites.   In  order  to  check                            -0.9
+the  accuracy of  our  variational wave  function  for  larger                                       0          0.02         0.04        0.06
+systems, we compare the VMC results with that obtained
+by  the  GFMC[62].    The  model  considered  here  is  the                                                               1/N2
+Holstein model of spinless fermions deﬁned by
+
+                                                                               FIG.  3:  (Color  online)  Comparisons  of  the  ground-state  en-
+         H  =  −t∑(c†                                                          ergy  density  between  the  VMC  with  P e−ph  (colored  large
+                            icj + h.c.)                                        symbols)  and  GFMC[62]  (black  small  symbols).   We  set  the
+                     ⟨i,j⟩                                                     cutoﬀ mmax
+                                                                                         q      to 10 for all q and conﬁrmed that the quantities
+                 −g∑(b†                                    b†                  have already well converged as a function of mmaxq    .
+                            i +bi)(ni − 12) +ω∑             ibi.     (37)
+                       i                                i
+                                                                                                                                                      9
+
+
+                N=4           N=6           N=8          N=16                             0.25
+ VMC1   -0.7832(7)  -0.7749(2)  -0.7739(2)  -0.7732(4)                                                   (ω/t, g2/ω2)=(10, 12)            DMRG
+ VMC2   -0.8904(5)  -0.8583(3)  -0.8484(3)  -0.8388(5)                                      0.2                                           VMC1
+ GFMC   -0.895(1)    -0.868(1)    -0.861(2)   -0.854(1)                                                                                   VMC2
+
+
+TABLE   II:   Ground-state   energy   densities   obtained   by                   π       0.15
+VMC  without  P e−ph(VMC1),  VMC  with  it  (VMC2),  and                                                 (ω/t, g2/ω2)=(0.1, 20)
+GFMC[62].  The system parameters  are chosen at  t = ω  and
+g = 1.5ω.                                                                                   0.1
+                                                                                          0.05           (ω/t, g2/ω2)=(0.1, 2)
+
+
+                                                                                               0
+  C.     Charge  structure  factor  in  the  Peierls  CDW                                          0              0.05              0.1             0.15
+                                 state                                                                                    1/N
+
+
+  The  Peierls  CDW  state  is  a  state  which  is  realized                 FIG.  4:  (Color  online)  Comparisons  of  the  charge  structure
+owing  to  the  electron-phonon  coupling.     In  order  to                  factor  Sc(π)  between  the  VMC  (colored  open  symbols)  and
+show that our variational wave function can describe the                      DMRG[65] (black diamonds).  The VMC1  and VMC2 repre-
+Peierls CDW state, we present results of the charge struc-                    sent  the  VMC  results  without  and  with  P e−ph,  respectively.
+ture factor in this subsection.  We check its accuracy by                     For  (ω/t, g2/ω2) = (0.1, 2),  we  set  the  cutoﬀ  mmaxq      to  20  for
+comparing  with  that  obtained  by  the  DMRG[65].   For                     all  q.   For  (ω/t, g2/ω2)  =  (0.1, 20)/(10,12),  we  set  mmaxq      to
+this comparison, we consider the spinless Holstein model                      360/80 for q = π  and to 10 for others.
+[Eq.(37)] at half ﬁlling again.  The applied boundary con-
+dition is also the same as that in the previous subsection.
+The measured charge structure factor is deﬁned by
+                                                                                          V.     SUMMARY  AND  OUTLOOK
+                       ∑
+      Sc(π) =   1N 2       (−1)j⟨(ni − 12 )(ni+j − 12 )⟩.       (39)             We   have   developed   a   VMC   method   for   electron-
+                        i,j                                                   phonon   coupled   systems   with   the   diagonal   electron-
+                                                                              phonon  interactions.     The  proposed  variational  wave
+                                                                              function  includes  a  correlation  factor  which  takes  into
+  In  Fig.   4,  we  show  the  comparison of Sc(π)  between                  account the eﬀect of the entanglement between electrons
+the  DMRG[65] and the  VMC for three diﬀerent param-                          and  phonons.  By  comparing  the  VMC  results  with  the
+eter  sets.  The  parameter set  (ω/t,g2/ω2) = (0.1, 2) be-                   previous  results  obtained  by  the  ED,  the  GFMC  and
+longs  to  the  TLL  phase,  and  the  other  parameter  sets                 the  DMRG,  we  have  shown  that  the  correlation  factor
+(ω/t,g2/ω2) = (10, 12) and (0.1,20) belong to the Peierls                     signiﬁcantly  improves  the  accuracy  of  the  ground-state
+CDW phase[8].  In the  TLL phase, the charge structure                        energy  as  well  as  the  correlation  function  (the  charge
+factor  decreases  as  the  system  size  increases,  and  even-              structure  factor).   Compared  with  the  other  numerical
+tually  vanishes  in  the  thermodynamic  limit.   Both  the                  methods, the advantage of the VMC method is its wide
+DMRG and VMC results are consistent with this behav-                          applicability and ﬂexibility.  We  do neither  have restric-
+ior.  The agreement between the DMRG and VMC results                          tions  on  the  forms  of  (diagonal)  electron-phonon  inter-
+(with or without P e−ph) is excellent as seen in the ﬁgure.                   actions  nor  lattice  structures  (spatial  dimensionality).
+                                                                              Furthermore, our variational wave function can describe
+  In  the  CDW  phase  at  (ω/t,g2/ω2)  =  (10, 12),  the                     dispersive  phonons  as  well  as  dispersionless  (Einstein)
+VMC  results  agree  with  the  DMRG  results  even  with-                    phonons.    It  is  also  possible  to  treat  several  diﬀerent
+out  P e−ph.    In  this  case,  the  charge  structure  factor               branches  of  phonon  dispersions.   Therefore,  we  expect
+does  not  show  clear  system-size  dependence  and  takes                   that  our  approach  will  open  a  way  to  study  a  wide  va-
+the  value  close  to  the  maximum  value  1/4,  indicating                  riety  of electron-phonon coupled systems.  For  example,
+a  strong  charge  order.   In  contrast,  the  charge  order  is             the present method will enable us to tackle the challeng-
+weaker for (ω/t,g2/ω2) = (0.1, 20).  In this intermediate                     ing issues such as phonon eﬀects on superconductivity in
+regime,  the  VMC  result  without  P e−ph  clearly  deviates                 strongly correlated electron systems and the competition
+from  the  DMRG  result.   However,  the  accuracy  of  the                   between  the  charge/spin  orders  and  superconductivity.
+VMC results improves by including P e−ph.                                     So  far,  we  have  considered  systems  with  the  diagonal
+                                                                                                                                                           10
+
+electron-phonon interactions.  The  extension  to  systems                        thank K. Ido for continuous discussion.  We appreciate H.
+with oﬀ-diagonal electron-phonon interactions as well as                          Fehske and A. R. Bishop for providing their DMRG data,
+diagonal ones is an intriguing challenge.                                         F. Marsiglio for providing his ED data and R. H. McKen-
+                                                                                  zie for allowing us to reproduce their GFMC data.  This
+                                                                                  work is ﬁnancially supported by MEXT HPCI Strategic
+                   ACKNOWLEDGMENTS                                                Programs  for  Innovative  Research  (SPIRE)(grant  num-
+                                                                                  ber 130007) and Computational Materials Science Initia-
+   The  code  was  developed  based  on  the  VMC  code                           tive  (CMSI).  This  work  was  also  supported  by  Grant-
+for electron systems (without electron-phonon couplings)                          in-Aid  for  Scientiﬁc  Research  (No.   22104010,  and  No.
+which was implemented by D. Tahara and S. Morita.  We                             22340090) from MEXT, Japan.
+
+
+
+
+
+ [1]  J.  Bardeen,  L.  N.  Cooper,  and  J.  R.  Schrieﬀer,  Phys.               [26]  G. Sangiovanni, O. Gunnarsson, E. Koch, C. Castellani,
+     Rev. 108, 1175 (1957).                                                            and M. Capone, Phys. Rev. Lett. 97, 046404 (2006).
+ [2]  A.  Lanzara,  P.  V.  Pogdanov,  X.  J.  Zhou,  S.  A.  Kellar,             [27]  P. Werner and A. J. Millis,  Phys. Rev. Lett. 99, 146404
+     D. L. Feng, E. D. Lu, T. Yoshida, H. Eisaki, A. Fujimori,                         (2007).
+     K. Kishio, et al., Nature (London) 412, 510 (2001).                          [28]  P.  Werner  and  M.  Eckstein,  Phys.  Rev.  B  88,  165108
+ [3]  R. Peierls, Quantum Theory of Solids (Oxford University,                         (2013).
+     Oxford) (1955).                                                              [29]  Y.  Murakami,  P.  Werner,  N.  Tsuji,  and  H.  Aoki,  Phys.
+ [4]  F. Marsiglio,  Phys. Lett. A 180, 280 (1993).                                    Rev. B 88, 125126 (2013).
+ [5]  F. Marsiglio,  Physica C 244, 21 (1995).                                    [30]  T. Holstein, Ann. Phys. (N.Y.) 8, 325 (1959).
+ [6]  S. R. White, Phys. Rev. Lett. 69, 2863 (1992).                              [31]  W. P. Su, J. R. Schrieﬀer, and A. J. Heeger, Phys. Rev.
+ [7]  E. Jeckelmann  and  S. R. White,  Phys. Rev. B  57,  6376                        Lett. 42, 1698 (1979).
+     (1998).                                                                      [32]  H.  Fr¨ohlich,  H.  Pelzer,  and  S.  Zienau,  Philos.  Mag.  41,
+ [8]  R.  J.  Bursill,  R.  H.  McKenzie,  and  C.  J.  Hamer,  Phys.                  221 (1950).
+     Rev. Lett. 80, 5607 (1998).                                                  [33]  G. Wellein and H. Fehske, Phys. Rev. B 58, 6208 (1998).
+ [9]  M. Tezuka, R. Arita, and H. Aoki, Phys. Rev. Lett. 95,                      [34]  J.  Bonˇca,  S. A. Trugman,  and  I. Batisti´c,  Phys. Rev. B
+     226401 (2005).                                                                    60, 1633 (1999).
+[10]  M.  Tezuka,  R.  Arita,  and  H.  Aoki,  Phys.  Rev.  B  76,                [35]  O. S. Bariˇsi´c, Phys. Rev. B 65, 144301 (2002).
+     155114 (2007).                                                               [36]  V.  Cataudella,  G.  D.  Filippis,  F.  Martone,  and  C.  A.
+[11]  H. Fehske, G. Hager, and E. Jeckelmann, Europhys. Lett.                          Perroni, Phys. Rev. B 70, 193105 (2004).
+     84, 57001 (2008).                                                            [37]  P. Barone, R. Raimondi, M. Capone,  C. Castellani,  and
+[12]  S.  Ejima  and  H.  Fehske,   Europhys.  Lett.  87,   27001                      M. Fabrizio, Europhys. Lett. 79, 47003 (2007).
+     (2009).                                                                      [38]  T.  M.  Hardy,  J.  P.  Hague,  J.  H.  Samson,  and  A.  S.
+[13]  J. E. Hirsch, Phys. Rev. Lett. 51, 296 (1983).                                   Alexandrov, Phys. Rev. B 79, 212501 (2009).
+[14]  R. T. Scalettar, N. E. Bickers, and D. J. Scalapino, Phys.                  [39]  M. Chakraborty and B. I. Min, Phys. Rev. B 88, 024302
+     Rev. B 40, 197 (1989).                                                            (2013).
+[15]  R. M. Noack, D. J. Scalapino, and R. T. Scalettar, Phys.                    [40]  M.  Chakraborty,  M.  Tezuka,  and  B.  I.  Min,  Phys.  Rev.
+     Rev. Lett. 66, 778 (1991).                                                        B 89, 035146 (2014).
+[16]  P.  Niyaz,  J.  E.  Gubernatis,  R.  T.  Scalettar,  and  C.  Y.            [41]  P. Barone, R. Raimondi, M. Capone,  C. Castellani,  and
+     Fong, Phys. Rev. B 48, 16011 (1993).                                              M. Fabrizio, Phys. Rev. B 77, 235115 (2008).
+[17]  A.  S.  Mishchenko,  N.  V.  Prokof’ev,  A.  Sakamoto,  and                 [42]  L.-C.  Ku,  S.  A.  Trugman,  and  J.  Bonˇca,  Phys.  Rev.  B
+     B. V. Svistunov, Phys. Rev. B 62, 6317 (2000).                                    65, 174306 (2002).
+[18]  M.  Hohenadler,  H.  G.  Evertz,  and  W.  von  der  Linden,                [43]  M. Berciu and G. L. Goodvin, Phys. Rev. B 76, 165109
+     Phys. Rev. B 69, 024301 (2004).                                                   (2007).
+[19]  P. E. Spencer, J. H. Samson, P. E. Kornilovitch, and A. S.                  [44]  Z.  Li,  D.  Baillie,  C.  Blois,  and  F.  Marsiglio,  Phys.  Rev.
+     Alexandrov, Phys. Rev. B 71, 184310 (2005).                                       B 81, 115114 (2010).
+[20]  F. F. Assaad, Phys. Rev. B 78, 155124 (2008).                               [45]  B. J. Alder, K. J. Runge, and R. T. Scalettar, Phys. Rev.
+[21]  M. Hohenadler, F. F. Assaad, and H. Fehske, Phys. Rev.                           Lett. 79, 3022 (1997).
+     Lett. 109, 116407 (2012).                                                    [46]  S. Sorella, Phys. Rev. B 64, 024512 (2001).
+[22]  E.  A. Nowadnick,  S. Johnston,  B.  Moritz,  R.  T.  Scalet-               [47]  M. Casula, C. Attaccalite, and S. Sorella, J. Chem. Phys.
+     tar, and T. P. Devereaux, Phys. Rev. Lett. 109, 246404                            121, 7110 (2004).
+     (2012).                                                                      [48]  S. Sorella, Phys. Rev. B(R) 71, 241103 (2005).
+[23]  S.  Johnston,  E.  A.  Nowadnick,  Y.  F.  Kung,  B.  Moritz,               [49]  S. Sorella, M. Casula, and D. Rocca, J. Chem. Phys. 127,
+     R. T. Scalettar,  and T. P. Devereaux, Phys. Rev. B 87,                           014105 (2007).
+     235133 (2013).                                                               [50]  D. Tahara and M. Imada, J. Phys. Soc. Jpn. 77, 114701
+[24]  A. Georges, G. Kotliar, W. Krauth, and M. M. J. Rozen-                           (2008).
+     berg, Rev. Mod. Phys. 68, 13 (1996).                                         [51]  T.  Giamarchi  and  C.  Lhuillier,  Phys.  Rev.  B  43,  12943
+[25]  G. Sangiovanni, M. Capone, C. Castellani, and M. Grilli,                         (1991).
+     Phys. Rev. Lett. 94, 026401 (2005).                                          [52]  A.  Himeda  and  M.  Ogata,  Phys.  Rev.  Lett.  85,  4345
+                                                                                                                                                       11
+
+     (2000).                                                                   Since  we  have  the  relations QRq   = QR−q, QIq  =  −QI−q,
+[53]  M. C. Gutzwiller, Phys. Rev. Lett. 10, 159 (1963).                       ΠRq  = ΠR−q, ΠIq  = −ΠI−q, we restrict them to those with
+[54]  R. Jastrow, Phys. Rev. 98, 1479 (1995).                                  the  wave  vector  to  half  of  the  ﬁrst  Brillouin  zone.   We
+[55]  M.   Capello,   F.   Becca,   M.   Fabrizio,   S.   Sorella,   and       can easily check that these operators satisfy the canonical
+     E. Tosatti, Phys. Rev. Lett. 94, 026406 (2005).                           commutation relations:
+[56]  S.  Liang,  B.  Doucot,  and  P.  W.  Anderson,  Phys.  Rev.
+     Lett. 61, 365 (1988).
+[57]  T. A. Kaplan, P. Horsch, and P. Fulde, Phys. Rev. Lett.
+     49, 889 (1982).                                                                                   [QRq, ΠRq′]  = iδq,q′,                        (A7)
+[58]  H. Yokoyama and H. Shiba, J. Phys. Soc. Jpn. 80, 3669
+     (2011).                                                                                            [QIq, ΠIq′]  = iδq,q′.                        (A8)
+[59]  J.  P.  Bouchaud,  A.  Georges,  and  C.  Lhuiller,  J.  Phys.
+     (Paris) 49, 533 (1988).
+[60]  N.  Metropolis,  A.  W.  Rosenbluth,  M.  N.  Rosenbluth,
+     A.  H.  Teller,  and  E.  Teller,  J.  Chem.  Phys.  21,  1087
+     (1953).
+[61]  W. K. Hastings, Biometrika 57, 97 (1965).                                In  terms  of  these  Hermitian  operators,  we  can  rewrite
+[62]  R. H. McKenzie, C. J. Hamer, and D. W. Murray, Phys.                     Hph  as
+     Rev. B 53, 9676 (1996).
+[63]  I. G. Lang and Y. A. Firsov, Sov. Phys. JETP 16, 1301
+     (1962).
+[64]  H. W. J. Bl¨ote, J. L. Cardy, and M. P. Nightingale, Phys.                                          ∑   (Π2q∗ +M 2ω2q∗Q2q∗)
+     Rev. Lett. 56, 742 (1986).                                                         Hph   =     1
+[65]  H. Fehske, G. Wellein, G. Hager, A. Weiße, K. W. Becker,                                      2M    q∗
+     and A. R. Bishop, Physica B 359-361, 699 (2005).                                                       ∑
+                                                                                                                 ′[(ΠRq )2 +M 2ω2q(QRq )2]
+                                                                                                    +   12M
+                                                                                                             q
+    Appendix  A:  Precise  treatment  of  the  normal                                                       ∑
+                                                                                                                 ′[(ΠIq)2 +M 2ω2q(QIq)2],    (A9)
+                             coordinates                                                            +   1
+                                                                                                      2M     q
+   In  this  paper,  we  have  assumed  that  the  normal  co-
+ordinate  operators  {Qq}  are  Hermitian  to  simplify  the
+explanations.  However, the normal coordinate operators
+are non-Hermitian in the presence of the electron-phonon                       where the prime on the summation means the summation
+coupling.  In this case, the eigenstates of the normal co-                     over  half  of  the  ﬁrst  Brillouin  zone  except  for  q  =  q∗.
+ordinates  do  not  form  a  complete  basis  of  the  phonon                  Correspondingly, we modify the phonon variational wave
+Hilbert space.  Therefore, in this appendix, we formulate                      function as follows:
+the precise treatment of the normal coordinates.
+   The  normal coordinate Qq  and its  conjugate momen-
+tum Πq  are deﬁned by
+                                    ∑                                                              mmax                         mR,max                
+                    Qq   =     1√        xje−iq·rj,                   (A1)                            q∗∑                              q∑
+                                                                                                                                 ′
+                                N     j                                        |ψph⟩  = ∏                  cmq∗ |mq∗⟩∏                     cmRq |mRq ⟩
+                    Πq   =     1√   ∑pjeiq·rj,                      (A2)                     q∗    mq∗ =0                     q       mRq =0
+                                N                                                                    mI,max               
+                                      j                                                                   q∑
+                                                                                                    ′
+respectively.  These  operators are non-Hermitian except                                    ⊗∏                 cmIq|mIq⟩.                             (A10)
+for the wave vectors q∗  satisﬁying sin(q∗ · rj) = 0 for all                                    q       mIq=0
+j  due  to  the  imaginary  part  of  the  exponential.   In  one
+dimension, q∗  =  0,π.   In  order  to  avoid  treating  these
+non-Hermitian operators, we instead treat the following
+Hermitian operators:                                                           Here, |mR(I)q    ⟩ represents a Fock state which is related to
+                          √   2  ∑                                             the normal coordinate QR(I)q    .  The prime on the product
+               QRq   =       N        xj cos(−q · rj),              (A3)       means the the product over half of the ﬁrst Brillouin zone
+                                  j                                            except for {q∗}.  We adopt the eigenstates of these (mod-
+                          √   2  ∑                                             iﬁed) normal coordinate operators {Qq∗}, {QRq }, {QIq} as
+                QIq   =      N        xj sin(−q · rj),              (A4)       a  complete  basis  of the  phonon Hilbert  space.  Even af-
+                                  j                                            ter  these  modiﬁcations,  we  can  still  treat  these  normal
+                          √   2  ∑                                             coordinate operators on an equal footing.  Therefore, the
+                ΠRq   =      N        pj cos(−q · rj),              (A5)       procedure in the VMC method does not change.
+
+                                  j
+                          √   2  ∑
+                ΠIq   =      N        pj sin(−q · rj).              (A6)
+                                  j

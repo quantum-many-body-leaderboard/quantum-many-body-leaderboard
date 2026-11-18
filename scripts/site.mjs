@@ -23,7 +23,7 @@ import { collect, classBest, shownBest, bestTagOf, lowestOf, noRecordKey, summar
 import { THEMES, W } from "./chart.mjs";
 import { citeRef, noteParts, codeRef, checkRef, libraryRef, paperYear } from "./cite.mjs";
 import { sources } from "./enrich_sources.mjs";
-import { quote, storedDigits, shorten, MODELS, BOUNDARY, instanceLabel, byGeometry, noRecordReason, gapAbove } from "./readme_table.mjs";
+import { quote, storedDigits, shorten, MODELS, BOUNDARY, boundaryLabel, instanceLabel, byGeometry, noRecordReason, gapAbove } from "./readme_table.mjs";
 import { logoSvg, faviconSvg, LOGO_CSS } from "./logo.mjs";
 import { hoursOrEdOf, costFigureName, flopsFigureName, paramsFigureName } from "./cost.mjs";
 import { FRONTIER } from "./views.mjs";
@@ -507,6 +507,14 @@ function hamiltonian(inst) {
       const holes = inst.n_sites - p.N_up - p.N_dn;
       return { formula: `H = ${hop("t", nn)}${p.t2 != null ? ` ${hop("t&prime;", nnn)}` : ""}${p.t3 != null ? ` ${hop("t&Prime;", third)}` : ""} + ${ex}`,
         note: `t-J model: P projects out doubly occupied sites, S = &sigma;/2. t = 1, J = ${+Number(p.J).toPrecision(6)}${p.t2 != null ? `, t&prime; = ${p.t2}` : ""}${p.t3 != null ? `, t&Prime; = ${p.t3}` : ""}; ${p.nn_term === false ? "the exchange term has no &minus;n<sub>i</sub>n<sub>j</sub>/4" : "the exchange term includes &minus;n<sub>i</sub>n<sub>j</sub>/4"}. N<sub>&uarr;</sub> = ${p.N_up}, N<sub>&darr;</sub> = ${p.N_dn} on ${inst.n_sites} sites (${holes} hole${holes === 1 ? "" : "s"}).${inst.cluster ? ` Cluster: ${esc(inst.cluster)}.` : ""}` };
+    }
+    case "Holstein": case "HubbardHolstein": {
+      // RULES.md 2.1 (2026-11-16): t = 1, one dispersionless phonon of frequency ω per site, coupled
+      // to n_i (not n_i - ρ), the phonon term without zero-point energy.
+      const s = p.spinless ? "" : "&sigma;", ne = p.N ?? p.N_up + p.N_dn;
+      const hop = `&minus;t ${sum(p.spinless ? nn : `${nn},&sigma;`)} (c<sup>&dagger;</sup><sub>i${s}</sub>c<sub>j${s}</sub> + h.c.)`;
+      return { formula: `H = ${hop} + &omega; ${sum("i")} b<sup>&dagger;</sup><sub>i</sub>b<sub>i</sub> + g ${sum("i")} n<sub>i</sub>(b<sup>&dagger;</sup><sub>i</sub> + b<sub>i</sub>)${p.U != null ? ` + U ${sum("i")} n<sub>i&uarr;</sub>n<sub>i&darr;</sub>` : ""}`,
+        note: `${inst.model === "Holstein" ? "Holstein" : "Hubbard-Holstein"} model: ${p.spinless ? `${ne} spinless fermion${ne === 1 ? "" : "s"}` : `N<sub>&uarr;</sub> = ${p.N_up}, N<sub>&darr;</sub> = ${p.N_dn}`} on ${inst.n_sites} sites, one dispersionless phonon mode per site. t = 1${p.U != null ? `, U = ${p.U}` : ""}, &omega; = ${+(+p.w).toPrecision(6)}, g = ${+(+p.g).toPrecision(6)}. The coupling is to n<sub>i</sub> and the phonon term has no zero-point energy; a source written with n<sub>i</sub> &minus; &rho; or &omega;(b<sup>&dagger;</sup>b + &frac12;) is shifted by a constant (shown on its row). A dimensionless &lambda; is converted to g with the source's own definition. Exact diagonalization with a phonon cutoff is variational.${inst.cluster ? ` Cluster: ${esc(inst.cluster)}.` : ""}` };
     }
     default:
       return { formula: null,
@@ -1041,6 +1049,8 @@ const MODEL_WORDS = {
   Hubbard: "fermi-hubbard",
   tV: "spinless-fermions tv",
   tJ: "t-j tj t-t'-j doped-mott holes",
+  Holstein: "holstein electron-phonon polaron bipolaron cdw",
+  HubbardHolstein: "hubbard-holstein holstein-hubbard electron-phonon polaron bipolaron cdw",
   TFIsing: "tfim tfi",
   Impurity: "anderson dmft bath",
   HEG3D: "jellium electron-gas heg continuum 3d",
@@ -1125,6 +1135,11 @@ function searchIndex(inst, name) {
   if (p.U != null) add(`u=${p.U} u/t=${p.U} ${p.U < 0 ? "attractive" : p.U > 0 ? "repulsive" : ""}`);
   if (p.V != null) add(`v=${p.V} v/t=${p.V}`);
   if (H_MODELS.has(inst.model)) add(`h${n} r=${p.R} ${p.basis === "none" ? "basis-free continuum cbs" : `${p.basis} ${p.basis.toLowerCase().replace(/[^a-z0-9]/g, "")}`}`);
+  if (inst.model === "Holstein" || inst.model === "HubbardHolstein") {
+    const ne = p.N ?? p.N_up + p.N_dn;
+    add(`w=${p.w} ω=${p.w} omega=${p.w} g=${p.g} ${p.spinless ? "spinless" : "spinful"} electrons=${ne} ${ne === 1 ? "polaron" : ne === 2 ? "bipolaron" : ""}`);
+    if (ne === n && !p.spinless) add("half-filling half-filled");
+  }
   if (inst.model === "tJ") {
     const holes = n - p.N_up - p.N_dn;
     add(`j=${+Number(p.J).toPrecision(6)} j/t=${+Number(p.J).toPrecision(6)} holes=${holes} ${holes}-hole doping=${Number((holes / n).toFixed(4))}`);
@@ -1507,8 +1522,18 @@ function instancePage(inst) {
   // own line and wraps. A molecule's nuclei (RULES.md 13, bohr) fold into a list under their count.
   const nuclei = g => `<details><summary>${g.length} nuclei, positions in bohr</summary><pre class="nuclei">${g.map(({ el, r }) =>
     `${el.padEnd(3)}${r.map(x => x.toFixed(6).padStart(13)).join("")}`).join("\n")}</pre></details>`;
+  // Holstein and Hubbard-Holstein (2026-11-16): symbols keep their case (an uppercased ω is Ω), the
+  // spin flag reads as spinless or spin-1/2, and the electron count is not confused with the site count.
+  const hol = /Holstein$/.test(inst.model);
+  const HOL_DT = { t: "t", w: "ω", g: "g", U: "U", N_up: "N↑", N_dn: "N↓" };
   const params = Object.entries(inst.params ?? {})
-    .map(([k, v]) => k === "geometry" && Array.isArray(v)
+    .map(([k, v]) => hol && k === "spinless"
+      ? `<div><dt>spin</dt><dd>${v ? "spinless" : "spin-1/2"}</dd></div>`
+      : hol && k === "N"
+      ? `<div><dt>particles</dt><dd class="num">${esc(v)}</dd></div>`
+      : hol && k in HOL_DT
+      ? `<div><dt class="sym">${HOL_DT[k]}</dt><dd class="num">${esc(v)}</dd></div>`
+      : k === "geometry" && Array.isArray(v)
       ? `<div class="long"><dt>${esc(k)}</dt><dd>${nuclei(v)}</dd></div>`
       : typeof v === "string" && v.length > 40
       ? `<div class="long"><dt>${esc(k.replace(/_/g, " "))}</dt><dd>${esc(v)}</dd></div>`
@@ -1530,7 +1555,7 @@ ${bestBox}
   <dl class="facts">
     <div><dt>${/^HEG/.test(inst.model) ? "cell" : H_MODELS.has(inst.model) ? "geometry" : "lattice"}</dt><dd>${esc(inst.lattice)}</dd></div>
     <div><dt>${/^HEG/.test(inst.model) ? "electrons" : H_MODELS.has(inst.model) || MOL_MODELS.has(inst.model) ? "atoms" : "sites"}</dt><dd class="num">${inst.n_sites}</dd></div>
-    <div><dt>boundary</dt><dd>${inst.boundary ? esc(BOUNDARY[inst.boundary] ?? "periodic") : "&mdash;"}</dd></div>
+    <div><dt>boundary</dt><dd>${inst.boundary ? esc(boundaryLabel(inst) ?? "periodic") : "&mdash;"}</dd></div>
     ${params}
     <div><dt>energies</dt><dd class="num">${inst.rows.length}</dd></div>
   </dl>
@@ -1585,6 +1610,7 @@ ${verified ? `<section><h2>How these numbers were read</h2>
 const MODEL_PHRASE = {
   Heisenberg: "the spin-1/2 Heisenberg antiferromagnet", J1J2: "the J1-J2 Heisenberg model", Kitaev: "the Kitaev (K-J-&Gamma;) model",
   ShastrySutherland: "the Shastry-Sutherland model", Hubbard: "the Hubbard model", tV: "the spinless t-V model", tJ: "the t-J model",
+  Holstein: "the Holstein model", HubbardHolstein: "the Hubbard-Holstein model",
   TFIsing: "the transverse-field Ising model", Impurity: "the impurity model", HEG3D: "the 3D homogeneous electron gas",
   HEG2D: "the 2D homogeneous electron gas", Hchain: "the hydrogen chain", Hsheet: "the hydrogen sheet",
 };
@@ -1981,6 +2007,7 @@ table.next tr.target > td:first-child, .rows tr:target > td:first-child { box-sh
 dl.facts { display: flex; flex-wrap: wrap; gap: 0.4rem 2rem; margin: 1rem 0; }
 dl.facts dt { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
 dl.facts dd { margin: 0; }
+dl.facts dt.sym { text-transform: none; font-size: 0.85rem; }
 dl.facts .long { flex-basis: 100%; }
 dl.facts .long dd { overflow-wrap: anywhere; max-width: 70ch; }
 dl.facts summary { cursor: pointer; color: var(--accent); }

@@ -1,0 +1,1306 @@
+ Constrained-Path Auxiliary-Field Quantum Monte Carlo for Coupled Electrons and
+                                                                   Phonons
+
+                                 Joonho  Lee,1,∗  Shiwei  Zhang,2, 3,†  and  David  R.  Reichman1,‡
+                       1Department  of  Chemistry,  Columbia  University,  New  York,  New  York  10027,  USA
+                  2Center  for  Computational  Quantum  Physics,  Flatiron  Institute,  New  York,  NY  10010,  USA
+                   3Department  of  Physics,  College  of  William  and  Mary,  Williamsburg,  Virginia  23187,  USA
+
+                  We present an extension of constrained-path auxiliary-ﬁeld quantum Monte Carlo (CP-AFQMC)
+                for the treatment of correlated electronic systems coupled to phonons.  The algorithm follows the
+                standard CP-AFQMC approach for description of the electronic degrees of freedom while phonons
+                are  described  in  ﬁrst  quantization  and  propagated  via  a  diﬀusion  Monte  Carlo  approach.   Our
+                method is tested on the one- and two-dimensional Holstein and Hubbard-Holstein models.  With a
+                simple semiclassical trial wavefunction, our approach is remarkably accurate for ω/(2dtλ) < 1 for
+                all  parameters  in  the  Holstein  model  considered  in  this  study.   In  addition,  we  empirically  show
+                that the autocorrelation time scales as 1/ω  for ω/t ≲ 1,  which is an improvement over the 1/ω2
+                scaling of the conventional determinant quantum Monte Carlo algorithm.  In the Hubbard-Holstein
+                model, the accuracy of our algorithm is found to be consistent with that of standard CP-AFQMC
+                for the Hubbard model when the HubbardU term dominates the physics of the model, and is nearly
+                exact when the ground state is dominated by the electron-phonon coupling scale λ.  The approach
+                developed in this work should be valuable for understanding the complex physics arising from the
+                interplay between electrons and phonons in both model lattice problems and ab-initio systems.
+
+
+                    I.    INTRODUCTION                                       tum Monte Carlo (AFQMC), indicates that the ground
+                                                                             state of the standard 2D repulsive Hubbard model with
+  The coupling of electrons to nuclear lattice distortions                   near-neighbor hopping supports modulated phases (e.g.
+is responsible for myriad important physical phenomena                       stripes)  that  are  not  superconducting  over  a  range  of
+in bulk materials.1 In particular, the thermodynamic and                     repulsion strengths and doping levels27  expected to de-
+transport properties of solids are crucially inﬂuenced by                    scribe the cuprates.  This suggests that features beyond
+electron-phonon (el-ph) interactions.  Perhaps the most                      those included in the simple Hubbard model, such as the
+spectacular consequence of el-ph interactions is the emer-                   eﬀects of multiple bands, longer ranged Coulomb inter-
+gence of superconductivity as described by the Bardeen-                      actions,  and/or  the  role  of  el-ph  interactions,  may  be
+Cooper-Schrieﬀer  (BCS)  theory.   Here,  the  el-ph  inter-                 needed  to  tip  the  balance  of  the  ground  state  towards
+action  mediates  an  eﬀective  electron-electron  (el-el)  at-              superconductivity for realistic values of doping levels and
+traction which results in the Cooper pairing of electrons                    the magnitude of el-el repulsions.
+of opposite spin.2  The BCS theory provides a quantita-                         Our  work  is  motivated  by  precisely  these  consider-
+tive framework for the description of conventional super-                    ations,  namely  the  development  of  a  scalable  and  ac-
+conductivity such as that found at low temperatures in                       curate  numerical  approach  that  can  treat  el-ph  eﬀects
+simple metals.                                                               on  the  same  footing  as  el-el  correlations.    This  is  a
+  A  simple  microscopic  picture  is  unfortunately  not                    challenging task,  as treating the complex electronic de-
+available for unconventional superconductors such as the                     grees  of  freedom  in  the  pure  2D  Hubbard  model  is
+cuprates,  whose critical temperature (Tc) can be above                      already  diﬃcult,  even  with  state-of-the-art  numerical
+90K  at  ambient  pressure.3,4    It  is  believed  that  the  el-           approaches.27–29      The  addition  of  el-ph  eﬀects,  as  con-
+ph  interaction  alone  cannot  give  rise  to  these  high Tc               tained in, e.g., the 2D Hubbard-Holstein model, thus re-
+values.5 However, experimental evidence exists which in-                     quires non-trivial extensions of these approaches in order
+dicates that non-negligible el-ph interactions are present                   to treat electrons and phonons on an equal footing.
+in these materials.6–24    It remains unclear what role el-ph                   Several  methods  have  been  formulated  or  extended
+interactions play in the cuprates and related materials,                     to   coupled   el-ph   problems,    including   DMRG,30–35
+and if a potentially delicate interplay between el-el and                    variational  exact  diagonalization,36  variational  Monte
+el-ph  interactions  may  inﬂuence  their  superconducting                   Carlo,37–39       dynamical  mean-ﬁeld  theory,40–44       density
+properties.                                                                  matrix    embedding    theory,45,46       and    coupled-cluster
+  The  canonical  model  Hamiltonian  used  to  capture                      theory.47–49      There are diﬃculties facing each approach.
+the physics of the cuprates is the two-dimensional (2D)                      For example, large el-ph couplings and/or small phonon
+repulsive  Hubbard  model.25  The  ground  state  of  the                    frequencies  are  challenging  to  handle  in  most  methods
+hole-doped  2D  Hubbard  model  has  been  thought  to                       based on a second quantized representation of phonons,
+support  d-wave  superconductivity  for  many  years.26  A                   because of the necessity of truncating the phonon Hilbert
+recent  joint  numerical  study  using  two  state-of-the-                   space.  When a large number of phonons per site is re-
+art  approaches,  density  matrix  renormalization  group                    quired, the computational cost associated with treating
+(DMRG) and constrained path (CP) auxiliary-ﬁeld quan-                        them can grow prohibitively expensive. In addition to the
+                                                                                                                                                   2
+
+demand of treating the phononic Hilbert space, there is                      SectionVIIIdiscusses the extension of our approach to
+of course the interacting many-electron problem. Clearly,                    realistic ab-initio problems.  In SectionIXwe conclude.
+the treatment of correlated el-ph coupled systems in two
+and higher dimensions over a wide range of the parame-
+ter space in an exact or near-exact manner is a forefront                                               II.    MODEL
+challenge.
+  The  method  that  we  propose  here  is  an  extension  of                        A.    The Hubbard-Holstein Hamiltonian
+the CP-AFQMC method developed and popularized by
+Zhang  and  co-workers.50,51      For  purely  electronic  prob-                Although the approach we outline is general, we focus
+lems,  the  CP-AFQMC  approach  is  similar  to  the  de-                    on a paradigmatic model of a correlated system coupled
+terminant quantum Monte Carlo (DQMC) method52–58                             to  phonons,  namely  the  Hubbard-Holstein  model.25,64
+in the sense that the two-body propagation is aided by                       The Hubbard-Holstein model is deﬁned by the following
+the  Hubbard-Stratonovich  transformation59  and  is  for-                   Hamiltonian:
+mulated in the space of determinants.  There,  however,                                      ˆH =  ˆH(1)
+are  several  key  diﬀerences.    CP-AFQMC  reformulates                                             el   +  ˆH(2)el   +  ˆHph +  ˆHel-ph,              (1)
+the imaginary-time propagation by working with open-                         where
+ended  random  walks.   An  exact  boundary  condition  is
+introduced in auxiliary-ﬁeld space, which can be approx-                                         ˆHel =  ˆH(1)
+imately imposed using a trial wave function, to avoid the                                                  el   +  ˆH(2)el ,                               (2)∑
+notorious  fermion  sign  problem.   The  open-ended  ran-                                      ˆH(1)el   =−t ∑           ˆa†iσˆajσ,                  (3)
+dom walk approach allows easy access to zero tempera-                                                       σ∈{↑,↓}  ⟨ij⟩
+ture results,  and is often much less prone to ergodicity                                       ˆH(2)           ˆni↑ ˆni↓,                              (4)
+problems in the Monte Carlo sampling.  Moreover, CP-                                             el   =U∑
+AFQMC can be naturally extended to  ab-initio Hamil-                                                         i
+tonians  while  coping  with  the  fermionic  phase  problem                                    ˆHph =ω∑ˆb†iˆbi,                                   (5)
+associated  with  these  more  complex  models  using  the                                                  i
+phaseless approximation instead of the constrained path                                                                                          (6)
+approximation.60,61      Because  of  the  constraint  imposed
+on  walker  trajectories,  CP-AFQMC  is  no  longer  exact,                  and
+unlike DQMC. Furthermore,  due to the constraint,  the                                          ˆHel-ph =−g∑
+ground-state  energy  computed  via  the  usual  mixed  es-                                                         ˆni(ˆbi + ˆb†i).                  (7)
+timator  is  not  variational.62  On  the  other  hand,  CP-                                                     i
+AFQMC can be used to access a wider range of interac-                        with
+tion strengths and doping regimes in which DQMC can-
+not be used due to the inherent sign problem.  It should                                               ˆni = ∑         ˆniσ                            (8)
+be noted that, in addition to its ﬂexibility, CP-AFQMC                                                        σ∈{↑,↓}
+has been shown to yield excellent accuracy for strongly
+correlated electrons.27,29                                                   The nearest-neighbor electronic hopping is controlled by
+  In  this  work  we  devise  an  extension  of  CP-AFQMC                    t and the on-site repulsion is characterized by the param-
+to  treat  both  electrons  and  phonons  on  an  equal  foot-               eter U.  The phonons are treated as harmonic oscillators
+ing, while retaining its beneﬁts for electrons.  Our frame-                  with a single frequency ω.  The electronic density is cou-
+work is similar to the extension of Green’s function Monte                   pled to the phonon degrees of freedom characterized by
+Carlo (GFMC) as formulated by McKenzie and others,63                         a coupling constant g.
+where the phonons are treated in a ﬁrst quantized space.                        There are three relevant dimensionless parameters to
+We present the formulation of this new CP-AFQMC ap-                          deﬁne.  The ﬁrst is the adiabaticity ratio in units of the
+proach,  provide thorough benchmark results on the 1D                        hopping parameter
+and 2D Holstein and Hubbard-Holstein models for vari-
+ous phonon frequencies and el-ph couplings, and discuss                                                     α = ωt.                                  (9)
+the  current  scope  and  limitations  of  the  proposed  ap-
+proach.                                                                      The second is the  eﬀective on-site repulsion in units of
+  The paper is organized as follows: In SectionIIwe out-                     the hopping parameter
+line the model we study and the important parameters                                                           U
+that  control  its  physics.   In  SectionIIIwe  outline  our
+algorithm.  SectionIVis devoted to a discussion of trial                                                        t .                                    (10)
+wave functions.  SectionV Aand SectionV Bdiscuss dis-                        Lastly, we deﬁne the dimensionless el-ph coupling λ,
+tinct perturbative approaches to the problem outlined in
+SectionII. SectionVIand SectionVIIpresent results for                                                     λ = g2
+the Holstein and Hubbard-Holstein models, respectively.                                                         2dtω,                              (11)
+                                                                                                                                                   3
+
+where  d  is  the  dimensionality  of  the  system.   When U                 Hubbard-Holstein model.  In this work, we will reformu-
+is the dominant parameter, a spin density wave (SDW)                         late the procedure to treat fermions in a second-quantized
+phase similar to that found in the Hubbard model is ex-                      space and bosons in a ﬁrst-quantized space.  Such a for-
+pected  to  arise.   When λ  dominates,  a  charge  density                  mulation  is  closely  related  to  that  of  Ref.63,  however
+wave  (CDW)  phase  similar  to  that  found  in  the  Hol-                  our work allows the control of the sign problem and in-
+stein model arises.  A metallic or superconducting phase                     troduces the full advantage of the CP-AFQMC approach
+can arise when the system transitions between these two                      in treating the electronic degrees of freedom.
+phases.58                                                                       In AFQMC, as in other projector QMC methods,66 we
+                                                                             obtain the ground state via
+
+            B.    Phonons in First Quantization                                                   |Ψ0⟩∝  limτ→∞e−τ ˆH|Φ0⟩,                    (16)
+
+  Since  the  Hamiltonian  in  Eq.  (1)  does  not  commute                  where|Ψ0⟩  is  the  true  ground  state, τ  denotes  imagi-
+with  the  phonon  number  operator  ˆb†                                     nary time, and|Φ0⟩ is a trial wavefunction with non-zero
+                                               iˆbi,  the  number  of        overlap  with  the  true  ground  state.   Since   ˆH  involves
+phonons in the system is not conserved.  Therefore, one                      both fermions and bosons and so do the wavefunctions
+needs  to  work  with  an  inﬁnitely  large  phonon  Hilbert                 |Ψ0⟩ and|Φ0⟩, we represent these global vibronic wave-
+space  in  order  to  study  eigenstates  of  the  Hubbard-                  functions as a function of imaginary time τ  in a mixed
+Holstein model.  Methods working in a second quantized                       basis
+space such as DMRG30 generally require a speciﬁcation of
+the maximum number of phonons a priori for the sake of                                        |Ψ(τ)⟩ =∑       ωi|ψi(τ), Xi(τ)⟩,               (17)
+computational tractability.  Limiting the maximum num-                                                     i
+ber of phonons eﬀectively truncates the inﬁnite Hilbert
+space,  which  may  introduce  signiﬁcant  errors,  particu-                 where|ψi⟩  is  the  electronic  wavefunction  and|Xi⟩  is  a
+larly when α is small and/or λ is large.                                     set of coordinates that represents the phonon degrees of
+  For this reason we work within the framework of ﬁrst                       freedom.  In our algorithm, these basis states each take a
+quantization, namely with position and momentum op-                          product form:
+erators on each site i,                                                                   |ψi(τ), Xi(τ)⟩≡|ψi(τ)⟩⊗|Xi(τ)⟩,           (18)
+                             √    1
+                      ˆXi =              i + ˆbi),                     (12)  where|ψi⟩ is a single Slater determinant.  We will show
+                              √2mω (ˆb†                                      below  that  the  projection  process  in  Eq.  (16)  can  be
+                       ˆPi =i    mω                                          turned into a random walk in the space of product states
+                                  2  (ˆb†i− ˆbi),                     (13)   of the form deﬁned in Eq. (18).  We note that it is also
+                                                                             possible to work in momentum space (|Pi⟩),67 however it
+and thus re-express                                                          is more convenient to work in position space here since it
+                                                                             makes the application of the e-ph coupling term straight-
+               ˆHph =∑(mω2                                                   forward.
+                         i     2    ˆX2i  +   12m ˆP 2i − ω2 ),         (14)    We write the propagator for a ﬁnite timestep ∆τ  as
+             ˆHel-ph =−g√2mω∑            ˆni ˆXi,                       (15)     exp(−∆τ ˆH) =e−∆τ ˆH(2)el e−∆τ( ˆH(1)el  + ˆHel-ph)e−∆τ ˆHph
+
+                                      i                                                          +O(∆τ 2)                                         (19)
+
+in the Hubbard-Holstein Hamiltonian in Eq. (1).  Here,                       using the standard ﬁrst-order Trotter approximation.  By
+we  introduced  a  ﬁctitious  mass m  and  throughout  this                  virtue of the Thouless theorem,68|ψi(τ)⟩ remains a sin-
+work  we  use m  =  1/ω.   Working  in  a  ﬁrst  quantized                   gle  Slater  determinant  after  propagation  via   ˆH(1)
+space allows one to work directly at the complete basis                      ˆHel-ph (note the latter is diagonal in|Xi⟩ space).   ˆH(2)el    and
+set limit for the phonons and avoids the issues posed by                                                                                      el   is
+a truncated phonon Hilbert space.                                            represented as a one-body operator coupled to Ising vari-
+                                                                             ables and therefore a single Slater determinant remains
+                                                                             in the same manifold after propagation bye−∆τ ˆH(2)el  .  The
+III.    CONSTRAINED-PATH AUXILIARY-FIELD                                     phonon  propagation  generated  by   ˆHph  follows  a  com-
+              QUANTUM MONTE CARLO                                            monly used diﬀusion MC (DMC) algorithm.69,70
+                                                                                Before elaborating on the propagation more concretely,
+  AFQMC  for  mixed  fermions  and  bosons  was  ﬁrst                        let  us  introduce  importance  sampling,  using  a  trial  vi-
+formulated  and  studied  by  Rubenstein,   Zhang,   and                     bronic  wavefunction |ΨT⟩.   We  re-write  the  global  vi-
+Reichman.65  In  their  formulation,  bosons  are  treated                   bronic wavefunction in Eq. (17) in the following form,      60
+within  a  second-quantized  framework.   Therefore,  their
+approach  would  naturally  suﬀer  from  the  truncation                                   |Ψ(τ)⟩ =∑        ωi |ψi(τ), Xi(τ)⟩⟨ΨT|ψi(τ), Xi(τ)⟩            (20)
+of  the  inﬁnite  bosonic  Hilbert  space  if  applied  to  the                                          i
+                                                                                                                                                4
+
+to perform imaginary-time propagation, namely                              trial  wavefunction.   More  speciﬁcally,  we  measure  the
+                                                                           overlap ratio of the i-th walker,
+|Ψ(τ + ∆τ)⟩ =e−∆τ ˆH(2)el e−∆τ( ˆH(1)el  + ˆHel-ph)e−∆τ ˆHph|Ψ(τ)⟩.
+                                                                 (21)                   ri =⟨ΨT|ψi(τ + ∆τ), Xi(τ + ∆τ)⟩⟨ΨT|ψi(τ), Xi(τ + ∆τ)⟩  .          (29)
+  In the propagation of the phonon degrees of freedom
+we sample from the distribution                                            If ri is negative, the constraint condition is invoked and
+                                                                           we set the weightwi to zero, which then causes the walker
+   f[(X(τ + ∆τ)]≡⟨ΨT|ψ(τ), X(τ + ∆τ)⟩⟨ΨT|ψ(τ), X(τ)⟩                       to be removed from the simulation.  Furthermore, we ap-
+                                                                           ply heat-bath sampling51 using this ratio to importance
+                      ×⟨X(τ + ∆τ)|e−∆τ ˆHph|X(τ)⟩,     (22)                sample the Ising variables.  This completes the descrip-
+                                                                           tion of our algorithm for the Hubbard-Holstein Hamilto-
+where  we  have  omitted  the  walker  index i  in  the  sub-              nian.
+script.   One  can  derive  the  following  MC  move  for  the                The  local  energy  evaluation  at τ  with  the  Hubbard-
+updating of the variable X(τ)≡ X:                                          Holstein   model   is   straightforward   via   the   one-body
+                                                        ∇XΨT (X)           walker Green’s function
+X(τ+∆τ) = X+N (µ = 0,σ =√m∆τ)+∆τm                         ΨT (X) .                                            iσˆajσ|ψ(τ), X(τ)⟩
+                                                                 (23)                   Giσjσ(τ)≡⟨ΨT|ˆa†⟨ΨT|ψ(τ), X(τ)⟩  ,          (30)
+HereN (µ,σ) is a normally distributed random number                        and the two-body walker Green’s function,
+with mean µ and variance σ2,  and the last term is the
+so-called drift term.  Updates for the walker weights are                                               i↑ˆai↑ˆa†i↓ˆai↓|ψ(τ), X(τ)⟩
+carried out as                                                                         Γi↑i↓ =⟨ΨT|ˆa†⟨ΨT|ψ(τ), X(τ)⟩    .        (31)
+ w(τ + ∆τ) =w(τ)e− ∆τ2  (Eph(τ+∆τ)+Eph(τ)−2Eshift),  (24)                  We  will  also  need  the  mixed  estimator  for  the  phonon
+where Eshift  is a constant shift that can be adjusted to                  displacement,
+control walker weight ﬂuctuations, and we deﬁne
+                                                                                   ⟨ ˆXi⟩(τ)≡⟨ΨT| ˆXi|ψ(τ), X(τ)⟩⟨ΨT|ψ(τ), X(τ)⟩    =Xi(τ),          (32)
+                  Eph(τ) =⟨ΨT| ˆHph|X(τ)⟩ΨT (X(τ))  .                 (25) and for the squared phonon momentum,
+
+This  algorithm  is  the  same  as  the  standard  diﬀusion                             ⟨ ˆP 2i⟩(τ) =−⟨ΨT|∇2Xi|ψ(τ), X(τ)⟩
+Monte Carlo algorithm.69–72                                                                                ⟨ΨT|ψ(τ), X(τ)⟩  ,          (33)
+  Propagation arising from   ˆHel-ph  is straightforward to                where∇2Xi can be applied to the left on|ΨT⟩. Using these
+implement, since
+  ∑                                                                        mixed estimators, the local energy can be evaluated as
+       ˆni ˆXi|ψ(τ), X(τ)⟩ =∑        ˆniXi(τ)|ψ(τ), X(τ)⟩.   (26)                                       ∑
+    i                             i                                                     EL =−t∑              Giσjσ +U∑Γi↑i↓
+∑                                                                                                    σ   ⟨ij⟩               i
+
+   i ˆniXi(τ)  is  thus  a  diagonal  matrix  in  the  single-
+particle space with its i-th entry being Xi(τ).  It is then                                  +∑(mω22 X2i  +   12m⟨ ˆP 2i⟩− ω2 )
+straightforward to exponentiate this matrix and apply it                                         i
+along with  ˆH(1)el   to the Slater determinant.                                             −g√2mω∑(Gi↑i↑ +Gi↓i↓)Xi.          (34)
+  Lastly, propagation generated by  ˆH(2)el   is the same as                                               i
+that for the standard AFQMC algorithm for the Hubbard
+model.  We employ the discrete Hirsch spin decomposi-                                   IV.    TRIAL WAVEFUNCTIONS
+tion for the two-body propagator59:
+
+ e−∆τU ˆni↑ ˆni↓  = 1                               eγxi(ˆni↑−ˆni↓),          The choice of the trial wavefunction can aﬀect the qual-
+                     2e−∆τU(ˆni↑+ˆni↓)/2 ∑xi=±1                            ity  of  the  CP  approximation  in  treating  the  electronic
+                                                                 (27)      degree of freedom.  It can also aﬀect the computational
+where the constant γ is determined by                                      eﬃciency  in  treating  the  electronic  and  especially  the
+                                                                           phononic degrees of freedom; in particular, a poor choice
+                       cosh(γ) =e−∆τU/2.                      (28)         of  the  importance  function  can  magnify  or  even  intro-
+                                                                           duce  additional  ergodicity  issues,  especially  in  an  el-ph
+For a given x, the action of Eq. (27) on a single Slater                   system when multiple phonon modes are pronounced.  It
+determinant  keeps  the  Slater  determinant  in  the  single              is highly advantageous if an accurate trial wavefunction
+determinant manifold.  In AFQMC we keep track of the                       allows the overlap ratio in Eq. (29), and the local energy
+overlap  between  the  walker  wavefunction  and  a  chosen                in Eq. (34), to be eﬃciently evaluated.
+                                                                                                                                                    5
+
+                    A.    Semiclassical state                                lowest energy of a semiclassical state can be obtained by
+                                                                             minimizing
+   The  simplest  variational  trial  wavefunction  that  we
+employ in this work takes a simple product form between
+electronic and bosonic degrees of freedom,                                                            ⟨ ˆHel⟩− g2ω⟨∑     ˆn2i⟩                       (42)
+                                                                                                                      i
+                       |ΨT⟩ =|ψT⟩⊗|φT⟩,                      (35)
+where|ψT⟩ is a single determinant and|φT⟩ is a coherent                      over the variational parameters in|ψT⟩.  For a ﬁxed λ,
+state (or a shifted harmonic oscillator state).  This wave                   variations inα do not change the energy of the semiclas-
+function has been referred to as a “semiclassical state” in                  sical state.
+literature.73,74     Due to its simple product form,  there is                  The semiclassical state is exact in  (1) the limitg→∞,
+no explicit entanglement between electrons and phonons.                      (2) the adiabatic limitω→ 0 (for a ﬁxedλ) withU→ 0,
+The electronic trial wavefunction,|ψT⟩, is parametrized                      and  (3)  the  atomic  limit U →∞.   When λ→∞  (or
+by orbital rotationθθθ,                                                      g→∞ for a ﬁxed ω),  the use of a single semiclassical
+                         |ψT (θθθ)⟩ =eˆκ|ψ0⟩,                        (36)    state  is  not  problematic  even  though  the  BO  potential
+                                                                             strongly bifurcates.  This situation is physically similar to
+where                                                                        that of the atomic limit of the Hubbard model (U→∞)
+                                                                             where spin ﬂips do not cause an energy penalty and a de-
+                     ˆκ =∑(θij−θji)ˆa†                                       generacy occurs amongst all possible 2N  spin ﬂips.  Sim-
+                                              i ˆaj,                    (37) ilarly, in the Holstein model, charge swapping does not
+                            ij                                               cause an energy penalty and the same macroscopic degen-
+and |ψ0⟩   is   some   initial   determinant   (normally   ob-               eracy occurs.  In other words, any one of the degenerate
+tained by diagonalizing the one-body electronic Hamilto-                     semiclassical states is equally well-suited as an approxi-
+nian).  Single determinant trial wavefunctions have been                     mate wave function.
+widely used in previous AFQMC studies of the Hubbard                            Aside  from  these  limits,  the  semiclassical  state  it-
+model.28,29,75,76                                                            self can be inaccurate, but we ﬁnd that the subsequent
+   The phonon trial wavefunction,|φT⟩, is parametrized                       AFQMC  calculation  with  the  semiclassical  trial  wave
+by coherent state displacementsβββ,                                          function  is  often  numerically  exact.   The  most  diﬃcult
+                           ∑                                                 parameter  regime  for  our  AFQMC  framework  is  when
+
+                              iβi(ˆb†i−ˆbi)|0⟩≡  ˆD(⃗β)|0⟩,         (38)     the  Holstein  coupling  strength g  takes  an  intermediate
+            |φT (βββ)⟩ =e                                                    value.  That is, g is large enough that the el-ph correla-
+where  ˆD(⃗β) is the displacement operator.  We optimize                     tion is strong but is small enough that the macroscopic
+the energy of|ΨT⟩ in Eq. (35) variationally over   θθθ  and                  degeneracy  does  not  occur.   A  straightforward  way  to
+βββ  and  use  this  as  the  ﬁnal  trial  wavefunction. |φT (βββ)⟩          probe these situations is to increaseω for a ﬁxedλ value.
+technically contains inﬁnitely many bosons, but it has a                     In this case, g  can be much larger than t but is always
+convenient property which allows for an eﬃcient AFQMC                        smaller  than ω  as  long  as  2dtλ < ω.   In  these  situa-
+algorithm                                                                    tions,  the  semiclassical  state  can  be  a  poor  choice  of  a
+                                                                             trial  wave  function  in  AFQMC,  as  we  shall  see.   This
+                     ˆbi|φT (βββ)⟩ =βi|φT (βββ)⟩.                    (39)    is because no correlation between electronic and bosonic
+                                                                             degrees of freedom is built into this trial wave function.
+Using  this  fact,  one  can  show  that  the  projection  of                   From a diﬀerent point of view, the diﬃculty of semi-
+⟨φT (βββ)| on to|X⟩ is                                                       classical  states  was  noted  in  the  work  of  Proville  and
+                          (mω    ) 1                                         Aubry,  who deﬁned the “quantumness” of the phonons
+
+                                   4 e−mω             2                      as77
+     ⟨φT (βββ)|X⟩ =∏          π           2  (Xi−√mωβi)2.      (40)
+                        i
+Similarly, the numerator of Eq. (33) is straightforward to                                             ζ = ω2g2  =  ω2dtλ.                         (43)
+evaluate as well using
+
+            −⟨φT (βββ)|∇2Xi|X⟩ =−∇2Xi⟨φT (βββ)|X⟩.        (41)               As ζ   increases,   the   semiclassical   state   qualitatively
+                                                                             fails.77 This is consistent with the picture described above
+This semiclassical trial wavefunction therefore can be ef-                   in that for a givenλ, bothg andζ increase asω increases.
+ﬁciently combined with the AFQMC algorithm.                                  We attribute the diﬃculties associated with semiclassical
+   The  variational  energy  of  the  semiclassical  state  can              states to the increase in correlation between electrons and
+be obtained within the Born-Oppenheimer (BO) approx-                         phonons instead of the quantal eﬀect associated with the
+imation.  After some algebra,  it can be shown that the                      phonons alone.
+                                                                                                                                                    6
+
+                   B.    Multivibronic state                                 smoothly interpolate between the two states by deﬁning
+                                                                             a convex combination
+  A  linear  combination  of  multiple  semiclassical  states                                    ⃗β(α) =α⃗β(1) + (1−α)⃗β(2)                 (47)
+can be used to correlate electrons and phonons
+              |ΨMS⟩ =∑        ci|ψT (θθθi)⟩⊗|φT (βββi)⟩,           (44)      for α∈ [0, 1].  For each ⃗β(α),  we ﬁnd a single determi-
+                           i                                                 nant that minimizes the energy of a single semiclassical
+where one may determine c, θθθ, and βββ  variationally.  We                  state.  One can take a linear combination of all of these
+refer to this wavefunction as a multivibronic (MV) wave-                     semiclassical states along the line that interpolates two
+function.   Similar  to  the  multi-Slater  determinant  trial               solutions to form a MV wavefunction.  We refer this to
+states  employed  to  study  purely  electronic  systems.75                  as the Thouless path (TP) wavefunction,|ΨTP⟩,
+The MV wavefunctions of this form would need exponen-                                           |ΨTP⟩ =∑         cα|ΨT (β(α))⟩,                 (48)
+tially many states for large systems.  Nevertheless, due to
+their simplicity, multivibronic states can be valuable for                                                   α
+the study of small systems.                                                  where cα  is determined by variationally minimizing the
+  A particular ﬂavor of MV wavefunction that we focus                        energy.  The construction of the TP wavefunction can be
+on  in  this  work  is  closely  tied  to  the  underlying  order            generalized  to  arbitrary  ﬁlling  fractions  and  number  of
+encoded  in  the  semiclassical  states  themselves.   Let  us               sites because diﬀerent ﬁlling fractions simply give rise to
+consider the two-electron, two-site Holstein model.  It is                   ordered states with diﬀerent wavelengths.  The cost for
+well known that for the Holstein model at a large cou-                       its construction is negligible compared to the optimiza-
+pling λ,  the  BO  surface  bifurcates  and  develops  into  a               tion of a semiclassical state.  Its use in AFQMC as a trial
+double well potential.64,78     For the two-site problem, the                wave  function  simply  introduces  a  prefactor  depending
+BO  potential  energy  surfaces  (PESs)  are  characterized                  on the number of states included in Eq. (48).  We will re-
+by                                                                           fer to a TP wave function with n interpolation values of
+       ˆHBO(X1,X2) =  ˆHel−g√2mω(ˆn1X1 + ˆn2X2)                              α as TP(n).  While TP wave functions provide a simple
+                                                                             and accurate importance function for bifurcated poten-
+                        + mω2                                                tial  energy  surfaces,  they  also  become  inaccurate  when
+                              2   (X21 +X22),                      (45)      the correlation between electrons and phonons becomes
+where X1  and X2  are constant scalars denoting the co-                      strong.
+ordinates  of  the  classical  phonons.    We  can  ﬁnd  the
+ground-state electronic wavefunction of the Hamiltonian
+in Eq. (45) by exactly diagonalizing it and forming a po-                        C.    Variational Lang-Firsov trial wavefunctions
+tential energy surface for each combination of (X1,X2).
+In  Fig.1,  a  representative  example  of  the  BO  PESs  is                   A  simple,  widely  used  way  to  incorporate  correla-
+given.  Fig.1(a) illustrates an example of the weak cou-                     tion  eﬀects  between  electrons  and  phonons  is  to  use
+pling case, where the coherent states have the same cen-                     the  polaron  transformation  or  the  Lang-Firsov  (LF)
+ters  for  all  sites  and  no  charge  modulation  occurs.   In             transformation,79
+such  cases,  the  minimum  BO  state  (i.e.   the  semiclas-
+sical state) is an excellent variational wavefunction.  In                                  |ΨLF⟩ =  ˆULF(ξξξ)|ψT (θθθ)⟩⊗|φT (βββ)⟩,           (49)
+Fig.1(b) there are two distinct minima with equal BO                         where
+energies.  Here, a wave function of a single semiclassical
+state with a Gaussian function centered at one of the two                                                       1 ∑
+BO minima in position space would not provide a good                                             ˆULF(ξξξ) =e√2      iξiˆni(ˆb†i−ˆbi),                 (50)
+description of the system.  When used as an importance                       and the setξξξ are referred to as the LF amplitudes which
+function, it can introduce or exacerbate ergodicity prob-                    are  variational  parameters  along  with θθθ  and βββ.   From
+lems in the Monte Carlo sampling and induce a large or                       the wavefunction viewpoint, Eq. (49) provides a way to
+even inﬁnite variance in the energy ﬂuctuations.                             explicitly build a wavefunction with non-perturbative el-
+  We propose the following improved variational wave-                        ph correlation on top of semiclassical states via a unitary
+function  in  this  situation  for  the  Holstein  model  on  a              transformation.  Typical LF implementations involve the
+bipartite lattice.  At half-ﬁlling there are two exactly de-                 phonon vacuum state as opposed to the coherent state in
+generate semiclassical states.  In particular, one state is                  Eq. (49).  We ﬁnd that having the coherent state provides
+characterized by                                                             additional variational ﬂexibility and thereby yields lower
+                       {                                                     energies  compared  to  those  that  use  the  vacuum  state.
+              β(1)       βe,    if i on A sublattice
+                i    =   βo,    if i on B sublattice,            (46)        Since it does not complicate the underlying optimization
+                                                                             problem, we use the coherent state as written in Eq. (49).
+where i is a site index.  The other degenerate solution is                      While the details of the LF transformation and its vari-
+given by switching the A and B sublattices.     One can                      ational optimization have been well-documented,79–82     we
+                                                                                                                                                           7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1.     Born-Oppenheimer potential energy surfaces in units of t for the 2-electron and 2-site Holstein model:  (a) ω = t,
+λ = 0.1t, and g = 0.447t and (b) ω = t, λ = t, and g = 1.414t.  The minimum in (a) is E = −2.40t at (X1=0.63, X2=0.63)
+while the two minima in (b) are E = −8.25t at (X1=3.90, X2=0.10) and (X1=0.10, X2=3.90), respectively.
+
+
+brieﬂy  summarize  them  to  provide  a  self-contained  de-                     All of the energy terms are straightforward to evaluate
+scription.  Our goal is to simultaneously determine ξξξ, θθθ,                    with semiclassical trial wavefunctions.  The electronic ki-
+andβββ variationally.  To carry this out, we ﬁnd that it is                      netic energy is more complex than its bare Hamiltonian
+simpler to work with the unitary-transformed Hamilto-                            counterpart  due  to  the  presence  of  exponential  bosonic
+nian,  ˆHLF,  based on  ˆULF,  and optimize the variational                      operators,  so  we  provide  more  details  here.   To  utilize
+energy of  ˆHLF evaluated with the semiclassical wavefunc-                       Eq.  (39),  we  write  the  exponential  term  in  the  kinetic
+tion.  We start from                                                             energy operator as
+   ˆULF(ξξξ)†a†iσajσ ˆULF(ξξξ) =a†iσajσe(−ξi(b†i−bi)+ξj(b†j−bj))                              √1      j−ˆbj)−ti(ˆb†i−ˆbi))
+                                                                      (51)                  e   2 (tj(ˆb†
+
+                                                                                                  √1                √1
+and                                                                                          =e     2 (tjˆb†j−tiˆb†i )e2 (tiˆbi−tjˆbj)e− 14 (t2i +t2j),       (58)
+                    ˆULF(ξξξ)†b†i ˆU(ξξξ) =b†i−ξiˆni,                 (52)       where we have used
+                    ˆULF(ξξξ)†bi ˆU(ξξξ) =bi−ξiˆni.                 (53)                         1                   1
+                                                                                                √2tj(ˆb†j−ˆbj) =e   √2tjˆb†je−  1√2tjˆbje− 14t2j.          (59)
+The LF transformed Hamiltonian reads                                                          e
+                         ∑                 √            √                        The expectation value of Eq. (58) is simple to evaluate
+       ˆHLFel   =−t∑          a†iσajσe(− ξi2 (b†i−bi)+ξj2 (b†j−bj))              with the semiclassical state of Eq. (35)
+
+                     σ   ⟨ij⟩
+                                                                                                 √1               √1
+            +U∑         ˆni↑ ˆni↓,                                            (54)      ⟨ΨT|e     2 (tjˆb†j−tiˆb†i )e2 (tiˆbi−tjˆbj)|ΨT⟩e− 14 (t2i +t2j)
+
+                                                                                              √1                √1
+                    i                                                                    =e     2 (tjβj−tiβi)e    2 (tiβi−tjβj)e− 14 (t2i +t2j).          (60)
+       ˆHLFph  =ω∑(ˆb†i + ξi√                  √                                    The  variational  LF  wavefunction  is  expected  to  be
+                    i            2 ˆni)(ˆbi + ξi2 ˆni),                (55)      more  accurate  than  the  semiclassical  state  due  to  the
+                                                                      (56)       explicit correlation between electrons and phonons.  Fur-
+and                                                                              thermore, the limit of ω→∞ which is diﬃcult for sim-
+             ˆHLFel-ph =−g∑                                                      ple semiclassical wavefunctions to treat,  can be exactly
+                                  ˆni(ˆbi + ˆb†i +√2ξiˆni).         (57)         treated by the LF wavefunction, because the el-ph cou-
+                               i                                                 pling term in  ˆHLF can be removed by settingξi =√2g/ω.
+                                                                                                                                                    8
+
+Due  to  the  fact  that  phonon  displacements  are  signiﬁ-                greatly reduce the diﬃculties in parameter regimes with
+cantly penalized in this limit,  the variational optimiza-                   strong el-ph coupling, and result in a major improvement
+tion overβββ naturally yieldsβββ = 000. Therefore, the bosonic               in our AFQMC approach.  We leave the implementation
+operators in the hopping amplitude in Eq. (54) all vanish.                   and systematic studies using an el-ph Jastrow trial wave-
+Provided  that  one  can  handle  the  remaining  electronic                 function in AFQMC for future work.
+Hamiltonian terms exactly, the variational LF wavefunc-
+tion should be exact in this limit.  We note that for many-
+electron systems in theω→∞ limit, the LF Hamiltonian                                              D.    Additional details
+takes  the  same  form  as  the  attractive  Hubbard  model,
+which is another sign-free lattice model that can be eﬃ-                        The  semiclassical  state  in  Eq.  (35)  can  describe  two
+ciently simulated in AFQMC.83,84                                             competing phases, SDW and CDW. To obtain the varia-
+  Despite  these  desirable  properties,  there  seems  to  be               tional wavefunction for these two distinct states, we em-
+no  simple  and  general  way  to  use  this  wavefunction  in               ploy the following protocol:
+AFQMC  without  invoking  a  major  increase  in  scaling.                       1.For   a   CDW   state,   we   perform   a   variational
+As  an  exception  to  this,  we  mention  here  the  work  of                      optimization  of  a  semiclassical  state  with  spin-
+Hohenadler  and  co-workers67  where  a  QMC  algorithm                             restriction.  Due to the spin-restriction, any states
+with the LF Hamiltonian was formulated for single elec-                             that arise from minimization are not capable of de-
+tron problems.  It was demonstrated, however, that the                              scribing SDW order.
+transformed electronic Hamiltonian in Eq. (54) creates a
+complex phase problem.                                                           2.For   an   SDW   state,   we   perform   a   variational
+  Therefore,  we  brieﬂy  investigate  a  simpler  linearized                       optimization  of  a  spin-unrestricted  Hartree-Fock
+LF (LLF) wavefunction of the form,                                                  (UHF) wavefunction to minimize the electronic en-
+                           ∑                                                        ergy.  Once a UHF state is obtained, we determine
+   |ΨLLF⟩ = (1 +   1√2         ξiˆniˆb†i)|ψT (θθθ)⟩⊗|φT (βββ)⟩,    (61)             the shift vectorβββ variationally while ﬁxing the elec-
+                            i                                                       tronic degrees of freedom. As long as the UHF state
+where we have omitted a term that is proportional to ˆniˆbi                         exhibits SDW order, such a coupled el-ph semiclas-
+since the action of ˆbi on|φT (βββ)⟩ is trivial due to Eq. (39).                    sical state with exhibit the same SDW order.  We
+We variationally optimizeξξξ in Eq. (61) to maximize the                            have  used  an  ad  hoc  eﬀective  repulsion  strength
+accuracy  of  the  LLF  trial  wavefunction.   The  AFQMC                           (Ueﬀ/t) of 0.575 in our UHF calculations to obtain
+algorithm presented in SectionIIIcan be eﬃciently im-                               SDW trial wavefunctions for the Hubbard-Holstein
+plemented for Eq. (61).                                                             model  in this  work.  The  CP-AFQMC  results are
+  It  is  possible  to  formulate  a  simple  extension  of  the                    not  sensitive  to  this  particular  choice.   (We  note
+LLF wavefunction in the spirit of the TP wavefunction:                              that it is possible to determine this eﬀective repul-
+                                                                                    sion  strength  via  a  self-consistent  procedure  with
+                                     n∑                                             CP-AFQMC85.)
+                  |ΨTP-LLF⟩ =           cα|Ψ(α)LLF⟩,                 (62)
+                                   α=1
+                                                                                          V.    PERTURBATION THEORY
+where each of the|Ψ(α)LLF⟩ terms has its own variational
+parameters.    Following  the  discussion  of  the  TP  trial                   A.    Coherent State Møller-Plesset Perturbation
+wavefunction, it may be possible to determine these vari-                                                   Theory
+ational parameters via a convex interpolation ofβββ andξξξ
+as in Eq. (47).  We refer to this wavefunction as the TP-                       It is instructive to consider low-order perturbation the-
+LLF(n) wavefunction which goes beyond both the TP(n)                         ory for comparison to numerically exact approaches.  We
+and the LLF wavefunctions in sophistication.                                 ﬁrst note that
+  In  contrast  with  the  LF  form,  a  trial  wave  function                                     ˆD(⃗β)†b†
+with an el-ph Jastrow factor can be used more straight-                                                    i ˆD(⃗β) =b†i +βi,                    (63)
+forwardly in AFQMC, since  ˆXi operators are involved in                                           ˆD(⃗β)†bi ˆD(⃗β) =bi +βi.                    (64)
+the exponent instead of  ˆPi as in LF. The unitary trans-
+formation in the LF wave function can be thought of as                       Using this property, we write
+a simple Jastrow factor that encodes correlation between                         ˆ¯Hph≡  ˆD(⃗β)† ˆHph ˆD(⃗β) =ω∑(b†
+the electronic density and the phonon momentum on a                                                                      i +βi)(bi +βi),   (65)
+site.  However,  ˆULF(ξξξ) is unitary and we thus expect this                                                       i
+transformation  to  behave  diﬀerently  from  Jastrow  fac-                                                                                     (66)
+tors in el-ph problems.37–39      (It is also diﬀerent from the              and
+coupled-cluster operators considered in recent studies of                       ˆ¯Hel-ph≡  ˆD(⃗β)† ˆHel-ph ˆD(⃗β) =−g∑        ˆni(ˆbi + ˆb†
+el-ph  problems  .47–49    )  Given  the  performance  improve-                                                                          i + 2βi).
+ment with the LLF trial wave function (as discussed be-                                                                    i
+low), we expect an el-ph Jastrow trial wave function will                                                                                       (67)
+                                                                                                                                                    9
+
+Thus we have                                                                 In this work, we are interested in comparing the second-
+                     ˆ¯H =  ˆHel +  ˆ¯Hph +  ˆ¯Hel-ph.                   (68)order perturbation theory (CSMP2) with AFQMC. The
+                                                                             evaluation of the CSMP2 energy is most natural in the
+We note that the following zeroth-order Hamiltonian nat-                     molecular orbital (MO) basis rather than in the site basis.
+urally has the semiclassical state of Eq. (35) as its ground                 The MO basis is deﬁned by a set of orbitals,{ψiσ}, that
+state                                                                        satisfy
+
+                   ˆH0 =  ˆF +ω∑                                                                       ˆFσψpσ =ϵpσψpσ,                         (77)
+                                       (β2i  + ˆb†iˆbi),                 (69)
+                                    i                                        where ϵpσ  is the p-th MO energy and the p-th MO, ψpσ,
+where  ˆF  is the Fock operator deﬁned as (for spin σ =↑                     is expanded via a set of site orbitals,{φµσ},
+or↓)                                                                                                 ψpσ =∑       Cµpσφµσ.                       (78)
+                     ˆFσ =  ˆFelσ− 2g∑      ˆniσβi,                   (70)                                     µ
+
+                                         i
+                                                                             We  then  transform  Eq.  (74)  from  the  site  basis  to  the
+with the electronic Fock operators:                                          MO basis using the coeﬃcient matrix C for each spin
+           ˆFel↑  =−t∑                                                            ˆ¯V  = ∑       ∑    ∑    (                                   )
+                           ˆa†i↑ˆaj↑ +U∑      ˆni↑⟨ˆni↓⟩ψT,       (71)                                      (ωβµ−gpq)ˆa†pσˆaqσˆb†µ + h.c.
+                       ⟨ij⟩                i                                            σ∈{↑,↓}   pq   µ
+           ˆFel↓  =−t∑ˆa†i↓ˆaj↓ +U∑           ˆni↓⟨ˆni↑⟩ψT.       (72)               +∑      Up↑q↓r↓s↑ˆa†p↑ˆa†q↓ˆar↓ˆas↑,                            (79)
+
+                       ⟨ij⟩                i                                            pqrs
+
+where                                                                        where
+
+                     ⟨ˆniσ⟩ψT  =⟨ψT|ˆniσ|ψT⟩⟨ψT|ψT⟩                       (73)             gpq =g∑(Cµp)∗Cµq,                               (80)
+                                                                                                      µ
+It is straightforward to show that|ΨT⟩ is an eigenstate of                         Up↑q↓r↓s↑ =U∑(Cµp↑)∗(Cµq↓)∗Cµr↓Cµs↑.        (81)
+ˆH0.  From this starting point, one can develop an order-                                              µ
+by-order perturbation theory to capture all of the corre-                       The CSMP2 energy expression follows in a spin-orbital
+lation eﬀects among electrons and between electrons and
+phonons built through                                                        MO basis,
+
+      ˆV  =  ˆ¯H−  ˆH0                                                                                M∑  (ωβµ−g∑
+                                                                                         E(2) =−                         i(Cµi)∗Cµi)2
+         = ( ˆHel−  ˆFel) +∑(ωβi−gˆni)(ˆbi + ˆb†                                                     µ=1                 ω
+                                                         i).        (74)
+                                i                                                                         −|gai|2
+We note that such a partitioning of the Hamiltonian re-                                        −∑      ω +ϵa−ϵi
+                                                                                                   ia
+sembles the widely used Møller-Plesset (MP) perturba-                                                  ∑          |Ui↑j↓b↓a↑|2
+tion theory in quantum chemistry.86 We refer this pertur-                                      −∑           ϵa↑ +ϵb↓−ϵi↑−ϵj↓,            (82)
+bation theory to as “coherent state Møller-Plesset pertur-                                        i↑a↑ j↓b↓
+bation theory” (CSMP) since a coherent state (or a semi-
+classical state) is an eigenstate of the zeroth-order Hamil-                 where the orbital energies{ϵp} are eigenvalues of the Fock
+tonian.  This was also recently discussed in the work of                     operator  ˆF.  We note that the ﬁrst term in Eq. (82) is
+White and co-workers in the context of coupled-cluster                       zero if the semiclassical reference state is fully optimized.
+theory.49
+  Similar to MP, CSMP recovers the energy of the semi-
+classical  state  with  the  ﬁrst-order  perturbation  correc-                         B.    Lang-Firsov Perturbation Theory
+tion,
+
+   E(0) +E(1) =⟨ ˆHel⟩ψT +ω∑              β2i− 2g∑⟨ˆni⟩ψTβi,                    It may be useful to develop a second-order perturba-
+                                       i              i                      tion  theory  from  a  reference  state  given  by  the  Lang-
+                                                                   (75)      Firsov transformation79 in Eq. (49).  In the spirit of the
+                                                                             original LF transformation,79 we set
+where we have deﬁned                                                                                             √
+                                                                                                           ξi =     2g
+                  ⟨ˆni⟩ψT≡⟨ψT|ˆni↑ + ˆni↓|ψT⟩.                (76)                                                 ω ,                              (83)
+                                                                                                                                                10
+
+which removes the Holstein coupling in the transformed                                    VI.    THE HOLSTEIN MODEL
+framework.   With  this  choice  of  the  LF  amplitudes  in-
+stead of the variational LF amplitudes, the transformed                        To study the behavior of the proposed AFQMC algo-
+Hamiltonian is simpliﬁed to                                                 rithm with simple trial wavefunctions such as the semi-
+                               ∑                                            classical,  LLF,  and  TP  wavefunctions,  we  shall  investi-
+   ˆHLF =ω∑        ˆb†iˆbi− g2      ˆni + (U− 2g2           ˆni↑ ˆni↓       gate the 1D and 2D Holstein models ﬁrst, namely we set
+                i           ω    i                ω  )∑i                    U = 0 in Eq. (1).
+                  ∑                                                            For  the  Holstein  model,  the  sign  problem  is  absent,
+         −t∑          a†iσajσe(−gω (b†i−bi)+gω (b†j−bj)).          (84)     as  is  well-known  in  the  determinant  quantum  Monte
+
+              σ   ⟨ij⟩                                                      Carlo  (DQMC)  approach89.     Similar  to  DQMC,  the
+For convenience, we rewrite                                                 overlap  function⟨ΨT|ψi(τ), Xi(τ)⟩  in  Eq.  (20)  remains
+                                                                            non-negative  throughout  the  imaginary-time  propaga-
+                                                                            tion,  since the phonon component, φT (X(τ)) (omitting
+                                                     g
+  e(−gω (b†i−bi)+gω (b†j−bj)) =e−g2ω2e−gω (b†i−b†j)eω (bi−bj).   (85)       the walker index again), is positive everywhere, and the
+                                                                            electronic component,⟨ψT|ψ⟩ =|⟨ψT,↑|ψ↑⟩|2 with a spin-
+Based  on  the  approach  of  Bonca,  Trugman,  and  co-                    restricted form, is also non-negative.  Thus, in the Hol-
+workers,87,88     we choose the zeroth order Hamiltonian as                 stein  model  the  diﬀerence  between  our  approach  and
+                             ∑                                              DQMC is primarily in the way the Monte Carlo sampling
+  ˆHLF0   =ω∑    ˆb†             ˆni+(U− 2g2            ˆni↑ ˆni↓,  (86)    is  conducted.   AFQMC  uses  a  branching  random  walk
+                   iˆbi−g2ω                   ω  )∑                         with a population of walkers to construct the imaginary-
+              i               i                     i                       time path iteratively, as we have described, while DQMC
+with the perturbing Hamiltonian                                             treats the entire path as a path integral or worldline, and
+                                                                            updates it by sweeping diﬀerent imaginary-time locations
+  ˆV LF =−te−g2           ∑               ω (b†i−b†j)eω (bi−bj).   (87)g    via  a  Metropolis-like  algorithm.   A  second  diﬀerence  is
+                  ω2∑         a†iσajσe−g                                    the  introduction  of  an  importance  functions  in  our  ap-
+                      σ   ⟨ij⟩                                              proach via the similarity transformation, as indicated in
+                                                                            Eqs. (22) and (29).  These factors can aﬀect the behavior
+  For  concreteness,   we  consider  the  speciﬁc  case  of                 of  the  Monte  Carlo  sampling,  and  yield  diﬀerent  per-
+second-order perturbation theory for a two-electron, two-                   formances  in  diﬀerent  regimes  of  the  parameter  space,
+site problem.  The ground state of   ˆHLF0    is either|↑1↓1                including  eﬃciency,  auto-correlation  time,  and  possibly
+⟩⊗|0, 0⟩ or|↑2↓2⟩⊗|0, 0⟩ with an energy U−  4g2ω  .  We                     diﬀerent  levels  of  diﬃculty  with  ergodicity.   The  exam-
+start from an unperturbed state,                                            ples in the Holstein model below serve as a ﬁrst test of
+                                                                            the AFQMC method in this context.
+    |Ψ(0)0 ⟩ =   1√2(|↑1↓1⟩⊗|0, 0⟩, +|↑2↓2⟩⊗|0, 0⟩),     (88)
+                                                                                             A.    2-Electron 2-site model
+noting that an excited state which can be connected to
+the unperturbed ground state via  ˆV LF takes the form                         We  start  with  this  small  problem  where  we  easily
+                                                                            can compare results against exact diagonalization (ED).
+          |Ψ(0)mn⟩ =   1√                                                   Since  there  are  only  two  sites  in  our  model,  we  com-
+                        2(|↑1↓2⟩−|↓1↑2⟩)⊗|m,n⟩.       (89)                  pute  energies  with  open  boundary  conditions  (OBCs).
+It is then easy to show that the ﬁrst-order energy correc-                  In  Fig.2,  we  present  the  error  in  the  total  energy  of
+tion to the unperturbed state is zero.  The second-order                    CSMP2, LFPT2 and AFQMC compared to ED. Under-
+energy reads                                                                standing  the  behaviors  of  the  two  ﬂavors  of  perturba-
+                                                                            tion  theory  helps  gauge  non-perturbative  eﬀects  in  our
+                                                                            system.   In  Fig.2(a),  it  is  clear  that  the  CSMP2  en-
+    E(2)LFPT =−2t2e− 2g2ω2                                                  ergy  becomes  more  inaccurate  as  we  increase ω.   This
+         ∞∑   ∞∑                                                            is  because  the  zeroth  order  wavefunction,  a  semiclassi-
+     ×            (g/ω)2(m+n)          1 + (−1)m+n          .     (90)      cal trial wavefunction, starts to degrade when increasing
+       m=0   n=0       m!n!       (m +n)ω−U + 2g2ω                          el-ph correlation.  Perhaps the most striking behavior to
+                                                                            note concerning CSMP2 is that this approach performs
+We numerically evaluate this expression in a brute-force                    worst for intermediate λ values, (e.g. λ = 0.5) and is in
+manner, observing that a maximumn of 200 is suﬃcient                        fact more accurate for larger λ values such as λ = 2.0.
+to  converge  the  energy  to  machine  precision.   We  note               This can also be understood in terms of the increase in
+that this expression diﬀers from that of Bonca, Trugman                     el-ph  correlation  as  explained  in  SectionIV A.  On  the
+and co-workers87,88     since in their work a single bipolaron              other hand,  LFPT2 in Fig.2(b) is comparatively more
+was  considered  in  the  continuum  limit  (inﬁnite  lattice)              accurate than CSMP2 for λ values larger than λ = 0.5.
+whereas in our work we focus on a 2-site problem.                           The LF reference state (namely two electrons occupying
+                                                                                                                                                 11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.   Error in the total energy in units of t for the 2-site 2-electron Holstein model as a function of ω for various λ values:
+(a) CSMP2, (b) LFPT2 and (c) AFQMC results.  For λ = 0.1, LFPT2 energy errors lie outside the plotted range.  In (c), for
+λ ≥ 0.5 AFQMC/TP(11) results are shown while for λ = 0.1 we present AFQMC/S results.  Note the diﬀerent vertical scales
+in panel (c).
+
+
+one  site  and  with  a  phonon  vacuum  state)  is  qualita-                curacy and sampling eﬃciency of AFQMC/TP(11).  We
+tively incorrect when the el-ph coupling is small.  In such                  discuss the issue of bias in AFQMC in sign problem-free
+cases,  we  cannot  treat  the  the  hopping  term  perturba-                models further in SectionVI Band SectionVI E.
+tively.   This  is  clearly  reﬂected  in  Fig.2(b)  as  LFPT2
+exhibits  large  errors  for  small λ  values.   As  LFPT2  is
+well  known  to  produce  accurate  results  for  strong  cou-                           B.    1D 4-site model at half-ﬁlling
+pling, it is remarkable that a weak coupling perturbation
+theory, CSMP2, performs equally well even at λ = 2.0.                          To  further  investigate  the  eﬀect  of  the  importance
+  We  also  show  the  performance  of  AFQMC  for  the                      function on the sampling result and any potential bias,
+same  2-site  Holstein  dimer.    The  error  of  AFQMC  is                  we  consider  a  1D  4-site  Holstein  model  employing  pe-
+shown on a much smaller (100 times) scale.     We have                       riodic  boundary  conditions  (PBCs),  at  half-ﬁlling  with
+tested  both  the  single  semiclassical  state  and  TP(11),                λ = 0.5, ω  = 4t,  and g  = 2t.  We compute the ground
+i.e., the TP state with a superposition of 11 semiclassical                  state energies with AFQMC using the following trial wave
+states,  as  trial  wave  function.   These  are  referred  to  as           functions:  a single semiclassical state (S); the TP wave-
+AFQMC/S and AFQMC/TP(11),  respectively.  Results                            function with 13 semiclassical states (TP(13)); the LLF
+are shown in the ﬁgure, with AFQMC/S for smallerλ and                        wavefunction;  and  the  TP-LLF  wavefunction  with  two
+AFQMC/TP(11)  for λ≥  0.5.   Near-exact  energies  are                       LLF states (TP-LLF(2)).  With AFQMC/TP-LLF(2), a
+obtained for all parameters examined here.  We observed                      ground-state energy of−10.293(2) is obtained, compared
+that results can become severely biased with AFQMC/S                         to the exact result of−10.292 (obtained from DMRG us-
+for large λ, as a consequence of a poor importance func-                     ing iTensor90,  although ED can also be done here).  In
+tion  causing  large,  or  even  diverging,  variances.   Even               contrast,  a  biased  result  is  seen  with  each  of  the  other
+with  an  improved  importance  function  TP(11),  small                     forms of the trial wave function.  The bias is about 0.4%
+residual eﬀects can be present (via underestimation of the                   relative to the exact result, using the computational pa-
+statistical error, or bias from population size).  We also                   rameters speciﬁed in Sec.X, and is essentially indepen-
+note a large statistical error atω = 2t which is maximized                   dent of whether bifurcation is accounted for or not in the
+at an intermediate value of λ = 0.5 (or g =√2t).  Nev-                       trial wave function. These results suggest that, to remove
+ertheless, with TP(11), the bias (if any) is smaller than                    the sampling bias in this parameter regime, it is critical
+0.001 t for the Holstein dimer, which highlights the ac-                     to capture in the importance function both a means to
+                                                                                                                                               12
+
+overcome  the  adiabatic  potential  bifurcation  issue  and               this work.
+treat el-ph correlation.
+
+                                                                                         D.    2D 4x4 model at half-ﬁlling
+           C.    1D 20-site model at half-ﬁlling
+                                                                              We have established the expected behavior of AFQMC
+  Next, we discuss a 20-site 1D Holstein model at half-                    with semicalssical wavefunctions as importance functions
+ﬁlling  employing  PBCs.    ED  is  no  longer  feasible  for              from studying one-dimensional problems such as the Hol-
+systems  of  this  size  so  we  used  the  iTensor90  package             stein dimer and a 1D chain.  Here, we explore higher di-
+to perform DMRG calculations30.  The DMRG calcula-                         mensions  by  investigating  a  2D  square  lattice  problem
+tions  were  carried  out  by  placing  alternating  fermionic             with a 4x4 geometry.  We employed PBCs along x-axis
+and bosnic sites on a 1D lattice so that overall there are                 and  OBCs  along  y-axis.   The  main  reason  for  choosing
+twice the number of sites compared to the physical lattice                 this boundary condition is to ease the convergence of the
+problem.  While it is possible to use an optimized phonon                  DMRG calculations.  We were able to converge DMRG
+basis91 to handle larger el-ph coupling cases, here we em-                 calculations only for 0.8≥ω and λ≤ 0.5 where we used
+ployed the most primitive version of DMRG for simple                       a  bond  dimension  of  2500  and  a  maximum  number  of
+comparisons.  The bond dimension we used was ﬁxed at                       bosons of 25.
+1000 and the maximum number of bosons for each site                           In  Fig.4,  the  energy  per  site  as  a  function  of    ω  for
+was taken to be 60.                                                        various λ values is presented for this 2D model.  We ob-
+  We   compare   the   total   energy   per   site   within                serve conclusions similar to our previous one-dimensional
+DMRG,   CSMP2,    variational   LF,   AFQMC/S,   and                       examples.   CSMP2  quantitatively  fails  as ω  increases.
+AFQMC/TP(11)  in  Fig.3for  various    λ  and ω.   Given                   Furthermore,  for a ﬁxed ω,  CSMP2 performs worst for
+the discussion of SectionVI B, it is desirable to employ                   intermediate λ  values  and  is  more  accurate  for  small
+the  TP-LLF(n)  wavefunctions  in  general,  but  we  leave                and  large λ  values.   Similarly  to  the  1D  20-site  case,
+a  more  detailed  study  with  this  trial  wavefunction  for             the variational LF energy is more accurate than CSMP2
+a  future  study.   Here,  we  focus  on  AFQMC  with  sim-                for λ > 0.1 and its improvement over CSMP2 becomes
+pler  and  less  accurate  trial  wavefunctions  (AFQMC/S                  larger  as ω  increases.    AFQMC/S  is  well  behaved  in
+and AFQMC/TP(11)).                                                         the  range ω ∈  [0.1, 2.0].   Its  maximum  error  occurs  at
+  Similarly  to  the  two-site  problem,  we  observe  that                λ = 0.3 andω = 2.0, where clear indications of sampling
+CSMP2 follows the (near-exact) answers given by DMRG                       bias arises.  Nevertheless, the range of parameters where
+and AFQMC closely at small λ (e.g. λ = 0.1) as the fre-                    AFQMC/S can be reliably performed with the simplest
+quency of the phonon mode is varied.  However, we see                      possible  semiclassical  trial  wavefunction  is  quite  broad
+a clear quantitative deviation of CSMP2 from the other                     even in 2D, highlighting the utility and potential of this
+curves as ω increases.  The deviation is again maximized                   approach.
+at  an  intermediate  coupling λ  =  0.8  and  is  smaller  at
+weak  and  strong  couplings.   The  variational  LF  wave-
+function works better than CSMP2 for all λ > 0.1.  Its                          E.    Autocorrelation time and variance control
+strength over CSMP2 is highlighted as ω increases.  This
+clearly suggests that the variational LF wavefunction in-                     As we mentioned at the beginning of this section, in the
+cludes el-ph correlation beyond the second-order contri-                   Holstein model the diﬀerence between our AFQMC ap-
+bution provided in CSMP2.                                                  proach and DQMC is mainly in the details of the Monte
+  The  performance  of  AFQMC/S  is  very  good  at  all                   Carlo  sampling  algorithm.   The  two  methods  can  thus
+coupling  strengths  considered  here  for ω ≤  2.0.   Sim-                have diﬀerent behavior in terms of eﬃciency in diﬀerent
+ilar  issues  with  biased  ﬁnal  estimates  from  poor  im-               regimes of the parameter space.  Here we look into this
+portance  functions  are  seen  at λ  =  0.3  and λ  =  0.8.               to help understand the domain of applicability.  We note
+AFQMC/TP(11)  shows  improvement  over  the  simplest                      that this is not the focus of our study, since in the most
+semiclassical importance function in the case of λ = 0.3.                  general case where electron interactions are present, the
+However its improvement forλ = 0.8 asω becomes larger                      branching random walk approach must be adopted in or-
+is very small.  For example, the residual bias is still vis-               der to control the sign or phase problem.
+ible at ω = 2.0.  This points to the need to improve the                      The  standard  DQMC  algorithm  based  on  local  up-
+importance  function  over  the  forms  we  have  used.   We               dates exhibits a long autocorrelation time in the Holstein
+expect  that  incorporating  el-ph  correlation  directly,  as             model forω< 0.5 and for low temperatures.  It has been
+in the LF-type wavefunctions, will ameliorate this sam-                    found that this is a consequence of an ergodicity prob-
+pling bias greatly,  as observed in SectionVI B. For the                   lem. A careful mathematical analysis of the causes of this
+rest  of  the  paper,  we  focus  on  AFQMC  with  the  sim-               problem can be found in the work of Hohenadler and co-
+plest  trial  wavefunction,  namely  a  single  semiclassical              workers.67,92,93         These authors have shown that the con-
+trial  wavefunction,  because  the  observed  sampling  bias               dition number of the bosonic action sampled in DQMC
+is small enough that it does not aﬀect the conclusions of                  for small values of ∆τ  scales as 1/(ω∆τ)2.  This poorly
+                                                                                                                                                          13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3.   Total energy per site in units of t for the 20-site 20-electron 1D Holstein model as a function of ω for various values
+of λ values:  (a) λ = 0.1 results, (b) λ = 0.3 results, (c) λ = 0.8 results, and (d) λ = 2.0 results.  Note that all error bars for
+AFQMC are too small to be seen on the plotted scales, DMRG reference values are unavailable for ω< 0.8 when λ = 0.8 and
+λ = 2.0, and AFQMC/TP(11) is not presented for λ = 0.1 because the results for this trial wavefunction are nearly identical
+to those of AFQMC/S.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 4.   Total energy per site in units of t for the 4x4 2D Holstein model at half-ﬁlling as a function of ω for variousλ values:
+(a) λ = 0.1 results, (b) λ = 0.3 results, (c) λ = 0.5 results, and (d) λ = 2.0 results.  Note that all error bars of CP-AFQMC/S
+are too small to be seen on the plotted scales, DMRG reference values are only available for ω ≥ 0.8 when λ< 2.0.
+                                                                                                                                                 14
+
+                                                                            model.  For both values ofλ, we observe a near linear be-
+                                                                            havior in the log-log scale correlation between τac and ω
+                                                                            as in Fig.5.  Empirically,  we ﬁnd that the autocorrela-
+                                                                            tion time scales as 1/ω0.9876 forλ = 0.1 and 1/ω0.8617 for
+                                                                            λ = 1.0.  This scaling is a signiﬁcant improvement over
+                                                                            that of the standard DQMC algorithms where τac scales
+                                                                            as 1/ω2.67
+                                                                               On the other hand, in AFQMC we use an importance
+                                                                            function to guide the random walks.  If the quality of the
+                                                                            importance function is very poor, the variance can grow
+                                                                            and even become inﬁnite.83 In cases where the trial wave
+                                                                            function suppresses certain regions of the Hilbert space
+                                                                            being  sampled  with  a  qualitatively  incorrect  functional
+                                                                            form, the autocorrelation time and thus the variance can
+FIG.  5.      Log-log  plot  of  autocorrelation  time τac/∆τ  and          diverge, as mentioned earlier in this section.  This situa-
+phonon  frequency ω/t  for λ  =  0.1  and λ  =  1.0.   The  black           tion was seen in the examples with the semiclassical wave
+dotted lines are linear ﬁts for each curve.  For λ = 0.1,  the              function where there is a strong bifurcation of the adia-
+slope is -0.9876 with R2 = 0.9993 and for λ = 1.0, the slope                batic potential in the Holstein dimer.  Another example
+is -0.8617 with R2 = 0.9942.                                                occurs with the use of semiclasscial trial wave functions
+                                                                            where the lack of explicit el-ph correlation leads to large
+conditioned action leads to a long autocorrelation time                     sampling  biases.   In  extreme  cases,  calculations  will  be
+that scales quadratically with increasingω−1. There have                    seemingly  well-behaved  in  “normal-sized”  runs,  as  the
+been attempts to ameliorate this problem based on global                    Monte  Carlo  sampling  is  strongly  biased  by  the  wrong
+moves  such  as  the  Langevin  dynamics  approach57,89,94                  importance function and the auto-correlation time grows
+and  the  self-learning  Monte  Carlo  approach.95  We  also                exponentially. These situations require careful analysis of
+mention  that  the  work  of  Hohenadler  and  co-workers                   the variance and study of the dependence on the details
+removed  the  autocorrelation  problem  using  the  Lang-                   of the importance function to reveal the problem.83 Sep-
+Firsov transformation along with a principal component                      arate but related to the quality of the importance func-
+analysis.67                                                                 tion  is  the  issue  of  eﬃciently  sampling  of  multi-modal
+  Since AFQMC applies a projector to the entire set of                      landscapes  in  the  el-ph  models,  as  we  have  only  incor-
+electronic  and  phonon  degrees  of  freedom  using  a  pop-               porated local moves in our random walks.  In the worst
+ulation  of  random  walkers,  it  is  less  prone  to  ergod-              cases, AFQMC can, even with reasonable choices of im-
+icity  problems.   The  Monte  Carlo  time  coincides  with                 portance functions, experience diﬃculties with long au-
+the  imaginary-time  direction,  with  open-ended  random                   tocorrelations as occurs in DQMC. In AFQMC the use of
+walks  evolving  along  the  worldines,  which  makes  them                 a population of open-ended random walkers with branch-
+less likely to become trapped in particular conﬁgurations                   ing can help avoid the sampling being stuck.
+of the phonon paths.  There is a deep connection between
+this  fact  and  the  necessity  to  resort  to  this  sampling                  VII.    THE HUBBARD-HOLSTEIN MODEL
+approach  in  order  to  impose  a  CP  or  phaseless  gauge
+condition51,60    .  To quantify this, we directly compute the
+energy autocorrelation function,                                               The focus of our CP-AFQMC method is on doped sys-
+                        N−τ∑                                                tems  and  more  realistic  Hamiltonians,  where  the  sign
+    cE(τ) =     1            (En−⟨E⟩)(En+τ−⟨E⟩),      (91)                  problem  or  phase  problem  will  be  present.   In  the  pre-
+               N−τ                                                          vious section, we studied the 1D and 2D Holstein mod-
+                        n=1                                                 els with simple trial wavefunctions.  In this section,  we
+which gives an estimate of the integrated autocorrelation                   present benchmark data using the same approach for the
+time via                                                                    Hubbard-Holstein model with U/t = 4.  Because of the
+                                 ∞∑                                         competition  between U  and g,  we  carefully  study  trial
+                       τac =           cE(τ)                                wavefunctions  with  both  CDW  and  SDW  order.   Note
+
+                               τ=−∞    cE(0).                       (92)    that  the  CP-AFQMC  algorithm  is  no  longer  exact  be-
+                                                                            cause  the  el-el  repulsion  will  lead  to  a  sign  problem.
+The summation in Eq. (92) needs to be performed within                      Karakuzu,  Seki,  and Sorella have presented an eﬃcient
+some  window  instead  of  over  the  entire  set  of  samples              QMC algorithm which is free of the sign-problem at half-
+since, for τ≫τac, the summed noise becomes compara-                         ﬁlling  as  long  as U >  2g2/ω.57  Within  CP-AFQMC,
+ble to the actual signal.  We follow Sokal’s prescription                   we can simulate any parameter regime without the sign
+of  the  automated  windowing  procedure  to  handle  this                  problem at the expense of the constraint bias.  Since CP-
+issue.96,97     In Fig.5, we present estimates of autocorrela-              AFQMC has been extensively benchmarked for electronic
+tion times forλ = 0.1 andλ = 1.0 for the 4x4 2D Holstein                    systems in the past,76 we focus on any additional biases
+                                                                                                                                               15
+
+that may arise from the interplay between electrons and                    CDW  transition  at λ ∼  0.5,  given  our  ad  hoc  choice
+phonons in this section.  We use an ad hoc Ueﬀ = 0.5t in                   of Ueﬀ  = 0.5.  We see that CP-AFQMC/CDW leads to
+the  electronic  mean-ﬁeld  part  to  generate  all  the  SDW              higher energies than CP-AFQMC/SDW forλ≤ 1.0.  The
+trial wavefunctions for CP-AFQMC in this section.                          energy diﬀerences are large enough to make it straight-
+  Below, we ﬁrst examine the behavior of our algorithm                     forward to identify the correct phase.
+in  1D,  and  then  in  2D  both  at  half-ﬁlling  and  1/8-                  We  next  make  more  quantitative  comparison  of  the
+doping.   We  will  focus  on  benchmarking  the  accuracy                 total  energy  per  site  obtained  from  CP-AFQMC  and
+of  the  computed  ground-state  energies.   We  note  that                DMRG in Fig.6. DMRG calculations are performed with
+for  the  purely  electronic  cases  with λ  =  0,  all  of  our           a bond dimension of 1000 and with the maximum num-
+models in 1D and at half-ﬁlling in 2D are sign-problem-                    ber  of  bosons  of  40.   In  Fig.6(c)  and  (d),  we  observe
+free.   However,  CP-AFQMC  can  incur  a  systematic  er-                 that CP-AFQMC/SDW closely follows the DMRG ener-
+ror  in  the  energy  in  these  cases,  because  of  an  “artiﬁ-          gies  from λ  =  0.1  to λ  =  1.0.   At λ  =  2.0,  the  energy
+cial  node”  in  auxiliary-ﬁeld  space;51  this  error  can  be            obtained from CP-AFQMC/SDW is signiﬁcantly higher
+removed  straightforwardly.75,76      Instead  of  invoking  the           than  that  from  CP-AFQMC/CDW,  with  the  latter  in
+scheme to remove this artiﬁcial bias, we will perform the                  good agreement  with DMRG. The  procedure  described
+CP-AFQMC calculation in the generic way as described                       above of combining the lowest energy curves between CP-
+above, since our main focus in this work is the most gen-                  AFQMC/SDW and CP-AFQMC/CDW produces quan-
+eral situation of a doped Hubbard-Holstein model where                     titatively accurate results across the full range of param-
+the sign problem is present.                                               eters that we study. Variations in the value of the phonon
+                                                                           frequency do not change the qualitative conclusions.
+                                                                              In  Fig.7we  show  a  magniﬁed  view  of  the  absolute
+           A.    1D 20-site model at half-ﬁlling                           discrepancies  between  CP-AFQMC  and  DMRG  ener-
+                                                                           gies.   As  a  comparison,  for  the  purely  electronic  Hub-
+  We  benchmark  CP-AFQMC  against  DMRG  for  the                         bard model (λ = 0), CP-AFQMC exhibits an error per
+20-site  1D  Hubbard-Holstein  model  at  half-ﬁlling  with                site of 0.00245(8) t with respect to the DMRG reference
+PBCs.  Unlike for the case of the pure Holstein model,                     values.   Similarly  in  the  Hubbard-Holstein  model,  CP-
+CSMP2  and  the  variational  LF  approach  are  quantita-                 AFQMC/SDW energies exhibit an error per site of ap-
+tively and qualitatively inaccurate for all parameters ex-                 proximately  0.002–0.003 t  for λ  =  0.1, 0.3, 0.8.   When
+amined here.  This is not surprising because the on-site                   the  system  reaches  values  as  large  as λ  =  1.0,  we  ob-
+repulsion term for U/t = 4 is not small, so the failure of                 serve  a  small  increase  in  the  error  as ω  increases.   The
+mean-ﬁeld theories and a low-order perturbation theory                     largest error found for λ = 1.0 is 0.0064(2) t at ω = 2.0,
+on the el-el interaction is expected.  For this reason we                  which is slightly larger than the constraint bias found in
+do not discuss CSMP2 and variational LF results here.                      the  purely  electronic  problem.   The  point  at  which  the
+  To study the CDW and SDW phases and the possibil-                        largest  error  was  observed  coincides  with  the  expected
+ity of a phase transition between them, we carry out CP-                   phase transition point between SDW and CDW (see be-
+AFQMC calculations using two diﬀerent mean-ﬁeld trial                      low).  At λ = 2.0, the discrepancy between CP-AFQMC
+wave functions with the corresponding broken symmetry.                     and DMRG is an order of magnitude smaller, with a max-
+Comparison of the computed energies indicates which one                    imum deviation of CP-AFQMC per site of -0.00040(2) t
+is the ground state at each Hamiltonian parameter choice                   at ω  = 2.0.  Possible reasons for this small discrepancy
+as well as the existence and location of a transition, al-                 are  that  the  DMRG  energies  with  a  maximum  boson
+though the fact that our CP-AFQMC energies computed                        number  of  40  are  not  fully  converged  and  the  residual
+from the mixed estimate are not variational62 adds a sub-                  time step error in CP-AFQMC is not negligible on the
+tlety to this procedure.  Here the calculation leading to                  plotted energy scale.
+the  higher  energy  can  be  thought  of  as  the  constraint                It  has  been  shown  by  several  methods37,46,57,58             that
+acting to “hold” the projection to an excited state com-                   in the thermodynamic limit the Hubbard-Holstein model
+patible with the broken symmetry of the trial wave func-                   undergoes a transition between SDW and CDW at
+tion. In actual applications, we could use a self-consistent
+CP-AFQMC procedure85 to tune the trial wave function                                                U≈ 2g2ω   = 4dtλ.                         (93)
+and reduce its eﬀect on the result, but for the purpose of
+benchmarks  we  will  only  perform  one-shot  calculations                This  value  of U  is  where  the  eﬀective  on-site  interac-
+here  using  UHF  trial  wave  functions  generated  with  a               tion  changes  sign  as  shown  in  Eq.  (84).   For   U/t  =  4
+ﬁxed Ueﬀ,  and  rely  on  comparison  with  DMRG  results                  and  d  =  1,  we  expect  the  phase  transition  to  occur  at
+to gauge the accuracy.                                                     approximately λ  =  1.0.    We  ﬁnd  that  in  the  20-site
+  In Fig.6, we compare two sets of CP-AFQMC results                        model,  despite  the  expected  ﬁnite  size  eﬀects,  the  on-
+at diﬀerent ω values, one set with SDW trial wavefunc-                     set  of  the  phase  transition  is  captured  quite  well.   In
+tions (denoted by CP-AFQMC/SDW) and another with                           particular, the crossover between CP-AFQMC/SDW and
+CDW trial wavefunctions (denoted CP-AFQMC/CDW).                            CP-AFQMC/CDW occurs roughly at λ = 1.0 in Fig.6.
+The  trial  wave  functions  themselves  show  a  SDW  to                  While this is encouraging, detailed phase diagram stud-
+                                                                                                                                                          16
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 6.     The total energy per site in units of t for the 20-site 1D Hubbard-Holstein model at half-ﬁlling with U  = 4t as a
+function ofλ for variousω values: (a)ω = 0.1, (b)ω = 0.4, (c)ω = 1.0, and (d)ω = 2.0.  Note that all error bars of CP-AFQMC
+are too small to be seen on the plotted scales.  Note that the DMRG results are unavailable for ω = 0.1 and ω = 0.4 as well as
+for λ> 2.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 7.    Error in total energy per site compared to DMRG in units of 0.001t for the 20-site 1D Hubbard-Holstein model at
+half-ﬁlling with U/t = 4 as a function of ω for various λ values:  (a) λ = 0.1 results and (b) λ = 1.0 results.  The black dotted
+line  in  (a)  indicates  the  electronic  CP-AFQMC  energy  error  (i.e., λ  =  0.0).   In  (b),  DMRG  energies  are  only  available  for
+ω = 1.0, 1.5, 2.0.  Note that for (b) the reference DMRG values are potentially unconverged with a maximum phonon number
+of 40 and the remaining time step error of CP-AFQMC is not negligible on the plotted energy scale.
+                                                                                                                                                  17
+
+ies  with  CP-AFQMC  should  be  carried  out  in  the  fu-                    VIII.    TOWARDS AB-INITIO HAMILTONIANS
+ture.  We note that CP-AFQMC often restores the sym-
+metry  breaking  of  the  underlying  mean-ﬁeld  trial  wave                    We brieﬂy discuss the extension of the presented algo-
+function,98,99      as  would  be  expected  of  an  exact  many-            rithm for general  ab-initio Hamiltonians.  The  ab-initio
+body computation.  Therefore,  a proper phase diagram                        Hamiltonian that describes el-ph problems typically in-
+study  with  CP-AFQMC  should  involve  a  direct  mea-                      volves linear el-ph coupling.  Therefore, the most widely
+surement  of  correlation  functions100  or  order  parame-                  used ab-initio Hamiltonian has the same form as Eq. (1)
+ters with explicit symmetry-breaking induced.27 Further-                     with more general Hamiltonian matrix elements,
+more, there may be intermediate phases such as metallic
+or  superconducting  phases  near  the  onset  of  the  phase                    ˆH(1)             ∑hpσqσˆa†pσˆaqσ,                              (94)
+transition between the SDW and CDW phases.  Studying                               el   = ∑
+these putative intermediate phases is of great interest.58                                σ∈{↑,↓}   pq
+                                                                                 ˆH(2)          ∑       ∑    (pσrσ|qσ′sσ′) ˆa†pσˆa†qσ′ ˆasσ′ ˆarσ,
+                                                                                   el   = 12
+                                                                                            σ,σ′∈{↑,↓}  pqrs
+                                                                                                                                               (95)
+B.    2D 4x4 model at half-ﬁlling and 1/8 hole-doping                            ˆHph =∑      ωIˆb†
+                                                                                                   IˆbI,                                                 (96)
+                                                                                           I
+  Instead of comparing CP-AFQMC with other methods                                                                                             (97)
+for 2D Hubbard-Holstein systems, we simply report the
+computed  total  energy  per  site  using  PBCs  along  both                 and
+the x  and y  directions,  as  shown  in  Fig.8.   Based  on
+the  benchmark  studies  in  the  previous  sections  and  on                       ˆHel-ph = ∑         ∑
+experience from the purely electronic model, we expect                                                       gpσqσIˆa†pσˆaqσ(ˆb†I + ˆbI),        (98)
+that  our  results  will  be  of  similar  accuracy  (or  better                               σ∈{↑,↓}  pqI
+because of eﬀective reduction of the el-el interaction from
+the  el-ph  coupling)  to  that  in  the  Hubbard  model  for                where we have suppressed other quantum numbers such
+most parameters considered in this work.  In Fig.8, we                       as k-point dependencies and have expressed everything
+see that CP-AFQMC/CDW has a lower energy for λ >                             in terms of the electronic ({p,q,r,s,···}) and phononic
+0.5 at both frequencies (ω  = 0.1 and ω  = 2.0) at both                      bands({I,J,K,L,···}).  The computation of these ma-
+half-ﬁlling and 1/8 hole-doping.  Based on Eq. (93), it is                   trix  elements  at  the  level  of  density  functional  theory
+expected that the onset of the crossover occurs around                       has  been  well-documented1,101,102         so  here  we  focus  on
+λ  =  0.5  in  2D,  consistent  with  our  numerical  results.               brieﬂy  describing  the  phaseless  AFQMC  (ph-AFQMC)
+(Note  that  our  deﬁnition  of λ  includes  dimensionality,                 algorithm60 for these realistic el-ph problems.
+hence the change in the crossover value from 1D to 2D).                         The walkers take the same form as in Eq. (20).  There-
+  Consistent with our previous results, for λ = 0.1 and                      fore,  the  essence  of  the  propagation  algorithm  remains
+λ = 0.3 at all frequencies up toω = 2.0, the CP-AFQMC                        unchanged.  The only complication arises from the gen-
+error per site is approximately 0.009 t or slightly larger.                  eralized  form  of   ˆH(2)el    which  necessitates  the  use  of  a
+At the onset of the crossover between CP-AFQMC/CDW                           continuous Hubbard-Stratonovich transformation.103,104
+and CP-AFQMC/SDW (λ∼ 0.5), we expect the error to                            The  continuous  transformation  leads  to  the  fermionic
+be maximized and larger than that of the CP-AFQMC                            phase problem which can be removed via the phaseless
+bias  for  the  electronic  problem,  similar  to  the  1D  20-              constraint.60 The propagation is carried out the same way
+site  model  at  half-ﬁlling.   For λ  =  0.8  and λ  =  2.0,                with  appropriate  modiﬁcations  to  the  constraint  to  ac-
+we  expect  that  our  results  will  be  nearly  exact  for  the            count for the phase problem. The ab-initio generalization
+ω  values  studied.    For  the  purely  electronic  Hubbard                 of semiclassical states used in this work is also straight-
+model  (λ  =  0),  CP-AFQMC  exhibits  an  error  per  site                  forward.   The  trial  wavefunction  still  takes  the  form  of
+of about 0.00901(9) t at half-ﬁlling and 0.00469(4) t at                     Eq.  (35),  Eq.  (36),  and  Eq.  (38).   A  variational  mini-
+1/8  hole-doping,  using  a  UHF  trial  wave  function.   As                mization of the total energy then leads to a trial wave-
+mentioned, the error at half-ﬁlling is “artiﬁcial” and can                   function that can be used in ph-AFQMC. The projection
+be removed,75,76     but this is not done here.  For λ≤ 1 at                 of the trial wavefunction onto phonon displacements|X⟩
+half-ﬁlling we expect an error of comparable size.  Com-                     is identical to Eq. (40) except that the phonon mass and
+paring  two  diﬀerent  ﬁllings,  we  do  not  see  qualitative               frequency now depend on band indices{I}.  The ab-initio
+diﬀerences  in  physical  behavior  in  our  ﬁnite-sized  lat-               generalization of the LF wavefunction may also be car-
+tice,  and  the  value  of  the  phonon  frequency  does  not                ried out straightforwardly by extending the LF generator
+appear to make qualitative diﬀerences as well.  We note                      in  Eq.  (50).   We  expect  that  the       ab-initio  ph-AFQMC
+that  the  energy  diﬀerence  between  CP-AFQMC/SDW                          approach will become a valuable tool for understanding
+and CP-AFQMC/CDW noticeably shrinks as the phonon                            polaronic physics in realistic correlated materials in the
+frequency ω increases.                                                       future.
+                                                                                                                                               18
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 8.   Total energy per site in units oft for the 4x4 2D Hubbard-Holstein model withU/t = 4 as a function ofω:  (a)ω = 0.1
+results at half-ﬁlling, (b) ω = 2.0 results at half-ﬁlling, (c) ω = 0.1 results at 1/8 hole-doping, and (d) ω = 2.0 results at 1/8
+hole-doping.  Note that all error bars of CP-AFQMC are too small to be seen on the plotted scales.
+
+
+        IX.    CONCLUSIONS AND OUTLOOK                                        We  have  tested  CP-AFQMC  on  the  ﬁnite  sized  ver-
+                                                                           sions  of  the  1D  and  2D  Hubbard-Holstein  models  with
+  In  this  work,  we  have  introduced  an  extension  of                 U/t = 4, using the simplest form of trial wave functions
+CP-AFQMC  to  describe  correlated  systems  with  el-ph                   consisting of a semiclassical state with a single Slater de-
+coupling.   Our  approach  utilizes  a  mixed  ﬁrst/second-                terminant.  For the 1D Hubbard-Holstein model, we have
+quantized representation where the phonons are propa-                      compared CP-AFQMC against numerically exact DMRG
+gated in ﬁrst quantization following the commonly used                     results.  When λ is small and the ground state is domi-
+diﬀusion  MC  algorithm,  and  the  electronic  degrees  of                nated by the Hubbard U  term, we ﬁnd that the error of
+freedom are handled in second quantization via AFQMC.                      our algorithm is roughly the same as that expected from
+The  resulting  algorithm  is  compared  with  numerically-                standard  CP-AFQMC  applied  to  the  purely  electronic
+exact DMRG and low-order perturbation theories for the                     Hubbard  model.   Furthermore,  when  the  ground  state
+Holstein model as a ﬁrst test of the basic algorithm.  We                  is  dominated  by  the  el-ph  coupling  term  and  exhibits
+have  demonstrated  that  the  autocorrelation  time  prob-                charge density wave order, we ﬁnd that the overall error
+lems that arises in the commonly used DQMC methods                         becomes remarkably small (smaller than that expected in
+is greatly ameliorated in AFQMC, with autocorrelation                      purely electronic systems).  These facts have motivated
+time that scales roughly as 1/ω.                                           the production of what we believe are benchmark results
+  While   the   Holstein   model   is   sign-problem   free,               for the ﬁnite sized 2D Hubbard-Holstein model for vari-
+AFQMC  with  the  simplest  trial  wavefunctions,  namely                  ous values ofλ andω at half-ﬁlling and 1/8 hole-doping.
+semiclassical  states,  is  found  to  introduce  a  small  bias              For U <  2g2/ω  at  half-ﬁlling  and  for  all  parameter
+when the underlying adiabatic surface bifurcates and/or                    regimes at any hole-doping,  standard QMC approaches
+g  is larger than t but smaller than ω  (e.g., ω→∞ for                     suﬀer from the sign problem.57  Therefore, our AFQMC
+a  ﬁxed λ).   Based  on  a  4-site  model,  we  have  shown                approach  should  become  an  essential  tool  for  produc-
+that this bias can be removed by using an improved trial                   ing  accurate  results  scalable  to  large  system  sizes  for
+wavefunction  where  both  bifurcations  and  increased  el-               this  model.   We  have  investigated  the  competing  spin-
+ph correlation are accounted for.  We have demonstrated                    and charge-density wave orders in the Hubbard-Holstein
+the remarkable accuracy of AFQMC for both 1D and 2D                        model.   At  the  onset  of  the  phase  transition  between
+Holstein models over a reasonably broad set of coupling                    these phases, we observe a crossover in the energies be-
+and phonon frequency parameters via direct comparison                      tween two AFQMC calculations targeting the two phases.
+with DMRG.                                                                 Lastly,  we  have  brieﬂy  discussed  the  extension  of  the
+                                                                                                                                                    19
+
+presented  algorithm  to  ab-initio  Hamiltonians  that  can                  called  PAUXY.106  The  blocking  analysis  was  performed
+be  easily  formulated  based  on  the  phaseless  AFQMC                      with pyblock.107 The pair branching algorithm was used
+method for general electronic Hamiltonians.60                                 for  population  control.108  Variational  calculations  were
+  Some  immediate  future  directions  include  using  this                   aided by automatic diﬀerentiation using JAX.109 A total
+framework to provide a detailed study of the phase di-                        of  640  walkers  and  a  time  step  of  0.005 t−1  were  used
+agram  of  the  Hubbard-Holstein  model  and  other  lat-                     in all calculations except for the Holstein dimer and the
+tice  models,  and  extending  this  framework  to  ﬁnite-                    4-site  1D  Holstein  model.   For  the  Holstein  dimer,  we
+temperature  problems  based  on  the  constrained  path                      used a time step of 0.0005 t−1  for ω≤ 1.6 and 0.00025
+approximation.105    As  mentioned,  a  trial  wave  func-                    t−1  for ω >  1.6  with  6400  walkers.   For  the  4-site  1D
+tion  with  an  el-ph  Jastrow  factor  can  be  implemented                  Holstein model, we used 6400 walkers and a time step of
+straightforwardly in AFQMC, which is expected to fur-                         0.0005t−1.  The population control bias and time step er-
+ther reduce the bias and improve sampling eﬃciency in                         ror were found to be smaller than 0.001t in the absolute
+anti-adiabatic  regimes  with  2dtλ < ω.   It  will  also  be                 total energy per site.
+valuable to further investigate the implementation of the
+full  LF  trial  wave  function.     Furthermore,  application
+of the proposed AFQMC approach to  ab-initio systems
+will be of great interest as well.  While there are several
+algorithmic aspects that can be further improved, includ-
+ing improved forms of importance functions and better
+sampling in large phonon frequency regimes, we believe
+that the algorithms and insights presented in this work                                      XI.    ACKNOWLEDGEMENT
+will  serve  as  stepping  stones  towards  simulating  model
+as well as ab-initio systems with a non-trivial interplay
+between electronic correlation and el-ph couplings, which                        We  are  grateful  to  Zihang  Li  and  Hao  Shi  for  their
+continue to be of great importance in modern condensed                        contributions during early stages of this work.  We thank
+matter physics.                                                               Hao Shi, Michael Lindsey, Fionn Malone for fruitful dis-
+                                                                              cussions and Miles Stoudenmire for help with iTensor cal-
+                                                                              culations.  DRR acknowledges support from grant NSF-
+           X.    COMPUTATIONAL DETAILS                                        CHE 1954791.  This work was conducted using compu-
+                                                                              tational resources and services at the Flatiron Institute.
+  Our  algorithm  was  implemented  in  a  public  open-                      The Flatiron Institute is a division of the Simons Foun-
+source  auxiliary-ﬁeld  quantum  Monte  Carlo  package                        dation.
+
+
+
+
+
+
+
+  ∗  jl5653@columbia.edu                                                       12  E.  Van  Heumen,   E.  Muhlethaler,   A.  B.  Kuzmenko,
+  †  szhang@ﬂatironinstitute.org                                                  H. Eisaki,  W. Meevasana,  M. Greven,   and D. Van Der
+  ‡  drr2103@columbia.edu                                                         Marel, Phys. Rev. B 79, 1 (2009).
+  1  F. Giustino, Rev. Mod. Phys. 89, 015003 (2017).                           13  C.   Gadermaier,   A.   S.   Alexandrov,   V.   V.   Kabanov,
+  2  G. D. Mahan, Many-particle physics  (Springer Science &                      P.  Kusar,  T.  Mertelj,  X.  Yao,  C.  Manzoni,  D.  Brida,
+    Business Media, 2013).                                                        G.  Cerullo,    and  D.  Mihailovic,  Phys.  Rev.  Lett.  105,
+  3  R.  Cava,  R.  Van  Dover,  B.  Batlogg,   and  E.  Rietman,                 257001 (2010).
+    Phys. Rev. Lett. 58, 408 (1987).                                           14  Y. He, M. Hashimoto, D. Song, S. D. Chen, J. He, I. M.
+  4  M.-K.  Wu,  J.  R.  Ashburn,  C.  Torng,  P.  H.  Hor,  R.  L.               Vishik, B. Moritz, D. H. Lee, N. Nagaosa, J. Zaanen, T. P.
+    Meng, L. Gao, Z. J. Huang, Y. Wang,  and a. Chu, Phys.                        Devereaux, Y. Yoshida, H. Eisaki, D. H. Lu,   and Z. X.
+    Rev. Lett. 58, 908 (1987).                                                    Shen, Science 362, 62 (2018).
+  5  D. J. Scalapino, Rev. Mod. Phys. 84, 1383 (2012).                         15  S. L. Yang, J. A. Sobota, Y. He, D. Leuenberger, H. Soifer,
+  6  K. A. M¨uller, Z. Phys. B. Con. Mat. 80, 193 (1990).                         H. Eisaki, P. S. Kirchmann,  and Z. X. Shen, Phys. Rev.
+  7  J. Song and J. F. Annett, Phys. Rev. B 51, 3840 (1995).                      Lett. 122, 1 (2019).
+  8  A.  S.  Alexandrov,  J.  Supercond.  Nov.  Magn.  13,  985                16  Y. Hu, X. Chen, S. T. Peng, C. Lane, M. Matzelle, Z. L.
+    (2000).                                                                       Sun, M. Hashimoto, D. H. Lu, E. F. Schwier, M. Arita,
+  9  T.  Cuk,  D.  H.  Lu,  X.  J.  Zhou,  Z.  X.  Shen,  T.  P.  De-             T. Wu, R. S. Markiewicz, K. Shimada, X. H. Chen, Z. X.
+    vereaux,   and  N.  Nagaosa,  Phys.  Status  Solidi  B  Basic                 Shen, A. Bansil, S. D. Wilson,  and J. F. He, Phys. Rev.
+    Res. 242, 11 (2005).                                                          Lett. 123, 1 (2019).
+ 10  E. Khatami, A. MacRidin,  and M. Jarrell, Phys. Rev. B                    17  B.  Rosenstein  and  B.  Y.  Shapiro,  Phys.  Rev.  B  100
+    78, 1 (2008).                                                                 (2019).
+ 11  O. Gunnarsson and O. R¨osch, J. Condens. Matter Phys.                     18  G.  Grissonnanche,  S.  Th´eriault,  A.  Gourgout,  M.  E.
+    20 (2008).                                                                    Boulanger, E. Lefran¸cois, A. Ataei, F. Lalibert´e, M. Dion,
+                                                                                  J. S. Zhou, S. Pyon, T. Takayama, H. Takagi, N. Doiron-
+                                                                                                                                                          20
+
+   Leyraud,  and L. Taillefer, Nat. Phys.  (2020).                                46  T. E. Reinhard, U. Mordovina, C. Hubig, J. S. Kretchmer,
+19  B.     Rosenstein     and     B.     Y.     Shapiro,         (2020),              U. Schollw¨ock, H. Appel, M. A. Sentef,  and A. Rubio, J.
+   arXiv:2003.03521.                                                                  Chem. Theory Comput. 15, 2221 (2019).
+20  S.  Banerjee,  W.  A.  Atkinson,    and  A.  P.  Kampf,    ,  1               47  M. Sibaev, I. Polyak, F. R. Manby,  and P. J. Knowles, J.
+   (2020),arXiv:2008.01401.                                                           Chem. Phys. 153, 124102 (2020).
+21  E. I. Shneyder, E. I. Shneyder, S. V. Nikolaev, S. V. Niko-                   48  T.  Dresselhaus,  C.  Bungey,  P.  J.  Knowles,    and  F.  R.
+   laev,  M.  V.  Zotova,  M.  V.  Zotova,  R.  A.  Kaldin,  S.  G.                   Manby, arXiv preprint arXiv:2010.04654  (2020).
+   Ovchinnikov,  and S. G. Ovchinnikov, Phys. Rev. B 101,                         49  A. F. White,  Y. Gao,  A. J. Minnich,   and G. K. Chan,
+   235114 (2020).                                                                     arXiv preprint arXiv:2009.13568  (2020).
+22  A.  S.  Mishchenko,  N.  Nagaosa,   and  N.  Prokof’ev,   ,  1                50  S. Zhang, J. Carlson,   and J. E. Gubernatis, Phys. Rev.
+   (2020),arXiv:2007.09888.                                                           Lett. 74, 3652 (1995).
+23  S. A. Sreedhar, A. Rossi, J. Nayak, Z. Anderson, Y. Tang,                     51  S. Zhang, J. Carlson,   and J. E. Gubernatis, Phys. Rev.
+   B. Gregory, M. Hashimoto, D. H. Lu, E. Rotenberg, R. J.                            B 55, 7464 (1997).
+   Birgeneau, M. Greven, M. Yi,  and I. M. Vishik,  (2020),                       52  R. Blankenbecler, D. J. Scalapino,  and R. L. Sugar, Phys.
+   arXiv:2005.07233.                                                                  Rev. D 24, 2278 (1981).
+24  Y. Peng, A. Husain, M. Mitrano, S.-L. Sun, T. Johnson,                        53  D. J. Scalapino and R. L. Sugar, Phys. Rev. Lett. 46, 519
+   A.  Zakrzewski,  G.  MacDougall,  A.  Barbour,  I.  Jarrige,                       (1981).
+   V. Bisogni,  and P. Abbamonte, Phys. Rev. Lett. 097002,                        54  D. J. Scalapino and R. L. Sugar, Phys. Rev. B 24, 4295
+   1 (2020).                                                                          (1981).
+25  J. Hubbard, Proc. R. Soc. A 276, 238 (1963).                                  55  S.  Johnston,  E.  A.  Nowadnick,  Y.  F.  Kung,  B.  Moritz,
+26  P. W. Anderson, Science 235, 1196 (1987).                                         R. T. Scalettar,   and T. P. Devereaux, Phys. Rev. B 87,
+27  M.  Qin,  C.-M.  Chung,  H.  Shi,  E.  Vitali,  C.  Hubig,                        235133 (2013).
+   U. Schollw¨ock, S. R. White, S. Zhang, et al., Phys. Rev.                      56  C. B. Mendl, E. A. Nowadnick, E. W. Huang, S. Johnston,
+   X 10, 031016 (2020).                                                               B.  Moritz,    and  T.  P.  Devereaux,  Phys.  Rev.  B  96,  1
+28  P.  F.  LeBlanc,  A.  E.  Antipov,  F.  Becca,  I.  W.  Bulik,                    (2017).
+   G. K. L. Chan, C. M. Chung, Y. Deng, M. Ferrero, T. M.                         57  S. Karakuzu, K. Seki,  and S. Sorella, Phys. Rev. B 98, 1
+   Henderson,  C.  A.  Jim´enez-Hoyos,  E.  Kozik,  X.  W.  Liu,                      (2018).
+   A.  J.  Millis,  N.  V.  Prokof’ev,  M.  Qin,  G.  E.  Scuseria,               58  N. C. Costa, K. Seki, S. Yunoki,  and S. Sorella, Commun.
+   H.  Shi,  B.  V.  Svistunov,  L.  F.  Tocchio,  I.  S.  Tupitsyn,                  Phys. 3, 1 (2020).
+   S. R. White, S. Zhang, B. X. Zheng, Z. Zhu,  and E. Gull,                      59  J. E. Hirsch, Phys. Rev. B 28, 4059 (1983).
+   Phys. Rev. X 5, 1 (2015).                                                      60  S. Zhang and H. Krakauer, Phys. Rev. Lett. 90, 136401
+29  B.-X. Zheng, C.-M. Chung, P. Corboz, G. Ehlers, M.-P.                             (2003).
+   Qin,  R. M. Noack,  H. Shi,  S. R. White,  S. Zhang,   and                     61  W. Al-Saidi, S. Zhang,  and H. Krakauer, J. Chem. Phys.
+   G. K.-L. Chan, Science 358, 1155 (2017).                                           124, 224101 (2006).
+30  E. Jeckelmann and S. R. White, Phys. Rev. B 57, 6376                          62  J.  Carlson,  J.  E.  Gubernatis,  G.  Ortiz,   and  S.  Zhang,
+   (1998).                                                                            Phys. Rev. B 59, 12788 (1999).
+31  E. Jeckelmann, C. Zhang,   and S. R. White, Phys. Rev.                        63  R. H. McKenzie, C. Hamer,   and D. Murray, Phys. Rev.
+   B 60, 7950 (1999).                                                                 B 53, 9676 (1996).
+32  M. Tezuka, R. Arita,  and H. Aoki, Physica B: Condensed                       64  T. Holstein, Ann. Phys. 8, 325 (1959).
+   Matter 359, 708 (2005).                                                        65  B. M. Rubenstein, S. Zhang,  and D. R. Reichman, Phys.
+33  M.  Tezuka,  R.  Arita,    and  H.  Aoki,  Phys.  Rev.  B  76,                    Rev. A 86, 053606 (2012).
+   155114 (2007).                                                                 66  R.  Blankenbecler  and  R.  Sugar,  Phys.  Rev.  D 27,  1304
+34  H. Fehske, G. Hager,  and E. Jeckelmann, EPL 84, 57001                            (1983).
+   (2008).                                                                        67  M. Hohenadler, H. G. Evertz,   and W. Von der Linden,
+35  S. Ejima and H. Fehske, J. Phys.:  Conf. Ser 200, 012031                          Phys. Rev. B 69 (2004).
+   (2010).                                                                        68  D. J. Thouless, Nucl. Phys. 21, 225 (1960).
+36  J. Bonˇca, S. Trugman,  and I. Batisti´c, Phys. Rev. B 60,                    69  C.  Umrigar,  M.  Nightingale,   and  K.  Runge,  J.  Chem.
+   1633 (1999).                                                                       Phys. 99, 2865 (1993).
+37  T. Ohgoe and M. Imada, Phys. Rev. B 89, 195139 (2014).                        70  B. L. Hammond, W. A. Lester,  and P. J. Reynolds, Monte
+38  T.  Ohgoe  and  M.  Imada,  Phys.  Rev.  Lett. 119,  197001                       Carlo  methods  in  ab  initio  quantum  chemistry,  Vol.  1
+   (2017).                                                                            (World Scientiﬁc, 1994).
+39  S.  Karakuzu,  L.  F.  Tocchio,  S.  Sorella,   and  F.  Becca,               71  J.  W.  Moskowitz,  K.  Schmidt,  M.  A.  Lee,   and  M.  H.
+   Phys. Rev. B 96, 205145 (2017).                                                    Kalos, J. Chem. Phys. 77, 349 (1982).
+40  G. S. Jeon, T. H. Park, J. H. Han, H. C. Lee,  and H. Y.                      72  P. J. Reynolds, D. M. Ceperley, B. J. Alder,   and W. A.
+   Choi, Phys. Rev. B 70, 1 (2004).                                                   Lester Jr, J. Chem. Phys. 77, 5593 (1982).
+41  P.  Paci,  M.  Capone,  E.  Cappelluti,  S.  Ciuchi,     and                  73  G. Kalosakas, S. Aubry,   and G. Tsironis, Phys. Rev. B
+   C. Grimaldi, Phys. Rev. B 74, 1 (2006).                                            58, 3094 (1998).
+42  P. Werner and A. J. Millis, Phys. Rev. Lett. 99, 1 (2007).                    74  A.  H.  Romero,  D.  W.  Brown,    and  K.  Lindenberg,  J.
+43  Y. Murakami, P. Werner, N. Tsuji,   and H. Aoki, Phys.                            Chem. Phys. 109, 6540 (1998).
+   Rev. B 88, 1 (2013),arXiv:1305.5771.                                           75  H. Shi and S. Zhang, Phys. Rev. B 88, 125132 (2013).
+44  S. Li, E. Khatami,  and S. Johnston, Phys. Rev. B 95, 1                       76  M. Qin, H. Shi,   and S. Zhang, Phys. Rev. B 94, 085103
+   (2017).                                                                            (2016).
+45  B. Sandhoefer and G. K. L. Chan, Phys. Rev. B 94 (2016).                      77  L.  Proville  and  S.  Aubry,  The  European  Physical  Jour-
+                                                                                      nal B-Condensed Matter and Complex Systems 15, 405
+                                                                                                                                                          21
+
+   (2000).                                                                       95  C. Chen, X. Y. Xu, J. Liu, G. Batrouni, R. Scalettar,  and
+78  T. Holstein, Ann. Phys. 8, 343 (1959).                                           Z. Y. Meng, Phys. Rev. B 98, 1 (2018).
+79  I.  Lang  and  Y.  A.  Firsov,  Sov.  Phys.  JETP  16,  1301                 96  “Autocorrelation   time   estimation,”   https://dfm.io/
+   (1963).                                                                           posts/autocorr/, accessed:  2020-09-30.
+80  R.  Silbey  and  R.  A.  Harris,  J.  Chem.  Phys.  80,  2615                97  A.  Sokal,  “Monte  carlo  methods  in  statistical  mechan-
+   (1984).                                                                           ics:  Foundations and new algorithms,” in Functional In-
+81  R.  A.  Harris  and  R.  Silbey,  J.  Chem.  Phys.  83,  1069                    tegration:  Basics and Applications, edited by C. DeWitt-
+   (1985).                                                                           Morette, P. Cartier,  and A. Folacci (Springer US, Boston,
+82  V. Pouthier, J. Chem. Phys. 138, 044108 (2013).                                  MA, 1997) pp. 131–192.
+83  H.  Shi  and  S.  Zhang,  Physical  Review  E  93,  033303                   98  W.   Purwanto,   W.   A.   Al-Saidi,   H.   Krakauer,      and
+   (2016).                                                                           S. Zhang, J. Chem. Phys. 128, 114309 (2008).
+84  H. Shi and S. Zhang, Phys. Rev. B 95, 045144 (2017).                         99  J. Lee, F. D. Malone,  and M. A. Morales, J. Chem. The-
+85  M. Qin, H. Shi,   and S. Zhang, Phys. Rev. B 94, 235119                          ory Comput. 16, 3019 (2020).
+   (2016).                                                                      100  C.-C. Chang and S. Zhang, Physical review letters 104,
+86  I.  Shavitt  and  R.  J.  Bartlett,  Many-body  methods  in                      116402 (2010).
+   chemistry and physics:  MBPT and coupled-cluster theory                      101  S. Ponc´e, E. Margine, C. Verdi,  and F. Giustino, Comput.
+   (Cambridge university press, 2009).                                               Phys. Commun. 209, 116  (2016).
+87  J.  Bonˇca,  T.  Katrasnik,    and  S.  Trugman,  Phys.  Rev.               102  J.-J. Zhou, J. Park, I.-T. Lu, I. Maliyov, X. Tong,   and
+   Lett. 84, 3153 (2000).                                                            M. Bernardi, “Perturbo:  a software package for ab initio
+88  J. Bonˇca and S. Trugman, J. Supercond. 13, 999 (2000).                          electron-phonon interactions, charge transport and ultra-
+89  G. Batrouni and R. T. Scalettar, Phys. Rev. B 99, 035114                         fast dynamics,”  (2020),arXiv:2002.02045.
+   (2019).                                                                      103  R. L. Stratonovich, Sov. Phys. Dokl. 2, 416 (1957).
+90  M. Fishman, S. R. White,  and E. M. Stoudenmire, arXiv                      104  J. Hubbard, Phys. Rev. Lett. 3, 77 (1959).
+   preprint arXiv:2007.14822  (2020).                                           105  S. Zhang, Phys. Rev. Lett. 83, 2777 (1999).
+91  C. Zhang, E. Jeckelmann,   and S. R. White, Phys. Rev.                      106  Seehttps://github.com/pauxy-qmc/pauxyfor details on
+   Lett. 80, 2661 (1998).                                                            how to obtain the source code.
+92  M. Hohenadler, H. G. Evertz,   and W. Von Der Linden,                       107  Seehttps://github.com/jsspencer/pyblockfor  details  on
+   Phys. Status Solidi B Basic Res. 242, 1406 (2005).                                how to obtain the source code.
+93  M. Hohenadler and W. von der Linden, Springer Series in                     108  L.  K.  Wagner,  M.  Bajdich,   and  L.  Mitas,  J.  Comput.
+   Materials Science 103, 463 (2007).                                                Phys. 228, 3390 (2009).
+94  F. H´ebert, B. Xiao, V. G. Rousseau, R. T. Scalettar,  and                  109  J.  Bradbury,  R.  Frostig,  P.  Hawkins,  M.  J.  Johnson,
+   G. G. Batrouni, Phys. Rev. B 99, 075108 (2019).                                   C.  Leary,   D.  Maclaurin,     and  S.  Wanderman-Milne,
+                                                                                     “JAX:  composable  transformations  of  Python+NumPy
+                                                                                     programs,”(2018).

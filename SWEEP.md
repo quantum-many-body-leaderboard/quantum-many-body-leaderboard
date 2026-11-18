@@ -150,6 +150,7 @@ A `sweep-rows` file is a JSON array with one object per row:
 | `precision_per_site` | optional: one unit in the last printed digit of an exact energy without an error bar, per site; stored as the row's `precision` |
 | `bound_type_reason` | optional: why the row has its `bound_type`, where the source says so (the isoTNS rows of arXiv:2112.08394); without it the loader writes the generic reason |
 | `scale`, `source_couplings` | optional: the source's Hamiltonian is the instance's times `scale` (couplings normalised, [RULES.md §2.1](RULES.md#21-instance-names)); `eps`, `sigma_per_site`, `var_per_site`, `precision_per_site` and `tol` are as printed, and the loader divides them by `scale` and keeps the factor and the source's couplings on the row as `normalised` |
+| `shift` | optional: `{ total, from, note }`, the constant (a total in the instance's units) by which the source's Hamiltonian differs from the instance's after any `scale`: a Holstein coupling to n_i − ρ or the phonon zero-point energy ([RULES.md §2.1](RULES.md#21-instance-names), 2026-11-16). The loader adds it and keeps it on the row as `converted` (DATA.md) |
 | `artifacts` | optional: the code the source names for this row, with `read_from` (quote, location, checked_on, pass) as in [DATA.md](DATA.md#the-code-behind-a-row-artifacts); copied to the row |
 
 `add_allresults_rows.mjs` converts `eps` and `sigma_per_site` into the instance's stored
@@ -205,6 +206,7 @@ tables and the unit conversion. `add_stored_rows.mjs` appends the rows and fills
 | `sweep-rows-2026-11-11-quoted.json` | the primaries of the 26 quoted rows held by the Ketboard/tachys pass: 11 papers read (Luo & Clark 2019, Iqbal et al. 2013 and 2014, Choo et al. 2019, Mezzacapo et al. 2009, Sandvik 1997, and five whose numbers QMBL already carried), 69 rows (52 new after the loader's duplicate check and the drop of 11 rows of arXiv:1311.5038 that repeat arXiv:1209.1858; the 6 x 6 and 10 x 10 Choo et al. CNN rows were already in), 0 new instances, no record moved; arXiv text read, journal versions on the second reading (2026-11-12: 30 verified, 15 kept with a note, 7 corrections). Of the 26 quotes, 7 are copies of rows QMBL carries, 7 are now read in their primary, and 12 stayed held. Of those 12, the four 8 x 8 Choo et al. CNN values are added from their first print, Vieijra & Nys (PRB 104, 045123, Table I; `sweep-rows-2026-11-12-quoted.json`); the Nomura & Imada value of arXiv:2005.14142v1-v3 is left out, because the journal version replaces it with a value QMBL carries; and 7 stay held: figure-only or not in the arXiv text (Loehr & Clark, Zhang & Li 108 and 192, Rende et al. two values, Ferrari et al., and a value arXiv:2002.04613 attributes to Hu et al. that matches a reference line in Fig. 7 of Ferrari et al.). Code links of the earlier pass in `passes/code/code-links-2026-11-11.json` (9 linked, 3 FlowKet rows ambiguous: a general library, not run scripts) |
 | `sweep-rows-2026-11-12-quoted.json` | four 8 x 8 CNN energies of Choo, Neupert & Carleo (J2 = 0, 0.45, 0.5, 0.55), held by the quoted pass: Choo et al. print 6 x 6 and 10 x 10 only, and the 8 x 8 values are first printed in Vieijra & Nys, PRB 104, 045123 (2021), Table I, row 'CNN [23]', whose acknowledgements say Choo provided them. Rows cite that first print with the quoted-in note in the source cell; totals in S.S units, bars kept as printed. 4 rows, 0 new instances, no record moved. |
 | `sweep-rows-2026-11-12-frustrated.json` | a targeted pass for the frustrated-lattice and transverse-field Ising families on clusters beyond exact diagonalization, written by `scripts/frustrated_2026_11_12.mjs`: Iqbal, Poilblanc & Becca, PRB 89, 020407 (arXiv:1311.5038) Table I, the 432-site row; Iqbal, Becca & Poilblanc, PRB 84, 020407 (arXiv:1105.0341), the Dirac and uniform RVB energies on 432 sites; Iqbal, Becca & Poilblanc, PRB 83, 100404 (arXiv:1011.3954), four energies on the 576-site (36 × 4 × 4) cluster; Iqbal, Poilblanc, Thomale & Becca, PRB 97, 115127 (arXiv:1712.04579) Supplemental Tables S1 and S2 at J▽/J∆ = 1, kagome tori of 48 to 2352 sites; Kim & Han, PRB 78, 180410 (arXiv:0807.2036) Table I, pyrochlore L = 2 and 4; Astrakhantsev et al., PRB 104, L220408 (arXiv:2110.08198) Table I, the 96-site shuriken torus; Lubasch, Cirac & Bañuls, PRB 90, 064425 (arXiv:1405.3259) Tables VI-VIII, finite PEPS on the open 11 × 11 and 21 × 21 transverse-field Ising squares at B = 2 to 4; Dektor et al. (arXiv:2510.20063) Table 2, block-MPS references on the open 4 × 4 transverse-field Ising square. 101 rows, 27 new instances (kagome 432, 576, 768, 1200, 2352 sites; TFIsing open 16, 121, 441 sites), arXiv text read, journal versions on the second reading; single reading. Held: the 1768-site column of arXiv:1712.04579 Tables S1-S2 (1768 is not 3L² for an integer L), the 432-site values of arXiv:1105.0341 that it attributes to arXiv:1011.3954 (extended Dirac −0.42872(1), J′/J = ±0.10, fixed node), and the breathing-kagome rows (J▽/J∆ < 1, not in scope). No Shastry-Sutherland energy beyond those QMBL carries was found printed; Nakano & Sakai (arXiv:1810.11533, 2209.13105, up to 48 sites) and arXiv:2303.14108 show theirs in figures only |
+| `sweep-rows-2026-11-16-holstein.json` | the first rows of the Holstein family (RULES.md §2.1): 36 energies on 20 new instances from 8 papers, written by `scripts/holstein_2026_11_16.mjs`; see [The Holstein pass](#the-holstein-pass-2026-11-16) |
 | `sweep-rows-2026-11-11-egas.json` | electron gas, two papers another leaderboard lists and QMBL lacked: arXiv:2609.10186 Table I, the TorFormer rows at N = 91, rs = 30 and 40 (triangular cell, spin-polarized). The table prints (E − E_Mad)/N × rs^(3/2), with E_Mad the classical triangular Wigner-crystal energy; the conversion reproduces, to every printed digit, the two rows the table quotes from arXiv:2607.08616, which QMBL already carries. 2 rows, 0 new instances. Held: the 23 energies of arXiv:2405.19397 (PRL 133, 266504; Supplemental Material Table I, N = 56, S_z = 0, NQS and the authors' DMC), whose rectangular cell is described only as commensurate with a triangular lattice, with no side lengths or twist |
 | `sweep-rows-2026-11-11-instances.json` | the cells the Ketboard/tachys pass held for want of an instance, on 19 instances created for them; written by `scripts/instances_2026_11_11.mjs`. arXiv:2304.01996 (Adv. Neural Inf. Process. Syst. 36, NeurIPS 2023), Tables 1-4: the J1-J2 model with open boundaries (Sec. 6.2) on 8 × 8 (J2 = 0.2, 0.5, 0.8), 10 × 10 and 12 × 12 (J2 = 0.2 to 0.8), energy per site in the Pauli form; RBM, PixelCNN, the two ANTN constructions and DMRG at bond dimension 8, 70 and 1024; 134 rows on 17 instances `J1J2/square_N_O_J2`, read in the NeurIPS version of record and the arXiv v3 HTML, which agree on all 159 energy cells (the older committed PDF text interleaves Tables 1 and 2). arXiv:2611.05174 Table I, L = 10: the two KagomeResNet rows on the 300-site rhombic torus `Heisenberg/kagome-10x10_300_P`. arXiv:2510.08430 Table 2: two ViT rows on the periodic 16-site chain `Heisenberg/chain_16_P`, printed in the Pauli form although the text writes S = σ/2, with the exact row QMBL computed (`checks/heisenberg-chain-16-ed/`, `add_exact_rows.mjs` batch B3). 138 rows, 19 new instances, single reading. Held: the Z₂* RVB energies of SM Table II of arXiv:2611.05174 (L = 10 and L = 18, 972 sites), quotes of Zhang & Li (PRB 102, 195106), whose arXiv text plots its energies in Fig. 5 and whose journal version was not reached; no 972-site instance is created |
 
@@ -350,6 +352,55 @@ The family was opened on a branch and ported onto `main` on 2026-10-24.
   arXiv text, so no row carries `artifacts`.
 - **Journal versions** were not reached (the publishers returned 403 to this session); every row
   says it was read from the arXiv text. arXiv:2602.21206 was published under a different title.
+
+### The Holstein pass (2026-11-16)
+
+The first instances of the Holstein family (RULES.md §2.1). No Hubbard-Holstein row was admitted.
+Most Hubbard-Holstein energies found sit on clusters whose boundary the source does not state, or
+are quoted from a primary not yet read.
+
+- **Finding.** Two arXiv queries (`holstein-model`, `holstein-methods` in `scripts/sweep_search.mjs`,
+  1992 onward) gave 816 candidates. The papers citing Jeckelmann & White, PRB 57, 6376 and Ohgoe &
+  Imada, PRB 89, 195139 (`scripts/cited_by.mjs`) added 106 that the keywords missed. All 922 texts
+  were fetched and ranked locally by Holstein mentions, energy-like numbers and table or
+  ground-state words. 143 papers went to a screen, 67 of them to readers.
+- **Reading.** One reading and one adversarial second reading per paper. The second reading
+  corrected 43 of 149 readings (column swaps, line numbers, boundaries the first reading had
+  inferred) and refuted none.
+- **Conventions.** Each source's coupling form, phonon term and λ definition are quoted on its row
+  (`convention_check`). A coupling to n_i − 1/2 (arXiv:2405.08701, cond-mat/9512046, 1403.4150
+  Table II) is shifted by −g²N/(4ω) at half filling (`converted` on the row). λ goes to g with the
+  source's own definition (1306.4751: λ = G²/(2tω), G = gω its coefficient of n_i(a† + a)).
+  QMBL's diagonalization of the 4-site spinless chain at ω = 1, g = 1.5, ρ = 1/2, antiperiodic, in the
+  source's convention gives −0.8939876 per site against the printed NQS −0.89394(7) and GFMC
+  −0.895(1). The same run reproduces the shift to 1e-10 (`checks/holstein-ed-2026-11/`).
+- **Rows.**
+  - Half-filled spinless chains of 4 to 16 sites at ω = 1, g = 1.5 (2405.08701 MLP, cond-mat/9512046
+    GFMC, 1403.4150 VMC). The GFMC rows are `exact (stochastic)`: the guiding function is positive
+    everywhere (line 379) and the time step is extrapolated to Δτ = 0 (detail).
+  - One electron on 4 sites, ω = 0.5, g = 1 (1403.4150 Table I).
+  - Open 51-site chains with 25 fermions (2011.07412).
+  - Four electrons on periodic and open chains of 12 to 60 sites (1306.4751).
+  - The 4-site half-filled spin-1/2 chain at ω = 4, g = 2 (2012.13473).
+  - The single polaron on 16 sites (H. Fehske's ED, printed in cond-mat/9812252) and on 32 sites
+    (the Global-Local state of cond-mat/9710321).
+- **Quotes dropped.** Values quoted from a primary this pass read are not rows:
+  - 2405.08701's Jastrow and GFMC columns are 1403.4150's and cond-mat/9512046's own. Its Jastrow
+    value at N = 8, −0.8424(3), differs from the primary's −0.8484(3) (1403.4150 Table II).
+  - 1403.4150's GFMC row is cond-mat/9512046's.
+- **Held** (`qmbl-runs/qmbl-worklist/2026-11-16-holstein/HELD.md`), with what would settle each:
+  - Boundary not stated: 2008.08466 (L = 51 to 501, extrapolated), 2208.07205 (Hubbard-Holstein,
+    8 sites, FCIQMC), 2603.11463, cond-mat/0407445 (10 sites), cond-mat/0011180 (32 and 6 sites),
+    and the quoted DMRG (32 sites) and cluster ED (6 sites) values of cond-mat/9710321 and
+    cond-mat/9812252.
+  - Primary not yet read: Fehske, Hager & Jeckelmann, EPL 84, 57001 (the DMRG column of 1602.04195,
+    whose λ also needs that primary's definition), Nomura (JPSJ 2020, the RBM column of 2405.08701),
+    Marsiglio (Physica C 244, 21, the ED of 1403.4150 Table I).
+  - Conventions inferred, not printed: 2310.13084 (L = 4, t = 1), 2603.09609 (the zero-point term),
+    cond-mat/9704237 (two-site spectral peaks marked ≃, not said to be the ground state).
+  - Not rows (RULES.md §2.1): single-polaron energies on the infinite lattice, binding energies,
+    SSH, Bond and breathing-mode models, and DMET or embedding values on clusters whose boundary is
+    unstated.
 
 ### Track 3: hydrogen chains and sheets
 

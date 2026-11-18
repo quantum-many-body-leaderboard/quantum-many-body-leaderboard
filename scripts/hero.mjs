@@ -48,6 +48,11 @@ const FORMULA = {
   tJ: [I("H"), O("="), O("−"), I("t"), SUM(ijs), hc(cd("i", "σ"), c("j", "σ")), O("+"), I("J"), SUM(nn), R(O("("), SdS, O("−"), FR(R(sb(I("n"), I("i")), sb(I("n"), I("j"))), N(4)), O(")"))],
   Impurity: [I("H"), O("="), SUM(R(I("k"), O(","), I("σ"))), sb(I("ε"), I("k")), cd("k", "σ"), c("k", "σ"), O("+"), SUM(I("σ")), sb(I("ε"), I("d")), ss(I("d"), I("σ"), O("†")), sb(I("d"), I("σ")),
     O("+"), I("U"), sb(I("n"), R(I("d"), O("↑"))), sb(I("n"), R(I("d"), O("↓"))), O("+"), SUM(R(I("k"), O(","), I("σ"))), sb(I("V"), I("k")), hc(ss(I("d"), I("σ"), O("†")), c("k", "σ"))],
+  // Holstein (RULES.md 2.1, 2026-11-16): one dispersionless phonon per site, coupled to n_i. The family
+  // holds spinless and spin-1/2 instances, so the hopping is written without a spin index (a sum over
+  // σ is implied for spin-1/2); this also keeps the formula inside a 400 px phone column.
+  Holstein: [I("H"), O("="), O("−"), I("t"), SUM(nn), hc(ss(I("c"), I("i"), O("†")), sb(I("c"), I("j"))), O("+"), I("ω"), SUM(I("i")), ss(I("b"), I("i"), O("†")), sb(I("b"), I("i")),
+    O("+"), I("g"), SUM(I("i")), sb(I("n"), I("i")), R(O("("), ss(I("b"), I("i"), O("†")), O("+"), sb(I("b"), I("i")), O(")"))],
   Hchain: molecular, Hsheet: molecular, Atom: molecular, Molecule: molecular, HEG2D: jellium, HEG3D: jellium,
 };
 export const formula = (model, block = false) => FORMULA[model] ? `<math${block ? ' display="block"' : ""}>${FORMULA[model].join("")}</math>` : "";
@@ -60,6 +65,8 @@ const ABOUT = {
   Hubbard: "Electrons hopping on a lattice with on-site repulsion U.",
   tV: "Spinless fermions with nearest-neighbour repulsion V.",
   tJ: "A doped Mott insulator: hopping without double occupancy, plus exchange J.",
+  Holstein: "Electrons coupled to one dispersionless phonon of frequency ω per site, with coupling g.",
+  HubbardHolstein: "The Holstein model with on-site repulsion U.",
   TFIsing: "Ising spins in a transverse field h.",
   Impurity: "Anderson impurity models from DMFT calculations.",
   HEG3D: "The homogeneous electron gas in three dimensions.",
@@ -98,6 +105,8 @@ const G = {
   TFIsing: () => L(8, 30, 52, 30) + [10, 20, 30, 40, 50].map((x, i) => A(x, 30, i % 2 ? 160 : -20, 7) + D(x, 30, 1.8)).join("") + `<path class="g-dash" d="M10 12 H50 M44 9 L50 12 L44 15"/><text class="g-t" x="27" y="9">h</text>`,
   tV: () => sqLines() + P3.flatMap((y, j) => P3.map((x, i) => (i + j) % 2 ? D(x, y, 3, "g-h") : D(x, y, 3))).join(""),
   tJ: () => sqLines() + neel((x, y) => x === 30 && y === 30),
+  // A chain whose sites each hang on a spring: one phonon mode per site.
+  Holstein: () => L(6, 22, 54, 22) + [12, 24, 36, 48].map(x => D(x, 22, 2.4) + `<path class="g-l" fill="none" d="M${x} 25 l-3 3 l6 3 l-6 3 l6 3 l-3 3"/>` + D(x, 42, 1.4)).join(""),
   Impurity: () => [...Array(8).keys()].map(k => { const a = k * Math.PI / 4, x = +(30 + 20 * Math.cos(a)).toFixed(2), y = +(30 + 20 * Math.sin(a)).toFixed(2); return L(30, 30, x, y, "g-dash") + D(x, y, 2.2); }).join("") + `<circle class="g-h" cx="30" cy="30" r="5.5"/>` + A(30, 30, 0, 3.5),
   Hchain: () => L(6, 30, 54, 30, "g-dash") + [10, 22, 34, 46].map(x => `<circle class="g-h" cx="${x}" cy="30" r="4"/>` + D(x, 30, 1.2)).join("") + `<path class="g-l" d="M10 42 V46 M22 42 V46 M10 44 H22"/><text class="g-t" x="13" y="54">R</text>`,
   // An atom: the nucleus inside three orbits. A molecule: three nuclei and their bonds.

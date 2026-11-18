@@ -369,6 +369,31 @@ for (const m of ["Atom", "Molecule"]) {
 }
 console.log(`atoms and molecules checked: ${checkedM}`);
 
+// Holstein and Hubbard-Holstein (RULES.md 2.1, 2026-11-16): the id against the params, and every
+// `converted` row names what it was converted from (DATA.md).
+let checkedH = 0;
+const fmtP = x => String(+(+x).toPrecision(6));
+for (const m of ["Holstein", "HubbardHolstein"]) {
+  if (!fs.existsSync(path.join("data", m))) continue;
+  for (const f of fs.readdirSync(path.join("data", m))) {
+    const inst = JSON.parse(fs.readFileSync(path.join("data", m, f), "utf8")), p = inst.params, id = inst.instance_id;
+    checkedH++;
+    const k = m === "Holstein" ? id.match(/^Holstein\/(.+)_(\d+)_([A-Z]+)_([fe])(\d+)_w([-\d.e]+)_g([-\d.e]+)$/)
+      : id.match(/^HubbardHolstein\/(.+)_(\d+)_([A-Z]+)_(e)(\d+)_U([-\d.e]+)_w([-\d.e]+)_g([-\d.e]+)$/);
+    if (!k) { issues.push(`HOLID ${id}: id does not parse (RULES.md 2.1)`); continue; }
+    const [, lat, n, b, kind, ne] = k, [U, w, g] = m === "Holstein" ? [null, k[6], k[7]] : [k[6], k[7], k[8]];
+    if (inst.lattice !== lat || inst.n_sites !== +n || inst.boundary !== b) issues.push(`HOLID ${id}: lattice, n_sites, boundary ${inst.lattice} ${inst.n_sites} ${inst.boundary}`);
+    if (p.t !== 1 || fmtP(p.w) !== w || fmtP(p.g) !== g || (U != null && fmtP(p.U) !== U)) issues.push(`HOLID ${id}: params ${JSON.stringify(p)}`);
+    if ((kind === "f") !== (p.spinless === true)) issues.push(`HOLID ${id}: spinless ${p.spinless} for ${kind}${ne}`);
+    if (expectedDof(inst) !== +ne) issues.push(`HOLID ${id}: ${expectedDof(inst)} electrons in params, ${ne} in the id`);
+    if (kind === "e" && p.N_up - p.N_dn !== +ne % 2) issues.push(`HOLID ${id}: N_up ${p.N_up}, N_dn ${p.N_dn}`);
+    if (kind === "e" && +ne === 1) issues.push(`HOLID ${id}: one electron is a spinless instance (f1)`);
+    for (const [i, r] of inst.rows.entries()) if (r.converted && (typeof r.converted.shift !== "number" || !r.converted.from || !r.converted.note))
+      issues.push(`HOLCONV ${id}[${i}]: converted without from, shift and note (DATA.md)`);
+  }
+}
+console.log(`Holstein and Hubbard-Holstein instances checked: ${checkedH}`);
+
 console.log(`rows=${rows}  dof_checked=${checkedD}  einf_checked=${checkedE}  vscore_checked=${checkedV}  tfising_exact_checked=${checkedT}`);
 console.log(`compute_blocks=${checkedC}  coverage_entries=${checkedCov}  spectrum_entries=${checkedS}`);
 console.log(`automatic below-exact flags (RULES.md 6.2; listed, not issues): ${belowExact.length}${belowExact.length ? "\n  " + belowExact.join("\n  ") : ""}`);

@@ -1,0 +1,69 @@
+{
+  "model": "Holstein",
+  "lattice": "chain",
+  "n_sites": 4,
+  "boundary": "P",
+  "params": {
+    "t": 1,
+    "w": 4,
+    "g": 2,
+    "spinless": false,
+    "N_up": 2,
+    "N_dn": 2
+  },
+  "instance_id": "Holstein/chain_4_P_e4_w4_g2",
+  "rows": [
+    {
+      "energy": -10.293,
+      "sigma": 0.002,
+      "energy_variance": null,
+      "dof": 4,
+      "einf": null,
+      "v_score": null,
+      "method": "CP-AFQMC",
+      "ansatz": "TP-LLF(2)",
+      "method_detail": "two Lang-Firsov states",
+      "method_as_published": "CP-AFQMC/TP-LLF(2)",
+      "family": "AFQMC / GFMC",
+      "bound_type": "projected",
+      "bound_type_reason": "projection (GFMC/fixed-node) on a trial state; not a strict variational bound (assigned during source reading)",
+      "reference": "Lee, Zhang & Reichman, Constrained-path auxiliary-field quantum Monte Carlo for coupled electrons and phonons, Phys. Rev. B 103, 115123 (2021), doi:10.1103/PhysRevB.103.115123, arXiv:2012.13473",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-16",
+        "method": "source text of arXiv:2012.13473 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-11-16)",
+        "reported_as": "−10.293(2)",
+        "note": "text: AFQMC with the TP-LLF(2) trial wave function, 4-site chain, PBC, half filling, λ = 0.5, ω = 4t, g = 2t (line 671); version read: arXiv text (sources/2012.13473.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eqs. (1)-(8), lines 77-92: H = -t sum a+a + U sum n n + ω sum b+b - g sum n_i (b_i + b+_i), coupling to n_i, no zero-point energy; λ = g^2/(2dtω) (line 119). Lines 664-672: 1D 4-site chain, periodic boundaries, half filling (4 electrons), λ = 0.5, ω = 4t, g = 2t, U = 0; total energies in units of t. The sign of g is a gauge choice.",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -10.292,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 4,
+      "einf": null,
+      "v_score": null,
+      "method": "DMRG",
+      "ansatz": null,
+      "method_detail": "ITensor",
+      "method_as_published": "DMRG (iTensor)",
+      "family": "tensor network",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Lee, Zhang & Reichman, Constrained-path auxiliary-field quantum Monte Carlo for coupled electrons and phonons, Phys. Rev. B 103, 115123 (2021), doi:10.1103/PhysRevB.103.115123, arXiv:2012.13473",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-16",
+        "method": "source text of arXiv:2012.13473 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and an adversarial second reading (2026-11-16)",
+        "reported_as": "−10.292",
+        "note": "text: 'the exact result of −10.292 (obtained from DMRG using iTensor)', same system (line 672); version read: arXiv text (sources/2012.13473.txt); the journal version was not reached from this session, to be read on the verification pass (RULES.md 8) | Eqs. (1)-(8), lines 77-92: H = -t sum a+a + U sum n n + ω sum b+b - g sum n_i (b_i + b+_i), coupling to n_i, no zero-point energy; λ = g^2/(2dtω) (line 119). Lines 664-672: 1D 4-site chain, periodic boundaries, half filling (4 electrons), λ = 0.5, ω = 4t, g = 2t, U = 0; total energies in units of t. The sign of g is a gauge choice.",
+        "secondary_of": null
+      }
+    }
+  ]
+}
