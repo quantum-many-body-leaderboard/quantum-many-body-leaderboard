@@ -1125,6 +1125,16 @@ for (const f of ["[0, 0, 0]", "[π/2, π/2, 0]", "[π/2, −π/2, 0]", "[0, 0, �
   NAMES[`VMC, ${f} flux state`] = ["VMC", `projected fermionic state, ${f.replace(/ /g, "")} flux${/π\/2/.test(f) ? " (chiral)" : ""}`];
 for (const f of ["FS (0, 0, 0)", "FS (0, 0, π)", "FS (π, 0, π)", "Chiral (π/2, π/2, π)", "Chiral (π/2, −π/2, 0)", "Chiral (π/2, −π/2, π)"])
   NAMES[`Gutzwiller projected ${f}`] = ["VMC", `U(1) spin liquid, ${f.startsWith("FS") ? "non-chiral (FS ansatz)" : "chiral"}, ${f.replace(/^\w+ /, "").replace(/ /g, "")} flux`];
+// Pass sweep-rows-2026-11-18-kagome (scripts/kagome_2026_11_18.mjs): Ran, Hermele, Lee & Wen, PRL 98, 117205
+// Tables I and III, and the remaining 432-site values of arXiv:1105.0341.
+for (const [s, d] of [["SL-[π/2, 0] spin liquid", "U(1) spin liquid, [π/2,0] flux"], ["SL-[±π/2, 0] spin liquid", "U(1) spin liquid, [±π/2,0] flux"],
+  ["SL-[π/2, π] spin liquid", "U(1) spin liquid, [π/2,π] flux"], ["uniform RVB SL-[0, 0] spin liquid", "uniform RVB spin liquid, [0,0] flux"],
+  ["VBS state (|χ1/χ2| = 1.05)", `VBS state next to the ${DIRAC}, |χ1/χ2| = 1.05`], ["VBS state (|χ1/χ2| = 0.95)", `VBS state next to the ${DIRAC}, |χ1/χ2| = 0.95`],
+  ["chiral spin liquid (θ = 0.05)", "chiral spin liquid, θ = 0.05 flux through the triangles"]])
+  NAMES[`VMC, Gutzwiller-projected ${s}, mixed spinon boundary conditions`] = ["VMC", `${d}, mixed spinon boundaries`];
+Object.assign(NAMES, {
+  "VMC, extended U(1) Dirac SL [0, π; 0, π] (optimised 2nd-neighbour hopping)": ["VMC", `${DIRAC}, [0,π;0,π] flux, n.n.n. hopping`],
+});
 NAMES["Gutzwiller projected L6-VBC"] = ["VMC", "loop-six valence-bond crystal (L6-VBC)"];
 NAMES["Gutzwiller projected PW-VBC"] = ["VMC", "pinwheel valence-bond crystal (PW-VBC)"];
 // arXiv:1405.3259 Tables VI-VIII (transverse-field Ising, open squares) and arXiv:2510.20063 Table 2.
