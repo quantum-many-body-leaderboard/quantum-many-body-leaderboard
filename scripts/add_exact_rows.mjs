@@ -489,4 +489,37 @@ for (const [N, full, enuc, s2, uccsd, err] of [
 }
 console.log("batch E: 7 exact rows computed by QMBL where none was published (STO-3G hydrogen chains H4-H16, R = 0.8 Å)");
 
+// ---------------------------------------------------------------------------------------
+// Batch F: QMBL's exact diagonalization of the four smallest Holstein instances with a cutoff on the
+// total phonon number (checks/holstein-ed-2026-11/rows_ed.py, 2026-11-18). A phonon cutoff keeps a
+// subspace of the instance's Hilbert space, so these rows are `variational`, however converged the
+// cutoff (RULES.md 2.1, ruled 2026-11-11 and 2026-11-18); `fields` overrides the batch default. Each
+// energy is the largest cutoff's eigenvalue rounded up at the 10th decimal, so the stored number stays
+// an upper bound. At half filling the phonons are counted in the basis displaced by g/(2w) per site.
+const HOL_ED = "QMBL, checks/holstein-ed-2026-11/ (exact diagonalization with a cutoff on the total phonon number)";
+// The instances are created here, before the pass rows of sweep-rows-2026-11-16-holstein append to them.
+for (const [id, params, M, dim, E, prev, basis, vs] of [
+  ["Holstein/chain_4_A_f2_w1_g1.5", { t: 1, w: 1, g: 1.5, spinless: true, N: 2 }, 32, "353,430", "-5.82595024588948", "-5.825950245889464 (M = 24)", true,
+    "The GFMC row of McKenzie, Hamer & Murray, -5.830(4), lies 0.0040 (1.0 sigma) below it; the MLP row of Mahajan et al., -5.82576(28), 0.0002 (0.7 sigma) above."],
+  ["Holstein/chain_6_P_f3_w1_g1.5", { t: 1, w: 1, g: 1.5, spinless: true, N: 3 }, 16, "1,492,260", "-8.584423623000326", "-8.584423549125987 (M = 14)", true,
+    "The GFMC row of McKenzie, Hamer & Murray, -8.583(6), lies 0.0014 (0.2 sigma) above it; the MLP row of Mahajan et al., -8.5794(12), 0.0050 above."],
+  ["Holstein/chain_4_P_f1_w0.5_g1", { t: 1, w: 0.5, g: 1, spinless: true, N: 1 }, 40, "543,004", "-2.8343490235198225", "-2.8343490235198288 (M = 32)", false,
+    "Ohgoe & Imada (Table I) compare with the exact diagonalization of Marsiglio, -2.8343, which this energy reproduces; their best VMC row, -2.796(1), lies 0.038 above it."],
+  ["Holstein/chain_4_P_e4_w4_g2", { t: 1, w: 4, g: 2, spinless: false, N_up: 2, N_dn: 2 }, 20, "382,536", "-10.29198866359708", "-10.2919886631839 (M = 16)", false,
+    "The DMRG energy Lee, Zhang & Reichman quote, -10.292, is this energy to its printed digits; their CP-AFQMC row, -10.293(2), lies 0.001 (0.5 sigma) below it."],
+]) {
+  const energy = Math.ceil(+E * 1e10) / 1e10;
+  const where = basis ? ", counted in the basis displaced by g/(2w) per site" : "";
+  const [, n, b] = id.match(/_(\d+)_([AP])_/);
+  put(id, { model: "Holstein", lattice: "chain", n_sites: +n, boundary: b, params, dof: params.N ?? params.N_up + params.N_dn, einf: null },
+    { energy, sigma: null, src: { ref: HOL_ED, pr: false },
+    method: `ED, at most ${M} phonons in total${basis ? ", displaced basis" : ""}`,
+    why: `exact diagonalization in the subspace of at most ${M} phonons in total${where}, computed by QMBL: a subspace of the instance's Hilbert space, so the energy is an upper bound (RULES.md 2.1); deterministic`,
+    read: `checks/holstein-ed-2026-11/rows_ed.py (sparse Hamiltonian, scipy eigsh, tol 1e-12) over ${dim} states, numpy 2.5.5 and scipy 1.18.1 on an Apple M5 laptop, 2026-11-18; results in checks/holstein-ed-2026-11/results-2.jsonl`,
+    reported: `${E} (results-2.jsonl, M = ${M}, field E) | ${prev}`,
+    note: `Total energy, t = 1, H = -t sum (c+c + h.c.) + w sum b+b + g sum n_i (b+_i + b_i) (RULES.md 2.1). Cutoff ${M} on the total phonon number${where}${basis ? "; E = E_displaced - g^2 N / (4w) at half filling" : ""}; the next smaller cutoff gives ${prev}. ${vs}`,
+    source: "qmbl-verify-2026-11-18", checked: "2026-11-18", fields: { computed_by: "qmbl", bound_type: "variational" } });
+}
+console.log("batch F: 4 variational rows computed by QMBL (Holstein, exact diagonalization with a phonon cutoff)");
+
 console.log(`added ${added} exact rows (${created} new instances)`);

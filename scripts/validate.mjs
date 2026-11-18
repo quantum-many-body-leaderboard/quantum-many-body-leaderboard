@@ -144,14 +144,15 @@ for (const m of fs.readdirSync("data")) {
         }
       }
       // A row QMBL computed itself (DATA.md, `computed_by`) must name its run: a cost run its
-      // checks/cost/ run and the measured cost, an exact row its checks/ folder and the code at a
-      // commit; any other row that carries the field is an issue.
+      // checks/cost/ run and the measured cost, a row from a check (exact, or ED with a boson
+      // cutoff) its checks/ folder and the code at a commit; any other row that carries the field is
+      // an issue.
       if (r.computed_by != null) {
         if (r.computed_by !== "qmbl") issues.push(`RUN ${at}: computed_by ${r.computed_by}`);
         if (r.baseline) issues.push(`RUN ${at}: both computed_by and baseline`);
-        if (r.bound_type === "exact" && !/checks\/cost\//.test(r.reference || "")) {
-          if (!/^QMBL, checks\/[^\s/]+\//.test(r.reference || "")) issues.push(`RUN ${at}: exact row does not name its QMBL checks/ folder`);
-          if (!r.artifacts?.code || !/^[0-9a-f]{7,40}$/.test(r.artifacts?.commit || "")) issues.push(`RUN ${at}: exact row without its code at a commit`);
+        if (/^QMBL, checks\/(?!cost\/)/.test(r.reference || "") || (r.bound_type === "exact" && !/checks\/cost\//.test(r.reference || ""))) {
+          if (!/^QMBL, checks\/[^\s/]+\//.test(r.reference || "")) issues.push(`RUN ${at}: check row does not name its QMBL checks/ folder`);
+          if (!r.artifacts?.code || !/^[0-9a-f]{7,40}$/.test(r.artifacts?.commit || "")) issues.push(`RUN ${at}: check row without its code at a commit`);
         } else {
           if (!/checks\/cost\//.test(r.reference || "")) issues.push(`RUN ${at}: reference does not name checks/cost/`);
           const c = r.compute;

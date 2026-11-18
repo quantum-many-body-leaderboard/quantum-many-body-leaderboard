@@ -1093,6 +1093,11 @@ Object.assign(NAMES, {
   "Global-Local variation": ["Global-Local variation", "", { family: "other" }],
   "ED, 10 phonons": ["ED", "10 phonons (5.3 × 10^6 states)"],
   "ED, 12 phonons": ["ED", "12 phonons (3.0 × 10^7 states)"],
+  // QMBL's own rows (add_exact_rows.mjs batch F, 2026-11-18)
+  "ED, at most 32 phonons in total, displaced basis": ["ED", "at most 32 phonons in total, in the basis displaced by g/(2ω) per site (353,430 states)"],
+  "ED, at most 16 phonons in total, displaced basis": ["ED", "at most 16 phonons in total, in the basis displaced by g/(2ω) per site (1,492,260 states)"],
+  "ED, at most 40 phonons in total": ["ED", "at most 40 phonons in total (543,004 states)"],
+  "ED, at most 20 phonons in total": ["ED", "at most 20 phonons in total (382,536 states)"],
 });
 for (const [p, d] of [[1, "0.20"], [2, "0.55"]]) {
   NAMES[`FLST, p = ${p}, Δ_BCS = ${d}`] = ["VMC", `projected BCS + Jastrow, Δ_BCS = ${d}, ${LANCZOS(p)} (statistical, FLST)`, { family: "classic VMC" }];
