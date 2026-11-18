@@ -46233,4 +46233,229 @@ export const VERIFICATIONS = [
     "source_entry": "RP2-heisenberg-tfising#43 journal read (qmbl-verify 2026-11-16)",
     "journal": true
   },
+  // Journal version of arXiv:2112.08394 (Lin, Zaletel & Pollmann, PRB 106, 245102) read 2026-11-18: Table III and the DMRG2 bound-type statement.
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-5x5_50_O_K-1",
+      "method": "Exact",
+      "energy": -35.7012005
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "published PDF, Phys. Rev. B 106, 245102 (2022), journals.aps.org/prb/pdf/10.1103/PhysRevB.106.245102, opened in a browser on 2026-11-18; PDF text layer read and kept as the reading's evidence; arXiv compared: 2112.08394 (sources/2112.08394.txt)",
+    "location": "Table III ('Table for energy per site E0/N of Kitaev honeycomb model at isotropic point Jx = Jy = Jz = 1'), row (5, 5), column Exact",
+    "reported_as": "–0.71402401 (energy per site E0/N, N = Lx × Ly × 2)",
+    "conversion": "-0.71402401 x 50 = -35.7012005 = stored",
+    "note": "Journal and arXiv Table III identical in all 14 cells.",
+    "source_entry": "journal read of arXiv:2112.08394 (qmbl-verify follow-up 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-5x5_50_O_K-1",
+      "method": "DMRG χ=512",
+      "energy": -35.681458
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "published PDF, Phys. Rev. B 106, 245102 (2022), journals.aps.org/prb/pdf/10.1103/PhysRevB.106.245102, opened in a browser on 2026-11-18; PDF text layer read and kept as the reading's evidence; arXiv compared: 2112.08394 (sources/2112.08394.txt)",
+    "location": "Table III ('Table for energy per site E0/N of Kitaev honeycomb model at isotropic point Jx = Jy = Jz = 1'), row (5, 5), column DMRG χ = 512",
+    "reported_as": "–0.71362916 (energy per site E0/N, N = Lx × Ly × 2)",
+    "conversion": "-0.71362916 x 50 = -35.681458 = stored",
+    "note": "Journal and arXiv Table III identical in all 14 cells.",
+    "source_entry": "journal read of arXiv:2112.08394 (qmbl-verify follow-up 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-5x5_50_O_K-1",
+      "method": "DMRG χ=1024",
+      "energy": -35.700541
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "published PDF, Phys. Rev. B 106, 245102 (2022), journals.aps.org/prb/pdf/10.1103/PhysRevB.106.245102, opened in a browser on 2026-11-18; PDF text layer read and kept as the reading's evidence; arXiv compared: 2112.08394 (sources/2112.08394.txt)",
+    "location": "Table III ('Table for energy per site E0/N of Kitaev honeycomb model at isotropic point Jx = Jy = Jz = 1'), row (5, 5), column DMRG χ = 1024",
+    "reported_as": "–0.71401082 (energy per site E0/N, N = Lx × Ly × 2)",
+    "conversion": "-0.71401082 x 50 = -35.700541 = stored",
+    "note": "Journal and arXiv Table III identical in all 14 cells.",
+    "source_entry": "journal read of arXiv:2112.08394 (qmbl-verify follow-up 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-5x5_50_O_K-1",
+      "method": "isoTNS D=4, η=8",
+      "energy": -35.3449695
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "published PDF, Phys. Rev. B 106, 245102 (2022), journals.aps.org/prb/pdf/10.1103/PhysRevB.106.245102, opened in a browser on 2026-11-18; PDF text layer read and kept as the reading's evidence; arXiv compared: 2112.08394 (sources/2112.08394.txt)",
+    "location": "Table III ('Table for energy per site E0/N of Kitaev honeycomb model at isotropic point Jx = Jy = Jz = 1'), row (5, 5), column isoTNS D = 4, η = 8",
+    "reported_as": "–0.70689939 (energy per site E0/N, N = Lx × Ly × 2)",
+    "conversion": "-0.70689939 x 50 = -35.3449695 = stored",
+    "note": "Bound type: the journal keeps the arXiv statement (Sec. III B, p. 245102-11): 'We would like to point out that the DMRG2 proposed here is not a standard variational algorithm, which optimize over the parameters of a single variational wavefunction. Instead, we optimize over a set of quantum states approximately connected by MM. [...] As a result, the variational energy does not monotonically decrease as in the standard DMRG algorithm [...]. The approximation of the ground-state energy found by DMRG2 is thus, similar to TEBD2, bound by the MM error.' So `projected` (RULES.md 4, 'otherwise biased') stands, as ruled 2026-10-24. Journal and arXiv Table III identical in all 14 cells.",
+    "source_entry": "journal read of arXiv:2112.08394 (qmbl-verify follow-up 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-7x7_98_O_K-1",
+      "method": "Exact",
+      "energy": -71.94840226
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "published PDF, Phys. Rev. B 106, 245102 (2022), journals.aps.org/prb/pdf/10.1103/PhysRevB.106.245102, opened in a browser on 2026-11-18; PDF text layer read and kept as the reading's evidence; arXiv compared: 2112.08394 (sources/2112.08394.txt)",
+    "location": "Table III ('Table for energy per site E0/N of Kitaev honeycomb model at isotropic point Jx = Jy = Jz = 1'), row (7, 7), column Exact",
+    "reported_as": "–0.73416737 (energy per site E0/N, N = Lx × Ly × 2)",
+    "conversion": "-0.73416737 x 98 = -71.94840226 = stored",
+    "note": "Journal and arXiv Table III identical in all 14 cells.",
+    "source_entry": "journal read of arXiv:2112.08394 (qmbl-verify follow-up 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-7x7_98_O_K-1",
+      "method": "DMRG χ=512",
+      "energy": -71.14167704
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "published PDF, Phys. Rev. B 106, 245102 (2022), journals.aps.org/prb/pdf/10.1103/PhysRevB.106.245102, opened in a browser on 2026-11-18; PDF text layer read and kept as the reading's evidence; arXiv compared: 2112.08394 (sources/2112.08394.txt)",
+    "location": "Table III ('Table for energy per site E0/N of Kitaev honeycomb model at isotropic point Jx = Jy = Jz = 1'), row (7, 7), column DMRG χ = 512",
+    "reported_as": "–0.72593548 (energy per site E0/N, N = Lx × Ly × 2)",
+    "conversion": "-0.72593548 x 98 = -71.14167704 = stored",
+    "note": "Journal and arXiv Table III identical in all 14 cells.",
+    "source_entry": "journal read of arXiv:2112.08394 (qmbl-verify follow-up 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-7x7_98_O_K-1",
+      "method": "DMRG χ=1024",
+      "energy": -71.57919314
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "published PDF, Phys. Rev. B 106, 245102 (2022), journals.aps.org/prb/pdf/10.1103/PhysRevB.106.245102, opened in a browser on 2026-11-18; PDF text layer read and kept as the reading's evidence; arXiv compared: 2112.08394 (sources/2112.08394.txt)",
+    "location": "Table III ('Table for energy per site E0/N of Kitaev honeycomb model at isotropic point Jx = Jy = Jz = 1'), row (7, 7), column DMRG χ = 1024",
+    "reported_as": "–0.73039993 (energy per site E0/N, N = Lx × Ly × 2)",
+    "conversion": "-0.73039993 x 98 = -71.57919314 = stored",
+    "note": "Journal and arXiv Table III identical in all 14 cells.",
+    "source_entry": "journal read of arXiv:2112.08394 (qmbl-verify follow-up 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-7x7_98_O_K-1",
+      "method": "isoTNS D=4, η=8",
+      "energy": -71.24270426
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "published PDF, Phys. Rev. B 106, 245102 (2022), journals.aps.org/prb/pdf/10.1103/PhysRevB.106.245102, opened in a browser on 2026-11-18; PDF text layer read and kept as the reading's evidence; arXiv compared: 2112.08394 (sources/2112.08394.txt)",
+    "location": "Table III ('Table for energy per site E0/N of Kitaev honeycomb model at isotropic point Jx = Jy = Jz = 1'), row (7, 7), column isoTNS D = 4, η = 8",
+    "reported_as": "–0.72696637 (energy per site E0/N, N = Lx × Ly × 2)",
+    "conversion": "-0.72696637 x 98 = -71.24270426 = stored",
+    "note": "Bound type: the journal keeps the arXiv statement (Sec. III B, p. 245102-11): 'We would like to point out that the DMRG2 proposed here is not a standard variational algorithm, which optimize over the parameters of a single variational wavefunction. Instead, we optimize over a set of quantum states approximately connected by MM. [...] As a result, the variational energy does not monotonically decrease as in the standard DMRG algorithm [...]. The approximation of the ground-state energy found by DMRG2 is thus, similar to TEBD2, bound by the MM error.' So `projected` (RULES.md 4, 'otherwise biased') stands, as ruled 2026-10-24. Journal and arXiv Table III identical in all 14 cells.",
+    "source_entry": "journal read of arXiv:2112.08394 (qmbl-verify follow-up 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-7x7_98_O_K-1",
+      "method": "isoTNS D=6, η=12",
+      "energy": -71.52760986
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "published PDF, Phys. Rev. B 106, 245102 (2022), journals.aps.org/prb/pdf/10.1103/PhysRevB.106.245102, opened in a browser on 2026-11-18; PDF text layer read and kept as the reading's evidence; arXiv compared: 2112.08394 (sources/2112.08394.txt)",
+    "location": "Table III ('Table for energy per site E0/N of Kitaev honeycomb model at isotropic point Jx = Jy = Jz = 1'), row (7, 7), column isoTNS D = 6, η = 12",
+    "reported_as": "–0.72987357 (energy per site E0/N, N = Lx × Ly × 2)",
+    "conversion": "-0.72987357 x 98 = -71.52760986 = stored",
+    "note": "Bound type: the journal keeps the arXiv statement (Sec. III B, p. 245102-11): 'We would like to point out that the DMRG2 proposed here is not a standard variational algorithm, which optimize over the parameters of a single variational wavefunction. Instead, we optimize over a set of quantum states approximately connected by MM. [...] As a result, the variational energy does not monotonically decrease as in the standard DMRG algorithm [...]. The approximation of the ground-state energy found by DMRG2 is thus, similar to TEBD2, bound by the MM error.' So `projected` (RULES.md 4, 'otherwise biased') stands, as ruled 2026-10-24. Journal and arXiv Table III identical in all 14 cells.",
+    "source_entry": "journal read of arXiv:2112.08394 (qmbl-verify follow-up 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-11x11_242_O_K-1",
+      "method": "Exact",
+      "energy": -182.23409732
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "published PDF, Phys. Rev. B 106, 245102 (2022), journals.aps.org/prb/pdf/10.1103/PhysRevB.106.245102, opened in a browser on 2026-11-18; PDF text layer read and kept as the reading's evidence; arXiv compared: 2112.08394 (sources/2112.08394.txt)",
+    "location": "Table III ('Table for energy per site E0/N of Kitaev honeycomb model at isotropic point Jx = Jy = Jz = 1'), row (11, 11), column Exact",
+    "reported_as": "–0.75303346 (energy per site E0/N, N = Lx × Ly × 2)",
+    "conversion": "-0.75303346 x 242 = -182.23409732 = stored",
+    "note": "Journal and arXiv Table III identical in all 14 cells.",
+    "source_entry": "journal read of arXiv:2112.08394 (qmbl-verify follow-up 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-11x11_242_O_K-1",
+      "method": "DMRG χ=512",
+      "energy": -175.22142616
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "published PDF, Phys. Rev. B 106, 245102 (2022), journals.aps.org/prb/pdf/10.1103/PhysRevB.106.245102, opened in a browser on 2026-11-18; PDF text layer read and kept as the reading's evidence; arXiv compared: 2112.08394 (sources/2112.08394.txt)",
+    "location": "Table III ('Table for energy per site E0/N of Kitaev honeycomb model at isotropic point Jx = Jy = Jz = 1'), row (11, 11), column DMRG χ = 512",
+    "reported_as": "–0.72405548 (energy per site E0/N, N = Lx × Ly × 2)",
+    "conversion": "-0.72405548 x 242 = -175.22142616 = stored",
+    "note": "Journal and arXiv Table III identical in all 14 cells.",
+    "source_entry": "journal read of arXiv:2112.08394 (qmbl-verify follow-up 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-11x11_242_O_K-1",
+      "method": "DMRG χ=1024",
+      "energy": -176.19664502
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "published PDF, Phys. Rev. B 106, 245102 (2022), journals.aps.org/prb/pdf/10.1103/PhysRevB.106.245102, opened in a browser on 2026-11-18; PDF text layer read and kept as the reading's evidence; arXiv compared: 2112.08394 (sources/2112.08394.txt)",
+    "location": "Table III ('Table for energy per site E0/N of Kitaev honeycomb model at isotropic point Jx = Jy = Jz = 1'), row (11, 11), column DMRG χ = 1024",
+    "reported_as": "–0.72808531 (energy per site E0/N, N = Lx × Ly × 2)",
+    "conversion": "-0.72808531 x 242 = -176.19664502 = stored",
+    "note": "Journal and arXiv Table III identical in all 14 cells.",
+    "source_entry": "journal read of arXiv:2112.08394 (qmbl-verify follow-up 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-11x11_242_O_K-1",
+      "method": "isoTNS D=4, η=8",
+      "energy": -180.16531918
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "published PDF, Phys. Rev. B 106, 245102 (2022), journals.aps.org/prb/pdf/10.1103/PhysRevB.106.245102, opened in a browser on 2026-11-18; PDF text layer read and kept as the reading's evidence; arXiv compared: 2112.08394 (sources/2112.08394.txt)",
+    "location": "Table III ('Table for energy per site E0/N of Kitaev honeycomb model at isotropic point Jx = Jy = Jz = 1'), row (11, 11), column isoTNS D = 4, η = 8",
+    "reported_as": "–0.74448479 (energy per site E0/N, N = Lx × Ly × 2)",
+    "conversion": "-0.74448479 x 242 = -180.16531918 = stored",
+    "note": "Bound type: the journal keeps the arXiv statement (Sec. III B, p. 245102-11): 'We would like to point out that the DMRG2 proposed here is not a standard variational algorithm, which optimize over the parameters of a single variational wavefunction. Instead, we optimize over a set of quantum states approximately connected by MM. [...] As a result, the variational energy does not monotonically decrease as in the standard DMRG algorithm [...]. The approximation of the ground-state energy found by DMRG2 is thus, similar to TEBD2, bound by the MM error.' So `projected` (RULES.md 4, 'otherwise biased') stands, as ruled 2026-10-24. Journal and arXiv Table III identical in all 14 cells.",
+    "source_entry": "journal read of arXiv:2112.08394 (qmbl-verify follow-up 2026-11-18)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Kitaev/honeycomb-11x11_242_O_K-1",
+      "method": "isoTNS D=6, η=12",
+      "energy": -180.73124102
+    },
+    "checked_on": "2026-11-18",
+    "scope": "value",
+    "method": "published PDF, Phys. Rev. B 106, 245102 (2022), journals.aps.org/prb/pdf/10.1103/PhysRevB.106.245102, opened in a browser on 2026-11-18; PDF text layer read and kept as the reading's evidence; arXiv compared: 2112.08394 (sources/2112.08394.txt)",
+    "location": "Table III ('Table for energy per site E0/N of Kitaev honeycomb model at isotropic point Jx = Jy = Jz = 1'), row (11, 11), column isoTNS D = 6, η = 12",
+    "reported_as": "–0.74682331 (energy per site E0/N, N = Lx × Ly × 2)",
+    "conversion": "-0.74682331 x 242 = -180.73124102 = stored",
+    "note": "Bound type: the journal keeps the arXiv statement (Sec. III B, p. 245102-11): 'We would like to point out that the DMRG2 proposed here is not a standard variational algorithm, which optimize over the parameters of a single variational wavefunction. Instead, we optimize over a set of quantum states approximately connected by MM. [...] As a result, the variational energy does not monotonically decrease as in the standard DMRG algorithm [...]. The approximation of the ground-state energy found by DMRG2 is thus, similar to TEBD2, bound by the MM error.' So `projected` (RULES.md 4, 'otherwise biased') stands, as ruled 2026-10-24. Journal and arXiv Table III identical in all 14 cells.",
+    "source_entry": "journal read of arXiv:2112.08394 (qmbl-verify follow-up 2026-11-18)",
+    "journal": true
+  },
 ];
