@@ -1134,6 +1134,8 @@ for (const [s, d] of [["SL-[π/2, 0] spin liquid", "U(1) spin liquid, [π/2,0] f
   NAMES[`VMC, Gutzwiller-projected ${s}, mixed spinon boundary conditions`] = ["VMC", `${d}, mixed spinon boundaries`];
 Object.assign(NAMES, {
   "VMC, extended U(1) Dirac SL [0, π; 0, π] (optimised 2nd-neighbour hopping)": ["VMC", `${DIRAC}, [0,π;0,π] flux, n.n.n. hopping`],
+  "VMC, extended uniform RVB SL [0, 0; π, π] (optimised 2nd-neighbour hopping)": ["VMC", "uniform RVB spin liquid, [0,0;π,π] flux, n.n.n. hopping"],
+  "VMC, extended uniform RVB SL [0, 0] (optimised hopping to 3rd neighbours)": ["VMC", "uniform RVB spin liquid, [0,0] flux, hopping to 3rd neighbours"],
 });
 NAMES["Gutzwiller projected L6-VBC"] = ["VMC", "loop-six valence-bond crystal (L6-VBC)"];
 NAMES["Gutzwiller projected PW-VBC"] = ["VMC", "pinwheel valence-bond crystal (PW-VBC)"];

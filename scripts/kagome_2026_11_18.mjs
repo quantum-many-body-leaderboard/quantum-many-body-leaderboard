@@ -1,6 +1,6 @@
 // Targeted pass 2026-11-18: kagome 192 and 432 energies that the 2026-11-16 second reading of the
 // frustrated-lattice pass found printed but not carried. Writes passes/rows/sweep-rows-2026-11-18-kagome.json.
-// Values are matched against the committed source text at the stated line; journal versions read
+// Values are matched against the committed source text (arXiv:1105.0341 Supplemental Material appended to sources/1105.0341.txt on 2026-11-18) at the stated line; journal versions read
 // (PRL 98, 117205 in the publisher PDF on 2026-11-18; PRB 84, 020407 publisher PDF on 2026-11-16).
 import fs from "node:fs";
 
@@ -11,7 +11,7 @@ const REF = {
   "cond-mat/0611414": { file: "cond-mat-0611414", ref: "Ran, Hermele, Lee & Wen, Projected-Wave-Function Study of the Spin-1/2 Heisenberg Model on the Kagomé Lattice, Phys. Rev. Lett. 98, 117205 (2007), doi:10.1103/PhysRevLett.98.117205, arXiv:cond-mat/0611414",
     version: "version read: Phys. Rev. Lett. 98, 117205 publisher PDF (2026-11-18, Tables I and III identical to the arXiv text)" },
   "1105.0341": { file: "1105.0341", ref: "Iqbal, Becca & Poilblanc, Projected wave function study of Z2 spin liquids on the kagome lattice for the spin-1/2 quantum Heisenberg antiferromagnet, Phys. Rev. B 84, 020407(R) (2011), doi:10.1103/PhysRevB.84.020407, arXiv:1105.0341",
-    version: "version read: Phys. Rev. B 84, 020407(R) publisher PDF (2026-11-16, the four values identical to the arXiv text)" },
+    version: "version read: Phys. Rev. B 84, 020407(R) publisher PDF (2026-11-16) and its Supplemental Material (2026-11-18), values identical to the arXiv text" },
 };
 
 const INST = { 192: "Heisenberg/kagome-8x8_192_P", 432: "Heisenberg/kagome-12x12_432_P" };
@@ -42,6 +42,10 @@ for (const [line, state, p192, p432] of [
 R.push(
   [432, "1105.0341", 182, "−0.42872(1)", "VMC, extended U(1) Dirac SL [0, π; 0, π] (optimised 2nd-neighbour hopping)", "variational",
     "page 3, 'For the present cluster, these values are E/J = −0.42872(1) per site, and χ2 = −0.0186(2)' (the [0,π; 0,π] state, nearest-neighbour Hamiltonian); the same value is printed for the 576-site cluster in arXiv:1011.3954, a row there", {}],
+  [432, "1105.0341", 318, "−0.41228(1)", "VMC, extended uniform RVB SL [0, 0; π, π] (optimised 2nd-neighbour hopping)", "variational",
+    "Supplemental Material p. 1, 'The energies of the NN [0, 0] SL and the extended 2nd and 3rd n.n. [0, 0] SLs ... are E/J = −0.41216(1), E/J = −0.41228(1), E/J = −0.412308(1) respectively' (the 2nd-neighbour state is the [0, 0;π,π] state of the main text, page 4); journal Supplemental Material (Supp-material.pdf and .tex, APS) prints the same sentence", {}],
+  [432, "1105.0341", 318, "−0.412308(1)", "VMC, extended uniform RVB SL [0, 0] (optimised hopping to 3rd neighbours)", "variational",
+    "Supplemental Material p. 1, same sentence, the extended 3rd n.n. [0, 0] SL (the main text, page 4: 'the 3rd NN uniform RVB SL with optimized χ2 and χ′3s'); journal Supplemental Material prints the same sentence", {}],
 );
 
 // Held after the second reading (2026-11-18): SL-[π,π] 'E/J ≃ −0.38372(1)' (page 4; the open-shell state is reached
