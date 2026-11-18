@@ -1,6 +1,7 @@
 """Exact diagonalization of the Holstein and Hubbard-Holstein models on small chains with a phonon
-cutoff (QMBL convention check, 2026-11-16). With a cutoff the energy is an upper bound, so this
-fixes conventions only; it makes no row (RULES.md 2.1).
+cutoff (QMBL convention check, 2026-11-16). With a cutoff the energy is an upper bound, so the
+convention check here makes no row; rows_ed.py uses the same Hamiltonian for QMBL's variational rows
+on the four smallest Holstein instances (2026-11-18, RULES.md 2.1).
 
 Instance convention (RULES.md 2.1):
   H = -t sum_<ij>,s (c+_is c_js + h.c.) + w sum_i b+_i b_i + g sum_i n_i (b+_i + b_i) [+ U sum_i n_iu n_id]
