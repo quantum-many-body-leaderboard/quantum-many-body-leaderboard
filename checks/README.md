@@ -686,3 +686,50 @@ energy minus error agrees with these values within the rounding of the two print
 **Reproduce.** `python checks/hchain-fci/fci_all.py checks/hchain-fci/jobs.json > results.jsonl`
 (PySCF; about 10 minutes, nearly all of it H16), then
 `node checks/hchain-fci/compare.mjs results.jsonl passes/track3/sweep-rows-2026-10-20-hydrogen.json`.
+
+## `holstein-ed-2026-11/`: the Holstein conventions, and variational energies of the four smallest instances
+
+**Question.** (1) Does QMBL's Holstein convention (RULES.md §2.1: coupling g n_i (b†_i + b_i), phonon
+term ω b†_i b_i, no zero-point energy) reproduce the sources that couple to n_i − 1/2, with the shift
+−g²N/(4ω) at half filling? (2) What is the lowest energy that exact diagonalization with a phonon
+cutoff gives on the four smallest Holstein instances, where no paper prints an exact energy?
+
+**Design.** `holstein_ed.py` builds the Holstein (and Hubbard-Holstein) Hamiltonian on a chain with a
+cutoff M on the total phonon number, in the instance's convention and in a source's convention
+(coupling to n_i − ρ, optional ω/2 per site), and diagonalizes both with `eigsh`. `cases-1.json` is
+the 4-site spinless chain of arXiv:2405.08701 Table 2 (ω = 1, g = 1.5, ρ = 1/2, antiperiodic),
+2026-11-16. `rows_ed.py` uses the same Hamiltonian on the four instances, 2026-11-18, and prints the
+true residual |Hv − Ev| at each cutoff. At half filling it counts phonons in the basis displaced by
+g/(2ω) per site, where the cutoff converges faster (at M = 12 on 6 sites the plain basis gives
+−8.57799, the displaced basis −8.58442). A cutoff keeps a subspace of the instance's states, and
+the displacement maps that subspace onto states of the instance, so the lowest eigenvalue is an
+upper bound and does not increase with M (RULES.md §2.1: `variational`).
+
+**Result.** (1) (`results-1.jsonl`) −0.8939876 per site in the source's convention, against the
+printed NQS −0.89394(7) and GFMC −0.895(1); the shift between the two conventions is −2.25, the
+rule's value, to 1e-10. (2) (`results-2.jsonl`; every residual below 4e-12):
+
+| instance | largest M | states | energy at the largest M | change from the M below |
+|---|---|---|---|---|
+| `Holstein/chain_4_A_f2_w1_g1.5` | 32 | 353,430 | −5.82595024588948 | 2e-15 |
+| `Holstein/chain_6_P_f3_w1_g1.5` | 16 | 1,492,260 | −8.584423623000326 | 7.4e-8 |
+| `Holstein/chain_4_P_f1_w0.5_g1` | 40 | 543,004 | −2.8343490235198243 | 4e-15 |
+| `Holstein/chain_4_P_e4_w4_g2` | 20 | 382,536 | −10.29198866359705 | 4.1e-10 |
+
+The other rows on these instances: the MLP rows of arXiv:2405.08701 lie 1.9e-4 (0.7 sigma, 4 sites)
+and 5.0e-3 (4.2 sigma, 6 sites) above; the GFMC rows of cond-mat/9512046, −5.830(4) and −8.583(6),
+are 1.0 sigma below and 0.2 sigma above; the best VMC row of arXiv:1403.4150 on the one-electron
+chain, −2.796(1), is 3.8e-2 above; on the ω = 4 chain the CP-AFQMC row of arXiv:2012.13473,
+−10.293(2), is 0.5 sigma below, and its DMRG row, −10.292, is this energy rounded to three decimals.
+
+**Conclusion.** The convention and the shift rule hold. The four energies are variational rows
+computed by QMBL (`scripts/add_exact_rows.mjs` batch F), each rounded up at the tenth decimal so the
+stored value stays an upper bound; the cutoff is in `method_detail`. The convention check makes no row.
+
+**Reproduce.** With numpy and scipy, on a laptop (Apple M5): `rows_ed.py` takes 28 s for all
+four instances and peaks at 3.4 GB (6 sites at M = 16).
+
+```bash
+python checks/holstein-ed-2026-11/holstein_ed.py checks/holstein-ed-2026-11/cases-1.json results-1.jsonl
+python checks/holstein-ed-2026-11/rows_ed.py > results-2.jsonl
+```
