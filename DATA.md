@@ -115,8 +115,9 @@ cost figures are comparable across methods. It is read like VarBench's `baseline
 - Every `compute` field is measured in the run's own process, with `scope: row` and
   `confidence: high`.
 
-The validator requires all of these. An exact row QMBL computed in a check (full CI or exact diagonalization where no
-paper prints the exact energy) carries `computed_by: "qmbl"` too. It names its `checks/`
+The validator requires all of these. A row QMBL computed in a check (full CI or exact diagonalization where no
+paper prints the exact energy, or exact diagonalization with a phonon or boson cutoff, which is
+`variational`, [RULES.md §2.1](RULES.md#21-instance-names)) carries `computed_by: "qmbl"` too. It names its `checks/`
 folder in `reference` and the code at a commit in `artifacts`, and needs no `compute` block.
 
 ### Rows no paper prints: `provenance: "unpublished"`
