@@ -999,12 +999,12 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | instance | value | energy | method | code |
 |---|---|---|---|---|
 | chain, 4 sites, antiperiodic, &omega; = 1, g = 1.5, 2 spinless fermions | exact (stochastic) | -1.458(1) | GFMC [McKenzie et al. (1996)](https://doi.org/10.1103/physrevb.53.9676) |  |
-|  | best variational | -1.4564876 &#9675; (+1.0e-3) | ED [QMBL check, checks/holstein-ed-2026-11/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/holstein-ed-2026-11) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/13377ab8/checks/holstein-ed-2026-11) |
+|  | best variational | -1.45644(7) (+1.1e-3) | VMC (MLP) [Mahajan et al. (2025)](https://doi.org/10.1103/p8qz-p45d) |  |
 | chain, 4 sites, &omega; = 4, g = 2, 4 electrons | best variational | -2.573 &#9675; | DMRG [Lee et al. (2021)](https://doi.org/10.1103/physrevb.103.115123) |  |
 |  | best projected | -2.5732(5) | CP-AFQMC (TP-LLF(2)) [Lee et al. (2021)](https://doi.org/10.1103/physrevb.103.115123) |  |
-| chain, 4 sites, &omega; = 0.5, g = 1, 1 spinless fermion | best variational | -0.7085873 &#9675; | ED [QMBL check, checks/holstein-ed-2026-11/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/holstein-ed-2026-11) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/13377ab8/checks/holstein-ed-2026-11) |
+| chain, 4 sites, &omega; = 0.5, g = 1, 1 spinless fermion | best variational | -0.6990(3) | VMC (Gutzwiller) [Ohgoe & Imada (2014)](https://doi.org/10.1103/physrevb.89.195139) |  |
 | chain, 6 sites, &omega; = 1, g = 1.5, 3 spinless fermions | exact (stochastic) | -1.431(1) | GFMC [McKenzie et al. (1996)](https://doi.org/10.1103/physrevb.53.9676) |  |
-|  | best variational | -1.4307373 &#9675; (−<1e-3) | ED [QMBL check, checks/holstein-ed-2026-11/](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/main/checks/holstein-ed-2026-11) | [QMBL code](https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/13377ab8/checks/holstein-ed-2026-11) |
+|  | best variational | -1.4299(2) (+<1e-3) | VMC (MLP) [Mahajan et al. (2025)](https://doi.org/10.1103/p8qz-p45d) |  |
 | chain, 8 sites, antiperiodic, &omega; = 1, g = 1.5, 4 spinless fermions | exact (stochastic) | -1.423(2) | GFMC [McKenzie et al. (1996)](https://doi.org/10.1103/physrevb.53.9676) |  |
 |  | best variational | -1.4231(1) (+<1e-3) | VMC (MLP) [Mahajan et al. (2025)](https://doi.org/10.1103/p8qz-p45d) |  |
 | chain, 12 sites, open, &omega; = 1, g = 1, 4 electrons | best variational | -0.8985 &#9675; | DMRG [Chakraborty et al. (2014)](https://doi.org/10.1103/physrevb.89.035146) |  |

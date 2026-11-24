@@ -13,44 +13,6 @@
   "instance_id": "Holstein/chain_4_A_f2_w1_g1.5",
   "rows": [
     {
-      "energy": -5.8259502458,
-      "sigma": null,
-      "energy_variance": null,
-      "dof": 2,
-      "einf": null,
-      "v_score": null,
-      "method": "ED",
-      "ansatz": null,
-      "method_detail": "at most 32 phonons in total, in the basis displaced by g/(2ω) per site (353,430 states)",
-      "method_as_published": "ED, at most 32 phonons in total, displaced basis",
-      "family": "other",
-      "bound_type": "variational",
-      "bound_type_reason": "exact diagonalization in the subspace of at most 32 phonons in total, counted in the basis displaced by g/(2w) per site, computed by QMBL: a subspace of the instance's Hilbert space, so the energy is an upper bound (RULES.md 2.1); deterministic",
-      "reference": "QMBL, checks/holstein-ed-2026-11/ (exact diagonalization with a cutoff on the total phonon number)",
-      "peer_reviewed": false,
-      "source": "qmbl-verify-2026-11-18",
-      "provenance": "primary",
-      "verified": {
-        "checked_on": "2026-11-18",
-        "method": "checks/holstein-ed-2026-11/rows_ed.py (sparse Hamiltonian, scipy eigsh, tol 1e-12) over 353,430 states, numpy 2.5.5 and scipy 1.18.1 on an Apple M5 laptop, 2026-11-18; results in checks/holstein-ed-2026-11/results-2.jsonl",
-        "reported_as": "-5.82595024588948 (results-2.jsonl, M = 32, field E) | -5.825950245889464 (M = 24)",
-        "note": "Total energy, t = 1, H = -t sum (c+c + h.c.) + w sum b+b + g sum n_i (b+_i + b_i) (RULES.md 2.1). Cutoff 32 on the total phonon number, counted in the basis displaced by g/(2w) per site; E = E_displaced - g^2 N / (4w) at half filling; the next smaller cutoff gives -5.825950245889464 (M = 24). The GFMC row of McKenzie, Hamer & Murray, -5.830(4), lies 0.0040 (1.0 sigma) below it; the MLP row of Mahajan et al., -5.82576(28), 0.0002 (0.7 sigma) above.",
-        "secondary_of": null
-      },
-      "computed_by": "qmbl",
-      "artifacts": {
-        "code": "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard/tree/13377ab8/checks/holstein-ed-2026-11",
-        "commit": "13377ab8",
-        "script": "checks/holstein-ed-2026-11/rows_ed.py",
-        "read_from": {
-          "quote": "QMBL, checks/holstein-ed-2026-11/ (exact diagonalization with a cutoff on the total phonon number)",
-          "location": "the row's reference (QMBL check directory)",
-          "checked_on": "2026-11-18",
-          "pass": "passes/code/code-links-2026-11-18.json"
-        }
-      }
-    },
-    {
       "energy": -5.82576,
       "sigma": 0.00028,
       "energy_variance": null,
