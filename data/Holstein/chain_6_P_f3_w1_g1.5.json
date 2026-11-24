@@ -175,6 +175,37 @@
         "shift": -3.375,
         "note": "E_instance = E_source - 2 g^2 rho N_e / w + g^2 rho^2 N / w (rho = 0.5, N_e = 3, N = 6), in units of t (RULES.md 2.1)"
       }
+    },
+    {
+      "energy": -8.46948,
+      "sigma": 0.00018,
+      "energy_variance": null,
+      "dof": 3,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "Gutzwiller",
+      "method_detail": "electron-phonon entangled wave function without the RBM factor, phonon cutoff 15",
+      "method_as_published": "|Ψel-ph⟩ (α = 0)",
+      "family": "classic VMC",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Nomura, Machine Learning Quantum States — Extensions to Fermion–Boson Coupled Systems and Excited-State Calculations, J. Phys. Soc. Jpn. 89, 054706 (2020), doi:10.7566/JPSJ.89.054706, arXiv:2001.02106",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-24",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-24",
+        "method": "source text of arXiv:2001.02106 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading and a blind second reading (2026-11-24)",
+        "reported_as": "-0.84908(3)",
+        "note": "Sec. 2.3.1, text, 6-site value ('α = 0 result in Fig. 4'); version read: the journal's full text (journals.jps.jp, 2026-11-24) and the arXiv text (sources/2001.02106.txt, line 301), which agree | Journal and arXiv, Eq. (1): H = -t sum (c+_i c_i+1 + h.c.) - g sum (n_i - 1/2)(b+_i + b_i) + sum ω b+_i b_i, spinless, no zero-point term. Sec. 2.3.1: 'periodic (anti-periodic) boundary condition when the number of electrons is odd (even)', 'ω/t = 1, g/t = 1.5', 'The filling is set to be half-filling', maximum phonon occupation 15 per site, 'the vertical axis is the energy per site' (Fig. 4); ω = t, so units of t and of ω are the same. Coupling to n_i - 1/2: E_instance = E_source - g^2 N / (4ω) at half filling (RULES.md 2.1). The sign of g is a gauge choice (b -> -b).",
+        "secondary_of": null
+      },
+      "converted": {
+        "from": "coupling to n_i - 0.5",
+        "shift": -3.375,
+        "note": "E_instance = E_source - 2 g^2 rho N_e / w + g^2 rho^2 N / w (rho = 0.5, N_e = 3, N = 6), in units of t (RULES.md 2.1)"
+      }
     }
   ]
 }

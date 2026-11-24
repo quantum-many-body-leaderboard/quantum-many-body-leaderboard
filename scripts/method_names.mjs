@@ -1091,6 +1091,7 @@ Object.assign(NAMES, {
   "SC-VAED": ["ED", "self-consistently grown variational basis (SC-VAED)"],
   "CP-AFQMC/TP-LLF(2)": ["CP-AFQMC", "trial state: TP-LLF(2), two Lang-Firsov states", { family: "AFQMC / GFMC" }],
   "Global-Local variation": ["Global-Local variation", "", { family: "other" }],
+  "|Ψel-ph⟩ (α = 0)": ["VMC", "electron-phonon entangled wave function without the RBM factor, phonon cutoff 15", { family: "classic VMC" }], // arXiv:2001.02106
   "ED, 10 phonons": ["ED", "10 phonons (5.3 × 10^6 states)"],
   "ED, 12 phonons": ["ED", "12 phonons (3.0 × 10^7 states)"],
 });

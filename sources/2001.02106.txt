@@ -1,0 +1,596 @@
+Journal  of  the  Physical  Society  of  Japan                                                                                                                                                                                                                                                                                                                                  FULL  PAPERS
+
+
+
+                     Machine  Learning  Quantum  States  –  Extensions  to  Fermion-Boson  Coupled
+                                                         Systems  and  Excited-State  Calculations
+
+                                                                                  Yusuke  Nomura1∗
+
+                                      1RIKEN  Center  for  Emergent  Matter  Science,  2-1  Hirosawa,  Wako,  351-0198,  Japan
+
+
+                  To   analyze   quantum   many-body   Hamiltonians,   recently,   machine   learning   techniques   have   been   shown   to   be   quite
+              useful   and   powerful.   However,   the   applicability   of   such   machine   learning   solvers   is   still   limited.   Here,   we   propose
+              schemes   that   make   it   possible   to   apply   machine   learning   techniques   to   analyze   fermion-boson   coupled   Hamiltonians
+              and   to   calculate   excited   states.   As   for   the   extension   to   fermion-boson   coupled   systems,   we   study   the   Holstein   model
+              as   a   representative   of   the   fermion-boson   coupled   Hamiltonians.   We   show   that   the   machine-learning   solver   achieves
+              highly  accurate  ground-state  energy,  improving  the  accuracy  substantially  compared  to  that  obtained  by  the  variational
+              Monte   Carlo   method.   As   for   the   calculations   of   excited   states,  we   propose   a   diﬀerent   approach   than   that   proposed   in
+              K.   Choo   et   al.,   Phys.   Rev.   Lett.   121   (2018)   167204.   We   discuss   the   diﬀerence   in   detail   and   compare   the   accuracy   of
+              two   methods   using   the   one-dimensional   S =    1/2   Heisenberg   chain.   We   also   show   the   benchmark   for   the   frustrated
+              two-dimensional   S =   1/2   J1-J2   Heisenberg   model   and   show   an   excellent   agreement   with   the   results   obtained   by   the
+              exact  diagonalization.   The  extensions   shown  here  open  a  way  to  analyze  general  quantum   many-body   problems  using
+              machine  learning  techniques.
+
+
+
+
+1.        Introduction                                                                             resent  any  bounded  continuous  function  to  arbitrary  accuracy
+   Solving   quantum   many-body   Hamiltonians   with   high   ac-                                (universal   approximation).5, 6)   Another   advantage   is   that   the
+curacy  is  a  great  challenge  in  condensed-matter  physics.  The                               RBM  allows  us  to  approximate  quantum  many-body  states  in
+behaviors  of  particles  in  such  quantum  systems  are  governed                                an  unbiased  way.  This  is  in  contrast  to  the  conventional  wave
+by   many-body  wave   functions;  once   exact  many-body  wave                                   function  methods  where  most  calculations  assume  a   speciﬁc
+functions   are   given,   we   can   predict   the   properties   of   many-                      form  of  the  wave  function,  i.e.,  the  calculations  are  biased.
+body  systems.  Therefore,  a  goal  is  to  obtain  exact  many-body                                  After     Ref.     1,     various     studies     have     shown     the     useful-
+wave  functions.  However,  in  general,  many-body  wave  func-                                   ness    of    using    machine   learning    techniques   to    study    quan-
+tions  are  vectors  with  huge  dimensions growing exponentially                                  tum    many-body    systems.    Several    studies    have    introduced
+with  the  number  of  particles,  which  makes  exact  diagonaliza-                               diﬀerent    neural    network    than    the    RBM.7–16)    The    relation-
+tion   intractable   for   large   systems.   Given   this   situation,   it   is                  ship  between  the  RBM  and  tensor  network  methods  has  also
+imperative  to  represent  many-body wave  functions  accurately                                   been    discussed.4, 17–19)    The    applicability    of    machine    learn-
+with  a  computationally  tractable  number  of  parameters.                                       ing    solvers    has    been    extended    to,    for    example,    frustrated
+   For   this   problem,  machine   learning  techniques  can   play   a                           spin    systems,14–16, 20, 21)    itinerant   boson    systems,11, 12)    topo-
+role.  Machine  learning  is  powerful  in  extracting  essential  fea-                            logical    states,3, 17–19, 22–24)     fermion    systems,14, 25–28)     excited
+tures  from  big  data.  Therefore,  it  would  also  be  useful  in  ex-                          states,29, 30)    open    quantum    states,31–34)    and    quantum    states
+tracting   the   essential   patterns   of   the   many-body   wave   func-                        with  nonabelian  or  anyonic  symmetries.30)
+tions  and  obtaining  compact  representations.                                                       In   the   present   paper,   we   report   two   crucial   extensions   of
+   Indeed,   Carleo    and    Troyer1)    have   introduced   variational                          machine  learning  solvers.  One  is  an  extension  to  the  fermion-
+ansatz   for   many-body   ground   states   based   on   the   restricted                         boson   coupled   systems.   The   other   is   the   calculations   of   ex-
+Boltzmann  machine  (RBM).  The  RBM   is  a   kind  of  artiﬁcial                                 cited   states.   For   the   fermion-boson  coupled   systems,   we   se-
+neural  network2)  consisting  of  visible  and  hidden  units  and  is                            lect  electron-phonon  coupled  systems  as  an  example.  A  gen-
+used   to   approximate  probability  distribution  over  the   visible                            eralization   of   the   proposed   scheme   to   other   fermion-boson
+unit  conﬁgurations.  If   we   interpret  the   values   of   many-body                           systems  is  straightforward.  As  for  the  calculations  of  excited
+wave   functions   as   a   generalized   probability   (allowing   com-                           states,  we  propose  a  diﬀerent  approach  than  that  employed  in
+plex  numbers) and  make  a  mapping between  physical and  vis-                                   Ref.  29.
+ible   unit   conﬁgurations,   we   can   represent   many-body   wave                                 This   paper   is   organized   as   follows.   Secs.   2   and   3   are   de-
+functions  in   terms   of   RBM.   The   RBM   wave   functions  were                             voted  to  the  extension  to  fermion-boson  coupled  systems  and
+ﬁrst  applied  to  spin  systems  and  have  been  shown  to  be  able                             calculations   of   excited   states,   respectively.   In   both   sections,
+to  represent  ground  states  of  spin  Hamiltonians  in  high  accu-                             we   provide   the   details   of   the   methods   and   demonstrate   the
+racy.1)                                                                                            accuracy  of  the  machine  learning  methods.  We  show  the  sum-
+   One  of  the  advantages  of  using  the  RBM  is  its  ﬂexible  rep-                           mary  and  future  perspective  in  Sec.  4.
+resentative   power.   The   RBM   can   represent   quantum   states                              2.        Extension  to  electron-phonon  coupled  systems
+showing  volume-law  entanglement  entropy.3, 4)  If  an  arbitrar-                                    The  electron-phonon  coupling  is  a  fundamental  interaction
+ily   large   number   of   hidden   units   are   introduced,   it   can   rep-                   in   solids.   In   the   conventional  superconductors,  the   electron-
+
+
+ ∗yusuke.nomura@riken.jp                                                                           phonon   coupling   gives   a   “glue”   for   creating   Cooper   pairs.
+
+
+                                                                                                1
+J.  Phys.  Soc.  Jpn.                                                                                                                                                                                                                                                                                                                                                                                                          FULL  PAPERS
+
+
+Even  in  the  strongly-correlated  materials,  the  coupling  to  the                                mi   (≥  0)  is  deﬁned  such  that  all  the  matrix  elements  of  the   ˆxsi
+phonons  plays   an   important   role.   For   example,   in   transition                            (=    (−1)i ˆxi)   operator   become   positive.   More   speciﬁcally,   we
+metal  oxides,  the  metal-insulator  transitions  often  accompany                                   deﬁne |mi⟩  as |mi⟩ = ((−1)i)mi |mi⟩0   with |mi⟩0   being  the  stan-
+structure  transition.35)  In  the  alkali-doped  fullerides,36, 37)  un-                             dard  deﬁnition  of  phonon  occupation  state.   Then,  the  matrix√
+usual   cooperation   between    strong   correlation   and    phonons                                elements  become  positive  as⟨mi| ˆxsi|mi +  1⟩ =                           mi+1
+induces    unconventional     s-wave     superconductivity    next    to                                                                                                             2     .
+the   Mott   insulating   phase.38, 39)   The   coupling   to   the   optical                         2.2        Methods
+phonons  of  SrTiO3  substrate  has  been  suggested  to  be  the  ori-                               2.2.1        Recent  variational  wave  functions
+gin   of   enhanced   superconductivity   in   FeSe   thin   ﬁlm   on   the                               Recently,   there   have   been   several   proposals   for   the   vari-
+SrTiO3  substrate.40)                                                                                 ational     wave     functions     for     electron-phonon    coupled    sys-
+   Therefore,     in     order     to     get     a     deeper     understanding     of               tems.41, 42)   In   those   studies,   the   form  of   the   variational  wave
+electron-phonon   physics,    it    is    essential    to    develop    power-                        functions  reads
+ful   numerical   methods   to   analyze   electron-phonon   coupled
+Hamiltonians.  Here,  we  discuss  an  extension  of  the  machine-                                                           |Ψ⟩ =  Pel-ph |Ψel⟩⊗|Ψph⟩.                                                          (5)
+learning  wave  function  methods  to  the  electron-phonon  cou-                                     Here, |Ψel⟩  and |Ψph⟩  are  the  electron  and  phonon  wave  func-
+pled  systems.                                                                                        tions,   respectively.   Pel-ph    is   the   electron-phonon   correlation
+
+2.1        Model                                                                                      factor.   In   this   form,   the   correlations   between   electrons   and
+   Hereafter, as  a representative example, we  restrict  ourselves                                   phonons  are  taken  into  account  only  by  Pel-ph;  without  Pel-ph,
+to   the   case   of   the   one-dimensional   spinless   Holstein   model                            electron  and  phonon  degrees  of  freedom  are  decoupled.
+and   discuss   how   we   construct   machine-learning  wave   func-                                 2.2.2        Machine-learning  variational  wave  function
+tions.  The  Hamiltonian  is  given  by                                                                   We    improve   the    accuracy    of    the    variational   wave    func-
+          ∑                               ∑( ˆni −   1)( ˆb†                ∑                         tion  by  i)  preparing  electron-phonon-entangled wave  function
+H=−t            ( ˆc†i  ˆci+1+ h.c.)− g                 2      i +  ˆbi)+        ω ˆb†i  ˆbi,          (1)
+             i                              i                                 i                       |Ψel-ph⟩   even   without   electron-phonon  correlation   factor   and
+where    ˆc†                                                                                          ii)   improving   electron-phonon   correlation   factor   with   RBM
+            i     ( ˆci)   is   the   creation   (annihilation)   operator   for   the                (denoted   as   PRBMel-ph ).   Then,   the   form   of   the   variational   wave
+electron at  site  i  and  ˆb†i   ( ˆbi)  creates  (annihilates) phonon at  site                      function  is  given  by
+i.   t   is   a   hopping  amplitude,  g   is   the   strength  of   the   electron-
+phonon   coupling   (g >    0),   and ω   is   the   phonon   frequency.                                                          |Ψ⟩ =  PRBMel-ph |Ψel-ph⟩.                                                                  (6)
+ˆni =   ˆc†i  ˆci  is  the  number  operator.  The  dimensionless  displace-                          In  the  following,  we  discuss  these  two  points  in  more  detail.
+ment   operator  of   the   phonons  is   given   by    ˆxi =          1√2 ( ˆb†i +   ˆbi).
+For  simplicity,  we  take  the  mass  of  nuclei  to  be  1.  The  meth-                              i)  Electron-phonon-entangled wave function|Ψel-ph⟩.        As
+ods   presented   here   can   be   easily   extended   to   more   general                           can  be  seen  in  Eq.  (4),  when  the  nsi   occupation  is  positive  nsi=
+electron-phonon coupled  systems  and  also  even  more  general                                      1  (negative  nsi=−1),  the  positive  (negative)  xsi   displacement  is
+fermion-boson  coupled  systems.                                                                      energetically  favored.  As  we  will  show  in  the  following,  even
+   For  later  use,  it  is  convenient  to  deﬁne  occupation  and  di-                              without  the   electron-phonon  correlation  factor,   one   can   take
+mensionless  displacement  operators  ( ˆnsi   and    ˆxsi ,  respectively)                           into  account  this  primitive  correlation  between  electrons  and
+in  a  staggered  way:                                                                                phonons.
+                             ˆnsi =  (−1)i(2 ˆni −  1)                                                                    (2)Deﬁning  real-space  electron  and  phonon  conﬁgurations  as
+                                                                                                      ν =   (ns1, ns2,..., nsNsite )  and µ =   (m1, m2,..., mNsite ),  respectively,
+and                                                                                                   the  electron-phonon-entangled wave  function  reads
+                                                    ( ˆb†                                                                             ∑
+                    ˆxsi =  (−1)i ˆxi =   (−1)i√        i +   ˆbi).                                                   (3)|Ψel-ph⟩ =         |ν,µ⟩Ψel(ν)Ψph(µ;ν),                                            (7)
+                                                2                                                                                      ν,µ
+Physically,  ˆnsi   is  proportional  to  the  electron  and  hole  occupa-                           where  the  phonon  wave  function Ψph   for  the  phonon  conﬁg-
+tions  (with  constant  shift)  for  even  and  odd  sites,  respectively.                            uration µ   does  depend   on   the   electron   conﬁguration ν.   Note
+Introduction of   ˆxsi   corresponds  to  the  change  of  positive  direc-                           that,   in   the   previous  studies,41, 42)   the   phonon   wave   function
+tion  of  phonon  displacements  depending  on  whether  the  site                                    Ψph  is  independent  of  the  electron  conﬁgurationν.
+index is  even or odd. With  this  deﬁnition, the instability for the                                     The  phonon  part,  which  depends  on  the  electron  conﬁgura-
+charge-density wave  with  the  momentumπ  can  be  interpreted                                       tionν,  is  given  by
+as  the  ferroic  order  in  the  nsi   occupation.  The  Hamiltonian  is                                               ⏐⏐⏐Ψph(ν)⟩ =     ∏mmax∑                 .                                              (8)
+rewritten  as∑                                      ∑                ∑                                                                                  cmi (nsi )|mi⟩
+ H = −t            ( ˆc†i  ˆci+1 +  h.c.)−      g√         ˆnsi  ˆxsi +    ω ˆb†i  ˆbi.             (4)                                     i    mi=0
+                i                                2     i               i                              Here,  mmax   is   the  maximum  phonon  occupation  number  and
+   As   for   the   basis,   we   use   the   occupation   number   basis   of                        the  coeﬃcient  cmi (nsi )  is  a  variational  parameter.  In  this  case,
+electrons  and  phonons  in  real  space;  it  is  a  natural  choice  be-                            the  coeﬃcients  for  the  phonon  states  depend  on  local  electron
+cause  the  Hamiltonian  in  Eq.  (4)  is  deﬁned  in  real  space.  The                              conﬁguration,  which  allows  us  to  take  into  account  the  above
+electron  occupations  are  speciﬁed  by  nsi =  (−1)i(2ni− 1).  The                                  described   primitive   local   correlation   between   electrons   and
+phonon   basis   set {|mi⟩}   with   the   phonon  occupation   number                                phonons.
+
+
+                                                                                                   2
+J.  Phys.  Soc.  Jpn.                                                                                                                                                                                                                                                                                                                                                                                                          FULL  PAPERS
+
+                  0.8                                                                                                                               hidden layer
+                  0.6
+                  0.4
+                  0.2
+                    0
+                −0.2
+                −0.4
+                −0.6
+                −0.8−3          −2        −1           0         1          2          3                                                            visible layer
+
+
+                                                                                                           Fig.    2.        (Color   online)   Structure   of   RBM   with   Nhidden =   M   and   Nvisible =
+Fig.    1.        (Color            online)            Phonon            wave            functions   ⟨x|0⟩            andN.  Nhidden  and  Nvisible  are  the  number  of  hidden  and  visible  units,  respectively.
+
+⟨x|1⟩.        x        is        the        dimensionless        displacement.  ⟨x|m⟩        is        given        by
+⟨x|m⟩  =       (√π2mm!)−1/2 Hm(x)  exp(−x2/2),     where     Hm(x)     is     the     Hermite
+polynomial.  Here,  we  omit  site  index  i.
+                                                                                                           Nu.c.-site   (Nu.c. ≤    Nsite )   unit   cell   structure   for    fi j   parameters
+                                                                                                           ( fi+ pNu.c., j+ pNu.c. =   fi j  for  some  integer  p)  to  reduce  the  number
+                                                                                                           of  variational  parameters.  With  this  setting,  we  can  study  the
+    If   the   cmi    coeﬃcients   have   the   same   sign   for   all   occupa-                          ordered   state   whose   period   is   smaller   than   or   equal   to   Nu.c..
+tion  numbers  mi,  the  expectation  value  of  the  xsi   displacement                                   The  number  of   fi j  is  reduced  from  N 2site  to  Nu.c. Nsite.
+takes   positive   value.   This   can   be   easily   understood   consid-                                   ii)   RBM   electron-phonon   correlation   factor   PRBMel-ph .        In
+ering   the   fact   that   all   the   matrix   elements ⟨mi| ˆxsi|mi +  1⟩   are                         Refs.  41  and  42,  the  form  of  the  electron-phonon  correlation
+positive  (see   also   Fig.   1).  This   situation  is   favored  when  the                              factor  reads                                                                                                  (10)
+nsi    occupation   is   positive   (nsi =  1).   On   the   other   hand,   when                                                                         ∑
+nsi =−1,  negative   xsi   will  be  induced.  The  negative   xsi   is  real-                                                      Pel-ph =  exp               αi jni x j
+ized  if  the  cmi   coeﬃcients  have  the  sign  change  between  even                                                                                     i j
+and  odd  occupation  numbers.  To  satisfy  the  above  described                                         and
+primitive  correlation,  for  nsi =  1,  we  initialize  cmi   coeﬃcients                                                                             −∑            ,                                                 (11)
+such  that  cmi (nsi= 1) >  0  for  all  mi.  On  the  other  hand,  the  cmi                                                    Pel-ph =  exp                   vi jnim j
+coeﬃcients  for  nsi =−1  are  initialized  as  cmi (nsi =−1) >   0  and                                                                                    i j
+cmi (nsi=−1) <  0 for even and odd mi,  respectively. This  initial-                                       respectively  (αi j   and  vi j   are   variational  parameters).  Both   of
+ization  gives  the  energy  gain  in  the  electron-phonon  coupling∑)  in  Eq.  (4).                     them  are  constructed  based  on  physical  insight.  In  the  present
+term(−     g√2       i  ˆnsi  ˆxsi                                                                         study,    we    replace    them    with    the    RBM    correlation    factor,
+    We   have   two   independent  variational  parameters   cmi (nsi =                                    which    is    more   ﬂexible   and    unbiased.   Indeed,   as    is    shown
+±1)  for  each  phonon  occupation  mi   (0 ≤   mi ≤   mmax).  There-                                      in    Refs.    18    and    25,   the    two-body   correlation   factors   such
+fore,  the  number  of  variational  parameters  for  the  coeﬃcient                                       as   Eqs.   (10)   and   (11)   can   be   analytically   expressed   by   the
+cmi (nsi )   is   2(mmax+ 1)Nsite.   In   the   actual  calculations,   we   im-                           RBM   correlation   factor.   On   top   of   such   two-body   correla-
+pose  the  translational  symmetry,  and  the  number  is  reduced  to                                     tions,  the  RBM  can  describe  many-body  correlations  such  as
+2(mmax+ 1).  In  the  particle-hole  symmetric  case  without  sym-                                        three-body   and   four-body   correlations   simultaneously   in   an
+metry  breaking,  we  can  further  reduce  the  number  to  mmax+1:                                       unbiased   way.   Furthermore,   as   is   discussed   in   the   introduc-
+We   can   set   c2k (nsi =   1) =    c2k (nsi = −1)   and   c2k+1(nsi =   1) =                            tion,   it  is   ensured  that  any  correlations  can   be   expressed  ex-
+−c2k+1(nsi=−1)  with  some  non-negative  integer  k.                                                      actly  by  the  RBM  in  the  limit  of  an  inﬁnite  number  of  hidden
+    As    for    the    electron    wave    function Ψel,    we    employ    the                           units  (“universal  approximation”).
+pair-product  (geminal)  wave  function.  The  pair-product  wave                                              The  structure  of  the  RBM  is  shown  in  Fig.  2.  By  identifying
+function  has  ﬂexible  representability:  it  can  describe,  for  ex-                                    visible  units  conﬁguration{σl}  and  that  of  physical  degrees  of
+ample,  Fermi-sea,  antiferromagnetic,  charge-ordered,  and  su-                                          freedom  (ν,µ)  (see  the  following),  the  RBM  correlation  factor
+perconducting states.  The  pair-product  wave  function  is  given                                        is  given  by
+by                                                                                                                                                                                               
+                                                Nel                                                                 ∑              ∑                ∑                       ∑
+                                     ∑                      2                                                 PRBMel-ph (σ) =             exp            alσl +           Wlkσlhk +               bkhk
+                       |Ψel⟩ =              fi j ˆc†i↑ ˆc†j↓   |0⟩                                                       (9)         {hk}            l               l,k                      k
+                                       i, j                                                                                                ∑      ×∏               bk +∑              
+with   the   number   of   electrons   Nel   and   the   variational  param-                                                   =    exp            alσl               2 cosh                     Wlkσl
+eter    fi j.  Here,  we  write  the  electron  spin  degrees  of  freedom                                                                     l                  k                          l
+explicitly  to  make  it  possible  to  apply  our  wave  functions  to                                                                                                                                  (12)
+the  Hamiltonian  with  spin  degrees  of  freedom.  In  the  case  of                                     Here, σl = ±1   and   hk = ±1   denote   the   state   of   visible   and
+the   present   spinless   case,   we   just   use   one   spin   component                                hidden  units  respectively. σ =   (σ1,σ2,...,σNvisible )  is  the  spin
+out   of   up   and   down   components.   When   the   boundary   con-                                    conﬁguration  of   the   visible   units. {al, Wlk, bk}   are   variational
+dition   of   the   lattice   is   periodic   or   anti-periodic,  we   can   take
+
+
+                                                                                                       3
+J.  Phys.  Soc.  Jpn.                                                                                                                                                                                                                                                                                                                                                                                                          FULL  PAPERS
+
+                                                    Phonon configurations
+      Electron configurations                                                                      ⟨Ψ|H|Ψ⟩/⟨Ψ|Ψ⟩,  where  the  expectation value  is  calculated  us-
+                                                                                                   ing   the   Monte   Carlo   method   over   the   real-space   conﬁgura-
+                                                                                                   tions   (µ,ν)   with   the   weight |Ψ(µ,ν)|2.   The   SR   method   real-
+                                                                                                  izes   imaginary  time   Hamiltonian  evolution  within  the   repre-
+                                                                                                   sentative  power  of  the  variational  wave  function45)  and  hence
+                                                                                                   enables  stable  optimization.  The  variational  parameters  to  be
+                                                                                                   optimized  are{cmi (nsi ),   fi j, Wlk, bk}  in  Eqs.  (8),  (9),  and  (12).
+                                                                                                       The  numbers  of  independent parameters for  the  translation-
+                                                                                                   ally  invariant  systems  are  2(mmax+ 1)  for  cmi (nsi ),  Nu.c. Nsite  for
+                                                                                                    fi j, αNvisible   for   Wlk ,   and α   for   bk   parameters.   If   the   system
+Fig.    3.        (Color  online)  Mapping  between  visible  unit  (σ)  conﬁgurations  and        has   particle-hole   symmetry,   the   number   for   cmi (nsi )   parame-
+electron  and  phonon  conﬁgurations  at  each  site.↑  and↓  correspond  toσl =  1                ters  can  be  reduced  to  mmax+ 1.  See  the  previous  sections  for
+and−1  with  l  being  the  visible-unit  index,  respectively.  In  this  example,  three         more  detail  on  the  number  of  independent  parameters.
+visible  units  are  introduced  to  represent  phonon  conﬁgurations.
+
+                                                                                                   2.3        Results
+                                                                                                   2.3.1        Total  energy
+parameters.  We  neglect  irrelevant  one-body  al   terms  and  op-                                   To     show    the    accuracy    of    our    wave    function,    we     ﬁrst
+timize  only{Wlk, bk}  parameters.                                                                 show   the   results   for   the   total   energy.   We   consider   the   one-
+   In    the    case    of    electron-phonon   coupled    Hamiltonian    in                       dimensional   spinless   Holstein   model   whose   Hamiltonian   is
+Eq.   (4),   to   represent   both   the   electron   and   phonon   conﬁgu-                       given  by  Eq.  (4).  Following  the  previous  studies,41, 46)  we  use
+rations,   we   prepare   one   visible   unit   for   electron   conﬁgura-                        periodic   (anti-periodic)   boundary   condition   when   the   num-
+tion   and   M   visible   units   for   phonon   conﬁguration   for   each                        ber   of   electrons   is   odd   (even).   We   simulate   6-,   8-,   and   16-
+site    (see    Fig.    3).   In    total,    the    number   of    visible    units    be-        site   systems  with ω/t =   1,  g/t =   1.5.  The  ﬁlling  is  set  to  be
+comes    Nvisible =     Nsite(M +   1).   We   deﬁne σl =     nsi = ±1                             half-ﬁlling.   In   this   setting,   the   ground   state   is   described   by
+for  the  visible  units  in  charge  of  electron  conﬁgurations.  For                            Tomonaga-Luttinger   liquid   (TLL).   Because   the   system   has
+phonon  conﬁguration,  with   M   visible  units,  we  can  describe                               particle-hole   symmetry,   the   number   of   independent   phonon
+the   phonon   states   up   to   the   occupation   number   of   2M −   1                        coeﬃcients{cmi (ni)}  becomes  mmax+1  (see  Methods  section).
+at   each   site.   For   example,   if   we   have   three   visible   units,   we                We   set   maximum   phonon   occupation   number   mmax   at   each
+can  map  (σl1,σl2,σl3 ) =   (1, 1, 1)  onto |0⟩,  (−1, 1, 1)  onto |1⟩,                           site  to  be  15,  i.e.,  the  number  for  visible  units  for  phonon  con-
+(1,−1, 1)  onto |2⟩,  ...,  and  (−1,−1,−1)  onto |7⟩.  Because  the                               ﬁguration  is   M =   4  per  site.  Then  the  total  number  of  visible
+maximum  phonon  occupation  number  mmax   scales   exponen-                                      units  are  Nvisible =   5Nsite.  We  conﬁrm  the  convergence  of  the
+tially  with   M,  we  can  essentially  simulate  inﬁnite  mmax.  This                            results  with  respect  to  mmax.  As  for  the   fi j  parameters, we  take
+deﬁnition   gives   one   to   one   correspondence   between σ   spin                             6-site  unit-cell  structure  for  the  6-site  system  and  4-site  unit-
+conﬁguration  and  electron  and  phonon  conﬁguration  (ν,µ).                                     cell  structure  for  the  8-site  and  16-site  systems.
+   The   correlation   factor   PRBM                                                                   Figure  4  shows  the  results  for  the  energy  per  site  for  diﬀer-
+                                          el-ph (σ)   in   Eq.   (12)   is   combined              ent  hidden  variable  densities α =   0,  2,   4,  8,   and  32.  In  each
+with    the    electron-phonon-entangled    wave    function |Ψel-ph⟩                              panel,  the  vertical  axis  is  the  energy  per  site  and  the  horizon-
+[Eq. (6)]. In addition to  the primitive correlation between elec-                                 tal   axis   is   the   energy  variance ∆var =   (⟨H 2⟩ − ⟨H⟩2)/⟨H⟩2.
+trons   and   phonons   taken   into   account   by |Ψel-ph⟩,   the   RBM                          The  energy  variance  becomes  zero  if  we  obtain  exact  ground-
+correlation    factor    PRBMel-ph     takes    into    account    more    sophisti-               state   wave   function   (in   more   general,   for   any   eigenstates   of
+cated  correlations.  Note  that  the  RBM  correlation  factor  takes                             the  Hamiltonian).  Therefore,  the  energy  variance  tells  us  how
+into   account   not   only   electron-phonon   correlations   but   also                          close  the  variational  wave  function  is  to  the  ground  state.  As
+electron-electron and phonon-phonon correlations. Therefore,                                       we   can   see,   the   accuracy   becomes   better   with   increasing α,
+we  do  not  need  to  introduce  additional  correlation  factor  for                             and  in  all  the  cases,  the  energy  for α =   8,  16,  32  agrees  with
+electron-electron   and   phonon-phonon   correlations,   whereas                                  those  obtained  by  numerically  exact  Green’s  function  Monte
+the  wave  functions  employed  in  the  previous  studies41, 42)  use                             Carlo  method46)   within  one  standard  error.  In  the  case  of  the
+electron-electron  correlation   factor   separately   with   electron-                            16-site   system,   extrapolation   to    zero   energy   variance   limit
+phonon  correlation  factor  in  Eqs.  (10)  and  (11).                                            seems  to  overshoot  the  ground  state  energy  estimated  by  the
+   The   accuracy   of    the   wave    function   is    controlled   by    the                    Monte   Carlo   method.   However,   the   deviation   is   still   within
+number  of  hidden  units:  The  more  hidden  units  we  introduce,                               two   standard   errors.   Note   that   our   wave   function   method   is
+the  more  accurate  the  wave  function  becomes.  We  deﬁne  the                                 variational;   therefore,   the   energy   never   becomes   lower   than
+control  parameter  of  accuracyα  to  beα =  Nhidden/Nvisible  with                               that  of  the  ground  state.
+the  number  of  hidden  unit  Nhidden.  We  call α  hidden  variable                                  Compared  to  the  result  of  the  previous  study  (blue  lines),41)
+density.  By  taking α  to  be  integer  and  imposing  translational                              our   wave   function   improves   the   accuracy   substantially.   The
+symmetry  in  Wik   and  bk   parameters,1)  the  number  of  Wik   and                            improvement    can    be    ascribed    to    the    synergetic    eﬀect    of
+bk  parameters  becomesαNvisible   andα,  respectively.                                            the  introduction  of  electron-phonon  entangled  wave  function
+2.2.3        Optimization                                                                          |Ψel-ph⟩   in   Eq.   (7)   and   the   usage   of   the   ﬂexible   RBM   cor-
+   We   employ   the   stochastic   reconﬁguration  (SR)   method43)                               relation    factor    in    Eq.    (12).    In    Ref.    41,    the    results    for    the
+to   optimize   the   variational   parameters.44)    The   optimization                           wave  function  without  the  electron-phonon  correlation  factor
+is     done    to    minimize    the    energy    expectation    value     E  =                    |Ψel⟩⊗|Ψph⟩,  in  which  the  electron and  phonon degrees of  free-
+
+
+                                                                                                4
+J.  Phys.  Soc.  Jpn.                                                                                                                                                                                                                                                                                                                                                                                                          FULL  PAPERS
+
+                                              (a) 6 sites                                     (b) 8 sites                                  (c) 16 sites
+
+                     −0.83                      VMC
+                                                GFMC
+                     −0.84                      present study
+
+
+                     −0.85
+
+                     −0.86
+
+                     −0.87
+
+                             0           0.004         0.008          0.012          0            0.004           0.008           0.012       0           0.002         0.004        0.006
+
+
+
+
+Fig.    4.        (Color   online)   Energy   for   the   one-dimensional   spinless   Holstein   model   [Eq.  (4)]   with ω/t =   1   and   g/t =   1.5   for   6-,  8-,   and   16-site   systems.   The
+results   of  the  present   study  are  given   by  red   dots.  In  each   ﬁgure,   from  right   to  left,   the  hidden   variable   density α  employed   in   the  variational   wave  function
+varies  as  0,  2,  4,  8,  and  32.  The  horizontal  axis  is  the  energy  variance ∆var =  (⟨H 2⟩−⟨H⟩2 )/⟨H⟩2.  For  comparison,  energies  obtained  by  the  variational  Monte
+Carlo  (VMC)41)   and  Green’s  function  Monte  Carlo  (GFMC)  method46)   are  shown,  where  the  shaded  regions  show  the  size  of  error  bar.
+
+
+
+                                                                                                                         0.20
+dom  are  decoupled,  are  also  shown;  the  obtained  energies  are
+−0.7749(2), −0.7739(2),  and −0.7732(4)  for   6-,   8-,   and   16-
+site  systems,  respectively.  By  incorporating  primitive  correla-                                                    0.15
+tions  between  electrons  and  phonons using|Ψel-ph⟩,  the  results
+improve  to−0.84908(3),−0.83884(3),−0.82933(2) for  for  6-                                                                                                                     present study
+,  8-,  and  16-site  systems,  respectively  (α =  0  result  in  Fig.  4).                                             0.10                                                   DMRG
+The RBM  correlation factor  PRBMel-ph (σ)  further improves the  en-
+ergy,   achieving   the   agreement   with   the   Monte   Carlo   results                                               0.05
+within  one  standard  error.
+
+2.3.2        Charge  structure  factor                                                                                      0 0                   0.04                0.08                0.12
+    When    the    electron-phonon   coupling    becomes    large,    the
+ground     state     of     the     one-dimensional     half-ﬁlled     Holstein
+model   [Eq.   (4)]   changes   from   TLL   to   charge   density   wave
+(CDW)  state.  Here,  we  show  the  results  for  the  charge  struc-                                    Fig.    5.        (Color   online)   Results   for   charge   structure   factor   S  c(π)   for   one-
+ture    factor    for    (ω/t  =       0.1,      g2/ω2  =       2)    and    (ω/t  =                      dimensional   spinless  Holstein   model  [Eq.  (4)]  with   (ω/t =   0.1,    g2/ω2 =   2)
+0.1,    g2/ω2 =    20).   The   former   gives   the   TLL   ground   state,                              and  (ω/t =  0.1,   g2/ω2 =  20).  System  sizes  used  in  the  calculations  are  8,  12,
+and  the  latter  gives  rise  to  the  CDW  instability.  In  the  present                               16,  24,  32,  48,  and  64.  Our  results  (red  dots)  are  compared  with  those  (black
+Hamiltonian,    the    charge-charge   correlation    function    has    a                                diamonds)47)   obtained  by  density-matrix  renormalization   group  (DMRG).
+peak   at   the   momentum  q = π,   and   the   charge   structure   fac-
+tor  is  given  by
+                                ∑                           )( ˆni+ j −   1)⟩.                         (13)
+         S  c(π) =        1N 2site   (−1) j⟨( ˆni −   12                  2                               study,  we  assume  one  of  two  patterns.  In  this  case,  in  the  no-
+                                 i, j                                                                     tation  of  nsi ,  the  CDW  corresponds  to  the  ferroic  order  favor-
+    Before   showing   the   results   for   S  c(π),   we   show   the   detail                          ing   either   (1, 1, 1, 1,....)  or   (−1,−1,−1,−1,...)  patterns.   Cor-
+of   the   parameter   setting.   We   employ   the   periodic   boundary                                 respondingly,  we  prepare  independent  cmi (nsi )  parameters  for
+condition   to   compare   our   results   with   those   of   Ref.      47.   In                         majority   and   minority  nsi    occupations.  Thus,   cmi (nsi =  1)   and
+the   TLL   phase   with   the   particle-hole  symmetry,  we   can   im-                                 cmi (nsi=−1)  become  independent  and  the  number  of  indepen-
+pose  the  relationship  in  the {cmi (nsi )}  coeﬃcients  as  described                                  dent  phonon  coeﬃcients{cmi (nsi )}  is  2(mmax+ 1).
+in   the   previous   section:   c2k (nsi =     1) =     c2k (nsi = −1)   and                                 In   the   TLL   (CDW)   phase   for ω/t =    0.1   and   g2/ω2 =    2
+c2k+1(nsi =    1) = −c2k+1(nsi = −1)   with   some   non-negative                                         (ω/t =   0.1  and  g2/ω2 =   20),  we  set  maximum  phonon  occu-
+integer    k.    The   number   of    independent   phonon   coeﬃcients                                   pation  number  mmax   at  each  site  to  be  7  (31),  and  the  number
+{cmi (nsi )}   is   mmax+ 1.   On   the   other   hand,   in   the   CDW   phase,                         for   visible   units   for   phonon   conﬁguration   becomes   M =    3
+we   have   charge-rich  and   charge-poor  sites,   and   the   particle-                                (M =  5)  per  site.  The  total  number  of  visible  units  is  given  by
+hole  symmetry  at  each  site  is  broken.  The  actual  ground  state                                   Nvisible =  Nsite(M +  1).  We  conﬁrm  the  convergence  of  results
+for   the   ﬁnite-size   system   is   made   of   superposition   of   (rich,                            with  respect  to  mmax.
+poor,  rich,  poor,  ...)  and  (poor,  rich,  poor,  rich,  ...)  CDW  pat-                                  As  for  the   fi j   parameters,  we  take  4-site  unit-cell  structure
+terns,  and  the  symmetry  is  recovered.  However,  in  the  present                                    in   common,   which   is   large   enough   to   study   both   TLL   and
+                                                                                                          commensurate  CDW  phases.  The  hidden  variable  densityα  is
+
+                                                                                                       5
+J.  Phys.  Soc.  Jpn.                                                                                                                                                                                                                                                                                                                                                                                                          FULL  PAPERS
+
+
+set  to  beα =  8.                                                                                 systems,   in   which   the   total   momentum   K   is   a   good   quan-
+   Figure  5  shows  the  calculated  charge  structure  factor  S  c(π)                           tum  number.  By  applying  the  momentum  projection,  we  can
+for   (ω/t =    0.1,    g2/ω2 =   2)   and   (ω/t =   0.1,    g2/ω2 =    20).                      discuss   the   dispersion   of   the   excited   states.   With   a   transla-
+In  the  former  case,  S  c(π)  vanishes  as  Nsite → ∞,  showing  the                            tion   operator   T R   shifting   all   the   particles   by   the   amount   R,
+absence  of  CDW  order.  In  the  latter  case,  CDW  order  is  con-                             the  many-body  wave  function  with  the  total  momentum  K  is
+ﬁrmed   by   nonzero  S  c(π)   with   Nsite → ∞.   We   also   compare                            transformed  as
+our  results  with  those47)  obtained  by  density-matrix renormal-                                             T RΨK(r) ≡ ΨK(r+  R) =  eiK·RΨK(r),                                   (14)
+ization  group  (DMRG).48)  They  show  good  agreements,  con-
+ﬁrming  the  accuracy  of  our  methods.                                                           where  r   denotes  the  real-space  conﬁguration  of  the   particles
+                                                                                                   r =    (r1, r2,..., rNparticles ).   In   the   following,   we   discuss,   in   de-
+2.4        Discussion                                                                              tail,   how  to  make  the  wave  function  satisfy  the   symmetry  in
+   In  the  present  study,  all  the  variational  parameters  are  taken                         Eq.  (14).
+to  be  real.  In  this  case,  the  RBM   correlation  factor   PRBMel-ph (σ)
+always   gives   positive   weight,   i.e.,   it   just   controls   the   ampli-                  3.1.2        Quantum  number  projection
+tude  of  the  wave  function  and  does  not  change  the  node  of  the                              Here,  we  discuss  how  to  apply  the  momentum  number  pro-
+wave  function. The  sign  of  the  wave  function is  determined by                               jection   to   the   wave   function.   For   simplicity,   let   us   give   an
+electron-phonon  entangled  wave  function |Ψel-ph⟩.  Therefore,                                   explanation   using   the   one-dimensional   S =      12    spin   models
+we  have  paid  close  attention  to  the  initial  sign  of  the  phonon                          with  the  periodic  boundary  condition.  The  spin  conﬁguration
+coeﬃcients{cmi (nsi )}  as  described  in  the  previous  sections.                                is  speciﬁed  by σ =  (σ1,σ2,...,σNsite )  with σi =  2S  zi = ±1.  S  zi
+   In   principle,   if   we   introduce   a   complex   RBM   correlation                         is  the  z-component  of  S =   12   spin  at  site  i.
+factor,   the   node   of   the   wave   function   can   change.   Even   in                        Method  in  Ref.  29.        For  a  spin  conﬁguration,  we  can  gen-
+that  case,  we  believe  that  a  good  initial  guess  for  the  sign  of                        erate  shifted  conﬁgurations  by  applying  the  translation  oper-
+phonon  coeﬃcients  will  make  the  optimization  easier.  There-                                 ators.  Among  the  generated  spin  conﬁgurations  including  the
+fore, although it  is  straightforward to  apply the  machine learn-                               original   conﬁguration,   we   choose   a   canonical   conﬁguration
+ing   wave   functions   to   more   general   fermion-boson   coupled                             σcanonical.   In   Ref.   29,  the   canonical  conﬁguration σcanonical   is
+Hamiltonians  once  the  mapping  between  fermion-boson  and                                      chosen  to  be  the  lexicographically  smallest  one.  By  introduc-
+visible-unit   conﬁgurations   is    deﬁned,   it    will    be    helpful   to                    ing  an  operator  T   shifting  spin  conﬁgurations  by  one  site,  the
+guess  the  sign  structure  of  the  exact  wave  functions  (at  least                           amplitude of  the  wave  function for  a  conﬁguration T nσcanonical
+at  primitive  level)  to  obtain  good  accuracy.                                                 (0≤ n< Nsite)  is  given  by
+3.        Calculations  of  excited  states                                                                       ΨK (T nσcanonical) =  einKΨ(σcanonical).                                     (15)
+   So    far,   almost    all    the    variational   studies    using    machine                  Here,  instead  of  calculating  the  amplitude  for  T nσcanonical   di-
+learning     techniques     have     focused     on     approximating     the                      rectly, the amplitude is  given by referring to  that of  the canoni-
+ground    state    wave    function.    However,    the    calculations    of                      cal  conﬁgurationσcanonical.  With  this,  the  wave  function on  the
+excited    states    also    give   important   information   such    as    the                    left-hand  side  satisﬁes  the  proper  symmetry  in  Eq.  (14)  even
+ground   state   degeneracy,   the   size   of   the   excitation   gap,   and                     when  we  do  not  impose  any  translation  symmetry  constraint
+low-lying  dispersion  of  excitations.                                                            on   the   wave   function  on   the   right-hand  side Ψ(σcanonical).   In
+   The   ﬁrst   attempt   to    obtain   excited   states    with    machine-                      Ref.   29, Ψ(σcanonical)   is   prepared  by   the   RBM   or   three-layer
+learning   wave   function   has   been   performed   in    Ref.   29.   In                        feedforward  neural  networks  (FFNN).
+this    study,    we    present    another    approach    to    obtain    excited                      Present    Scheme.        In    the    present    study,   we    employ    the
+states.   We   apply  the  method  to   the  one-dimensional  Heisen-                              scheme  in  Refs.  50  and  51.  The  wave  function  projected  onto
+berg   model  and   show   that   our   method   gives   better   accuracy                         the  total  momentum  K  sector  is  given  by
+than  that  obtained  in   Ref.  29  even  though  the   present  neural                                                               Nsite−1∑
+network is  much more  compact than  that  employed in  Ref.  29.                                                       ΨK (σ) =               e−inKΨ(T nσ).                                                 (16)
+We  also  apply  the  method  to  the  two-dimensional  Heisenberg                                                                      n=0
+model  with  frustration  and  demonstrate  good  accuracy  of  the                                Is  it  easy  to  show  that  the  wave  function  on  the  left-hand  side
+method.                                                                                            is  transformed according to  Eq.  (14).  Note  again  that  the  wave
+
+3.1        Method                                                                                  function   on   the   right-hand   side   does   not   necessarily   satisfy
+3.1.1        General  idea                                                                         the  symmetry  in  Eq.  (14).  To  represent Ψ(σ),  we  employ  the
+   For  ﬁnite  size  systems,  eigenstates  of  many-body  Hamilto-                                RBM  wave  function  with  Nvisible =  Nsite,  which  reads           
+nians  with  several  symmetries  are  labelled  by  quantum  num-                                                               ∑            ∑                     ∑
+bers.   Therefore,   we   can   use   quantum   number   projection   to                                          Ψ(σ) =              exp           Wikσihk +             bk hk
+obtain   excited   states:   We   ﬁnd   the   lowest   energy   eigenstates                                                      {hk}          i,k                    k
+for  diﬀerent  quantum  number  sectors;  then  we  obtain  excited                                                              ∏               bk +∑            .                                (17)
+states   characterized   by   diﬀerent   quantum   numbers   than   that                                                    =          2 cosh                   Wikσi
+of  the  ground  state.  This  approach  is  taken  commonly  in  the                                                              k                        i
+present   study   and   Ref.   29.49)   The   diﬀerence   in   the   schemes                       bk   is   the   bias   on   the   hidden  units,   and   Wik   is   the   interaction
+comes   from   the   way   of   enforcing   quantum   numbers   to   the                           between  the  visible  and  hidden  units.  As  in  Sec.  2,  we  neglect
+many-body  wave  function.                                                                         the  bias  term  for  the  visible  units.  In  order  to  make  it  possible
+   In   the   present  study,   we   focus   on   translationally  invariant                       to  represent  the  sign  change  of  the  wave  function,  we  take  the
+
+                                                                                                6
+J.  Phys.  Soc.  Jpn.                                                                                                                                                                                                                                                                                                                                                                                                          FULL  PAPERS
+
+bk  and  Wik   parameters  to  be  complex  variables.                                                        −0.40             RBM
+   Comparison   between   the   present    scheme    and   that    in                                                           Exact
+Ref.    29.        Let     us     show    the     diﬀerence    in     the     above    two                   −0.42
+schemes    using    the    simple    one-dimensional    four-site    spin                                                                    10−4
+model.  In  this  case,  for  example,  the  following  four  spin  con-
+ﬁgurations  are  related  with  each  other  by  the  translation  oper-                                     −0.44                           10−5
+ator:
+                          σ0   =          (↑,↑,↓,↓)                                                                                          10−6
+                                                                                                             −0.46
+                          σ1   =          (↓,↑,↑,↓) =  Tσ0                                                                                   10−70                0.5               1.0
+
+                          σ2   =          (↓,↓,↑,↑) =  T 2σ0                                                 −0.48
+                          σ3   =          (↑,↓,↓,↑) =  T 3σ0                                        (18)              0             0.2             0.4            0.6             0.8            1.0
+
+Let   us   take σcanonical    to   be σ0.   Then,   the   wave   function   in
+Ref.  29  is  given  by                                                                               Fig.    6.        (Color   online)   Energy  per   site  as  a  function   of  total  momentum   K
+                            ΨK (σ0)  =  Ψ(σ0)                                                         for  the  one-dimensional  antiferromagnetic  Heisenberg  model.  Red  dots  show
+                                                                                                      the   RBM   results   with   the   hidden   variable   density α =   1.   The   size   of   error
+                            ΨK (σ1)  =          eiKΨ(σ0)                                              bars  is  smaller  than  the  symbol  size.  The  exact  results  obtained   by  the  exact
+                                                                                                      diagonalization    are   shown   by   the   blue   curve.   The   inset   shows   the   relative
+                            ΨK (σ2)  =          e2iKΨ(σ0)                                             error   of   the   energy   (ERBM −   Eexact )/EGS   with   the   RBM   energy   ERBM ,   the
+                                                                                                      exact  energy  Eexact ,  and  the  exact  ground  state  energy  EGS .
+                            ΨK (σ3)  =          e3iKΨ(σ0)
+On   the   other   hand,  the   wave   function  in   the   present  scheme
+reads
+ ΨK (σ0) = Ψ(σ0)+  e−iKΨ(σ1)+  e−2iKΨ(σ2)+  e−3iKΨ(σ3)                                                Here  Si   is  the  spin-1/2  operator  at  site  i  and   J   is  the  Heisen-
+ ΨK (σ1) = Ψ(σ1)+  e−iKΨ(σ2)+  e−2iKΨ(σ3)+  e−3iKΨ(σ0)                                                berg  exchange  interaction.  We  take   J   as  energy  unit,  i.e.,  we
+                                                                                                      set   J =   1.  As  in  Ref.  29,  we  take  36  site  systems  (Nsite =   36)
+ ΨK (σ2) = Ψ(σ2)+  e−iKΨ(σ3)+  e−2iKΨ(σ0)+  e−3iKΨ(σ1)                                                and    impose    periodic   boundary   condition.   The    relation    be-
+ ΨK (σ3) = Ψ(σ3)+  e−iKΨ(σ0)+  e−2iKΨ(σ1)+  e−3iKΨ(σ2).                                               tween   the   visible   units   and   physical   spins   is   given   by σi =
+                                                                                                      2S  zi ,   as   we   described   above.   The   number   of   visible   units   is
+   When    we    deﬁne    the    hidden    variable   density α    as α =                             Nvisible =   Nsite.  We  do  not  impose  any  symmetry  in  bk   or  Wik ,
+Nhidden/Nvisible  (=  Nhidden/Nsite)  as  in  Sec.  2,  the  computational                            and   the   numbers   of   independent   bk   and   Wik   parameters   are
+cost  of  the  scheme  in  Ref.  29  scales  asO(αN 2site ).  On  the  other                          αNvisible   and αN 2visible ,  respectively.  The  total  number  of  vari-
+hand,  the  present  scheme  scales  asO(αN 3site)  because  we  need                                 ational   parameters   amounts   to   2αNvisible (Nvisible +  1),   where
+to   compute   the   summation   over   n   in   Eq.   (16),   which   gives                          the   factor   of   2   comes  from  the   fact   that  bk   and   Wik   parame-
+an  additional  factor  of  Nsite.  Therefore,  when  the  hidden  vari-                              ters  have  both  real  and  imaginary  parts.  The  optimization  of
+able  density α  is  the   same,  the  scheme  in   Ref.  29  is  compu-                              the  variational  parameters  is  done  in  the  very  same  way  as  in
+tationally  cheaper.  However,  as  we  show  in  the  next  section,                                 Sec.  2,  i.e.,  we  use  the  SR  method.
+the   present  scheme  is   much   more  accurate  with   the   same α.                                   We  optimize  the  RBM  wave  function  with  the  hidden  vari-
+In   the   scheme   in   Ref.   29,   if   the   value   of α   giving   the   same                   able  densityα =  1  for  each  momentum  K  sector  and  compare
+accuracy  as   that   in   the   present  scheme  becomes  comparable                                 the   energy   with   the   exact   results   (Fig.   6).   We   ﬁnd   that   the
+to  Nsite,  the  computational  cost  becomes  comparable  between                                    relative  error  of  the   RBM   energy  is  at  most  2 ×  10−5,  show-
+the  two  methods.                                                                                    ing  an  excellent  agreement  with  the  exact  energy.  Indeed,  the
+   Furthermore,   when   the   number   of   variational   parameters                                 present RBM  energy is  much more accurate than that obtained
+becomes    large,    numerical    optimization    becomes    diﬃcult.                                 in  Ref.  29:  In  Ref.  29,  the  results  obtained  by  the  RBM  with
+Therefore,   in   general,   it   helps   to   save   the   number   of   varia-                      α =    3   show   the   relative   error   of   about   7 ×  10−3   at   the   mo-
+tional   parameters   for   achieving   stable   optimizations.   In   this                           mentum  in  which  the  accuracy  is  the  worst  (around  K =     23π).
+sense,   the   present  scheme   has  an   advantage  because   we   can                              The  best  accuracy  is  achieved  at  K =  0  in  both  cases,  the  rel-
+achieve   much   better   accuracy   with    smaller α   and   hence   a                              ative  error  is  about  4×  10−7   (the  present  study)  and  2×  10−5
+smaller  number  of  variational  parameters.                                                         (Ref.  29).
+                                                                                                          As   we   already   described,   the   way   of   imposing   total   mo-
+3.2        Results                                                                                    mentum  is  diﬀerent  in  the  two  methods,  which  leads  to  a  sig-
+3.2.1        One-dimensional           antiferromagnetic           Heisenberg                         niﬁcant   diﬀerence   in   the   accuracy.   The   present   RBM   wave
+           model                                                                                      function  gives  better  accuracy  even  though  the  number of  hid-
+   First,    we    show    the    result    of    S  =          1                                     den  units  is  smaller.  To  improve  the  accuracy,  in  Ref.  29,  the
+                                                                 2     antiferromagnetic              three-layer FFNN  is  introduced. The  size  of  the  FFNN  is  char-
+Heisenberg   model   on   the   one-dimensional   spin   chain.   The                                 acterized  by  the  ﬁrst  hidden-layer  variable  densityα1 =  2  and
+Hamiltonian  is  given  by                                                                            the  second  hidden-layer  variable  density α2 =   0.5.  However,
+
+                                        Nsite∑                                                        the  accuracy  of  the  FFNN  is  still  worse  than  that  obtained  by
+                            H =   J          Si ·  Si+1.                                                                (19)the  present  RBM:  the  best  accuracy  is  achieved  at  K =   0  and
+                                        i=1
+
+                                                                                                   7
+J.  Phys.  Soc.  Jpn.                                                                                                                                                                                                                                                                                                                                                                                                          FULL  PAPERS
+
+                                                                                                                                                 (a) J2 = 0.2
+the   relative  error  is  about  3 ×  10−5,   whereas  the  worst  accu-                                          −0.45
+rate  momentum  is  at   K = π/2  and  the  relative  error  is  about
+5×  10−4.
+                                                                                                                   −0.50
+3.2.2        Two-dimensional  antiferromagnetic  J1-J2  Heisenberg
+           model                                                                                                   −0.55
+   We  also  apply  the  method  to  the  S =      12   antiferromagnetic
+J1-J2   Heisenberg   model  on   the   square   lattice.   The   Hamilto-
+nian  is  given  by         ∑                        ∑                                                             −0.60
+                H =   J1          Si ·  S j +  J2          Si ·  S j,                                       (20)                                                                RBM
+                             ⟨i, j⟩                 ⟨⟨i, j⟩⟩                                                                                                                    Exact
+                                                                                                                   −0.65
+where  Si   is   the   spin-1/2  operator  at   site   i,   and   J1   (J2)   is   the
+nearest   neighbor   (next   nearest   neighbor)   exchange   interac-
+tion.   We   take    J1    as   energy   unit,   i.e.,   we   set    J1 =     1. ⟨i,   j⟩
+and⟨⟨i,   j⟩⟩  denote  pairs  of  nearest  neighbor  and  next  nearest-                                                                         (b) J2 = 0.5
+neighbor  sites,   respectively.  In   the   S =      12    antiferromagnetic                                      −0.40
+J1-J2  Heisenberg model on the square lattice, the  next nearest-
+neighbor   J2   interaction   gives  frustration   and   the   model  may
+host  spin  liquid  ground  state  around  J2/J1 =  0.5.  However,  it                                             −0.45
+is  still  an  open  problem whether  the  spin  liquid  ground state  is
+realized  or  not.  For  the  frustrated  systems,  whereas  the  quan-
+tum  Monte  Carlo  methods  suﬀer  from  the  negative  sign  prob-
+lem,  the  RBM  scheme  is  free  from  the  sign  problem  and  can                                               −0.50
+be  applied  to  this  challenging  problem.
+   Here,   as   a   benchmark,   we   employ   the   4 ×   4   lattice   with
+the  periodic  boundary  condition.  In  the  case  of  the  4×  4  lat-                                           −0.55
+tice,  there  are  six  irreducible  momenta  (0, 0),  (π/2, 0),  (π, 0),
+(π,π/2),  (π,π)  and  (π/2,π/2).  For  each  momentum,  we  com-
+pute   the   lowest   energy   state   with   the   RBM   (α =    2.5)   and                         Fig.    7.        (Color   online)   Energy  per  site  as  a  function   of  total   momentum  K
+compare   them   with   the   results   obtained   by   the   exact   diago-                         for   the   two-dimensional   J1 -J2   Heisenberg   model   with   (a)   J2 =   0.2   and   (b)
+nalization.  Fig.  7(a)  and  (b)  show  the  results  for   J2/J1 =   0.2                           J2 =   0.5.  The  RBM   results   with   the  hidden   variable   density   of α =   2.5  are
+and  0.5,  respectively.  As  can  be  seen,  the  agreement  between                                shown  by  red  crosses.  Blue  dots  show  the  exact  results  obtained  by  the  exact
+the  RBM  and  the  exact  results  is  excellent.  The  relative  errors                            diagonalization.   Blue  dotted  lines  are  just  guide  to  the  eye.
+are   at   most   1 ×  10−4   and   4 ×  10−4   for   J2/J1 =   0.2   and   0.5,
+respectively.
+
+3.3        Discussion                                                                                the   previous   variational   wave   function.   The   improvement  is
+   We   have   shown  that   the   complex  RBM   can   well   describe                              achieved  by  preparing  electron-phonon-entangled wave  func-
+the    excited    states    of    the    quantum    spin    Hamiltonians.    The                     tion  and  improving  the  electron-phonon correlation  factor  us-
+method   seems   to   work   well   even   in   the   frustrated   spin   sys-                       ing  the  RBM.
+tems,   in   which   the   node   structure   of   the   wave   function   be-                           The   second   extension   is   the   calculation   of   excited   states.
+comes   crucial.   Therefore,   it   opens   a   way   to   investigate,   for                       This  is  achieved  by  imposing  quantum  numbers  to  the   wave
+example,  the   existence   of   the   spin   gap   in   the   frustrated   sys-                     functions. The diﬀerence between the  present  method and  that
+tems.                                                                                                in   Ref.   29   lies   in   the   way   of   imposing   quantum   numbers.
+   For  large  system   sizes,   the   number  of   variational  parame-                             By   applying   it   to   the   one-dimensional  S =    1/2   Heisenberg
+ters  would  become  large  to  achieve  high  accuracy.  Because  it                                model, we  have shown that  the  present scheme gives better  ac-
+is   diﬃcult   to   perform   stable   optimization   of   a   large   number                        curacy  than  that  achieved  in  Ref.  29,  even  though  the  present
+of  parameters,  it   is  helpful  to   reduce  the   number  of  parame-                            neural  network  is  more  compact.  We  have  also  performed  the
+ters.  As  is  discussed  in  Ref.  25,  by  combining  the  RBM  with                               benchmark  using  the  two-dimensional  S =  1/2  J1-J2  Heisen-
+other  powerful  wave   functions,  the   same   accuracy  would   be                                berg model, and showed an  excellent agreement with the exact
+achieved  by  smaller  number  of  variational  parameters.  It  is  an                              results.
+interesting   future   issue   to   implement   such   a   combination   to                              Finally,  we  brieﬂy  discuss  several  future  directions.  As  for
+study  excited  states.                                                                              the   ﬁrst   part,   an   application   to   more   general   fermion   boson
+4.        Summary                                                                                    systems  would  be  of  great  interest.  It  will  open  a  way  to  study
+   We   have   discussed   two   extensions   of   the   machine   learn-                            real   materials,   which   sometimes   have   complicated   forms   of
+ing  variational  method.  The  ﬁrst  extension  is  the  application                                interactions.   As   for   the   second   part,   the   information   of   ex-
+to  the  fermion-boson  coupled  Hamiltonians.  We  have  studied                                    cited  states  is  crucial  to  reveal  the  nature  of  quantum  spin  liq-
+the   Holstein   model   as   a   representative   and   showed   that   the                         uids  in  the  frustrated  spin  systems,  if  the  spin  liquid  exists  as
+present   RBM-based    variational   wave   function   outperforms                                   a  stable  phase.  For  example,  the  two-dimensional S =  1/2  J1-
+
+
+                                                                                                  8
+J.  Phys.  Soc.  Jpn.                                                                                                                                                                                                                                                                                                                                                                                                          FULL  PAPERS
+
+
+J2   Heisenberg  model,  which  we  have  studied  in  this  paper,  is                                               23)     S.  Lu,  X.  Gao,  and  L.-M.  Duan:  Phys.  Rev.  B  99  (2019)  155136.
+one  of  the  candidate Hamiltonians  to  host  quantum spin  liquid                                                  24)     R.   Kaubruegger,   L.  Pastori,   and   J.  C.  Budich:   Phys.  Rev.  B  97   (2018)
+as  a   ground  state.   It  is   intriguing  to   perform  calculations  for                                                195136.
+larger  system  sizes  and  investigate  the  nature  of  the  quantum                                                25)     Y.   Nomura,   A.  S.  Darmawan,   Y.   Yamaji,   and   M.  Imada:   Phys.  Rev.  B
+                                                                                                                             96  (2017)  205152.
+spin  liquid.  We  ﬁnally  note  that  the  present  method  to  calcu-                                               26)     D.  Luo  and  B.  K.  Clark:  Phys.  Rev.  Lett.  122  (2019)  226401.
+late   excited  states  can  be  easily   generalized  to,   e.g.,  fermion                                           27)     Jiequn  Han,  Linfeng  Zhang,  and  Weinan  E,  arXiv:1807.07014.
+and  fermion-boson  coupled  systems,  which  is  also  left  as  an                                                  28)     K.  Choo,  A.  Mezzacapo,  and  G.  Carleo,  arXiv:1909.12852.
+important  future  issue.                                                                                             29)     K.  Choo,  G.  Carleo,  N.  Regnault,  and  T.  Neupert:  Phys.  Rev.  Lett.  121
+    Acknowledgments.     We     are     grateful     for     fruitful     discus-                                            (2018)  167204.
+                                                                                                                      30)     T.  Vieijra,  C.  Casert,  J.  Nys,  W.  De  Neve,  J.  Haegeman,  J.  Ryckebusch,
+sions    with    Kenny    Choo,    Giuseppe    Carleo,    Takahiro    Oh-                                                    and  F.  Verstraete:  Phys.  Rev.  Lett.  124  (2020)  097201.
+goe,  Masatoshi  Imada,  and  Youhei  Yamaji.  In  particular,  we                                                    31)     A.  Nagy  and  V.  Savona:  Phys.  Rev.  Lett.  122  (2019)  250501.
+thank  Kenny  Choo  and  Takahiro  Ohgoe  for  providing  us  the                                                     32)     M.  J.  Hartmann  and  G.  Carleo:  Phys.  Rev.  Lett.  122  (2019)  250502.
+raw   data   in   Refs.   29   and   41,   respectively.   The   implementa-                                          33)     F.  Vicentini,   A.  Biella,  N.  Regnault,   and  C.  Ciuti:  Phys.  Rev.  Lett.  122
+tion   of   the   machine-learning   method   is   done   based   on   the                                                   (2019)  250503.
+                                                                                                                      34)     N.  Yoshioka  and  R.  Hamazaki:  Phys.  Rev.  B  99  (2019)  214306.
+mVMC   package.52)    This   work   was   supported   by   Grant-in-
+Aids  for   Scientiﬁc   Research   (JSPS   KAKENHI)  (Grants  No.
+16H06345,  No.  17K14336  and  No.  18H01158).                                                                        35)     M.  Imada,  A.  Fujimori,  and  Y.  Tokura:  Rev. Mod. Phys. 70  (1998)  1039.
+                                                                                                                      36)     O.  Gunnarsson:  Rev.  Mod.  Phys.  69  (1997)  575.
+                                                                                                                      37)     M.  Capone,  M.  Fabrizio,  C.  Castellani,  and  E.  Tosatti:  Rev.  Mod.  Phys.
+                                                                                                                             81  (2009)  943.
+                                                                                                                      38)     Y.   Nomura,   S.   Sakai,   M.   Capone,   and   R.   Arita:   Science   Advances   1
+  1)     G.  Carleo  and  M.  Troyer:  Science  355  (2017)  602.                                                            (2015)  e1500568.
+  2)     P.  Smolensky:   in   Parallel   Distributed   Processing:   Explorations   in   the                         39)     Y.  Nomura,  S.  Sakai,  M.  Capone,  and  R.  Arita:  Journal  of  Physics:  Con-
+        Microstructure   of   Cognition:   Foundations,   ed.   D.   E.  Rumelhart,   J.   L.                                densed  Matter  28  (2016)  153001.
+        McLelland,  and  PDP  Research  Group  (MIT  Press,  Cambridge,  1986).                                       40)     J.   J.  Lee,   F.   T.   Schmitt,   R.   G.   Moore,   S.   Johnston,   Y.   T.  Cui,   W.   Li,
+  3)     D.-L.  Deng,  X.  Li,  and  S.  Das  Sarma:  Phys.  Rev.  X  7  (2017)  021021.                                     M.  Yi,  Z.  K.  Liu,  M.  Hashimoto,  Y.  Zhang,  D.  H.  Lu,  T.  P.  Devereaux,
+  4)     J.   Chen,   S.   Cheng,   H.   Xie,   L.   Wang,   and   T.   Xiang:   Phys.  Rev.   B   97                        D.  H.  Lee,  and  Z.  X.  Shen:  Nature  515  (2014)  245  EP  .
+        (2018)  085104.                                                                                               41)     T.  Ohgoe  and  M.  Imada:  Phys.  Rev.  B  89  (2014)  195139.
+  5)     N.  L.  Roux  and  Y.  Bengio:  Neural  Computation  20  (2008)  1631.                                       42)     S.   Karakuzu,   L.  F.  Tocchio,   S.  Sorella,   and   F.  Becca:   Phys.  Rev.  B  96
+  6)     G.  Montufar  and  N.  Ay:  Neural  Comput.  23  (2011)  1306.                                                      (2017)  205145.
+  7)     X.  Gao  and  L.-M.  Duan:  Nat.  Commun.  8  (2017)  662.                                                   43)     S.  Sorella:  Phys.  Rev.  B  64  (2001)  024512.
+  8)     L.  Pastori,   R.   Kaubruegger,   and   J.  C.  Budich:   Phys.  Rev.  B  99   (2019)                       44)     The   equivalent    optimization   scheme   is   called   natural   gradient   in   the
+        165123.                                                                                                              artiﬁcial  intelligence   community.53, 54)
+  9)     G.  Carleo,  Y.  Nomura,  and  M.  Imada:  Nat.  Commun.  9  (2018)  5322.                                   45)     J.   Haegeman,   J.   I.  Cirac,   T.   J.  Osborne,   I.   Piˇzorn,   H.   Verschelde,   and
+ 10)     N.  Freitas,  G.  Morigi,  and  V.  Dunjko:  International  Journal  of  Quantum                                    F.  Verstraete:  Phys.  Rev.  Lett.  107  (2011)  070601.
+        Information  16  (2018)  1840008.                                                                             46)     R.  H. McKenzie,  C.  J. Hamer,  and  D.  W. Murray:  Phys. Rev. B  53  (1996)
+ 11)     H.  Saito:  J.  Phys.  Soc.  Jpn.  86  (2017)  093001.                                                              9676.
+ 12)     H.  Saito  and  M.  Kato:  J.  Phys.  Soc.  Jpn.  87  (2018)  014001.                                        47)     H.  Fehske,  G.  Wellein,  G.  Hager,  A.  Weiße,  K.  Becker,  and  A.  Bishop:
+ 13)     H.  Saito:  J.  Phys.  Soc.  Jpn.  87  (2018)  074002.                                                              Physica  B:  Condensed  Matter  359-361  (2005)  699  .
+ 14)     Z.  Cai  and  J.  Liu:  Phys.  Rev.  B  97  (2018)  035116.                                                  48)     S.  R.  White:  Phys.  Rev.  Lett.  69  (1992)  2863.
+ 15)     K.  Choo,  T.  Neupert,  and  G.  Carleo:  Phys.  Rev.  B  100  (2019)  125124.                              49)     In  Ref.  29,  independently   from  the  quantum  number  approach,  excited
+ 16)     T.  Westerhout,  N.  Astrakhantsev,  K.  S.  Tikhonov,  M.  I.  Katsnelson,  and                                    states   are   also   constructed   by   orthogonalizing   the   wave   function   with
+        A.  A.  Bagrov:  Nat.  Commun.  11  (2020)  1593.                                                                    respect   to   the   variational    ground   state   wave   function.   In   the   present
+ 17)     I.  Glasser,  N. Pancotti,  M.  August,  I.  D. Rodriguez,  and  J.  I. Cirac:  Phys.                               study,  we  do  not  discuss  such  kind  of  approach.
+        Rev.  X  8  (2018)  011006.                                                                                   50)     T.  Mizusaki  and  M.  Imada:  Phys.  Rev.  B  69  (2004)  125110.
+ 18)     S.   R.   Clark:   Journal   of   Physics   A:   Mathematical    and   Theoretical    51                     51)     D.  Tahara  and  M.  Imada:  J.  Phys.  Soc.  Jpn.  77  (2008)  114701.
+        (2018)  135301.                                                                                               52)     T. Misawa,  S. Morita,  K.  Yoshimi, M.  Kawamura,  Y. Motoyama,  K. Ido,
+ 19)     Y.  Huang,  and  J.  E.  Moore,  arXiv:1701.06246.                                                                  T.  Ohgoe,  M.  Imada,  and  T.  Kato:  Computer  Physics  Communications
+ 20)     X.  Liang,  W.-Y. Liu, P.-Z. Lin, G.-C. Guo,  Y.-S. Zhang,  and  L. He:  Phys.                                      235  (2019)  447  .
+        Rev.  B  98  (2018)  104426.                                                                                  53)     S.-I.  Amari,  K.  Kurata,  and  H.  Nagaoka:  IEEE  Transactions  on  Neural
+ 21)     F.    Ferrari,    F.    Becca,    and    J.    Carrasquilla:    Phys.   Rev.   B    100    (2019)                   Networks  3  (1992)  260.
+        125131.                                                                                                       54)     S.-I.  Amari:  Neural  Comput.  10  (1998)  251.
+ 22)     D.-L.  Deng,  X.  Li,  and  S.  Das  Sarma:  Phys.  Rev.  B  96  (2017)  195145.
+
+                                                                                                                 9
