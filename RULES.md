@@ -339,7 +339,10 @@ Stored conventions follow VarBench and are asserted per instance, not per row:
   SU(2). None of them defines `einf` (the boson spaces are infinite, and no source states E_inf),
   so they compute no V-score.
 
-Any submitted number is converted by the loader, never by hand. The conventions of every
+Any submitted number is converted by the loader, never by hand. It is converted only from what
+the source prints (its Hamiltonian, couplings and units), and the row records the conversion. A
+source that does not print them is `needs_review` (§10) until they are found. A convention is
+never inferred, and never checked by a computation of QMBL's own (2026-11-24). The conventions of every
 model are listed in [DATA.md](DATA.md#units-and-conventions).
 
 ## 6. Best values and ties
@@ -535,14 +538,13 @@ A baseline row is ranked like any other row: it can be the best of its class, an
 VarBench paper. The flag changes nothing about eligibility. It shows that no published number
 beats the reference run on that instance.
 
-QMBL's own runs carry `computed_by: "qmbl"` instead ([DATA.md](DATA.md#rows-qmbl-computed-computed_by)):
-reference calculations of the common ansätze on one machine under one protocol
-([`checks/cost/`](checks/cost/README.md)), so the cost axes have points that are comparable
-across methods. The same reading and the same eligibility apply: the row ranks, can be the
-best of its class, and is cited to its run script, job and commit. A QMBL best value means no
-published energy of that class on that instance is lower. An exact energy QMBL computed where none is
-published (full CI, exact diagonalization) carries the field too, and is cited to its `checks/`
-folder and commit.
+QMBL collects published results and computes no rows of its own (2026-11-24). Before that date
+it added 24 exact energies where none was published (full CI, exact diagonalization). They carry
+`computed_by: "qmbl"` ([DATA.md](DATA.md#rows-qmbl-computed-computed_by)), are cited to their
+`checks/` folder and commit, and stay as the exact reference of their instance. QMBL's own
+diagonalizations otherwise only check a row that looks wrong and make no row. QMBL's earlier
+cost-to-reproduce runs ([`checks/cost/`](checks/cost/README.md)) are not rows either; the cost
+figures still draw them.
 
 ### 8.3 Unpublished results
 
@@ -802,8 +804,7 @@ their background), is included.
 - Rydberg sources are converted by the loader (× 1/2), never by hand. A source that leaves the
   Madelung term out, or writes the Ewald sum another way, is converted by the loader from the
   convention it states, and the row says which. A source that states no convention is
-  `needs_review` until it is found (§10). The check that fixes a convention is a Hartree-Fock
-  energy the source prints, compared with QMBL's own for the instance.
+  `needs_review` until it is found (§10).
 - `dof` is N. No `einf` is defined, so no V-score is computed; `Var(E)/N` is stored where
   printed (§9).
 
@@ -1006,8 +1007,8 @@ Section 4 applies unchanged. The recurring cases:
   `approximate` list stays `approximate` there, as in §12.4.
 - Not settled, `null` until read case by case (§4): free-projection AFQMC.
 
-QMBL computes its own exact row (`computed_by: "qmbl"`, DATA.md) by full CI on every basis
-instance small enough for it, as it did for the hydrogen chains.
+The exact rows of the STO-3G hydrogen chains are QMBL's full CI (`computed_by: "qmbl"`, DATA.md,
+§8.2); QMBL computes no new ones.
 
 ### 13.5 Site
 
@@ -1144,8 +1145,7 @@ Landau level, the interaction and the Landau-level mixing.
   electron-background and background-background energy, −N_e²/(2√Q) in total; on the torus the
   Coulomb sum is Ewald-summed with the Madelung term, as in §12.2. A source that leaves the
   background out (most pseudopotential calculations do) is converted by the loader; one that does
-  not say whether it is in is `needs_review` (§10). The check that fixes a convention is the exact
-  energy QMBL computes for a small instance, compared with the source's value.
+  not say whether it is in is `needs_review` (§10).
 - With finite thickness, the background is computed with the same softened interaction as the
   electrons. A source that uses another background states it, and the loader converts.
 - Model Hamiltonians have no background: their energies are stored as computed, in the units of the
@@ -1166,8 +1166,7 @@ energies per particle relative to another state, overlaps, and energies read fro
 Section 4 applies unchanged. The recurring cases:
 
 - Without mixing (κ = 0) the Hilbert space of the level is finite. Exact diagonalization in it is
-  `exact`. QMBL computes its own exact row (`computed_by: "qmbl"`) on every instance small enough for
-  it.
+  `exact`.
 - DMRG at a stated bond dimension, composite-fermion wave functions (projected into the level by any
   scheme, the projection being part of the state) and neural-network states: `variational`.
 - With mixing (`_k`): exact diagonalization or DMRG in a truncated set of levels is `variational`
@@ -1224,8 +1223,7 @@ between particle numbers), excitation energies, extrapolations in N, and values 
 Section 4 applies unchanged. The recurring cases:
 
 - Two electrons: the centre of mass separates (its energy is ω) and the relative motion is a
-  one-dimensional radial equation. QMBL solves it to full precision and stores the result as an
-  `exact` row (`computed_by: "qmbl"`) on every two-electron instance. Closed-form energies at special
+  one-dimensional radial equation. Closed-form energies at special
   ω are `exact` and checked by the validator.
 - Configuration interaction (exact diagonalization) in a finite one-particle basis (Fock-Darwin or
   harmonic-oscillator orbitals): `variational`, since the basis spans a subspace; the basis size goes

@@ -101,24 +101,17 @@ the field and how such a row ranks. The count is generated: `baseline_rows` in
 
 ### Rows QMBL computed: `computed_by`
 
-`computed_by: "qmbl"` marks a row QMBL ran itself, under the protocol in
-[`checks/cost/README.md`](checks/cost/README.md): the common ansätze on one machine, so that
-cost figures are comparable across methods. It is read like VarBench's `baseline`
-([RULES.md §8.2](RULES.md#82-baseline-collected-versus-computed)).
+QMBL collects published results and computes no rows of its own (2026-11-24,
+[RULES.md §8.2](RULES.md#82-baseline-collected-versus-computed)). `computed_by: "qmbl"` marks the
+24 exact energies QMBL computed before that date where no paper prints one (full CI, exact
+diagonalization). Each names its `checks/` folder in `reference` and the code at a commit in
+`artifacts`, and needs no `compute` block; the validator requires both.
 
-- The run uses QMBL's implementation, hyperparameters and budget, not the authors'. Its
-  method string says so ("ViT (...), QMBL cost-to-reproduce run").
-- A state QMBL trained is never attached to another's row. It is a row of its own.
-- `reference` names the run and the commit.
-- `verified.reported_as` and `compute.reported_as` quote the committed results file under
-  `checks/cost/results/`.
-- Every `compute` field is measured in the run's own process, with `scope: row` and
-  `confidence: high`.
-
-The validator requires all of these. A row QMBL computed in a check (full CI or exact diagonalization where no
-paper prints the exact energy, or exact diagonalization with a phonon or boson cutoff, which is
-`variational`, [RULES.md §2.1](RULES.md#21-instance-names)) carries `computed_by: "qmbl"` too. It names its `checks/`
-folder in `reference` and the code at a commit in `artifacts`, and needs no `compute` block.
+QMBL's cost-to-reproduce runs ([`checks/cost/README.md`](checks/cost/README.md)) are not rows of
+the table. After validation `scripts/split_cost_runs.mjs` moves them to `data/_cost_runs.json`
+with the fields they carry (a `compute` block measured in the run's own process, `reported_as`
+quoting `checks/cost/results/`), and the cost figures draw them, each mark linked to its run record.
+A state QMBL trained is never attached to another's row.
 
 ### Rows no paper prints: `provenance: "unpublished"`
 
@@ -221,8 +214,7 @@ number. An unpublished row keeps its code in the same block (above).
 The site and the README show the link in a `code` column next to `source`. The label is "run
 script" for a file in a repository, owner/repo for a repository, "Zenodo" and the record
 number for a Zenodo record, "model code" for a release that holds only the network and no
-training or run script (`scope: "model"`), "QMBL code" for QMBL's checks, and "rerun (QMBL code)" for a
-row QMBL computed, linking how to rerun it ([checks/cost/README.md](checks/cost/README.md#rerun-a-row)).
+training or run script (`scope: "model"`), and "QMBL code" for QMBL's checks and the exact rows QMBL computed.
 Where the code column carries a VarBench run script, the source cell names the paper only.
 
 A row with no code of its own can carry `artifacts.libraries`: the libraries its source says
@@ -873,7 +865,7 @@ came from:
   repository, a Zenodo record, a notebook's stored output, or output files the authors sent
   for the entry, committed under `sources/` as received.
 - `measured_by` is `qmbl` when QMBL measured it on the checkpoint the authors published, with
-  their network. A state QMBL trained is a row of its own
+  their network. A state QMBL trained is not a row
   ([`computed_by`](#rows-qmbl-computed-computed_by)).
 - `source_file` is committed under `sources/`, and every ` | `-separated part of
   `reported_as` appears in it verbatim, so each value can be checked from a clone.

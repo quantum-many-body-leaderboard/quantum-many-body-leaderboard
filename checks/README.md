@@ -722,9 +722,9 @@ are 1.0 sigma below and 0.2 sigma above; the best VMC row of arXiv:1403.4150 on 
 chain, −2.796(1), is 3.8e-2 above; on the ω = 4 chain the CP-AFQMC row of arXiv:2012.13473,
 −10.293(2), is 0.5 sigma below, and its DMRG row, −10.292, is this energy rounded to three decimals.
 
-**Conclusion.** The convention and the shift rule hold. The four energies are variational rows
-computed by QMBL (`scripts/add_exact_rows.mjs` batch F), each rounded up at the tenth decimal so the
-stored value stays an upper bound; the cutoff is in `method_detail`. The convention check makes no row.
+**Conclusion.** The convention and the shift rule hold. The four energies were rows of QMBL from
+2026-11-18 to 2026-11-24 and were removed when QMBL stopped adding rows of its own (RULES.md §8.2).
+The convention check makes no row.
 
 **Reproduce.** With numpy and scipy, on a laptop (Apple M5): `rows_ed.py` takes 28 s for all
 four instances and peaks at 3.4 GB (6 sites at M = 16).

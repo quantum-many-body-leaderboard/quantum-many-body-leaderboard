@@ -2833,8 +2833,8 @@ Every row has a `bound_type` that says what kind of number the energy is
 order. [Error metrics](DATA.md#error-metrics) defines the markers.
 
 The code column links the code that produced a result, where its authors published it: the
-place to start when you want to rerun it. For a row QMBL computed, "rerun (QMBL code)" links the
-command, the commit and the package versions it ran with. Where the authors published no code
+place to start when you want to rerun it. For an exact row QMBL computed, "QMBL code" links the
+check that computed it. Where the authors published no code
 of their own, a muted "uses …" names the library they used, if their paper says. An empty
 cell means that no source read so far names the code or a library.
 [How the links were found](DATA.md#the-code-behind-a-row-artifacts).
