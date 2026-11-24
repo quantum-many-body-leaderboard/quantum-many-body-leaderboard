@@ -6,6 +6,7 @@
 // (multiplied here, once, and marked `derived`), or CPU core-hours. A GPU-hour and a CPU
 // core-hour keep their unit and are never converted into each other; the stored fields
 // are never derived.
+import fs from "node:fs";
 
 // Total durations only. Anything per step, per sweep or cumulative over several sizes is
 // not this run's wall-clock and stays unparsed; the row then has no hours. A rounded total
@@ -58,3 +59,13 @@ export const MIN_COSTED = 2;
 export const costFigureName = inst => `cost/${inst.instance_id.replace("/", "--")}`;
 export const flopsFigureName = inst => `flops/${inst.instance_id.replace("/", "--")}`;
 export const paramsFigureName = inst => `params/${inst.instance_id.replace("/", "--")}`;
+
+// QMBL's own cost-to-reproduce runs (add_cost_runs.mjs) are drawn in the cost figures but are not
+// rows of the table (2026-11-24): split_cost_runs.mjs keeps them in data/_cost_runs.json.
+export const isCostRun = r => r.computed_by === "qmbl" && /^QMBL, checks\/cost\//.test(r.reference ?? "");
+export const costRunsByInstance = (file = "data/_cost_runs.json") => {
+  const by = new Map();
+  if (!fs.existsSync(file)) return by;
+  for (const { instance_id, row } of JSON.parse(fs.readFileSync(file, "utf8"))) by.set(instance_id, [...(by.get(instance_id) ?? []), row]);
+  return by;
+};

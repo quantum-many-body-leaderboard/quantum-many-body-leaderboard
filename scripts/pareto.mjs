@@ -13,14 +13,18 @@
 import fs from "node:fs";
 import { classEligible, exactEligible, boundLabel, perSiteDivisor, perSiteLabel } from "./units.mjs";
 import { collect, classBest, shownBest, rowId } from "./summary.mjs";
-import { hoursOrEdOf, parametersOf, MIN_COSTED, costFigureName, flopsFigureName, paramsFigureName } from "./cost.mjs";
+import { hoursOrEdOf, parametersOf, MIN_COSTED, costFigureName, flopsFigureName, paramsFigureName, isCostRun, costRunsByInstance } from "./cost.mjs";
 import { estimatedFlopsOf } from "./flops.mjs";
 import { stairs, layoutLabels, meets, insetFrame } from "./labels.mjs";
 import { MODELS, BOUNDARY } from "./readme_table.mjs";
 import { W, PAD, n, text, hline, dot, legend, header, footnote, doc, textWidth, niceStep, writer, log, logScale, pow10, shortLabel, rowHref, linked } from "./chart.mjs";
 
 const OUT = "figures";
-const instances = collect();
+// QMBL's cost runs are not in the table but stay in these figures: appended to their instance
+// last, as add_cost_runs.mjs placed them, and linked to their run record instead of a table row.
+const COST_RUNS = costRunsByInstance();
+const instances = collect().map(i => (COST_RUNS.has(i.instance_id) ? { ...i, rows: [...i.rows, ...COST_RUNS.get(i.instance_id)] } : i));
+const hrefOf = p => (isCostRun(p.r) ? p.r.artifacts?.code : rowHref(p.inst, p.r));
 const { write, written } = writer(OUT);
 const BOUNDS = { variational: 0, projected: 1, extrapolated: 2, approximate: 2, exact: 3 };
 
@@ -130,9 +134,12 @@ const labelClashes = [];
 
 // Lines to marks, names and numbers, as layoutLabels placed them. A name for several rows
 // carries them all, best first, as a merged mark does (size_accuracy.mjs), for the site's list.
-const toRows = (rows, svg) => (rows.length > 1
-  ? `<a class="pt" href="${rowHref(rows[0].inst, rows[0].r)}" data-rows="${rows.map(p => rowId(p.inst, p.r)).join(" ")}">${svg}</a>`
-  : linked(rowHref(rows[0].inst, rows[0].r), svg));
+const toRows = (all, svg) => {
+  const rows = all.filter(p => !isCostRun(p.r));
+  return rows.length > 1
+    ? `<a class="pt" href="${rowHref(rows[0].inst, rows[0].r)}" data-rows="${rows.map(p => rowId(p.inst, p.r)).join(" ")}">${svg}</a>`
+    : linked(hrefOf(rows[0] ?? all[0]), svg);
+};
 
 // The marks, each linked to its row; marks drawn as one, within 6 px (as layoutLabels groups
 // their names), all carry the whole pile, best first, so hovering whichever lies on top lists
@@ -158,7 +165,7 @@ function drawLabels(t, parts, inst, L) {
   }
   // A 9 px digit is a small target: an invisible box a little larger than it takes the pointer.
   // The digit comes second, so the site's hover scale (a.pt > :nth-child(2)) grows it as it grows a mark.
-  for (const k of L.keyed) parts.push(linked(rowHref(k.p.inst, k.p.r),
+  for (const k of L.keyed) parts.push(linked(hrefOf(k.p),
     `<rect x="${n(k.box.x0 - 2)}" y="${n(k.box.ty - 6)}" width="${n(k.box.x1 - k.box.x0 + 4)}" height="11" fill="${t.surface}" fill-opacity="0"/>` +
     text(k.x, k.y, k.num, { size: 9, fill: t.ink2, anchor: k.anchor, weight: 600 })));
 }

@@ -31,6 +31,8 @@ node scripts/add_ed_cost.mjs
 # Instance-level: the cluster of instances no family script creates.
 node scripts/add_clusters.mjs
 node scripts/validate.mjs
+# QMBL's cost runs leave the table for data/_cost_runs.json; pareto.mjs still draws them.
+node scripts/split_cost_runs.mjs
 # Track 4, the thermodynamic limit (RULES.md 14): tdl/ is rebuilt from its pass files and checked.
 node scripts/add_tdl_rows.mjs
 node scripts/validate_tdl.mjs
