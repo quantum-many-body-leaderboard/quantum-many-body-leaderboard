@@ -1,13 +1,14 @@
 # Cost to reproduce: QMBL's own runs on one machine
 
-Ten rows in the table state what they cost in hours; the rest do not, and the
+Few published rows state what they cost in hours, and the
 [estimated FLOPs](../../DATA.md#how-a-flop-count-is-estimated) are good to an order of
 magnitude. The only cost figures that are comparable across methods are ones measured on
-the same hardware under the same protocol, so QMBL runs the common ansätze itself, with
-public code, and attaches each run as **a row of its own** with `computed_by: "qmbl"`
-([DATA.md](../../DATA.md#rows-qmbl-computed-computed_by)). A run reproduces a *method*, not
-a paper's number: it is QMBL's implementation, QMBL's hyperparameters and QMBL's budget,
-and the row says so in its method string. Nothing here is attached to anyone else's row.
+the same hardware under the same protocol, so QMBL ran the common ansätze itself, with
+public code. The runs stopped on 2026-11-24 and are not rows of the table
+([DATA.md](../../DATA.md#rows-qmbl-computed-computed_by)): they are kept in `data/_cost_runs.json`
+and drawn in the cost figures. Below, "row" means an entry of that file. A run reproduces a
+*method*, not a paper's number: it is QMBL's implementation, QMBL's hyperparameters and QMBL's
+budget, and its method string says so. Nothing here is attached to anyone else's row.
 
 ## Protocol (2026-09-21)
 
@@ -147,8 +148,8 @@ and the row says so in its method string. Nothing here is attached to anyone els
     discards), joined along each chain; NetKet's statistics of the joined array are those of one
     call on the same samples (checked by `h100/eval_check.py`). Nothing else changes, so the
     rows made before stand; the two 16 x 16 runs are rerun from the start.
-  - **Where it shows.** The runs are rows (`computed_by: qmbl`) in the table and in "The best
-    published energies, by cost". The front-page section "What the cost grows to with the lattice"
+  - **Where it shows.** The runs are drawn in "The best published energies, by cost" and the
+    per-instance cost figures. The front-page section "What the cost grows to with the lattice"
     (`scripts/size_cost.mjs`, 2026-09-29) was removed on 2026-10-06.
 
 ## What a run becomes
@@ -157,9 +158,8 @@ and the row says so in its method string. Nothing here is attached to anyone els
 rung for DMRG): `bound_type: variational`, `computed_by: "qmbl"`, `reference` naming this
 directory and the job, a `verified` block quoting the results file's values, and a `compute`
 block whose every field is measured (`scope: row`, `confidence: high`, `reported_as` the
-same values, `source` the results file, job and commit). The row ranks like any other and can hold a record; a QMBL run beating every
-published number would mean nobody has published a good number for that instance, the same
-reading RULES.md 8.2 gives a VarBench baseline.
+same values, `source` the results file, job and commit). After validation
+`scripts/split_cost_runs.mjs` moves these rows to `data/_cost_runs.json`.
 
 ## The forward pass, counted (2026-09-29)
 

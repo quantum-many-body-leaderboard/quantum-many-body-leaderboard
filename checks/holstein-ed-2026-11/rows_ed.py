@@ -1,4 +1,4 @@
-"""QMBL's variational rows on the four smallest Holstein instances (2026-11-18): exact diagonalization
+"""Variational energies of the four smallest Holstein instances (2026-11-18; rows of QMBL until 2026-11-24): exact diagonalization
 with a cutoff M on the total phonon number. The kept states span a subspace of the instance's Hilbert
 space and H contains only b+b and b + b+, so the matrix is the projection P H P: its lowest eigenvalue
 is an upper bound on the ground-state energy and does not increase with M (RULES.md 2.1, variational).
