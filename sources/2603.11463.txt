@@ -1,0 +1,721 @@
+Bootstrap Embedding for Interacting Electrons in Phonon Coherent-state
+Mean Field
+          Shariful Islam     ,1 Joel Bierman,2 and Yuan Liu          2, 3, 1,a)
+          1)Department  of  Physics,  North  Carolina  State  University,  Raleigh,  NC  27695,
+          USA
+          2)Department of Electrical and Computer Engineering, North Carolina State University, Raleigh, NC 27695,
+          USA
+          3)Department  of  Computer  Science,  North  Carolina  State  University,  Raleigh,  NC  27695,
+          USA
+          We develop a fermi-bose bootstrap embedding (fb-BE) framework for the ground state of interacting elec-
+          trons  coupled  to  phonon  mean  field.   The  method  combines  bootstrap  embedding  for  correlated  electrons
+          with a self-consistent coherent-state mean-field treatment for phonons.  This method models the interacting
+          electron-phonon problem as a system of correlated electrons traveling in a self-consistently specified potential
+          landscape,  allowing  for  efficient  treatment  of  large  lattice  systems.   Convergence  of  the  methods  for  frag-
+          ment size and total system size are demonstrated for one-dimensional Hubbard-Holstein model for up to 350
+          sites.  Finite-size scaling is performed to extrapolate to infinite system size.  Benchmarking against density
+          matrix renormalization group for small 8-site system at half- and quarter-filling shows orders-of-magnitude
+          runtime advantage.  The comparison further reveals that the method performs best in regimes dominated by
+          localization, such as the Mott insulating phase and the strong-coupling tiny polaron regime, where the local
+          embedding ansatz is still valid.  However, due to the mean-field treatment for phonons, we find limitations of
+          our methods in the weakly coupled delocalized region and at the Peierls transition, where quantum phonon
+          fluctuations and long-range kinetic correlations become substantial.
+
+
+I.    INTRODUCTION                                                          (DMFT) accurately captures local temporal correlations
+                                                                            but  ignores  non-local  spatial  fluctuations  necessary  for
+  Strongly   correlated   electron-phonon   systems   play                  low-dimensional ordering, unless computationally expen-
+a   key   role   in   condensed   matter   physics,   including             sive cluster extensions are used17–19    .
+polaron   formation,   charge-density-wave   (CDW)   or-                       For  numerical  simulation  of  electron-phonon  coupled
+der,   metal-insulator   transitions,   and   unconventional                systems,   the  primary  bottleneck  of  using  these  ap-
+superconductivity1–3   . A quantitative description of these                proaches  is  the  simultaneous  consideration  of  the  con-
+systems  is  notoriously  difficult  due  to  the  competing                tinuous  bosonic  degrees  of  freedom  and  the  fermionic
+roles  of  electron-electron  and  electron-phonon  interac-                correlation  problem.   The  phonon  Hilbert  space  is  in-
+tions, as well as the exponential expansion of the many-                    finite,  therefore  truncations  may  cause  artifacts  in  the
+body Hilbert space with system size.                                        strong-coupling  regime.   By  leveraging  quantum  hard-
+  The Hubbard–Holstein model combines local Coulomb                         ware,  these  challenges  can  be  partially  alleviated20–26    .
+repulsion  with  site-resolved  coupling  to  local  phonon                 However, there is still a critical need for efficient frame-
+modes4–6   ,  creating  a  simple  yet  physically  rich  frame-            works that can bridge the gap between small systems and
+work  for  exploring  this  interplay.   Despite  its  apparent             thermodynamic limit.
+simplicity,  the  model  reveals  a  complicated  phase  dia-                  Embedding methods27–29      provide a powerful solution
+gram driven by the competition between electronic cor-                      to  treat  large  problems  on  small  computers  by  sepa-
+relations and lattice distortions6,7  .                                     rating highly correlated sections (fragments) and treat-
+  There are many numerical methods developed to study                       ing  their  interactions  with  the  environment  in  a  self-
+the  Hubbard–Holstein  model.     Exact  diagonalization                    consistent  manner.   Density  matrix  embedding  theory
+(ED) or full configuration interaction (FCI) give numeri-                   (DMET)30,31     and  bootstrap  embedding  (BE)32–35      pro-
+cally exact results, but can only be used on small clusters                 vide  high  accuracy  for  exclusively  fermionic  systems.
+because  the  Hilbert  space  grows  exponentially8,9  .   The              Bootstrap embedding is especially useful since it treats
+density matrix renormalization group (DMRG) method                          the problem as a constraint optimization problem with
+has high accuracy in one dimension10–12    , but its compu-                 the  constraint  as  matching  conditions  on  reduced  den-
+tational cost increases dramatically in higher dimensions                   sity matrices (RDMs) on overlapping regions of adjacent
+or  for  systems  with  long-range  entanglement.    Quan-                  fragments, rather than solving for an explicit bath wave-
+tum Monte Carlo (QMC) approaches scale more favor-                          function.  This enables flexible and systematic matching
+ably, but suffer from the fermion sign problem or phase                     of local observables between overlapping chunks.
+problem  for  bosons13–16    .   Dynamical  mean-field  theory                 In  this  paper,  we  extend  bootstrap  embedding  to
+                                                                            electron-phonon systems by incorporating a mixed fermi-
+                                                                            bose eigensolver that treat electrons at a correlated level
+                                                                            while  treating  phonons  as  a  coherent-state  mean  field
+a)Electronic mail:q   yuanliu@ncsu.edu
+                                                                            (CSMF)31,36    .  By expressing phonons as site-local coher-
+                                                                                                                                                         2
+
+ent displacements, the bosonic sector is essentially turned                        Electronic  Hamiltonian.The  electronic  part  of  the
+into  a  self-consistent  potential  that  acts  on  electrons.                 Hamiltonian is given by:
+This  avoids  explicit  truncation  of  the  phonon  number
+while capturing the fundamental mechanics of static lat-                              ˆHel =−t     X      ˆc  †iσˆc  jσ + H.c.+U   X     ˆn  i↑ ˆn  i↓ ,     (2)
+tice deformation.  Our technique, unlike quantum imple-                                          ⟨i,j⟩,σ                              i
+mentations, works on classical hardware. The BE match-
+ing  conditions  handle  electronic  correlations,  while  the                  where ˆc  †iσ  (ˆc  iσ) creates (annihilates) an electron of spin
+CSMF ansatz transforms the bosonic sector into a self-                          σat  sitei,  ˆn           iσ  =  ˆc  †iσˆc  iσ  is  the  number  operator,tis
+consistent potential.                                                           the  nearest-neighbor  hopping  amplitude,  andUis  the
+   Convergence  of  the  methods  for  fragment  size  and                      strength of the on-site Coulomb repulsion.
+total system size are demonstrated for one-dimensional                             Phonon  Hamiltonian.The phononic degrees of free-
+Hubbard-Holstein model for up to 350 sites.  Finite-size                        dom are represented as independent local harmonic os-
+scaling  is  performed  to  extrapolate  to  infinite  system                   cillators:
+size.  Benchmarking against density matrix renormaliza-                                                               X
+tion group for small 8-site system at half- and quarter-                                                  ˆHph =ω    0     ˆb†iˆbi,                        (3)
+filling  suggests  orders-of-magnitude  runtime  advantage,                                                             i
+despite limitations for cases where quantum fluctuations
+of  phonon  dominate.   This  solution  allows  for  scalable                   where  ˆb†i  and  ˆbi  are  bosonic  creation  and  annihilation
+simulations of the Hubbard-Holstein model beyond the                            operators for the phonon mode at sitei,  andω                0  is the
+reach  of  accurate  diagonalization  while  preserving  con-                   phonon frequency.
+trollable  precision  in  both  the  electronic  and  phononic                     Electron–Phonon Interaction.The Holstein coupling
+sectors.                                                                        refers  a  local  interaction  between  electron  density  and
+   The  remaining  sections  of  this  work  are  organized                     phonon displacement:
+as  follows.   SectionIIintroduces  the  Hubbard-Holstein                                     ˆHel-ph =g  X      ˆb†
+Hamiltonian, the coherent-state description of phonons,                                                             i + ˆbi  (ˆn  i↑  + ˆn  i↓ ),          (4)
+the fb-BE formalism, and the computational algorithm.                                                        i
+SectionIII discusses  the  computational  details.    Sec-                      wheregdenotes the electron-phonon coupling strength.
+tionIVpresents  benchmarking  results  in  different  pa-                       This  term  generates  a  phonon-mediated  attraction  be-
+rameter regimes.  SectionVconcludes the paper.                                  tween  electrons  occupying  the  same  site,  counteracting
+                                                                                the repulsiveUterm.
+
+II.    METHODOLOGY
+                                                                                B.    Coherent-State Mean-Field Approximation
+   We  present  details  on  the  methodology  in  this  sec-
+tion.     Sec.II Areviews  the  basics  of  the  Hubbard-                          We   describe   lattice   degrees   of   freedom   employ-
+Holstein Hamiltonian of interest.  Sec.II Bpresents the                         ing  a  coherent-state  mean-field  approximation  for  the
+coherent-state  mean-field  approach  used  in  our  eigen-                     phonons,31,36     in which the solutions for the bosonic de-
+solver.  Sec.II Cpresents details of the fb-BE algorithm.                       grees of freedom are assumed to be a coherent state|α          i⟩
+                                                                                forα     i  ∈Cbeing  a  tunable  parameter,  which  satisfies
+                                                                                ˆbi |α i⟩ =α     i |α i⟩since  coherent  state  is  defined  as  the
+A.    Hubbard–Holstein Hamiltonian                                              eigenstate of the annihilation operator. With this ansatz,
+                                                                                the  Hamiltonian  of  the  fermi-bose  mixtures  can  be  re-
+   The Hubbard–Holstein model provides a widely used                            duced  to  a  fermionic  Hamiltonian  by  substituting  the
+theoretical  framework  for  studying  the  interplay  be-                      bosonic operators at each site withα        i andα      ∗i
+tween  strong  electron–electron  interactions  and  local                                             ˆbi →α    i,       ˆb†
+electron–phonon coupling in correlated materials,  espe-                                                                 i →α    ∗i .                     (5)
+cially low-dimensional systems such as organic conduc-                          This approach captures static lattice distortions caused
+tors, quasi-1D charge-transfer salts, and transition-metal                      by electron-phonon coupling while maintaining a compu-
+oxides.4,5,37                                                                   tationally efficient framework appropriate for large-scale
+   The total Hamiltonian  ˆHcomprises three parts:                              systems.
+                     ˆH=     ˆHel +  ˆHph +  ˆHel-ph,                   (1)        More   specifically,   within   this   approximation,   the
+                                                                                electron-phonon interaction simplifies to an effective site-
+where  ˆHel represents the purely electronic degrees of free-                   dependent potential that influences the electronic subsys-
+dom with on-site Hubbard interactions,  ˆHph encompasses                        tem,
+
+local phonons at each site, and  ˆHel-ph  characterizes the                                          ˆHMFel-ph = 2g  XRe(α       i) ˆn  i,                  (6)
+Holstein-type electron-phonon coupling.                                                                               i
+                                                                                                                                                    3
+
+where ˆn  i = ˆn  i↑  + ˆn  i↓ .  The phononic contribution to the           andβ,λ           (αβ)ij     are Lagrange multipliers enforcing 1-RDM
+energy is correspondingly given by                                           consistency,µis a global chemical potential, andN           e is the
+                       EMF           X    |α i|2.                       (7)  total number of electrons.  Extensions of this formalism
+                         ph   =ω    0                                        to incorporate 2-RDM consistency constraints proceed in
+                                       i                                     an analogous manner38.
+  The   coherent-state   parameter{α                     i} are   obtained      The BE equations are solved in a self-consistent man-
+through  a  variational  minimization  of  the  total  mean-                 ner through iterative updates of the fragment Hamilto-
+field  energy  with  respect  toα   ∗i ,  resulting  in  a  self-            nians  and  Lagrange  multipliers  until  the  global  RDM
+consistency  condition  that  relates  the  lattice  distortion              constraints  reach  convergence.     In  practice,  the  La-
+at each site to the local electronic density.  This proce-                   grange  multipliers  are  regarded  as  variational  parame-
+dure  yields  a  renormalized  electronic  Hamiltonian  that                 ters and are optimized through the use of gradient-based
+incorporates phonon-induced lattice effects at the mean-                     techniques38.
+field level.                                                                    For  the  Hubbard–Holstein  model  examined  in  this
+  The coherent-state mean-field approximation thus of-                       study,   the   electronic   Hamiltonian   encompasses   the
+fers a physically justified foundation for the BE approach                   on-site   Hubbard   interaction   and   the   effective   elec-
+to treat electronic correlation coupled to phonons, as dis-                  tron–phonon  coupling  generated  by  site-local  coherent
+cussed  in  the  subsequent  section.   To  preserve  clarity                phonon displacements.  The phonon degrees of freedom
+in  the  primary  text,  we  only  present  the  fundamental                 contribute solely a classical energy component, whereas
+framework of the approximation here.  A comprehensive                        all electronic correlations are addressed expressly within
+derivation of the mean-field decoupling,  the variational                    the  BE  framework.    This  approach  facilitates  precise
+equations, and the energy expressions is provided in Ap-                     modeling  of  electron–electron  and  electron–phonon  in-
+pendixA. In addition, AppendixBelucidates the varia-                         teractions  in  large  lattice  systems  that  are  beyond  the
+tional coherent-state construction and the calculation of                    capabilities of exact diagonalization.
+phononic contributions to the total ground-state energy.                        The  BE  algorithm  to  treat  Hubbard-Hostein  model
+                                                                             proceeds  as  follows,  shown  in  Algorithm1.   We  utilize
+                                                                             a CSMF approach for the phonon degrees of freedom in-
+C.    Bootstrap Embedding with Mixed Fermi-Bose                              tegrated with BE for the correlated electronic subsystem.
+Eigensolver for Hubbard-Holstein Model                                       The method iteratively enforces self-consistency between
+                                                                             electronic densities, site-local phonon displacements, and
+  In the BE formalism, the full lattice system is divided                    global reduced density matrix constraints.
+into  a  set  of  fragments{F   α},  each  comprising  a  small                 The  Lagrangian  formalism  of  Bootstrap  Embedding
+subset of lattice sites.  For each fragment, an embedded                     enforces the global consistency criteria on 1-RDMs and
+Hamiltonian  ˆHembα     is constructed by projecting the full                the total particle number. After every cycle of optimizing
+Hamiltonian onto the fragment and its associated bath                        the fragment 1-RDM, the phonon displacementsα   i  are
+degrees of freedom.  The bath orbitals are derived from                      updated according to the energy minimization condition:
+the  mean-field  one-particle  reduced  density  matrix  (1-
+RDM)  through  singular  value  decomposition,  ensuring                                                α⋆i  =−    gω0⟨ˆn    i⟩
+an accurate representation of the entanglement between
+the fragment and the environment.32,38    .
+  Each embedded Hamiltonian  ˆHembα     is addressed with
+a precise many-body solver to derive the fragment wave-                      III.    COMPUTATIONAL DETAILS
+functions  and  associated  reduced  density  matrices,  in-
+cluding the fragment 1-RDMγ               (α)   , and, when necessary,          We   study   the   one-dimensional   Hubbard–Holstein
+the two-particle reduced density matrix (2-RDM) Γ(α)   .                     model with nearest-neighbor hoppingt.  All energies are
+RDMs  across  different  fragments  are  not  independent;                   therefore expressed in units oft= 1.  The phonon fre-
+consistency conditions are often enforced within the over-                   quency is fixed atω    0 = 0.25.
+lapping regions shared by different fragments to improve                        For benchmarking, we first consider an eight-site chain
+the representation of the global many-body state.38.                         at both half filling (N  e = 8) and quarter filling (N  e = 4).
+  Global  consistency  is  enforced  through  a  Lagrangian                  The electron–phonon coupling strengthgis varied from
+formulation,                                                                 0.1 to 0.5, and the on-site Coulomb repulsionUis varied
+                                 X                                           from  0  to  10.   To  assess  scalability,  we  consider  larger
+       L=  XEα + X                      λ(αβ)ij γ(α)ij  −γ    (β)ij          half-filled  chains  containing  up  to  350  lattice  sites  at
+               α          α<β  ij∈O   αβ
+                   X     X               !                          (8)      g= 0.1. The DMRG calculation is performed with bond-
+             −µ               γii −N   e    ,                                dimension=150 using the Block2 package39 via computa-
+                                                                             tional resources provided by the ACCESS program40.  In
+                      α    i                                                 the DMRG calculation, each phonon site was truncated
+whereE           α represents the ground-state energy of fragment            to 11 Fock levels with local bosonic Hilbert space of di-
+α, O    αβ  signifies  the  overlap  sites  between  fragmentsα              mension  11,  corresponding  to  a  maximum  phonon  oc-
+                                                                                                                                                                4
+
+                                                                                   The convergence of the inner electronic–phonon loop oc-
+Algorithm 1. Self-Consistent Fermi-Bose Bootstrap Embed-                           curred  when  theℓ      2-norm  variation  in  the  phonon  dis-
+ding (fb-BE)                                                                       placement fields{α            i}decreased below 10  −5  .  The outer
+ 1:Input:Number  of  SitesN,   electrons  numberN                               e, self-consistency  loop,  which  linked  BE-derived  site  oc-
+    Hubbard  interactionU,  phonon  frequencyω                                         0,  electron-cupations to new phonon displacements, converged when
+    phonon couplingg, tolerancesε                                      inner, εoutertheℓ      2-norm difference in{α      i}between two iterations was
+ 2:Initialize{α                       (0,0)i    } ∈C                               less than 5×10     −6  .  These requirements made sure that
+ 3:forgrand iterationm= 0 to max                 iterdo                            both the electronic and bosonic degrees of freedom con-
+ 4:     Setα     (m,0)i       =α    (m)i                                           verged completely in all calculations.
+ 5:    forinner iterationk= 0 to max               innerdo
+ 6:          Construct electronic Hamiltonian:(
+ 7:          h   ij =  −t                     ifi, jare nearest neighbors          IV.    RESULTS AND DISCUSSION
+                       2g·Re(α             (m,k)
+                                   i      )    ifi=j
+ 8:          Solve RHF with on-site interactionUand effective                         In this section, we present numerical results obtained
+    coupling term
+ 9:          Extract site densitiesn                     (m,k)                     using the fb-BE framework for the one-dimensional Hub-
+                                           i       from 1-RDM
+10:        Updateα              (m,k+1)       )                                    bard–Holstein  model.   In  Sec.IV A,  we  show  the  con-
+                          i           =−     gω0 n(m,ki                            vergence  ofαvalues  for  the  outer  iteration  of  the  al-
+11:       if∥α           (m,k+1)      −α    (m,k)     ∥< ε  inner then
+12:            Breakinner loop                                                     gorithm  and  the  convergence  of  the  fragment-size.   In
+13:       end if                                                                   Sec.IV B, finite-size scaling to infinite-size limit is pre-
+14:   end for                                                                      sented,  and  a  runtime  comparison  to  DMRG  is  per-
+15:   Construct  fragment  and  bath  orbitals  from  the  con-                    formed.   In  Sec. IV C,  we  discuss  the  electron-phonon
+    verged  mean-field  solution  via  Schmidt  decomposition                      physics for both half-filled and quarter-filled cases for 8-
+    also construct embedded fragment hamiltonian                                   site system and compared our result with DMRG.
+16:   Solve  fragment  hamiltonian  using  FCI  and  perform
+    BE optimization
+17:   Extract BE 1-RDMγ                  mij  and computen         BE,(m)i         =γ   miiA.    Convergence of the Algorithm
+18:   Update:α                (m+1)i        =−    gω0 nBE,(m)i
+
+19:   if∥α           (m+1)    −α    (m)   ∥< ε  outer then                            The outer Hubbard–Holstein self-consistency is imple-
+20:       Breakgrand loop                                                          mented as a fixed-point iteration of updatingα.  We also
+21:   end if                                                                       used linear mixing strategy to updateαwhere it faced
+22:end for                                                                         challenge to get converged, especially in the strong cou-
+23:Output:Final{α                                i},E    tot =E    el +ω    0Pi |α i|2pling region for some values of U. Convergence is moni-
+                                                                                   tored using the Euclidean norm of the update
+                                                                                                    ∆α    (m)   2 =α(m+1)    −α    (m)   2 ,             (9)
+cupation number 10 per lattice site.  fb-BE calculations
+were performed using the customized version of QuEmb
+package41,42    .                                                                  with a tolerance of 10−6  . In all parameter regimes consid-
+   We  use  the  BE241  scheme  to  break  up  the  full  lat-                     ered, the residual decreases monotonically and approxi-
+tice system into a number of overlapping fragments.  In                            mately exponentially with iteration number.  Represen-
+this scheme, we fragment the system by looping over all                            tative convergence behavior is shown in Fig.1.
+spatial lattice sites, generating fragments that consist of                           For theL= 8 half-filled system atU= 5 andg= 0.5,
+that central site and its nearest neighbors (i.e.,  a frag-                        the residual decreases monotonically and approximately
+ment radius of 1 site).   We leave out the first and last                          exponentially  with  iteration  number,  reaching  the  con-
+fragments to avoid edge overcounting.  To build the em-                            vergence  threshold  within  25  iterations  because  of  the
+bedded Hamiltonian  ˆHembα     for each fragmentF  α, we use                       linear mixing scheme but it got stuck by direct update
+the mean-field-decoupled Hubbard–Holstein form for the                             ofαvalues.   For  the  larger  system  (L=  350,U=  5,
+global system.  The detailed derivation can be found in                            g= 0.1), the direct (unmixed) update converges in two
+AppendixA.                                                                         iterations, with the residual reduced below 10−6   after the
+   Exact diagonalization is used to solve each embedded                            first  correction.   To  assess  convergence  with  respect  to
+Hamiltonian.   This  gives  us  fragment  reduced  density                         fragment size, we compared BE2, and BE3 for an 8-site
+matrices  (RDMs).   The  BE  optimization’s  convergence                           chain at half filling in the strong-coupling regime (U= 8,
+threshold  (the  consistency  of  the  fragment  and  global                       g= 0.5,t= 1).  The total energies are
+reduced density matrices) was set on density mismatch
+at  10−6  .    To  provide  self-consistent  coupling  between                                   EBE2tot   =−10.4200,    E                      BE3tot   =−10.4208.
+phonon   displacements   and   electronic   structure,   two
+nested  loops  were  utilized:  an  inner  Hubbard–Holstein                        The BE2 and BE3 results differ by 8×10     −4  , indicating
+mean-field  loop  and  a  grand  outer  BE-coupled  loop.                          that BE2 is essentially converged for this small system.
+                                                                                                                                                                  5
+
+                                                                                    ω0 = 0.25.
+                                                                                        Fig.2shows the scaling behavior at different inter-
+                                                                                    action  strengthU=  4.   The  energy  per  site  exhibits
+                                                                                    an essentially linear dependence on 1/L, consistent with
+                                                                                    leading finite-size corrections of the form
+
+                                                                                                         E(L, U) =E         ∞(U) +     a(U)L   .               (10)
+
+                                                                                    The intercept of the linear fit at 1/L→0 provides the
+                                                                                    infinite-size  energy  densityE  ∞(U).   The  linearity  con-
+                                                                                    firms that finite-size effects are well described by leading
+                                                                                    1/Lscaling over the system sizes considered. We perform
+                                                                                    such finite-size scaling for differentU, and the final per-
+                                                                                    site energy extrapolated to infinite size limit is tabulated
+                                                                                    in TableI.
+
+FIG.  1.   Convergence  of  the  outer  Hubbard–Holstein  self-                     TABLE  I.  Infinite-size-limit  ground-state  energy  per  site
+consistency  loop,  quantified  by  the  Euclidean  norm  of  the                   E∞(U) obtained from linear extrapolation in 1/Lusing sys-
+phonon displacement update∥∆α               (k)  ∥2 as a function of outer          tem sizesL= 150,200,300,and 350 atg= 0.1 andω                                                       0 = 0.25.
+iteration.  For theL= 8 half-filled system atU= 5,g= 0.5                                    U        0.2        1.0        2.0        3.0        4.0        5.0
+(blue circles), linear mixing ofαproduces monotonic and ap-                             E∞(U)      −1.264−1.080−0.884−0.726−0.607−0.519
+proximately exponential convergence.  For the larger system
+(L= 350,U= 5,g= 0.1;  orange squares), the direct (un-
+mixed) update converges in two iterations, with the residual                                     U         6.0        7.0        8.0        9.0       10.0
+dropping below 10−6    after the first correction.                                           E∞(U)      −0.454−0.404−0.364−0.333−0.307
+
+
+                                                                                        To see explicitly the dependence of the energy per-site
+                                                                                    on  interaction  strength,  Fig.3shows  the  deviation  of
+                                                                                    per-site energy for finite-size system as compared to the
+                                                                                    extrapolated infinite-size limit.  The upper panel shows
+                                                                                    E(L, U) for all system sizes together with the extrapo-
+                                                                                    lated  infinite-size  curveE  ∞(U).   The  finite-size  results
+                                                                                    converge monotonically toward the bulk limit across the
+                                                                                    entire interaction range.  In particular, theL= 300 and
+                                                                                    L= 350 curves are nearly indistinguishable fromE          ∞(U),
+                                                                                    indicating that lattice sizesL≳300 already provide an
+                                                                                    accurate approximation to infinite-size behavior.
+                                                                                        To  quantify  the  residual  size  dependence,  the  lower
+                                                                                    panel of Fig.3displays the finite-size deviation
+                                                                                                      ∆E(L, U) =E(L, U)−E                       ∞(U).            (11)
+                                                                                    The  deviations  decrease  systematically  with  increasing
+                                                                                    system  size  and  remain  small  over  the  full  interaction
+FIG. 2.     Finite-size scaling of the ground-state energy per                      range.  The largest deviations occur at smallerUwhile
+site at at differentU= values.  The energy densityE(L, U)                           the deviations diminish at largerU, consistent with the
+is plotted versus inverse system size 1/L.  The dashed line is                      increasingly  local  character  of  the  strongly  interacting
+a linear fit of the formE(L, U) =E               ∞(U) +a(U)/L, whose                regime.   Overall,  the  nearly  linear  1/Lscaling  and  the
+intercept yields the infinite-size-limit valueE      ∞.                             rapid suppression of ∆E(L, U) demonstrate that the fb-
+                                                                                    BE calculations are well converged with respect to system
+B.    Finite-Size Scaling to Infinite Size                                          size and reliably capture the infinite-size energy density
+                                                                                    forL≥300.
+                                                                                        Fig.4shows  the  CPU  time  required  by  DMRG  and
+   To assess finite-size effects and establish convergence                          fb-BE across the interaction sweep.  The embedding ap-
+toward bulk behavior of our fb-BE method, we performed                              proach  is  consistently  faster.    While  DMRG  requires
+a  systematic  finite-size  scaling  analysis  of  the  ground-                     O(10    3)  seconds  perUvalue,  fb-BE  converges  within  a
+state energy density, energy per unit lattice site, for half-                       few seconds and displays only weak dependence on inter-
+filled 1D systems with lattice sizesL= 150,200,300,and                              action strength.  These results highlight the substantial
+350 at coupling strengthg= 0.1 and phonon frequency                                 computational efficiency of the embedding framework.
+                                                                                                                                                       6
+
+                                                                               Sec.IV C 1and quater-filling in Sec.IV C 2for a small
+                                                                               lattice of 8 sites.  The small system size is chosen mostly
+                                                                               due to the DMRG calculation efficiency.  We note similar
+                                                                               calculation can be performed for larger size systems given
+                                                                               enough computational time.
+
+
+                                                                               1.    Half-Filling
+
+                                                                                  We start by looking at the half-filled case, where the
+                                                                               physics  is  determined  by  the  interaction  between  the
+                                                                               charge-density-wave (CDW) instability caused bygand
+                                                                               the Mott insulating state affected byU   7,43  .
+                                                                                  Fig.5shows the total ground state energies obtained
+                                                                               from DMRG and fb-BE. The method shows great qual-
+                                                                               itative agreement all around the phase diagram.  As ex-
+                                                                               pected,  the  overall  energy  goes  up  (becomes  less  nega-
+                                                                               tive) when the repulsiveUgoes up.  On the other hand,
+                                                                               stronger electron-phonon coupling lowers the energy sig-
+                                                                               nificantly.  The reduction in energy results from lattice
+                                                                               relaxation:  the  lattice  deforms  to  shield  the  local  elec-
+                                                                               tronic density, thereby screening the Coulomb interaction
+                                                                               and producing a phonon-mediated attractive interaction
+                                                                               that counteracts the repulsive Hubbard term4.
+                                                                                  The lower panel of Fig.5depicts the energy deviation
+                                                                               ∆E=E           fb-BE −E    DMRG to further quantify the correct-
+FIG. 3.   Ground-state energy per siteE(L, U) as a function                    ness  of  the  approach.   There  are  two  different  regimes
+of interaction strengthUforL= 150–350 together with the                        to  be  seen.Strong  Correlation  Regime  (U  >2t):
+extrapolated infinite-size resultE        ∞(U) (upper panel). Finite-          The  errors  are  essentially  independent  of  the  coupling
+size deviation ∆E(L, U) =E(L, U)−E                    ∞(U), highlighting the   strengthgand are very modest (|∆E|<0.05 Hartree).
+systematic suppression of size effects with increasingL(lower                  Electrons are confined and charge fluctuations are con-
+panel).                                                                        trolled in this Mott-dominated regime43. Here, the short-
+                                                                               range  antiferromagnetic  interactions  are  well  captured
+                                                                               by  the  local  fragment  logic  of  the  Bootstrap  Embed-
+                                                                               ding framework32. Peierls/CDW  Regime  for  large
+                                                                               g,  whenU  <2t: There  are  notable  variations,  espe-
+                                                                               cially forg= 0.5 at lowU, where ∆E≈ −0.5 Hartree.
+                                                                               The  fb-BE  energy  is  less  than  the  DMRG  energy,  as
+                                                                               shown by the negative sign.  The CSMF method doesn’t
+                                                                               take into account quantum phonon fluctuations and in-
+                                                                               stead assumes a static lattice distortion, which is a known
+                                                                               problem with the mean-field treatment of phonons and
+                                                                               the  negative  energy  error  here  can  likely  be  attributed
+                                                                               to  the  non-variational  nature  of  bootstrap  embedding.
+                                                                               Quantum fluctuations (zero-point motion and tunneling
+                                                                               between degenerate CDW patterns) increase the ground
+                                                                               state energy in the exact solution (DMRG)44,45    . Because
+                                                                               the mean-field  solution essentially ”freezes” the system
+                                                                               into a deeper potential well, the binding energy is over-
+FIG.  4.    CPU  time  (total  runtime)  comparison  between                   estimated.
+DMRG  and  fb-BE  for  an  8-site  Hubbard–Holstein  chain  at
+half filling (g= 0.4).
+                                                                               2.    Quarter-Filling
+
+C.    Probing Electron-Phonon Physics                                             Next,  we  look  at  the  system  withN        e  =  4  (quarter-
+                                                                               filling).  This regime usually has either metallic behavior
+   In  this  part,  we  compare  the  performance  of  the  fb-                or a liquid of polarons, depending on how strong the cou-
+BE method’s with DMRG calculations at half-filling in                          pling is6.  The results are shown in Fig.6.
+                                                                                                                                                        7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  5.   Ground  state  energy  comparison  between  DMRG
+and fb-BE for an 8-site, 8-electron system (ω  0 = 0.25).  The
+embedding method accurately captures the energy evolution
+from the weak-coupling to strong-coupling regimes.  The sub-                   FIG. 6.  The energy of the ground state for the quarter-filled
+stantial  negative  deviation  observed  for  lowUand  highg                   system (8 sites, 4 electrons).  WhenUis big, the differences
+is attributed to the mean-field overstabilization of the static                between  fb-BE  and  DMRG  are  more  than  when  it  is  half-
+CDW order; however, this deviation disappears in the Mott                      filled.Energy  deviation  for  the  system  that  is  a  quarter  full
+regime.                                                                        (N  e  = 4).  The inaccuracy is more asUgets bigger,  but it
+                                                                               gets smaller whenggets stronger.  This means that phonon-
+                                                                               induced localization (polaron production) makes the local em-
+   In   this   situation,   the   errors   are   mostly   positive             bedding approximation more accurate.
+
+(E  fb-BE  >  EDMRG),  which  means  that  the  embedding
+ansatz is missing some of the correlation energy. The bot-
+tom panel of Fig.6shows a surprising change in accuracy                        lattice distortions that renormalize the local on-site en-
+caused by the interaction between electrons and phonons.                       ergies.  These site-dependent effective potentials enhance
+Weak Coupling (g= 0.1):The error increases mono-                               charge localization and reduce the spatial extent of elec-
+tonically withUforU≳4, reaching ∆E≈1.5 Hartree at                              tronic correlations.
+U= 10.  In this quarter-filled regime, the system retains                         As  a  result,  the  effective  electronic  Hamiltonian  be-
+its  metallic  characteristics  despite  significant  repulsion,               comes more local,  which is favorable for bootstrap em-
+as the holes facilitate charge mobility without double oc-                     bedding since the fragmentation error is minimized when
+cupancy. We classify this as a strongly correlated metallic                    correlations  are  predominantly  short-ranged.   The  im-
+phase6.  The small fragment size utilized in BE captures                       proved performance of fb-BE at strong coupling is there-
+on-site correlations well but difficulties with the longer-                    fore  attributed  to  enhanced  electronic  localization  in-
+range kinetic correlations of delocalized electrons.                           duced by static lattice distortions.  In particular, at large
+   Strong Coupling (g= 0.5):The error is significantly                         g, the lattice-induced potential can promote partial spa-
+lower than for weak coupling (∆E≈0.6 Hartree atU=                              tial charge separation, which reduces the degree of elec-
+10).  Within the CSMF approximation, phonon degrees                            tronic delocalization.  The continued variation of the to-
+of freedom are treated as static classical displacements.                      tal energy with increasingUshould therefore be inter-
+In the strong-coupling regime, the electron–lattice inter-                     preted as residual electronic correlation effects within this
+action generates spatially inhomogeneous, self-consistent                      localized regime.
+                                                                                                                                                      8
+
+V.    CONCLUSION                                                              ACKNOWLEDGMENTS
+
+  We  propose  a  new  fermi-bose  Bootstrap  Embedding                          This  work  is  supported  by  the  U.S.  Department  of
+(fb-BE) method and demonstrated its convergence using                         Energy, Office of Science, Advanced Scientific Comput-
+one-dimensional Hubbard–Holstein model for large sys-                         ing  Research,  under  contract  number  DE-SC0025384.
+tem size. In addition, systematically benchmarks against                      This work used Bridges-2 at the Pittsburgh Supercom-
+precise DMRG calculations are performed for small sys-                        puting  Center  (PSC)  through  allocation  CHE250139
+tem size.  We have explored the applicability domain of                       from  the  Advanced  Cyberinfrastructure  Coordination
+this embedding strategy by investigating two unique fill-                     Ecosystem:   Services  &  Support  (ACCESS)  program,
+ing regimes (half and quater filling) that exhibit different                  which is supported by U.S. National Science Foundation
+physics.                                                                      grants #2138259, #2138286, #2138307, #2137603, and
+  Our  results  show  that  fb-BE  works  very  well  when                    #2138296.
+there  is  a  large  correlation  (U   >2t),  because  elec-
+tron  localization  reduces  the  errors  that  come  with  fi-
+nite fragment sizes and it is consistent with the findings                    DATA AVAILABILITY
+from DMET applied to Hubbard-Holstein model36.  At
+half-filling,  the  technique  precisely  represents  the  Mott                  The data that support the findings of this study are
+insulating  state,   exhibiting  minimal  divergence  from                    available in the fb-BE github repository50.
+DMRG over a broad spectrum of electron-phonon cou-
+pling  strengths.   In  the  weak-correlation  Peierls  regime
+(U  <2t,  largeg),  the  static  mean-field  approach  to                     Appendix A: Effective Hamiltonian for the
+phonons results in an exaggerated assessment of charge-                       Hubbard-Holstein Model
+density-wave stability, underscoring the importance of in-
+corporating quantum phonon fluctuations to accurately                            We  consider  the  Hubbard–Holstein  model  on  a  lat-
+determine the ground state energy near the phase tran-                        tice includingNsites, wherein electrons undergo an on-
+sition.                                                                       site Coulomb interaction and local coupling to quantized
+  In the quarter-filling regime, we noted a distinct transi-                  phonon modes.  The full Hamiltonian is:
+tion in accuracy induced by polaron production. The ap-                                                                                        X
+proach fails to accurately capture the long-range kinetic                      ˆH=−t       X      ˆc  †iσˆc  jσ + h.c.+U   X   ˆn  i↑ ˆn  i↓  +ω    0ˆb†iˆbi
+correlations  of  delocalized  electrons  (weakg),  but  the                             ⟨i,j⟩,σ                            i                   i
+emergence of strong electron-phonon coupling markedly                                                                                       ˆb†
+enhances the outcomes.  The creation of small polarons                                                                       +g  X    ˆn  iσ  i + ˆbi  ,
+confines the electronic degrees of freedom, thus improv-                                                                          i,σ
+ing the accuracy of the local embedding approximation.                                                                                            (A1)
+  The  fb-BE  method  offers  a  computationally  efficient                   where  ˆc  †iσ  (ˆc  iσ)  denotes  the  creation  (annihilation)  an
+method for modeling strongly correlated electron-phonon                       electron with spinσat sitei, and ˆn                iσ = ˆc  †iσˆc  iσ is the cor-
+systems,  especially  in  regimes  characterized  by  localiz-                responding number operator.  The phonon operators ˆb†i,
+ing  interactions.   Future  developments  of  this  research                 ˆbi create and annihilate vibrational quanta at sitei.  The
+may mitigate existing constraints by integrating dynam-                       parameterst,U,ω                             0, andgdenote the electron hopping
+ical phonon treatments or enlarging the fragment size to                      amplitude, on-site Coulomb repulsion, phonon frequency,
+more effectively capture long-range changes in the metal-                     and electron–phonon coupling strength, respectively.
+lic phase.
+  Our work also opens several directions for future explo-
+ration.  One is to improve the quality of the mixed fermi-                    Mean-Field Decoupling
+bose eigensolver by including phonon correlation beyond
+a single coherent state46.  However, classical eigensolvers                      To achieve a manageable approximation, we implement
+will face a bottleneck for strongly correlated systems at                     mean-field  decoupling  on  the  interaction  terms.    The
+large size.  One hopeful approach is to use quantum com-                      Hubbard  term  is  expressed  in  a  linearized  form  as  fol-
+puters  for  fragment  eigensolvers23,35,38,47           .   In  addition,    lows:
+because the electron-phonon problem has both discrete
+fermionic and continuous bosonic degrees of freedom, hy-                             ˆn  iσ =⟨ˆn       iσ⟩+ (ˆn    iσ − ⟨ˆn    iσ⟩) =⟨ˆn         iσ⟩+δˆn         iσ       (A2)
+brid continuous-variable (CV) and discrete-variable (DV)
+quantum processors24,26,47,48            could be an excellent choice         so,
+to use as a quantum eigensolver.  Ultimately, extending
+the current formalism to include excited states and finite-                                ˆn  i↑ ˆn  i↓  = (⟨ˆn     i↑ ⟩+δˆn         i↑ ) (⟨ˆn     i↓ ⟩+δˆn         i↓ )        (A3)
+temperature phase diagrams would significantly enhance
+our  understanding  of  the  thermodynamics  of  polaronic                    Neglecting the second order termδˆn             i↑ δˆn    i↓   because it is
+materials49.                                                                  a product of two small fluctuations,
+                                                                                                                                                                             9
+
+                                                                                          As a special case, if the bosonic ground state is vacuum,
+        ˆn  i↑ ˆn  i↓  ≈ ⟨ˆn    i↑ ⟩ˆn    i↓  +⟨ˆn       i↓ ⟩ˆn    i↑  − ⟨ˆn    i↑ ⟩⟨ˆn     i↓ ⟩.       (A4)i.e.,⟨     ˆb′†i ˆb′i⟩= 0, then the phonon energy is
+                                                                                                                                 P
+   Similarly,  the  electron–phonon  term  is  decoupled  as                                                        Eph =−           i g2⟨ˆn    iσ⟩2
+follows:                                                                                                                                ω0        .                 (A11)
+
+      ˆb†                       ˆb†                                                       Total Effective Energy
+ˆn  iσ  i + ˆbi     ≈ ⟨ˆn    iσ⟩   i + ˆbi   +ˆn  iσ⟨ˆb†i+ˆbi⟩−⟨ˆn         iσ⟩⟨ˆb†i+ˆbi⟩.
+                                                                             (A5)
+   The full mean-field Hamiltonian becomes:
+ˆHMFel-ph =−t     X           ˆc  †i,σˆc  j,σ + h.c.                                      EMF =E    el +E    ph −g  X⟨ˆn    iσ⟩⟨ˆbi + ˆb†i⟩ −U   X⟨ˆn    i↑ ⟩⟨ˆn     i↓ ⟩.
+                   ⟨i,j⟩,σ                                                                                                 i,σ                              i
+                                                                                                                                                                      (A12)
+              +U   X(⟨ˆn     i,↓  ⟩ˆn    i,↑   +⟨ˆn       i,↑  ⟩ˆn    i,↓  )
+                       i
+              + X      ω0ˆb†                  ⟨ˆn    iσ⟩( ˆb†                             Appendix B: Variational Coherent-State Ansatz as Mixed
+                            iˆbi +g  X                   i + ˆbi) + ˆn  iσ⟨ˆb†i + ˆbi⟩    Fermi-Bose Eigensolver for the Hubbard-Holstein Model
+                   i                   i,σ
+              −U   X⟨ˆn    i,↑  ⟩⟨ˆn     i,↓  ⟩ −g  X⟨ˆn    iσ⟩⟨ˆb†i + ˆbi⟩                   We consider the Hubbard–Holstein Hamiltonian:
+                       i                         i,σ
+                                                                                                    ˆH=     ˆHel + X     ω0ˆb†i ˆbi +g  X      ˆn  i(ˆb†i + ˆbi),        (B1)
+
+                                                                                                                      i                    i
+Total Effective Hamiltonian
+
+   The resulting total Hamiltonian is                                                     Ansatz
+
+                 ˆHMFel-ph =  ˆHMFel   ⊗I    ph +I    el ⊗  ˆHMFph  ,         (A6)            We choose a variational product ansatz of the form:
+
+where the fermionic part is                                                                                         |Ψ⟩=|ψ           el⟩ ⊗ O  |α i⟩,                  (B2)
+
+                   ˆHMF                      ˆc  †                                                                                        i
+                     el    =−t     X          iσˆc  jσ + h.c.
+                                   ⟨i,j⟩,σ                                                where each|α    i⟩is a phonon coherent state:
+
+                   +X        U⟨ˆn       i¯σ  ⟩+g⟨      ˆbi + ˆb†i⟩ˆn  iσ            (A7)                                                ∞X    αni
+                       i,σ                                                                                     |α i⟩=e    −|α    i|2/2       √
+                                                                                                                                      n=0      n!   |n⟩.              (B3)
+and the bosonic part is
+         ˆHMF             h                         ˆb†         i
+           ph   = X         ω0ˆb†iˆbi +g⟨ˆn         iσ⟩i + ˆbi     .        (A8)          Expectation Values
+                       i
+Despite  the  name,  we  emphasize  that   ˆHMFel    is  still  an                            the total energy is:
+interacting correlated Hamiltonian, which will be solved                                                  E=⟨Ψ|          ˆH|Ψ⟩
+using correlated eigensolvers. The superscript ”MF” only
+refers to the interaction between fermions and bosons are                                                     =⟨Ψ|        ˆHel|Ψ⟩+⟨Ψ|         X ω0 ˆb†iˆbi|Ψ⟩
+treated at the mean-field level.                                                                                                            i                           (B4)
+   Assuming  the  phonon  state  is  a  product  of  coherent                                                    +⟨Ψ|g      X     ˆn  i ˆb†
+states|α            i⟩which satisfy the following relationships                                                                         i + ˆbi|Ψ⟩.
+                                                                                                                              i
+ ˆbi |α i⟩=α     i |α i⟩,  ⟨  ˆb†iˆbi⟩=|α      i|2,  ⟨ ˆbi + ˆb†i⟩= 2 Re(α        i).
+   Define shifted displaced operators                                                       ⟨Ψ|     ˆHel|Ψ⟩=     ⟨ψ  el| ⊗ O⟨α  j|  ˆHel  |ψ el⟩ ⊗ O            |α k⟩.
+                                                                                                                              j                              k
+              ˆb′i = ˆbi + g⟨ˆn      iσ⟩    i  = ˆb†i + g⟨ˆn      iσ⟩
+                               ω0   ,    ˆb′†                 ω0   ,       (A9)               Since  ˆHel is purely an electronic Hamiltonian, it only
+the phonon Hamiltonian can be rewritten in terms of the                                   acts  on  the  electronic  part  of  the  wavefunction.   The
+new shifted bosonic operators as                                                          phonon coherent states|α            k⟩are not affected by it. There-
+                                                                                          fore, we can write:
+             ˆHMFph   = X       ω0ˆb′†i ˆb′i − g2⟨ˆn    iσ⟩2ω0.            (A10)                  ⟨Ψ|     ˆHel|Ψ⟩=⟨ψ            el| ˆHel|ψ el⟩ O⟨α  j| O     |α k⟩.
+
+                          i                                                                                                                 j             k
+                                                                                                                                                                   10
+
+   The  term   Nj⟨α  j| (Nk |α k⟩)  represents  the  inner                           these back into the sum, the coupling term in the total
+product of all the phonon coherent states:                                            energy expression becomes:
+
+                   =⟨α     1|α 1⟩⟨α    2|α 2⟩. . .⟨α    N|α N⟩                                                   g X⟨ˆn    i⟩(2Re(α            i))
+                                                                                                                     i
+Since phonon coherent states are normalized,⟨α                       j|α j⟩= 1
+for allj. Therefore, the product    Qj⟨α  j|α j⟩= 1·1·····1 =                            We start with the free phonon part of the Hamiltonian
+1.  So, the first term simplifies to:                                                 and the variational ansatz for the phononic part of the
+                                                                                      system.  The free phonon Hamiltonian is:
+        ⟨Ψ|     ˆHel|Ψ⟩=⟨ψ           el| ˆHel|ψ el⟩ ·1 =⟨ψ      el| ˆHel|ψ el⟩                                     ˆHph = X
+                                                                                                                                 ω0ˆb†iˆbi
+   Let’s  examine  the  coupling  term  in  the  Hamiltonian                                                                  i
+and  then  its  expectation  value.   The  original  coupling                         The variational ansatz for the phononic part is a product
+term in the Hamiltonian is:                                                           of coherent states:
+                     ˆHcoupling =g  X        ˆn  i(ˆb†i + ˆbi)                                                    |Ψ ph⟩=  O|α j⟩
+
+                                         i                                                                                      j
+Now,  let’s  consider  the  expectation  value  of  this  term                        The expectation value of the phonon Hamiltonian with
+with respect to the chosen variational product ansatz:                                respect to this ansatz is:
+
+                        |Ψ⟩=|ψ           el⟩ ⊗ O |α j⟩                                                                           X              O
+                                              j                                              ⟨Ψ  ph| ˆHph|Ψ ph⟩=  
+O          αk        ω0 ˆb†iˆbi       αj.
+So, the expectation value is:                                                                                             k          i               j
+                                                                                         Due to the product nature of the coherent state ansatz,
+   ⟨ ˆHcoupling⟩=g   X       ⟨ψ  el|ˆn   i |ψ el⟩⟨α  i|( ˆb†                          the  expectation  value  of  the  operator  acting  on  sitei
+                                                       i + ˆbi)|α   i⟩  (B5)          simplifies. The terms for all other sites (j̸=i) will simply
+                          i                                                           be⟨α    j|α j⟩= 1 due to the normalization of the coherent
+                 
+ψel ⊗ O           ˆn  i ˆb†                                       states.  This leaves us with just the term for sitei:
+       =g  X                    αj                                 αk.                                           X
+                                           i + ˆbiψel ⊗ O                                                           ω0⟨α  i|ˆb†iˆbi|α i⟩
+              i             j                                  k                                                   i
+
+   Now, consider a single term in the sum, for a specific                             Now we use the property of coherent states, where|α            i⟩
+sitei:                                                                                is  an  eigenstate  of  the  annihilation  operator,b            i|α i⟩=
+                                                                                      αi|α i⟩, and its conjugate,⟨α                      i|b †i  =α   ∗i ⟨α  i|.  Substituting
+             ⟨ψ  el ⊗ O     αj|ˆn   i ˆb†                     αk⟩                     this:
+                                      i + ˆbi|ψ el ⊗ O                                                          X
+                        j                                 k                                                           ω0α∗i αi⟨α  i|α i⟩
+   Since the ansatz separates the electronic and phononic                                                          i
+parts, and the phonon coherent states for different sites                             Since  the  coherent  states  are  normalized,⟨α                       i|α i⟩=  1.
+are independent, we can separate the expectation values:                              And by definition,α                ∗i αi =|α    i|2.  This simplifies to:
+        =⟨ψ     el|ˆn   i|ψ el⟩ · ⟨α  i|( ˆb†              ⟨α  j|ˆI|α   j⟩                                            X
+                                      i + ˆbi)|α   i⟩ · Y                                                                   ω0|α i|2
+                                                       j̸=i                                                             i
+The product Q                                                                            therefore, the total energy becomes:
+                     j̸=i   ⟨α  j|ˆI|α   j⟩simplifies to 1 because coher-
+ent states are normalized (⟨α   j|α j⟩= 1).  So, for each site                        E[{α      i}] =⟨ψ        el|  ˆHel |ψ el⟩+ Xω0|α i|2+X      g(α   ∗i +α   i)⟨ˆn     i⟩.
+i, the term becomes:                                                                                                        i                 i
+                   ⟨ψ  el|ˆn   i|ψ el⟩ · ⟨α  i|( ˆb†                                                                                                            (B6)
+                                              i + ˆbi)|α   i⟩
+We know that:                                                                         Energy Minimization
+
+                     ⟨α  i|( ˆb†i + ˆbi)|α   i⟩= 2Re(α          i)                       We minimizeE[{α                       i}] with respect toα     ∗i :
+
+And  the  term⟨ψ          el|ˆn   i|ψ el⟩is  precisely  the  expectation                  ∂E
+value of the number operator ˆn  i in the electronic ground                                                                                                     (B7)
+state .  This is denoted as⟨ˆn        i⟩.  Therefore, substituting                       ∂α∗i  =ω    0αi +g⟨ˆn         i⟩= 0 ⇒  α        ⋆i  =−    gω0⟨ˆn    i⟩
+                                                                                                                                                                      11
+
+Phonon Contribution to Energy                                                            5J. Hubbard,Proceedings A276, 238 (1963).
+                                                                                         6R. P. Hardikar and R. T. Clay,Physical Review B75, 245103
+   Substitutingα                       ⋆i   into  the  energy  yields  the  effective    7R.  T.  Clay  and  R.  P.  Hardikar,Physical  Review  Letters(2007).
+                                                                                                                                                          95,
+phonon-induced term:                                                                      096401 (2005).
+                                                                                         8Y. Wang, I. Esterlis, T. Shi, J. I. Cirac, and E. Demler,Physical
+                − g                                                                   Review Research2, 043258 (2020).
+                               2                                                         9A. Dobry, A. Greco, S. Koval, and J. Riera,Physical Review B
+  Eph =ω    0       ω0⟨ˆn    i⟩  +g⟨ˆn         i⟩− gω0⟨ˆn    i⟩+−     gω0⟨ˆn    i⟩      10M. Tezuka, R. Arita, and H. Aoki,52, 13722 (1995).
+                                                                                                                              Physica B: Condensed Matter
+                                                                                          359-361, 708 (2005).
+                                                                                        11M.  Tezuka,  R.  Arita,  and  H.  Aoki,Phys.  Rev.  B76,  155114
+                         Eph =−  X           g2                                         12D. Jansen, J. Bonˇca, and F. Heidrich-Meisner,(2007).
+                                            ω0⟨ˆn    i⟩2                     (B8)                                                     Phys. Rev. B102,
+                                         i                                                165155 (2020).
+                                                                                        13Y.  Luo,  J.  Park,  and  M.  Bernardi,Nature  Physics21,  1275
+   The mean-field decoupling of the electron–phonon in-                                   (2025).
+teraction introduces the correction term                                                14W. M. C. Foulkes, L. Mitas, R. J. Needs, and G. Rajagopal,Rev.
+                                                                                          Mod. Phys.73, 33 (2001).
+                    E(2)                 ⟨ˆn    iσ⟩⟨ˆbi + ˆb†                           15W. Purwanto and S. Zhang,Phys. Rev. E70, 056702 (2004).
+                       ph  =−g    X                      i⟩.              (B9)          16B. M. Rubenstein, S. Zhang, and D. R. Reichman,Phys. Rev. A
+                                     i,σ                                                  86, 053606 (2012).
+                                                                                        17P. Werner and A. J. Millis,Phys. Rev. Lett.99, 146404 (2007).
+   Assuming  a  product  of  local  phonon  coherent  states                            18G. S. Jeon, T.-H. Park, J. H. Han, H. C. Lee, and H.-Y. Choi,
+|{α   i}⟩, we use                                                                         Phys. Rev. B70, 125114 (2004).
+                                                                                        19S. Backes,  Y. Murakami,  S. Sakai, and R. Arita,Phys. Rev. B
+                          ⟨ˆbi + ˆb†i⟩=α     i +α   ∗i .                   (B10)          107, 165155 (2023).
+                                                                                        20S. McArdleet al.,Reviews of Modern Physics92, 015003 (2020).
+                                                                                        21A. Macridin, P. Spentzouris, J. Amundson, and R. Harnik,Phys-
+Minimization of the total energy with respect toα   ∗i yields                             ical Review Letters121, 110504 (2018).
+the stationary displacement                                                             22N. P. D. Sawaya, T. Menke, T. H. Kyaw, S. Johri, A. Aspuru-
+                                                                                          Guzik, and G. G. Guerreschi,npj Quantum Information6(2020),
+                              α∗i  =−    gω0⟨ˆn    i⟩,                      (B11)       23A. Bidart, P. Vaish, T. Kabengele, Y. Pang, Y. Liu, and B. M.10.1038/s41534-020-0278-0.
+which is real at the minimum.                                                             Rubenstein,  “Quantum  computing  beyond  ground  state  elec-
+                                                                                          tronic structure: A review of progress toward quantum chemistry
+   Substituting this result intoE    (2)ph  gives                                         out of the ground state,”https://arxiv.org/pdf/2509.19709.
+                                                                                          pdf(2025), arXiv:2509.19709], accessed December 30, 2025.
+                                                                                        24Y. Liu, S. Singh, K. C. Smith, E. Crane, J. M. Martyn, A. Eick-
+                         E(2)               g2                                            busch,  A.  Schuckert,  R.  D.  Li,  J.  Sinanan-Singh,  M.  B.  Soley,
+                            ph  = 2X        ω0⟨ˆn    i⟩2.                 (B12)
+                                        i                                                 T.  Tsunoda,  I.  L.  Chuang,  N.  Wiebe,  and  S.  M.  Girvin,  “Hy-
+                                                                                          brid oscillator-qubit quantum processors:  Instruction set archi-
+   Combining the two phonon contributions, we obtain                                      tectures,  abstract  machine  models,  and  applications,”https:
+                                                                                          //arxiv.org/abs/2407.10381(2025),  arXiv:2407.10381  [quant-
+         Etotph  =E    (1)                                                                ph], accessed December 30, 2025.
+                       ph  +E    (2)ph                                       (B13)      25E. Crane, K. C. Smith, T. Tomesh, A. Eickbusch, J. M. Martyn,
+                             g2                     g2                                    S. K¨uhn,  L. Funcke,  M. A. DeMarco,  I. L. Chuang,  N. Wiebe,
+                 =−  X       ω0⟨ˆn    i⟩2 + 2X      ω0⟨ˆn    i⟩2           (B14)          A. Schuckert, and S. M. Girvin, “Hybrid oscillator-qubit quan-
+                         i                      i                                         tum processors:  Simulating fermions, bosons, and gauge fields,”
+                          g2                                                              https://arxiv.org/abs/2409.03747(2024),   arXiv:2409.03747
+                 = X                                                                      [quant-ph], accessed December 30, 2025.
+                          ω0⟨ˆn    i⟩2.                                    (B15)        26A.  F.  Kemper,  A.  Alvertis,  M.  Asaduzzaman,  B.  N.  Bakalov,
+                      i                                                                   D.  Baron,  J.  Bierman,  B.  Burgstahler,  S.  Chundury,  E.  R.
+   Finally, usingα          i =−(g/ω         0)⟨ˆn     i⟩, the total phonon en-           Das, J. Furches, F. Guo, R. G. Jha, K. Klymko, A. Kushwaha,
+ergy can be written compactly as                                                          A. Li, A. Majumdar, C. Ortiz Marrero, S. Mohapatra, C. Mori,
+                                                                                          F. Mueller, D. T. Popovici, T. Stavenger, M. Tirfe, N. M. Tub-
+                                          X                                               man,  M.  Zheng,  H.  Zhou,  and  Y.  Liu,  “Hybrid  continuous-
+                           Etotph  =ω    0     |α i|2.                   (B16)            discrete-variable quantum computing: a guide to utility,”https:
+                                            i                                             //arxiv.org/abs/2511.13882(2025),  arXiv:2511.13882  [quant-
+                                                                                          ph], accessed December 30, 2025.
+                                                                                        27L. O. Jones, M. A. Mosquera, G. C. Schatz, and M. A. Ratner,
+REFERENCES                                                                                J. Am. Chem. Soc.142, 3281 (2020).
+                                                                                        28M.  Rossmannek,  F.  Pavoˇsevi´c,  A.  Rubio,  and  I.  Tavernelli,J.
+                                                                                          Phys. Chem. Lett.14, 3491 (2023).
+                                                                                        29Q. Sun and G. K.-L. Chan,Accounts of Chemical Research49,
+ 1E.  Morosan,  D.  Natelson,  A.  H.  Nevidomskyy,  and  Q.  Si, Ad-
+  vanced Materials24, 4896 (2012).                                                      30G.  Knizia  and  G.  K.-L.  Chan,Physical  Review  Letters2705 (2016).
+ 2E.   Dagotto   and   Y.   Tokura,                                                                                                                      109,
+                                      MRS   Bulletin33(2008),                             186404 (2012).
+  .10.1557/mrs2008.223                                                                  31B. Sandhoefer and G. K.-L. Chan,Physical Review B94, 085115
+ 3F. Giustino,Reviews of Modern Physics89, 015003 (2017).
+ 4T. Holstein,                                                                            (2016).
+       Annals of Physics8, 325 (1959).
+                                                                                                                                                                    12
+
+
+32H.-Z. Ye, N. D. Ricke, H. K. Tran, and T. Van Voorhis,J. Chem.                       41M.  Cho,  O.  R.  Meitei,  L.  P.  Weisburn,  O.  Weser,  S.  Weath-
+  Theory Comput.15, 4497 (2019).                                                         erly, A. Alexiu, R. Hanscam, H. K. Tran, H.-Z. Ye, M. Welborn,
+33O. R. Meitei and T. Van Voorhis,J. Chem. Theory Comput.19,                             N. Ricke, T. Tsuchimochi, A. Trofimov, T. Orkhon, N. Whelpley,
+  3123 (2023).                                                                           C. Luo, and T. V. Voorhis,Journal of Physical Chemistry A129
+34Y. Liu, O. R. Meitei, Z. E. Chin, A. Dutt, M. Tao, I. L. Chuang,                       (2025).
+  and T. Van Voorhis,J. Chem. Theory Comput.19, 2230 (2023).                           42O.  R.  Meitei  and  contributors,  “Quemb:   A  toolbox  for  boot-
+35J.   Bierman   and   Y.   Liu,   “Towards   utility-scale   electronic                 strap embedding calculations of molecular and periodic systems,”
+  structure  with  sample-based  quantum  bootstrap  embedding,”                         https://github.com/oimeitei/quemb(2025), gitHub repository,
+  https://chemrxiv.org/engage/chemrxiv/article-details/                                  accessed December 30, 2025.
+  68c8d7c69008f1a467ce73f7(2025), chemRxiv preprint, accessed                          43N. C. Costa, K. Seki, S. Yunoki, and S. Sorella,Communications
+  December 30, 2025.                                                                     Physics3, 80 (2020).
+36T.  E.  Reinhard,  U.  Mordovina,  C.  Hubig,  J.  S.  Kretchmer,                    44E. Jeckelmann, C. Zhang, and S. R. White,Physical Review B
+  U. Schollw¨ock, H. Appel, M. A. Sentef, and A. Rubio,J. Chem.                          60, 7950 (1999).
+  Theory Comput.15, 2221 (2019).                                                       45Q. Wang and H. Zheng,Physics Letters A260, 99 (1999).
+37E. Berger, P. Val´aˇsek, and W. von der Linden,Physical Review                       46J. Li and T. Zhu,Phys. Rev. Lett.133, 216402 (2024).
+  B52, 4806 (1995).                                                                    47K.   J.   Joven,    E.   R.   Das,    J.   Bierman,    A.   Majumdar,
+38Y. Liu, O. R. Meitei, Z. E. Chin, A. Dutt, M. Tao, I. L. Chuang,                       M. Hakimi Heris, and Y. Liu,“Scalable quantum computational
+  and T. Van Voorhis, arXiv preprint arXiv:2301.01457  (2023).                           science:   A  perspective  from  block-encodings  and  polynomial
+39B.  Developers,  “Custom  hamiltonians  —  block2  documenta-                          transformations,”https://arxiv.org/abs/2511.16738 (2025),
+  tion,”https://block2.readthedocs.io/en/latest/tutorial/                                arXiv:2511.16738 [quant-ph], accessed December 30, 2025.
+  custom-hamiltonians.html(2025), accessed December 30, 2025.                          48U.  L.  Andersen,  J.  S.  Neergaard-Nielsen,  P.  van  Loock,  and
+40T.  J.  Boerner,  S.  Deems,  T.  R.  Furlani,  S.  L.  Knuth,  and                    A. Furusawa,Nature Physics11, 713 (2015).
+  J.  Towns,  inPractice  and  Experience  in  Advanced  Research                      49V. Jankovi´c and N. Vukmirovi´c,Physical Review B105, 054311
+  Computing  2023:  Computing  for  the  Common  Good,  PEARC                            (2022).
+  ’23 (Association for Computing Machinery, New York, NY, USA,                         50Y. L. Shariful Islam, Joel Bierman,“fb-BE,”GitHub repository
+  2023) p. 173–176.                                                                      (2025).

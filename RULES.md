@@ -1037,6 +1037,9 @@ infinite lattice. It has no site count, boundary or cluster.
   about 4e-5, more than an iPEPS energy's precision. Case: h = 3.04438 (Rader & Läuchli, PRX 8,
   031030) and h = 3.044 are two instances.
 - A filling is the density per site as printed (`n`), not a particle number.
+- Holstein and Hubbard-Holstein ids write the filling with its particle type, `f<n>` for spinless
+  fermions and `e<n>` for electrons, then U, ω and g: `Holstein/chain_inf_f0.5_w1_g0.5`,
+  `HubbardHolstein/chain_inf_e1_U2_w0.25_g0.1`. A "quarter filling" of electrons is n = 0.5.
 - Spins are S = 1/2, as in track 1, unless the instance carries a spin length `S` (Heisenberg
   at S = 1 on the pyrochlore, checkerboard and crossed ruby lattices, Schäfer et al., PRL 131,
   096702). Its id ends in `_S<S>` (`Heisenberg/pyrochlore_inf_S1`).
@@ -1079,7 +1082,8 @@ the source prints is a row, as in track 1.
 - `extrapolation in the ansatz` and `finite-size extrapolation`: `extrapolated`. A sign-free QMC
   energy extrapolated to N → ∞ is `extrapolated`, not `exact (stochastic)`: the extrapolation
   form is a choice.
-- `series or approximate theory`: `approximate`.
+- `series or approximate theory`: `approximate`. Embedding on the infinite lattice (DMET, bootstrap
+  embedding) is here too, also when its energies are extrapolated in size (2026-11-25).
 - Projector methods on the infinite lattice: `projected`, as in §4.
 
 ### 14.5 Site

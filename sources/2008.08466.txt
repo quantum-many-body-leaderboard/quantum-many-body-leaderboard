@@ -1,0 +1,1849 @@
+ SciPost Physics                                                                                 Submission
+
+                  Eﬃcient and Flexible Approach to Simulate
+             Low-Dimensional Quantum Lattice Models withLarge Local Hilbert Spaces
+
+
+                                    T. K¨ohler1, J. Stolpp2, S. Paeckel3*
+
+ 1 Department of Physics and Astronomy, Uppsala University, Box 516, S-751 20 Uppsala,
+   Sweden 2 Institut f¨ur Theoretische Physik, Georg-August-Universit¨at G¨ottingen, 37077
+ G¨ottingen, Germany 3 Department of Physics, Arnold Sommerfeld Center for Theoretical
+       Physics (ASC), Munich Center for Quantum Science and Technology (MCQST),
+              Ludwig-Maximilians-Universit¨at M¨unchen, 80333 M¨unchen, Germany
+                              * sebastian.paeckel@physik.uni-muenchen.de
+
+Abstract
+
+Quantum lattice models with large local Hilbert spaces emerge across various ﬁelds in quan-
+tum  many-body  physics.   Problems  such  as  the  interplay  between  fermions  and  phonons,
+the  BCS-BEC  crossover  of  interacting  bosons,  or  decoherence  in  quantum  simulators  have
+been extensively studied both theoretically and experimentally.  In recent years, tensor net-
+work  methods  have  become  one  of  the  most  successful  tools  to  treat  such  lattice  systems
+numerically.  Nevertheless, systems with large local Hilbert spaces remain challenging.  Here,
+we introduce a mapping that allows to construct artiﬁcial U(1) symmetries for any type of
+lattice  model.   Exploiting  the  generated  symmetries,  numerical  expenses  that  are  related
+to  the  local  degrees  of  freedom  decrease  signiﬁcantly.   This  allows  for  an  eﬃcient  treat-
+ment  of  systems  with  large  local  dimensions.   Further  exploring  this  mapping,  we  reveal
+an  intimate  connection  between  the  Schmidt  values  of  the  corresponding  matrix-product-
+state  representation  and  the  single-site  reduced  density  matrix.   Our  ﬁndings  motivate  an
+intuitive  physical  picture  of  the  truncations  occurring  in  typical  algorithms  and  we  give
+bounds  on  the  numerical  complexity  in  comparison  to  standard  methods  that  do  not  ex-
+ploit such artiﬁcial symmetries.  We demonstrate this new mapping,  provide an implemen-
+tation recipe for an existing code, and perform example calculations for the Holstein model
+at half ﬁlling.  We studied systems with a very large number of lattice sites up to L = 501
+while  accounting  for Nph  =  63  phonons  per  site  with  high  precision  in  the  CDW  phase.
+
+
+Contents
+
+1   Introduction                                                                                                      2
+
+2   General Concept                                                                                               3
+
+3   Implementation Recipe                                                                                     5
+
+4   General Models and Bath Sites                                                                        6
+
+5 U(1) Symmetries in Matrix-Product States                                                      9
+
+                                                         1
+ SciPost Physics                                                                                  Submission
+
+
+6 U(1)-Invariant Matrix-Product States with Bath Sites                                  10
+
+7   The Holstein Model:  Example Calculations                                                   14
+
+8   Conclusion                                                                                                       17
+
+A  Connection to single-site reduced density-matrix (1RDM)                            19
+
+B  Characterization of numerical expenses                                                          21
+
+C  Hubbard Model with pair creation and annihilation                                      25
+
+D  Object comparison between LBO and ppDMRG                                           26
+
+References                                                                                                            28
+
+
+
+
+1  Introduction
+
+Large local Hilbert spaces appear in various kinds of problems in quantum many-body physics.
+Prominent examples arise in the ﬁeld of ultra-cold quantum gases.  Systems such as interact-
+ing bosons in a one-dimensional lattice [1, 2] or trapped ion quantum simulators [3–5] have
+been studied extensively, fertilizing a rapid theoretical and experimental progress.  Another
+typical problem featuring large local Hilbert spaces is the interplay between lattice fermions
+and phonons.  For instance, the formation and stability of (Bi-)Polarons is a central problem
+and considerable eﬀort has been taken for its investigation [6–15].  A broad class of diﬀerent
+methods such as quantum Monte Carlo [16,17], density-functional theory [18], density-matrix
+embedding theory [19], or dynamical mean-ﬁeld theory [20–22] has been explored to study its
+various aspects.  Evidently, the task to numerically describe such low-dimensional, strongly
+correlated quantum systems has been subject to a vast development.  In particular, the ca-
+pabilities  of  tensor-network  methods  have  improved  a  lot  in  the  past  two  decades.   Here,
+matrix-product states (MPSs) have become the fundament for ﬂexible, numerically unbiased
+and in principle exact methods allowing for the study of not only ground-state properties but
+also of out-of-equilibrium dynamics of quantum many-body systems [23–33].
+    In (time-dependent)  density-matrix  renormalization  group (DMRG) methods,  the com-
+putationally  limiting  factor  is  the  bond  dimension  of  the  tensors  when  performing  tensor
+contractions [26–28, 30, 31, 33].  For instance, using MPS, one is mostly concerned with ma-
+trix-matrix contractions, which scale with the third power of the dimensions of the involved
+matrices.   However,  these  operations  can  be  rendered  cheaper  if  the  system  under  consid-
+eration conserves global symmetries.  Being able to exploit (non-)abelean symmetries is an
+important feature of tensor networks in general [34–37], as a large bond dimension is related to
+the amount of entanglement and decay of correlation functions [29,38,39].  Aiming to describe
+strongly correlated systems, large bond dimensions can be required and thereby exploiting as
+many symmetries of the system as possible is highly desired.
+    Another important contribution to the numerical expenses of MPS algorithms is the di-
+
+
+                                                         2
+ SciPost Physics                                                                                  Submission
+
+
+mension of the local Hilbert spacesHj.  For instance,  when considering systems with large
+spin or  bosonic  degrees of freedom,  a local dimension  dimHj ≡ dj ∼O(10)−O(100) can
+yield drastic restrictions on the maximum possible bond dimensions as typical contractions
+usually scale withd2j or evend3j.  In order to overcome such restrictions, approaches such as the
+pseudo site (PS) and the local-basis optimization (LBO) method [6, 40–42] were developed.
+These methods have proven to be successful tools for treating fermion-phonon couplings in
+the Holstein model, even out of equilibrium and at ﬁnite temperature [6,10,13,14].
+    In  this  paper,  we  introduce  an  alternative  approach  to  simulate  systems  with  large  lo-
+cal  Hilbert  spaces  eﬃciently  and  in  a  ﬂexible  framework.   In  order  to  treat  these  kinds  of
+systems  eﬃciently  with  MPS,  we  exploit  the  fact  that  global U(1)  symmetries  reduce  ef-
+fective  local  block  dimensions  drastically  [34–36].   The  starting  point  of  our  method  is  a
+thermoﬁeld doubling of the many-body Hilbert space, which is an established procedure in
+ﬁnite-temperature DMRG [43–45].  Then, introducing a new representation for operators in
+a particular subspace of the doubled Hilbert space allows us to show that global operators
+breaking U(1) symmetries can be identiﬁed with  projected  puriﬁed  operators  that conserve
+the corresponding symmetries1.  Thereby, challenging general lattice systems breaking global
+U(1)  symmetries  with dj ∼O(10)−O(100)  can  always  be  mapped  into  numerically  more
+feasible  systems.   Importantly,  this  mapping  requires  only  minor  changes  in  existing  codes
+and is completely general.
+    The paper is organized as follows: At ﬁrst, we present the relevant aspects of our approach
+in Sec. 2 in a less detailed fashion and provide an implementation recipe,  in Sec. 3,  which
+captures  the  changes  in  actual  codes.   In  Sec.  4,  we  introduce  the  projected  puriﬁcation  in
+great detail and show how to construct corresponding operators.  In Secs. 5 and 6, we present
+the representation in terms of MPS and discuss the connection between the Schmidt values on
+the newly emerging auxiliary bonds and the diagonal elements of the 1RDM. We illustrate our
+mapping in Sec. 7 with an exemplary application of our mapping to the Holstein model and
+present numerical results demonstrating its computational capabilities.  Finally, we conclude
+and discuss further applications in Sec. 8.  Additional technical details related to both, the
+method and applications can be found in the appendices.
+
+2  General Concept
+
+The general idea of our mapping is to exploit global U(1)-symmetries, where the system un-
+der consideration does not conserve them in the ﬁrst place.  In the tensor-network framework,
+states  can  be  constructed  so  that  they  transform  under  a  global  symmetry,  i.e.,  they  are
+eigenstates of the corresponding symmetry generator.  Let us consider a system with a global
+particle number operator  ˆN  that, for now, is not a conserved quantity of the system.  Eigen-
+states|N⟩ of  ˆN are labeled by their irreducible representationsN and (ignoring degeneracies)
+any state can be decomposed in terms of these eigenstates
+
+                                               |ψ⟩ =∑      ψN|N⟩ .                                                      (1)
+                                                        N
+
+   1A side note: The construction is closely related to the formulation of supersymmetry in high-energy physics.
+Even though, supersymmetry itself is not possible for lattice systems by construction, the general prescriptions
+of our method show striking similarities [46].
+
+
+                                                          3
+ SciPost Physics                                                                               Submission
+
+
+Now, we can perform a doubling of the original Hilbert space and construct states of the form
+
+                                   |ψ⟩PB = ∑        ψN,N′|N⟩P⊗|N′⟩B ,                                         (2)
+                                              N,N′
+
+where we introduced labels P,B  to distinguish the diﬀerent Hilbert spaces.  We restrict the
+allowed coeﬃcients N′  such that each state|N⟩ can be mapped uniquely to a state|N⟩P⊗
+|N0−N⟩B with a properly chosen N0:
+
+                                       |N⟩↦−→|N⟩P⊗|N0−N⟩B .                                              (3)
+
+The transformed wavefunctions
+
+                                  |ψ⟩↦−→∑        ψN,N0|N⟩P⊗|N−N0⟩B                                        (4)
+                                             N
+
+are  eigenstates  of  the  new,  global  symmetry   ˆNP  +  ˆNB  with  eigenvalue N0  and  can  there-
+fore  be  represented  eﬃciently  by  symmetric  MPS.  The  subspace P  spanned  by  all  states
+|N⟩P⊗|N0−N⟩B has the same dimension as the original Hilbert space so that no additional
+complexity is generated with this new representation.
+    An important observation is that the coeﬃcients ψN,N0 can be recast into a block-N×N
+matrix ψN,N′  and each block can be factorized using a singular-value decomposition (SVD)
+
+     |ψ⟩≡  ∑          ψN,N0|N⟩P⊗|N−N0⟩B = ∑                   ψN,N′δ(N′− (N−N0))|N⟩P⊗|N′⟩B
+                  N                                     N,N′
+                                                      =∑     ΛNψP ;N|N⟩P⊗ψB;N|N−N0⟩B .         (5)
+                                                          N
+Here,ψP/B;N are left-/right-orthonormal matrices that are obtained by factorizing the degen-
+erated blocks ψN,N0  for ﬁxed N  and ΛN  are diagonal matrices.  Normalization of the overall
+state demands∑N Tr Λ2N = 1 so that
+
+                             ˆρ = TrB|ψ⟩⟨ψ| =∑         ψP ;NΛ2Nψ†P ;N|N⟩P P⟨N|                                (6)
+                                                    N
+is a density operator, which describes the mixture of the diﬀerent irreducible representations
+labeled by N.  Note that ρN  = Tr Λ2N, i.e., the diagonal elements of  ˆρ, specify the mixing of
+symmetry sectors in the state|ψ⟩. As an example consider a nearlyU(1)-symmetry conserving
+state that is characterized by a dominating diagonal element ρN≈ 1.  The remaining, quickly
+decaying  elements ρN  allow  us  to  truncate  the  state  representation  so  that  a  compression
+scheme in the subspaceP can be formulated, which is in complete accordance to the canoncial
+truncation scheme used in DMRG. Importantly,  the same considerations can be applied to
+the local degrees of freedom, constituting the many-body Hilbert space.
+    Guided by this idea we will show in the following sections that there is a simple prescription
+to  transform  operators  so  that  they  are  acting  inP  only.   Using  balancing  operators  ˆβ(†)B;j
+(which are introduced in Eqs. (19) and (20)), global operators  ˆO that break the global U(1)
+symmetry generated by  ˆN can be mapped into operators conserving the globalU(1) symmetry
+
+
+
+                                                        4
+                         SciPost Physics                                                                                  Submission
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                       Figure  1:    Mapping  of  local  operators ˆbj  and ˆb†j  acting  onH  into  projected  puriﬁed  local
+                       operators ˆbP ;j ˆβ†B;j  and ˆb†P ;j ˆβB;j  acting onP.  This  transformation is the  central,  necessary
+                       modiﬁcation for existing codes in order to use our method.
+
+
+                       generated by   ˆNP  +  ˆNB.  This is achieved by replacing ladder operators ˆb(†)j    in the original
+                       Hilbert space:
+                                                                      ˆbj↦−→ ˆbP ;j⊗ ˆβ†B;j
+                                                                      ˆb†j↦−→ ˆb†P ;j⊗ ˆβB;j .                                                      (7)
+
+                       The detailed mapping, containing also the intermediate step of doubling the Hilbert space, is
+                       shown in Fig. 1.  Note that our mapping is also valid for fermionic degrees of freedom, e.g.,
+                       electrons with a pairing term that breaksU(1) symmetry.  Nevertheless, the general deﬁnition
+                       of the bosonic balancing operators  ˆβ(†)B;j  remains unchanged even in this case.
+                            Recapitulating this short description of the general ideas of our mapping it should be noted
+                       that the states mapped toP are pure states inP but describe mixed states with respect to the
+                       orthogonal decomposition ofH in terms of the eigenstates of  ˆN.  This is in close reminiscence
+                       to the puriﬁcation procedure [43–45] that is commonly used to represent mixed states with
+                       respect toH.  However, there is also an important diﬀerence:  Restricting the allowed states
+                       by a projection into the subspaceP of the doubled Hilbert space, the complexity of the state’s
+                       representation is conserved, i.e., our mapping does not add additional degrees of freedom to
+                       the problem under consideration.
+
+                       3  Implementation Recipe
+
+                       Next,  we  provide  a  short  recipe,  for  how  to  implement  the  previously  described  projected
+                       puriﬁed DMRG (ppDMRG) for ground-state searches and time-evolution methods, including
+                       prerequirements.  Note that this recipe is particularly short, because the necessary changes
+                       are small.
+
+                       Prerequirements    In order to incorporate ppDMRG into an existing framework, it is nec-
+                       essary that the framework can handle Hamiltonians with more than nearest-neighbor inter-
+                       actions.
+
+          doubling                        projection                              5
+
+
+ˆbj                         ˆbP ;j⊗ ˆ1B;j               ˆbP ;j⊗ ˆβ†B;j
+          H                                                             P       HPB
+ˆb†j                        ˆb†P ;j⊗ ˆ1B;j              ˆb†P ;j⊗ ˆβB;j
+
+
+          doubling                        projection
+ SciPost Physics                                                                                  Submission
+
+
+Necessary changes    The existing set of local operators needs to be extended with balancing
+operators that act on the bath sites, as introduced in Eqs. (19) and (20).  In particular, for
+every species of local creation and annihilation operators corresponding balancing operators
+are needed when changing a global U(1) quantum number.  Those operators shall only have
+zero and one as elements and always commute with every other operator.  Additionally, for
+each species of creation- and annihilation operators ˆb(†)j  , a parity-operator  ˆPˆbj =eiπˆb†jˆbj  might
+be useful.  A scenario in which the action of  ˆPˆbj  is necessary is discussed in Sec. 7.
+
+Usage    Following  these  changes,  all  existing  tools  can  be  used  as  usual,  but  with  a  dou-
+bled  system  size  where  physical  and  bath  sites  alternate,  which  is  a  common  technique  in
+ﬁnite-temperature DMRG. Hence,  local observables are now evaluated via two neighboring
+operators.  Note that there is no need to map the state back into the original Hilbert space
+since the physical and the original Hilbert space are isomorphic to each other,  as we show
+in Sec. 4.  However, care must be taken that the MPS represents states inP, i.e., the L local
+gauge constraints deﬁned in Eq. (18) have to be fulﬁlled.  Fortunately, since projected puriﬁed
+operators manifestly act onP only, it suﬃces to ensure that the initial state of any algorithm
+is inP.  For instance, using the previous conventions, an initial state for a ground-state search
+is given by the product state
+               |ψ) =|nP ;1 = 0⟩⊗|nB;1 =σ− 1⟩⊗···|nP ;L = 0⟩⊗|nB;L =σ− 1⟩ .               (8)
+Clearly, for typical ground-state calculations this state is a bad initial guess.  However, it can
+be used as a starting point to create more suitable initial guess states by applying sequences
+of projected puriﬁed operators.  Additionally, our numerical experiences gained so far suggest
+that the convergence of ground state calculations can beneﬁt from a careful use of the subspace
+expansion [47].
+
+4  General Models and Bath Sites
+
+We consider a lattice system ofL∈ N degrees of freedom, each of which being described within
+a Hilbert spaceHσ  of local dimension σ∈ N spanning the system’s overall tensor-product
+Hilbert spaceH =H⊗Lσ   .  A state|ψ⟩∈H can be expressed in terms of all local degrees of
+freedom|σ1···σL⟩∈H:
+
+                                     |ψ⟩ = ∑         ψσ1...σL|σ1,...,σL⟩ ,                                          (9)
+                                             σ1,...,σL
+with, in general, complex coeﬃcients ψσ1...σL∈ C.
+    Let  ˆO be an operator acting on this tensor product Hilbert spaceH and let  ˆN  =∑j ˆnj
+be another operator with local operators ˆnj :Hσ↦−→Hσ fulﬁlling the commutation relations
+[ˆnj, ˆnk] = 0.  We denote the ladder operators spanning the algebra of local operators by ˆb(†)[ˆbj,ˆb†]         j
+that obey canonical commutation relations                     k
+                                                                ϵ = δj,k  and ϵ =± distinguishes between
+the commutator or anticommutator.  Without loss of generality, we choose the spectrum of the
+local operators ˆnj  to be nj∈{0, 1,...,σ− 1}2.  Let us assume furthermore that  ˆO contains
+
+   2In  fact,  the  following  discussion  is  valid  for  any  labeling  of  the  irreducible  representations  of  the U(1)
+symmetries.
+
+                                                         6
+ SciPost Physics                                                                                Submission
+
+
+
+
+
+
+
+
+
+
+
+Figure 2:   Starting from some Hilbert spaceH, a thermoﬁeld doubling is performed to obtain
+the combined Hilbert spaceHPB  =HP⊗HB.  Applying the projection as discussed in the
+main  text  yields  the  subspaceP,  in  which  the  global U(1)  symmetry  is  restored.   Finally,
+upon acting with I as introduced in Eq. (14), states inP  are identiﬁed with states inH.
+
+
+summands with ladder operators ˆb(†)j    that are not paired up with their Hermitian conjugates
+breaking the globalU(1) symmetry generated by  ˆN.  For instance, in the Holstein model (see
+Sec. 7) such contributions are given by the fermion-phonon interactions
+                               ˆO =−∑          (ˆb†      )           [ ˆN, ˆO]
+                                            ˆnfj  j + ˆbj     ⇒                ⁄= 0.                                (10)
+                                        j
+Note that in this example  ˆN =∑j ˆb†jˆbj  is the operator counting the number of phonons and
+ˆnfj  measures the local fermion density.
+    Next, we introduce a thermoﬁeld doubling of this Hilbert space.  The new double Hilbert
+spaceHPB =HP⊗HB  consists of two copies of the original Hilbert space, which we denote
+as the physical Hilbert spaceHP  and the bath Hilbert spaceHB  (see ﬁrst arrow in Fig. 2).
+Correspondingly, we denote the density operators ˆnP ;j and ˆnB;j, which have exactly the same
+properties as the density operators  ˆnj  in the original Hilbert space.  In particular, the basis
+states|nP/B;1⟩⊗···⊗|nP/B;L⟩≡|nP/B;1···nP/B;L⟩ span a complete orthonormal basis of
+HP/B.
+    Here, we leave the framework of ﬁnite-temperature DMRG by considering the subspace
+P⊂HPB =HP⊗HB of the doubled system that is spanned by all states
+                   |nP ;1,...,nP ;L) =|nP ;1,...,nP ;L⟩P⊗|g(nP ;1),...,g(nP ;L)⟩B                   (11)
+                                       =|nP ;1,...,nP ;L,g(nP ;1),...,g(nP ;L)⟩PB ,                      (12)
+with nP ;j ∈  [0,σ− 1]  and g(x)  = σ− 1−x  (see  second  arrow  in  Fig.  2).   Note  that  for
+convenience  we  have  labeled  the  kets  in  the  physical  and  bath  system  by  subscripts  and
+introduced rounded kets to indicate states in the subspaceP⊂HPB, which depend only on
+a reduced number of coeﬃcients nP ;1,...,nP ;L.  This subspace is contained in the subspace
+with NP +NB = (σ− 1)·L, i.e.,
+                     ( ˆNP +  ˆNB)|nP ;1,...,nP ;L) = (σ− 1)·L|nP ;1,...,nP ;L) ,                     (13)
+so that all states in the subspaceP  transform symmetrically under the action of the global
+U(1) symmetry generated by  ˆNP +  ˆNB.  Furthermore, note that by counting the number of
+basis states spanningP  it follows that dimH = dimP.
+    Now, we deﬁne the map
+                                               I  : P−→H
+                                                   |ψ)↦−→|ψ⟩ ,                                                      (14)
+
+
+                                                         7
+ SciPost Physics                                                                                     Submission
+
+
+identifying states|ψ)∈P  in the subspace of the doubled system with states|ψ⟩∈H in the
+original Hilbert space as shown in Fig. 2.  Since g(x) is invertible and dimP  = dimHP  =
+dimH, it follows that I  is invertible.  Next, we deﬁne the projected puriﬁed operator  ˆOPP  :
+P−→P  by
+                                                   ˆO =I ˆOPPI−1.                                                      (15)
+
+Assuming  ˆOPP  exists, this deﬁnition implies in particular that
+                  ⟨n1,...,nL| ˆO|n′1,...,n′L⟩ = (nP ;1,...,nP ;L| ˆOPP|n′P ;1,...,n′P ;L),                (16)
+that is, the matrix representations of  ˆO  and  ˆOPP  in the local basis sets{|n1,...,nL⟩} and
+{|nP ;1,...,nP ;L)} are identical.  We can, hence, work with  ˆOPP  in the subspaceP instead of
+ˆO.  In order to show that  ˆOPP  always exists, we construct it explicitly.  For that purpose, we
+note that the above deﬁnition ofP  is equivalent to
+                 |ψ)∈P⇔ (ˆnP ;j + ˆnB;j)|ψ) = (σ− 1)|ψ)    for all j∈{1,...,L}.               (17)
+But this means that each operator  ˆOPP  has to satisfy[ ˆOPP, ˆnP ;j + ˆnB;j]
+                                                       = 0    for all j∈{1,...,L}.                             (18)
+
+    This motivates us to deﬁne balancing operators  ˆβB;j/ ˆβ†B;j :HB,σ−→HB,σ
+
+
+                                       B⟨n′B;j| ˆβB;j|nB;j⟩B =δn′B;j,nB;j+1                                         (19)
+
+                                       B⟨n′B;j| ˆβ†[ ˆβ(†)B;j|nB;j⟩B =δn′B;j,nB;j−1                                         (20)]
+
+                                                   B;j,ˆb(†)P ;k= 0.                                                       (21)
+
+Since every operator  ˆOP⊗ ˆ1B  acting non-trivially only onHP  can be expressed as function
+of a product of ladder operators ˆb[†]P,j, we can thus map it toP  through the transformations
+                                ˆb†P ;j−→ ˆb†P ;j ˆβB;j    and   ˆbP ;j−→ ˆbP ;j ˆβ†B;j ,                                 (22)
+and imposing the local gauge ﬁxing conditions Eq. (17).  By means of this transformation,
+which is shown graphically in Fig. 1, the local conservation laws Eq. (18) are fulﬁlled.  Note
+that  ˆβ†B;j ˆβB;j⁄= ˆnB;j.
+    There is also another way to introduce projected puriﬁed operators.  We can deﬁne the
+projection operator
+                                 ˆP  = ∑       |nP ;1,...,nP ;L) (nP ;1,...,nP ;L|                                  (23)
+                                      {nP;j}
+and look for operators satisfying  ˆP ˆOPP ˆP  =  ˆOPP .  Those operators are manifestly invariant
+under a projection intoP and therefore, ignoring zero elements, have the same matrix elements
+in bothH andP.  Here the important observation is that restricting the ansatz class of states
+|ψ⟩PB ∈HPB  toP,  we  have  found  a  one-to-one  mapping  betweenH  andP ⊂HPB,  and
+the states|ψ) =  ˆP|ψ⟩PB transform under the global U(1) symmetry generated by  ˆNP +  ˆNB,
+obeying Eq. (17).
+    In the following, we explicitly derive the representation of states inP in terms of MPS and
+demonstrate the capability of the introduced U(1) symmetrization to improve the numerical
+eﬃciency of MPS calculations.  For that purpose, we brieﬂy recapitulate U(1)-invariant MPS
+before digging into the technical details of the projection.
+
+                                                           8
+ SciPost Physics                                                                                  Submission
+
+
+5   U(1) Symmetries in Matrix-Product States
+
+
+
+
+
+
+
+Figure  3:    Schematic  of  the  tensor  network  of  a  MPS.  Horizontal  lines  denote  the  inter-
+nal indices with bond dimension mj, whereas the vertical lines denote physical indices with
+dimension d.  Dotted lines to the left and right indicate the dummy indices m0 and mL.
+
+    Consider  a  state|ψ⟩  as  described  in  Eq.  (9).   Within  the  MPS  formulation  [31],  the
+coeﬃcients ψσ1...σL  are expanded into a tensor train of rank-3 tensors Mσjj;mj−1,mj.  For each
+
+lattice sitej, there is a set ofσ matricesMσjj ∈ Cmj−1×mj.  We refer to the matrix dimensions
+mj  as bond dimensions.  A compact representation of|ψ⟩ is then given by
+
+                                   |ψ⟩ = ∑         Mσ11 ···MσLL     |σ1···σL⟩ ,                                     (24)
+                                          σ1,...,σL|      {z      }
+                                                       ψσ1...σL
+
+where  neighboring  matrices  are  contracted  over  their  shared  bond  indices: MσjMσj+1  =
+∑
+   mjMσjj;mj−1,mjMσj+1j+1;mj,mj+1.   Commonly,  these  contractions  are  represented  pictographi-
+cally.  Each tensor is drawn as a shape with as many legs attached to it as there are indices.
+Then, contractions over shared indices are indicated by connecting the corresponding legs as
+shown in Fig. 3 for the case of a MPS.
+    In  order  to  exploit U(1)  symmetries,  let  us  consider  a  Hamiltonian   ˆH  :H−→H  of  a
+system and  ˆN :H−→H an operator generating a global U(1) symmetry of  ˆH, i.e.,
+                                 [ ˆH,  ˆN]                 L∑
+                                           = 0,     ˆN =       ˆnj,    [ˆnj, ˆnk] = 0                                   (25)
+                                                          j=1
+with local density operators ˆnj :Hσ−→Hσ acting only on the jth lattice site.
+    Since [ ˆH,  ˆN] = 0, we can diagonalize both operators  ˆH and  ˆN  in the same basis.  Let this
+basis be spanned by{|N⟩} with  ˆN|N⟩ = N|N⟩ as well as⟨N|N′⟩ = δN,N′. N  is called the
+global quantum number of the state|N⟩.  A state|ψ⟩∈H can now be expanded in terms of
+the simultaneous eigenstates|n1,...,nL⟩∈H of  ˆN  with N  =∑jnj  and labels nj  denoting
+the eigenvalues of the local operators3  ˆnj:
+
+               |ψ⟩ = ∑         ψn1···nL|n1,...,nL⟩ = ∑               Mn11 ···MnLL |n1,...,nL⟩ ,            (26)
+                      n1,...,nL                             n1,...,nL
+    As  a  consequence  of  the  Wigner-Eckart  theorem,  it  can  be  shown  [35, 36]  that  the  site
+tensors decompose according to()
+         Mnjj;αj−1,αj                           j;αj−1,mj−1;αj−1,αj,mj;αj|   =Tnjj;aj−1,aj·Snjj;αj−1,αj          (27)
+                       mj−1;αj−1,mj;αj  =Mnj|            {z      }    {z   }
+
+                                                        aj−1          aj
+
+   3If the local operators have degenerated eigenvalues, more labels have to be used as a set to identify each
+state uniquely.
+
+                                                          9
+ SciPost Physics                                                                                Submission
+
+
+
+
+
+
+
+
+
+
+Figure 4:   MPS representation in an enlarged Hilbert space with each physical site accompa-
+nied by a bath site.
+
+
+
+
+
+
+
+
+
+
+Figure 5:   Decomposition of general MPS tensor (left) into U(1)-invariant physical and bath-
+site  tensors  (center).   Projection  of  the U(1)-invariant  MPS  (center)  into  the  subspaceP
+(right) enforcing the local gauge condition given in Eq. (17).  Decomposition of the introduced
+auxiliary index ˜aj−1 into irreducible representation of the local conservation law generated by
+ˆnP ;j + ˆnB;j  is sketched by double bonds γj−1→ (˜nP ;j, ˜aj−1).
+
+
+with
+
+                                      Snjj;αj−1,αj =δ(nj +αj−1−αj),                                          (28)
+
+where we interpret in the following
+                    (             )
+     Tnjj;aj−1,aj =   Tnjj;αj−1,αj                   ,    hence  Tnjj;αj−1,αj∈ Cmj−1;αj−1×mj;αj .       (29)
+                                    mj−1;αj−1,mj;αj
+
+Here, the indices αj−1,αj  are labeling irreducible representations of the U(1) symmetry on
+the  bond  spaces.   Hence,  we  can  describe  a  state  by  its  rank-5  site  tensors Mnjj;aj−1,aj  and
+beneﬁt from their block structure.  The matrices Mnjj    are decomposed into blocks Tnjj;αj−1,αj
+with overall dimensions mj  = ∑αjmj;αj.  However,  matrix multiplications  only  scale with(  )3
+the block bond dimensionsmj;αj  and are thus cheaper by a factor of                      mj      , i.e., typically
+                                                                                        mj;αj
+∼O(10)−O(100).
+
+6   U(1)-Invariant Matrix-Product States with Bath Sites
+
+The introduced mapping from an operator breaking a globalU(1) symmetry to one conserving
+a U(1) symmetry (see Sec. 4) can be exploited to eﬃciently reduce the matrix sizes of MPS
+representations.  The key observation is that, while puriﬁed states in the doubled Hilbert space
+
+
+                                                        10
+ SciPost Physics                                                                                Submission
+
+
+in general have a huge redundancy that comes with additional gauge degrees of freedom, the
+projection intoP  ﬁxes all these gauge degrees of freedom by the L local gauge constraints
+given in Eq. (17).  Here, we discuss the implications on the projection of puriﬁed MPS intoP
+and an important connection between the Schmidt decomposition of the puriﬁed states and
+the 1RDM. The latter is being derived rigorosly in App. A and also allows to give bounds
+on  the  numerical  complexity  of  this  mapping  when  allowing  for  truncation  (App.  B).  We
+summarize our ﬁndings at the end of this section.
+    Let again|ψ⟩∈H and consider its single-site representation
+
+                          |ψ⟩ =  ∑             Mnjj;mj−1,mj|mj−1⟩⊗|nj⟩⊗|mj⟩ ,                            (30)
+                                  mj−1,mj,nj
+
+with⟨mj−1|m′j−1⟩ =δmj−1,m′j−1 and⟨mj|m′j⟩ =δmj,m′j. Following the previous considerations,
+we take this state representation into the subspaceP of the enlarged Hilbert spaceHPB with
+NP  + NB  =  (σ− 1)· L.   We  represent  the  MPS  in HPB  by  interpreting  the  single-site
+representation of|ψ⟩ as a two-site representation inHPB,
+
+                    |ψ⟩PB =  ∑           MnP;j,nB;jj;mj−1,mj|mj−1⟩⊗|nP ;j,nB;j⟩PB⊗|mj⟩ .                   (31)
+                               nP;j,nB;jmj−1,mj
+
+Then,  we  apply  the  projection  into  the  subspaceP  by  enforcing  the  local  gauge  condition
+Eq. (17). Pursuing these two steps at all sitesj∈{1,...,L}, the resulting state representation
+is in the subspaceP  of the enlarged Hilbert spaceHPB
+
+               |ψ) =  ∑         MnP;j,nB;jj;mj−1,mjδnB;j,g(nP;j)|mj−1⟩⊗|nP ;j,nB;j⟩PB⊗|mj⟩ .             (32)
+                      nP;j,nB;jmj−1,mj
+
+Then, the site tensors decompose under the global U(1) symmetry as
+
+                 MnP;j,nB;jj;mj−1,mj≡MnP;j,nB;jj;aj−1,aj  =TnP;j,nB;jj;aj−1,aj δ(nP ;j +nB;j +αj−1−αj),                (33)
+
+where again we combine block and matrix indices (αj,mj;αj)≡aj  as introduced in Eq. (27).
+A  matrix  factorization  of  the  decomposed  site  tensors MnP;j,nB;jj             = ⨁NjTnP;j,nB;jj;Nj         in  each
+symmetry block nP ;j +αj−1 = Nj  = nB;j−αj  yields the MPS representation of|ψ) in the
+subspaceP  of the enlarged Hilbert space
+
+             TnP;j,nB;jj;Nj  ≡TnP;j,nB;jj;αj−1,αj  =∑TnP;jj;αj−1,cj−1TnB;jj;cj−1,αj                                                (34)
+                                            cj−1
+                 ⇒|ψ) =  ∑             TnP;jj;aj−1,cj−1δ(nP ;j +αj−1−γj−1)|aj−1⟩⊗|nP ;j⟩×
+
+                            aj−1,nP;j,
+                               cj−1
+                             ∑     TnB;j
+                                     j;cj−1,ajδ(nB;j +γj−1−αj)δnB;j,g(nP;j)|nB;j⟩⊗|aj⟩ .          (35)
+                            aj,nB;j
+
+In Eq. (34), we introduce the index cj−1 as a result of the factorization in each tensor block.
+Then, we again employ the notation introduced in Eq. (27) to extend this index to also contain
+U(1) block labels γj:  (γj,mj;γj)≡cj.
+
+                                                        11
+ SciPost Physics                                                                                  Submission
+
+
+    The MPS constructed in this way is shown in Fig. 4 and consists of alternating physical
+and bath sites, which are labeled by the physical and bath degrees of freedom nP ;j and nB;j,
+respectively.  The delta function δnB;j,g(nP;j) in the last line of Eq. (35) is again the manifes-
+tation of the L gauge-ﬁxing conditions imposed in Eq. (17).  It motivates the introduction
+of the auxiliary U(1) irreducible representation (irrep) labels ηj  enumerating the irreducible
+representations of each locally conserved quantity between the physical and bath sites.  In this
+way theU(1)-irrep labelsγj−1 can be decomposed into labelsγj−1→ (ηj,νj−1), which need to
+fulﬁllηj +νj−1 =nP ;j +αj−1.  Note that we focus only on the labels for the symmetry blocks
+and – for convenience – in the following, neglect the bond dimension m, which is part of the
+label a.  From the local conservation laws and the gauge ﬁxing, we can furthermore conclude
+that the bond label νj−1  has only one non-vanishing block with respect to the global U(1)
+symmetry, which is characterized by a quantum number (j− 1)· (σ− 1)≡αj−1.  Accordingly,
+there is only one non-vanishing blockαj to the right of the bath site, which is characterized by
+a quantum numberj·(σ−1)≡αj. In tensor notation, this can be expressed by a reformulation
+of the local conservation laws at every site, introducing for brevity Nj = (σ− 1)· (j− 1),
+            ∑   TnP;j
+                  j;αj−1,cj−1TnB;jj;cj−1,αjδnB;j,g(nP;j)
+           cj−1
+            = ∑        TnP;jj;αj−1,(ηj,νj−1)δ(Nj−αj−1)TnB;jj;(ηj,νj−1),αjδ(Nj+1−αj)δnB;j,g(nP;j).        (36)
+               ηj,νj−1
+
+Therefore, we ﬁnd that there is a unique decomposition of the auxiliary bond label γj−1  =
+(ηj,νj−1) given by identifying ηj≡nP ;j  and thus also νj−1≡αj−1.  This can be summarized
+by decomposing the site tensors as
+             ∑    TnP;j
+                    j;αj−1,cj−1TnB;jj;cj−1,αjδnB;j,g(nP;j)
+             cj−1
+              =  ∑         TnP;jj;αj−1,(˜αj−1˜nP;j)TnB;jj;(˜αj−1˜nP;j),αjδαj−1,˜αj−1δnP;j,˜nP;jδnB;j,g(nP;j),          (37)
+                 ˜nP;j,˜αj−1
+
+which is exempliﬁed in Fig. 5 and presumed from now on.  Note that this rather cumbersome
+notation is important to derive the correct connection between the site tensorsTnP;jj;αj−1,(˜αj−1˜nP;j)
+and the 1RDM. However,  in what follows we summarize the results of this discussion in a
+condensed notation and refer the interested reader to App. A.
+    Now, we consider the 1RDM, which is the central object of the LBO method [13, 40, 42].
+The  expectation  value  of  the  local  density  operators  in  the  original  Hilbert  space  can  be
+written in terms of the 1RDM  ˆρj = Trk⁄=j ˆρ,
+                         ⟨ˆnj⟩ = Trj{ˆρjˆnj} =∑         ⟨nj|ˆρjˆnj|nj⟩ =∑       ρnj,njnj .                         (38)
+
+                                                    nj                      nj
+
+Note that the diagonal elementsρnj,nj determine the probability to ﬁndnj particles occupying
+the jth physical degree of freedom.  After doubling the system, the diagonal elements of the
+1RDM  ˆρP ;j  for states in a mixed-canonical MPS with center of orthogonality at the physical
+site j can be written as
+                                        ⏐⏐⏐⏐TnP;j                        ⏐⏐⏐⏐2 ⏐⏐⏐TnP;j⏐⏐⏐2 .                          (39)
+                         ρnP;j,nP;j =      j;αj−1,(˜nP;j,˜αj−1)δnP;j,˜nP;j  ≡
+
+
+                                                         12
+ SciPost Physics                                                                                  Submission
+
+
+Here, the important observation is that the auxiliary bond label ˜nP ;j is connected to the label
+of the physical degree of freedomnP ;j by the Kronecker-δ.  It is then straightforward to derive
+an important connection between the occupation probabilities ρnP;j,nP;j  of the local degrees
+of freedom and the Schmidt spectrum Λj  for a cut between the physical and bath site.  In
+particular,  in  App.  A,  we  show  that  the  singular  values  ΛnP;jj;τ    obtained  by  factorizing  the
+tensor block TnP;j  via a SVD fulﬁll
+                                         ∑    (        )2
+                                                ΛnP;jj;τ   =ρnP;j,nP;j ,                                              (40)
+                                           τ
+
+where τ  runs  over  all  singular  values  in  the  factorized  tensor  block TnP;j.   This  relation  is
+the key to understand the numerical behavior of the introduced mapping from an intuitive
+physical picture.  As an example, we assume a system that is characterized by a 1RDM whose
+diagonal elements ρnP;j,nP;j  are sharply peaked around some nP ;j≡ n0.  Let us denote the
+probability  to  ﬁnd n0  particles  at  site j  by ρn0,n0 ≡  1−δ  with  some  small  0≤ δ ≪  1.
+Then, Eq. (40) tells us that we can discard all tensor blocks TnP;j⁄=n0  while maintaining an
+approximative  description  of  the  quantum  state  with  precision δ.   More  precisely,  if|ψ)  is
+the exact state and|ϕ) the state with all tensor blocks TnP;j⁄=n0  discarded, then the Hilbert-
+Schmidt distance fulﬁlls (ψ|ϕ) = 1−δ.  By choosing the truncation thresholdδ more carefully
+and allowing for truncations in the tensor blocks, the approximation quality can be improved.
+Notably, the canonical procedures intrinsic to most of the DMRG algorithms already truncate
+the site tensors in exactly this way [31], i.e., given a truncation threshold δ, singular values
+ΛnP;jj;τ    are discarded until their summed, squared weight reaches δ.
+    We investigate the dependency of the probability distributions of the single-site occupa-
+tions nj  given by the diagonal elements of the 1RDM on the previously described truncation
+scheme in App. B. For simplicity, we assumed strictly exponentially decaying singular values
+            −τAnP;j .  Interestingly, already in the case of moderately large tensor-block dimen-
+ΛnP;jj;τ ∼ e
+sions mj ∼ O(100),  we  ﬁnd  that  the  overall  increase  of  the  bond  dimension  between  the
+physical  and  bath  site,  compared  to  the  bond  dimension  in  the  original  system,  is  practi-
+cally independent on the exponent AnP;j.  Moreover, in this regime the growth in the bond
+dimension decays exponentially with the occupation probabilities ρnP;j,nP;j.  Combining both
+results, we ﬁnd a strong argument that this mapping allows the eﬃcient simulation of sys-
+tems with large local Hilbert spaces and without global U(1) conservation, if the 1RDM is
+peaked around some single-site occupation.  Numerical simulations and estimations from the
+exact  analysis  in  App.  B  showed  that,  typically,  the  growth  in  bond  dimension  is∼O(1)
+and becomes∼ 10 only in drastic situations such as coherent states ρnj,nj ∝ znjnj! e−z.  Note
+also that if the state accidentally conserves the global U(1) symmetry, there will be only one
+non-vanishing tensor block per site and no growth of the total bond dimension at all.
+    In summary, taking MPS to their projected puriﬁed counterparts, we ﬁnd that the occu-
+pation probabilitiesρnP;j,nP;j, i.e., the diagonal elements of the 1RDM of the physical system,
+control the numerical eﬃciency of the state representations.  Specifying a certain truncated
+weightδ and applying the canonical DMRG truncation scheme then yields an approximation
+to the 1RDM with an error∼ δ  with respect to the 1-norm.  Hence, having quickly decay-
+ing  occupation  probabilities,  which  is  typically  the  case  in  physical  systems,  the  projected
+
+                                                         13
+ SciPost Physics                                                                                 Submission
+
+
+puriﬁcation provides an eﬃcient approximation scheme.
+
+7  The Holstein Model:  Example Calculations
+
+In this section, we provide numerical results for the Holstein model.  The Hubbard model with
+superconducting (SC) terms is discussed in App. C where we focus on some technical issues
+arising from the anti-commutation relations of the electronic ladder operators.
+    The Holstein model [48] is given by
+                   ˆH =−t∑       (                 )       ∑    ˆb†                (ˆb†      )
+                                   ˆc†jˆcj+1 + h.c.  +ω0         jˆbj +γ∑      ˆnfj   j + ˆbj   ,                  (41)
+                              j                              j              j
+
+in which ˆc(†)j    denotes spinless fermion annihilation (creation) operators, ˆnfj  = ˆc†jˆcj  the corre-
+sponding particle number operators,  and ˆb(†)j    the bosonic annihilation (creation) operators.
+The parameters of this model are the hopping amplitudet, the phonon frequencyω0, and the
+electron-phonon coupling γ.  Here, the total number of spinless fermions∑j ˆnfj  is conserved,
+while the total number of phonons∑j ˆb†jˆbj  is not.  Owing to the fermion-phonon interaction,
+the number of phonons per lattice site can become very large, rendering this model very chal-
+lenging for DMRG, in particular in the charge-density wave (CDW) phase at half ﬁlling [6,7],
+for which we also present some numerical results.
+    We restore the conservation of the global phonon number by adding balancing operators
+ˆβ(†)B;j, according to the procedure described in Sec. 4. The projected puriﬁed Hamilton operator
+then reads
+   ˆHPP  =−t∑       (                     )        ∑ˆb†                        (ˆb†                     )
+                      ˆc†P ;jˆcP ;j+1 + h.c. +ω0         P ;jˆbP ;j +γ∑    ˆnfj   P ;j ˆβB;j + ˆbP ;j ˆβ†B;j.   (42)
+                 j                                   j                  j
+
+Note  that  the  local  phonon-density  operators  transform  as  ˆb†jˆbj →  ˆb†P ;jˆbP ;j,  which  follows
+directly from the speciﬁc deﬁnition of the balancing operators in Eqs. (19) and (20).
+
+Numerical results in the CDW phase
+In order to illustrate the numerical properties of the mapping introduced in this paper, we
+performed calculations in the CDW phase of the half-ﬁlled Holstein model [7, 40, 49].  This
+phase  is  characterized  by  the  formation  of  bound  electron-phonon  states  (polarons)  and  a
+Fermi wave vector kF  =π, i.e., in a physical image every second lattice site is occupied by a
+polaron.  In the atomic limitt→ 0, there is an analytic expression for the probabilityPph(nj)
+to measure nj  phonons at occupied lattice sites j, which is given by
+
+
+                                                                   −γ2ω20 .                                               (43)
+                                          Pph(nj) =  γ2njω2nj
+                                                          0 nj!e
+Note that the excitation probabilities are given by the diagonal elements of the 1RDM. Hence,
+they can be evaluated directly numerically.  Another important quantity is the occupation w0
+of the optimal modes of the 1RDM ˆρj, which is also mentioned in App. A. The optimal modes
+
+
+
+                                                        14
+ SciPost Physics                                                                                  Submission
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 6:   Weight wo of optimal modes do as a function of the maximal bond dimension at
+the auxiliary bond γ25  using the projected puriﬁcation.  Data is extracted from the 1RDM
+ρn25,n′25  at the center site (j  = 25) in the calculated ground state of the half-ﬁlled Holstein
+model with L = 51 sites and N  = 25 fermions, ω/t = 1.0,γ/t = 2.0.  The inset shows the
+diagonal elementsρn25,n25 indicating the immediate eﬀect of truncations.  For comparison, the
+phonon-excitation probabilities obtained for t = 0 are overlayed, indicated by yellow crosses.
+
+
+|do⟩ are the eigenstates of  ˆρj  and their occupations are the corresponding eigenvalues
+
+                                             ˆρj =∑     wo|do⟩⟨do| .                                                  (44)
+                                                    do
+As  discussed  elsewhere  [13, 40, 42],  these  constitute  an  important  measure  for  the  quality
+of  the  approximation  of  the  phonon  states.   In  our  framework,  the  full  1RDM  can  be  ex-
+tracted  directly  from  the  projected  puriﬁed  state|ψ)  in  a  mixed  canonical  representation
+when contracting physical and bath site tensors TnP/B;j  over their auxiliary bond index γj−1
+(see Eq. (31)):
+                                                         {[                                }
+                      ˆρj;nj,n′j = Trk⁄=j|ψ) (ψ| = Tr        Tn′P;jTn′B;j]†TnP;jTnB;j         ,                     (45)
+
+where we used the mapping I to identify nP ;j≡nj  (see also Eq. (51)).
+    For our calculations,  we set ω0/t = 1.0 and γ/t = 2.0 so that the model is in the CDW
+phase.  In Fig. 6, the optimal modes of a system with L = 51 sites and N = 25 fermions are
+displayed for the ground-state and on an occupied lattice site (j = 25).  The truncation was
+performed by allowing a maximum discarded weight of δ = 10−14  per auxiliary bond while
+restricting the total bond dimension to mj≤ 2000.  The color-coded graphs correspond to
+calculations with diﬀerent, maximally allowed total bond dimensions.
+    The immediate eﬀect of the truncation on the auxiliary bonds between physical and bath
+site  tensors  can  be  seen  as  a  suppression  of  the  occupation wo  of  optimal  modes  when wo
+
+                                                         15
+                                  SciPost Physics                                                                                     Submission
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                Figure 7:   Finite-size scaling for the ground-state energy of the Holstein model at half ﬁlling
+                                using  the  projected  puriﬁcation  and  a  two-site  DMRG  solver.   The  model  is  evaluated  for
+                                parameters ω/t = 1.0, γ/t = 2.0 at nearly half ﬁlling and a maximum discarded weight per
+                                bond δ = 10−10.  We chose system sizes L = 51, 101, 151, 201, 251, 301, 401, 501 and electron
+                                ﬁllings Nel = (L− 1)/2.  The inset shows the total CPU time for the ground-state search as
+                                a function of the number of lattice sites L.
+
+
+                                becomes small. Upon increasing the total bond dimensionmj, the distributionwo(do) becomes
+                                stationary once mj > 1200.  In the inset, the diagonal elements of the 1RDM are shown as
+                                a function of mj  and overlayed with the occupation probabilities Pph(nj) (Eq. (43)) in the
+                                atomic  limit.   The  discarded  diagonal  elements  of  ˆρj  can  be  deduced  from  the  intersection
+                                of the vertical lines with the horizontal axis.  Comparing the magnitude at which diagonal
+                                elements of ˆρj are discarded as a function ofmj to the plateaus of the optimal mode occupation
+                                in the main plot, we ﬁnd a clear correspondence between both.  This can be related to the
+                                discussion in App. A, where we show that w.r.t. to the 1-norm the quality of the approximation
+                                of the projected puriﬁed state is bounded by the occupation of the optimal modes of ˆρj, which
+                                are not treated correctly.  Thus, a scaling analysis in the bond dimension mj only is suﬃcient
+                                to  obtain  converged  results  for  the  phonon  system.   Finally,  we  ﬁnd  that,  in  accordance
+                                with  the  system  being  deep  in  the  CDW  phase,  the  diagonal  elements ρj;nj,nj  are  already
+                                very close to the excitation probabilities Pph(nj) in the atomic limit.  Even though the bond
+                                dimensionsmj≤ 2000 may appear very large, the fact that we are able to exploit globalU(1)
+                                symmetries for both the fermionic and bosonic system allows us to perform these calculations
+                                very eﬃciently.
+                                     We also performed a ﬁnite-size scaling of the ground-state energy Eδ as a function of the
+                                discarded weight to prove the capability of our approach to deal with large system sizes.  Here,
+ −2.1                           we applied a scaling analysis in the numerical precision, tuning the maximal discarded weight
+                           CPU timeper bond from δ = 10−4  to δ = 10−10  and extrapolated E0  towards δ→ 0.  The number ofL = 101, E0/L =−2.1251± 2.3· 10−6L = 151, E0/L =−2.1321± 3.4· 10−6L = 251, E0/L =−2.1378± 5.9· 10−6L = 201, E0/L =−2.1357± 3.6· 10−6L = 301, E0/L =−2.1392± 3.7· 10−5L = 51, E0/L =−2.1044± 1.1· 10−6L = 501, E0/L =−2.142± 1.9· 10−5L = 401, E0/L =−2.141± 7.2· 10−3
+                                                         −2.100−2.129
+                                                         −2.135
+                                                         −2.122−2.132
+                                                         −2.139−2.138
+                                lattice  sites  was  increased  from L  =  51  sites  up  to L  =  501  sites.   In  Fig.  7,  we  show  the−2.136
+             10                                          −2.130
+                                                         −2.102
+−2.11                                                    −2.136
+                                                         −2.140−2.137
+                                extrapolations and the scaling of the intensive energy density E0/L as a function of 1/L.  We ﬁt−2.139
+                                                         −2.124−2.131−2.134
+                                                         −2.138
+                                                         −2.104−2.141
+                                                         −2.137−2.140
+                                                         −2.132
+                                                         −2.139
+                                                         −2.142
+                                                         −2.106−2.141
+−2.12         5                                          −2.126−2.138−2.136
+                                                                10−1010−1010−1010−1010−1010−1010−1010−1010−910−910−910−910−910−910−910−910−810−810−810−810−810−810−810−810−710−710−710−710−710−710−710−710−610−610−610−610−610−610−610−610−510−510−510−510−510−510−510−510−410−410−410−410−410−410−410−4
+                                                                               Discarded weightDiscarded weightDiscarded weightDiscarded weightDiscarded weightDiscarded weightDiscarded weightDiscarded weight
+−2.13                     200        400
+                               L
+                                                                                            16
+−2.14
+
+                                                                                ε∞ =−2.14628344± 2· 10−9
+         10−3                                                                          10−2
+                                                           1/L
+ SciPost Physics                                                                                Submission
+
+
+the ground-state energy densities as a function of the number of lattice sites using the ansatz
+
+                                                E0
+                                                 L  = AL +ε∞.                                                       (46)
+Here,  limL→∞E0/L =ε∞ is the extrapolated ground-state energy density in the thermodynamic
+limit yielding
+
+                                      ε∞ =−2.14628344± 2· 10−9.                                           (47)
+
+Note that the given uncertainty is obtained from propagating the errors of the scaling w.r.t.  to
+the discarded weight per bond, which was done for each lattice sizeL.  Since bond observables
+are evaluated with errors whose absolute values are bounded by the discarded weight per bond,
+this is a numerically exact error bound.  Additionally, in the inset of Fig. 7, we plot the total
+CPU time of a ground-state search running until the convergence threshold Lδ withδ = 10−8
+for the relative change in the ground-state energy after a completed sweep was reached.  Using
+two cores of an Intel® Xeon® Gold 6150 CPU @ 2.70GHz, the largest systems with L = 501
+converged after∼ 12 hours.
+
+8  Conclusion
+
+Numerically studying strongly correlated quantum many-body systems with a large number
+of local degrees of freedom is a challenging problem, in particular for tensor-network meth-
+ods [6, 7, 40–42].  In this paper we address the problem by introducing a mapping (projected
+puriﬁcation) to construct artiﬁcial, globalU(1) symmetries for models without a genericU(1)
+symmetry.  For any given operator acting on a tensor-product Hilbert spaceH, we derived a
+construction scheme that generates its projected puriﬁed representation in a subspace of the
+thermoﬁeld doubling ofH.  We show that both operators can be identiﬁed with each other by
+an isomorphism, but the projected puriﬁed representation manifestly conserves global U(1)
+symmetries.  Additionally, we derive a projected puriﬁed representation of MPS exploiting the
+fact that the isomorphism is obtained from a gauge ﬁxing of the additional degrees of freedom
+introduced by the doubling.  Here, the tensors representing the projected puriﬁed state can
+exploit the restored globalU(1) symmetry which, for instance, immediately reduces the eﬀec-
+tive local dimension in each tensor block to 1 providing a signiﬁcant speedup during numerical
+calculations when the local Hilbert space dimension is large.  We characterize this represen-
+tation and reveal an intimate relation between the Schmidt values of projected puriﬁed MPS
+and  the  1RDM  that  allows  us  to  estimate  the  numerical  expenses  of  our  representation  in
+comparison to calculations without symmetries.
+    The mapping into a projected puriﬁed representation of operators and states is mostly in-
+dependent of the underlying implementation. Thereby, it can be used without much eﬀort with
+already existing toolkits, which we demonstrated by performing numerical calculations [50]
+on the one-dimensional Holstein model at half ﬁlling [7,10,49,51].  The large number of local
+degrees of freedom that have to be taken into account (we allow up to Nph = 63 phonons per
+lattice site) typically renders large scale calculations very challenging.  We perform a ﬁnite-
+size scaling in the CDW phase taking into account a maximum number of L = 501 lattice
+sites  while  maintaining  a  high  numerical  precision  and  keeping  up  to mmax  =  2000  states
+per bond.  Importantly, we showed that convergence in the U(1)-symmetry breaking phonon
+
+                                                        17
+ SciPost Physics                                                                                Submission
+
+
+system can be achieved by a scaling in the bond dimension while converging the discarded
+weight, only.  There are no further numerical control parameter, as, for instance, in the LBO,
+which simpliﬁes both, implementation and numerical simulations.
+    Due to the reduction of the eﬀective local dimension of the MPS blocks, two-site solvers
+with a larger numerical complexity can be used [30,31,37,52], as we did in the ground-state
+calculations of the Holstein model.  Therefore, the projected puriﬁcation allows to apply two-
+site time-dependent variational principle (2TDVP) [32,53] as time evolution method to treat
+systems  out  of  equilibrium.   So  far,  existing  methods  to  tackle  such  problems  mostly  [54]
+use time-evolving block decimation (TEBD) as time stepper, only, due to the high numerical
+costs  when  performing  two-site  updates  on  systems  with  a  large  number  of  local  degrees
+of  freedom  [13].   However,  TEBD  typically  requires  a  much  smaller  time  step  to  achieve  a
+certain  precision,  compared  to  2TDVP  [33].   We  thus  anticipate  that  using  the  presented
+mapping, out of equilibrium and ﬁnite-temperature calculations of such highly complicated
+systems  can  become  cheaper,  more  reliable,  and  straight  forward  to  realize.   For  instance,
+we  expect  this  mapping  to  enable  the  eﬃcient  application  of  tensor-network  algorithms  to
+address questions about lattice electrons coupled to phonons out of equilibrium [22, 55, 56],
+numerically unbiased.  Furthermore, our mapping is compatible with common matrix-product
+operator (MPO)-based time-evolution methods, e.g., the aforementioned TEBD as well as the
+MPO W I,II  methods [57].  Exhibiting a scaling of the numerical complexity that is at least
+quadratic in the local dimension [33], these time-evolution schemes should also beneﬁt from
+taking operators to their projected puriﬁed representation.
+
+Acknowledgements    We  thank  A.  Feiguin,  K.  Harms,  F.  Heidrich-Meisner,  A.  Kantian,
+R.  K.  Kessing,  and  S.  R.  Manmana  for  insightful  discussions.    TK  acknowledges  ﬁnan-
+cial support by the ERC Starting Grant from the European Union’s Horizon 2020 research
+and  innovation  program  under  grant  agreement  No.   758935.   JS  and  SP  were  funded  by
+the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) 207383564/FOR
+1807 (projects P4 and P7). SP acknowledges support by the Deutsche Forschungsgemeinschaft
+(DFG, German Research Foundation) under Germany’s Excellence Strategy-426 EXC-2111-
+390814868.   We  thank  the  TU  Clausthal  for  providing  access  to  the  Nuku  computational
+cluster.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        18
+  SciPost Physics                                                                                      Submission
+
+
+A Connection to 1RDM
+
+The projected puriﬁcation introduced above is closely related to the 1RDM. We consider the
+expectation value of the local density operators in the original Hilbert space written in terms
+of the 1RDM  ˆρj = Trk⁄=j ˆρ,
+                          ⟨ˆnj⟩ = Trj{ˆρjˆnj} =∑           ⟨nj|ˆρjˆnj|nj⟩ =∑        ρnj,njnj .                         (48)
+
+                                                       nj                       nj
+Expanding  the  expectation  value  of  ˆnP ;j  in  terms  of  the  physical  system’s  1RDM  ˆρP ;j  for
+states|ψ)∈P and a mixed-canonical MPS with center of orthogonality at the physical site j
+yields
+          (ˆnP,j) = TrP ;j{ˆρP ;jˆnP ;j} =∑(nP ;j|ˆρP ;jˆnP ;j|nP ;j) =∑               ρnP;j,nP;jnP ;j                (49)
+
+                                               nP;j                               nP;j
+                                       (                                   )∗
+                  =  ∑           nP ;j    Tn′P;jj;αj−1,(˜nP;j,˜αj−1)δn′P;j,˜nP;jTnP;jj;αj−1,(˜nP;j,˜αj−1)δnP;j,˜nP;j
+                      nP;j,n′P;j,
+                      ˜nP;j,˜αj−1,
+                         αj−1
+                                    ∑        ⏐⏐⏐⏐TnP;j                         ⏐⏐⏐⏐2
+                  =∑       nP ;j               j;αj−1,(˜nP;j,˜αj−1)δnP;j,˜nP;j     ,                                        (50)
+                      nP;j       ˜nP;j,˜αj−1,
+                                    αj−1
+where we made use of the fact that the local symmetry generators ˆnP ;j  are one-dimensional
+representations of the localU(1) symmetry (see Fig. 8).  From Eq. (16) it follows that Eq. (49)
+and Eq. (48) are completely equivalent so that
+                                                 ρnj,nj =ρnP;j,nP;j ,                                                    (51)
+
+and thus, comparing to Eq. (50),
+                                                ⏐⏐⏐⏐TnP;j                         ⏐⏐⏐⏐2
+                                    ρnj,nj =      j;αj−1,(˜nP;j,˜αj−1)δnP;j,˜nP;j     .                                     (52)
+
+We hence ﬁnd that the 1RDM of the physical part ofP  has the same diagonal elements as
+the original one.  They are given by the trace over the absolute square of the symmetry blocks
+of the mixed-canonical site tensors.  However, the symmetry conservation inP  implies that
+ˆρP ;j  is diagonal whereas  ˆρj  in general is not.  We can write the distance with respect to the
+1-norm of these two operators by means of the mapping I:{ˆIρP ;jI−1}
+                  ‖ˆρj−I ˆρP ;jI−1‖1 = Trj{ˆρj}− Trj
+
+                                                       }−∑       ⏐⏐⏐⏐TnP;j                          ⏐⏐⏐⏐2
+                                          = Trj{ˆρj                 j;αj−1,(˜nP;j,˜αj−1)δnP;j,˜nP;j     .                (53)
+                                                            nP;j
+Here, we link to the LBO method, which expresses  ˆρj  in its eigenbasis (optimal modes) with
+diagonal elements wnj  so that
+                                                                ⏐⏐⏐⏐TnP;j                          ⏐⏐⏐⏐2
+                   ‖ˆρj−I ˆρP ;jI−1‖1 =∑           wnj−∑           j;αj−1,(˜nP;j,˜αj−1)δnP;j,˜nP;j     .                 (54)
+                                               nj          nP;j
+
+
+                                                            19
+ SciPost Physics                                                                                    Submission
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 8:   Expectation value of the local density⟨ˆnP ;j⟩, which by Eq. (52) can be directly
+related to the diagonal elements of the 1RDM in the eigenbasis ˆnP ;j.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 9:   For a given nP ;j, the diagonal entry of the 1RDM is given by the singular values
+of the decomposed physical site.  Note that we make extensive use of the tensor notation, in
+particular implicit deltas, which was introduced in [58].
+
+
+    Let  us  now  consider  the  Schmidt  decomposition  of  a  state |ψ⟩  at  the  auxiliary  bond
+γj−1 = (˜nP ;j, ˜αj−1).  Because αj−1 is ﬁxed for every j, a block for a given nP ;j  of a physical
+site can be decomposed individually to
+
+                                  TnP;jj;αj−1,γj−1 =UnP;jj;αj−1,γj−1ΛnP;jj;γj−1Vj;γj−1 .                                    (55)
+
+The sum over the squared singular values is identiﬁed with the corresponding (diagonal) entry
+of the 1RDM
+                                         ∑    (           )2 =ρnP;j,nP;j .                                            (56)
+                                                ΛnP;jj,γj−1;τ
+                                          τ
+Note that we implicitly accounted for all constraints arising from the projection intoP  and
+wrote the γj−1 on the left only for completeness, as all α are ﬁxed and the nP ;j is chosen.  In
+Fig. 9, the argument is given diagrammatically.
+    Truncating  the  singular  values  according  to  a  certain  threshold  0 < δ ≪  1,  so  that()2
+∑       ∑      ΛnP;j       <  1− δ  implies  a  rescaling  of  the  diagonal  elements  of  the  1RDM
+   nP;j    τ     j;τ
+
+(nP ;j|ˆρP ;j|nP ;j), which is governed by the decay of the singular values ΛnP;jj,τ   in each block. If we
+assume that the optimal modes of ˆρj are truncated in the same way, so that∑njwnj < 1−δ,
+we  can  compare  this  expression  with  Eq.  (54).   Then,  using  the  invariance  of  the  trace,  a
+truncation of the bond index γj−1  by means of the usual MPS truncation routine yields an
+
+                                                          20
+ SciPost Physics                                                                                Submission
+
+
+equivalently precise approximation to ˆρj as the truncation occurring in the LBO. In addition,
+performing the truncation in the projected puriﬁed representation automatically favors those
+eigenvalues of ˆρj that have the largest weight without the necessity of constructing the 1RDM
+at all.  This is an important improvement as it prevents the repeated constructions of  ˆρj  in
+contrast to the LBO.
+
+B Characterization of numerical expenses
+
+The previous considerations enable us to compare the numerical complexity of typical tensor
+contractions arising from the MPS representation of states|ψ)∈P with those of MPS repre-
+sentations without the expansion of the Hilbert space.  At ﬁrst, we point out again that due
+to the local conservation laws and the gauge ﬁxing, the bond labels αj−1,αj  of the MPS site
+tensors TnP;jj;αj−1,γj−1  and TnB;jj;γj−1,αj  have only one non-vanishing entry; each of which is given
+byαj−1 =Nj,αj =Nj+1 withNj as deﬁned above.  Therefore, without truncation, the bond
+dimensionsmj−1,mj are identical to those of the site tensorsMnjj;αj−1,αj representing the same
+state in the physical Hilbert spaceH  only.  There is no additional complexity arising from
+the representation of|ψ)∈P on these indices.  Furthermore, without truncation the eﬀective
+bond dimensions on the γ-bonds are given by mj;γ =nP ;j· min(mj−1,mj).  In what follows,
+we analyze two truncation schemes on these bonds for states in the enlarged Hilbert space
+HPB.  Thereafter, we discuss in which situations these yield a reduced numerical complexity
+of  the  most  expensive  operation  during  ground-state  calculations,  i.e.,  the  application  of  a
+MPO to a state.
+    A physically motivated truncation can be deﬁned by exploiting Eq. (40) and discarding all
+single-site occupations of  ˆρj, whose sum is below a given threshold δ> 0.  More precisely, let{}
+D⊂     0,··· ,nP ;j− 1      be a set for which∑nP;j∈DρnP;j < 1−δ.  Since ˆρj is a reduced density
+matrix, its trace is normalized, and by sorting the diagonal elements such a set can always
+be deﬁned.  Then, all tensor blocks TnP;jj;αj−1,˜αj−1˜nP;j  with nP ;j /∈D are discarded so that the
+total number of kept states on the auxiliary bond is bounded by mj;γ≤|D| min(mj−1,mj).
+The physical interpretation is straightforward:  All tensor blocks TnP;j  that have a negligible⏐⏐⏐TnP;j⏐⏐⏐
+                                    2 = ˆρnP;j  are discarded, i.e., empty modes do not contribute to
+single-site occupation
+the physics.  However, we can give a tighter estimate by considering the explicit distribution
+of the singular values in each block.
+    Motivated by the numerical evidence that often the singular values decay exponentially in
+ground states of one-dimensional (1D) gaped systems [25,29,39], we assume such a decay in
+each block TnP;jj;αj−1,˜αj−1˜nP;j  (nP ;j∈D).  That means, in the decomposition shown in Fig. 9,
+
+
+                                           −anP;jτ,     mj∑   −2anP;jτ =ρnP;j ,                                  (57)
+                               ΛnP;jj;τ   =e                e
+                                                        τ=1
+for some anP;j > 0 and we abbreviated mj≡ min(mj−1,mj).  Note that nP ;j  only speciﬁes
+one block (due to the implicit δnP;j,˜nP;j) and that we neglected the constant αj  for brevity.
+
+
+
+
+                                                        21
+ SciPost Physics                                                                                   Submission
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 10:  Left (purple) and right (green) hand sides of Eq. (59),XnP;j values at intersections
+are solutions for distinct pairs of (ρnP;j,mj).
+
+
+Normalization to the single-site occupation yields
+
+                                        mj−1∑ (                    −2anP;j−e−2anP;j (mj+1)
+                              −2anP;j            −2anP;j)τ = e
+                   ρnP;j =e                     e                               −2anP;j     .                  (58)
+                                         τ=0                              1−e
+
+Deﬁning anP;j =− 12 logXnP;j  with 0<XnP;j < 1, we can rewrite Eq. (58) into
+
+                                     Xmj+1nP;j    =XnP;j(1 +ρnP;j)−ρnP;j .                                       (59)
+
+ Since δ ≤ ρnP;j ≤  1  and mj ≥  1,  this  equation  has  only  one  solution  for XnP;j  in  the
+given domain,  even though there is no closed expression (see Fig. 10 for graphical solution
+at distinct pairs (ρnP;j,mj)).  Therefore, we consider two limiting cases that yield upper and
+lower  bounds  on  the  decay  of  the  singular  values  in  each  tensor  block.   The  lower  bound
+XnP;j,min is obtained through the intersection of the right-hand side with the horizontal axis
+and can be related to the limit mj≫ 1:
+
+                                            0 =XnP;j,min(1 +ρnP;j)−ρnP;j
+
+                                  ⇒XnP;j≥XnP;j,min =  ρnP;j1 +ρnP;j          .                                           (60)
+
+
+An upper bound XnP;j,max can be established if the right-hand side of Eq. (59) is tangential
+
+
+
+
+
+
+                                                         22
+ SciPost Physics                                                                                 Submission
+
+
+to the left-hand side
+                                                ⏐⏐⏐⏐⏐XnP;j,max
+                                  d    Xmj+1                 != 1 +ρnP;j
+                              dXnP;j     nP;j
+
+                                                               (1 +ρnP;j     )1/mj
+                                 ⇒XnP;j≤XnP;j,max =                1 +mj              .                               (61)
+
+Combining both bounds, we ﬁnd
+
+                          −     12mnP;jlog 1 +ρnP;j1 +mj ≤anP;j≤−12 log  ρnP;j1 +ρnP;j   ,                           (62)
+
+which, by introducing normalization constants AnP;j,max/min, limits the decay of the singular
+values
+                   √              (            )τ≤ ΛnP;j        √              (            )τ ,                  (63)
+                      AnP;j,min    XnP;j,min            j;τ ≤      AnP;j,max     XnP;j,max
+
+and thus can be used to ﬁx upper and lower bounds for the matrix dimensions required on the
+auxiliary bonds between physical and bath site.  The normalization constants are determined
+from
+                                                                                (          )mj
+                                        mj∑ (         )τ =AnP;j,ηXd,η      1−     XnP;j,η
+                    ρnP;j =AnP;j,η           XnP;j,η                           1−XnP;j,η
+                                       τ=1
+                                                                    [ρnP;j    ]mj ,                                  (64)
+                                ⇒AnP;j,η = 1−XnP;j,ηXnP;j,η
+                                                               1−    XnP;j,η
+
+with η  =  min, max.   We  introduce  a  truncation  threshold δ′nP;j  for  each  block  so  that  for
+singular values with τ≤m′nP;j,η≤mj, we obtain
+
+                                               m′                                    [         ]m′
+                                                 nP;j,η∑(          )τ =ρnP;j    1−    XnP;j,η     nP;j,η
+                   ρnP;j−δ′nP;j≥AnP;j,η                   XnP;j,η                      (          )mj
+                                                 τ=1                              1−     XnP;j,η
+               [         ]m′               (       δ′nP;j)(        (         )mj)
+
+                            nP;j,η≥ 1−
+           ⇒    XnP;j,η                       1−   ρnP;j      1−     XnP;j,η         .                                (65)
+
+
+For this inequality to hold, we necessarily need ρnP;j−δ′nP;j≥ 0, because AnP;j,η,XnP;j,η >
+0.   This  is  ensured  by  taking nP ;j ∈D  and  choosing δ′nP;j  =  max( δ|D|, minnP;j∈DρnP;j)  as
+truncation  scheme.   Then,  taking  the  logarithm  of  both  sides  and  solving  for m′nP;j,η,  we
+divide by logXnP;j,η < 0 so that
+                                          {      (            )(       [         ]mj)}
+                                      log   1−     1−RnP;j        1−     XnP;j,η
+                         m′nP;j,η≤                       logXnP;j,η           ,                         (66)
+
+
+                                                         23
+ SciPost Physics                                                                                Submission
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 11:  Upper and lower boundsFmax/min(mj,ρnP;j) for relative change in bond dimension
+m′nP;j
+
+ mj    per tensor block on bond between physical and auxiliary sites derived from Eq. (59).
+
+
+                                                           δ′nP;j
+where we deﬁned the truncation ratio RnP;j =               ρnP;j ≤ 1.  Imposing equality between the left
+and right side, we ﬁnally obtain an estimation for the upper and lower bounds of the required
+bond dimension m′nP;j,η in each block.  Introducing the relative change of the number of kept
+                            m′nP;j,η
+states Fη(mj,ρnP;j) =          mj    , we show the bounds in Fig. 11 for varying mj  and ρnP;j.  For
+the  upper  bound  there  are  two  regimes:  In  the  limit  of  small  truncation  ratio RnP;j ≪  1
+we have FnP;j,max(mj,ρnP;j)≈ 1, whereas for RnP;j→ 1 there is a sharp drop towards zero.
+The transition regime between both asymptotics is governed by the physical bond dimension
+mj  and  shifts  towards  larger  values  of ρnP;j  as mj  increases.   The  lower  bound  exhibits  a
+power-law decay over several magnitudes of ρnP;j  and saturates towards one if mj  is small
+(Fig. 11).  Finally, from Fig. 10 we can deduce that if mj≫ 1, the lower bound becomes an
+increasingly better approximation for the bond dimension m′nP;j,j.
+    In  summary,  we  found  that  for  small  physical  bond  dimension mj  characterizing  the
+approximation of the state without bath sites, the bond dimension m′j,nP;j  between physical{                    }
+and auxiliary sites is of the order of|D′|mj ifmj is small (∼O(1)) andD′ =                    nP ;j|ρnP;j >δ       .
+However, ifmj≫ 1, the relative value of the bond dimensionm′j,nPj  per tensor block compared
+to mj  mostly follows a power law in ρnP;j  and quickly decays to zero.  In this situation, the
+state can be eﬃciently approximated in the enlarged Hilbert space with a moderate growth
+of the bond dimension, given that the occupations of the 1RDM ρnP;j  decay fast enough.
+    In physical problems one is often faced with exponentially decaying occupations ofρnP;j [59,
+60].   Exemplary,  we  consider  a  typical,  physical  bond  dimension mj  =  100  and  assume
+
+
+                                                        24
+ SciPost Physics                                                                                Submission
+
+
+
+ρnP;j ∝ e−2nP;j  with  a  truncation  threshold  of δ  =  10−14  and  take  into  consideration  a
+local dimension of nP ;j  = 21 (i.e., permit for 20 occupied states).  We use the derived lower
+bound and obtainm′j≈mj.  This estimation relies on the assumption of strictly exponentially
+decaying singular values in each tensor block, which does not necessarily need to be the case
+in actual calculations.  However, a relative growth in the overall bond dimension ofO(1) was
+also found in our test calculations.  Finally, we note that due to the rapid decrease of the lower
+bound derived above the total local dimension nP ;j  is not a limiting factor in the ﬁrst place
+as long as mj  is large enough.  In turn, the decay of the 1RDM occupation strongly dictates
+the numerical expenses.
+    We  close  this  section  by  demonstrating  the  numerical  beneﬁts  of  the  above  introduced
+enlargement of the Hilbert space and projection into the subspaceP by considering the scaling
+of the most expensive calculation in a DMRG two-site ground-state search.  This algorithm
+scales with the application of the MPO to the MPS and has dominating numerical expenses
+m3j·wj·n2P ;j ifmj is suﬃciently larger than wj.  Assuming a typical growth factor 2 between
+the physical and bath sites, this operation is 8 times more expensive on these bonds than on
+the original bond between physical sites only.  In order to beneﬁt from the introduction of
+U(1)-invariant state representations in the ﬁrst place, we therefore need to have a reasonably
+large local dimension nP ;j >√8, since for U(1)-invariant representations all local generators
+can  be  chosen  as  one-dimensional  representations.   Thus, nP ;j ≥  3  already  speeds  up  this
+contraction and the beneﬁts will grow quadratically with larger nP ;j.  We may also consider a
+decomposition of the MPO bond dimension wj  due to the U(1) symmetry, which typically is
+of the order of 2− 3 and thereby also generates an additional speed-up.  Finally, we note that
+the system size is doubled, which could also be incorporated into the estimations.  But this
+is only a constant factor of two and can be compensated easily by the quadratically growing
+expenses in the local dimension or the decomposition of the MPO bond dimension under the
+global symmetry.
+
+C Hubbard Model with pair creation and annihilation
+
+The Hubbard model [61–66] with additional SC terms is given by
+             ˆH =−t∑       (                    )                               (                 )
+                             ˆc†j,σˆcj+1,σ + h.c. +U∑        ˆnj,↑ˆnj,↓ + ∆∑      ˆc†j,↑ˆc†j,↓ + h.c.,          (67)
+                       j,σ                               j                   j
+
+in  which  ˆc(†)∑j    denotes  spin S  =   1/2  fermion  annihilation  (creation)  operators  and  ˆnj   =
+
+σ=↑,↓ ˆc†j,σˆcj,σ the local fermion density operator.  The parameters of this model are the hopping
+amplitudet, the interaction strengthU, and the SC pair creation and annihilation amplitude
+∆.
+    In this model, the pair creation contributions∝ ∆ break the conservation of the global
+particle number conservation.  We restore the corresponding globalU(1) symmetry by adding
+
+
+
+
+
+
+
+                                                        25
+ SciPost Physics                                                                                     Submission
+
+
+
+balancing operators  ˆβ(†)B;j,σ with σ =↑,↓.  The projected puriﬁed Hamiltonian now reads
+               ˆHPP  =−t∑         (                                           )
+                                    ˆc†P ;j,σ ˆβB;j,σˆcP ;j+1,σ ˆβ†B;j+1,σ + h.c.+U∑       ˆnP ;j,↑ˆnP ;j,↓
+                              j,σ  (                                    )               j
+                        + ∆∑         ˆc†P ;j,↑ ˆβB;j,↑ˆc†P ;j,↓ ˆβB;j,↓ + h.c.,                                               (68)
+                                j
+
+where local density terms remain unchanged:  ˆnP ;j,↑ˆnP ;j,↓ ˆβ†B;j,σ ˆβB;j,σ = ˆnP ;j,↑ˆnP ;j,↓.  Exploit-
+ing this representation, one of the authors studied the charge-degeneracy points of topologi-
+cally superconducting islands coupled to normal leads [67–70].
+    In contrast to the Holstein model, here the projected puriﬁcation acts on fermions.  This
+causes  a  subtilty  if  the  fermionic  anticommutation  relations  are  implemented  in  terms  of
+Jordan-Wigner  strings  [71]  as  is  usually  done,  either  explicitly  or  implicitly.   For  instance,
+if ˆb(†)j,↑  are  annihilation  (creation)  operators  of  hardcore  bosons  at  lattice j,  then  fermionic,
+bilinear operators can be written in terms of parity operators  ˆPˆbj,↑  as
+                                                         [ k∏          ]
+                                       ˆc†j,↑ˆcj+k,↑ = ˆb†j     ˆPˆbj+l,↑ˆbj+k,↑.                                         (69)
+
+                                                           l=1
+
+The operator string∏kl=1  ˆPˆbj+l,↑  is commonly referred to as Jordan-Wigner string and a con-
+sequence of the anticommutation relations.  The problem here is that mapping such operator
+strings into the puriﬁed Hilbert space, one has to ensure that they act only in the physical
+Hilbert space.  For instance, if the generation of the anticommutation relations is implemented
+in the MPS code itself, then typically such Jordan-Wigner strings are created automatically.
+If this is the case, their eﬀect on the bath sites have to be canceled, which can be done by
+placing parity operators on bath sites inside the Jordan-Wigner string, for instance,
+                                                        [k−1∏            ]
+                              ˆc†j,↑ˆcj+k,↑→ ˆc†j,↑ ˆβB;j       ˆPˆbB;j+l,↑ˆcj+k,↑ ˆβ†B;j .                               (70)
+
+                                                          l=0
+
+D Object comparison between LBO and ppDMRG
+
+                                                                           In  this  appendix,  we  aim  to  give
+                                                                           an overview of the relationship be-
+                                                                           tween the objects used in the LBO
+                                                                           and   in   the   ppDMRG.   Its   main
+                                                                           purpose  is  to  support  future  dis-
+                                                                           cussions  and  developments.    It  is
+                                                                           speciﬁcally not intended for imple-
+                                                                           mentation purposes, see Sec. 3.
+                                                                               In  Fig.  12,  a  complete  sand-
+                                                                           wich  MPS-MPO-MPS  for  a  sin-
+                                                                           gle  site  is  shown.     In  order  to
+                                                                           show  the  connection  between  the
+
+                                                          26
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 12:   A tensor network representing a single site
+consisting of an MPS, an MPO, and the adjoint MPS. All
+tensors are split into several (virtual) objects in order to
+be rejoined to the tensors used in the LBO (ppDMRG)
+as highlighted by the red (blue) boxes that contain vir-
+tual objects.  Note that equivalent bond labels do not in-
+dicate the same objects, but only an implicit δ between
+the, for brevity not shown, diﬀerent indicies.
+SciPost Physics                                                                                Submission
+
+
+                                                                      LBO and the ppDMRG, all tensors
+                                                                      are  split  into  virtual  objects  that
+                                                                      are subsequently rejoined in diﬀer-
+                                                                      ent  fashions.    On  the  one  hand,
+                                                                      the  objects  coming  from  the  LBO
+                                                                      (highlighted  with  red  boxes)  are
+                                                                      mainly  split  vertically  into  parts
+                                                                      “belonging” to the physical and the
+                                                                      bath  Hilbert  space.   On  the  other
+                                                                      hand, the objects coming from the
+                                                                      ppDMRG  (highlighted  with  blue
+                                                                      boxes)  needed  to  be  split  horizon-
+                                                                      tally so that they could be related
+                                                                      to the diﬀerent objects in the LBO.
+                                                                      In particular, the identities contain-
+                                                                      ing the mapsI andI† do not really
+                                                                      appear within the ppDMRG.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                      27
+ SciPost Physics                                                                                Submission
+
+
+References
+
+ [1]E.   Berg,   E.   G.   Dalla   Torre,   T.   Giamarchi   and   E.   Altman,                  Rise   and    fall
+     of   hidden     string   order    of  lattice   bosons,       Phys.   Rev.   B   77,   245119   (2008),
+     doi:10.1103/PhysRevB.77.245119.
+
+ [2]S. Ejima, M. J. Bhaseen, M. Hohenadler, F. H. L. Essler, H. Fehske and B. D. Simons,
+     Ising  deconﬁnement       transition   between    feshbach-resonant       superﬂuids,  Phys. Rev. Lett.
+     106, 015303 (2011),  doi:10.1103/PhysRevLett.106.015303.
+ [3]I. Bloch, J. Dalibard and S. Nascimbene,              Quantum     simulations    with   ultracold   quantum
+     gases,  Nat Phys 8(4), 267 (2012).
+
+ [4]A. J. Daley, H. Pichler, J. Schachenmayer and P. Zoller,               Measuring     entanglement     growth
+     in  quench   dynamics     of bosons   in an  optical  lattice, Phys. Rev. Lett. 109, 020505 (2012),
+     doi:10.1103/PhysRevLett.109.020505.
+ [5]M.   L.   Wall,   A.   Safavi-Naini   and   A.   M.   Rey,             Simulating      generic    spin-boson
+     models      with    matrix     product      states,         Phys.    Rev.    A   94,    053637    (2016),
+     doi:10.1103/PhysRevA.94.053637.
+
+ [6]E.  Jeckelmann  and  S.  R.  White,               Density-matrix       renormalization-group        study    of
+     the   polaron     problem     in   the   Holstein    model,      Phys.   Rev.   B  57,   6376   (1998),
+     doi:10.1103/PhysRevB.57.6376.
+ [7]R.   J.   Bursill,   R.   H.   McKenzie   and   C.   J.   Hamer,                Phase     diagram     of   the
+     one-dimensional      holstein   model    of spinless   fermions,  Phys. Rev. Lett. 80, 5607 (1998),
+     doi:10.1103/PhysRevLett.80.5607.
+ [8]R.  J.  Bursill,  R.  H.  McKenzie  and  C.  J.  Hamer,               Phase    diagram     of  a  heisenberg
+     spin-peierls     model    with    quantum      phonons,      Phys.   Rev.   Lett.  83,   408   (1999),
+     doi:10.1103/PhysRevLett.83.408.
+ [9]E.   Jeckelmann,   C.   Zhang   and   S.   R.   White,             Metal-insulator       transition    in  the
+     one-dimensional       holstein    model    at   half   ﬁlling,      Phys.  Rev.  B  60,   7950  (1999),
+     doi:10.1103/PhysRevB.60.7950.
+[10]M.   Tezuka,   R.   Arita   and   H.   Aoki,             Phase     diagram     for   the   one-dimensional
+     Hubbard-Holstein        model:    A   density-matrix     renormalization      group   study,   Phys.  Rev.
+     B 76, 155114 (2007),  doi:10.1103/PhysRevB.76.155114.
+
+[11]B. Kloss, D. R. Reichman and R. Tempelaar,                 Multiset   matrix   product    state  calculations
+     reveal   mobile   franck-condon     excitations   under    strong  holstein-type    coupling,  Phys. Rev.
+     Lett. 123, 126601 (2019),  doi:10.1103/PhysRevLett.123.126601.
+[12]D.  Jansen,  J.  Stolpp,  L.  Vidmar  and  F.  Heidrich-Meisner,               Eigenstate    thermalization
+     and   quantum      chaos   in the   holstein  polaron    model,   Phys.  Rev.  B 99,  155130  (2019),
+     doi:10.1103/PhysRevB.99.155130.
+[13]J.   Stolpp,    J.   Herbrych,    F.   Dorfner,    E.   Dagotto   and   F.   Heidrich-Meisner,
+     Charge-density-wave        melting    in the   one-dimensional      Holstein   model,   Physical  Review
+     B 101(3) (2020),  doi:10.1103/physrevb.101.035134.
+
+                                                        28
+ SciPost Physics                                                                                Submission
+
+
+[14]D.  Jansen,  J.  Bonˇca  and  F.  Heidrich-Meisner,                Finite-temperature        density-matrix
+     renormalization       group   method      for  electron-phonon       systems:     Thermodynamics         and
+     holstein-polaron     spectral   functions (2020), 2007.11343.
+
+[15]A.  Nocera,  J.  Sous,  A.  E.  Feiguin  and  M.  Berciu,               One-dimensional       peierls   phase
+     separation    in the  dilute  carrier  density   limit (2020), 2008.03304.
+
+[16]F.  F.  Assaad  and  T.  C.  Lang,           Diagrammatic       determinantal      quantum      monte    carlo
+     methods:      Projective    schemes    and   applications    to  the  hubbard-holstein      model,   Phys.
+     Rev. B 76, 035116 (2007),  doi:10.1103/PhysRevB.76.035116.
+
+[17]M. Hohenadler and G. G. Batrouni,               Dominant      charge   density   wave   correlations   in  the
+     holstein   model    on   the  half-ﬁlled   square    lattice,    Physical  Review  B  100(16)  (2019),
+     doi:10.1103/physrevb.100.165114.
+
+[18]E.   V.   Bostr¨om,    P.   Helmer,    P.   Werner   and   C.   Verdozzi,                 Electron-electron
+     versus    electron-phonon       interactions    in  lattice   models:      Screening     eﬀects   described
+     by   a  density    functional    theory    approach,     Physical  Review  Research  1(1)  (2019),
+     doi:10.1103/physrevresearch.1.013017.
+
+[19]T. E. Reinhard, U. Mordovina, C. Hubig, J. S. Kretchmer, U. Schollw¨ock, H. Appel, M. A.
+     Sentef  and  A.  Rubio,      Density-matrix      embedding      theory   study   of  the  one-dimensional
+     hubbard–holstein      model, Journal of Chemical Theory and Computation 15(4), 2221–2232
+     (2019),  doi:10.1021/acs.jctc.8b01116.
+
+[20]P.    Werner    and    A.    J.    Millis,          Eﬃcient      dynamical      mean      ﬁeld    simulation
+     of    the    holstein-hubbard        model,           Phys.    Rev.    Lett.    99,     146404    (2007),
+     doi:10.1103/PhysRevLett.99.146404.
+
+[21]M. Sch¨uler, M. Eckstein and P. Werner,             Truncating     the memory     time   in nonequilibrium
+     dynamical      mean     ﬁeld    theory    calculations,       Physical   Review   B   97(24)   (2018),
+     doi:10.1103/physrevb.97.245129.
+
+[22]S.  Sayyad,  R.       ˇZitko,  H.  U.  R.  Strand,  P.  Werner  and  D.  Goleˇz,       Comparative      study
+     of  nonequilibrium      insulator-to-metal     transitions    in  electron-phonon      systems,   Physical
+     Review B 99(4) (2019),  doi:10.1103/physrevb.99.045118.
+
+[23]S.  R.  White,      Density   matrix    formulation    for  quantum     renormalization      groups,   Phys.
+     Rev. Lett. 69(19), 2863 (1992),  doi:10.1103/PhysRevLett.69.2863.
+
+[24]S. R. White,      Density-matrix     algorithms    for quantum     renormalization     groups, Phys. Rev.
+     B 48(14), 10345 (1993),  doi:10.1103/PhysRevB.48.10345.
+
+[25]S.  Rommer  and  S.        ¨Ostlund,   Class   of  ansatz   wave   functions    for one-dimensional       spin
+     systems    and   their  relation  to  the  density   matrix    renormalization     group,  Phys. Rev. B
+     55, 2164 (1997),  doi:10.1103/PhysRevB.55.2164.
+
+[26]G. Vidal,      Eﬃcient    simulation    of one-dimensional      quantum      many-body      systems,  Phys.
+     Rev. Lett. 93, 040502 (2004),  doi:10.1103/PhysRevLett.93.040502.
+
+
+
+
+                                                        29
+ SciPost Physics                                                                                Submission
+
+
+[27]A. J. Daley,  C. Kollath,  U. Schollw¨ock and G. Vidal,                Time-dependent       density-matrix
+     renormalization-group        using  adaptive   eﬀective   Hilbert   spaces,  Journal of Statistical Me-
+     chanics:  Theory and Experiment 2004(04), P04005 (2004).
+
+[28]S.   R.   White   and   A.   E.   Feiguin,               Real-time      evolution     using    the    density
+     matrix      renormalization        group,            Phys.    Rev.    Lett.    93,     076401    (2004),
+     doi:10.1103/PhysRevLett.93.076401.
+
+[29]F. Verstraete and J. I. Cirac,          Matrix   product    states  represent   ground    states  faithfully,
+     Phys. Rev. B 73, 094423 (2006),  doi:10.1103/PhysRevB.73.094423.
+
+[30]U.  Schollw¨ock,      The   density-matrix     renormalization      group,   Rev.  Mod.  Phys. 77,  259
+     (2005),  doi:10.1103/RevModPhys.77.259.
+
+[31]U. Schollw¨ock,      The   density-matrix     renormalization     group    in the  age  of matrix    product
+     states, Annals of Physics 326(1), 96 (2011), doi:DOI: 10.1016/j.aop.2010.09.012, January
+     2011 Special Issue.
+
+[32]J. Haegeman, C. Lubich, I. Oseledets, B. Vandereycken and F. Verstraete,                     Unifying    time
+     evolution    and  optimization    with   matrix   product   states, Phys. Rev. B 94, 165116 (2016),
+     doi:10.1103/PhysRevB.94.165116.
+
+[33]S.  Paeckel,  T.  K¨ohler,  A.  Swoboda,  S.  R.  Manmana,  U.  Schollw¨ock  and  C.  Hubig,
+     Time-evolution      methods    for matrix-product     states, Annals of Physics 411, 167998 (2019),
+     doi:10.1016/j.aop.2019.167998.
+
+[34]I. P. McCulloch,       From    density-matrix     renormalization      group   to matrix    product   states,
+     Journal of Statistical Mechanics:  Theory and Experiment 2007(10), P10014 (2007).
+
+[35]S. Singh, R. N. C. Pfeifer and G. Vidal,          Tensor   network    decompositions     in the  presence   of
+     a  global  symmetry,  Phys. Rev. A 82, 050301 (2010),  doi:10.1103/PhysRevA.82.050301.
+
+[36]S.  Singh,  R.  N.  C.  Pfeifer  and  G.  Vidal,             Tensor    network    states   and   algorithms
+     in   the  presence     of  a  global   U(1)    symmetry,     Phys.  Rev.  B  83,   115125  (2011),
+     doi:10.1103/PhysRevB.83.115125.
+
+[37]C. Hubig,     Abelian   and   non-abelian    symmetries    in  inﬁnite  projected   entangled    pair states,
+     SciPost Physics 5(5) (2018),  doi:10.21468/scipostphys.5.5.047.
+
+[38]M. Fannes, B. Nachtergaele and R. Werner,                Finitely   correlated   states  on  quantum     spin
+     chains,  Communications in Mathematical Physics 144, 443 (1992).
+
+[39]J. Eisert,  M. Cramer and M. B. Plenio,               Colloquium:      Area   laws  for  the  entanglement
+     entropy,  Rev. Mod. Phys. 82(1), 277 (2010),  doi:10.1103/RevModPhys.82.277.
+
+[40]C.  Zhang,  E.  Jeckelmann  and  S.  R.  White,           Density    matrix   approach     to  local  Hilbert
+     space   reduction,  Phys. Rev. Lett. 80, 2661 (1998),  doi:10.1103/PhysRevLett.80.2661.
+
+[41]C.  Guo,  A.  Weichselbaum,  J.  von  Delft  and  M.  Vojta,               Critical  and   strong-coupling
+     phases   in  one-  and   two-bath    spin-boson    models,  Phys. Rev. Lett. 108, 160401 (2012),
+     doi:10.1103/PhysRevLett.108.160401.
+
+
+                                                        30
+ SciPost Physics                                                                                 Submission
+
+
+[42]C.   Brockt,    F.   Dorfner,    L.   Vidmar,    F.   Heidrich-Meisner   and   E.   Jeckelmann,
+     Matrix-product-state          method      with     a   dynamical       local    basis    optimization       for
+     bosonic      systems     out    of   equilibrium,         Phys.    Rev.    B   92,    241106    (2015),
+     doi:10.1103/PhysRevB.92.241106.
+
+[43]A.    E.    Feiguin    and    S.    R.    White,                Finite-temperature         density      matrix
+     renormalization       using   an  enlarged    hilbert   space,    Phys.  Rev.  B  72,  220401  (2005),
+     doi:10.1103/PhysRevB.72.220401.
+
+[44]F.  Verstraete,  J.  J.  Garc´ıa-Ripoll  and  J.  I.  Cirac,        Matrix    product    density    operators:
+     Simulation     of  ﬁnite-temperature      and   dissipative    systems,  Phys. Rev. Lett. 93, 207204
+     (2004),  doi:10.1103/PhysRevLett.93.207204.
+
+[45]T.  Barthel,  U.  Schollw¨ock  and  S.  R.  White,             Spectral    functions    in  one-dimensional
+     quantum      systems   at  ﬁnite  temperature      using  the  density   matrix   renormalization      group,
+     Phys. Rev. B 79(24), 245101 (2009),  doi:10.1103/PhysRevB.79.245101.
+
+[46]P.  Fayet  and  S.  Ferrara,           Supersymmetry,     Physics  Reports  32(5),   249  (1977),
+     doi:https://doi.org/10.1016/0370-1573(77)90066-7.
+
+[47]C.  Hubig,   I.  P.  McCulloch,   U.  Schollw¨ock  and  F.  A.  Wolf,                    Strictly   single-site
+     dmrg     algorithm      with   subspace      expansion,       Phys.   Rev.   B   91,   155115   (2015),
+     doi:10.1103/PhysRevB.91.155115.
+
+[48]T. Holstein,      Studies   of  polaron   motion:    Part   i.the  molecular-crystal      model,  Annals of
+     Physics 8(3), 325 (1959),  doi:https://doi.org/10.1016/0003-4916(59)90002-8.
+
+[49]C. E. Creﬃeld, G. Sangiovanni and M. Capone,                   Phonon    softening    and  dispersion    in the
+     1D   Holstein   model    of spinless   fermions,  The European Physical Journal B - Condensed
+     Matter and Complex Systems 44(2), 175 (2005),  doi:10.1140/epjb/e2005-00112-9.
+
+[50]S. Paeckel and T. K¨ohler,         Symmps,  https://www.symmps.eu,  Accessed:  2019-12-29.
+
+[51]J.  E.  Hirsch  and  E.  Fradkin,            Phase    diagram     of  one-dimensional       electron-phonon
+     systems.      ii.  the   molecular-crystal       model,        Phys.   Rev.   B   27,    4302   (1983),
+     doi:10.1103/PhysRevB.27.4302.
+
+[52]C.  Hubig,  J.  Haegeman  and  U.  Schollw¨ock,              Error   estimates    for  extrapolations      with
+     matrix-product      states, Physical Review B 97(4) (2018), doi:10.1103/physrevb.97.045125.
+
+[53]J.  Haegeman,  J.  I.  Cirac,  T.  J.  Osborne,  I.  Piˇzorn,  H.  Verschelde  and  F.  Verstraete,
+     Time-dependent        variational   principle   for quantum     lattices, Phys. Rev. Lett. 107, 070601
+     (2011),  doi:10.1103/PhysRevLett.107.070601.
+
+[54]F.  A.  Y.  N.  Schr¨oder  and  A.  W.  Chin,             Simulating     open   quantum      dynamics      with
+     time-dependent       variational    matrix   product     states:  Towards     microscopic     correlation    of
+     environment      dynamics     and   reduced   system    evolution,  Phys. Rev. B 93, 075105 (2016),
+     doi:10.1103/PhysRevB.93.075105.
+[55]P.    Werner    and    M.    Eckstein,              Phonon-enhanced          relaxation     and     excitation
+     in     the    holstein-hubbard         model,             Physical     Review     B    88(16)     (2013),
+     doi:10.1103/physrevb.88.165108.
+
+                                                        31
+ SciPost Physics                                                                              Submission
+
+
+[56]M.   Weber,   F.   F.   Assaad   and   M.   Hohenadler,                Phonon     spectral    function    of
+     the   one-dimensional      holstein-hubbard       model,      Physical  Review  B  91(23)  (2015),
+     doi:10.1103/physrevb.91.235150.
+
+[57]M. P. Zaletel, R. S. K. Mong, C. Karrasch, J. E. Moore and F. Pollmann,                    Time-evolving
+     a  matrix   product   state  with   long-ranged    interactions,  Phys. Rev. B 91, 165112 (2015),
+     doi:10.1103/PhysRevB.91.165112.
+
+[58]R. Penrose,      Applications     of negative   dimensional     tensors,  Combinatorial mathematics
+     and its applications 1, 221 (1971).
+
+[59]F. Dorfner, L. Vidmar, C. Brockt, E. Jeckelmann and F. Heidrich-Meisner,                         Real-time
+     decay   of  a highly   excited   charge   carrier  in the  one-dimensional      holstein   model,   Phys.
+     Rev. B 91, 104302 (2015),  doi:10.1103/PhysRevB.91.104302.
+
+[60]F. Dorfner and F. Heidrich-Meisner,           Properties    of the  single-site  reduced   density   matrix
+     in the  bose-bose   resonance    model   in the  ground   state  and  in quantum     quenches, Physical
+     Review A 93(6) (2016),  doi:10.1103/physreva.93.063624.
+
+[61]M. C. Gutzwiller,       Eﬀect  of  correlation  on  the  ferromagnetism      of transition  metals, Phys.
+     Rev. Lett. 10, 159 (1963),  doi:10.1103/PhysRevLett.10.159.
+
+[62]J.  Kanamori,       Electron   correlation   and   ferromagnetism      of  transition   metals,   Progress
+     of  Theoretical  Physics  30(3),  275  (1963),   doi:10.1143/PTP.30.275,   /oup/backfile/
+     content_public/journal/ptp/30/3/10.1143/ptp.30.275/2/30-3-275.pdf.
+
+[63]J.  Hubbard,      Electron    correlations   in  narrow   energy   bands,   Proceedings  of  the  Royal
+     Society of London A: Mathematical, Physical and Engineering Sciences 276(1365), 238
+     (1963),  doi:10.1098/rspa.1963.0204.
+
+[64]J. Hubbard,      Electron   correlations   in  narrow   energy   bands.   ii.the  degenerate    band   case,
+     Proceedings of the Royal Society of London A: Mathematical, Physical and Engineering
+     Sciences 277(1369), 237 (1964),  doi:10.1098/rspa.1964.0019.
+
+[65]J.  Hubbard,       Electron   correlations    in narrow    energy   bands.   iii. an  improved    solution,
+     Proceedings of the Royal Society of London A: Mathematical, Physical and Engineering
+     Sciences 281(1386), 401 (1964),  doi:10.1098/rspa.1964.0190.
+
+[66]J. Hubbard,      Electron   correlations   in narrow   energy   bands.   iv. the  atomic   representation,
+     Proceedings of the Royal Society of London A: Mathematical, Physical and Engineering
+     Sciences 285(1403), 542 (1965),  doi:10.1098/rspa.1965.0124.
+
+[67]R.  M.  Lutchyn,  J.  D.  Sau  and  S.  Das  Sarma,           Majorana     fermions    and   a topological
+     phase   transition    in semiconductor-superconductor           heterostructures,   Phys.  Rev.  Lett.
+     105, 077001 (2010),  doi:10.1103/PhysRevLett.105.077001.
+
+[68]R. M. Lutchyn, E. P. A. M. Bakkers, L. P. Kouwenhoven, P. Krogstrup, C. M. Marcus
+     and Y. Oreg,      Majorana     zero modes    in superconductor–semiconductor           heterostructures,
+     Nature Reviews Materials 3(5), 52–68 (2018),  doi:10.1038/s41578-018-0003-1.
+
+
+
+
+                                                       32
+ SciPost Physics                                                                                 Submission
+
+
+[69]A.   Keselman,   C.   Murthy,   B.   van   Heck   and   B.   Bauer,                 Spectral    response     of
+     josephson     junctions     with   low-energy     quasiparticles,     SciPost  Physics  7(4)  (2019),
+     doi:10.21468/scipostphys.7.4.050.
+
+[70]S.  Paeckel,       Topological     and    non-equilibrium      superconductivity       in   low-dimensional
+     strongly   correlated    quantum     systems,  Ph.D. thesis, Universit¨at G¨ottingen (2020).
+
+[71]S. Paeckel,  T. K¨ohler and S. R. Manmana,                Automated       construction    of  U(1)-invariant
+     matrix-product       operators    from   graph    representations,    SciPost  Phys.  3,  035  (2017),
+     doi:10.21468/SciPostPhys.3.5.035.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        33

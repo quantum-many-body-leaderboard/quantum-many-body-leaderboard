@@ -1,0 +1,647 @@
+Superconductivity, charge-density waves, antiferromagnetism, and phase separation in
+                                                  the Hubbard-Holstein model
+
+                          Seher  Karakuzu,1  Luca  F.  Tocchio,2  Sandro  Sorella,1  and  Federico  Becca3
+                   1SISSA-International  School  for  Advanced  Studies,  Via  Bonomea  265,  I-34136  Trieste,  Italy
+                                    2Institute  for  Condensed  Matter  Physics  and  Complex  Systems,
+                                           DISAT,  Politecnico  di  Torino,  I-10129  Torino,  Italy
+                       3Democritos  National  Simulation  Center,  Istituto  Oﬃcina  dei  Materiali  del  CNR  and
+                   SISSA-International  School  for  Advanced  Studies,  Via  Bonomea  265,  I-34136  Trieste,  Italy
+                                                          (Dated:  November 28, 2017)
+                   By using variational wave functions and quantum Monte Carlo techniques, we investigate the inter-
+                play between electron-electron and electron-phonon interactions in the two-dimensional Hubbard-
+                Holstein  model.   Here,  the  ground-state  phase  diagram  is  triggered  by  several  energy  scales,  i.e.,
+                the  electron  hopping t,  the  on-site  electron-electron  interaction U,  the  phonon  energy ω0,  and
+                the  electron-phonon  coupling g.   At  half  ﬁlling,  the  ground  state  is  an  antiferromagnetic  insula-
+                tor for U & 2g2/ω0, while it is a charge-density-wave (or bi-polaronic) insulator for U ≲ 2g2/ω0.
+                In  addition  to  these  phases,  we  ﬁnd  a  superconducting  phase  that  intrudes  between  them.   For
+                ω0/t  =  1,  superconductivity  emerges  when  both U/t  and  2g2/tω0  are  small;  then,  by  increasing
+                the value of the phonon energy ω0, it extends along the transition line between antiferromagnetic
+                and charge-density-wave insulators.  Away from half ﬁlling, phase separation occurs when doping
+                the charge-density-wave insulator, while a uniform (superconducting) ground state is found when
+                doping the superconducting phase.  In the analysis of ﬁnite-size eﬀects, it is extremely important to
+                average over twisted boundary conditions, especially in the weak-coupling limit and in the doped
+                case.
+
+                PACS numbers:  71.10.Fd,71.27.+a,74.20.-z,63.20.Kr
+
+
+                     I.    INTRODUCTION                                       may give rise tod-wave superconductivity, while the lat-
+                                                                              ter one directly mediates a local attraction among elec-
+  The challenge of understanding the interplay between                        trons, leading to ans-wave superconductor.  In addition,
+electron-electron  and  electron-phonon  interactions  has                    a strong electron correlation may also lead to spin-density
+stimulated an intense work in the condensed-matter com-                       waves and a magnetically ordered state, which competes
+munity, since the early developments of many-body ap-                         with superconductivity;  instead,  a local attraction may
+proaches  to  describe  metals,  insulators,  and  supercon-                  also  generate  charge  localization,  i.e.,  charge-density-
+ductors  [1].   Indeed,  the  low-temperature  properties  of                 wave  (CDW)  or  dimerized  (Peierls)  states.   Therefore,
+several  materials  are  controlled  by  the  competition,  or                it is a highly nontrivial task to obtain the properties of a
+sometimes  the  cooperation,  between  these  interaction                     system in which both interactions are relatively strong.
+terms.  For example,  in high-temperature superconduc-                        In this respect, the Hubbard-Holstein model represents a
+tors, where the presence of a strong electron-electron cor-                   prototypical example that includes these features.  This
+relation is irrefutable, the role of phonons could be not                     model incorporates both an on-site Coulomb repulsionU
+entirely negligible, as suggested by the kinks in the elec-                   (the Hubbard term) [9] and a coupling  g  between elec-
+tron  dispersion  [2]  or  by  the  signatures  of  the  isotope              trons  and  dispersionless  Einstein  phonons  with  energy
+eﬀect [3,4].  In alkali-metal-doped fullerides, a supercon-                   ω0 (the Holstein terms) [10], as well as a kinetic term for
+ducting phase appears close to a Mott transition [5,6],                       electrons:
+even though they are often considered as phononic super-                             H = −t ∑             c†                           ni,↑ni,↓
+conductors.   This  particular  feature  suggests  that  both                                              i,σcj,σ + H.c. +U∑
+                                                                                                   ⟨i,j⟩,σ                          i
+the  Coulomb  repulsion  and  the  electron-phonon  cou-                                             ∑
+pling  are  strong  and  cooperate  to  establish  a  strongly-                                +ω0       b†ibi +g∑ni(b†i +bi),               (1)
+correlated superconductor.  Similarly, in pnictide super-                                             i               i
+conductors  [7],  such  as  LaOFeAs,  and  in  aromatic  su-                  where⟨i,j⟩ indicates nearest-neighbor sites (on a square
+perconductors, such as potassium-intercalated picene [8],                     lattice); moreover, on a given sitei,c†
+there are evidences that, apart from a moderately strong                                                                     i,σ (ci,σ) creates (de-
+electron  correlation,  there  is  also  a  non-negligible  cou-              stroys) an electron with spinσ,b†i  (bi) creates (destroys)
+pling between electrons and lattice degrees of freedom.                       a phonon, andni =∑σni,σ =∑σc†i,σci,σ is the electron
+  In a nutshell,  the interplay between electron-electron                     density.  In analogy, we also deﬁne the phonon density on
+repulsion and electron-phonon coupling is due to the fact                     the sitei bymi =b†ibi.  Of course, this model gives a sim-
+that the former one generates spin ﬂuctuations, which in                      pliﬁed description of real solids, since both the Coulomb
+turn  mediate  a  non-local  pairing  among  electrons  that                  repulsion  and  the  electron-phonon  interaction  are  as-
+                                                                                                                                                   2
+
+sumed to be local.  In addition, the latter term is mod-                    assess the ground-state phase diagram of the Hubbard-
+eled by coupling the lattice displacementxi∝ (b†i +bi) to                   Holstein  model  at  half  ﬁlling  and  in  its  vicinity  [40].
+the electron density ni.  A diﬀerent way to introduce the                   The  same  variational  wave  functions  have  been  imple-
+electron-phonon coupling has been considered within the                     mented to study the electron-phonon coupling in multi-
+Su-Schrieﬀer-Heeger  model  [11],  where  lattice  displace-                band models [41].
+ments  are  coupled  to  the  hopping  term  rather  than  to                  One  important  aspect  in  the  phase  diagram  of  the
+the density.  While the latter case is more suited to de-                   Hubbard-Holstein   model   is   the   nature   of   the   tran-
+scribe materials with delocalized phonons,  the Holstein                    sition  between  CDW  (bi-polaronic)  and  Mott  insula-
+model can be used as a good approximation for molec-                        tors  at  half  ﬁlling  and  the  possibility  that  a  metal-
+ular solids in which there are local phonon modes (like,                    lic/superconducting  phase  may  intrude  in  between  [42,
+for example, fullerene doped with alkali-metal atoms).                      43].  In the antiadiabatic limit  ω0/t→∞, given the map-
+  Although   the   properties   of   the   Hubbard-Holstein                 ping from the Holstein model to the negative-U Hubbard
+model depend uponω0/t andg/t independently, it is use-                      model,  one  should  expect  a  direct  transition  between
+ful to deﬁne the quantityλ = 2g2/ω0, which is often con-                    an antiferromagnetic (Mott) insulator, that is stable for
+sidered to measure the strength of the electron-phonon                      U > λ, and a CDW insulator, that is stable for U < λ.
+coupling.  This dimensionless coupling emerges naturally                    However, in this limit, the CDW state is degenerate with
+in the antiadiabatic limit where the phonons have a large                   ans-wave superconductor, because of the SU(2) pseudo-
+energy (i.e., ω0/t→∞).  In this case,  the retarded in-                     spin  symmetry  of  the  negative-U  Hubbard  model  (this
+teraction  mediated  by  phonons  becomes  instantaneous.                   fact leads to peculiar ground-state properties, with both
+In fact, for ω0≫ t there is an exact mapping from the                       broken  translational  symmetries,  i.e.,  CDW  order,  and
+Holstein  model  to the  negative-U  Hubbard  model with                    gapless  excitations).   By  contrast,  for  any  ﬁnite  values
+Uatt  =−λ.  Therefore, the Hubbard-Holstein model re-                       of the phonon energy ω0,  there is no reason for having
+duces to the Hubbard model with a renormalized on-site                      a direct transition between the two insulating states and
+interaction, i.e., Ueﬀ  = U−λ.  In the general case with                    an  intermediate  phase  may  emerge.   In  one  dimension,
+a ﬁnite phonon energy, the multidimensional parameter                       the existence of a metallic phase, with strong supercon-
+space of the Hubbard-Holstein model (i.e.,U/t,g/t,ω0/t,                     ducting correlations, has been reported by DMRG stud-
+as well as the electron density n) leads to an extremely                    ies [16–18],  with a clear evidence that the intermediate
+rich  physics  and  various  approaches  have  been  used  to               region broadens with increasing the phonon energy (up
+understand its ground-state properties.                                     to ω0/t≈ 5).  Instead, DMFT calculations showed con-
+  In  one  spatial  dimension,  early  works,  based  upon                  tradictory results, with either a direct transition between
+perturbation theory and Monte Carlo calculations, sug-                      CDW and Mott insulators [22] or the presence of a small
+gested that the ground state of the Holstein model dis-                     intermediate phase [23].  Also in two dimensions the sit-
+plays CDW order for any non-zero electron-phonon cou-                       uation is not conclusive, since only few calculations have
+pling and ω0/t <∞ [12,13].  Instead, subsequent stud-                       been aﬀorded [31,32], where some evidence for the emer-
+ies, using density-matrix renormalization group (DMRG)                      gence  of  an  intermediate  metallic  phase  has  been  sug-
+and Monte Carlo techniques, have highlighted the exis-                      gested at ﬁnite temperatures. In addition, away from half
+tence of a gapless phase (with dominant superconducting                     ﬁlling, the sign problem is so strong that it prevents one
+pair correlations) for small values of the electron-phonon                  from performing any stable simulation.  Therefore, alter-
+coupling and ﬁnite phonon energies, which persists also                     native approaches are highly desirable.  One possibility
+for ﬁnite values ofU/t [14–19]. In the opposite limit of in-                is to deﬁne suitable wave functions that can be treated
+ﬁnite dimensions, dynamical mean-ﬁeld theory (DMFT)                         within  the  VMC  technique.   In  this  spirit,  Ohgoe  and
+has been employed to assess various aspects of the phase                    Imada have recently extended the “many-variable” VMC
+diagram,  including  the  competition  between  supercon-                   method  to  include  phonon  degrees  of  freedom  [40, 44],
+ductivity  and  CDW  order  [20–23],  the  role  of  phonons                showing  evidence  in  favor  of  a  metallic  (with  weak  su-
+in the vicinity of the Mott transition [24,25], the veriﬁ-                  perconducting correlations) phase between the CDW and
+cation of the Migdal-Eliashberg theory [26], the polaron                    Mott  insulators  at  half  ﬁlling.   In  addition,  they  high-
+formation,  and  the  existence  of  the  isotope  eﬀect  [27–              lighted  the  presence  of  phase  separation  when  doping
+29].  The two-dimensional case has been relatively little                   the CDW insulator.  Instead, the ground state is uniform
+investigated in the past.  Indeed, quantum Monte Carlo                      when doping the metallic phase.
+techniques suﬀer from the sign problem and stable sim-                         In  this  paper,  we  present  further  VMC  calculations
+ulations can be accomplished only in few cases [30–32].                     that are based upon diﬀerent wave functions and smart
+Therefore, the Hubbard-Holstein model has been mainly                       average  over  twisted  boundary  conditions  (denoted  by
+considered  within  mean-ﬁeld  approaches  [33–36]  or  by                  TABC)  in  order  to  reduce  size  eﬀects.   Indeed,  when
+using perturbative methods [37,38].  Variational Monte                      imposing  periodic  or  antiperiodic  boundary  conditions,
+Carlo (VMC) has been also employed to assess the inter-                     there are very large size eﬀects, especially for small values
+play  between  electron-electron  and  electron-phonon  in-                 ofω0/t and in the doped case, preventing us from reach-
+teractions in the Su-Schrieﬀer-Heeger model [39].  More                     ing  deﬁnitive  conclusions  in  the  thermodynamic  limit.
+recently, Ohgoe and Imada used the VMC approach to                          Thanks to TABC, we give a clear evidence that a super-
+                                                                                                                                                 3
+
+conducting phase is present between the CDW and the                         total number of electrons is ﬁxed to Ne by the projector
+antiferromagnetic insulators and that its stability region                  PNe.
+broadens  when  increasing  the  phonon  energy.   Finally,                   The uncorrelated phononic part is then given by:
+phase separation is found when doping the CDW state,                                                        (          )Nb
+while a uniform (superconducting) phase is observed by                                                        eζ b†k=0
+doping the uniform ground state.                                                              |Φp⟩ =∑             Nb!  |0⟩,                  (5)
+  The paper is organized as follows:  in Sec.II, we show                                                Nb
+the  variational  wave  function  and  brieﬂy  discuss  the
+Monte Carlo methods that have been used;  in Sec.III,                       whereb†k=0 = 1/√N∑ib†i  creates a phonon in thek = 0
+we present the numerical results;  ﬁnally, in Sec.IV, we                    momentum state (N  is the number of sites).  Here, Nb
+draw our conclusions.                                                       denotes  the  total  number  of  phonons.   Since  the  num-
+                                                                            ber of phonons is not conserved by the Hubbard-Holstein
+                                                                            Hamiltonian  of  Eq.  (1), |Φp⟩  has  components  on  sub-
+     II.    WAVE FUNCTIONS AND METHODS                                      spaces  with  any  value  of Nb;  then, ζ  is  a  variational
+                                                                            parameter  that  plays  the  role  of  a  fugacity.   Denoting
+  In this section,  we ﬁrst describe the variational wave                   by|m1,...,mN⟩ the (normalized) conﬁguration with mi
+function  that  has  been  used  in  the  numerical  calcula-               phonons  on  the  site i,  the  uncorrelated  phononic  wave
+tions.  Then, we brieﬂy discuss the updating scheme that                    function can be written as:
+has been implemented within the VMC method for the
+phononic  degrees  of  freedom  (for  the  electrons,  we  use                     |Φp⟩ =  ∑            √  eζ∑imi
+standard updating schemes [45]).  Finally,  we show the                                      m1,...,mN    m1!...mN!|m1,...,mN⟩.     (6)
+TABC procedure to reduce size eﬀects and we highlight
+advantages and disadvantages of the VMC method.                               Finally, Jee, Jpp,  and Jep  are  density-density  Jas-
+  The  wave  function  is  given  by  the  so-called  Jastrow-              trow  factors  for  the  electron-electron,  phonon-phonon,
+Slater state that is deﬁned by:                                             and electron-phonon correlations, respectively:
+              |Ψ⟩ =JeeJppJepPNe|Φe⟩⊗|Φp⟩.              (2)                                                                    
+                                                                                                         −1     ∑             ,               (7)
+Here,|Φe⟩ is the ground state of an auxiliary (quadratic)                                   Jee = exp         2      veei,jninj
+                                                                                                                  i,j
+Hamiltonian that contains electron hopping and (singlet)                                                                        
+pairing:                                                                                                  −1    ∑               ,             (8)
+                                                                                            Jpp = exp          2      vppi,jmimj
+        Haux =−t ∑           c†i,σcj,σ + H.c.−µ∑         c†i,σci,σ                                               i,j         
+
+                      ⟨i,j⟩,σ                        i,σ
+        +∑(−1)Xi+Yi[∆CDW + ∆AF(−1)¯σ]c†                                                     Jep = exp    −∑       vepi,jnimj,                (9)
+                                                         i,σci,σ                                               i,j
+           i,σ
+                ∑
+        +∆SC         c†i,↑c†i,↓ + H.c.,                                   (3)where veei,j, vppi,j, and vepi,j  are pseudo-potentials, including
+                  i                                                         the  on  site  terms,  that  are  taken  to  be  translationally
+where µ,  ∆CDW,  ∆AF,  and  ∆SC  are  parameters  that                      invariant, i.e., they depend only upon the Euclidean dis-
+are  optimized  in  order  to  minimize  the  variational  en-              tance|Ri−Rj|.  They can be optimized (each one inde-
+ergy [46],    Ri = (Xi,Yi) indicates the coordinates of the                 pendently) to reach the optimal variational Ansatz [46].
+sitei in the square lattice, and ¯σ = +1 (−1) for up (down)                 Here, all the pseudo-potentials are taken to be symmet-
+electrons.  The auxiliary Hamiltonian of Eq. (3) is rather                  ric in the exchange i↔j.  By a full optimization of the
+ﬂexible  to  describe  states  with  (i)  CDW  order  (when                 Jastrow factors, we ﬁnd that the phonon-phonon corre-
+∆CDW⁄= 0 and ∆AF = ∆SC = 0), (ii) antiferromagnetic                         lations only give a marginal improvement in the energy
+N´eel  order  (when  ∆AF ⁄=  0  and  ∆CDW  =  ∆SC  =  0),                   and, therefore, they are not employed.  By contrast, the
+and  (iii)  superconducting  order  (when  ∆SC ⁄=  0  and                   electron-phonon term is fundamental to obtain an accu-
+∆CDW  =  ∆AF  =  0).   Moreover,  states  with  coexisting                  rate description when g/t and ω0  are ﬁnite.  As for the
+orders are also possible.  This Hamiltonian can be easily                   Hubbard  model,  the  electron-electron  Jastrow  factor  is
+diagonalized  to  deﬁne  the  uncorrelated  electronic  state               crucial to reproduce the correct low-energy behavior of
+|Φe⟩, which has the following form:                                         the ground state [47,48].
+                                                                            The  conﬁguration  space  that  is  sampled  along  the
+                                                                            Markov chain is deﬁned by specifying both electron and
+               |Φe⟩ = exp    ∑     fi,jc†i,↑c†j,↓|0⟩,              (4)    phonon occupations on each site (i.e., we work in a ba-
+                                i,j                                         sis  in  which  the  number  of  phonons mi  is  speciﬁed  on
+                                                                            each lattice site, as well as the number of up- and down-
+where  the  pairing  function fi,j  depends  upon  the  vari-               spin electrons ni,σ).  In our case, where the uncorrelated
+ational  parameters  of  the  auxiliary  Hamiltonian.   The                 phononic part is given by Eq. (6) and contains a single
+                                                                                                                                                    4
+
+                                                                             tional parameters (i.e.,O(N) for a translationally invari-
+                                                                             ant case) and the optimization of the long-range tail of
+                                                                             the pairing function can be diﬃcult within a stochastic
+                                                                             approach.  An advantage of our parametrization is that
+                                                                             the nature of the wave function is transparent from the
+                                                                             optimized values of the parameters, e.g., obtaining a ﬁ-
+                                                                             nite ∆CDW  immediately implies that the state displays
+                                                                             CDW order.  We also mention that the present approach
+                                                                             allows us to easily detect metastable phases, with given
+                                                                             physical properties:  for example, by ﬁxing ∆AF = 0, we
+                                                                             are able to obtain the best paramagnetic state, even in
+                                                                             a region where the ground state is antiferromagnetically
+                                                                             ordered.
+                                                                                When using the wave function of Eq. (2), the Metropo-
+                                                                             lis  algorithm  can  be  easily  implemented  to  propose  a
+FIG. 1:   Size scaling of the energy per site at half ﬁlling (with           change in the phononic conﬁguration.  Indeed, let us con-
+ω0/t = 1, λ/t = 0.98, and U  = 0) for periodic-periodic (red                 sider the case in which one phonon is created/destroyed
+squares), periodic-antiperiodic (black circles), and twisted av-             at site l, i.e., mi→mi±δil.  Then, in order to compute
+erage  (blue  diamonds)  boundary  conditions.   Errorbars  are              the Metropolis acceptance probability, it is necessary to
+smaller than the size of the symbols.                                        evaluate the following ratio:
+
+                                                                                  R±l   =⟨m1,...,ml± 1,...,mN|JppJep|Ψp⟩⟨m1,...,ml,...,mN|JppJep|Ψp⟩  ,      (10)
+
+                                                                             which can be explicitly given by the expressions of the un-
+                                                                             correlated phononic state (6) and the Jastrow factors (8)
+                                                                             and (9):
+                                                                                                        [                                   ]
+                                                                              R+l  =   eζ√ml + 1 exp      −∑(vepi,lni +vppi,lmi)−vppl,l        ,(11)
+                                                                                                        [     i                              ]
+
+                                                                               R−l   =√ml e−ζ exp         +∑(vepi,lni +vppi,lmi)−vppl,l        .(12)
+                                                                                                               i
+                                                                                Finally, let us discuss the TABC method to reduce the
+                                                                             size  eﬀects.   Our  calculations  are  performed  on  square
+                                                                             clusters with N  = L×L sites.  In most cases,  periodic
+FIG. 2:    Size scaling of the energy per site at quarter ﬁlling             (or anti-periodic) boundary conditions are employed on
+(with ω0/t  =  1, λ/t  =  2,  and U  =  0)  for  periodic-periodic           both the Hamiltonian and the variational wave function
+(red squares) and twisted average (blue diamonds) boundary                   (i.e., the auxiliary Hamiltonian deﬁned above).  However,
+conditions. Errorbars are smaller than the size of the symbols.              strong size eﬀects may be present, due to a large corre-
+                                                                             lation length.  It has been proposed that a selected twist
+variational parameter ζ, we do not need to include any                       in the boundary condition,  or an average over diﬀerent
+cutoﬀ  in  the  number  of  phonons.   By  contrast,  Ohgoe                  boundary  conditions,  may  improve  the  convergence  to
+and  Imada  [40, 44]  used  a  more  involved  parametriza-                  the thermodynamic limit [49,50].  On the lattice, by ex-
+tion  of  the  phonon  wave  function,  with  several  param-                plicitly indicating the coordinates of the site in the cre-
+eters  (i.e.,  one  for  each  boson  number);  therefore,  they             ation operators (i.e., c†i,σ→ c†Ri,σ, where Ri  = (Xi,Yi)
+considered a cutoﬀ in the maximum number of phonons.                         denotes  the  coordinates  of  the  site i  in  the  lattice),
+Moreover, along the Markov chain, they sampled the dis-                      twisted boundary conditions correspond to impose:
+placement xi, using a diﬀerent electron-phonon Jastrow                                               c†                xc†
+factor, which couples the electron densitynj toxi (rather                                             Ri+Lx,σ =eiθσ       Ri,σ,                   (13)
+than to the phonon number mi).  Finally, also the elec-                                              c†Ri+Ly,σ =eiθσyc†Ri,σ,                   (14)
+tronic part used in Refs. [40,44] is slightly diﬀerent from
+the one that is employed here:  they do not obtain|Φe⟩                       where Lx = (L, 0) and Ly = (0,L) are the vectors that
+from the auxiliary Hamiltonian (3), but perform a full op-                   deﬁne the periodicity of the cluster; θσx  and θσy  are two
+timization of the pairing function fi,j  of Eq. (4).  In our                 phases in [0, 2π) that determine the twists alongx andy
+opinion,  this  procedure  may  be  problematic,  especially                 directions.  In order to preserve time-reversal invariance,
+for  large  sizes,  since  one  must  deal  with  several  varia-            we must impose that θ↑x =−θ↓x, and similarly for the y
+                                                                                                                                                      5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                              FIG. 4:    Antiferromagnetic (red circles) and charge-density-
+                                                                              wave (blue squares) parameters for the case with ω0/t = 1.
+                                                                              The cases with λ/t = 4.5 (upper panel), where a ﬁrst-order
+                                                                              phase transition between these two insulators is present, and
+                                                                              with λ/t = 2 (lower panel), where a continuous phase tran-
+                                                                              sition takes place, are reported.  The calculations have been
+                                                                              performed on the 12 × 12 cluster with TABC and error bars
+                                                                              are smaller than the size of the symbols.
+
+                                                                                 In TABC, an average over a large numberNθ of phases
+                                                                              (typically Nθ = 576 points in the Brillouin zone) is con-
+                                                                              sidered in order to evaluate the expectation value of the
+                                                                              Hamiltonian or any other operatorOθ, which in general
+                                                                              depends upon the twist through Eq. (13) and (14):
+FIG. 3:   Ground-state phase diagram in the (λ/t,U/t) plane                                                    ∑    ⟨Ψθ|Oθ|Ψθ⟩
+for the Hubbard-Holstein model at ω0/t = 1 (upper panel),                                        ⟨O⟩ =   1Nθ           ⟨Ψθ|Ψθ⟩ .                 (15)
+ω0/t = 5 (middle panel), and ω0/t = 15 (lower panel).  An-                                                       θ
+tiferromagnetic  (AF),  charge-density-wave  (CDW),  and  su-                 By  imposing  that  all  the  twists  share  the  same  varia-
+perconducting (SC) phases are present, the latter one being
+marked in blue.  The calculations have been performed on the                  tional  parameters,  we  can  reach  much  faster  the  ther-
+12 × 12  cluster  with  TABC.  The  dotted  line U  = λ  is  also             modynamic limit.  For example, by considering uncorre-
+marked for reference.                                                         lated  (i.e.,  mean-ﬁeld)  wave  functions,  we  veriﬁed  that
+                                                                              this  procedure  allows  us  to  get  the  thermodynamic  re-
+                                                                              sults even when using a small cluster.  Moreover, within
+term.  Then, for each choice ofθ≡ (θ↑x,θ↓x,θ↑y,θ↓y), we de-                   a  Monte  Carlo  optimization,  the  average  of  Eq.  (15)  is
+ﬁne the many-body wave function|Ψθ⟩, which is obtained                        very conveniently implemented, since the statistical error
+from the auxiliary Hamiltonian (3) with twisted bound-                        decreases with 1/√Nθ  and, therefore, several boundary
+ary  conditions  (notice  that  the  Jastrow  factors  are  not               conditions can be considered without any extra compu-
+aﬀected by the twist, since they contain density-density                      tational cost.  In Fig.1, we show the size scaling of the
+correlations).                                                                energy  per  site  when  applying  the  TABC  procedure  at
+                                                                                                                                                     6
+
+half  ﬁlling  (for U   =  0, λ/t  =  0.98,  and ω0/t  =  1),
+in  comparison  with  the  standard  cases  with  periodic-
+periodic and periodic-antiperiodic boundary conditions.
+In all three cases,  the optimized variational wave func-
+tions  have  ∆SC⁄=  0  (and  ∆CDW  =  ∆AF  =  0)  and  the
+extrapolated values are all consistent (within few error-
+bars), giving E/t =−2.1725(1).  Away from half ﬁlling,
+size  eﬀects  become  even  more  pronounced  and  TABC
+are crucial to extract an accurate value in the thermody-
+namic limit. In Fig.2, we report the case at quarter ﬁlling
+(with U  = 0, λ/t = 2,  and ω0/t = 1).  Here,  periodic-
+periodic boundary conditions give scattered results, while
+averaging over twisted boundary conditions gives rise to
+a rather smooth extrapolation to E/t =−1.652(1).  The
+important  message  is  that,  while  the  cases  with  ﬁxed
+boundary conditions possess huge size eﬀects and require
+large clusters to reach accurate results in the thermody-
+namic limit, a remarkable ﬂat size scaling is obtained by
+using TABC, thus allowing us to consider relatively small
+clusters in our numerical simulation, with small ﬁnite-size
+errors.
+  We  would  also  like  to  brieﬂy  discuss  the  advantages
+and disadvantages of computing ground-state properties
+by  means  of  a  Monte  Carlo  sampling  over  variational
+wave  functions.   The  main  advantage  is  that  strongly-
+correlated states may be treated beyond perturbative ap-
+proaches.  For example, the physical properties (e.g., en-
+ergy and correlations functions) of the simple Gutzwiller
+wave  function  can  be  assessed  without  considering  the
+Gutzwiller approximation [51,52].  In order to compute                        FIG. 5:   Antiferromagnetic (red circles), charge-density-wave
+expectation values over variational states, a Monte Carlo                     (blue squares), and superconducting (black diamonds) param-
+sampling is necessary,  thus leading to statistical errors,                   eters for the case with ω0/t = 5.  The cases with λ/t = 4.5
+which,  however,  can  be  safely  kept  under  control  (i.e.,               (upper  panel)  and λ/t  =  2  (lower  panel)  are  reported.   In
+they  scale  to  zero  by  increasing  the  length  of  the  sim-             both  cases,  there  is  a  small  region  where  the  ground  state
+ulation).  The energy computed with variational Monte                         is  superconducting  with  no  charge-density-wave  order.   The
+Carlo gives an upper bound to the exact value, thus pro-                      calculations have been performed on the 12 × 12 cluster with
+viding a criterion to judge the quality of the variational                    TABC and error bars are smaller than the size of the symbols.
+states.  Moreover, it is possible to assess quite large clus-
+ters,  with  all  relevant  spatial  symmetries  (translations,               long-range antiferromagnetic order (namely the uncorre-
+rotations,  and  reﬂections)  preserved.   The  main  disad-                  lated  part  of  the  electronic  wave  function  has  ∆AF ⁄=
+vantage is that it is diﬃcult to quantify the systematic                      0).   The  stability  region  of  this  phase  is  approximately
+errors,  which  are  introduced  by  the  choice  of  the  trial              bounded (from below) by the line U =λ, for all the val-
+state.                                                                        ues of the phonon energies.  This is a remarkable feature,
+                                                                              which has been already obtained by diﬀerent approaches,
+                         III.    RESULTS                                      especially  in  one  dimension  by  DMRG  [16–18]  and  in
+                                                                              two dimensions by VMC [40].  In fact,  this is expected
+  In this section, we start by showing our numerical re-                      in  the  antiadiabatic  limit  where ω0/t→∞,  but  there
+sults for the half-ﬁlled casen =Ne/N = 1 and then move                        are no simple reasons that it should also hold for ﬁnite
+to the doped region with n< 1.                                                (and  relatively  small)  values  of ω0.   For  large  electron-
+                                                                              phonon coupling, the ground state is a CDW insulator,
+                                                                              where doubly-occupied sites (doublons) and empty sites
+                                                                              (holons) form a checkerboard pattern; this charge mod-
+                       A.    Half-ﬁlled case                                  ulation is accompanied by a considerable phonon “dress-
+                                                                              ing”, namely a large number of phonons are present on
+  In Fig.3, we show the ground-state phase diagram for                        top of doublons, while no phonons are present on empty
+three  values  of ω0/t,  i.e., ω0/t  =  1,  5,  and  15,  at  half            sites.  This phonon cloud gives a drastic reduction of the
+ﬁlling.  Here, we identify three diﬀerent phases.  For large                  kinetic energy of electrons, which hardly hop around in
+electron-electron interaction, the lowest-energy state has                    the  lattice.   Finally,  there  is  an  intermediate  supercon-
+                                                                                                                                                  7
+
+                                                                            the transition for λ/t = 4.5 are reported in Fig.4.  By
+                                                                            decreasingλ/t, the local minima disappear and the tran-
+                                                                            sition appears to be continuous.  For λ/t = 2, which ap-
+                                                                            proximately corresponds to the tip of the superconduct-
+                                                                            ing region, CDW and antiferromagnetic parameters van-
+                                                                            ish forU/t≈ 1.2, see Fig.4.  For smaller values of    λ/t, a
+                                                                            superconducting phase can be stabilized for small enough
+                                                                            electron-electron repulsions, with a small but clearly ﬁ-
+                                                                            nite  pairing  term  ∆SC.   We  would  like  to  remark  that
+                                                                            forU = 0, within our variational approach (implemented
+                                                                            with  TABC),  we  obtain  a  ﬁnite  value  of  the  electron-
+                                                                            phonon  coupling λ/t ≈  1,  separating  superconducting
+                                                                            and  CDW  phases.   In  the  non-interacting  limit,  at  the
+                                                                            density  where  the  Van  Hove  singularity  occurs  (i.e.,  at
+                                                                            half ﬁlling, when only the nearest-neighbor hopping t is
+                                                                            present), both the particle-hole and the particle-particle
+                                                                            susceptibilities diverge as ln2(t/Λ) [53], where Λ is an in-
+                                                                            frared cutoﬀ.  The former one has a larger prefactor with
+                                                                            respect to the superconducting one, thus implying that,
+                                                                            within  the  mean-ﬁeld  approach,  an  inﬁnitesimal  inter-
+                                                                            action will lead to CDW. However, bare susceptibilities
+                                                                            may lead to an incorrect prediction and it is important
+                                                                            to  go  beyond  this  approximation.   Our  variational  cal-
+                                                                            culations should capture the correct qualitative picture,
+                                                                            i.e., the presence of an extended superconducting region
+                                                                            below a given λ/t, even though we cannot exclude sub-
+                                                                            tle  ﬁnite-size  eﬀects  that  could  be  particularly  diﬃcult
+                                                                            to control even by using TABC. In this respect, our re-
+                                                                            sults contrast with recent calculations obtained by using
+FIG. 6:   Antiferromagnetic (red circles), charge-density-wave              a ﬁnite-temperature quantum Monte Carlo method [54].
+(blue squares), and superconducting (black diamonds) param-
+eters for the case with ω0/t = 15.  The cases with λ/t = 4.5
+(upper panel) andλ/t = 2 (lower panel) are reported.  In this
+cases,  there  is  a  substantial  region  where  the  ground  state
+is  superconducting  with  no  charge-density-wave  order.   The               When increasing the phonon energy, the region of sta-
+calculations have been performed on the 12 × 12 cluster with                bility for the superconducting phase broadens, intruding
+TABC and error bars are smaller than the size of the symbols.               between  the  two  insulators  also  when λ/t  is  large.   In
+                                                                            Figs.5and6, we report the behavior of the variational
+                                                                            parameters ∆AF, ∆CDW, and ∆SC for ω0/t = 5 and 15.
+ducting phase (with pairing correlations that increase by                   In the intermediate region, both ∆AF and ∆CDW are van-
+increasingω0/t) that intrudes between the previous insu-                    ishing, while ∆SC is ﬁnite.  Notice that ∆SC is also ﬁnite
+lators. For small values of the phonon energy, it is limited                inside  the  insulating  CDW  region.   This  fact  does  not
+to a narrow region for small couplings, while for interme-                  lead to a super-solid ground state (i.e., a superconduct-
+diate values of ω0/t, it expands inside the region where                    ing state with CDW order), since the presence of a ﬁnite
+U <λ.  By further increasing ω0/t, the superconducting                      ∆CDW  is  associated  with  a  gap  in  the  excitation  spec-
+correlations get stronger and stronger, eventually pervad-                  trum  (we  determine  whether  the  system  is  metallic  or
+ing the whole CDW region.  It should be mentioned that,                     insulating by looking at the density-density correlations,
+when ω0/t→∞, the CDW state returns into the game,                           see for instance Ref.55).  By contrast, this result may be
+being degenerate with the superconducting one (due to                       ascribed to the fact that superconducting and CDW so-
+the emerging SU(2) pseudo-spin symmetry that connects                       lutions become degenerate forω0/t→∞, and, therefore,
+the superconducting and the CDW states).  In practice,                      at the variational level, some energy gain can be obtained
+we cannot recover an exact degeneracy between these two                     by mixing superconductivity and CDW order, even when
+states, since the density-density Jastrow factor favors the                 the phonon energy is large but ﬁnite.  Finally, we remark
+superconducting one for very large phonon energies.                         that the transition between the antiferromagnetic insu-
+  Forω0/t = 1 and largeλ/t, the transition between the                      lator and the superconductor appears to be continuous,
+CDW and the antiferromagnetic insulators is ﬁrst order,                     i.e.,  both  ∆AF  and  ∆SC  vanish  (approximately)  at  the
+since both wave functions can be stabilized also when the                   same point.  This is a particularly remarkable and unex-
+competitor gives the lowest variational energy. For exam-                   pected feature, since s-wave superconductivity and local
+ple,  the  variational  parameters  ∆AF  and  ∆CDW  across                  moments are not compatible.
+                                                                                                                                                     8
+
+                         B.    Doped case
+
+  Let  us  now  move  to  the  doped  case,  for  which  we
+want  to  assess  the  stability  toward  phase  separation.
+When doping an antiferromagnet, phase separation could
+appear  for  small  hole  concentrations,  as  found  in  the
+repulsive-U  Hubbard  model,  whenever  the  loss  in  the
+magnetic contribution to the total energy is larger than
+the gain due to the kinetic part.  The presence of phase
+separation  in  the  repulsive-U  Hubbard  model  has  been
+conﬁrmed by diﬀerent methods, even if its extension as
+a function of U  is still controversial [56–62].  In order to
+highlight the possible presence of phase separation in the
+Hubbard-Holstein model, it is very useful to consider the
+so-called energy per hole [63]:
+
+                       ϵ(δ) = E(δ)−E(0)δ    ,                      (16)
+
+whereE(δ) is the energy per site at hole dopingδ = 1−n.
+For a uniform phase,ϵ(δ) has a monotonically increasing
+behavior with increasingδ from 0 to 1; by contrast, phase
+separation  is  marked  by  the  presence  of  a  minimum  of
+ϵ(δ)  on  any  ﬁnite-size  clusters  and  a  ﬂat  behavior  (up
+to δc) in the thermodynamic limit.  These facts can be
+easily understood by considering thatϵ(δ) represents the
+slope of the line joining (0,E(0)) to (δ,E(δ)) and that, in
+a stable uniform phase E(δ) is a convex function, while
+phase separation implies (after Maxwell construction) a
+linear behavior of E(δ) up to δc.                                            FIG. 7:   Energy per hole of Eq. (16) for   λ/t = 2 and various
+  The results of the energy per hole are shown in Fig.7.                     values ofU/t (upper panel) and forU = 0 and various values
+First of all,  we discuss the case with U  = 0, ω0/t = 1,                    of λ/t (lower panel).  In both cases ω0/t = 1 and calculations
+and  ﬁnite λ  (lower  panel).   Here,  the  system  does  not                are performed on the 12 × 12 cluster with TABC. Errorbars
+phase  separate  for  small  values  of  the  electron-phonon                are smaller than the size of the symbols.
+coupling, i.e., when doping the superconducting phase at
+half ﬁlling.  Most importantly, the ground state remains
+superconducting also when the electron density is n< 1.
+This fact is most evident whenω0/t is large enough, since
+the  superconducting  signal  is  rather  small  in  the  adia-
+batic limit and increases withω0/t.  In order to show this
+feature,  we present the results for ω0/t = 15 in Fig.8.
+As  for  the  half-ﬁlled  case,  in  order  to  get  smooth  re-
+sults when the electron density is varied, it is fundamen-
+tal  to  consider  TABC,  since  ﬁxed  boundary  conditions
+(here, periodic-antiperiodic ones) give rise to a strongly
+scattered behavior.  By contrast, when entering into the
+CDW phase for large values of λ/t, a small hole doping
+leads to a charge instability, with the region where phase
+separation  is  obtained  increasing  with λ.   We  remark
+that, within TABC, the results show a smooth behavior
+that is not obtained by using ﬁxed boundary conditions.
+As for the case of an antiferromagnetic phase, also in the
+presence of CDW order the injection of few mobile holes
+that damage the charge periodicity is not compensated                        FIG. 8:   Variational parameter ∆SC as a function of the elec-
+by a kinetic energy gain.  Thus, phase separation appears                    tron  density n,  computed  with  periodic-antiperiodic  (black
+for suﬃciently small hole doping.  In Fig.7, we also show                    circles), and twisted average (blue diamonds) boundary con-
+the results for λ/t = 2 and various values of U/t (upper                     ditions on the 12×12 cluster. Here,ω0/t = 15 andλ/t = 0.98.
+panel).  Here, the electron-electron repulsion opposes to                    Errorbars are smaller than the size of the symbols.
+the electron-phonon coupling,  leading to a reduction of
+                                                                                                                                                    9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 9:    Energy per hole of Eq. (16) for   U  = 0 and λ/t = 2              FIG. 10:   Energy per hole of Eq. (16) for   U = 0 and λ/t = 2
+(red  squares),  compared  with U/t  =  1.38  and λ/t  =  3.38               for ω0/t  =  1  (red  squares),  5  (black  circles),  and  15  (blue
+(black circles), that corresponds to the same value of the ef-               diamonds).  Calculations are performed on the 12 × 12 clus-
+fective interaction Ueﬀ  =U −λ.  In both cases ω0/t = 1 and                  ter  with  TABC.  Errorbars  are  smaller  than  the  size  of  the
+calculations are performed on the 12×12 cluster with TABC.                   symbols.
+Errorbars are smaller than the size of the symbols.
+
+phase separation until it eventually disappears  above a                     been strongly reduced by implementing an average over
+critical value of U/t (by further increasing the electron-                   twisted boundary conditions.  At half ﬁlling, our results
+electron  repulsion,  antiferromagnetism  settles  down  at                  conﬁrm  the  existence  of  a  gapless  phase  between  the
+half  ﬁlling,  thus  leading  again  to  phase  separation,  as              CDW  and  the  antiferromagnetic  insulators,  as  recently
+discussed in the positive-U  Hubbard model).                                 obtained by diﬀerent VMC calculations [40].  Moreover,
+  In Fig.9, we further show that, at ﬁnite values of the                     within our approach, which is based upon a transparent
+phonon energy,  the extent of phase separation depends                       parametrization of the variational wave functions, we are
+upon  the  actual  values  of  both U  and λ.   Indeed,  we                  able to observe the presence of superconducting correla-
+observe that, forω0/t = 1, phase separation is more pro-                     tions in the intermediate phase.  When the phonon en-
+nounced for U/t = 1.38 and λ/t = 3.38 than for U  = 0                        ergy becomes large, pairing correlations strengthen and
+and λ/t  =  2,  even  if  both  cases  would  give  the  same                the  superconducting  region  broadens  to  the  detriment
+eﬀective interaction Ueﬀ  = U−λ.  This fact can be ex-                       of CDW order.  The emergence of superconductivity in
+plained by the presence, at half ﬁlling, of a larger CDW                     the half-ﬁlled Hubbard-Holstein model is an example on
+parameter in the former case with respect to the latter                      how two competing tendencies (i.e., antiferromagnetism,
+one.                                                                         favored  by  electron-electron  interaction,  and  CDW  or-
+  Finally,  we  compare  the  energy  per  hole  for U  =  0                 der, favored by electron-phonon coupling) may lead to a
+and λ/t = 2 for diﬀerent values of ω0/t, see Fig.10.  In                     third stable phase.  In addition, we studied the eﬀect of
+all these cases, the ground state at half ﬁlling has CDW                     hole doping for both regimes where the half-ﬁlled ground
+order (see Fig.3) and, therefore, phase separation is ex-                    state has either CDW or superconducting order.  In the
+pected to appear away from half ﬁlling.  However, in the                     former case, a substantial phase separation is present at
+antiadiabatic  limit ω0/t→∞,  there  is  no  phase  sepa-                    small dopings, resembling the case of a doped repulsive-U
+ration, since the Holstein model maps to the negative-U                      Hubbard [56–62].  In the latter case, instead, the ground
+Hubbard model, which has a uniform ground state away                         state remains uniform with superconducting order.  How-
+from half ﬁlling.  In fact, we ﬁnd that phase separation                     ever,  superconductivity  is  found  to  monotonically  de-
+reduces  when  increasing ω0/t,  i.e.,  the  position  of  the               crease  upon  doping.   We  remark  that,  away  from  half
+minimum  in  the  energy  per  hole  shifts  toward δ  =  0,                 ﬁlling,  TABCs  are  fundamental  to  reduce  ﬁnite-size  ef-
+indicating that our variational approach correctly repro-                    fects.
+duces the expected physical behavior.                                           From  general  grounds,  within  the  Hubbard-Holstein
+                                                                             model,    superconductivity   is   rather   fragile   against
+                                                                             electron-electron repulsion and also against electron dop-
+                    IV.    CONCLUSIONS                                       ing.  Indeed, since phonons are coupled to the local elec-
+                                                                             tronic  density  in  the  Hubbard-Holstein  model,  there  is
+                                                                             a direct competition between the formation of supercon-
+  In conclusion, we have performed accurate VMC cal-                         ducting pairs and the local Coulomb repulsion U.  In ad-
+culations  to  extract  thermodynamic  properties  of  the                   dition, superconducting pairing is maximum at half ﬁlling
+Hubbard-Holstein  model,  where  ﬁnite-size  eﬀects  have                    and strongly reduces in the presence of hole doping.  In
+                                                                                                                                                           10
+
+this respect,  a diﬀerent scenario is expected within the                         Further variational investigations in this direction could
+Su-Schrieﬀer-Heeger  model  [11],  where  lattice  displace-                      beneﬁt from the use of backﬂow terms, as introduced to
+ments are coupled to the hopping term:  here, no super-                           improve the quality of the wave functions in the Hubbard
+conductivity  is  expected  at  half  ﬁlling,  since  a  Peierls                  model [55,67].
+insulator should take place for any electron-phonon cou-
+pling  at U  =  0  (similarly  to  what  happens  in  one  di-
+mension [64–66]).  On the contrary, superconductivity is                                                   Acknowledgments
+expected to emerge upon doping, being also more robust
+against Coulomb repulsion than in the Hubbard-Holstein
+model.  Therefore, the Su-Schrieﬀer-Heeger model would                               We thank M. Fabrizio for useful discussions as well as
+provide a diﬀerent mechanism for electron pairing, more                           T. Ohgoe and M. Imada for sharing their VMC numerical
+pertinent for cuprate and iron-pnictide superconductors.                          data.
+
+
+
+
+
+ [1]A.A.  Abrikosov,  L.P.  Gorkov,  and  I.E.  Dzialoshinskii,                   [20]J.K. Freericks, M. Jarrell, and D.J. Scalapino, Phys. Rev.
+     Methods of Quantum Field Theory in Statistical Physics                            B 48, 6302 (1993).
+     (Dover, New York, 1975).                                                     [21]J.K. Freericks and M. Jarrell, Phys. Rev. Lett.      75, 2570
+ [2]A. Lanzara, P.V. Bogdanov, X.J. Zhou, S.A. Kellar, D.L.                            (1995).
+     Feng,  E.D.  Lu,  T.  Yoshida,  H.  Eisaki,  A.  Fujimori,  K.               [22]J.  Bauer  and  A.C.  Hewson,  Phys.  Rev.  B      81,  235113
+     Kishio, J.-I. Shimoyama, T. Noda, S. Uchida, Z. Hussain,                          (2010).
+     and Z.-X. Shen, Nature (London) 412, 510 (2001).                             [23]Y. Murakami, P. Werner, N. Tsuji, and H. Aoki, Phys.
+ [3]G.M. Zhao, M.B. Hunt, H. Keller, and K.A. Muller, Na-                              Rev. B 88, 125126 (2013).
+     ture (London) 385, 236 (1997).                                               [24]M. Capone, G. Sangiovanni, C. Castellani, C. Di Castro,
+ [4]G.-H. Gweon, T. Sasagawa, S.Y. Zhou, J. Graf, H. Tak-                              and M. Grilli, Phys. Rev. Lett. 92, 106401 (2004).
+     agi,  D.-H. Lee,  and A. Lanzara,  Nature (London) 430,                      [25]G. Sangiovanni, M. Capone, C. Castellani, and M. Grilli,
+     187 (2004).                                                                       Phys. Rev. Lett. 94, 026401 (2005).
+ [5]M. Capone,  M. Fabrizio,  C. Castellani,  and E. Tosatti,                     [26]P. Werner and A.J. Millis, Phys. Rev. Lett.      99, 146404
+     Rev. Mod. Phys. 81, 943 (2009).                                                   (2007).
+ [6]Y.  Takabayashi,  A.Y.  Ganin,  P.  Jeglic,  D.  Arcon,  T.                   [27]M. Capone and S. Ciuchi,  Phys. Rev. Lett.      91,  186405
+     Takano,  Y. Iwasa,  Y. Ohishi,  M. Takata,  N. Takeshita,                         (2003).
+     K.  Prassides,  and  M.J.  Rosseinsky,  Science  323,  1585                  [28]P.   Paci,   M.   Capone,   E.   Cappelluti,   S.   Ciuchi,   C.
+     (2009).                                                                           Grimaldi, and L. Pietronero, Phys. Rev. Lett. 94, 036406
+ [7]C. de la Cruz, Q. Huang, J.W. Lynn, J. Li, W. Ratcliﬀ,                             (2005).
+     J.L.  Zarestzky,  H.A.  mook,  G.F.  Chen,  J.L.  Luo,  N.L.                 [29]A. Macridin, B. Moritz, M. Jarrell, and T. Maier, Phys.
+     Wang, and P. Dai, Nature (London) 453, 899 (2008).                                Rev. Lett. 97, 056402 (2006).
+ [8]R.  Mitsuhashi,  Y.  Suzuki,  Y.  Yamanari,  H.  Mitamura,                    [30]Z.B. Huang, W. Hanke, E. Arrigoni, and D. J. Scalapino,
+     T. Kambe, N. Ikeda, H. Okamoto, A. Fujiwara, M. Ya-                               Phys. Rev. B 68, 220507 (2003).
+     maji, N. Kawasaki, Y. Maniwa, and Y, Kubozono, Na-                           [31]E.A.  Nowadnick,  S.  Johnston,  B.  Moritz,  R.T.  Scalet-
+     ture (London) 464, 76 (2010).                                                     tar, and T.P. Devereaux, Phys. Rev. Lett. 109, 246404
+ [9]J.  Hubbard,  Proc.  R.  Soc.  London,  Ser.  A     276,  238                      (2012).
+     (1963).                                                                      [32]S.  Johnston,  E.A.  Nowadnick,  Y.F.  Kung,  B.  Moritz,
+[10]T. Holstein, Ann. Phys. (N.Y.)      8, 325 (1959).                                 R.T.  Scalettar,  and  T.P.  Devereaux,  Phys.  Rev.  B 87,
+[11]W.P.  Su,  J.R.  Schrieﬀer,  and  A.J.  Heeger,  Phys.  Rev.                       235133 (2013).
+     Lett. 42, 1698 (1979).                                                       [33]F. Becca, M. Tarquini, M. Grilli, and C. Di Castro, Phys.
+[12]J.E.  Hirsch  and  E.  Fradkin,  Phys.  Rev.  B       27,  4302                    Rev. B 54, 12443 (1996).
+     (1983).                                                                      [34]R. Zeyher and M.L. Kulic, Phys. Rev. B      53, 2850 (1996).
+[13]H. Zheng,  D. Feinberg,  and M. Avignon,  Phys. Rev. B                        [35]P. Barone, R. Raimondi, M. Capone, C. Castellani, and
+     39, 9405 (1989).                                                                  M. Fabrizio, Phys. Rev. B 77, 235115 (2008).
+[14]E. Jeckelmann, Phys. Rev. B      57, 11838 (1998).                            [36]A.  Di  Ciolo,  J.  Lorenzana,  M.  Grilli,  and  G.  Seibold,
+[15]E. Jeckelmann, C. Zhang, and S.R. White, Phys. Rev. B                              Phys. Rev. B 79, 085101 (2009).
+     60, 7950 (1999).                                                             [37]E. Berger, P. Valasek, and W. von der Linden, Phys. Rev.
+[16]R.T.  Clay  and  R.P.  Hardikar,  Phys.  Rev.  Lett.       95,                     B 52, 4806 (1995).
+     096401 (2005); R.P. Hardikar and R.T. Clay, Phys. Rev.                       [38]T. Hotta and Y. Takada, Phys. Rev. B      56, 13916 (1997).
+     B 75, 245103 (2007).                                                         [39]B.J. Alder, K.J. Runge, and R.T. Scalettar, Phys. Rev.
+[17]M.  Tezuka,  R.  Arita,  and  H.  Aoki,  Phys.  Rev.  B      76,                   Lett. 79, 3022 (1997).
+     155114 (2007).                                                               [40]T. Ohgoe and M. Imada, Phys. Rev. Lett.      119, 197001
+[18]H. Fehske, G. Hager, and E. Jeckelmann, Europhys. Lett.                            (2017).
+     84, 57001 (2008).                                                            [41]H. Watanabe, K. Seki, and S. Yunoki, Phys. Rev. B      91,
+[19]M. Hohenadler and F.F. Assaad, Phys. Rev. B      87, 075149                        205135 (2015).
+     (2013).                                                                      [42]Y. Takada, J. Phys. Soc. Jpn.      65, 1544 (1996).
+                                                                                                                                                                 11
+
+[43]Y. Takada and A. Chatterjee, Phys. Rev. B      67, 081102                              74, 085104 (2006).
+     (2003).                                                                         [57]M. Aichhorn,  E. Arrigoni,  M. Potthoﬀ,  and W. Hanke,
+[44]T. Ohgoe and M. Imada, Phys. Rev. B      89, 195139 (2014).                            Phys. Rev. B 76, 224509 (2007).
+[45]F.  Becca  and  S.  Sorella,         Quantum  Monte  Carlo  Ap-                  [58]C.-C.  Chang  and  S.  Zhang,  Phys.  Rev.  B      78,  165101
+     proaches  for  Correlated  Systems  (Cambridge University                             (2008).
+     Press, Cambridge, England, 2017).                                               [59]T.  Misawa  and  M.  Imada,  Phys.  Rev.  B       90,  115137
+[46]S. Sorella, Phys. Rev. B      71, 241103 (2005).                                       (2014).
+[47]M.  Capello,  F.  Becca,  M.  Fabrizio,  S.  Sorella,  and  E.                   [60]S. Sorella, Phys. Rev. B      91, 241116 (2015).
+     Tosatti, Phys. Rev. Lett. 94, 026406 (2005).                                    [61]L.F. Tocchio, F. Becca, and S. Sorella, Phys. Rev. B      94,
+[48]M. Capello,  F. Becca,  S. Yunoki,  and S. Sorella,  Phys.                             195126 (2016).
+     Rev. B 73, 245116 (2006).                                                       [62]F.       ˇSimkovic  IV.,  Y.  Deng,  N.V.  Prokof’ev,  B.V.  Svis-
+[49]C. Lin, F.H. Zong, and D.M. Ceperley, Phys. Rev. E      64,                            tunov,  I.S.  Tupitsyn,  and  E.  Kozik,  Phys.  Rev.  B  96,
+     016702 (2001).                                                                        081117 (2017).
+[50]M.  Dagrada,  S.  Karakuzu,  V.L.  Vildosola,  M.  Casula,                       [63]V.J.  Emery,  S.A.  Kivelson,  and  H.Q.  Lin,  Phys.  Rev.
+     and S. Sorella, Phys. Rev. B 94, 245108 (2016).                                       Lett. 64, 475 (1990).
+[51]W.F.  Brinkman  and  T.M.  Rice,  Phys.  Rev.  B      2,  4302                   [64]E.  Fradkin  and  J.E.  Hirsch,  Phys.  Rev.  B       27,  1680
+     (1970).                                                                               (1983).
+[52]D. Vollhardt, Rev. Mod. Phys.      56, 99 (1984).                                [65]D. Baeriswyl and K. Maki, Phys. Rev. B      31, 6633 (1985).
+[53]R. Hlubina, S. Sorella, and F. Guinea, Phys. Rev. Lett.                          [66]M. Weber, F.F. Assaad, and M. Hohenadler, Phys. Rev.
+     78, 1343 (1997).                                                                      B 91, 245147 (2015).
+[54]M. Weber and M. Hohenadler, arXiv:1709.01096.                                    [67]L.F. Tocchio, F. Becca, A. Parola, and S. Sorella, Phys.
+[55]L.F. Tocchio, F. Becca, and C. Gros, Phys. Rev. B      83,                             Rev. B 78, 041101 (2008).
+     195138 (2011).
+[56]A.  Macridin,  M.  Jarrell,  and  Th.  Maier,  Phys.  Rev.  B
