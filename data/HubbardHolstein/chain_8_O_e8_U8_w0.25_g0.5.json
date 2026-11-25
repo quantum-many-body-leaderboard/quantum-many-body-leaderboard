@@ -1,0 +1,70 @@
+{
+  "model": "HubbardHolstein",
+  "lattice": "chain",
+  "n_sites": 8,
+  "boundary": "O",
+  "params": {
+    "t": 1,
+    "U": 8,
+    "w": 0.25,
+    "g": 0.5,
+    "spinless": false,
+    "N_up": 4,
+    "N_dn": 4
+  },
+  "instance_id": "HubbardHolstein/chain_8_O_e8_U8_w0.25_g0.5",
+  "rows": [
+    {
+      "energy": -10.42,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": null,
+      "v_score": null,
+      "method": "bootstrap embedding",
+      "ansatz": null,
+      "method_detail": "BE2 fragments (a site and its nearest neighbours), phonons in a coherent-state mean field",
+      "method_as_published": "fb-BE, BE2",
+      "family": "other",
+      "bound_type": "approximate",
+      "bound_type_reason": "built on a fixed approximation (RPA, MP2, channel-truncated CC, or a transcorrelated Hamiltonian with its three-body term dropped); error of unknown sign (RULES.md 4; assigned during source reading)",
+      "reference": "Islam, Bierman & Liu, Bootstrap embedding for interacting electrons in phonon coherent-state mean field, J. Chem. Phys. 164, 124111 (2026), doi:10.1063/5.0320786, arXiv:2603.11463",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-25",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-25",
+        "method": "source text of arXiv:2603.11463 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading (2026-11-24) and a reading of the journal version and the authors' code (2026-11-25)",
+        "reported_as": "−10.4200",
+        "note": "Sec. IV A, text, E_tot^BE2 (arXiv line 240); version read: the journal's full text (pubs.aip.org, 2026-11-25), same value, and the arXiv text (sources/2603.11463.txt) | Eqs. (1)-(4), arXiv lines 62-91: H = -t sum (c+c + h.c.) + U sum n_up n_dn + ω0 sum b+b + g sum (b+_i + b_i)(n_i,up + n_i,dn), coupling to n_i, no zero-point term; t = 1, ω0 = 0.25 for every calculation (line 166); the 8-site half-filled chain (N_e = 8) at U = 8, g = 0.5 (lines 236-238); total energies. Boundary: open. The text leaves out 'the first and last fragments to avoid edge overcounting' (lines 229-230, same in the journal), so the chain has ends; the authors' code that the data-availability statement cites (ref. 50, github.com/Shariful38/fb-BE, commit 20fad1e) builds the hopping with range(n_sites - 1) and no closing bond, in the fb-BE and the DMRG scripts (2026-11-25). The phonons are a product of coherent states (mean field) and the text calls the embedding non-variational (line 349). No conversion.",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -10.4208,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": null,
+      "v_score": null,
+      "method": "bootstrap embedding",
+      "ansatz": null,
+      "method_detail": "BE3 fragments, phonons in a coherent-state mean field",
+      "method_as_published": "fb-BE, BE3",
+      "family": "other",
+      "bound_type": "approximate",
+      "bound_type_reason": "built on a fixed approximation (RPA, MP2, channel-truncated CC, or a transcorrelated Hamiltonian with its three-body term dropped); error of unknown sign (RULES.md 4; assigned during source reading)",
+      "reference": "Islam, Bierman & Liu, Bootstrap embedding for interacting electrons in phonon coherent-state mean field, J. Chem. Phys. 164, 124111 (2026), doi:10.1063/5.0320786, arXiv:2603.11463",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-25",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-25",
+        "method": "source text of arXiv:2603.11463 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading (2026-11-24) and a reading of the journal version and the authors' code (2026-11-25)",
+        "reported_as": "−10.4208",
+        "note": "Sec. IV A, text, E_tot^BE3 (arXiv line 240); version read: the journal's full text (pubs.aip.org, 2026-11-25), same value, and the arXiv text (sources/2603.11463.txt) | Eqs. (1)-(4), arXiv lines 62-91: H = -t sum (c+c + h.c.) + U sum n_up n_dn + ω0 sum b+b + g sum (b+_i + b_i)(n_i,up + n_i,dn), coupling to n_i, no zero-point term; t = 1, ω0 = 0.25 for every calculation (line 166); the 8-site half-filled chain (N_e = 8) at U = 8, g = 0.5 (lines 236-238); total energies. Boundary: open. The text leaves out 'the first and last fragments to avoid edge overcounting' (lines 229-230, same in the journal), so the chain has ends; the authors' code that the data-availability statement cites (ref. 50, github.com/Shariful38/fb-BE, commit 20fad1e) builds the hopping with range(n_sites - 1) and no closing bond, in the fb-BE and the DMRG scripts (2026-11-25). The phonons are a product of coherent states (mean field) and the text calls the embedding non-variational (line 349). No conversion.",
+        "secondary_of": null
+      }
+    }
+  ]
+}

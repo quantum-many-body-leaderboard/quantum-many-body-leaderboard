@@ -1089,6 +1089,8 @@ Object.assign(NAMES, {
   "DMRG, m = 400": ["DMRG", "up to 2^5 − 1 = 31 phonons per site, up to 400 density-matrix eigenstates kept", { bond_dimension: 400 }],
   "DMRG (iTensor)": ["DMRG", "ITensor"],
   "SC-VAED": ["ED", "self-consistently grown variational basis (SC-VAED)"],
+  "fb-BE, BE2": ["bootstrap embedding", "BE2 fragments (a site and its nearest neighbours), phonons in a coherent-state mean field", { family: "other" }], // arXiv:2603.11463
+  "fb-BE, BE3": ["bootstrap embedding", "BE3 fragments, phonons in a coherent-state mean field", { family: "other" }],
   "CP-AFQMC/TP-LLF(2)": ["CP-AFQMC", "trial state: TP-LLF(2), two Lang-Firsov states", { family: "AFQMC / GFMC" }],
   "Global-Local variation": ["Global-Local variation", "", { family: "other" }],
   "|Ψel-ph⟩ (α = 0)": ["VMC", "electron-phonon entangled wave function without the RBM factor, phonon cutoff 15", { family: "classic VMC" }], // arXiv:2001.02106
@@ -1293,6 +1295,8 @@ const NO_ANSATZ = new Set(["DMRG", "ED", "SSE QMC", "QMC", "CT-QMC", "DQMC", "Ex
   // Holstein (2026-11-16): sign-free GFMC with a positive guiding function, and the Global-Local
   // variational state of the polaron, which is not sampled.
   "GFMC", "Global-Local variation",
+  // Hubbard-Holstein (2026-11-25): bootstrap embedding, an embedding method with no variational ansatz.
+  "bootstrap embedding",
   // Track 3 (RULES.md 13): basis-set quantum chemistry, embedding and Green's-function methods,
   // DMRG variants and the quantum-flow algorithms carry no ansatz.
   "FCI", "CASCI", "CCSD(T)", "RCCSD", "RCCSD(T)", "UCCSD", "UCCSD(T)", "MkMRCCSD", "MkMRCCSD(T)", "MRCI", "MRCI+Q",
