@@ -197,7 +197,7 @@
       ]
     },
     {
-      "energy": -86.26267036121452,
+      "energy": -86.262624,
       "sigma": null,
       "energy_variance": null,
       "dof": 36,
@@ -230,21 +230,7 @@
           "note": "Journal (OCR of the scan) and arXiv v2 print the same cell. bound_type exact, 6x6 PBC, peer_reviewed true correct. The stored total carries QMBL's recomputed digits per the 2026-09-29 ruling (paper rounds). No duplicate on the instance (ViT/RBM -86.262336 and Gong DMRG rows are other numbers).",
           "source_entry": "JP11-j1j2-heisenberg-hubbard#58"
         }
-      },
-      "corrections": [
-        {
-          "field": "energy",
-          "to": -86.26267036121452,
-          "reported_as": "-0.599046 (36(A1), energy per site, J1 = 1, S.S units)",
-          "location": "Table II (journal p. 681 = PDF p. 7), \"The ground state energy per site for different clusters and different values of J2 (J1 is normalized to unity)\", row 0.20, column 36(A1)",
-          "version_read": "J. Phys. I France 6, 675-703 (1996), published version: HAL jpa-00247209 scan (sources/journal/schulz-jp1-6-675-HAL.pdf, 29 pp., CCITT page images with an OCR text layer); text layer extracted with pypdf plain + layout (work/vj2_schulz-jp1-6-675-HAL.*); every cell used here also read on a 300/600 dpi pdftoppm render of p. 681 (work/schulz_p7-07.png, schulz_36col_rows_m1_to_040.png); arXiv:cond-mat/9402061v2 (sources/cond-mat-9402061v2.vb1.layout.txt) compared cell by cell; the same cell read again in arXiv:cond-mat/9402061v2 by VP15-hubbard-j1j2-heisenberg#17; recomputation: this pass on an AMD EPYC 9654 server: E2's ed_sym.py unchanged (md5 f3b1f728), symmetric bases C4v (Gamma, M: A1 B1 A2 B2) and c2v_axes (A1+B1 at Gamma; E at Gamma and M); earlier qmbl-ed-2026-09-28 run of the same code",
-          "conversion": "-0.599046 x 4 x 36 = -86.262624 (stored); recomputed -86.26267036121452 = -0.599046322 per site, which rounds to the printed six decimals",
-          "checked_on": "2026-09-30",
-          "reason": "Rule for exact rows QMBL recomputed (2026-09-30): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by ed_sym.py (C4v A1 at k = 0, z = +1, residual 9.0e-10) with a second basis (c2v_axes) and a sector screening; codes and outputs in checks/exact-recompute-2026-09/.",
-          "source_entry": "VE-exact-recompute#92, VJ2-journal-other#40, VP15-hubbard-j1j2-heisenberg#17 (qmbl-verify 2026-09-29); rule for recomputed exact rows, 2026-09-30",
-          "from": -86.262624
-        }
-      ]
+      }
     },
     {
       "energy": -86.184,

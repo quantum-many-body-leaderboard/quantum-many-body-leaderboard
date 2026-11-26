@@ -23,7 +23,7 @@
       "family": "other",
       "bound_type": "exact",
       "bound_type_reason": "exact diagonalization|ex",
-      "reference": "[code](https://github.com/varbench/methods/blob/main/scripts/tV/chain_32_P_16_2/ed_lattice_symmetries.sh) (QMBL's exact diagonalization of the full N_f = 16 space, 601080390 states, reproduces this number to 2.1e-13 relative: checks/exact-recompute-2026-09/results/tV__chain_32_P_16_2.json; the stored number is Dian Wu's VarBench upload of a QuSpin Lanczos run, b9c67ed, 2023-02-01)",
+      "reference": "[code](https://github.com/varbench/methods/blob/main/scripts/tV/chain_32_P_16_2/ed_lattice_symmetries.sh) (vendor/varbench/tV/chain_32_P_16_2.md:3 prints this number with the label 'Exact diagonalization' and this script; the stored number is Dian Wu's VarBench upload of a QuSpin Lanczos run, b9c67ed, 2023-02-01)",
       "source": "varbench@2024-10-22",
       "provenance": "imported",
       "baseline": true,
@@ -39,6 +39,22 @@
           "reason": "The linked ed_lattice_symmetries.sh fixes every lattice-symmetries sector to 0 (nk2ls.py line 214, translation and reflection in 1D), and the stored number predates the link (a QuSpin Lanczos run whose script is not in varbench/methods; VB4). No paper the reader found prints it. QMBL's exact diagonalization of the full space, no spatial symmetry, reproduces it (translation expectation ~0, the K = +-pi/2 doublet the reader expected); the files are copied into checks/exact-recompute-2026-09/ with this commit. The row cites that reproduction beside the link; the number keeps its digits. The row is the instance's only exact reference. Ruling E5 (2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged.",
           "source_entry": "VB4-tfising-tv#33 (qmbl-verify 2026-09-29, ambiguous); ruling E5, 2026-10-02",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/tV/chain_32_P_16_2/ed_lattice_symmetries.sh)"
+        },
+        {
+          "field": "reference",
+          "edit": [
+            "(QMBL's exact diagonalization of the full N_f = 16 space, 601080390 states, reproduces this number to 2.1e-13 relative: checks/exact-recompute-2026-09/results/tV__chain_32_P_16_2.json; the stored number is",
+            "(vendor/varbench/tV/chain_32_P_16_2.md:3 prints this number with the label 'Exact diagonalization' and this script; the stored number is"
+          ],
+          "reported_as": "none (text field)",
+          "location": "vendor/varbench/tV/chain_32_P_16_2.md:3 '| -12.32869972364372 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--V 2 --Nf 16 --boundary peri --L 32'",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)",
+          "from": "[code](https://github.com/varbench/methods/blob/main/scripts/tV/chain_32_P_16_2/ed_lattice_symmetries.sh) (QMBL's exact diagonalization of the full N_f = 16 space, 601080390 states, reproduces this number to 2.1e-13 relative: checks/exact-recompute-2026-09/results/tV__chain_32_P_16_2.json; the stored number is Dian Wu's VarBench upload of a QuSpin Lanczos run, b9c67ed, 2023-02-01)",
+          "to": "[code](https://github.com/varbench/methods/blob/main/scripts/tV/chain_32_P_16_2/ed_lattice_symmetries.sh) (vendor/varbench/tV/chain_32_P_16_2.md:3 prints this number with the label 'Exact diagonalization' and this script; the stored number is Dian Wu's VarBench upload of a QuSpin Lanczos run, b9c67ed, 2023-02-01)"
         }
       ],
       "verified": {

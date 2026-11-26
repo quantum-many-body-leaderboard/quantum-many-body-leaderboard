@@ -9233,182 +9233,6 @@ export const CORRECTIONS = [
   // Exact rows QMBL recomputed whose printed value is QMBL's value rounded or truncated: QMBL's
   // digits, the printed value kept (rule of 2026-09-30; checks/exact-recompute-2026-09/) (8; with
   // kagome 24, 30 and 36b, ruling A3 of 2026-10-02, 11)
-  {
-    "match": {
-      "instance": "Heisenberg/shuriken_24_P",
-      "method": "Exact diagonalization",
-      "energy": -43.039584
-    },
-    "field": "energy",
-    "to": -43.0395889922721,
-    "reported_as": "-0.448329 per site (S.S units): the first author's six-decimal VarBench upload of 2021-07-23; arXiv:2110.08198 prints no digits (Fig. 4, ED star)",
-    "location": "Fig. 4 main panel, blue star ('ED', 'the ED energy on the D4 symmetric 6x2^2 cluster') at N^-3/2 = 8.50518e-3 (N = 24.000)",
-    "version_read": "arXiv:2110.08198v3 and v1 PDF: Fig. 4 vector data (pypdf content-stream parse, work/mpl_parse.py); cond-mat/0411673v1 Table I (pypdf plain); recomputation: recomputation; geometry arXiv:2110.08198v3 Supplement Sec. I (as E1; bond list rebuilt independently in code/gen_clusters.mjs)",
-    "conversion": "-0.448329 x 4 x 24 = -43.039584 (stored); recomputed -43.0395889922721 = -0.448329052 per site, which rounds to the six decimals",
-    "checked_on": "2026-09-30",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by E1 run_spins.mjs (node Lanczos, S^z = 0 full space, D = 2704156, residual 9.9e-11) and ed_full2.py (residual 5.9e-12), 6.4e-11 apart; codes and outputs in checks/exact-recompute-2026-09/.",
-    "source_entry": "VE-exact-recompute#64, VA5-hubbard-heisenberg-tfising-j1j2#15 (qmbl-verify 2026-09-29); rule for recomputed exact rows, 2026-09-30"
-  },
-  {
-    "match": {
-      "instance": "Heisenberg/kagome-2x2_12_P",
-      "method": "Exact diagonalization (Lanczos)",
-      "energy": -21.779500864
-    },
-    "field": "energy",
-    "to": -21.779500867887435,
-    "reported_as": "-5.444875216 (total, J, S.S)",
-    "location": "Table I, row N = 12, column 'Total E (J)'",
-    "version_read": "arXiv:1103.1159v2 (8 Mar 2011; Phys. Rev. B 83, 212401 (2011)): PDF pypdf layout (sources/vp12_1103.1159v2.layout.txt); v1 PDF also extracted, Table I identical in both versions; recomputation: prior recomputation P4 work/ed.mjs (node Lanczos; value in report.md, no output file) plus this pass: ed_full2.py heis_bonds (no spatial symmetry) and ed_perm2.py (cluster space group)",
-    "conversion": "-5.444875216 x 4 = -21.779500864 (stored); recomputed S.S total -5.4448752169709, truncated to 9 decimals -5.444875216",
-    "checked_on": "2026-09-30",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30): the printed value is QMBL's value truncated (rounding would print ...217) to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by ed_full2.py (full S^z = 0 space, residual 3.9e-12) and ed_perm2.py (cluster space group), 1.1e-14 apart, and P4's node Lanczos; codes and outputs in checks/exact-recompute-2026-09/.",
-    "source_entry": "VE-exact-recompute#62, VP12-heisenberg-j1j2-hubbard#45 (qmbl-verify 2026-09-29); rule for recomputed exact rows, 2026-09-30"
-  },
-  {
-    "match": {
-      "instance": "Heisenberg/kagome-36a_36_P",
-      "method": "Exact diagonalization (Lanczos)",
-      "energy": -63.151499388
-    },
-    "field": "energy",
-    "to": -63.15149939025944,
-    "reported_as": "-15.787874847 (total, J, S.S)",
-    "location": "Table I, row N = 36 a, column 'Total E (J)'",
-    "version_read": "arXiv:1103.1159v2 (8 Mar 2011; Phys. Rev. B 83, 212401 (2011)): PDF pypdf layout (sources/vp12_1103.1159v2.layout.txt); v1 PDF also extracted, Table I identical in both versions; recomputation: this pass on an AMD EPYC 9654 server: ed_perm2.py (E2 ed_perm.py kernels, general cluster group)",
-    "conversion": "-15.787874847 x 4 = -63.151499388 (stored); recomputed S.S total -15.7878748476, truncated to 9 decimals -15.787874847",
-    "checked_on": "2026-09-30",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30): the printed value is QMBL's value truncated (rounding would print ...848) to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by ed_perm2.py (cluster-space-group basis, real 1D characters, z = +1); the second determination is the source's own Lanczos value, which it truncates; codes and outputs in checks/exact-recompute-2026-09/.",
-    "source_entry": "VE-exact-recompute#156, VP12-heisenberg-j1j2-hubbard#48 (qmbl-verify 2026-09-29); rule for recomputed exact rows, 2026-09-30"
-  },
-  {
-    "match": {
-      "instance": "Heisenberg/kagome-36c_36_P",
-      "method": "Exact diagonalization (Lanczos)",
-      "energy": -63.257336008
-    },
-    "field": "energy",
-    "to": -63.257336011794834,
-    "reported_as": "-15.814334002 (total, J, S.S)",
-    "location": "Table I, row N = 36 c, column 'Total E (J)'",
-    "version_read": "arXiv:1103.1159v2 (8 Mar 2011; Phys. Rev. B 83, 212401 (2011)): PDF pypdf layout (sources/vp12_1103.1159v2.layout.txt); v1 PDF also extracted, Table I identical in both versions; recomputation: this pass on an AMD EPYC 9654 server: ed_perm2.py (E2 ed_perm.py kernels, general cluster group)",
-    "conversion": "-15.814334002 x 4 = -63.257336008 (stored); recomputed S.S total -15.8143340029, truncated to 9 decimals -15.814334002",
-    "checked_on": "2026-09-30",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30): the printed value is QMBL's value truncated (rounding would print ...003) to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by ed_perm2.py (cluster-space-group basis, real 1D characters, z = +1, residual 8.3e-10); the second determination is the source's own Lanczos value, which it truncates; codes and outputs in checks/exact-recompute-2026-09/.",
-    "source_entry": "VE-exact-recompute#83, VP12-heisenberg-j1j2-hubbard#50 (qmbl-verify 2026-09-29); rule for recomputed exact rows, 2026-09-30"
-  },
-  {
-    "match": {
-      "instance": "Heisenberg/kagome-36d_36_P",
-      "method": "Exact diagonalization (Lanczos)",
-      "energy": -63.126220472
-    },
-    "field": "energy",
-    "to": -63.12622047596263,
-    "reported_as": "-15.781555118 (total, J, S.S)",
-    "location": "Table I, row N = 36 d, column 'Total E (J)'",
-    "version_read": "arXiv:1103.1159v2 (8 Mar 2011; Phys. Rev. B 83, 212401 (2011)): PDF pypdf layout (sources/vp12_1103.1159v2.layout.txt); v1 PDF also extracted, Table I identical in both versions; recomputation: this pass on an AMD EPYC 9654 server: ed_perm2.py (E2 ed_perm.py kernels, general cluster group)",
-    "conversion": "-15.781555118 x 4 = -63.126220472 (stored); recomputed S.S total -15.7815551190, truncated to 9 decimals -15.781555118",
-    "checked_on": "2026-09-30",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30): the printed value is QMBL's value truncated (rounding would print ...119) to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by ed_perm2.py (cluster-space-group basis, real 1D characters, z = +1); the second determination is the source's own Lanczos value, which it truncates; codes and outputs in checks/exact-recompute-2026-09/.",
-    "source_entry": "VE-exact-recompute#157, VP12-heisenberg-j1j2-hubbard#51 (qmbl-verify 2026-09-29); rule for recomputed exact rows, 2026-09-30"
-  },
-  {
-    "match": {
-      "instance": "J1J2/square_36_P_0.2",
-      "method": "Exact diagonalization",
-      "energy": -86.262624
-    },
-    "field": "energy",
-    "to": -86.26267036121452,
-    "reported_as": "-0.599046 (36(A1), energy per site, J1 = 1, S.S units)",
-    "location": "Table II (journal p. 681 = PDF p. 7), \"The ground state energy per site for different clusters and different values of J2 (J1 is normalized to unity)\", row 0.20, column 36(A1)",
-    "version_read": "J. Phys. I France 6, 675-703 (1996), published version: HAL jpa-00247209 scan (sources/journal/schulz-jp1-6-675-HAL.pdf, 29 pp., CCITT page images with an OCR text layer); text layer extracted with pypdf plain + layout (work/vj2_schulz-jp1-6-675-HAL.*); every cell used here also read on a 300/600 dpi pdftoppm render of p. 681 (work/schulz_p7-07.png, schulz_36col_rows_m1_to_040.png); arXiv:cond-mat/9402061v2 (sources/cond-mat-9402061v2.vb1.layout.txt) compared cell by cell; the same cell read again in arXiv:cond-mat/9402061v2 by VP15-hubbard-j1j2-heisenberg#17; recomputation: this pass on an AMD EPYC 9654 server: E2's ed_sym.py unchanged (md5 f3b1f728), symmetric bases C4v (Gamma, M: A1 B1 A2 B2) and c2v_axes (A1+B1 at Gamma; E at Gamma and M); earlier qmbl-ed-2026-09-28 run of the same code",
-    "conversion": "-0.599046 x 4 x 36 = -86.262624 (stored); recomputed -86.26267036121452 = -0.599046322 per site, which rounds to the printed six decimals",
-    "checked_on": "2026-09-30",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by ed_sym.py (C4v A1 at k = 0, z = +1, residual 9.0e-10) with a second basis (c2v_axes) and a sector screening; codes and outputs in checks/exact-recompute-2026-09/.",
-    "source_entry": "VE-exact-recompute#92, VJ2-journal-other#40, VP15-hubbard-j1j2-heisenberg#17 (qmbl-verify 2026-09-29); rule for recomputed exact rows, 2026-09-30"
-  },
-  {
-    "match": {
-      "instance": "J1J2/square_36_P_0.55",
-      "method": "Exact diagonalization",
-      "energy": -71.305632
-    },
-    "field": "energy",
-    "to": -71.30558885966441,
-    "reported_as": "-0.495178 (36(A1), energy per site, J1 = 1, S.S units)",
-    "location": "Table II (journal p. 681 = PDF p. 7), \"The ground state energy per site for different clusters and different values of J2 (J1 is normalized to unity)\", row 0.55, column 36(A1)",
-    "version_read": "J. Phys. I France 6, 675-703 (1996), published version: HAL jpa-00247209 scan (sources/journal/schulz-jp1-6-675-HAL.pdf, 29 pp., CCITT page images with an OCR text layer); text layer extracted with pypdf plain + layout (work/vj2_schulz-jp1-6-675-HAL.*); every cell used here also read on a 300/600 dpi pdftoppm render of p. 681 (work/schulz_p7-07.png, schulz_36col_rows_m1_to_040.png); arXiv:cond-mat/9402061v2 (sources/cond-mat-9402061v2.vb1.layout.txt) compared cell by cell; the same cell read again in arXiv:cond-mat/9402061v2 by VP15-hubbard-j1j2-heisenberg#18; recomputation: this pass on an AMD EPYC 9654 server: E2's ed_sym.py unchanged (md5 f3b1f728), symmetric bases C4v (Gamma, M: A1 B1 A2 B2) and c2v_axes (A1+B1 at Gamma; E at Gamma and M); earlier qmbl-ed-2026-09-28 run of the same code",
-    "conversion": "-0.495178 x 4 x 36 = -71.305632 (stored); recomputed -71.30558885966441 = -0.495177700 per site, which rounds to the printed six decimals",
-    "checked_on": "2026-09-30",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by ed_sym.py (C4v A1 at k = 0, z = +1, residual 8.2e-10) with a second basis (c2v_axes) and a sector screening; codes and outputs in checks/exact-recompute-2026-09/.",
-    "source_entry": "VE-exact-recompute#93, VJ2-journal-other#41, VP15-hubbard-j1j2-heisenberg#18 (qmbl-verify 2026-09-29); rule for recomputed exact rows, 2026-09-30"
-  },
-  {
-    "match": {
-      "instance": "J1J2/square_36_P_0.65",
-      "method": "Exact diagonalization",
-      "energy": -72.948672
-    },
-    "field": "energy",
-    "to": -72.9486516516581,
-    "reported_as": "-0.506588 (36(A1), energy per site, J1 = 1, S.S units)",
-    "location": "Table II (journal p. 681 = PDF p. 7), \"The ground state energy per site for different clusters and different values of J2 (J1 is normalized to unity)\", row 0.65, column 36(A1)",
-    "version_read": "J. Phys. I France 6, 675-703 (1996), published version: HAL jpa-00247209 scan (sources/journal/schulz-jp1-6-675-HAL.pdf, 29 pp., CCITT page images with an OCR text layer); text layer extracted with pypdf plain + layout (work/vj2_schulz-jp1-6-675-HAL.*); every cell used here also read on a 300/600 dpi pdftoppm render of p. 681 (work/schulz_p7-07.png, schulz_36col_rows_m1_to_040.png); arXiv:cond-mat/9402061v2 (sources/cond-mat-9402061v2.vb1.layout.txt) compared cell by cell; the same cell read again in arXiv:cond-mat/9402061v2 by VP15-hubbard-j1j2-heisenberg#19; recomputation: this pass on an AMD EPYC 9654 server: E2's ed_sym.py unchanged (md5 f3b1f728), symmetric bases C4v (Gamma, M: A1 B1 A2 B2) and c2v_axes (A1+B1 at Gamma; E at Gamma and M); earlier qmbl-ed-2026-09-28 run of the same code",
-    "conversion": "-0.506588 x 4 x 36 = -72.948672 (stored); recomputed -72.9486516516581 = -0.506587859 per site, which rounds to the printed six decimals",
-    "checked_on": "2026-09-30",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by ed_sym.py (C4v A1 at k = 0, z = +1, residual 8.0e-10; B1 lies 8.6e-4 higher) with a second basis (c2v_axes) and a sector screening; codes and outputs in checks/exact-recompute-2026-09/.",
-    "source_entry": "VE-exact-recompute#94, VJ2-journal-other#42, VP15-hubbard-j1j2-heisenberg#19 (qmbl-verify 2026-09-29); rule for recomputed exact rows, 2026-09-30"
-  },
-  {
-    "match": {
-      "instance": "Heisenberg/kagome-24_24_P",
-      "method": "Exact diagonalization (Lanczos)",
-      "energy": -42.359862188
-    },
-    "field": "energy",
-    "to": -42.35986218805902,
-    "reported_as": "-10.589965547 (total, J, S.S)",
-    "location": "Table I, row N = 24, column 'Total E (J)'",
-    "version_read": "arXiv:1103.1159v2 (8 Mar 2011; Phys. Rev. B 83, 212401 (2011)): PDF pypdf layout (sources/vp12_1103.1159v2.layout.txt); v1 PDF also extracted, Table I identical in both versions; recomputation: prior recomputation P4 work/ed.mjs (node Lanczos; output work/ed24.json) plus this pass: ed_full2.py heis_bonds (no spatial symmetry) and ed_perm2.py (cluster space group)",
-    "conversion": "-10.589965547 x 4 = -42.359862188 (stored); recomputed S.S total -10.5899655470148, rounded (and truncated) to 9 decimals -10.589965547",
-    "checked_on": "2026-10-02",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30), extended to this row by ruling A3 (2026-10-02): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by ed_full2.py (full S^z = 0 space, D = 2704156, residual 4.0e-12) and ed_perm2.py (cluster space group, 16 real 1D sectors), 1.4e-13 apart, and P4's node Lanczos; codes and outputs in checks/exact-recompute-2026-09/.",
-    "source_entry": "VE-exact-recompute#61, VP12-heisenberg-j1j2-hubbard#46 (qmbl-verify 2026-09-29); rule for recomputed exact rows, 2026-09-30, extended to kagome 24, 30 and 36b by ruling A3, 2026-10-02"
-  },
-  {
-    "match": {
-      "instance": "Heisenberg/kagome-30_30_P",
-      "method": "Exact diagonalization (Lanczos)",
-      "energy": -52.617275792
-    },
-    "field": "energy",
-    "to": -52.61727579388159,
-    "reported_as": "-13.154318948 (total, J, S.S)",
-    "location": "Table I, row N = 30, column 'Total E (J)'",
-    "version_read": "arXiv:1103.1159v2 (8 Mar 2011; Phys. Rev. B 83, 212401 (2011)): PDF pypdf layout (sources/vp12_1103.1159v2.layout.txt); v1 PDF also extracted, Table I identical in both versions; recomputation: this pass on an AMD EPYC 9654 server: ed_full2.py heis_bonds (no spatial symmetry) and ed_perm2.py (E2 ed_perm.py kernels, general cluster group)",
-    "conversion": "-13.154318948 x 4 = -52.617275792 (stored); recomputed S.S total -13.1543189484704, rounded (and truncated) to 9 decimals -13.154318948",
-    "checked_on": "2026-10-02",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30), extended to this row by ruling A3 (2026-10-02): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by ed_full2.py (full S^z = 0 space, D = 155117520, 760 Lanczos steps, residual 7.7e-11). ed_perm2.py over the real 1D characters of the cluster group does not reach the ground state, which carries a complex momentum pair (its lowest level lies 0.0116 higher), so the second determination is the source's own Lanczos value, which it rounds; codes and outputs in checks/exact-recompute-2026-09/.",
-    "source_entry": "VE-exact-recompute#155, VP12-heisenberg-j1j2-hubbard#47 (qmbl-verify 2026-09-29); rule for recomputed exact rows, 2026-09-30, extended to kagome 24, 30 and 36b by ruling A3, 2026-10-02"
-  },
-  {
-    "match": {
-      "instance": "Heisenberg/kagome-36b_36_P",
-      "method": "Exact diagonalization (Lanczos)",
-      "energy": -63.227711024
-    },
-    "field": "energy",
-    "to": -63.22771102445205,
-    "reported_as": "-15.806927756 (total, J, S.S)",
-    "location": "Table I, row N = 36 b, column 'Total E (J)'",
-    "version_read": "arXiv:1103.1159v2 (8 Mar 2011; Phys. Rev. B 83, 212401 (2011)): PDF pypdf layout (sources/vp12_1103.1159v2.layout.txt); v1 PDF also extracted, Table I identical in both versions; recomputation: this pass on an AMD EPYC 9654 server: ed_perm2.py (E2 ed_perm.py kernels, general cluster group)",
-    "conversion": "-15.806927756 x 4 = -63.227711024 (stored); recomputed S.S total -15.8069277561130, rounded (and truncated) to 9 decimals -15.806927756",
-    "checked_on": "2026-10-02",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30), extended to this row by ruling A3 (2026-10-02): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by ed_perm2.py (cluster-space-group basis, real 1D characters, z = +1, residual 7.6e-10) on the cluster with b = (-2,4): the printed b = (-3,4) is a misprint (it gives a cluster equivalent to 36c), and (-2,4) reproduces the printed energy. The second determination is the source's own Lanczos value, which it rounds; codes and outputs in checks/exact-recompute-2026-09/.",
-    "source_entry": "VE-exact-recompute#82, VP12-heisenberg-j1j2-hubbard#49 (qmbl-verify 2026-09-29); rule for recomputed exact rows, 2026-09-30, extended to kagome 24, 30 and 36b by ruling A3, 2026-10-02"
-  },
   // PRX 11, 041021 (Astrakhantsev et al.), Table II on the 32-site pyrochlore mVMC row: the printed
   // -0.5162(1) and its bar (ruling A4, 2026-10-02; table over figure) (2)
   {
@@ -22744,40 +22568,6 @@ export const CORRECTIONS = [
     "reason": "QMBL no longer flags an error bar for the way it was estimated. For many methods, extrapolations above all, there is no agreed way to estimate the error of an energy, so a stated sigma is kept as published and is read with its definition. The finding, kept on the row in `from`, says what this sigma measures. The energy, sigma and bound_type are unchanged.",
     "source_entry": "rule 2026-10-24: all 14 sigma-understated flags lifted"
   },
-  // Earlier diagonalizations that print a more precise published exact energy rounded: the
-  // more precise digits, the printed value kept (rule of 2026-10-24, RULES.md 6 and 11)
-  {
-    "match": {
-      "instance": "Heisenberg/square_36_P",
-      "method": "ED",
-      "energy": -97.7575896
-    },
-    "field": "energy",
-    "to": -97.7575895972357,
-    "reported_as": "E0 = -24.4393974 (total, S.S units, J = 1), N = 36, edge vectors (6, 0), (0, 6)",
-    "location": "Table 2.1 (p. 102), row N = 36, column E0",
-    "version_read": "Lect. Notes Phys. 645, 85 (2004), publisher PDF (Springer, a scan), Table 2.1 on p. 102 read from the page image rendered at 200 %; arXiv:cond-mat/0412662 Table 1 (pypdf layout and plain) prints the same digits",
-    "conversion": "-24.4393974 x 4 = -97.7575896 (stored); VarBench's ED on this instance, -97.7575895972357 = -24.4393973993 S.S total, rounds to the printed seven decimals",
-    "checked_on": "2026-10-24",
-    "reason": "Rule for exact rows that state a more precise published exact energy (2026-10-24): the printed value is the more precise diagonalization's value rounded to the printed digits, so the row keeps its citation and carries those digits, and as the earliest diagonalization of the instance it is the exact energy shown (RULES.md 6, 11); the printed value stays here. The more precise value is VarBench's exact diagonalization of the same 6 x 6 torus (run script ed_lattice_symmetries.sh, Wu et al., Science 386, 296 (2024)).",
-    "source_entry": "rule 2026-10-24: earlier diagonalizations carry the more precise digits"
-  },
-  {
-    "match": {
-      "instance": "Heisenberg/square_40_P",
-      "method": "ED",
-      "energy": -108.3794012
-    },
-    "field": "energy",
-    "to": -108.379401,
-    "reported_as": "E0 = -27.0948503 (total, S.S units, J = 1), N = 40, edge vectors (2, 6), (-6, 2)",
-    "location": "Table 2.1 (p. 102), row N = 40, column E0",
-    "version_read": "Lect. Notes Phys. 645, 85 (2004), publisher PDF (Springer, a scan), Table 2.1 on p. 102 read from the page image rendered at 200 %; arXiv:cond-mat/0412662 Table 1 (pypdf layout and plain) prints the same digits",
-    "conversion": "-27.0948503 x 4 = -108.3794012 (stored); Richter & Schulenburg's -27.09485025 x 4 = -108.379401 rounds to the printed seven decimals",
-    "checked_on": "2026-10-24",
-    "reason": "Rule for exact rows that state a more precise published exact energy (2026-10-24): the printed value is the more precise diagonalization's value rounded to the printed digits, so the row keeps its citation and carries those digits, and as the earliest diagonalization of the instance it is the exact energy shown (RULES.md 6, 11); the printed value stays here. The more precise value is Richter & Schulenburg, Eur. Phys. J. B 73, 117 (2010), Table 1, row J2 = 0, -27.09485025, on the mirror image of the same cluster.",
-    "source_entry": "rule 2026-10-24: earlier diagonalizations carry the more precise digits"
-  },
   // ---------------------------------------------------------------------------------------
   // Families pass 2026-10-20 (honeycomb and Shastry-Sutherland, sweep-rows-2026-10-20-families.json):
   // sampled: false on the exact and exactly contracted rows whose printed label carries no
@@ -22943,150 +22733,6 @@ export const CORRECTIONS = [
   // the source's Lanczos residual or not fully converged, or QMBL's value truncated: the exact value or
   // QMBL's digits, the printed value kept (rule of 2026-09-30, ruled for these rows 2026-10-24;
   // checks/exact-recompute-2026-10-families/) (9)
-  {
-    "match": {
-      "instance": "ShastrySutherland/square-tilted_32_P_J0.677244_Jd1",
-      "method": "exact diagonalisation (Lanczos)",
-      "energy": -47.9999999996
-    },
-    "field": "energy",
-    "to": -48,
-    "reported_as": "-0.374999999997006 (E0/N, per site, units of J1 = Jd, S.S form)",
-    "location": "Table I (square N = 32, left half), row J2/J1 = 0.677244 (arXiv:cond-mat/0605464)",
-    "version_read": "recomputation (checks/exact-recompute-2026-10-families/); printed value read in arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; journal version (Int. J. Mod. Phys. C 17, 1085) not reached (HTTP 403)",
-    "conversion": "recomputed -48.0000000000; stored -47.9999999996; difference -4.00e-10",
-    "checked_on": "2026-10-24",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; ruled for this row 2026-10-24): the dimer-singlet product state is an exact eigenstate at E = -48, and QMBL's Lanczos of the lowest state orthogonal to it (ed.c, S^z = 0 basis of the (4,4), (4,-4) torus, 601,080,390 states, dimer state deflated) gives -47.9997683784 after 217 steps, 2.316e-04 above it, so E0 = -48 exactly. The printed value carries the source's Lanczos residual (printed x 128 = -47.99999999962). The row carries the exact value; the printed value stays here. Codes and outputs in checks/exact-recompute-2026-10-families/.",
-    "source_entry": "famE-exact-recompute#7, famP2-10-1142-s0129183106009709#0 (qmbl-verify 2026-10-23); rule for recomputed exact rows, 2026-09-30, ruled for these rows 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "ShastrySutherland/square-tilted_32_P_J0.677246_Jd1",
-      "method": "exact diagonalisation (Lanczos)",
-      "energy": -47.9999999996
-    },
-    "field": "energy",
-    "to": -48,
-    "reported_as": "-0.374999999997179 (E0/N, per site, units of J1 = Jd, S.S form)",
-    "location": "Table I (square N = 32, left half), row J2/J1 = 0.677246 (arXiv:cond-mat/0605464)",
-    "version_read": "recomputation (checks/exact-recompute-2026-10-families/); printed value read in arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; journal version (Int. J. Mod. Phys. C 17, 1085) not reached (HTTP 403)",
-    "conversion": "recomputed -48.0000000000; stored -47.9999999996; difference -4.00e-10",
-    "checked_on": "2026-10-24",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; ruled for this row 2026-10-24): the dimer-singlet product state is an exact eigenstate at E = -48, and QMBL's Lanczos of the lowest state orthogonal to it (ed.c, S^z = 0 basis of the (4,4), (4,-4) torus, 601,080,390 states, dimer state deflated) gives -47.9998852404 after 217 steps, 1.148e-04 above it, so E0 = -48 exactly. The printed value carries the source's Lanczos residual (printed x 128 = -47.99999999964). The row carries the exact value; the printed value stays here. Codes and outputs in checks/exact-recompute-2026-10-families/.",
-    "source_entry": "famE-exact-recompute#8, famP2-10-1142-s0129183106009709#1 (qmbl-verify 2026-10-23); rule for recomputed exact rows, 2026-09-30, ruled for these rows 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "ShastrySutherland/square-tilted_32_P_J0.677248_Jd1",
-      "method": "exact diagonalisation (Lanczos)",
-      "energy": -48.0000020238
-    },
-    "field": "energy",
-    "to": -48.0000021044,
-    "reported_as": "-0.375000015810957 (E0/N, per site, units of J1 = Jd, S.S form)",
-    "location": "Table I (square N = 32, left half), row J2/J1 = 0.677248 (arXiv:cond-mat/0605464)",
-    "version_read": "recomputation (checks/exact-recompute-2026-10-families/); printed value read in arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; journal version (Int. J. Mod. Phys. C 17, 1085) not reached (HTTP 403)",
-    "conversion": "recomputed -48.0000021044; stored -48.0000020238; difference -8.06e-08",
-    "checked_on": "2026-10-24",
-    "reason": "Ruled 2026-10-24 (rule for exact rows QMBL recomputed, 2026-09-30): QMBL's Lanczos (ed.c, S^z = 0 basis of the (4,4), (4,-4) torus, 601,080,390 states, dimer state deflated; 217 steps, the last 10 moved it by about 1e-10) gives -48.0000021044, below the dimer state at -48 and 8.06e-08 below the printed value (x 128), beyond its convergence. Lanczos Ritz values are upper bounds, so the source's run was not fully converged; the row carries QMBL's digits and the printed value stays here. Codes and outputs in checks/exact-recompute-2026-10-families/.",
-    "source_entry": "famE-exact-recompute#9, famP2-10-1142-s0129183106009709#2 (qmbl-verify 2026-10-23); rule for recomputed exact rows, 2026-09-30, ruled for these rows 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "ShastrySutherland/square-tilted_32_P_J0.67724_Jd1",
-      "method": "exact diagonalisation (Lanczos)",
-      "energy": -47.9999999996
-    },
-    "field": "energy",
-    "to": -48,
-    "reported_as": "-0.374999999997117 (E0/N, per site, units of J1 = Jd, S.S form)",
-    "location": "Table I (square N = 32, left half), row J2/J1 = 0.67724 (arXiv:cond-mat/0605464)",
-    "version_read": "recomputation (checks/exact-recompute-2026-10-families/); printed value read in arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; journal version (Int. J. Mod. Phys. C 17, 1085) not reached (HTTP 403)",
-    "conversion": "recomputed -48.0000000000; stored -47.9999999996; difference -4.00e-10",
-    "checked_on": "2026-10-24",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; ruled for this row 2026-10-24): the dimer-singlet product state is an exact eigenstate at E = -48, and QMBL's Lanczos of the lowest state orthogonal to it (ed.c, S^z = 0 basis of the (4,4), (4,-4) torus, 601,080,390 states, dimer state deflated) gives -47.9995346605 after 217 steps, 4.653e-04 above it, so E0 = -48 exactly. The printed value carries the source's Lanczos residual (printed x 128 = -47.99999999963). The row carries the exact value; the printed value stays here. Codes and outputs in checks/exact-recompute-2026-10-families/.",
-    "source_entry": "famE-exact-recompute#10, famP2-10-1142-s0129183106009709#3 (qmbl-verify 2026-10-23); rule for recomputed exact rows, 2026-09-30, ruled for these rows 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "ShastrySutherland/square-tilted_32_P_J0.6778_Jd1",
-      "method": "exact diagonalisation (Lanczos)",
-      "energy": -48.0323336684
-    },
-    "field": "energy",
-    "to": -48.0323336688,
-    "reported_as": "-0.375252606784488 (E0/N, per site, units of J1 = Jd, S.S form)",
-    "location": "Table I (square N = 32, left half), row J2/J1 = 0.6778 (arXiv:cond-mat/0605464)",
-    "version_read": "recomputation (checks/exact-recompute-2026-10-families/); printed value read in arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; journal version (Int. J. Mod. Phys. C 17, 1085) not reached (HTTP 403)",
-    "conversion": "recomputed -48.0323336688; stored -48.0323336684; difference -3.78e-10",
-    "checked_on": "2026-10-24",
-    "reason": "Ruled 2026-10-24 (rule for exact rows QMBL recomputed, 2026-09-30): QMBL's Lanczos (ed.c, S^z = 0 basis of the (4,4), (4,-4) torus, 601,080,390 states, dimer state deflated; 209 steps, the last 10 moved it by about 1e-10) gives -48.0323336688, below the dimer state at -48 and 3.64e-10 below the printed value (x 128), beyond its convergence. Lanczos Ritz values are upper bounds, so the source's run was not fully converged; the row carries QMBL's digits and the printed value stays here. Codes and outputs in checks/exact-recompute-2026-10-families/.",
-    "source_entry": "famE-exact-recompute#14, famP2-10-1142-s0129183106009709#7 (qmbl-verify 2026-10-23); rule for recomputed exact rows, 2026-09-30, ruled for these rows 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "ShastrySutherland/square-tilted_32_P_J0.677_Jd1",
-      "method": "exact diagonalisation (Lanczos)",
-      "energy": -47.9999999999
-    },
-    "field": "energy",
-    "to": -48,
-    "reported_as": "-0.374999999998987 (E0/N, per site, units of J1 = Jd, S.S form)",
-    "location": "Table I (square N = 32, left half), row J2/J1 = 0.677 (arXiv:cond-mat/0605464)",
-    "version_read": "recomputation (checks/exact-recompute-2026-10-families/); printed value read in arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; journal version (Int. J. Mod. Phys. C 17, 1085) not reached (HTTP 403)",
-    "conversion": "recomputed -48.0000000000; stored -47.9999999999; difference -1.00e-10",
-    "checked_on": "2026-10-24",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; ruled for this row 2026-10-24): the dimer-singlet product state is an exact eigenstate at E = -48, and QMBL's Lanczos of the lowest state orthogonal to it (ed.c, S^z = 0 basis of the (4,4), (4,-4) torus, 601,080,390 states, dimer state deflated) gives -47.9855261950 after 222 steps, 1.447e-02 above it, so E0 = -48 exactly. The printed value carries the source's Lanczos residual (printed x 128 = -47.99999999987). The row carries the exact value; the printed value stays here. Codes and outputs in checks/exact-recompute-2026-10-families/.",
-    "source_entry": "famE-exact-recompute#15, famP2-10-1142-s0129183106009709#8 (qmbl-verify 2026-10-23); rule for recomputed exact rows, 2026-09-30, ruled for these rows 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "ShastrySutherland/square-tilted_32_P_J0.68_Jd1",
-      "method": "exact diagonalisation (Lanczos)",
-      "energy": -48.1627761552
-    },
-    "field": "energy",
-    "to": -48.1627761592,
-    "reported_as": "-0.376271688712272 (E0/N, per site, units of J1 = Jd, S.S form)",
-    "location": "Table I (square N = 32, left half), row J2/J1 = 0.68 (arXiv:cond-mat/0605464)",
-    "version_read": "recomputation (checks/exact-recompute-2026-10-families/); printed value read in arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; journal version (Int. J. Mod. Phys. C 17, 1085) not reached (HTTP 403)",
-    "conversion": "recomputed -48.1627761592; stored -48.1627761552; difference -4.01e-09",
-    "checked_on": "2026-10-24",
-    "reason": "Ruled 2026-10-24 (rule for exact rows QMBL recomputed, 2026-09-30): QMBL's Lanczos (ed.c, S^z = 0 basis of the (4,4), (4,-4) torus, 601,080,390 states, dimer state deflated; 191 steps, the last 10 moved it by about 1e-10) gives -48.1627761592, below the dimer state at -48 and 4.04e-09 below the printed value (x 128), beyond its convergence. Lanczos Ritz values are upper bounds, so the source's run was not fully converged; the row carries QMBL's digits and the printed value stays here. Codes and outputs in checks/exact-recompute-2026-10-families/.",
-    "source_entry": "famE-exact-recompute#16, famP2-10-1142-s0129183106009709#9 (qmbl-verify 2026-10-23); rule for recomputed exact rows, 2026-09-30, ruled for these rows 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "ShastrySutherland/square_16_P_J0.7_Jd1",
-      "method": "exact values",
-      "energy": -25.4008
-    },
-    "field": "energy",
-    "to": -25.401007836214,
-    "reported_as": "-0.63502 ×10^1 (total energy, units of J = Jd, S.S form)",
-    "location": "Sec. 3 and Table I, row L = 1 (arXiv:cond-mat/0309368)",
-    "version_read": "recomputation (checks/exact-recompute-2026-10-families/); printed value read in arXiv:cond-mat/0309368v2 and v1 (pypdf layout); J. Phys. Soc. Jpn. 73, 340 not reached",
-    "conversion": "-0.63502e1 x 4 = -25.4008 (S units total x 4); recomputed -25.401007836214 = 4 x (-6.350251959)",
-    "checked_on": "2026-10-24",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; ruled for this row 2026-10-24): the printed -0.63502 x 10^1 is QMBL's ground state truncated to the printed digits (-6.3502520 would round to -6.3503), so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by Lanczos on the 4 x 4 orthogonal-dimer torus in the S^z = 0 basis (12,870 states, ed.c), the same code in the full 2^16 basis, and scipy eigsh, all -25.401007836214. The source does not print the boundary; the torus reproduces the printed digits, so the instance's periodic boundary stands. Codes and outputs in checks/exact-recompute-2026-10-families/.",
-    "source_entry": "famE-exact-recompute#18, famP7-kitaev-shastrysutherland#1 (ambiguous: boundary, closed) (qmbl-verify 2026-10-23); rule for recomputed exact rows, 2026-09-30, ruled for these rows 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "ShastrySutherland/square_36_P_J0.5_Jd1",
-      "method": "exact diagonalisation (Lanczos)",
-      "energy": -53.9999999999
-    },
-    "field": "energy",
-    "to": -54,
-    "reported_as": "-0.374999999999425 (E0/N, per site, units of J1 = Jd, S.S form)",
-    "location": "Table II (N = 6 x 6 = 36, left half), row J2/J1 = 0.5 (arXiv:cond-mat/0605464)",
-    "version_read": "recomputation (checks/exact-recompute-2026-10-families/); printed value read in arXiv:cond-mat/0605464v1 PDF, pypdf layout mode (shared cache sources/cond-mat-0605464v1.layout.txt), checked against the plain extraction, the project's sources/cond-mat-0605464.txt and a 110 dpi render of page 11; journal version (Int. J. Mod. Phys. C 17, 1085) not reached (HTTP 403)",
-    "conversion": "18 dimers x (-3/4) = -13.5 in S units; x 4 = -54 (Pauli total)",
-    "checked_on": "2026-10-24",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; ruled for this row 2026-10-24): at J/Jd = 1/2 the dimer-singlet product state is a proven ground state (H splits into triangles h_t = (Jd/2) S1.S2 + J (S1.S3 + S2.S3), each bounded below by -3J/4 and saturated by the dimer state, also on the 6 x 6 torus), so E0 = -54 exactly (18 dimers x -3/4 x 4); the printed -0.374999999999425 per site carries the source's Lanczos residual (5.75e-13 per site). The row carries the exact value; the printed value stays here. See checks/exact-recompute-2026-10-families/.",
-    "source_entry": "famE-exact-recompute#19, famP2-10-1142-s0129183106009709#11 (qmbl-verify 2026-10-23); rule for recomputed exact rows, 2026-09-30, ruled for these rows 2026-10-24"
-  },
   // qmbl-verify 2026-10-23 (t-J branch), rulings of 2026-10-24: sampled false on the exact Lanczos-step
   // rows of arXiv:cond-mat/0006353 (11), and the exact rows QMBL recomputed carry its digits, the printed
   // value kept (rule of 2026-09-30; checks/tj-exact-recompute-2026-10/) (22; the 32-site row with four
@@ -23267,358 +22913,6 @@ export const CORRECTIONS = [
     "checked_on": "2026-10-24",
     "reason": "Deterministic: the energy of p Lanczos steps applied exactly, or of the exact ground state, carries no statistical error, and the method string matches none of isSampled's deterministic markers, so the row would read as a sampled energy without an error bar. The generator's reading already states sampled: false; the loader does not carry the field, so it is stated here (ruled 2026-10-24).",
     "source_entry": "tjP4-10-1007-978-94-010-0771-9-18#22 (qmbl-verify 2026-10-23); ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/honeycomb-flake24_24_O_h1_J0.333333",
-      "method": "ED",
-      "energy": -8.26066666667
-    },
-    "field": "energy",
-    "to": -8.260597675193,
-    "reported_as": "-24.782 (E_tot in units of J (t/J = 3))",
-    "location": "Table I, E_tot, row ED, 24-site cluster, t/J = 3 (line 159)",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-24.782 / 3 (units of J, t/J = 3) = -8.26066666667 (stored); recomputed -8.260597675193 = -24.78179303 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 4 of 4 symmetry sectors, lowest sector cor_h1_J1o3_l2, dimension 5408312), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#0 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/honeycomb-flake24_24_O_h2_J0.333333",
-      "method": "ED",
-      "energy": -9.94466666667
-    },
-    "field": "energy",
-    "to": -9.944599589435,
-    "reported_as": "-29.834 (E_tot in units of J (t/J = 3))",
-    "location": "Table III, E_tot, row ED, 24-site cluster, t/J = 3 (line 362)",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-29.834 / 3 (units of J, t/J = 3) = -9.94466666667 (stored); recomputed -9.944599589435 = -29.83379877 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 4 of 4 symmetry sectors, lowest sector cor_h2_J1o3_l2, dimension 32449872), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#1 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/ladder-2x11_22_P_h2_J0.5",
-      "method": "ED (sector S = 0, K = (0,0))",
-      "energy": -12.99978
-    },
-    "field": "energy",
-    "to": -12.999784429648,
-    "reported_as": "-12.99978 (E_GS total, units of t)",
-    "location": "footnote 7: E_GS of the 2 x 11 ladder with two holes, sector (S = 0, K = (0, 0)), J/t = 0.5 (line 288)",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-12.99978 (total) = -12.99978 (stored); recomputed -12.999784429648 = -12.9997844296 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 12 of 12 symmetry sectors, lowest sector lad2x11P_h2_J0.5_n0_p+, dimension 1940064), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#2 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/ladder-2x13_26_P_h2_J0.5",
-      "method": "ED (sector S = 0, K = (0,0))",
-      "energy": -14.90765
-    },
-    "field": "energy",
-    "to": -14.907654276052,
-    "reported_as": "-14.90765 (E_GS total, units of t)",
-    "location": "footnote 7: E_GS of the 2 x 13 ladder with two holes, sector (S = 0, K = (0, 0)), J/t = 0.5 (line 289)",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-14.90765 (total) = -14.90765 (stored); recomputed -14.907654276052 = -14.9076542761 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 14 of 14 symmetry sectors, lowest sector lad2x13P_h2_J0.5_n0_p+, dimension 33802412), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#3 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/ladder-3x6_18_A_h1_J0.5",
-      "method": "Lanczos",
-      "energy": -10.40757
-    },
-    "field": "energy",
-    "to": -10.407574528812,
-    "reported_as": "-10.40757 (total, units of t)",
-    "location": "Table I, 3 x 6 isotropic ladder, 1 hole, lowest entry of the column (k = π/2, R = -1) (line 609)",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-10.40757 (total) = -10.40757 (stored); recomputed -10.407574528812 = -10.4075745288 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; the full space at its electron number, lowest sector lad3x6A_h1_J0.5_full, dimension 437580), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#4 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/ladder-3x6_18_A_h2_J0.5",
-      "method": "Lanczos",
-      "energy": -11.8068
-    },
-    "field": "energy",
-    "to": -11.806802485145,
-    "reported_as": "-11.80680 (total, units of t)",
-    "location": "Table I, 3 x 6 isotropic ladder, 2 holes, lowest entry of the column (k = 0, R = +1) (line 599)",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-11.80680 (total) = -11.8068 (stored); recomputed -11.806802485145 = -11.8068024851 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; the full space at its electron number, lowest sector lad3x6A_h2_J0.5_full, dimension 1969110), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#5 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/square_16_O_h2_J0.4",
-      "method": "E_ED",
-      "energy": -9.02976
-    },
-    "field": "energy",
-    "to": -9.029868687223,
-    "reported_as": "-0.56436 (E_ED per site)",
-    "location": "text: E_ED of the 4 x 4 lattice with 2 holes, J/t = 0.4, open boundaries (line 94)",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-0.56436 x 16 = -9.02976 (stored); recomputed -9.029868687223 = -0.5643667930 in the printed form, which truncates to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value truncated (rounding would print -0.56437) to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; the full space at its electron number, lowest sector sq16O_h2_J0.4_full, dimension 411840), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#6 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/square_18_P_h2_J0.4",
-      "method": "exact (p = ∞)",
-      "energy": -11.86272
-    },
-    "field": "energy",
-    "to": -11.862775993031,
-    "reported_as": "-0.65904 (E0/L, p = infinity)",
-    "location": "Table 1.2, L = 18, N = 16, J = 0.4, p = ∞ (the exact ground state) (line 305)",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-0.65904 x 18 = -11.86272 (stored); recomputed -11.862775993031 = -0.6590431107 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; the full space at its electron number, lowest sector sq18P_h2_J0.4_full, dimension 1969110), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#7 (qmbl-verify 2026-10-23), tjP4-10-1007-978-94-010-0771-9-18#21 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/square_26_P_h2_J0.3",
-      "method": "E_ex (Lanczos)",
-      "energy": -13.02522
-    },
-    "field": "energy",
-    "to": -13.025267202995,
-    "reported_as": "-0.50097 (E/L)",
-    "location": "Table I, J/t = 0.3, column E_ex (Lanczos) (line 383)",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-0.50097 x 26 = -13.02522 (stored); recomputed -13.025267202995 = -0.5009718155 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 14 of 14 symmetry sectors, lowest sector sq26P_h2_J0.3_k0-0_l2_star1, dimension 8450824), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#8 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/square_26_P_h2_J0.4",
-      "method": "E_ex (Lanczos)",
-      "energy": -15.45752
-    },
-    "field": "energy",
-    "to": -15.457434662825,
-    "reported_as": "-0.59452 (E/L)",
-    "location": "Table I, J/t = 0.4, column E_ex (Lanczos) (line 384)",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-0.59452 x 26 = -15.45752 (stored); recomputed -15.457434662825 = -0.5945167178 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 14 of 14 symmetry sectors, lowest sector sq26P_h2_J0.4_k0-0_l2_star1, dimension 8450824), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#9 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/square_26_P_h2_J0.5",
-      "method": "E_ex (Lanczos)",
-      "energy": -17.9257
-    },
-    "field": "energy",
-    "to": -17.925669794311,
-    "reported_as": "-0.68945 (E/L)",
-    "location": "Table I, J/t = 0.5, column E_ex (Lanczos) (line 385)",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-0.68945 x 26 = -17.9257 (stored); recomputed -17.925669794311 = -0.6894488382 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 14 of 14 symmetry sectors, lowest sector sq26P_h2_J0.5_k0-0_l2_star1, dimension 8450824), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#10 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/square_26_P_h2_J0.6",
-      "method": "E_ex (Lanczos)",
-      "energy": -20.41962
-    },
-    "field": "energy",
-    "to": -20.419736257759,
-    "reported_as": "-0.78537 (E/L)",
-    "location": "Table I, J/t = 0.6, column E_ex (Lanczos) (line 386)",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-0.78537 x 26 = -20.41962 (stored); recomputed -20.419736257759 = -0.7853744715 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 14 of 14 symmetry sectors, lowest sector sq26P_h2_J0.6_k0-0_l2_star1, dimension 8450824), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#11 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/square_26_P_h2_J0.8",
-      "method": "E_ex (Lanczos)",
-      "energy": -25.4631
-    },
-    "field": "energy",
-    "to": -25.463200957002,
-    "reported_as": "-0.97935 (E/L)",
-    "location": "Table I, J/t = 0.8, column E_ex (Lanczos) (line 387)",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-0.97935 x 26 = -25.4631 (stored); recomputed -25.463200957002 = -0.9793538830 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 14 of 14 symmetry sectors, lowest sector sq26P_h2_J0.8_k0-0_l2_star1, dimension 8450824), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#12 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/square_26_P_h2_J1",
-      "method": "E_ex (Lanczos)",
-      "energy": -30.55988
-    },
-    "field": "energy",
-    "to": -30.559852374433,
-    "reported_as": "-1.17538 (E/L)",
-    "location": "Table I, J/t = 1, column E_ex (Lanczos) (line 388)",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-1.17538 x 26 = -30.55988 (stored); recomputed -30.559852374433 = -1.1753789375 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 14 of 14 symmetry sectors, lowest sector sq26P_h2_J1_k0-0_l2_star1, dimension 8450824), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#13 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/square_26_P_h4_J0.3",
-      "method": "Exact (D. Poilblanc, unpublished)",
-      "energy": -16.70812
-    },
-    "field": "energy",
-    "to": -16.708026076752,
-    "reported_as": "-0.64262 (E/L)",
-    "location": "Table I, N = 22, L = 26, J/t = 0.3, column Exact",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-0.64262 x 26 = -16.70812 (stored); recomputed -16.708026076752 = -0.6426163876 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 6 of 14 symmetry sectors, lowest sector sq26P_h4_J0.3_k0-0_l0_star1, dimension 101410008), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#14 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/square_26_P_h4_J0.4",
-      "method": "E_ex (Lanczos)",
-      "energy": -18.57362
-    },
-    "field": "energy",
-    "to": -18.573539395453,
-    "reported_as": "-0.71437 (E/L)",
-    "location": "Table II, J/t = 0.4, column E_ex (Lanczos) (line 394)",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-0.71437 x 26 = -18.57362 (stored); recomputed -18.573539395453 = -0.7143668998 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 1 of 14 symmetry sectors, lowest sector sq26P_h4_J0.4_k0-0_l0_star1, dimension 101410008), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#15 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/square_26_P_h4_J0.5",
-      "method": "Exact (D. Poilblanc, unpublished)",
-      "energy": -20.49112
-    },
-    "field": "energy",
-    "to": -20.491228545965,
-    "reported_as": "-0.78812 (E/L)",
-    "location": "Table I, N = 22, L = 26, J/t = 0.5, column Exact",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-0.78812 x 26 = -20.49112 (stored); recomputed -20.491228545965 = -0.7881241748 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 1 of 14 symmetry sectors, lowest sector sq26P_h4_J0.5_k0-0_l0_star1, dimension 101410008), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#16 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/square_26_P_h4_J0.6",
-      "method": "E_ex (Lanczos)",
-      "energy": -22.44762
-    },
-    "field": "energy",
-    "to": -22.447652574704,
-    "reported_as": "-0.86337 (E/L)",
-    "location": "Table II, J/t = 0.6, column E_ex (Lanczos) (line 396)",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-0.86337 x 26 = -22.44762 (stored); recomputed -22.447652574704 = -0.8633712529 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 1 of 14 symmetry sectors, lowest sector sq26P_h4_J0.6_k0-0_l0_star1, dimension 101410008), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#17 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/square_26_P_h4_J0.8",
-      "method": "E_ex (Lanczos)",
-      "energy": -26.45058
-    },
-    "field": "energy",
-    "to": -26.450585746393,
-    "reported_as": "-1.01733 (E/L)",
-    "location": "Table II, J/t = 0.8, column E_ex (Lanczos) (line 397)",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-1.01733 x 26 = -26.45058 (stored); recomputed -26.450585746393 = -1.0173302210 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 1 of 14 symmetry sectors, lowest sector sq26P_h4_J0.8_k0-0_l0_star1, dimension 101410008), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#18 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/square_26_P_h4_J1",
-      "method": "Exact (D. Poilblanc, unpublished)",
-      "energy": -30.54818
-    },
-    "field": "energy",
-    "to": -30.548073706468,
-    "reported_as": "-1.17493 (E/L)",
-    "location": "Table I, N = 22, L = 26, J/t = 1, column Exact",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-1.17493 x 26 = -30.54818 (stored); recomputed -30.548073706468 = -1.1749259118 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 1 of 14 symmetry sectors, lowest sector sq26P_h4_J1_k0-0_l0_star1, dimension 101410008), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#19 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/square_32_P_h1_J0.3_tp0.3_tpp-0.2",
-      "method": "exact diagonalization",
-      "energy": -13.913616
-    },
-    "field": "energy",
-    "to": -13.913615604089,
-    "reported_as": "-13.913616 (E_Nc total)",
-    "location": "Table I, E_Nc for Nc = 1 charge carriers of the electron-doped model (t = -1, t' = 0.3, t'' = -0.2, J = 0.3) (line 68)",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-13.913616 (total) = -13.913616 (stored); recomputed -13.913615604089 = -13.91361560409 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 4 symmetry sectors (the source's ground-state sector), lowest sector sq32P_h1_J0.3_tp0.3_tpp-0.2_k0-16_pg4++++_star2, dimension 75165879), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#20 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
-  },
-  {
-    "match": {
-      "instance": "tJ/square_32_P_h2_J0.3_tp0.3_tpp-0.2",
-      "method": "exact diagonalization",
-      "energy": -16.601689
-    },
-    "field": "energy",
-    "to": -16.601689053076,
-    "reported_as": "-16.601689 (E_Nc total)",
-    "location": "Table I, E_Nc for Nc = 2 charge carriers of the electron-doped model (t = -1, t' = 0.3, t'' = -0.2, J = 0.3) (line 69)",
-    "version_read": "recomputation: checks/tj-exact-recompute-2026-10/ (tjk.c, 2026-10-23); the printed value as the generator read it (scripts/tj_2026_10_22.mjs)",
-    "conversion": "-16.601689 (total) = -16.601689 (stored); recomputed -16.601689053076 = -16.60168905308 in the printed form, which rounds to the printed digits",
-    "checked_on": "2026-10-23",
-    "reason": "Rule for exact rows QMBL recomputed (2026-09-30; applied to the t-J rows, ruled 2026-10-24): the printed value is QMBL's value rounded to the printed digits, so the row keeps its citation and carries QMBL's digits; the printed value stays here. Recomputed by tjk.c (symmetry-adapted Lanczos, |dE| < 1e-13 per step; 1 symmetry sector (the source's ground-state sector), lowest sector sq32P_h2_J0.3_tp0.3_tpp-0.2_k0-0_pg8+-+--+-+_star1, dimension 300535476), whose code agrees with the brute-force bf.py to 1e-10 on 12 small clusters; codes and outputs in checks/tj-exact-recompute-2026-10/.",
-    "source_entry": "tjE-exact-recompute#21 (qmbl-verify 2026-10-23); rule for recomputed exact rows, ruled 2026-10-24"
   },
   {
     "match": {
@@ -27000,5 +26294,10191 @@ export const CORRECTIONS = [
     "checked_on": "2026-11-26",
     "reason": "The source defines neither its 'reported final value' nor the bar in parentheses; the only statistics it defines are medians and standard deviations over windows of the optimisation trace. The bar is not a stated statistical error of the energy, so the row carries none (ruled 2026-11-26). Energy unchanged.",
     "source_entry": "RP1#NQS-Agent (qmbl-verify 2026-11-26-reread)"
+  },
+  // Retroactive 2026-11-24/26 rules (applied 2026-11-26): printed digits, printed HF energies, notes citing printed evidence.
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1_sto6g",
+      "method": "FCI",
+      "energy": -3.8243885482
+    },
+    "field": "energy",
+    "to": -3.82438855,
+    "reported_as": "-3.82438855 (total, Hartree; authors' dataset). Table II prints the per-atom value -0.382439 per atom",
+    "location": "data repository github.com/simonsfoundation/hydrogen-benchmark-PRX at b99a183, file N_10_OBC/R_1.0/FCI_basis-STO (sources/1705.01608-data-b99a183.tsv line 49); Table II R = 1.0",
+    "version_read": "authors' dataset b99a183 (committed TSV in sources/); paper PRX 7, 031059 / arXiv:1705.01608 Table II for the per-atom value",
+    "conversion": "dataset total printed in Hartree, no conversion = -3.82438855 (Table II per atom x 10 agrees within its 6-decimal rounding)",
+    "checked_on": "2026-11-26",
+    "reason": "carries the digits its source printed (2026-11-26); QMBL's recomputed digits are no longer stored",
+    "from": -3.8243885482,
+    "source_entry": "retro-qmbl-evidence-2026-11-26 recompute-digits-2 (Hchain FCI)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.2_sto6g",
+      "method": "FCI",
+      "energy": -4.7663776751
+    },
+    "field": "energy",
+    "to": -4.76637768,
+    "reported_as": "-4.76637768 (total, Hartree; authors' dataset). Table II prints the per-atom value -0.476638 per atom",
+    "location": "data repository github.com/simonsfoundation/hydrogen-benchmark-PRX at b99a183, file N_10_OBC/R_1.2/FCI_basis-STO (sources/1705.01608-data-b99a183.tsv line 124); Table II R = 1.2",
+    "version_read": "authors' dataset b99a183 (committed TSV in sources/); paper PRX 7, 031059 / arXiv:1705.01608 Table II for the per-atom value",
+    "conversion": "dataset total printed in Hartree, no conversion = -4.76637768 (Table II per atom x 10 agrees within its 6-decimal rounding)",
+    "checked_on": "2026-11-26",
+    "reason": "carries the digits its source printed (2026-11-26); QMBL's recomputed digits are no longer stored",
+    "from": -4.7663776751,
+    "source_entry": "retro-qmbl-evidence-2026-11-26 recompute-digits-2 (Hchain FCI)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.4_sto6g",
+      "method": "FCI",
+      "energy": -5.2050941285
+    },
+    "field": "energy",
+    "to": -5.20509413,
+    "reported_as": "-5.20509413 (total, Hartree; authors' dataset). Table II prints the per-atom value -0.520509 per atom",
+    "location": "data repository github.com/simonsfoundation/hydrogen-benchmark-PRX at b99a183, file N_10_OBC/R_1.4/FCI_basis-STO (sources/1705.01608-data-b99a183.tsv line 206); Table II R = 1.4",
+    "version_read": "authors' dataset b99a183 (committed TSV in sources/); paper PRX 7, 031059 / arXiv:1705.01608 Table II for the per-atom value",
+    "conversion": "dataset total printed in Hartree, no conversion = -5.20509413 (Table II per atom x 10 agrees within its 6-decimal rounding)",
+    "checked_on": "2026-11-26",
+    "reason": "carries the digits its source printed (2026-11-26); QMBL's recomputed digits are no longer stored",
+    "from": -5.2050941285,
+    "source_entry": "retro-qmbl-evidence-2026-11-26 recompute-digits-2 (Hchain FCI)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.6_sto6g",
+      "method": "FCI",
+      "energy": -5.3843610661
+    },
+    "field": "energy",
+    "to": -5.38436107,
+    "reported_as": "-5.38436107 (total, Hartree; authors' dataset). Table II prints the per-atom value -0.538436 per atom",
+    "location": "data repository github.com/simonsfoundation/hydrogen-benchmark-PRX at b99a183, file N_10_OBC/R_1.6/FCI_basis-STO (sources/1705.01608-data-b99a183.tsv line 294); Table II R = 1.6",
+    "version_read": "authors' dataset b99a183 (committed TSV in sources/); paper PRX 7, 031059 / arXiv:1705.01608 Table II for the per-atom value",
+    "conversion": "dataset total printed in Hartree, no conversion = -5.38436107 (Table II per atom x 10 agrees within its 6-decimal rounding)",
+    "checked_on": "2026-11-26",
+    "reason": "carries the digits its source printed (2026-11-26); QMBL's recomputed digits are no longer stored",
+    "from": -5.3843610661,
+    "source_entry": "retro-qmbl-evidence-2026-11-26 recompute-digits-2 (Hchain FCI)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.8_sto6g",
+      "method": "FCI",
+      "energy": -5.4243853763
+    },
+    "field": "energy",
+    "to": -5.42438538,
+    "reported_as": "-5.42438538 (total, Hartree; authors' dataset). Table II prints the per-atom value -0.542439 per atom",
+    "location": "data repository github.com/simonsfoundation/hydrogen-benchmark-PRX at b99a183, file N_10_OBC/R_1.8/FCI_basis-STO (sources/1705.01608-data-b99a183.tsv line 384); Table II R = 1.8",
+    "version_read": "authors' dataset b99a183 (committed TSV in sources/); paper PRX 7, 031059 / arXiv:1705.01608 Table II for the per-atom value",
+    "conversion": "dataset total printed in Hartree, no conversion = -5.42438538 (Table II per atom x 10 agrees within its 6-decimal rounding)",
+    "checked_on": "2026-11-26",
+    "reason": "carries the digits its source printed (2026-11-26); QMBL's recomputed digits are no longer stored",
+    "from": -5.4243853763,
+    "source_entry": "retro-qmbl-evidence-2026-11-26 recompute-digits-2 (Hchain FCI)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R2_sto6g",
+      "method": "FCI",
+      "energy": -5.3896258811
+    },
+    "field": "energy",
+    "to": -5.38962588,
+    "reported_as": "-5.38962588 (total, Hartree; authors' dataset). Table II prints the per-atom value -0.538963 per atom",
+    "location": "data repository github.com/simonsfoundation/hydrogen-benchmark-PRX at b99a183, file N_10_OBC/R_2.0/FCI_basis-STO (sources/1705.01608-data-b99a183.tsv line 476); Table II R = 2.0",
+    "version_read": "authors' dataset b99a183 (committed TSV in sources/); paper PRX 7, 031059 / arXiv:1705.01608 Table II for the per-atom value",
+    "conversion": "dataset total printed in Hartree, no conversion = -5.38962588 (Table II per atom x 10 agrees within its 6-decimal rounding)",
+    "checked_on": "2026-11-26",
+    "reason": "carries the digits its source printed (2026-11-26); QMBL's recomputed digits are no longer stored",
+    "from": -5.3896258811,
+    "source_entry": "retro-qmbl-evidence-2026-11-26 recompute-digits-2 (Hchain FCI)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R2.4_sto6g",
+      "method": "FCI",
+      "energy": -5.2279364921
+    },
+    "field": "energy",
+    "to": -5.22793649,
+    "reported_as": "-5.22793649 (total, Hartree; authors' dataset). Table II prints the per-atom value -0.522794 per atom",
+    "location": "data repository github.com/simonsfoundation/hydrogen-benchmark-PRX at b99a183, file N_10_OBC/R_2.4/FCI_basis-STO (sources/1705.01608-data-b99a183.tsv line 568); Table II R = 2.4",
+    "version_read": "authors' dataset b99a183 (committed TSV in sources/); paper PRX 7, 031059 / arXiv:1705.01608 Table II for the per-atom value",
+    "conversion": "dataset total printed in Hartree, no conversion = -5.22793649 (Table II per atom x 10 agrees within its 6-decimal rounding)",
+    "checked_on": "2026-11-26",
+    "reason": "carries the digits its source printed (2026-11-26); QMBL's recomputed digits are no longer stored",
+    "from": -5.2279364921,
+    "source_entry": "retro-qmbl-evidence-2026-11-26 recompute-digits-2 (Hchain FCI)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R2.8_sto6g",
+      "method": "FCI",
+      "energy": -5.0502449595
+    },
+    "field": "energy",
+    "to": -5.05024496,
+    "reported_as": "-5.05024496 (total, Hartree; authors' dataset). Table II prints the per-atom value -0.505024 per atom",
+    "location": "data repository github.com/simonsfoundation/hydrogen-benchmark-PRX at b99a183, file N_10_OBC/R_2.8/FCI_basis-STO (sources/1705.01608-data-b99a183.tsv line 660); Table II R = 2.8",
+    "version_read": "authors' dataset b99a183 (committed TSV in sources/); paper PRX 7, 031059 / arXiv:1705.01608 Table II for the per-atom value",
+    "conversion": "dataset total printed in Hartree, no conversion = -5.05024496 (Table II per atom x 10 agrees within its 6-decimal rounding)",
+    "checked_on": "2026-11-26",
+    "reason": "carries the digits its source printed (2026-11-26); QMBL's recomputed digits are no longer stored",
+    "from": -5.0502449595,
+    "source_entry": "retro-qmbl-evidence-2026-11-26 recompute-digits-2 (Hchain FCI)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R3.2_sto6g",
+      "method": "FCI",
+      "energy": -4.9103828758
+    },
+    "field": "energy",
+    "to": -4.91038288,
+    "reported_as": "-4.91038288 (total, Hartree; authors' dataset). Table II prints the per-atom value -0.491038 per atom",
+    "location": "data repository github.com/simonsfoundation/hydrogen-benchmark-PRX at b99a183, file N_10_OBC/R_3.2/FCI_basis-STO (sources/1705.01608-data-b99a183.tsv line 756); Table II R = 3.2",
+    "version_read": "authors' dataset b99a183 (committed TSV in sources/); paper PRX 7, 031059 / arXiv:1705.01608 Table II for the per-atom value",
+    "conversion": "dataset total printed in Hartree, no conversion = -4.91038288 (Table II per atom x 10 agrees within its 6-decimal rounding)",
+    "checked_on": "2026-11-26",
+    "reason": "carries the digits its source printed (2026-11-26); QMBL's recomputed digits are no longer stored",
+    "from": -4.9103828758,
+    "source_entry": "retro-qmbl-evidence-2026-11-26 recompute-digits-2 (Hchain FCI)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R3.6_sto6g",
+      "method": "FCI",
+      "energy": -4.8187008121
+    },
+    "field": "energy",
+    "to": -4.81870081,
+    "reported_as": "-4.81870081 (total, Hartree; authors' dataset). Table II prints the per-atom value -0.481870 per atom",
+    "location": "data repository github.com/simonsfoundation/hydrogen-benchmark-PRX at b99a183, file N_10_OBC/R_3.6/FCI_basis-STO (sources/1705.01608-data-b99a183.tsv line 852); Table II R = 3.6",
+    "version_read": "authors' dataset b99a183 (committed TSV in sources/); paper PRX 7, 031059 / arXiv:1705.01608 Table II for the per-atom value",
+    "conversion": "dataset total printed in Hartree, no conversion = -4.81870081 (Table II per atom x 10 agrees within its 6-decimal rounding)",
+    "checked_on": "2026-11-26",
+    "reason": "carries the digits its source printed (2026-11-26); QMBL's recomputed digits are no longer stored",
+    "from": -4.8187008121,
+    "source_entry": "retro-qmbl-evidence-2026-11-26 recompute-digits-2 (Hchain FCI)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "SJB-VMC (N = 14 table)",
+      "energy": 47.7822815043
+    },
+    "field": "energy",
+    "to": 47.782276,
+    "reported_as": "E_c = -0.58624(1) Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row 'SJB VMC', column rs=0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.58624(1)) = 47.782276",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "SJB-VMC (N = 14 table)",
+      "energy": 47.7822815043
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'SJB VMC', column rs=0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "SJB-VMC (N = 14 table)",
+      "energy": 47.7822815043
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 48.368516 (Cassella et al. SM Table IV, N = 14 sc, r_s = 0.5), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'SJB VMC', column rs=0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "SJB-DMC (N = 14 table)",
+      "energy": 47.7807415043
+    },
+    "field": "energy",
+    "to": 47.780736,
+    "reported_as": "E_c = -0.58778(1) Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row 'SJB DMC', column rs=0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.58778(1)) = 47.780736",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "SJB-DMC (N = 14 table)",
+      "energy": 47.7807415043
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'SJB DMC', column rs=0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "SJB-DMC (N = 14 table)",
+      "energy": 47.7807415043
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 48.368516 (Cassella et al. SM Table IV, N = 14 sc, r_s = 0.5), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'SJB DMC', column rs=0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "FermiNet (1 dense determinant, N = 14 table)",
+      "energy": 47.7795715043
+    },
+    "field": "energy",
+    "to": 47.779566,
+    "reported_as": "E_c = -0.58895(6) Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row 'ndet = 1', column rs=0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.58895(6)) = 47.779566",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "FermiNet (1 dense determinant, N = 14 table)",
+      "energy": 47.7795715043
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'ndet = 1', column rs=0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "FermiNet (1 dense determinant, N = 14 table)",
+      "energy": 47.7795715043
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 48.368516 (Cassella et al. SM Table IV, N = 14 sc, r_s = 0.5), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'ndet = 1', column rs=0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "FermiNet (16 dense determinants, N = 14 table)",
+      "energy": 47.7775815042
+    },
+    "field": "energy",
+    "to": 47.777576,
+    "reported_as": "E_c = -0.59094(6) Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row 'ndet = 16', column rs=0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.59094(6)) = 47.777576",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "FermiNet (16 dense determinants, N = 14 table)",
+      "energy": 47.7775815042
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'ndet = 16', column rs=0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "FermiNet (16 dense determinants, N = 14 table)",
+      "energy": 47.7775815042
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 48.368516 (Cassella et al. SM Table IV, N = 14 sc, r_s = 0.5), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'ndet = 16', column rs=0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "FermiNet (1 block determinant, N = 14 table)",
+      "energy": 47.7802115042
+    },
+    "field": "energy",
+    "to": 47.780206,
+    "reported_as": "E_c = -0.58831(7) Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Supplementary Table III (block determinants) (arXiv v3 layout text line 672; journal Table I / SM Table III identical), row 'Block ndet = 1', column rs = 0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.58831(7)) = 47.780206",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "FermiNet (1 block determinant, N = 14 table)",
+      "energy": 47.7802115042
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Supplementary Table III (block determinants) (arXiv v3 layout text line 672; journal Table I / SM Table III identical), row 'Block ndet = 1', column rs = 0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "FermiNet (1 block determinant, N = 14 table)",
+      "energy": 47.7802115042
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 48.368516 (Cassella et al. SM Table IV, N = 14 sc, r_s = 0.5), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Supplementary Table III (block determinants) (arXiv v3 layout text line 672; journal Table I / SM Table III identical), row 'Block ndet = 1', column rs = 0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "FermiNet (16 block determinants, N = 14 table)",
+      "energy": 47.7789015042
+    },
+    "field": "energy",
+    "to": 47.778896,
+    "reported_as": "E_c = -0.58962(6) Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=16, rs=0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.58962(6)) = 47.778896",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "FermiNet (16 block determinants, N = 14 table)",
+      "energy": 47.7789015042
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=16, rs=0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "FermiNet (16 block determinants, N = 14 table)",
+      "energy": 47.7789015042
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 48.368516 (Cassella et al. SM Table IV, N = 14 sc, r_s = 0.5), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=16, rs=0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "i-FCIQMC, 1/M extrapolation",
+      "energy": 47.7716215042
+    },
+    "field": "energy",
+    "to": 47.771616,
+    "reported_as": "E_c = -0.5969(3) Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, rs=0.5 column, row M=infinity; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.5969(3)) = 47.771616",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Booth & Alavi's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "i-FCIQMC, 1/M extrapolation",
+      "energy": 47.7716215042
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, rs=0.5 column, row M=infinity; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "i-FCIQMC, 1/M extrapolation",
+      "energy": 47.7716215042
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 48.368516 (Cassella et al. SM Table IV, N = 14 sc, r_s = 0.5), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, rs=0.5 column, row M=infinity; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "i-FCIQMC, single-point basis-limit estimate (run at M = 1850)",
+      "energy": 47.7726215043
+    },
+    "field": "energy",
+    "to": 47.772616,
+    "reported_as": "E_c = -0.5959(7) Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table II, rs = 0.5, N = 14 (M = 1850, column Ecorr); E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.5959(7)) = 47.772616",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Booth & Alavi's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "i-FCIQMC, single-point basis-limit estimate (run at M = 1850)",
+      "energy": 47.7726215043
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II, rs = 0.5, N = 14 (M = 1850, column Ecorr); E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "i-FCIQMC, single-point basis-limit estimate (run at M = 1850)",
+      "energy": 47.7726215043
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 48.368516 (Cassella et al. SM Table IV, N = 14 sc, r_s = 0.5), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II, rs = 0.5, N = 14 (M = 1850, column Ecorr); E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "MP2, complete-basis limit",
+      "energy": 47.7930795042
+    },
+    "field": "energy",
+    "to": 47.793074,
+    "reported_as": "E_c = -0.575442(1) Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I (txt line 8295-8305, after Sec. III; 'Values of the complete basis set limit MP2 correlation energy obtained by extrapolation for N = 14'), row rs = 0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.575442(1)) = 47.793074",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Grueneis, Booth, Kresse & Alavi's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "MP2, complete-basis limit",
+      "energy": 47.7930795042
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I (txt line 8295-8305, after Sec. III; 'Values of the complete basis set limit MP2 correlation energy obtained by extrapolation for N = 14'), row rs = 0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "MP2, complete-basis limit",
+      "energy": 47.7930795042
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 48.368516 (Cassella et al. SM Table IV, N = 14 sc, r_s = 0.5), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I (txt line 8295-8305, after Sec. III; 'Values of the complete basis set limit MP2 correlation energy obtained by extrapolation for N = 14'), row rs = 0.5; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCSD (initiator stochastic CC), complete-basis limit",
+      "energy": 47.7788215043
+    },
+    "field": "energy",
+    "to": 47.778816,
+    "reported_as": "E_c = -0.5897(1) Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table II (txt lines 601-606), row rs = 0.5, column E_CCSD; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.5897(1)) = 47.778816",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Spencer & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCSD (initiator stochastic CC), complete-basis limit",
+      "energy": 47.7788215043
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II (txt lines 601-606), row rs = 0.5, column E_CCSD; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCSD (initiator stochastic CC), complete-basis limit",
+      "energy": 47.7788215043
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 48.368516 (Cassella et al. SM Table IV, N = 14 sc, r_s = 0.5), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II (txt lines 601-606), row rs = 0.5, column E_CCSD; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCSDT (initiator stochastic CC), complete-basis limit",
+      "energy": 47.7720215042
+    },
+    "field": "energy",
+    "to": 47.772016,
+    "reported_as": "E_c = -0.5965(2) Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table II (txt lines 601-606), row rs = 0.5, column E_CCSDT; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.5965(2)) = 47.772016",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Spencer & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCSDT (initiator stochastic CC), complete-basis limit",
+      "energy": 47.7720215042
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II (txt lines 601-606), row rs = 0.5, column E_CCSDT; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCSDT (initiator stochastic CC), complete-basis limit",
+      "energy": 47.7720215042
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 48.368516 (Cassella et al. SM Table IV, N = 14 sc, r_s = 0.5), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II (txt lines 601-606), row rs = 0.5, column E_CCSDT; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 2109 plane waves (4218 spin orbitals), time step 0.005 a.u., 2880 walkers; PAUXY] (arXiv:1905.04361)",
+      "energy": 47.7754215042
+    },
+    "field": "energy",
+    "to": 47.775416,
+    "reported_as": "E_c = -0.5931(6) Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table II, rs=0.5, M=2109, column ph-AFQMC; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.5931(6)) = 47.775416",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Lee, Malone & Morales's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 2109 plane waves (4218 spin orbitals), time step 0.005 a.u., 2880 walkers; PAUXY] (arXiv:1905.04361)",
+      "energy": 47.7754215042
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II, rs=0.5, M=2109, column ph-AFQMC; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCSD [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSD; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 47.7800215042
+    },
+    "field": "energy",
+    "to": 47.780016,
+    "reported_as": "E_c = -0.58850(6) Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row CCSD, rs=0.5 a0 (own value); E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.58850(6)) = 47.780016",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Neufeld & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCSD [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSD; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 47.7800215042
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row CCSD, rs=0.5 a0 (own value); E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCSDT [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDT; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 47.7739515042
+    },
+    "field": "energy",
+    "to": 47.773946,
+    "reported_as": "E_c = -0.59457(7) Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row CCSDT, rs=0.5 a0 (own value); E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.59457(7)) = 47.773946",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Neufeld & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCSDT [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDT; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 47.7739515042
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row CCSDT, rs=0.5 a0 (own value); E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCSDTQ [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDTQ; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 47.7738715042
+    },
+    "field": "energy",
+    "to": 47.773866,
+    "reported_as": "E_c = -0.59465(8) Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row CCSDTQ, rs=0.5 a0 (own value); E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.59465(8)) = 47.773866",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Neufeld & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCSDTQ [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDTQ; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 47.7738715042
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row CCSDTQ, rs=0.5 a0 (own value); E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCSDTQ5 [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDTQ5; complete-basis estimate from the Table I footnotes; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 47.7738215042
+    },
+    "field": "energy",
+    "to": 47.773816,
+    "reported_as": "E_c = -0.5947(2) Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row CCSDTQ5, rs=0.5 a0 (own value); E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.5947(2)) = 47.773816",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Neufeld & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCSDTQ5 [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDTQ5; complete-basis estimate from the Table I footnotes; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 47.7738215042
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row CCSDTQ5, rs=0.5 a0 (own value); E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "FCIQMC [(i)FCIQMC; initiator used for M > 358 at rs=0.5 (txt line 253-255); CBS value estimated as footnote g; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 47.7738515043
+    },
+    "field": "energy",
+    "to": 47.773846,
+    "reported_as": "E_c = -0.59467(9) Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I (txt lines 303-311), row FCIQMC, column rs = 0.5 a0 (14-electron UEG, CBS-extrapolated correlation energies in hartrees, total); E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.59467(9)) = 47.773846",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Neufeld & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "FCIQMC [(i)FCIQMC; initiator used for M > 358 at rs=0.5 (txt line 253-255); CBS value estimated as footnote g; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 47.7738515043
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I (txt lines 303-311), row FCIQMC, column rs = 0.5 a0 (14-electron UEG, CBS-extrapolated correlation energies in hartrees, total); E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCSD [CCMC non-initiator, cubic fit in 1/M, one point excluded (agrees with the quadratic fit within 2 sigma); extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 47.7800415042
+    },
+    "field": "energy",
+    "to": 47.780036,
+    "reported_as": "E_c = -0.58848(7) Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Fig. 1 caption (txt line 199-205): 'best cubic fit (red, long dashes, excluding one data point), giving b0 = -0.58848(7) ha'; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.58848(7)) = 47.780036",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Neufeld & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCSD [CCMC non-initiator, cubic fit in 1/M, one point excluded (agrees with the quadratic fit within 2 sigma); extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 47.7800415042
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Fig. 1 caption (txt line 199-205): 'best cubic fit (red, long dashes, excluding one data point), giving b0 = -0.58848(7) ha'; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 47.8965215042
+    },
+    "field": "energy",
+    "to": 47.896516,
+    "reported_as": "E_c = -0.472 Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=0.5, column lmCCD; sources/1310.6806v2.txt line 488; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.472) = 47.896516",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 47.8965215042
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=0.5, column lmCCD; sources/1310.6806v2.txt line 488; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 47.7995215041
+    },
+    "field": "energy",
+    "to": 47.799516,
+    "reported_as": "E_c = -0.569 Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=0.5, column mCCD; sources/1310.6806v2.txt line 488; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.569) = 47.799516",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 47.7995215041
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=0.5, column mCCD; sources/1310.6806v2.txt line 488; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 47.7805215042
+    },
+    "field": "energy",
+    "to": 47.780516,
+    "reported_as": "E_c = -0.588 Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=0.5, column CCD; sources/1310.6806v2.txt line 488; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.588) = 47.780516",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 47.7805215042
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=0.5, column CCD; sources/1310.6806v2.txt line 488; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 47.7175215042
+    },
+    "field": "energy",
+    "to": 47.717516,
+    "reported_as": "E_c = -0.651 Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=0.5, column rmCCD; sources/1310.6806v2.txt line 488; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.651) = 47.717516",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 47.7175215042
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=0.5, column rmCCD; sources/1310.6806v2.txt line 488; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 47.6105215041
+    },
+    "field": "energy",
+    "to": 47.610516,
+    "reported_as": "E_c = -0.758 Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=0.5, column rxmCCD; sources/1310.6806v2.txt line 488; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.758) = 47.610516",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 47.6105215041
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=0.5, column rxmCCD; sources/1310.6806v2.txt line 488; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 47.7915215042
+    },
+    "field": "energy",
+    "to": 47.791516,
+    "reported_as": "E_c = -0.577 Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=0.5, column d+S (KS); sources/1310.6806v2.txt line 488; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.577) = 47.791516",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 47.7915215042
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=0.5, column d+S (KS); sources/1310.6806v2.txt line 488; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 47.4825215042
+    },
+    "field": "energy",
+    "to": 47.482516,
+    "reported_as": "E_c = -0.886 Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=0.5, column dRPA (KS); sources/1310.6806v2.txt line 488; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.886) = 47.482516",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 47.4825215042
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=0.5, column dRPA (KS); sources/1310.6806v2.txt line 488; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 47.8665215042
+    },
+    "field": "energy",
+    "to": 47.866516,
+    "reported_as": "E_c = -0.502 Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=0.5, column d+S (HF); sources/1310.6806v2.txt line 488; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.502) = 47.866516",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 47.8665215042
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=0.5, column d+S (HF); sources/1310.6806v2.txt line 488; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 47.5995215042
+    },
+    "field": "energy",
+    "to": 47.599516,
+    "reported_as": "E_c = -0.769 Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=0.5, column dRPA (HF); sources/1310.6806v2.txt line 488; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.769) = 47.599516",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 47.5995215042
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=0.5, column dRPA (HF); sources/1310.6806v2.txt line 488; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "FCIQMC-TC [i-FCIQMC (initiator 3.0, semi-stochastic, |D| = 10000) on the transcorrelated Hamiltonian with the basis-adapted correlation factor of Eq. (22); three-body operator dropped except its RPA-type two-body contraction (Eq. 25); largest basis M = 1850 spin orbitals, no extrapolation (txt line 691-704: 'such an extrapolation is not necessary')] (arXiv:1712.07524)",
+      "energy": 47.7737215042
+    },
+    "field": "energy",
+    "to": 47.773716,
+    "reported_as": "E_c = -0.5948(2) Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table 1, N=14, rs=0.5, column FCIQMC-TC; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.5948(2)) = 47.773716",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Luo & Alavi's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "FCIQMC-TC [i-FCIQMC (initiator 3.0, semi-stochastic, |D| = 10000) on the transcorrelated Hamiltonian with the basis-adapted correlation factor of Eq. (22); three-body operator dropped except its RPA-type two-body contraction (Eq. 25); largest basis M = 1850 spin orbitals, no extrapolation (txt line 691-704: 'such an extrapolation is not necessary')] (arXiv:1712.07524)",
+      "energy": 47.7737215042
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table 1, N=14, rs=0.5, column FCIQMC-TC; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCD (3071 plane waves, data release of arXiv:2403.04645)",
+      "energy": 47.7806796286
+    },
+    "field": "energy",
+    "to": 47.78067412438616,
+    "reported_as": "E_c = -0.58784187561384282 Ha (total, 14 electrons) + E_HF = 48.368516 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: raw_data/rs_0_5/N_14.csv, last line (num states = 2 70), column cc; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "48.368516 + (-0.58784187561384282) = 47.78067412438615718",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 0.5, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Butler, Hjorth-Jensen & Lietz's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_0.5",
+      "method": "CCD (3071 plane waves, data release of arXiv:2403.04645)",
+      "energy": 47.7806796286
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 3.45489439316 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 48.368516 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: raw_data/rs_0_5/N_14.csv, last line (num states = 2 70), column cc; E_HF: SM Table IV row r_s = 0.5",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "SJB-VMC (N = 14 table)",
+      "energy": 7.96608060353
+    },
+    "field": "energy",
+    "to": 7.966076,
+    "reported_as": "E_c = -0.5254(1) Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row 'SJB VMC', column rs=1.0; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.5254(1)) = 7.966076",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "SJB-VMC (N = 14 table)",
+      "energy": 7.96608060353
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'SJB VMC', column rs=1.0; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "SJB-VMC (N = 14 table)",
+      "energy": 7.96608060353
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 8.491476 (Cassella et al. SM Table IV, N = 14 sc, r_s = 1.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'SJB VMC', column rs=1.0; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "SJB-DMC (N = 14 table)",
+      "energy": 7.96608060353
+    },
+    "field": "energy",
+    "to": 7.966076,
+    "reported_as": "E_c = -0.5254(1) Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row 'SJB DMC', column rs=1.0; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.5254(1)) = 7.966076",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "SJB-DMC (N = 14 table)",
+      "energy": 7.96608060353
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'SJB DMC', column rs=1.0; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "SJB-DMC (N = 14 table)",
+      "energy": 7.96608060353
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 8.491476 (Cassella et al. SM Table IV, N = 14 sc, r_s = 1.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'SJB DMC', column rs=1.0; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "FermiNet (1 dense determinant, N = 14 table)",
+      "energy": 7.96580060353
+    },
+    "field": "energy",
+    "to": 7.965796,
+    "reported_as": "E_c = -0.52568(3) Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row 'ndet = 1', column rs=1.0; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.52568(3)) = 7.965796",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "FermiNet (1 dense determinant, N = 14 table)",
+      "energy": 7.96580060353
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'ndet = 1', column rs=1.0; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "FermiNet (1 dense determinant, N = 14 table)",
+      "energy": 7.96580060353
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 8.491476 (Cassella et al. SM Table IV, N = 14 sc, r_s = 1.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'ndet = 1', column rs=1.0; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "FermiNet (16 dense determinants, N = 14 table)",
+      "energy": 7.96466060354
+    },
+    "field": "energy",
+    "to": 7.964656,
+    "reported_as": "E_c = -0.52682(3) Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row 'ndet = 16', column rs=1.0; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.52682(3)) = 7.964656",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "FermiNet (16 dense determinants, N = 14 table)",
+      "energy": 7.96466060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'ndet = 16', column rs=1.0; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "FermiNet (16 dense determinants, N = 14 table)",
+      "energy": 7.96466060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 8.491476 (Cassella et al. SM Table IV, N = 14 sc, r_s = 1.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'ndet = 16', column rs=1.0; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "FermiNet (1 block determinant, N = 14 table)",
+      "energy": 7.96638060354
+    },
+    "field": "energy",
+    "to": 7.966376,
+    "reported_as": "E_c = -0.52510(3) Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=1, rs=1.0; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.52510(3)) = 7.966376",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "FermiNet (1 block determinant, N = 14 table)",
+      "energy": 7.96638060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=1, rs=1.0; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "FermiNet (1 block determinant, N = 14 table)",
+      "energy": 7.96638060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 8.491476 (Cassella et al. SM Table IV, N = 14 sc, r_s = 1.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=1, rs=1.0; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "FermiNet (16 block determinants, N = 14 table)",
+      "energy": 7.96590060354
+    },
+    "field": "energy",
+    "to": 7.965896,
+    "reported_as": "E_c = -0.52558(3) Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=16, rs=1.0; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.52558(3)) = 7.965896",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "FermiNet (16 block determinants, N = 14 table)",
+      "energy": 7.96590060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=16, rs=1.0; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "FermiNet (16 block determinants, N = 14 table)",
+      "energy": 7.96590060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 8.491476 (Cassella et al. SM Table IV, N = 14 sc, r_s = 1.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=16, rs=1.0; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "i-FCIQMC, 1/M extrapolation",
+      "energy": 7.95898060353
+    },
+    "field": "energy",
+    "to": 7.958976,
+    "reported_as": "E_c = -0.5325(4) Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, rs=1.0 column, row M=infinity; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.5325(4)) = 7.958976",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Booth & Alavi's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "i-FCIQMC, 1/M extrapolation",
+      "energy": 7.95898060353
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, rs=1.0 column, row M=infinity; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "i-FCIQMC, 1/M extrapolation",
+      "energy": 7.95898060353
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 8.491476 (Cassella et al. SM Table IV, N = 14 sc, r_s = 1.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, rs=1.0 column, row M=infinity; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "i-FCIQMC, single-point basis-limit estimate (run at M = 1850)",
+      "energy": 7.95988060354
+    },
+    "field": "energy",
+    "to": 7.959876,
+    "reported_as": "E_c = -0.5316(4) Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table II, rs=1.0, N=14, column Ecorr (a.u.); E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.5316(4)) = 7.959876",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Booth & Alavi's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "i-FCIQMC, single-point basis-limit estimate (run at M = 1850)",
+      "energy": 7.95988060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II, rs=1.0, N=14, column Ecorr (a.u.); E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "i-FCIQMC, single-point basis-limit estimate (run at M = 1850)",
+      "energy": 7.95988060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 8.491476 (Cassella et al. SM Table IV, N = 14 sc, r_s = 1.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II, rs=1.0, N=14, column Ecorr (a.u.); E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "MP2, complete-basis limit",
+      "energy": 7.99214260354
+    },
+    "field": "energy",
+    "to": 7.992138,
+    "reported_as": "E_c = -0.499338(2) Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I (txt line 8295-8305, after Sec. III; 'Values of the complete basis set limit MP2 correlation energy obtained by extrapolation for N = 14'), row rs = 1; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.499338(2)) = 7.992138",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Grueneis, Booth, Kresse & Alavi's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "MP2, complete-basis limit",
+      "energy": 7.99214260354
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I (txt line 8295-8305, after Sec. III; 'Values of the complete basis set limit MP2 correlation energy obtained by extrapolation for N = 14'), row rs = 1; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "MP2, complete-basis limit",
+      "energy": 7.99214260354
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 8.491476 (Cassella et al. SM Table IV, N = 14 sc, r_s = 1.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I (txt line 8295-8305, after Sec. III; 'Values of the complete basis set limit MP2 correlation energy obtained by extrapolation for N = 14'), row rs = 1; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "CCSD (initiator stochastic CC), complete-basis limit",
+      "energy": 7.97598060354
+    },
+    "field": "energy",
+    "to": 7.975976,
+    "reported_as": "E_c = -0.5155(3) Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table II (txt lines 601-606), row rs = 1, column E_CCSD; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.5155(3)) = 7.975976",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Spencer & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "CCSD (initiator stochastic CC), complete-basis limit",
+      "energy": 7.97598060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II (txt lines 601-606), row rs = 1, column E_CCSD; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "CCSD (initiator stochastic CC), complete-basis limit",
+      "energy": 7.97598060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 8.491476 (Cassella et al. SM Table IV, N = 14 sc, r_s = 1.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II (txt lines 601-606), row rs = 1, column E_CCSD; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "CCSDT (initiator stochastic CC), complete-basis limit",
+      "energy": 7.95978060353
+    },
+    "field": "energy",
+    "to": 7.959776,
+    "reported_as": "E_c = -0.5317(3) Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table II (txt lines 601-606), row rs = 1, column E_CCSDT; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.5317(3)) = 7.959776",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Spencer & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "CCSDT (initiator stochastic CC), complete-basis limit",
+      "energy": 7.95978060353
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II (txt lines 601-606), row rs = 1, column E_CCSDT; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "CCSDT (initiator stochastic CC), complete-basis limit",
+      "energy": 7.95978060353
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 8.491476 (Cassella et al. SM Table IV, N = 14 sc, r_s = 1.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II (txt lines 601-606), row rs = 1, column E_CCSDT; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 2109 plane waves (4218 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+      "energy": 7.96168060353
+    },
+    "field": "energy",
+    "to": 7.961676,
+    "reported_as": "E_c = -0.5298(8) Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III, rs=1.0, M=2109, column ph-AFQMC; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.5298(8)) = 7.961676",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Lee, Malone & Morales's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 2109 plane waves (4218 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+      "energy": 7.96168060353
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III, rs=1.0, M=2109, column ph-AFQMC; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "CCSD [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSD; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 7.97698060354
+    },
+    "field": "energy",
+    "to": 7.976976,
+    "reported_as": "E_c = -0.51450(9) Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row CCSD, rs=1.0 a0 (own value); E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.51450(9)) = 7.976976",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Neufeld & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "CCSD [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSD; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 7.97698060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row CCSD, rs=1.0 a0 (own value); E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "CCSDT [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDT; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 7.96078060354
+    },
+    "field": "energy",
+    "to": 7.960776,
+    "reported_as": "E_c = -0.5307(2) Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row CCSDT, rs=1.0 a0 (own value); E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.5307(2)) = 7.960776",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Neufeld & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "CCSDT [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDT; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 7.96078060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row CCSDT, rs=1.0 a0 (own value); E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "CCSDTQ [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDTQ; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 7.96038060353
+    },
+    "field": "energy",
+    "to": 7.960376,
+    "reported_as": "E_c = -0.5311(2) Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row CCSDTQ, rs=1.0 a0 (own value); E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.5311(2)) = 7.960376",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Neufeld & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "CCSDTQ [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDTQ; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 7.96038060353
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row CCSDTQ, rs=1.0 a0 (own value); E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "CCSDTQ5 [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDTQ5; complete-basis estimate from the Table I footnotes; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 7.96038060353
+    },
+    "field": "energy",
+    "to": 7.960376,
+    "reported_as": "E_c = -0.5311(2) Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row CCSDTQ5, rs=1.0 a0 (own value); E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.5311(2)) = 7.960376",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Neufeld & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "CCSDTQ5 [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDTQ5; complete-basis estimate from the Table I footnotes; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 7.96038060353
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row CCSDTQ5, rs=1.0 a0 (own value); E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "FCIQMC [(i)FCIQMC; initiator used for M > 66 at rs=1.0 (txt line 253-255); CBS value estimated as footnote i; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 7.96018060354
+    },
+    "field": "energy",
+    "to": 7.960176,
+    "reported_as": "E_c = -0.5313(2) Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I (txt lines 303-311), row FCIQMC, column rs = 1 a0 (14-electron UEG, CBS-extrapolated correlation energies in hartrees, total); E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.5313(2)) = 7.960176",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Neufeld & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "FCIQMC [(i)FCIQMC; initiator used for M > 66 at rs=1.0 (txt line 253-255); CBS value estimated as footnote i; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": 7.96018060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I (txt lines 303-311), row FCIQMC, column rs = 1 a0 (14-electron UEG, CBS-extrapolated correlation energies in hartrees, total); E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 8.12848060354
+    },
+    "field": "energy",
+    "to": 8.128476,
+    "reported_as": "E_c = -0.363 Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=1, column lmCCD; sources/1310.6806v2.txt line 493; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.363) = 8.128476",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 8.12848060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=1, column lmCCD; sources/1310.6806v2.txt line 493; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 8.00748060354
+    },
+    "field": "energy",
+    "to": 8.007476,
+    "reported_as": "E_c = -0.484 Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=1, column mCCD; sources/1310.6806v2.txt line 493; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.484) = 8.007476",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 8.00748060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=1, column mCCD; sources/1310.6806v2.txt line 493; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 7.97748060354
+    },
+    "field": "energy",
+    "to": 7.977476,
+    "reported_as": "E_c = -0.514 Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=1, column CCD; sources/1310.6806v2.txt line 493; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.514) = 7.977476",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 7.97748060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=1, column CCD; sources/1310.6806v2.txt line 493; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 7.87848060353
+    },
+    "field": "energy",
+    "to": 7.878476,
+    "reported_as": "E_c = -0.613 Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=1, column rmCCD; sources/1310.6806v2.txt line 493; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.613) = 7.878476",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 7.87848060353
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=1, column rmCCD; sources/1310.6806v2.txt line 493; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 7.65048060354
+    },
+    "field": "energy",
+    "to": 7.650476,
+    "reported_as": "E_c = -0.841 Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=1, column rxmCCD; sources/1310.6806v2.txt line 493; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.841) = 7.650476",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 7.65048060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=1, column rxmCCD; sources/1310.6806v2.txt line 493; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 7.98248060354
+    },
+    "field": "energy",
+    "to": 7.982476,
+    "reported_as": "E_c = -0.509 Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=1, column d+S (KS); sources/1310.6806v2.txt line 493; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.509) = 7.982476",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 7.98248060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=1, column d+S (KS); sources/1310.6806v2.txt line 493; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 7.69748060354
+    },
+    "field": "energy",
+    "to": 7.697476,
+    "reported_as": "E_c = -0.794 Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=1, column dRPA (KS); sources/1310.6806v2.txt line 493; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.794) = 7.697476",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 7.69748060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=1, column dRPA (KS); sources/1310.6806v2.txt line 493; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 8.08548060354
+    },
+    "field": "energy",
+    "to": 8.085476,
+    "reported_as": "E_c = -0.406 Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=1, column d+S (HF); sources/1310.6806v2.txt line 493; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.406) = 8.085476",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 8.08548060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=1, column d+S (HF); sources/1310.6806v2.txt line 493; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 7.86248060354
+    },
+    "field": "energy",
+    "to": 7.862476,
+    "reported_as": "E_c = -0.629 Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=1, column dRPA (HF); sources/1310.6806v2.txt line 493; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.629) = 7.862476",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 7.86248060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=1, column dRPA (HF); sources/1310.6806v2.txt line 493; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "FCIQMC-TC [i-FCIQMC (initiator 3.0, semi-stochastic, |D| = 10000) on the transcorrelated Hamiltonian with the basis-adapted correlation factor of Eq. (22); three-body operator dropped except its RPA-type two-body contraction (Eq. 25); value of the largest basis of Fig. 3 (M not printed in the text), no extrapolation ('simply taken from those of the used largest basis sets', txt line 805-806)] (arXiv:1712.07524)",
+      "energy": 7.96058060354
+    },
+    "field": "energy",
+    "to": 7.960576,
+    "reported_as": "E_c = -0.5309(2) Ha (total, 14 electrons) + E_HF = 8.491476 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table 1, N=14, rs=1.0, column FCIQMC-TC; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "8.491476 + (-0.5309(2)) = 7.960576",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 1.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Luo & Alavi's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "FCIQMC-TC [i-FCIQMC (initiator 3.0, semi-stochastic, |D| = 10000) on the transcorrelated Hamiltonian with the basis-adapted correlation factor of Eq. (22); three-body operator dropped except its RPA-type two-body contraction (Eq. 25); value of the largest basis of Fig. 3 (M not printed in the text), no extrapolation ('simply taken from those of the used largest basis sets', txt line 805-806)] (arXiv:1712.07524)",
+      "energy": 7.96058060354
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.606534328824 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 8.491476 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table 1, N=14, rs=1.0, column FCIQMC-TC; E_HF: SM Table IV row r_s = 1.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "SJB-VMC (N = 14 table)",
+      "energy": -0.114454735371
+    },
+    "field": "energy",
+    "to": -0.114455,
+    "reported_as": "E_c = -0.437(3) Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row 'SJB VMC', column rs=2.0; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.437(3)) = -0.114455",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "SJB-VMC (N = 14 table)",
+      "energy": -0.114454735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'SJB VMC', column rs=2.0; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "SJB-VMC (N = 14 table)",
+      "energy": -0.114454735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 0.322545 (Cassella et al. SM Table IV, N = 14 sc, r_s = 2.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'SJB VMC', column rs=2.0; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "SJB-DMC (N = 14 table)",
+      "energy": -0.115954735371
+    },
+    "field": "energy",
+    "to": -0.115955,
+    "reported_as": "E_c = -0.4385(3) Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row 'SJB DMC', column rs=2.0; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.4385(3)) = -0.115955",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "SJB-DMC (N = 14 table)",
+      "energy": -0.115954735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'SJB DMC', column rs=2.0; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "SJB-DMC (N = 14 table)",
+      "energy": -0.115954735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 0.322545 (Cassella et al. SM Table IV, N = 14 sc, r_s = 2.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'SJB DMC', column rs=2.0; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "FermiNet (1 dense determinant, N = 14 table)",
+      "energy": -0.116264735371
+    },
+    "field": "energy",
+    "to": -0.116265,
+    "reported_as": "E_c = -0.43881(1) Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row 'ndet = 1', column rs=2.0; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.43881(1)) = -0.116265",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "FermiNet (1 dense determinant, N = 14 table)",
+      "energy": -0.116264735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'ndet = 1', column rs=2.0; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "FermiNet (1 dense determinant, N = 14 table)",
+      "energy": -0.116264735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 0.322545 (Cassella et al. SM Table IV, N = 14 sc, r_s = 2.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'ndet = 1', column rs=2.0; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "FermiNet (16 dense determinants, N = 14 table)",
+      "energy": -0.117984735371
+    },
+    "field": "energy",
+    "to": -0.117985,
+    "reported_as": "E_c = -0.44053(1) Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row 'ndet = 16', column rs=2.0; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.44053(1)) = -0.117985",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "FermiNet (16 dense determinants, N = 14 table)",
+      "energy": -0.117984735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'ndet = 16', column rs=2.0; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "FermiNet (16 dense determinants, N = 14 table)",
+      "energy": -0.117984735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 0.322545 (Cassella et al. SM Table IV, N = 14 sc, r_s = 2.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'ndet = 16', column rs=2.0; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "FermiNet (1 block determinant, N = 14 table)",
+      "energy": -0.115874735371
+    },
+    "field": "energy",
+    "to": -0.115875,
+    "reported_as": "E_c = -0.43842(1) Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=1, rs=2.0; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.43842(1)) = -0.115875",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "FermiNet (1 block determinant, N = 14 table)",
+      "energy": -0.115874735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=1, rs=2.0; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "FermiNet (1 block determinant, N = 14 table)",
+      "energy": -0.115874735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 0.322545 (Cassella et al. SM Table IV, N = 14 sc, r_s = 2.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=1, rs=2.0; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "FermiNet (16 block determinants, N = 14 table)",
+      "energy": -0.116214735371
+    },
+    "field": "energy",
+    "to": -0.116215,
+    "reported_as": "E_c = -0.43876(1) Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=16, rs=2.0; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.43876(1)) = -0.116215",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "FermiNet (16 block determinants, N = 14 table)",
+      "energy": -0.116214735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=16, rs=2.0; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "FermiNet (16 block determinants, N = 14 table)",
+      "energy": -0.116214735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 0.322545 (Cassella et al. SM Table IV, N = 14 sc, r_s = 2.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=16, rs=2.0; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "i-FCIQMC, 1/M extrapolation",
+      "energy": -0.122154735371
+    },
+    "field": "energy",
+    "to": -0.122155,
+    "reported_as": "E_c = -0.4447(4) Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, rs=2.0 column, row M=infinity; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.4447(4)) = -0.122155",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 2.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Booth & Alavi's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "i-FCIQMC, 1/M extrapolation",
+      "energy": -0.122154735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, rs=2.0 column, row M=infinity; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "i-FCIQMC, 1/M extrapolation",
+      "energy": -0.122154735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 0.322545 (Cassella et al. SM Table IV, N = 14 sc, r_s = 2.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, rs=2.0 column, row M=infinity; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "i-FCIQMC, single-point basis-limit estimate (run at M = 1850)",
+      "energy": -0.121454735371
+    },
+    "field": "energy",
+    "to": -0.121455,
+    "reported_as": "E_c = -0.444(1) Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table II, rs=2.0, N=14, column Ecorr (a.u.); E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.444(1)) = -0.121455",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 2.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Booth & Alavi's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "i-FCIQMC, single-point basis-limit estimate (run at M = 1850)",
+      "energy": -0.121454735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II, rs=2.0, N=14, column Ecorr (a.u.); E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "i-FCIQMC, single-point basis-limit estimate (run at M = 1850)",
+      "energy": -0.121454735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 0.322545 (Cassella et al. SM Table IV, N = 14 sc, r_s = 2.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II, rs=2.0, N=14, column Ecorr (a.u.); E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "MP2, complete-basis limit",
+      "energy": -0.0764027353712
+    },
+    "field": "energy",
+    "to": -0.076403,
+    "reported_as": "E_c = -0.398948(2) Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I (txt line 8295-8305, after Sec. III; 'Values of the complete basis set limit MP2 correlation energy obtained by extrapolation for N = 14'), row rs = 2; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.398948(2)) = -0.076403",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 2.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Grueneis, Booth, Kresse & Alavi's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "MP2, complete-basis limit",
+      "energy": -0.0764027353712
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I (txt line 8295-8305, after Sec. III; 'Values of the complete basis set limit MP2 correlation energy obtained by extrapolation for N = 14'), row rs = 2; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "MP2, complete-basis limit",
+      "energy": -0.0764027353712
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 0.322545 (Cassella et al. SM Table IV, N = 14 sc, r_s = 2.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I (txt line 8295-8305, after Sec. III; 'Values of the complete basis set limit MP2 correlation energy obtained by extrapolation for N = 14'), row rs = 2; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "CCSD (initiator stochastic CC), complete-basis limit",
+      "energy": -0.0868547353716
+    },
+    "field": "energy",
+    "to": -0.086855,
+    "reported_as": "E_c = -0.4094(1) Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table II (txt lines 601-606), row rs = 2, column E_CCSD; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.4094(1)) = -0.086855",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 2.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Spencer & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "CCSD (initiator stochastic CC), complete-basis limit",
+      "energy": -0.0868547353716
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II (txt lines 601-606), row rs = 2, column E_CCSD; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "CCSD (initiator stochastic CC), complete-basis limit",
+      "energy": -0.0868547353716
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 0.322545 (Cassella et al. SM Table IV, N = 14 sc, r_s = 2.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II (txt lines 601-606), row rs = 2, column E_CCSD; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "CCSDT (non-initiator stochastic CC energies, basis-set extrapolated; Table II footnote ‡), complete-basis limit",
+      "energy": -0.112854735371
+    },
+    "field": "energy",
+    "to": -0.112855,
+    "reported_as": "E_c = -0.4354(4) Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table II, row rs=2.0, column E_CCSDT; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.4354(4)) = -0.112855",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 2.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Spencer & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "CCSDT (non-initiator stochastic CC energies, basis-set extrapolated; Table II footnote ‡), complete-basis limit",
+      "energy": -0.112854735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II, row rs=2.0, column E_CCSDT; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "CCSDT (non-initiator stochastic CC energies, basis-set extrapolated; Table II footnote ‡), complete-basis limit",
+      "energy": -0.112854735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = 0.322545 (Cassella et al. SM Table IV, N = 14 sc, r_s = 2.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II, row rs=2.0, column E_CCSDT; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 2109 plane waves (4218 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+      "energy": -0.119454735371
+    },
+    "field": "energy",
+    "to": -0.119455,
+    "reported_as": "E_c = -0.4420(9) Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III, rs=2.0, M=2109, column ph-AFQMC; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.4420(9)) = -0.119455",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 2.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Lee, Malone & Morales's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 2109 plane waves (4218 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+      "energy": -0.119454735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III, rs=2.0, M=2109, column ph-AFQMC; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "CCSD [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSD; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": -0.0870547353708
+    },
+    "field": "energy",
+    "to": -0.087055,
+    "reported_as": "E_c = -0.4096(10) Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row CCSD, rs=2.0 a0 (own value); E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.4096(10)) = -0.087055",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 2.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Neufeld & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "CCSD [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSD; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": -0.0870547353708
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row CCSD, rs=2.0 a0 (own value); E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "CCSDT [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDT; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": -0.118154735372
+    },
+    "field": "energy",
+    "to": -0.118155,
+    "reported_as": "E_c = -0.4407(10) Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row CCSDT, rs=2.0 a0 (own value); E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.4407(10)) = -0.118155",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 2.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Neufeld & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "CCSDT [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDT; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": -0.118154735372
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row CCSDT, rs=2.0 a0 (own value); E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "CCSDTQ [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDTQ; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": -0.120654735371
+    },
+    "field": "energy",
+    "to": -0.120655,
+    "reported_as": "E_c = -0.4432(10) Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row CCSDTQ, rs=2.0 a0 (own value); E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.4432(10)) = -0.120655",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 2.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Neufeld & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "CCSDTQ [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDTQ; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": -0.120654735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row CCSDTQ, rs=2.0 a0 (own value); E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "CCSDTQ5 [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDTQ5; complete-basis estimate from the Table I footnotes; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": -0.120854735371
+    },
+    "field": "energy",
+    "to": -0.120855,
+    "reported_as": "E_c = -0.4434(10) Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row CCSDTQ5, rs=2.0 a0 (own value); E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.4434(10)) = -0.120855",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 2.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Neufeld & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "CCSDTQ5 [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDTQ5; complete-basis estimate from the Table I footnotes; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": -0.120854735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row CCSDTQ5, rs=2.0 a0 (own value); E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 0.0725452646292
+    },
+    "field": "energy",
+    "to": 0.072545,
+    "reported_as": "E_c = -0.250 Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=2, column lmCCD; sources/1310.6806v2.txt line 494; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.250) = 0.072545",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 2.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 0.0725452646292
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=2, column lmCCD; sources/1310.6806v2.txt line 494; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -0.0864547353716
+    },
+    "field": "energy",
+    "to": -0.086455,
+    "reported_as": "E_c = -0.409 Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=2, column CCD; sources/1310.6806v2.txt line 494; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.409) = -0.086455",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 2.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -0.0864547353716
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=2, column CCD; sources/1310.6806v2.txt line 494; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -0.21445473537
+    },
+    "field": "energy",
+    "to": -0.214455,
+    "reported_as": "E_c = -0.537 Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=2, column rmCCD; sources/1310.6806v2.txt line 494; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.537) = -0.214455",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 2.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -0.21445473537
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=2, column rmCCD; sources/1310.6806v2.txt line 494; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -0.670454735371
+    },
+    "field": "energy",
+    "to": -0.670455,
+    "reported_as": "E_c = -0.993 Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=2, column rxmCCD; sources/1310.6806v2.txt line 494; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.993) = -0.670455",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 2.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -0.670454735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=2, column rxmCCD; sources/1310.6806v2.txt line 494; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -0.100454735372
+    },
+    "field": "energy",
+    "to": -0.100455,
+    "reported_as": "E_c = -0.423 Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=2, column d+S (KS); sources/1310.6806v2.txt line 494; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.423) = -0.100455",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 2.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -0.100454735372
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=2, column d+S (KS); sources/1310.6806v2.txt line 494; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -0.350454735371
+    },
+    "field": "energy",
+    "to": -0.350455,
+    "reported_as": "E_c = -0.673 Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=2, column dRPA (KS); sources/1310.6806v2.txt line 494; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.673) = -0.350455",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 2.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -0.350454735371
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=2, column dRPA (KS); sources/1310.6806v2.txt line 494; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 0.0215452646286
+    },
+    "field": "energy",
+    "to": 0.021545,
+    "reported_as": "E_c = -0.301 Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=2, column d+S (HF); sources/1310.6806v2.txt line 494; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.301) = 0.021545",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 2.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": 0.0215452646286
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=2, column d+S (HF); sources/1310.6806v2.txt line 494; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -0.15145473537
+    },
+    "field": "energy",
+    "to": -0.151455,
+    "reported_as": "E_c = -0.474 Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=2, column dRPA (HF); sources/1310.6806v2.txt line 494; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.474) = -0.151455",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 2.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -0.15145473537
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=2, column dRPA (HF); sources/1310.6806v2.txt line 494; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "FCIQMC-TC [i-FCIQMC (initiator 3.0, semi-stochastic, |D| = 10000) on the transcorrelated Hamiltonian with the basis-adapted correlation factor of Eq. (22); three-body operator dropped except its RPA-type two-body contraction (Eq. 25); value of the largest basis of Fig. 3 (M not printed in the text), no extrapolation ('simply taken from those of the used largest basis sets', txt line 805-806)] (arXiv:1712.07524)",
+      "energy": -0.121454735372
+    },
+    "field": "energy",
+    "to": -0.121455,
+    "reported_as": "E_c = -0.4440(3) Ha (total, 14 electrons) + E_HF = 0.322545 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table 1, N=14, rs=2.0, column FCIQMC-TC; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "0.322545 + (-0.4440(3)) = -0.121455",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 2.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Luo & Alavi's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "FCIQMC-TC [i-FCIQMC (initiator 3.0, semi-stochastic, |D| = 10000) on the transcorrelated Hamiltonian with the basis-adapted correlation factor of Eq. (22); three-body operator dropped except its RPA-type two-body contraction (Eq. 25); value of the largest basis of Fig. 3 (M not printed in the text), no extrapolation ('simply taken from those of the used largest basis sets', txt line 805-806)] (arXiv:1712.07524)",
+      "energy": -0.121454735372
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = 0.0230389474735 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = 0.322545 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table 1, N=14, rs=2.0, column FCIQMC-TC; E_HF: SM Table IV row r_s = 2.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "SJB-VMC (N = 14 table)",
+      "energy": -1.11593870306
+    },
+    "field": "energy",
+    "to": -1.115939,
+    "reported_as": "E_c = -0.30339(2) Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row 'SJB VMC', column rs=5.0; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.30339(2)) = -1.115939",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "SJB-VMC (N = 14 table)",
+      "energy": -1.11593870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'SJB VMC', column rs=5.0; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "SJB-VMC (N = 14 table)",
+      "energy": -1.11593870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = -0.812549 (Cassella et al. SM Table IV, N = 14 sc, r_s = 5.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'SJB VMC', column rs=5.0; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "SJB-DMC (N = 14 table)",
+      "energy": -1.11728870306
+    },
+    "field": "energy",
+    "to": -1.117289,
+    "reported_as": "E_c = -0.30474(8) Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row 'SJB DMC', column rs=5.0; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.30474(8)) = -1.117289",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "SJB-DMC (N = 14 table)",
+      "energy": -1.11728870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'SJB DMC', column rs=5.0; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "SJB-DMC (N = 14 table)",
+      "energy": -1.11728870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = -0.812549 (Cassella et al. SM Table IV, N = 14 sc, r_s = 5.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'SJB DMC', column rs=5.0; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "FermiNet (1 dense determinant, N = 14 table)",
+      "energy": -1.11722870306
+    },
+    "field": "energy",
+    "to": -1.117229,
+    "reported_as": "E_c = -0.30468(1) Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row 'ndet = 1', column rs=5.0; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.30468(1)) = -1.117229",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "FermiNet (1 dense determinant, N = 14 table)",
+      "energy": -1.11722870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'ndet = 1', column rs=5.0; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "FermiNet (1 dense determinant, N = 14 table)",
+      "energy": -1.11722870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = -0.812549 (Cassella et al. SM Table IV, N = 14 sc, r_s = 5.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'ndet = 1', column rs=5.0; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "FermiNet (16 dense determinants, N = 14 table)",
+      "energy": -1.11749870306
+    },
+    "field": "energy",
+    "to": -1.117499,
+    "reported_as": "E_c = -0.30495(1) Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row 'ndet = 16', column rs=5.0; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.30495(1)) = -1.117499",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "FermiNet (16 dense determinants, N = 14 table)",
+      "energy": -1.11749870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'ndet = 16', column rs=5.0; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "FermiNet (16 dense determinants, N = 14 table)",
+      "energy": -1.11749870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = -0.812549 (Cassella et al. SM Table IV, N = 14 sc, r_s = 5.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row 'ndet = 16', column rs=5.0; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "FermiNet (1 block determinant, N = 14 table)",
+      "energy": -1.11687870306
+    },
+    "field": "energy",
+    "to": -1.116879,
+    "reported_as": "E_c = -0.30433(1) Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=1, rs=5.0; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.30433(1)) = -1.116879",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "FermiNet (1 block determinant, N = 14 table)",
+      "energy": -1.11687870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=1, rs=5.0; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "FermiNet (1 block determinant, N = 14 table)",
+      "energy": -1.11687870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = -0.812549 (Cassella et al. SM Table IV, N = 14 sc, r_s = 5.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=1, rs=5.0; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "FermiNet (16 block determinants, N = 14 table)",
+      "energy": -1.11720870306
+    },
+    "field": "energy",
+    "to": -1.117209,
+    "reported_as": "E_c = -0.30466(1) Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=16, rs=5.0; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.30466(1)) = -1.117209",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print their own E_HF for this cell (SM Table IV); the total is now the sum of two numbers printed in the same paper.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "FermiNet (16 block determinants, N = 14 table)",
+      "energy": -1.11720870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=16, rs=5.0; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "FermiNet (16 block determinants, N = 14 table)",
+      "energy": -1.11720870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = -0.812549 (Cassella et al. SM Table IV, N = 14 sc, r_s = 5.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (SI), Block determinants, ndet=16, rs=5.0; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "i-FCIQMC, 1/M extrapolation",
+      "energy": -1.11854870306
+    },
+    "field": "energy",
+    "to": -1.118549,
+    "reported_as": "E_c = -0.306(1) Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, rs=5.0 column, row M=infinity; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.306(1)) = -1.118549",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 5.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Booth & Alavi's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "i-FCIQMC, 1/M extrapolation",
+      "energy": -1.11854870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, rs=5.0 column, row M=infinity; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "i-FCIQMC, 1/M extrapolation",
+      "energy": -1.11854870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = -0.812549 (Cassella et al. SM Table IV, N = 14 sc, r_s = 5.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, rs=5.0 column, row M=infinity; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "i-FCIQMC, single-point basis-limit estimate (run at M = 778)",
+      "energy": -1.11954870306
+    },
+    "field": "energy",
+    "to": -1.119549,
+    "reported_as": "E_c = -0.307(1) Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table II, rs=5.0, N=14, column Ecorr (a.u.); E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.307(1)) = -1.119549",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 5.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Booth & Alavi's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "i-FCIQMC, single-point basis-limit estimate (run at M = 778)",
+      "energy": -1.11954870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II, rs=5.0, N=14, column Ecorr (a.u.); E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "i-FCIQMC, single-point basis-limit estimate (run at M = 778)",
+      "energy": -1.11954870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = -0.812549 (Cassella et al. SM Table IV, N = 14 sc, r_s = 5.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table II, rs=5.0, N=14, column Ecorr (a.u.); E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "MP2, complete-basis limit",
+      "energy": -1.06821270306
+    },
+    "field": "energy",
+    "to": -1.068213,
+    "reported_as": "E_c = -0.255664(4) Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I (txt line 8295-8305, after Sec. III; 'Values of the complete basis set limit MP2 correlation energy obtained by extrapolation for N = 14'), row rs = 5; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.255664(4)) = -1.068213",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 5.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Grueneis, Booth, Kresse & Alavi's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "MP2, complete-basis limit",
+      "energy": -1.06821270306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I (txt line 8295-8305, after Sec. III; 'Values of the complete basis set limit MP2 correlation energy obtained by extrapolation for N = 14'), row rs = 5; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "MP2, complete-basis limit",
+      "energy": -1.06821270306
+    },
+    "field": "verified.note",
+    "edit": [
+      "Stored E = E_HF + E_c with E_HF from QMBL (checks/heg-hf/hf.mjs; RULES.md 12.3, 2026-10-19).",
+      "Stored E = printed E_HF + printed E_c: E_HF = -0.812549 (Cassella et al. SM Table IV, N = 14 sc, r_s = 5.0), E_c as printed here."
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I (txt line 8295-8305, after Sec. III; 'Values of the complete basis set limit MP2 correlation energy obtained by extrapolation for N = 14'), row rs = 5; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 389 plane waves (778 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+      "energy": -1.07994870306
+    },
+    "field": "energy",
+    "to": -1.079949,
+    "reported_as": "E_c = -0.2674(6) Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table IV, rs=5.0, M=389, column RHF; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.2674(6)) = -1.079949",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 5.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Lee, Malone & Morales's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "RHF+ph-AFQMC [single-determinant RHF trial, basis M = 389 plane waves (778 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+      "energy": -1.07994870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table IV, rs=5.0, M=389, column RHF; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "UHF+ph-AFQMC [UHF trial with RHF initial wavefunction (spin projection), basis M = 389 plane waves (778 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+      "energy": -1.07794870306
+    },
+    "field": "energy",
+    "to": -1.077949,
+    "reported_as": "E_c = -0.2654(2) Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table IV, rs=5.0, M=389, column UHF; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.2654(2)) = -1.077949",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 5.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Lee, Malone & Morales's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "UHF+ph-AFQMC [UHF trial with RHF initial wavefunction (spin projection), basis M = 389 plane waves (778 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+      "energy": -1.07794870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table IV, rs=5.0, M=389, column UHF; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "NOMSD+ph-AFQMC [ten-determinant NOMSD trial from projected Hartree-Fock, basis M = 389 plane waves (778 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+      "energy": -1.09194870306
+    },
+    "field": "energy",
+    "to": -1.091949,
+    "reported_as": "E_c = -0.2794(4) Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table IV, rs=5.0, M=389, column NOMSD; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.2794(4)) = -1.091949",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 5.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Lee, Malone & Morales's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "NOMSD+ph-AFQMC [ten-determinant NOMSD trial from projected Hartree-Fock, basis M = 389 plane waves (778 spin orbitals), time step 0.005 a.u., 2880 walkers; QMCPACK] (arXiv:1905.04361)",
+      "energy": -1.09194870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table IV, rs=5.0, M=389, column NOMSD; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "CCSD [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSD; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": -1.06564870306
+    },
+    "field": "energy",
+    "to": -1.065649,
+    "reported_as": "E_c = -0.2531(3) Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row CCSD, rs=5.0 a0 (own value); E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.2531(3)) = -1.065649",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 5.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Neufeld & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "CCSD [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSD; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": -1.06564870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row CCSD, rs=5.0 a0 (own value); E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "CCSDT [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDT; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": -1.10954870306
+    },
+    "field": "energy",
+    "to": -1.109549,
+    "reported_as": "E_c = -0.2970(4) Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row CCSDT, rs=5.0 a0 (own value); E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.2970(4)) = -1.109549",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 5.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Neufeld & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "CCSDT [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDT; CBS extrapolation: CCSD fitted in 1/M with the polynomial order chosen by the chi^2 procedure of Sec. IV, higher levels by extrapolating level differences; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": -1.10954870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row CCSDT, rs=5.0 a0 (own value); E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "CCSDTQ [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDTQ; complete-basis estimate from the Table I footnotes; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": -1.11404870306
+    },
+    "field": "energy",
+    "to": -1.114049,
+    "reported_as": "E_c = -0.3015(4) Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row CCSDTQ, rs=5.0 a0 (own value); E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.3015(4)) = -1.114049",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 5.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Neufeld & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "CCSDTQ [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDTQ; complete-basis estimate from the Table I footnotes; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": -1.11404870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row CCSDTQ, rs=5.0 a0 (own value); E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "CCSDTQ5 [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDTQ5; complete-basis estimate from the Table I footnotes; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": -1.11504870306
+    },
+    "field": "energy",
+    "to": -1.115049,
+    "reported_as": "E_c = -0.3025(4) Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table I, row CCSDTQ5, rs=5.0 a0 (own value); E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.3025(4)) = -1.115049",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 5.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Neufeld & Thom's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "CCSDTQ5 [coupled cluster Monte Carlo (HANDE), non-initiator; level CCSDTQ5; complete-basis estimate from the Table I footnotes; extrapolated: 1/M → 0 (complete basis)] (arXiv:1706.09923)",
+      "energy": -1.11504870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table I, row CCSDTQ5, rs=5.0 a0 (own value); E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -0.943548703062
+    },
+    "field": "energy",
+    "to": -0.943549,
+    "reported_as": "E_c = -0.131 Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=5, column lmCCD; sources/1310.6806v2.txt line 497; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.131) = -0.943549",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 5.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "lmCCD [ladders + mosaics only; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -0.943548703062
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=5, column lmCCD; sources/1310.6806v2.txt line 497; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -1.03554870306
+    },
+    "field": "energy",
+    "to": -1.035549,
+    "reported_as": "E_c = -0.223 Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=5, column mCCD; sources/1310.6806v2.txt line 497; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.223) = -1.035549",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 5.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "mCCD [mosaics only (a self-consistent Brueckner MP2); extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -1.03554870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=5, column mCCD; sources/1310.6806v2.txt line 497; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -1.06554870306
+    },
+    "field": "energy",
+    "to": -1.065549,
+    "reported_as": "E_c = -0.253 Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=5, column CCD; sources/1310.6806v2.txt line 497; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.253) = -1.065549",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 5.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "CCD [full CCD (driver, ladders, rings, crossed-rings, mosaics); equals CCSD in the HEG; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -1.06554870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=5, column CCD; sources/1310.6806v2.txt line 497; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -1.18354870306
+    },
+    "field": "energy",
+    "to": -1.183549,
+    "reported_as": "E_c = -0.371 Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=5, column rmCCD; sources/1310.6806v2.txt line 497; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.371) = -1.183549",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 5.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "rmCCD [rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -1.18354870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=5, column rmCCD; sources/1310.6806v2.txt line 497; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -1.64554870306
+    },
+    "field": "energy",
+    "to": -1.645549,
+    "reported_as": "E_c = -0.833 Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=5, column rxmCCD; sources/1310.6806v2.txt line 497; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.833) = -1.645549",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 5.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "rxmCCD [rings, crossed-rings and mosaics; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -1.64554870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=5, column rxmCCD; sources/1310.6806v2.txt line 497; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -1.11354870306
+    },
+    "field": "energy",
+    "to": -1.113549,
+    "reported_as": "E_c = -0.301 Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=5, column d+S (KS); sources/1310.6806v2.txt line 497; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.301) = -1.113549",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 5.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "d+S (KS) [dRPA+SOSEX from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -1.11354870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=5, column d+S (KS); sources/1310.6806v2.txt line 497; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -1.31154870306
+    },
+    "field": "energy",
+    "to": -1.311549,
+    "reported_as": "E_c = -0.499 Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=5, column dRPA (KS); sources/1310.6806v2.txt line 497; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.499) = -1.311549",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 5.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "dRPA (KS) [direct RPA from a Kohn-Sham (kinetic-energy-only) reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -1.31154870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=5, column dRPA (KS); sources/1310.6806v2.txt line 497; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -0.992548703062
+    },
+    "field": "energy",
+    "to": -0.992549,
+    "reported_as": "E_c = -0.180 Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=5, column d+S (HF); sources/1310.6806v2.txt line 497; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.180) = -0.992549",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 5.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "d+S (HF) [dRPA+SOSEX from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -0.992548703062
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=5, column d+S (HF); sources/1310.6806v2.txt line 497; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -1.10054870306
+    },
+    "field": "energy",
+    "to": -1.100549,
+    "reported_as": "E_c = -0.288 Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table III (N=14), row rs=5, column dRPA (HF); sources/1310.6806v2.txt line 497; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.288) = -1.100549",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 5.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Shepherd, Henderson & Scuseria's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "dRPA (HF) [direct RPA from a Hartree-Fock reference; extrapolated: 1/M → 0 (complete basis)] (arXiv:1310.6806)",
+      "energy": -1.10054870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table III (N=14), row rs=5, column dRPA (HF); sources/1310.6806v2.txt line 497; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "FCIQMC-TC [i-FCIQMC (initiator 3.0, semi-stochastic, |D| = 10000) on the transcorrelated Hamiltonian with the basis-adapted correlation factor of Eq. (22); three-body operator dropped except its RPA-type two-body contraction (Eq. 25); value of the largest basis of Fig. 3 (M not printed in the text), no extrapolation ('simply taken from those of the used largest basis sets', txt line 805-806)] (arXiv:1712.07524)",
+      "energy": -1.12034870306
+    },
+    "field": "energy",
+    "to": -1.120349,
+    "reported_as": "E_c = -0.3078(3) Ha (total, 14 electrons) + E_HF = -0.812549 Ha (total, Cassella SM Table IV)",
+    "location": "E_c: Table 1, N=14, rs=5.0, column FCIQMC-TC; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "-0.812549 + (-0.3078(3)) = -1.120349",
+    "checked_on": "2026-11-26",
+    "reason": "The stored total was N x E_HF from QMBL's own Hartree-Fock program + the printed E_c, so its digits rest on a QMBL computation (RULES.md 5). Cassella et al. print E_HF for the same instance (N = 14, 7+7, sc, r_s = 5.0, Gamma) in SM Table IV; under the 2026-11-26 ruling it is added to Luo & Alavi's printed correlation energy.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "FCIQMC-TC [i-FCIQMC (initiator 3.0, semi-stochastic, |D| = 10000) on the transcorrelated Hamiltonian with the basis-adapted correlation factor of Eq. (22); three-body operator dropped except its RPA-type two-body contraction (Eq. 25); value of the largest basis of Fig. 3 (M not printed in the text), no extrapolation ('simply taken from those of the used largest basis sets', txt line 805-806)] (arXiv:1712.07524)",
+      "energy": -1.12034870306
+    },
+    "field": "verified.note",
+    "edit": [
+      "E = E_HF + E_c with E_HF = -0.0580391930759 Ha per electron (QMBL, checks/heg-hf/hf.mjs)",
+      "E = E_HF + E_c with E_HF = -0.812549 Ha total (Cassella et al. SM Table IV, printed)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "E_c: Table 1, N=14, rs=5.0, column FCIQMC-TC; E_HF: SM Table IV row r_s = 5.0",
+    "version_read": "E_c: source text in sources/ as named in location; E_HF: PRL 130, 036401 Supplemental Material, image-only PDF, OCR plus visual check",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "Wording follows the energy entry: the E_HF sentence named a QMBL computation; the E_HF is now a printed number.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-ehf"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "WAP-net (n_d = 1)",
+      "energy": 7.965384
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "1.137912(9)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 0"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "WAP-net (n_d = 8)",
+      "energy": 7.96551
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "1.13793(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 1"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": 7.96824
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "1.13832(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 2"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_1",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": 7.96565
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "1.13795(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 3"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_10",
+      "method": "WAP-net (n_d = 1)",
+      "energy": -0.7728343
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.1104049(6)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 4"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_10",
+      "method": "WAP-net (n_d = 8)",
+      "energy": -0.7728532
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.1104076(6)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 5"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_10",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": -0.7722603
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.1103229(7)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 6"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_10",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": -0.773052
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.110436(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 7"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_100",
+      "method": "WAP-net (n_d = 1)",
+      "energy": -0.10822336
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.01546048(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 8"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_100",
+      "method": "WAP-net (n_d = 8)",
+      "energy": -0.10821972
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.01545996(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 9"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_100",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": -0.10818675
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.01545525(6)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 10"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_100",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": -0.10828013
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.01546859(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 11"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "WAP-net (n_d = 1)",
+      "energy": -0.116662
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.016666(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 12"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "WAP-net (n_d = 8)",
+      "energy": -0.116634
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.016662(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 13"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": -0.114856
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.016408(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 14"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": -0.11655
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.01665(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 15"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_20",
+      "method": "WAP-net (n_d = 1)",
+      "energy": -0.4542181
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.0648883(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 16"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_20",
+      "method": "WAP-net (n_d = 8)",
+      "energy": -0.4542076
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.0648868(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 17"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_20",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": -0.4539108
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.0648444(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 18"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_20",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": -0.4544099
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.0649157(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 19"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "WAP-net (n_d = 1)",
+      "energy": -1.117683
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.159669(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 20"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "WAP-net (n_d = 8)",
+      "energy": -1.117704
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.159672(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 21"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": -1.116668
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.159524(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 22"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_5",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": -1.117788
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.159684(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 23"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_50",
+      "method": "WAP-net (n_d = 1)",
+      "energy": -0.20471115
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.02924445(6)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 24"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_50",
+      "method": "WAP-net (n_d = 8)",
+      "energy": -0.20470954
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.02924422(7)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 25"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_50",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": -0.2046044
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.02922920(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 26"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_50",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": -0.2048011
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.0292573(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 27"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_1",
+      "method": "WAP-net (n_d = 1)",
+      "energy": 19.8787025
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "2.092495(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 28"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_1",
+      "method": "WAP-net (n_d = 8)",
+      "energy": 19.8785885
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "2.092483(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 29"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_1",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": 19.879168
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "2.092544(7)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 30"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_1",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": 19.878275
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "2.092450(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 31"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_10",
+      "method": "WAP-net (n_d = 1)",
+      "energy": -1.00433715
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.1057197(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 32"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_10",
+      "method": "WAP-net (n_d = 8)",
+      "energy": -1.00434665
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.1057207(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 33"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_10",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": -1.0042355
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.1057090(6)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 34"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_10",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": -1.0044388
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.1057304(6)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 35"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_100",
+      "method": "WAP-net (n_d = 1)",
+      "energy": -0.146634495
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.01543521(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 36"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_100",
+      "method": "WAP-net (n_d = 8)",
+      "energy": -0.14655878
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.01542724(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 37"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_100",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": -0.14666081
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.01543798(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 38"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_100",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": -0.146707075
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.01544285(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 39"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_2",
+      "method": "WAP-net (n_d = 1)",
+      "energy": 1.829776
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "0.192608(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 40"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_2",
+      "method": "WAP-net (n_d = 8)",
+      "energy": 1.829757
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "0.192606(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 41"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_2",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": 1.8300515
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "0.192637(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 42"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_2",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": 1.8297475
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "0.192605(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 43"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_20",
+      "method": "WAP-net (n_d = 1)",
+      "energy": -0.60820805
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.0640219(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 44"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_20",
+      "method": "WAP-net (n_d = 8)",
+      "energy": -0.6081558
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.0640164(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 45"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_20",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": -0.60819
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.0640200(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 46"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_20",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": -0.60831635
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.0640333(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 47"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_5",
+      "method": "WAP-net (n_d = 1)",
+      "energy": -1.27775095
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.1345001(7)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 48"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_5",
+      "method": "WAP-net (n_d = 8)",
+      "energy": -1.27776995
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.1345021(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 49"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_5",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": -1.27756
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.134480(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 50"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_5",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": -1.277826
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.134508(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 51"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_50",
+      "method": "WAP-net (n_d = 1)",
+      "energy": -0.276734525
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.02912995(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 52"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_50",
+      "method": "WAP-net (n_d = 8)",
+      "energy": -0.27674849
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.02913142(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 53"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_50",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": -0.276748965
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.02913147(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 54"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_19_P_19_0_50",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": -0.276814705
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.02913839(8)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 55"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_1",
+      "method": "WAP-net (n_d = 1)",
+      "energy": 7.8427475
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "2.240785(7)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 56"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_1",
+      "method": "WAP-net (n_d = 8)",
+      "energy": 7.8425025
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "2.240715(7)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 57"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_1",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": 7.84294
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "2.24084(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 58"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_1",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": 7.8428
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "2.24080(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 59"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_10",
+      "method": "WAP-net (n_d = 1)",
+      "energy": -0.37197895
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.1062797(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 60"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_10",
+      "method": "WAP-net (n_d = 8)",
+      "energy": -0.3720052
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.1062872(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 61"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_10",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": -0.3718316
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.1062376(6)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 62"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_10",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": -0.371966
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.106276(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 63"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_100",
+      "method": "WAP-net (n_d = 1)",
+      "energy": -0.054225815
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.01549309(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 64"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_100",
+      "method": "WAP-net (n_d = 8)",
+      "energy": -0.05422564
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.01549304(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 65"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_100",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": -0.05416698
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.01547628(7)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 66"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_100",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": -0.05422375
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.0154925(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 67"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_2",
+      "method": "WAP-net (n_d = 1)",
+      "energy": 0.776181
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "0.221766(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 68"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_2",
+      "method": "WAP-net (n_d = 8)",
+      "energy": 0.77595
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "0.221700(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 69"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_2",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": 0.7763105
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "0.221803(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 70"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_2",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": 0.776153
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "0.221758(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 71"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_20",
+      "method": "WAP-net (n_d = 1)",
+      "energy": -0.2258823
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.0645378(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 72"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_20",
+      "method": "WAP-net (n_d = 8)",
+      "energy": -0.22588265
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.0645379(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 73"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_20",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": -0.22568805
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.0644823(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 74"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_20",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": -0.2258655
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.064533(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 75"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_5",
+      "method": "WAP-net (n_d = 1)",
+      "energy": -0.4648875
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.132825(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 76"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_5",
+      "method": "WAP-net (n_d = 8)",
+      "energy": -0.4649575
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.132845(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 77"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_5",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": -0.4647055
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.132773(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 78"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_5",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": -0.4648385
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.132811(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 79"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_50",
+      "method": "WAP-net (n_d = 1)",
+      "energy": -0.10262623
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.02932178(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 80"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_50",
+      "method": "WAP-net (n_d = 8)",
+      "energy": -0.102625635
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.02932161(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 81"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_50",
+      "method": "IB-VMC (iterative backflow, single determinant)",
+      "energy": -0.10253495
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.0292957(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 82"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_7_P_7_0_50",
+      "method": "IB-DMC (fixed-node DMC on the iterative-backflow state)",
+      "energy": -0.1026228
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: at rs = 1, N = 14 the energies sit 0.0376 Ha per electron below QMBL's HF energy 0.6065343, a correlation energy; without the Madelung term they would sit 0.365 Ha higher.",
+      "Printed in the source (arXiv:2202.04622, sources/2202.04622.txt): the interaction of each electron with its own images is added, for Ne electrons 'it is Ne vM', vM the Madelung constant (lines 182-190); electrons in 'a cubic box of side L' with periodic boundary conditions (line 159); 'Energies are given in Rydbergs' (lines 202-203); Table III caption 'energies per particle in Rydbergs' (lines 537-538)."
+    ],
+    "reported_as": "-0.0293208(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 83"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_0.2",
+      "method": "FermiNet (16 dense determinants)",
+      "energy": 1192.87809
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "44.18067(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 84"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_0.2",
+      "method": "SJB-VMC (gas)",
+      "energy": 1192.92345
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "44.18235(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 85"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_0.2",
+      "method": "SJB-DMC (gas trial state)",
+      "energy": 1192.92048
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "44.18224(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 86"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_0.2",
+      "method": "SJB-VMC (crystal)",
+      "energy": 1192.990005
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "44.184815(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 87"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_0.2",
+      "method": "SJB-DMC (crystal trial state)",
+      "energy": 1192.98636
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "44.18468(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 88"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_0.5",
+      "method": "FermiNet (16 dense determinants)",
+      "energy": 170.605008
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "6.318704(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 89"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_0.5",
+      "method": "SJB-VMC (gas)",
+      "energy": 170.63541
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "6.31983(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 90"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_0.5",
+      "method": "SJB-DMC (gas trial state)",
+      "energy": 170.633358
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "6.319754(7)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 91"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_0.5",
+      "method": "SJB-VMC (crystal)",
+      "energy": 170.69643
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "6.322090(8)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 92"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_0.5",
+      "method": "SJB-DMC (crystal trial state)",
+      "energy": 170.6751
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "6.32130(6)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 93"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_1",
+      "method": "FermiNet (16 dense determinants)",
+      "energy": 34.061769
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "1.261547(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 94"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_1",
+      "method": "SJB-VMC (gas)",
+      "energy": 34.074594
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "1.262022(8)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 95"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_1",
+      "method": "SJB-DMC (gas trial state)",
+      "energy": 34.073325
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "1.261975(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 96"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_1",
+      "method": "SJB-VMC (crystal)",
+      "energy": 34.09722
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "1.26286(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 97"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_1",
+      "method": "SJB-DMC (crystal trial state)",
+      "energy": 34.08858
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "1.26254(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 98"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_10",
+      "method": "FermiNet (16 dense determinants)",
+      "energy": -1.35864
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.050320(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 99"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_10",
+      "method": "SJB-VMC (gas)",
+      "energy": -1.3540527
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.0501501(6)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 100"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_10",
+      "method": "SJB-DMC (gas trial state)",
+      "energy": -1.3555026
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.0502038(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 101"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_10",
+      "method": "SJB-VMC (crystal)",
+      "energy": -1.3575114
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.0502782(7)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 102"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_10",
+      "method": "SJB-DMC (crystal trial state)",
+      "energy": -1.3590423
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.0503349(8)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 103"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_2",
+      "method": "FermiNet (16 dense determinants)",
+      "energy": 4.106322
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "0.152086(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 104"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_2",
+      "method": "SJB-VMC (gas)",
+      "energy": 4.114611
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "0.152393(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 105"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_2",
+      "method": "SJB-DMC (gas trial state)",
+      "energy": 4.113288
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "0.152344(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 106"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_2",
+      "method": "SJB-VMC (crystal)",
+      "energy": 4.1072535
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "0.1521205(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 107"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_2",
+      "method": "SJB-DMC (crystal trial state)",
+      "energy": 4.106079
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "0.152077(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 108"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_3",
+      "method": "FermiNet (16 dense determinants)",
+      "energy": -0.187947
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.006961(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 109"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_3",
+      "method": "SJB-VMC (gas)",
+      "energy": -0.180711
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.006693(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 110"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_3",
+      "method": "SJB-DMC (gas trial state)",
+      "energy": -0.1820313
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.0067419(7)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 111"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_3",
+      "method": "SJB-VMC (crystal)",
+      "energy": -0.186705
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.006915(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 112"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_3",
+      "method": "SJB-DMC (crystal trial state)",
+      "energy": -0.188082
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.006966(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 113"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_30",
+      "method": "FermiNet (16 dense determinants)",
+      "energy": -0.608607
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.022541(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 114"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_30",
+      "method": "SJB-VMC (gas)",
+      "energy": -0.606177
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.0224510(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 115"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_30",
+      "method": "SJB-DMC (gas trial state)",
+      "energy": -0.6074649
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.02249870(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 116"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_30",
+      "method": "SJB-VMC (crystal)",
+      "energy": -0.6078213
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.0225119(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 117"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_30",
+      "method": "SJB-DMC (crystal trial state)",
+      "energy": -0.609174
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.0225620(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 118"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_5",
+      "method": "FermiNet (16 dense determinants)",
+      "energy": -1.557657
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.057691(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 119"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_5",
+      "method": "SJB-VMC (gas)",
+      "energy": -1.551231
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.057453(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 120"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_5",
+      "method": "SJB-DMC (gas trial state)",
+      "energy": -1.5525621
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.0575023(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 121"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_5",
+      "method": "SJB-VMC (crystal)",
+      "energy": -1.5565392
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.0576496(9)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 122"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_5",
+      "method": "SJB-DMC (crystal trial state)",
+      "energy": -1.557954
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.057702(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 123"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_50",
+      "method": "FermiNet (16 dense determinants)",
+      "energy": -0.390906
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.014478(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 124"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_50",
+      "method": "SJB-VMC (gas)",
+      "energy": -0.3888891
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.0144033(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 125"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_50",
+      "method": "SJB-DMC (gas trial state)",
+      "energy": -0.38999043
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.01444409(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 126"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_50",
+      "method": "SJB-VMC (crystal)",
+      "energy": -0.3902256
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.0144528(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 127"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_50",
+      "method": "SJB-DMC (crystal trial state)",
+      "energy": -0.3912786
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.0144918(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 128"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_70",
+      "method": "FermiNet (16 dense determinants)",
+      "energy": -0.288711
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.010693(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 129"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_70",
+      "method": "SJB-VMC (gas)",
+      "energy": -0.2871585
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.0106355(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 130"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_70",
+      "method": "SJB-DMC (gas trial state)",
+      "energy": -0.2881845
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.0106735(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 131"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_70",
+      "method": "SJB-VMC (crystal)",
+      "energy": -0.2884248
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.0106824(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 132"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_70",
+      "method": "SJB-DMC (crystal trial state)",
+      "energy": -0.2892186
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.0107118(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 133"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_90",
+      "method": "FermiNet (16 dense determinants)",
+      "energy": -0.229392
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.008496(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 134"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_90",
+      "method": "SJB-VMC (gas)",
+      "energy": -0.2275479
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.0084277(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 135"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_90",
+      "method": "SJB-DMC (gas trial state)",
+      "energy": -0.2291274
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.0084862(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 136"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_90",
+      "method": "SJB-VMC (crystal)",
+      "energy": -0.22930398
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.00849274(7)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 137"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/bcc_27_P_27_0_90",
+      "method": "SJB-DMC (crystal trial state)",
+      "energy": -0.2298699
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check fixes the cell: at rs = 0.2 the FermiNet energy 44.18067 is 0.047 Ha below QMBL's bcc HF energy (open shell), against 5.1 and 2.6 Ha above it for sc and fcc cells.",
+      "Printed in the source (arXiv:2202.05183, sources/2202.05183.txt): 'spin-polarized 27-electron gas in a body-centered cubic (bcc) simulation cell' (line 201); Table IV caption 'N=27 HEG in a body-centered cubic simulation cell' (line 698); column 'Total energy [Hartree per electron]' (line 702); U_Coulomb is 'the Coulomb energy per simulation cell of an infinite periodic lattice of identical copies of that cell' (lines 100-101) and the cell is 'embedded in a periodic array of images of all charges in the simulation cell' (line 498)."
+    ],
+    "reported_as": "−0.0085137(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 138"
+  },
+  {
+    "match": {
+      "instance": "HEG2D/square_37_P_37_0_5",
+      "method": "Neural canonical transformation (ground state)",
+      "energy": -5.31801
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: -0.14373 Ha per electron is 0.0118 Ha below QMBL's HF energy -0.1319137.",
+      "Printed in the source (arXiv:2201.03156, sources/2201.03156.txt): 'We set the energy unit to be Rydberg' (line 140); the Fig. 2(b) caption gives the converged result -0.28746(8) and the variational Monte Carlo result -0.2863(1) of Ref. [41] (lines 265-267), Tanatar & Ceperley, Phys. Rev. B 39, 5005, Table II, N = 37, rs = 5 (qmbl-runs/qmbl-worklist/2026-10-22-quoted-primaries/dl/tanatar-ceperley-1989.txt line 216), who state that 'an electron must also interact with all of its own images' (lines 201-203). Difference of the two printed numbers: -0.28746 - (-0.2863) = -0.00116 Ry."
+    ],
+    "reported_as": "−0.28746(8)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-1 entry 223"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_10",
+      "method": "MPNN (1 message-passing iterations, plane-wave reference), before basis transformation",
+      "energy": -1.933647
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-1.933647(8)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 0"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_10",
+      "method": "MPNN (1 message-passing iterations, plane-wave reference), after basis transformation",
+      "energy": -1.933741
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-1.933741(9)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 1"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_10",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference), before basis transformation",
+      "energy": -1.934601
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-1.934601(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 2"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_10",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference), after basis transformation",
+      "energy": -1.934627
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-1.934627(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 3"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_100",
+      "method": "MPNN (1 message-passing iterations, plane-wave reference), before basis transformation",
+      "energy": -0.2767561
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.2767561(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 4"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_100",
+      "method": "MPNN (1 message-passing iterations, plane-wave reference), after basis transformation",
+      "energy": -0.2767603
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.2767603(6)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 5"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_100",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference), before basis transformation",
+      "energy": -0.2769409
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.2769409(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 6"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_100",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference), after basis transformation",
+      "energy": -0.2769434
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.2769434(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 7"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_30",
+      "method": "MPNN (1 message-passing iterations, plane-wave reference), before basis transformation",
+      "energy": -0.817603999999
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.817604(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 8"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_30",
+      "method": "MPNN (1 message-passing iterations, plane-wave reference), after basis transformation",
+      "energy": -0.817620999998
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.817621(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 9"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_30",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference), before basis transformation",
+      "energy": -0.8181171
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.8181171(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 10"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_30",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference), after basis transformation",
+      "energy": -0.818119599998
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.8181196(7)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 11"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_5",
+      "method": "MPNN (1 message-passing iterations, plane-wave reference), before basis transformation",
+      "energy": -2.72139
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-2.72139(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 12"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_5",
+      "method": "MPNN (1 message-passing iterations, plane-wave reference), after basis transformation",
+      "energy": -2.72155
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-2.72155(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 13"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_5",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference), before basis transformation",
+      "energy": -2.72254
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-2.72254(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 14"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_5",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference), after basis transformation",
+      "energy": -2.72256
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-2.72256(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 15"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_50",
+      "method": "MPNN (1 message-passing iterations, plane-wave reference), before basis transformation",
+      "energy": -0.5216283
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.5216283(8)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 16"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_50",
+      "method": "MPNN (1 message-passing iterations, plane-wave reference), after basis transformation",
+      "energy": -0.521642999999
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.521643(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 17"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_50",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference), before basis transformation",
+      "energy": -0.521923299998
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.5219233(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 18"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_50",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference), after basis transformation",
+      "energy": -0.521926099999
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.5219261(8)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 19"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_80",
+      "method": "MPNN (1 message-passing iterations, plane-wave reference), before basis transformation",
+      "energy": -0.3401625
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3401625(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 20"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_80",
+      "method": "MPNN (1 message-passing iterations, plane-wave reference), after basis transformation",
+      "energy": -0.3401708
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3401708(9)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 21"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_80",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference), before basis transformation",
+      "energy": -0.3404184
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3404184(6)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 22"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_80",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference), after basis transformation",
+      "energy": -0.3404231
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3404231(6)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 23"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_86.6",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference, α fixed across the scan), before basis transformation",
+      "energy": -0.3164466
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3164466(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 24"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_86.6",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference, α fixed across the scan), after basis transformation",
+      "energy": -0.3164493
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3164493(7)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 25"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_86.6",
+      "method": "MPNN (2 message-passing iterations, Gaussian-orbital reference, α fixed across the scan), before basis transformation",
+      "energy": -0.3164428
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3164428(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 26"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_86.6",
+      "method": "MPNN (2 message-passing iterations, Gaussian-orbital reference, α fixed across the scan), after basis transformation",
+      "energy": -0.3164435
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3164435(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 27"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_86.7",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference, α fixed across the scan), before basis transformation",
+      "energy": -0.3161113
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3161113(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 28"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_86.7",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference, α fixed across the scan), after basis transformation",
+      "energy": -0.3161131
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3161131(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 29"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_86.7",
+      "method": "MPNN (2 message-passing iterations, Gaussian-orbital reference, α fixed across the scan), before basis transformation",
+      "energy": -0.3161083
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3161083(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 30"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_86.7",
+      "method": "MPNN (2 message-passing iterations, Gaussian-orbital reference, α fixed across the scan), after basis transformation",
+      "energy": -0.3161087
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3161087(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 31"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_86.8",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference, α fixed across the scan), before basis transformation",
+      "energy": -0.3157748
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3157748(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 32"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_86.8",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference, α fixed across the scan), after basis transformation",
+      "energy": -0.3157773
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3157773(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 33"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_86.8",
+      "method": "MPNN (2 message-passing iterations, Gaussian-orbital reference, α fixed across the scan), before basis transformation",
+      "energy": -0.3157743
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3157743(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 34"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_86.8",
+      "method": "MPNN (2 message-passing iterations, Gaussian-orbital reference, α fixed across the scan), after basis transformation",
+      "energy": -0.3157745
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3157745(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 35"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_86.9",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference, α fixed across the scan), before basis transformation",
+      "energy": -0.31544
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3154400(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 36"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_86.9",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference, α fixed across the scan), after basis transformation",
+      "energy": -0.3154422
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3154422(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 37"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_86.9",
+      "method": "MPNN (2 message-passing iterations, Gaussian-orbital reference, α fixed across the scan), before basis transformation",
+      "energy": -0.3154413
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3154413(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 38"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_86.9",
+      "method": "MPNN (2 message-passing iterations, Gaussian-orbital reference, α fixed across the scan), after basis transformation",
+      "energy": -0.3154419
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3154419(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 39"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_87.1",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference, α fixed across the scan), before basis transformation",
+      "energy": -0.3147681
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3147681(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 40"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_87.1",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference, α fixed across the scan), after basis transformation",
+      "energy": -0.3147713
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3147713(7)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 41"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_87.1",
+      "method": "MPNN (2 message-passing iterations, Gaussian-orbital reference, α fixed across the scan), before basis transformation",
+      "energy": -0.3147772
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3147772(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 42"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_87.1",
+      "method": "MPNN (2 message-passing iterations, Gaussian-orbital reference, α fixed across the scan), after basis transformation",
+      "energy": -0.3147776
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3147776(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 43"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_87",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference, α fixed across the scan), before basis transformation",
+      "energy": -0.3151011
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3151011(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 44"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_87",
+      "method": "MPNN (2 message-passing iterations, plane-wave reference, α fixed across the scan), after basis transformation",
+      "energy": -0.3151048
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3151048(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 45"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_87",
+      "method": "MPNN (2 message-passing iterations, Gaussian-orbital reference, α fixed across the scan), before basis transformation",
+      "energy": -0.3151082
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3151082(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 46"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/rect-3x3x2_36_P_18_18_87",
+      "method": "MPNN (2 message-passing iterations, Gaussian-orbital reference, α fixed across the scan), after basis transformation",
+      "energy": -0.3151086
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's HF check: N = 14, rs = 1, sc: E/N = 0.56902 is 0.0375 Ha below QMBL's HF energy 0.6065343, as arXiv:2202.04622's are.",
+      "Printed in the source (arXiv:2604.15888, sources/2604.15888.txt): 'rectangular simulation cell with aspect ratio 3 : 3 : 2' (line 998); Table IV caption 'Total energy in Hartree' (line 1334); Coulomb sum over lattice vectors Ls under periodic boundary conditions in which terms with i=j are omitted only when Ls = 0, evaluated by Ewald summation (lines 817-820 and 143)."
+    ],
+    "reported_as": "-0.3151086(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 47"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_0.5",
+      "method": "VMC of the Hartree-Fock determinant",
+      "energy": 176.3586
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "3.2659(7)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 159"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_0.5",
+      "method": "VMC, SJ",
+      "energy": 174.0744
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "3.2236(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 160"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_0.5",
+      "method": "DMC, SJ nodes",
+      "energy": 174.0123
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "3.22245(9)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 161"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_0.5",
+      "method": "VMC, SJ3",
+      "energy": 174.0582
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "3.2233(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 162"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_0.5",
+      "method": "VMC, BF",
+      "energy": 173.95128
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "3.22132(7)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 163"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_0.5",
+      "method": "DMC, BF nodes",
+      "energy": 173.94048
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "3.22112(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 164"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_1",
+      "method": "VMC of the Hartree-Fock determinant",
+      "energy": 30.7206
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "0.5689(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 165"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_1",
+      "method": "VMC, SJ",
+      "energy": 28.73394
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "0.53211(7)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 166"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_1",
+      "method": "DMC, SJ nodes",
+      "energy": 28.66806
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "0.53089(9)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 167"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_1",
+      "method": "VMC, SJ3",
+      "energy": 28.7145
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "0.53175(7)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 168"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_1",
+      "method": "VMC, BF",
+      "energy": 28.62486
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "0.53009(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 169"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_1",
+      "method": "DMC, BF nodes",
+      "energy": 28.61406
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "0.52989(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 170"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_10",
+      "method": "VMC of the Hartree-Fock determinant",
+      "energy": -2.09736
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.03884(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 171"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_10",
+      "method": "VMC, SJ",
+      "energy": -2.912058
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.053927(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 172"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_10",
+      "method": "VMC, SJ3",
+      "energy": -2.918268
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.054042(4)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 173"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_10",
+      "method": "DMC, SJ3 nodes",
+      "energy": -2.92977
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.054255(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 174"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_10",
+      "method": "VMC, BF3",
+      "energy": -2.937006
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.054389(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 175"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_10",
+      "method": "DMC, BF3 nodes",
+      "energy": -2.939922
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.054443(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 176"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_2",
+      "method": "VMC of the Hartree-Fock determinant",
+      "energy": 1.0044
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "0.0186(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 177"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_2",
+      "method": "VMC, SJ",
+      "energy": -0.67284
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.01246(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 178"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_2",
+      "method": "DMC, SJ nodes",
+      "energy": -0.70794
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.01311(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 179"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_2",
+      "method": "VMC, SJ3",
+      "energy": -0.67608
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.01252(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 180"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_2",
+      "method": "VMC, BF",
+      "energy": -0.74628
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.01382(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 181"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_2",
+      "method": "DMC, BF nodes",
+      "energy": -0.754164
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.013966(9)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 182"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_20",
+      "method": "VMC of the Hartree-Fock determinant",
+      "energy": -1.1907
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.02205(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 183"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_20",
+      "method": "VMC, SJ",
+      "energy": -1.715418
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.031767(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 184"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_20",
+      "method": "VMC, SJ3",
+      "energy": -1.720332
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.031858(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 185"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_20",
+      "method": "DMC, SJ3 nodes",
+      "energy": -1.726542
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.031973(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 186"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_20",
+      "method": "VMC, BF3",
+      "energy": -1.7279136
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.0319984(8)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 187"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_20",
+      "method": "DMC, BF3 nodes",
+      "energy": -1.730538
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.032047(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 188"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_5",
+      "method": "VMC of the Hartree-Fock determinant",
+      "energy": -3.0375
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.05625(7)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 189"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_5",
+      "method": "VMC, SJ",
+      "energy": -4.2201
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.07815(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 190"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_5",
+      "method": "VMC, SJ3",
+      "energy": -4.227336
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.078284(9)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 191"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_5",
+      "method": "DMC, SJ3 nodes",
+      "energy": -4.247046
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.078649(7)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 192"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_5",
+      "method": "VMC, BF3",
+      "energy": -4.263894
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.078961(5)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 193"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_5",
+      "method": "DMC, BF3 nodes",
+      "energy": -4.267944
+    },
+    "field": "verified.note",
+    "edit": [
+      "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+      "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+    ],
+    "reported_as": "−0.079036(3)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 194"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_0.5",
+      "method": "DeepSolid (1 determinant)",
+      "energy": 173.946204
+    },
+    "field": "verified.note",
+    "edit": [
+      "; QMBL's HF check: at rs = 0.5 the energy 3.221226 sits 0.044 Ha below QMBL's HF energy 3.2653295.",
+      ". Printed in the source (arXiv:2203.15472, sources/2203.15472.txt): Supplementary Table 11 gives the 54-electron gas with 'energies are all given in Hartree' (lines 1013-1019) and prints Net beside BF-DMC and BF-VMC; at rs = 0.5 (BF-DMC 3.22112(4), BF-VMC 3.22132(7)) and rs = 1 (0.52989(4), 0.53009(3)) these equal Table I of arXiv:0801.0518. Madelung term as stated for those rows, arXiv:2103.03176 Table II 'including the Madelung constant' (sources/2103.03176.txt lines 389-397)."
+    ],
+    "reported_as": "3.221226(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 216"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_1",
+      "method": "DeepSolid (1 determinant)",
+      "energy": 28.621026
+    },
+    "field": "verified.note",
+    "edit": [
+      "; QMBL's HF check: at rs = 0.5 the energy 3.221226 sits 0.044 Ha below QMBL's HF energy 3.2653295.",
+      ". Printed in the source (arXiv:2203.15472, sources/2203.15472.txt): Supplementary Table 11 gives the 54-electron gas with 'energies are all given in Hartree' (lines 1013-1019) and prints Net beside BF-DMC and BF-VMC; at rs = 0.5 (BF-DMC 3.22112(4), BF-VMC 3.22132(7)) and rs = 1 (0.52989(4), 0.53009(3)) these equal Table I of arXiv:0801.0518. Madelung term as stated for those rows, arXiv:2103.03176 Table II 'including the Madelung constant' (sources/2103.03176.txt lines 389-397)."
+    ],
+    "reported_as": "0.530019(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 217"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_10",
+      "method": "DeepSolid (1 determinant)",
+      "energy": -2.931039
+    },
+    "field": "verified.note",
+    "edit": [
+      "; QMBL's HF check: at rs = 0.5 the energy 3.221226 sits 0.044 Ha below QMBL's HF energy 3.2653295.",
+      ". Printed in the source (arXiv:2203.15472, sources/2203.15472.txt): Supplementary Table 11 gives the 54-electron gas with 'energies are all given in Hartree' (lines 1013-1019) and prints Net beside BF-DMC and BF-VMC; at rs = 0.5 (BF-DMC 3.22112(4), BF-VMC 3.22132(7)) and rs = 1 (0.52989(4), 0.53009(3)) these equal Table I of arXiv:0801.0518. Madelung term as stated for those rows, arXiv:2103.03176 Table II 'including the Madelung constant' (sources/2103.03176.txt lines 389-397)."
+    ],
+    "reported_as": "-0.0542785(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 218"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_2",
+      "method": "DeepSolid (1 determinant)",
+      "energy": -0.74736
+    },
+    "field": "verified.note",
+    "edit": [
+      "; QMBL's HF check: at rs = 0.5 the energy 3.221226 sits 0.044 Ha below QMBL's HF energy 3.2653295.",
+      ". Printed in the source (arXiv:2203.15472, sources/2203.15472.txt): Supplementary Table 11 gives the 54-electron gas with 'energies are all given in Hartree' (lines 1013-1019) and prints Net beside BF-DMC and BF-VMC; at rs = 0.5 (BF-DMC 3.22112(4), BF-VMC 3.22132(7)) and rs = 1 (0.52989(4), 0.53009(3)) these equal Table I of arXiv:0801.0518. Madelung term as stated for those rows, arXiv:2103.03176 Table II 'including the Madelung constant' (sources/2103.03176.txt lines 389-397)."
+    ],
+    "reported_as": "-0.013840(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 219"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_20",
+      "method": "DeepSolid (1 determinant)",
+      "energy": -1.7111844
+    },
+    "field": "verified.note",
+    "edit": [
+      "; QMBL's HF check: at rs = 0.5 the energy 3.221226 sits 0.044 Ha below QMBL's HF energy 3.2653295.",
+      ". Printed in the source (arXiv:2203.15472, sources/2203.15472.txt): Supplementary Table 11 gives the 54-electron gas with 'energies are all given in Hartree' (lines 1013-1019) and prints Net beside BF-DMC and BF-VMC; at rs = 0.5 (BF-DMC 3.22112(4), BF-VMC 3.22132(7)) and rs = 1 (0.52989(4), 0.53009(3)) these equal Table I of arXiv:0801.0518. Madelung term as stated for those rows, arXiv:2103.03176 Table II 'including the Madelung constant' (sources/2103.03176.txt lines 389-397)."
+    ],
+    "reported_as": "-0.0316886(1)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 220"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_54_P_27_27_5",
+      "method": "DeepSolid (1 determinant)",
+      "energy": -4.2571116
+    },
+    "field": "verified.note",
+    "edit": [
+      "; QMBL's HF check: at rs = 0.5 the energy 3.221226 sits 0.044 Ha below QMBL's HF energy 3.2653295.",
+      ". Printed in the source (arXiv:2203.15472, sources/2203.15472.txt): Supplementary Table 11 gives the 54-electron gas with 'energies are all given in Hartree' (lines 1013-1019) and prints Net beside BF-DMC and BF-VMC; at rs = 0.5 (BF-DMC 3.22112(4), BF-VMC 3.22132(7)) and rs = 1 (0.52989(4), 0.53009(3)) these equal Table I of arXiv:0801.0518. Madelung term as stated for those rows, arXiv:2103.03176 Table II 'including the Madelung constant' (sources/2103.03176.txt lines 389-397)."
+    ],
+    "reported_as": "-0.0788354(2)",
+    "location": "see edit text (printed lines cited there)",
+    "version_read": "sources/ text of the cited papers, as stated in the edit",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 221"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_PA_8_2",
+      "method": "HFDS (fully parametrized hidden sub-matrix)",
+      "energy": -20.11088
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1274-1275 \"U = 2 ... 4 -1.25693(1)\"; 1268-1270 \"periodic boundary conditions along one of the sides ... anti-periodic ... other side\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_PA_8_4",
+      "method": "HFDS (fully parametrized hidden sub-matrix)",
+      "energy": -14.592
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1274-1275 \"U = 4 ... -0.9120(1)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_PA_8_6",
+      "method": "HFDS (fully parametrized hidden sub-matrix)",
+      "energy": -10.9016
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1274-1275 \"U = 6 ... -0.68135(1)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_PA_8_8",
+      "method": "HFDS (fully parametrized hidden sub-matrix)",
+      "energy": -8.6416
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1274-1275 \"U = 8 ... -0.5401(1)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_0.1",
+      "method": "Exact diagonalization",
+      "energy": -19.9073095
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1192-1193 \"U = 0.1 ... ED -19.9073095(9)\"; 1170 \"4x4 ... n = 1/2 ... periodic boundary conditions\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_0.1",
+      "method": "USD (Table II)",
+      "energy": -19.906
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1192-1193 \"U = 0.1 ... ED -19.9073095(9)\"; 1170 \"4x4 ... n = 1/2 ... periodic boundary conditions\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_0.1",
+      "method": "USD (Gutzwiller) (Table II)",
+      "energy": -19.9044
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1192-1193 \"U = 0.1 ... ED -19.9073095(9)\"; 1170 \"4x4 ... n = 1/2 ... periodic boundary conditions\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_0.1",
+      "method": "USD (Jastrow) (Table II)",
+      "energy": -19.90449
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1192-1193 \"U = 0.1 ... ED -19.9073095(9)\"; 1170 \"4x4 ... n = 1/2 ... periodic boundary conditions\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_0.1",
+      "method": "USD (RBM) (Table II)",
+      "energy": -19.904895
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1192-1193 \"U = 0.1 ... ED -19.9073095(9)\"; 1170 \"4x4 ... n = 1/2 ... periodic boundary conditions\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_0.1",
+      "method": "Gutzwiller inspired CF (Table II)",
+      "energy": -19.90535
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1192-1193 \"U = 0.1 ... ED -19.9073095(9)\"; 1170 \"4x4 ... n = 1/2 ... periodic boundary conditions\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_0.1",
+      "method": "Unrestricted hidden spin (Table II)",
+      "energy": -19.906781
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1192-1193 \"U = 0.1 ... ED -19.9073095(9)\"; 1170 \"4x4 ... n = 1/2 ... periodic boundary conditions\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_0.1",
+      "method": "Jastrow inspired CF (Table II)",
+      "energy": -19.906567
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1192-1193 \"U = 0.1 ... ED -19.9073095(9)\"; 1170 \"4x4 ... n = 1/2 ... periodic boundary conditions\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_0.1",
+      "method": "Gutzwiller inspired CF(RBM) (Table II)",
+      "energy": -19.904895
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1192-1193 \"U = 0.1 ... ED -19.9073095(9)\"; 1170 \"4x4 ... n = 1/2 ... periodic boundary conditions\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_0.1",
+      "method": "Unrestricted hid. spin(RBM) (Table II)",
+      "energy": -19.904427
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1192-1193 \"U = 0.1 ... ED -19.9073095(9)\"; 1170 \"4x4 ... n = 1/2 ... periodic boundary conditions\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_1",
+      "method": "Exact diagonalization",
+      "energy": -19.161986
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1192-1193 \"U = 1 ... ED -19.161986(3)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_1",
+      "method": "USD (Table II)",
+      "energy": -19.07
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1192-1193 \"U = 1 ... ED -19.161986(3)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_1",
+      "method": "USD (Gutzwiller) (Table II)",
+      "energy": -19.147
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1192-1193 \"U = 1 ... ED -19.161986(3)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_1",
+      "method": "USD (Jastrow) (Table II)",
+      "energy": -19.1432
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1192-1193 \"U = 1 ... ED -19.161986(3)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_1",
+      "method": "USD (RBM) (Table II)",
+      "energy": -19.14965
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1192-1193 \"U = 1 ... ED -19.161986(3)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_1",
+      "method": "Gutzwiller inspired CF (Table II)",
+      "energy": -19.14257
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1192-1193 \"U = 1 ... ED -19.161986(3)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_1",
+      "method": "Unrestricted hidden spin (Table II)",
+      "energy": -19.14371
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1192-1193 \"U = 1 ... ED -19.161986(3)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_1",
+      "method": "Jastrow inspired CF (Table II)",
+      "energy": -19.09486
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1192-1193 \"U = 1 ... ED -19.161986(3)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_1",
+      "method": "Gutzwiller inspired CF(RBM) (Table II)",
+      "energy": -19.14965
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1192-1193 \"U = 1 ... ED -19.161986(3)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_1",
+      "method": "Unrestricted hid. spin(RBM) (Table II)",
+      "energy": -19.16018
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1192-1193 \"U = 1 ... ED -19.161986(3)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_10",
+      "method": "HFDS (8 hidden fermions, single hidden layer, α = 0.5)",
+      "energy": -16.0457
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1176,1179 \"U ... HFDS (α = 0.5) ... 10 -16.1432081(7) -16.0457(1)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_10",
+      "method": "HFDS (8 hidden fermions, single hidden layer, α = 1)",
+      "energy": -16.0995
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1176,1179 \"U ... HFDS (α = 0.5) ... 10 -16.1432081(7) -16.0457(1)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_10",
+      "method": "HFDS (8 hidden fermions, single hidden layer, α = 2)",
+      "energy": -16.1103
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1176,1179 \"U ... HFDS (α = 0.5) ... 10 -16.1432081(7) -16.0457(1)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_10",
+      "method": "HFDS (8 hidden fermions, single hidden layer, α = 4)",
+      "energy": -16.1204
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1176,1179 \"U ... HFDS (α = 0.5) ... 10 -16.1432081(7) -16.0457(1)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_10",
+      "method": "HFDS (8 hidden fermions, single hidden layer, α = 8)",
+      "energy": -16.1329
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1176,1179 \"U ... HFDS (α = 0.5) ... 10 -16.1432081(7) -16.0457(1)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_10",
+      "method": "HFDS (8 hidden fermions, single hidden layer, α = 16)",
+      "energy": -16.1348
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1176,1179 \"U ... HFDS (α = 0.5) ... 10 -16.1432081(7) -16.0457(1)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_10",
+      "method": "USD (Table II)",
+      "energy": -13.74
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1176,1179 \"U ... HFDS (α = 0.5) ... 10 -16.1432081(7) -16.0457(1)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_10",
+      "method": "USD (Gutzwiller) (Table II)",
+      "energy": -15.685
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1176,1179 \"U ... HFDS (α = 0.5) ... 10 -16.1432081(7) -16.0457(1)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_10",
+      "method": "USD (Jastrow) (Table II)",
+      "energy": -15.7443
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1176,1179 \"U ... HFDS (α = 0.5) ... 10 -16.1432081(7) -16.0457(1)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_10",
+      "method": "USD (RBM) (Table II)",
+      "energy": -15.9339
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1176,1179 \"U ... HFDS (α = 0.5) ... 10 -16.1432081(7) -16.0457(1)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_10",
+      "method": "Gutzwiller inspired CF (Table II)",
+      "energy": -15.7953
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1176,1179 \"U ... HFDS (α = 0.5) ... 10 -16.1432081(7) -16.0457(1)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_10",
+      "method": "Jastrow inspired CF (Table II)",
+      "energy": -13.2197
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1176,1179 \"U ... HFDS (α = 0.5) ... 10 -16.1432081(7) -16.0457(1)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_10",
+      "method": "Gutzwiller inspired CF(RBM) (Table II)",
+      "energy": -15.9416
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1176,1179 \"U ... HFDS (α = 0.5) ... 10 -16.1432081(7) -16.0457(1)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_4_10",
+      "method": "Unrestricted hid. spin(RBM) (Table II)",
+      "energy": -15.9788
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1176,1179 \"U ... HFDS (α = 0.5) ... 10 -16.1432081(7) -16.0457(1)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_5_10",
+      "method": "HFDS (10 hidden fermions, α = 64)",
+      "energy": -16.9002
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1219-1220 \"n = 5/8 ... periodic boundary conditions\"; 1225,1228 \"U =10 ... HFSD (α = 64) -16.90020(3)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_5_10",
+      "method": "HFDS (10 hidden fermions, α = 64) + C4",
+      "energy": -16.90119
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1219-1220 \"n = 5/8 ... periodic boundary conditions\"; 1225,1228 \"U =10 ... HFSD (α = 64) -16.90020(3)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_5_10",
+      "method": "HFDS (10 hidden fermions, α = 64) + K = 0",
+      "energy": -16.90147
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1219-1220 \"n = 5/8 ... periodic boundary conditions\"; 1225,1228 \"U =10 ... HFSD (α = 64) -16.90020(3)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_7_8",
+      "method": "HFDS (fully parametrized hidden sub-matrix)",
+      "energy": -11.8544
+    },
+    "field": "verified.note",
+    "edit": [
+      " The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+      " The U of each row is the label printed in its table; the instance's U value is the one set by the relabel recorded on the instance."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2111.10420.txt:1246-1247 \"1/8 hole doping (n = 7/8) and U = 8\"; 1252-1253 \"L ... 4 -0.7409(1)\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.1",
+      "method": "Exact diagonalization",
+      "energy": -91.885824
+    },
+    "field": "verified.note",
+    "edit": [
+      "QMBL's Lanczos (qmbl-runs/qmbl-ed-2026-09-28: E2's ed_sym.py, C4v one-dimensional sectors with even spin at k = 0 (A1, B1)) gives -0.638095436 per site, so the printed value is 5.6e-7 below it, 1.13x the half-width of its 6 decimals. Golubev et al. (arXiv:2606.04558 Table I, 6x6 ED) print -0.638095, also correctly rounded",
+      "Golubev et al. (arXiv:2606.04558 Table I, 6x6 ED) print -0.638095 for the same cluster, 1e-6 per site from this cell (arithmetic between two printed numbers); the cluster is the untilted six-by-six with periodic boundaries (sources/cond-mat-9402061.txt:239, :247-49) and H = J1 Si.Sj + J2 Si.Sj' (:127)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/cond-mat-9402061.txt:1644 row 0.10 col 36(A1) -0.638096; PBC :239; N=36 untilted six-by-six :247-49; H = J1 Si.Sj + J2 Si.Sj' :127; per site, J1 unity (Table II caption). Golubev et al. arXiv:2606.04558 Table I prints -0.638095",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.1",
+      "method": "Exact diagonalization",
+      "energy": -91.885824
+    },
+    "field": "verified.note",
+    "edit": [
+      "the same column reproduces QMBL's exact 36-site rows at J2 = 0, 0.3, 0.4, 0.5, 0.6 to 1e-6.",
+      "per site, J1 normalized to unity (Table II caption, sources/cond-mat-9402061.txt:1644)."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/cond-mat-9402061.txt:1644 row 0.10 col 36(A1) -0.638096; PBC :239; N=36 untilted six-by-six :247-49; H = J1 Si.Sj + J2 Si.Sj' :127; per site, J1 unity (Table II caption). Golubev et al. arXiv:2606.04558 Table I prints -0.638095",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_16_O_h2_J0.4",
+      "method": "E_fPEPS (D = 12, Dc = 56)",
+      "energy": -9.02848
+    },
+    "field": "verified.note",
+    "edit": [
+      "energies per site: QMBL's diagonalization of the open 4 x 4 lattice with 2 holes gives -0.564366793 per site, the printed E_ED -0.56436.",
+      "energies per site: the paper's E_inf = -0.6701 is per site (sources/1908.10000.txt:98-99, extrapolated in sqrt(L1 L2), caption :79-80), and the printed E_ED for the 4 x 4 lattice with 2 holes is -0.56436."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1908.10000.txt:98-99 'extrapolated ground state energy in the thermodynamic limit is E_inf = -0.6701' (per site, extrapolated in sqrt(L1 L2), :79-80 caption); :79-80 'open boundary conditions'; :49 Eq. (1) with -n_i n_j/4; :93 'E_fPEPS = -0.56428'; SI Table S2 '4x4 -0.56428(2)' (1908.10000-si.txt:64)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-DMFT-MT-HF_9",
+      "method": "Exact diagonalization",
+      "energy": -23.300947155759474
+    },
+    "field": "reference",
+    "edit": [
+      "QMBL's exact diagonalization reproduces this number to 1.8e-15 relative, checks/cost/ed/results/Impurity--SB-DMFT-MT-HF_9.json",
+      "the value and the label 'Exact diagonalization' are printed in the VarBench dataset, vendor/varbench/Impurity/SB-DMFT-MT-HF_9.md:4; the script runs no exact diagonalization"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/Impurity/SB-DMFT-MT-HF_9.md:4 '| -23.300947155759474 | ... | Exact diagonalization |'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-IMP_9",
+      "method": "Exact diagonalization",
+      "energy": -10.487128484702636
+    },
+    "field": "reference",
+    "edit": [
+      "QMBL's exact diagonalization reproduces this number to 1.5e-15 relative, checks/cost/ed/results/Impurity--SB-IMP_9.json",
+      "the value and the label 'Exact diagonalization' are printed in the VarBench dataset, vendor/varbench/Impurity/SB-IMP_9.md:4; the script runs no exact diagonalization"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/Impurity/SB-IMP_9.md:4 '| -10.487128484702636 | ... | Exact diagonalization |'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-DMFT-MI-HF_10",
+      "method": "Exact diagonalization",
+      "energy": -34.58052046520682
+    },
+    "field": "reference",
+    "edit": [
+      "QMBL's exact diagonalization reproduces this number to 3.3e-15 relative, checks/cost/ed/results/Impurity--SB-DMFT-MI-HF_9.json",
+      "the value and the label 'Exact diagonalization' are printed in the VarBench dataset, vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4; the script runs no exact diagonalization"
+    ],
+    "reported_as": "none (text field)",
+    "location": "varbench-methods ed31bb0 scripts/Impurity/SB-DMFT-MI-HF_9.py:17 \"Nbath=9\", :18 \"U=8.0\", :21 \"Filling=1.0\", :41 \"if abs(U-8.0) < 0.1 and Filling==1.0:\", :44 \"Nb=Nbath+1\"; energies and Einf printed in vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (instances-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/instances-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/chain_32_P_16_1",
+      "method": "Exact diagonalization",
+      "energy": -15.946847944277561
+    },
+    "field": "reference",
+    "edit": [
+      "(QMBL's exact diagonalization of the full N_f = 16 space, 601080390 states, reproduces this number to 8.8e-14 relative: checks/exact-recompute-2026-09/results/tV__chain_32_P_16_1.json; the stored number is",
+      "(vendor/varbench/tV/chain_32_P_16_1.md:3 prints this number with the label 'Exact diagonalization' and this script; the stored number is"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/tV/chain_32_P_16_1.md:3 '| -15.946847944277561 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--ham tv --boundary peri --L 32 --V 1 --Nf 16' (per the row's value_check)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/chain_32_P_16_2",
+      "method": "Exact diagonalization",
+      "energy": -12.32869972364372
+    },
+    "field": "reference",
+    "edit": [
+      "(QMBL's exact diagonalization of the full N_f = 16 space, 601080390 states, reproduces this number to 2.1e-13 relative: checks/exact-recompute-2026-09/results/tV__chain_32_P_16_2.json; the stored number is",
+      "(vendor/varbench/tV/chain_32_P_16_2.md:3 prints this number with the label 'Exact diagonalization' and this script; the stored number is"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/tV/chain_32_P_16_2.md:3 '| -12.32869972364372 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--V 2 --Nf 16 --boundary peri --L 32'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_6_O_R2_sto3g",
+      "method": "QFlow(4e,4o)",
+      "energy": -3.2173
+    },
+    "field": "verified.note",
+    "edit": [
+      "Nuclear repulsion not stated; value magnitude suggests included.",
+      "Nuclear repulsion not stated; the H6/STO-3G cells of this table (HF -3.1059, ED -3.2177) equal the total energies in hartree printed in arXiv:2609.04387 (sources/2609.04387.txt:468-477: RHF -3.10585013, FCI -3.21769929), which prints no R for its H6."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.05168.txt:216-228 Table I 'energies (in Hartree)', R_H-H=2.0 a.u., STO-3G H6 chains (:248); sources/2609.04387.txt:468-477 'H6/STO-3G total energies ... in hartree' RHF -3.10585013, FCI -3.21769929 = this table HF -3.1059, ED -3.2177. Weakness: that paper prints no R for its H6",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_6_O_R2_sto3g",
+      "method": "ED",
+      "energy": -3.2177
+    },
+    "field": "verified.note",
+    "edit": [
+      "Nuclear repulsion not stated; value magnitude suggests included.",
+      "Nuclear repulsion not stated; the H6/STO-3G cells of this table (HF -3.1059, ED -3.2177) equal the total energies in hartree printed in arXiv:2609.04387 (sources/2609.04387.txt:468-477: RHF -3.10585013, FCI -3.21769929), which prints no R for its H6."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.05168.txt:216-228 Table I 'energies (in Hartree)', R_H-H=2.0 a.u., STO-3G H6 chains (:248); sources/2609.04387.txt:468-477 'H6/STO-3G total energies ... in hartree' RHF -3.10585013, FCI -3.21769929 = this table HF -3.1059, ED -3.2177. Weakness: that paper prints no R for its H6",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_6_O_R3_sto3g",
+      "method": "QFlow(4e,4o)",
+      "energy": -2.9521
+    },
+    "field": "verified.note",
+    "edit": [
+      "Nuclear repulsion not stated; value magnitude suggests included.",
+      "Nuclear repulsion not stated; the H6 (2.0 a.u.) column of this table equals the total energies in hartree printed in arXiv:2609.04387 (sources/2609.04387.txt:468-477: RHF -3.10585013, FCI -3.21769929), which prints no R for its H6; the convention is carried over within the same table."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.05168.txt:216-228 Table I caption 'energies (in Hartree)'; convention pinned only by the H6 (2.0 a.u.) column match to sources/2609.04387.txt:468-477; same-table extension",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_6_O_R3_sto3g",
+      "method": "ED",
+      "energy": -2.9576
+    },
+    "field": "verified.note",
+    "edit": [
+      "Nuclear repulsion not stated; value magnitude suggests included.",
+      "Nuclear repulsion not stated; the H6 (2.0 a.u.) column of this table equals the total energies in hartree printed in arXiv:2609.04387 (sources/2609.04387.txt:468-477: RHF -3.10585013, FCI -3.21769929), which prints no R for its H6; the convention is carried over within the same table."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.05168.txt:216-228 Table I caption 'energies (in Hartree)'; convention pinned only by the H6 (2.0 a.u.) column match to sources/2609.04387.txt:468-477; same-table extension",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_8_O_R2_sto3g",
+      "method": "QFlow(4e,4o)",
+      "energy": -4.2847
+    },
+    "field": "verified.note",
+    "edit": [
+      "Nuclear repulsion not stated; value magnitude suggests included.",
+      "Nuclear repulsion not stated; the H6 (2.0 a.u.) column of this table equals the total energies in hartree printed in arXiv:2609.04387 (sources/2609.04387.txt:468-477: RHF -3.10585013, FCI -3.21769929), which prints no R for its H6; the convention is carried over within the same table."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.05168.txt:216-228 Table I caption 'energies (in Hartree)'; same-table extension of the H6 match to sources/2609.04387.txt:468-477",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_8_O_R2_sto3g",
+      "method": "ED",
+      "energy": -4.286
+    },
+    "field": "verified.note",
+    "edit": [
+      "Nuclear repulsion not stated; value magnitude suggests included.",
+      "Nuclear repulsion not stated; the H6 (2.0 a.u.) column of this table equals the total energies in hartree printed in arXiv:2609.04387 (sources/2609.04387.txt:468-477: RHF -3.10585013, FCI -3.21769929), which prints no R for its H6; the convention is carried over within the same table."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.05168.txt:216-228 Table I caption 'energies (in Hartree)'; same-table extension of the H6 match to sources/2609.04387.txt:468-477",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_8_O_R3_sto3g",
+      "method": "QFlow(4e,4o)",
+      "energy": -3.9322
+    },
+    "field": "verified.note",
+    "edit": [
+      "Nuclear repulsion not stated; value magnitude suggests included.",
+      "Nuclear repulsion not stated; the H6 (2.0 a.u.) column of this table equals the total energies in hartree printed in arXiv:2609.04387 (sources/2609.04387.txt:468-477: RHF -3.10585013, FCI -3.21769929), which prints no R for its H6; the convention is carried over within the same table."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.05168.txt:216-228 Table I caption 'energies (in Hartree)'; same-table extension of the H6 match to sources/2609.04387.txt:468-477",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_8_O_R3_sto3g",
+      "method": "ED",
+      "energy": -3.9447
+    },
+    "field": "verified.note",
+    "edit": [
+      "Nuclear repulsion not stated; value magnitude suggests included.",
+      "Nuclear repulsion not stated; the H6 (2.0 a.u.) column of this table equals the total energies in hartree printed in arXiv:2609.04387 (sources/2609.04387.txt:468-477: RHF -3.10585013, FCI -3.21769929), which prints no R for its H6; the convention is carried over within the same table."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.05168.txt:216-228 Table I caption 'energies (in Hartree)'; same-table extension of the H6 match to sources/2609.04387.txt:468-477",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
   },
 ];

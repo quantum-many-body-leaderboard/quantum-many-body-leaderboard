@@ -344,7 +344,9 @@ the source prints (its Hamiltonian, couplings and units), and the row records th
 source that does not print them is `needs_review` (§10) until they are found. A convention is
 never guessed, and never checked by a computation of QMBL's own (2026-11-24). One the source
 implies without stating it counts as printed only under the rule for implied facts (§8,
-2026-11-26). The conventions of every model are listed in [DATA.md](DATA.md#units-and-conventions).
+2026-11-26). A total energy may be formed from a printed correlation energy and a Hartree-Fock
+energy of the same instance printed by another source (same cell, particle number, polarisation,
+twist and Madelung convention); the row names both sources (2026-11-26). The conventions of every model are listed in [DATA.md](DATA.md#units-and-conventions).
 
 ## 6. Best values and ties
 
@@ -745,30 +747,22 @@ corrected. A row that fails a check is flagged in place (§6.1) and is never del
 under the removal rules below.
 
 A row that duplicates another, or is not an energy of its instance, is removed, with the
-reason listed in `scripts/removals.mjs`. A row declared `exact` that independent
-recomputation places above the ground-state energy, by more than the precision it is printed
-to, is removed in the same way. The table carries one exact energy per instance, possibly
+reason listed in `scripts/removals.mjs`. A row declared `exact` that lies above
+another source's printed exact energy of the same cluster, by more than the precision both are
+printed to, is removed in the same way. The table carries one exact energy per instance, possibly
 printed by several sources (§6), and a number that is not that energy states nothing an exact
 row may claim. The same holds below the
 ground state where a per-site rounding was multiplied back to a total (case: the 4x4 Hubbard
-rows at half filling). The removal names the recomputation and the value that stands. Where
+rows at half filling). The removal names the printed value that stands. Since 2026-11-26 a removal rests on printed
+values only, never on a computation of QMBL's own (§5). Where
 no other exact row carries that value, QMBL's recomputed row does
 (`scripts/add_exact_rows.mjs`, batch B2).
 
-Where the printed value of an exact row is QMBL's recomputed energy rounded or truncated to
-the printed digits, the row keeps its citation and carries QMBL's digits. The printed value
-goes to `corrections`, and the recomputation is named. Where the paper's value is better, the
-row keeps it. Case: Schulz, Ziman & Poilblanc's 6x6 J1-J2 energies print six decimals per
-site. At J2 = 0.2, 0.55 and 0.65 they are the recomputed energies rounded, and the rows carry
-the full values (`checks/exact-recompute-2026-09/`). At J2 = 0.1 the printed -0.638096 is
-neither (the recomputation gives -0.638095436). That row keeps the paper's value, and the
-recomputation is recorded on its verification.
-
-The same holds where the more precise value is another source's diagonalization of the same
-cluster (2026-10-24): the earlier row keeps its citation, carries the more precise digits and
-is the exact energy shown (§6), and its printed value goes to `corrections`. Case: Richter,
-Schulenburg & Honecker (2004) print -24.4393974 for the 6 x 6 torus; VarBench's
--24.4393973993 rounds to it.
+Every row carries the digits its source printed (2026-11-26). Where several sources print the
+exact energy of one cluster, each row keeps its own digits, and the most precise is the exact
+energy shown (§6). Until 2026-11-26, rows whose printed value was QMBL's recomputation rounded
+carried QMBL's digits, and an earlier row carried another source's more precise digits; both
+practices are withdrawn and those rows carry their printed values again.
 
 Every other correction keeps the old value on the row, listed with its source and reason in
 `scripts/corrections.mjs`. This holds for imported rows and for rows QMBL added itself; for

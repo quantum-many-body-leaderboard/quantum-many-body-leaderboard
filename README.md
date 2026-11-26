@@ -127,7 +127,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | rectangular 6x12, periodic/open | exact (stochastic) | -0.6570101(4) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
 | rectangular 6x8 | exact | -0.6759867 | ED [Wietek & Läuchli (2018)](https://doi.org/10.1103/physreve.98.033309) |  |
 | rectangular 8x16, periodic/open | exact (stochastic) | -0.6583592(4) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
-| shuriken, 24 sites | exact | -0.4483291 | ED [Astrakhantsev et al. (2021)](https://doi.org/10.1103/physrevb.104.l220408) |  |
+| shuriken, 24 sites | exact | -0.448329 | ED [Astrakhantsev et al. (2021)](https://doi.org/10.1103/physrevb.104.l220408) |  |
 | shuriken, 96 sites | best variational | -0.43826(1) | VMC (PP) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | *uses [mVMC](https://github.com/issp-center-dev/mVMC)* |
 | shuriken, 216 sites | best variational | -0.4376(1) | VMC (PP) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | *uses [mVMC](https://github.com/issp-center-dev/mVMC)* |
 | shuriken, 384 sites | best variational | -0.4371(1) | VMC (PP) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | *uses [mVMC](https://github.com/issp-center-dev/mVMC)* |
@@ -136,8 +136,8 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square 6x6, open | exact | -0.6035218 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_O/ed_lattice_symmetries.sh) |
 |  | best variational | -0.6035218 &#9675; (+<1e-7) | DMRG [Huang et al. (2016)](https://doi.org/10.48550/arxiv.1611.09574) |  |
 |  | best extrapolated | -0.60351496(1) (+6.9e-6) | VMC (2D RNN) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) | [mschuylermoss/HeisenbergRNN](https://github.com/mschuylermoss/HeisenbergRNN) |
-| square 6x6 | exact | -0.6788721 | ED [Richter et al. (2004)](https://doi.org/10.1007/bfb0119592) |  |
-|  | best variational | -0.678871(3) (+1.1e-6) | VMC (CNN BF + RBM) [Hendry et al. (2025)](https://doi.org/10.48550/arxiv.2507.10287) | *uses [NetKet](https://www.netket.org/)* |
+| square 6x6 | exact | -0.6788722 | ED [Richter et al. (2004)](https://doi.org/10.1007/bfb0119592) |  |
+|  | best variational | -0.678871(3) (+1.2e-6) | VMC (CNN BF + RBM) [Hendry et al. (2025)](https://doi.org/10.48550/arxiv.2507.10287) | *uses [NetKet](https://www.netket.org/)* |
 |  | best extrapolated | -0.67887177(7) (+3.8e-7) | VMC (2D RNN) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) | [mschuylermoss/HeisenbergRNN](https://github.com/mschuylermoss/HeisenbergRNN) |
 | square, 38 sites | exact | -0.6779156 | ED [Richter et al. (2004)](https://doi.org/10.1007/bfb0119592) |  |
 | square, 40 sites | exact | -0.6773713 | ED [Richter et al. (2004)](https://doi.org/10.1007/bfb0119592) |  |
@@ -300,8 +300,8 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best variational | -0.7684501 (+1.8e-5) | VQE [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_16_P_1.0/vqe.sh) |
 | square 6x6, J2 = 0.1 | exact | -0.638096 | ED [Schulz et al. (1996)](https://arxiv.org/abs/cond-mat/9402061) |  |
 |  | best variational | -0.638078 &#9675; (+1.8e-5) | VMC (ViT) [Golubev et al. (2026)](https://doi.org/10.48550/arxiv.2606.04558) | *uses [NetKet](https://www.netket.org/)* |
-| square 6x6, J2 = 0.2 | exact | -0.5990463 | ED [Schulz et al. (1996)](https://arxiv.org/abs/cond-mat/9402061) |  |
-|  | best variational | -0.599044 &#9675; (+2.3e-6) | VMC (ViT) [Golubev et al. (2026)](https://doi.org/10.48550/arxiv.2606.04558) | *uses [NetKet](https://www.netket.org/)* |
+| square 6x6, J2 = 0.2 | exact | -0.599046 | ED [Schulz et al. (1996)](https://arxiv.org/abs/cond-mat/9402061) |  |
+|  | best variational | -0.599044 &#9675; (+2.0e-6) | VMC (ViT) [Golubev et al. (2026)](https://doi.org/10.48550/arxiv.2606.04558) | *uses [NetKet](https://www.netket.org/)* |
 | square 6x6, J2 = 0.3 | exact | -0.5624595 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.3/ed_lattice_symmetries.sh) |
 |  | best variational | -0.562453 &#9675; (+6.5e-6) | VMC (ViT) [Golubev et al. (2026)](https://doi.org/10.48550/arxiv.2606.04558) | *uses [NetKet](https://www.netket.org/)* |
 | square 6x6, J2 = 0.4 | exact | -0.529745 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.4/ed_lattice_symmetries.sh) |
@@ -318,14 +318,14 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best extrapolated | -0.50382(1) (−1.0e-5) | VMC (Gutzwiller) [Hu et al. (2013)](https://doi.org/10.48550/arxiv.1304.2630) |  |
 | square 6x6, J2 = 0.52 | exact | -0.4998846 &dagger; | ED J. Richter's exact diagonalization… |  |
 |  | best extrapolated | -0.4983(6) (+1.6e-3) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
-| square 6x6, J2 = 0.55 | exact | -0.4951777 | ED [Schulz et al. (1996)](https://arxiv.org/abs/cond-mat/9402061) |  |
+| square 6x6, J2 = 0.55 | exact | -0.495178 | ED [Schulz et al. (1996)](https://arxiv.org/abs/cond-mat/9402061) |  |
 |  | best variational | -0.495167 &#9675; (+1.1e-5) | DMRG [Gong et al. (2013)](https://doi.org/10.48550/arxiv.1311.5962) |  |
 |  | best projected | -0.4939(5) (+1.3e-3) | FN-GFMC (PEPS) [Lin et al. (2024)](https://doi.org/10.1103/physrevb.109.235133) |  |
 |  | best extrapolated | -0.49521(7) (−3.2e-5) | VMC (Gutzwiller) [Hu et al. (2013)](https://doi.org/10.48550/arxiv.1304.2630) |  |
 | square 6x6, J2 = 0.6 | exact | -0.4932386 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.6/ed_lattice_symmetries.sh) |
 |  | best variational | -0.49318(5) (+5.9e-5) | VMC (RBM) [Chen et al. (2022)](https://doi.org/10.48550/arxiv.2206.14307) |  |
 |  | best extrapolated | -0.488(1) (+5.3e-3) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
-| square 6x6, J2 = 0.65 | exact | -0.5065879 | ED [Schulz et al. (1996)](https://arxiv.org/abs/cond-mat/9402061) |  |
+| square 6x6, J2 = 0.65 | exact | -0.506588 | ED [Schulz et al. (1996)](https://arxiv.org/abs/cond-mat/9402061) |  |
 |  | best variational | -0.506299 &#9675; (+2.9e-4) | VMC (ViT) [Golubev et al. (2026)](https://doi.org/10.48550/arxiv.2606.04558) | *uses [NetKet](https://www.netket.org/)* |
 | square 6x6, J2 = 0.7 | exact | -0.5300012 | ED [Schulz et al. (1996)](https://doi.org/10.1051/jp1:1996236) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.7/ed_lattice_symmetries.sh) |
 |  | best variational | -0.5299243 (+7.7e-5) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.7/dmrg.sh) |
@@ -493,7 +493,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 
 | instance | value | energy | method | code |
 |---|---|---|---|---|
-| square 4x4, J = 0.7, Jd = 1 | exact | -0.3968907 | ED [Munehisa & Munehisa (2004)](https://doi.org/10.1143/jpsj.73.340) |  |
+| square 4x4, J = 0.7, Jd = 1 | exact | -0.3968875 | ED [Munehisa & Munehisa (2004)](https://doi.org/10.1143/jpsj.73.340) |  |
 | square 6x6, J = 0.5, Jd = 1 | exact | -0.375 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
 | square 6x6, J = 0.66697792, Jd = 1 | exact | -0.375 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
 | square 6x6, J = 0.67441, Jd = 1 | exact | -0.375004 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
@@ -950,58 +950,58 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 
 | instance | value | energy | method | code |
 |---|---|---|---|---|
-| honeycomb-flake24, 24 sites, open, J = 0.333333, 1 hole | exact | -0.3441916 | ED [Cui et al. (2024)](https://doi.org/10.1103/physrevb.110.155111) |  |
+| honeycomb-flake24, 24 sites, open, J = 0.333333, 1 hole | exact | -0.3441944 | ED [Cui et al. (2024)](https://doi.org/10.1103/physrevb.110.155111) |  |
 |  | best variational | -0.3366806 &#9675; (+7.5e-3) | VMC (phase string) [Cui et al. (2024)](https://doi.org/10.1103/physrevb.110.155111) |  |
-| honeycomb-flake24, 24 sites, open, J = 0.333333, 2 holes | exact | -0.4143583 | ED [Cui et al. (2024)](https://doi.org/10.1103/physrevb.110.155111) |  |
+| honeycomb-flake24, 24 sites, open, J = 0.333333, 2 holes | exact | -0.4143611 | ED [Cui et al. (2024)](https://doi.org/10.1103/physrevb.110.155111) |  |
 |  | best variational | -0.398 &#9675; (+1.6e-2) | VMC (phase string) [Cui et al. (2024)](https://doi.org/10.1103/physrevb.110.155111) |  |
-| ladder 2x11, J = 0.5, 2 holes | exact | -0.5908993 | ED [Chiappa et al. (2001)](https://doi.org/10.1103/physrevb.63.115120) |  |
-| ladder 2x13, J = 0.5, 2 holes | exact | -0.5733713 | ED [Chiappa et al. (2001)](https://doi.org/10.1103/physrevb.63.115120) |  |
-| ladder 3x6, antiperiodic legs, J = 0.5, 1 hole | exact | -0.5781986 | ED [Rice et al. (1997)](https://doi.org/10.1103/physrevb.56.14655) |  |
-| ladder 3x6, antiperiodic legs, J = 0.5, 2 holes | exact | -0.6559335 | ED [Rice et al. (1997)](https://doi.org/10.1103/physrevb.56.14655) |  |
+| ladder 2x11, J = 0.5, 2 holes | exact | -0.5908991 | ED [Chiappa et al. (2001)](https://doi.org/10.1103/physrevb.63.115120) |  |
+| ladder 2x13, J = 0.5, 2 holes | exact | -0.5733712 | ED [Chiappa et al. (2001)](https://doi.org/10.1103/physrevb.63.115120) |  |
+| ladder 3x6, antiperiodic legs, J = 0.5, 1 hole | exact | -0.5781983 | ED [Rice et al. (1997)](https://doi.org/10.1103/physrevb.56.14655) |  |
+| ladder 3x6, antiperiodic legs, J = 0.5, 2 holes | exact | -0.6559333 | ED [Rice et al. (1997)](https://doi.org/10.1103/physrevb.56.14655) |  |
 | rectangular 4x8, open, J = 0.4, 4 holes | best variational | -0.59050(1) | VMC (fPEPS) [Dong et al. (2020)](https://doi.org/10.1038/s41535-020-0226-4) |  |
 | rectangular 6x16, periodic/open, J = 0.35, 8 holes | best variational | -0.5470833 &#9675; | DMRG [McCulloch et al. (2001)](https://doi.org/10.1080/13642810108208574) |  |
 |  | best extrapolated | -0.5484(5) | DMRG [McCulloch et al. (2001)](https://doi.org/10.1080/13642810108208574) |  |
 | rectangular 6x8, open, J = 0.4, 6 holes | best variational | -0.60398(2) | VMC (fPEPS) [Dong et al. (2020)](https://doi.org/10.1038/s41535-020-0226-4) |  |
 | rectangular 8x10, open, J = 0.4, 10 holes | best variational | -0.61780(1) | VMC (fPEPS) [Dong et al. (2020)](https://doi.org/10.1038/s41535-020-0226-4) |  |
 | rectangular 8x12, open, J = 0.4, 12 holes | best variational | -0.62188(1) | VMC (fPEPS) [Dong et al. (2020)](https://doi.org/10.1038/s41535-020-0226-4) |  |
-| square 4x4, open, J = 0.4, 2 holes | exact | -0.5643668 | ED [Dong et al. (2020)](https://doi.org/10.1038/s41535-020-0226-4) |  |
-|  | best variational | -0.56428(2) (+8.7e-5) | VMC (fPEPS) [Dong et al. (2020)](https://doi.org/10.1038/s41535-020-0226-4) |  |
-| square, 18 sites, J = 0.4, 2 holes | exact | -0.6590431 | ED [Becca et al. (2001)](https://doi.org/10.1007/978-94-010-0771-9_18) |  |
-|  | best variational | -0.65904 (+3.1e-6) | VMC (Gutzwiller) [Becca et al. (2001)](https://doi.org/10.1007/978-94-010-0771-9_18) |  |
-| square, 26 sites, J = 0.3, 2 holes | exact | -0.5009718 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+| square 4x4, open, J = 0.4, 2 holes | exact | -0.56436 | ED [Dong et al. (2020)](https://doi.org/10.1038/s41535-020-0226-4) |  |
+|  | best variational | -0.56428(2) (+8.0e-5) | VMC (fPEPS) [Dong et al. (2020)](https://doi.org/10.1038/s41535-020-0226-4) |  |
+| square, 18 sites, J = 0.4, 2 holes | exact | -0.65904 | ED [Becca et al. (2001)](https://doi.org/10.1007/978-94-010-0771-9_18) |  |
+|  | best variational | -0.65904 (+<1e-5) | VMC (Gutzwiller) [Becca et al. (2001)](https://doi.org/10.1007/978-94-010-0771-9_18) |  |
+| square, 26 sites, J = 0.3, 2 holes | exact | -0.50097 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best variational | -0.48476(1) (+1.6e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best projected | -0.49445(2) (+6.5e-3) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
-| square, 26 sites, J = 0.4, 2 holes | exact | -0.5945167 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+| square, 26 sites, J = 0.4, 2 holes | exact | -0.59452 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best variational | -0.57978(1) (+1.5e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best projected | -0.58881(2) (+5.7e-3) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
-| square, 26 sites, J = 0.5, 2 holes | exact | -0.6894488 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+| square, 26 sites, J = 0.5, 2 holes | exact | -0.68945 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best variational | -0.67568(1) (+1.4e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best projected | -0.68434(3) (+5.1e-3) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
-| square, 26 sites, J = 0.6, 2 holes | exact | -0.7853745 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+| square, 26 sites, J = 0.6, 2 holes | exact | -0.78537 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best variational | -0.77228(1) (+1.3e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
-|  | best projected | -0.78062(3) (+4.8e-3) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
-| square, 26 sites, J = 0.8, 2 holes | exact | -0.9793539 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+|  | best projected | -0.78062(3) (+4.7e-3) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+| square, 26 sites, J = 0.8, 2 holes | exact | -0.97935 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best variational | -0.96706(1) (+1.2e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best projected | -0.97505(3) (+4.3e-3) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
-| square, 26 sites, J = 1, 2 holes | exact | -1.1753789 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+| square, 26 sites, J = 1, 2 holes | exact | -1.17538 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best variational | -1.16352(1) (+1.2e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best projected | -1.17136(2) (+4.0e-3) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
-| square, 26 sites, J = 0.3, 4 holes | exact | -0.6426164 | ED D. Poilblanc (unpublished), quoted in [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
+| square, 26 sites, J = 0.3, 4 holes | exact | -0.64262 | ED D. Poilblanc (unpublished), quoted in [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
 |  | best variational | -0.6387(1) (+3.9e-3) | VMC (Gutzwiller) [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
 |  | best projected | -0.6371(1) (+5.5e-3) | FN-GFMC (Gutzwiller) [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
-| square, 26 sites, J = 0.4, 4 holes | exact | -0.7143669 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+| square, 26 sites, J = 0.4, 4 holes | exact | -0.71437 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best variational | -0.68946(1) (+2.5e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best projected | -0.70292(2) (+1.1e-2) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
-| square, 26 sites, J = 0.5, 4 holes | exact | -0.7881242 | ED D. Poilblanc (unpublished), quoted in [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
+| square, 26 sites, J = 0.5, 4 holes | exact | -0.78812 | ED D. Poilblanc (unpublished), quoted in [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
 |  | best variational | -0.7855(1) (+2.6e-3) | VMC (Gutzwiller) [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
 |  | best projected | -0.7841(1) (+4.0e-3) | FN-GFMC (Gutzwiller) [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
-| square, 26 sites, J = 0.6, 4 holes | exact | -0.8633713 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+| square, 26 sites, J = 0.6, 4 holes | exact | -0.86337 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best variational | -0.84170(1) (+2.2e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best projected | -0.85348(3) (+9.9e-3) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
-| square, 26 sites, J = 0.8, 4 holes | exact | -1.0173302 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
+| square, 26 sites, J = 0.8, 4 holes | exact | -1.01733 | ED [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best variational | -0.99709(1) (+2.0e-2) | VMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
 |  | best projected | -1.00806(2) (+9.3e-3) | FN-GFMC (Pfaffian) [Lugas et al. (2006)](https://doi.org/10.1103/physrevb.74.165122) |  |
-| square, 26 sites, J = 1, 4 holes | exact | -1.1749259 | ED D. Poilblanc (unpublished), quoted in [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
+| square, 26 sites, J = 1, 4 holes | exact | -1.17493 | ED D. Poilblanc (unpublished), quoted in [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
 |  | best variational | -1.1724(1) (+2.5e-3) | VMC (Gutzwiller) [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
 |  | best projected | -1.1706(1) (+4.3e-3) | FN-GFMC (Gutzwiller) [Sorella (2001)](https://doi.org/10.1103/physrevb.64.024512) |  |
 | square, 32 sites, J = 0.3, t&prime; = 0.3, t&Prime; = -0.2, 1 hole | exact | -0.4348005 | ED [Leung (2006)](https://doi.org/10.1103/physrevb.73.075104) |  |
@@ -1549,10 +1549,10 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best approximate | 10.6732066 &#9675; | dRPA [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
 | sc cell, N = 14, rs = 0.4, unpolarized | best extrapolated | 5.6765448 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
 |  | best approximate | 5.6547591 &#9675; | dRPA [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 0.5, unpolarized | best variational | 3.412684(4) | VMC (FermiNet) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
-|  | best projected | 3.41253(4) | ph-AFQMC (RHF) [Lee et al. (2019)](https://doi.org/10.1063/1.5109572) | *uses [PAUXY](https://github.com/pauxy-qmc/pauxy)* |
+| sc cell, N = 14, rs = 0.5, unpolarized | best variational | 3.412684(4) | VMC (FermiNet) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) |  |
+|  | best projected | 3.41253(4) | ph-AFQMC (RHF) [Lee et al. (2019)](https://doi.org/10.1063/1.5109572) |  |
 |  | best extrapolated | 3.41226(2) | FCIQMC [Shepherd et al. (2012)](https://doi.org/10.1063/1.4720076) |  |
-|  | best approximate | 3.3916087 &#9675; | dRPA [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | 3.3916083 &#9675; | dRPA [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
 | sc cell, N = 14, rs = 0.6, unpolarized | best extrapolated | 2.2154921 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
 |  | best approximate | 2.1945636 &#9675; | dRPA [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
 | sc cell, N = 14, rs = 0.7, unpolarized | best extrapolated | 1.5130365 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
@@ -1562,9 +1562,9 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | sc cell, N = 14, rs = 0.9, unpolarized | best extrapolated | 0.7746685 &#9675; | CCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
 |  | best approximate | 0.7534542 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
 | sc cell, N = 14, rs = 1, unpolarized | best variational | 0.568851(1) | VMC (FermiNet) [Liu et al. (2026)](https://doi.org/10.48550/arxiv.2604.15888) |  |
-|  | best projected | 0.56869(6) | ph-AFQMC (RHF) [Lee et al. (2019)](https://doi.org/10.1063/1.5109572) | *uses [QMCPACK](https://qmcpack.org/)* |
+|  | best projected | 0.56869(6) | ph-AFQMC (RHF) [Lee et al. (2019)](https://doi.org/10.1063/1.5109572) |  |
 |  | best extrapolated | 0.56850(3) | FCIQMC [Shepherd et al. (2012)](https://doi.org/10.1063/1.4720076) |  |
-|  | best approximate | 0.5464629 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
+|  | best approximate | 0.5464626 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
 | sc cell, N = 14, rs = 10, unpolarized | best variational | -0.0552126(6) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
 |  | best projected | -0.0552180(5) | FN-DMC (iterative BF) [Wilson et al. (2023)](https://doi.org/10.1103/physrevb.107.235139) |  |
 |  | best extrapolated | -0.05289 &#9675; | DCD [Liao et al. (2021)](https://doi.org/10.1103/physrevresearch.3.033072) |  |
@@ -1575,8 +1575,8 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best approximate | -0.0104603 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
 | sc cell, N = 14, rs = 15, unpolarized | best variational | -0.0408619(1) | VMC (FermiNet) [Liu et al. (2026)](https://doi.org/10.48550/arxiv.2604.15888) |  |
 |  | best approximate | -0.0580244 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 2, unpolarized | best variational | -0.0084275(7) | VMC (FermiNet) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) | *uses [FermiNet](https://github.com/google-deepmind/ferminet)* |
-|  | best projected | -0.00853(6) | ph-AFQMC (RHF) [Lee et al. (2019)](https://doi.org/10.1063/1.5109572) | *uses [QMCPACK](https://qmcpack.org/)* |
+| sc cell, N = 14, rs = 2, unpolarized | best variational | -0.0084275(7) | VMC (FermiNet) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) |  |
+|  | best projected | -0.00853(6) | ph-AFQMC (RHF) [Lee et al. (2019)](https://doi.org/10.1063/1.5109572) |  |
 |  | best extrapolated | -0.00873(3) | FCIQMC [Shepherd et al. (2012)](https://doi.org/10.1063/1.4720076) |  |
 |  | best approximate | -0.0478896 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
 | sc cell, N = 14, rs = 20, unpolarized | best variational | -0.0324553(2) | VMC (MP-NQS) [Pescia et al. (2024)](https://doi.org/10.1103/physrevb.110.035108) | *uses [NetKet 3](https://www.netket.org/)* |
@@ -1881,7 +1881,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best extrapolated | -0.4432(3) | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 |  | best approximate | -0.4427(2) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 | H10 chain, open, R = 1, STO-6G | exact | -0.3824389 | FCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
-|  | best variational | -0.3824389 &#9675; (−<1e-7) | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best variational | -0.3824389 &#9675; (+<1e-7) | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 |  | best projected | -0.38248(3) (−4.1e-5) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 |  | best approximate | -0.382432 &#9675; (+6.9e-6) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 | H10 chain, open, R = 1.2, cc-pV5Z | best variational | -0.4884091 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
@@ -1919,7 +1919,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best extrapolated | -0.5493(2) | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 |  | best approximate | -0.5491(1) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 | H10 chain, open, R = 1.4, STO-6G | exact | -0.5205094 | FCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
-|  | best variational | -0.5205094 &#9675; (−<1e-7) | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best variational | -0.5205094 &#9675; (+<1e-7) | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 |  | best projected | -0.52051(5) (−5.9e-7) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 |  | best approximate | -0.520492 &#9675; (+1.7e-5) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 | H10 chain, open, R = 1.41729, STO-6G | exact | -0.522856 | FCI [Stair & Evangelista (2020)](https://doi.org/10.1063/5.0014928) |  |
@@ -1960,7 +1960,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best extrapolated | -0.5667(1) | SBDMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 |  | best approximate | -0.56638(4) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 | H10 chain, open, R = 1.8, STO-6G | exact | -0.5424385 | FCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
-|  | best variational | -0.5424385 &#9675; (−<1e-7) | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best variational | -0.5424385 &#9675; (+<1e-7) | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 |  | best projected | -0.542439 &#9675; (−4.6e-7) | CCSDTQ [Low et al. (2019)](https://doi.org/10.48550/arxiv.1904.01131) |  |
 |  | best approximate | -0.542419 &#9675; (+2.0e-5) | CCSD(T) [Li et al. (2023)](https://doi.org/10.1021/acs.jctc.3c00831) |  |
 | H10 chain, open, R = 1.88973, STO-6G | exact | -0.5415393 | FCI [Stair & Evangelista (2020)](https://doi.org/10.1063/5.0014928) |  |
@@ -2018,7 +2018,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best extrapolated | -0.5377(1) | SBDMRG [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 |  | best approximate | -0.53749(6) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 | H10 chain, open, R = 2.8, STO-6G | exact | -0.5050245 | FCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
-|  | best variational | -0.5050245 &#9675; (−<1e-7) | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best variational | -0.5050245 &#9675; (+<1e-7) | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 |  | best projected | -0.50507(5) (−4.6e-5) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 |  | best approximate | -0.5029597 &#9675; (+2.1e-3) | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 | H10 chain, open, R = 2.83459, STO-6G | exact | -0.5036293 | FCI [Stair & Evangelista (2020)](https://doi.org/10.1063/5.0014928) |  |
@@ -2038,8 +2038,8 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best extrapolated | -0.52512(6) | DMET [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 |  | best approximate | -0.5257(1) | RCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 | H10 chain, open, R = 3.2, STO-6G | exact | -0.4910383 | FCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
-|  | best variational | -0.4910383 &#9675; (−<1e-7) | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
-|  | best projected | -0.4910383 &#9675; (−<1e-7) | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best variational | -0.4910383 &#9675; (+<1e-7) | MRCI [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
+|  | best projected | -0.4910383 &#9675; (+<1e-7) | MRCI+Q [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 |  | best approximate | -0.4895218 &#9675; (+1.5e-3) | UCCSD(T) [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 | H10 chain, open, R = 3.6, cc-pV5Z | best variational | -0.5050291 &#9675; | HF [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |
 |  | best projected | -0.51584(8) | ph-AFQMC [Motta et al. (2017)](https://doi.org/10.1103/physrevx.7.031059) |  |

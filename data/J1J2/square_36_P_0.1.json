@@ -91,7 +91,7 @@
         "checked_on": "2026-09-28",
         "method": "source text of arXiv:cond-mat/9402061 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.638096",
-        "note": "Table II, row J2 = 0.10, column 36(A1). QMBL's Lanczos (qmbl-runs/qmbl-ed-2026-09-28: E2's ed_sym.py, C4v one-dimensional sectors with even spin at k = 0 (A1, B1)) gives -0.638095436 per site, so the printed value is 5.6e-7 below it, 1.13x the half-width of its 6 decimals. Golubev et al. (arXiv:2606.04558 Table I, 6x6 ED) print -0.638095, also correctly rounded | Ground-state energy per site, J1 = 1, S.S units; the same column reproduces QMBL's exact 36-site rows at J2 = 0, 0.3, 0.4, 0.5, 0.6 to 1e-6.",
+        "note": "Table II, row J2 = 0.10, column 36(A1). Golubev et al. (arXiv:2606.04558 Table I, 6x6 ED) print -0.638095 for the same cluster, 1e-6 per site from this cell (arithmetic between two printed numbers); the cluster is the untilted six-by-six with periodic boundaries (sources/cond-mat-9402061.txt:239, :247-49) and H = J1 Si.Sj + J2 Si.Sj' (:127) | Ground-state energy per site, J1 = 1, S.S units; per site, J1 normalized to unity (Table II caption, sources/cond-mat-9402061.txt:1644).",
         "secondary_of": null,
         "second_read": {
           "checked_on": "2026-09-30",
@@ -103,7 +103,41 @@
           "note": "Transcription verified in the published version: the journal prints the same -0.638096 as arXiv v2, so the question the VP15 reader left open (\"the 1996 journal version ... may print a different digit\") is settled: it does not. The value itself is questioned in the ambiguous entry for this row (below the recomputed ground state). Also read by VP15-hubbard-j1j2-heisenberg#16 (scope value: Table II, row J2 = 0.10, column 36(A1)). QMBL's recompute (checks/exact-recompute-2026-09/, 2026-09-29): -91.88574274986225 = -0.638095436 per site, three determinations agreeing to 6e-13 (C4v A1 at k = 0, z = +1, residual 2.1e-10; a second basis, c2v_axes; qmbl-ed-2026-09-28), 8.1e-5 above the printed -0.638096; the published J. Phys. I scan prints the same digit as arXiv. Ruling 2026-09-30: the row keeps the paper's -0.638096, no flag.",
           "source_entry": "VJ2-journal-other#38, VP15-hubbard-j1j2-heisenberg#16 (qmbl-verify 2026-09-29)"
         }
-      }
+      },
+      "corrections": [
+        {
+          "field": "verified.note",
+          "edit": [
+            "QMBL's Lanczos (qmbl-runs/qmbl-ed-2026-09-28: E2's ed_sym.py, C4v one-dimensional sectors with even spin at k = 0 (A1, B1)) gives -0.638095436 per site, so the printed value is 5.6e-7 below it, 1.13x the half-width of its 6 decimals. Golubev et al. (arXiv:2606.04558 Table I, 6x6 ED) print -0.638095, also correctly rounded",
+            "Golubev et al. (arXiv:2606.04558 Table I, 6x6 ED) print -0.638095 for the same cluster, 1e-6 per site from this cell (arithmetic between two printed numbers); the cluster is the untilted six-by-six with periodic boundaries (sources/cond-mat-9402061.txt:239, :247-49) and H = J1 Si.Sj + J2 Si.Sj' (:127)"
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/cond-mat-9402061.txt:1644 row 0.10 col 36(A1) -0.638096; PBC :239; N=36 untilted six-by-six :247-49; H = J1 Si.Sj + J2 Si.Sj' :127; per site, J1 unity (Table II caption). Golubev et al. arXiv:2606.04558 Table I prints -0.638095",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "Table II, row J2 = 0.10, column 36(A1). QMBL's Lanczos (qmbl-runs/qmbl-ed-2026-09-28: E2's ed_sym.py, C4v one-dimensional sectors with even spin at k = 0 (A1, B1)) gives -0.638095436 per site, so the printed value is 5.6e-7 below it, 1.13x the half-width of its 6 decimals. Golubev et al. (arXiv:2606.04558 Table I, 6x6 ED) print -0.638095, also correctly rounded | Ground-state energy per site, J1 = 1, S.S units; the same column reproduces QMBL's exact 36-site rows at J2 = 0, 0.3, 0.4, 0.5, 0.6 to 1e-6.",
+          "to": "Table II, row J2 = 0.10, column 36(A1). Golubev et al. (arXiv:2606.04558 Table I, 6x6 ED) print -0.638095 for the same cluster, 1e-6 per site from this cell (arithmetic between two printed numbers); the cluster is the untilted six-by-six with periodic boundaries (sources/cond-mat-9402061.txt:239, :247-49) and H = J1 Si.Sj + J2 Si.Sj' (:127) | Ground-state energy per site, J1 = 1, S.S units; the same column reproduces QMBL's exact 36-site rows at J2 = 0, 0.3, 0.4, 0.5, 0.6 to 1e-6."
+        },
+        {
+          "field": "verified.note",
+          "edit": [
+            "the same column reproduces QMBL's exact 36-site rows at J2 = 0, 0.3, 0.4, 0.5, 0.6 to 1e-6.",
+            "per site, J1 normalized to unity (Table II caption, sources/cond-mat-9402061.txt:1644)."
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/cond-mat-9402061.txt:1644 row 0.10 col 36(A1) -0.638096; PBC :239; N=36 untilted six-by-six :247-49; H = J1 Si.Sj + J2 Si.Sj' :127; per site, J1 unity (Table II caption). Golubev et al. arXiv:2606.04558 Table I prints -0.638095",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "Table II, row J2 = 0.10, column 36(A1). Golubev et al. (arXiv:2606.04558 Table I, 6x6 ED) print -0.638095 for the same cluster, 1e-6 per site from this cell (arithmetic between two printed numbers); the cluster is the untilted six-by-six with periodic boundaries (sources/cond-mat-9402061.txt:239, :247-49) and H = J1 Si.Sj + J2 Si.Sj' (:127) | Ground-state energy per site, J1 = 1, S.S units; the same column reproduces QMBL's exact 36-site rows at J2 = 0, 0.3, 0.4, 0.5, 0.6 to 1e-6.",
+          "to": "Table II, row J2 = 0.10, column 36(A1). Golubev et al. (arXiv:2606.04558 Table I, 6x6 ED) print -0.638095 for the same cluster, 1e-6 per site from this cell (arithmetic between two printed numbers); the cluster is the untilted six-by-six with periodic boundaries (sources/cond-mat-9402061.txt:239, :247-49) and H = J1 Si.Sj + J2 Si.Sj' (:127) | Ground-state energy per site, J1 = 1, S.S units; per site, J1 normalized to unity (Table II caption, sources/cond-mat-9402061.txt:1644)."
+        }
+      ]
     },
     {
       "energy": -91.8288,

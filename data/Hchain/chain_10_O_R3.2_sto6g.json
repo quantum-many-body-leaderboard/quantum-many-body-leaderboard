@@ -150,7 +150,7 @@
       ]
     },
     {
-      "energy": -4.9103828758,
+      "energy": -4.91038288,
       "sigma": null,
       "energy_variance": null,
       "dof": 10,
@@ -186,6 +186,18 @@
           "conversion": "printed -0.491038 x 10 = -4.91038 Ha (the table's 6-decimal rounding of the per-atom value); dataset total -4.91038288; QMBL pyscf FCI (fci/results.jsonl, STO-6G, nuclear repulsion 6.028026 included, S^2 = 3.5e-12) -4.9103828758; stored minus pyscf = +2.88e-06 Ha; stored per atom: -4.9103828758 / 10; per atom -0.491038 -> -0.49103828758, stored as totals (x 10)",
           "reason": "RULES.md §11: where the printed value of an exact row is QMBL's recomputed energy rounded to the printed digits, the row keeps its citation and carries QMBL's digits; the printed value goes to corrections. The table value is the recomputation rounded (within half a unit of the 6th decimal per atom), and the authors' own data file prints the total to 1e-8, equal to the recomputation within 5e-9. With the rounded value stored, variational rows of the same source (DMRG at R = 1.4, 1.6, 2.8, 3.2; MRCI at R = 1.4, 1.6, 2.8, 3.2, 3.6) sit 0.8e-6 to 5e-6 Ha below the exact row although they lie at or above the true FCI energy within their own printed digits (DMRG 6.6e-8 to 1.9e-6 above, MRCI within 5e-9); the full digits remove these false violations. Value, basis, R, N = 10, OBC and bound_type exact otherwise confirmed; journal and arXiv v2 cells identical.",
           "source_entry": "h-motta17-misc-1#8 (qmbl-verify 2026-10-23/24, correction; skeptic upheld)"
+        },
+        {
+          "field": "energy",
+          "to": -4.91038288,
+          "reported_as": "-4.91038288 (total, Hartree; authors' dataset). Table II prints the per-atom value -0.491038 per atom",
+          "location": "data repository github.com/simonsfoundation/hydrogen-benchmark-PRX at b99a183, file N_10_OBC/R_3.2/FCI_basis-STO (sources/1705.01608-data-b99a183.tsv line 756); Table II R = 3.2",
+          "version_read": "authors' dataset b99a183 (committed TSV in sources/); paper PRX 7, 031059 / arXiv:1705.01608 Table II for the per-atom value",
+          "conversion": "dataset total printed in Hartree, no conversion = -4.91038288 (Table II per atom x 10 agrees within its 6-decimal rounding)",
+          "checked_on": "2026-11-26",
+          "reason": "carries the digits its source printed (2026-11-26); QMBL's recomputed digits are no longer stored",
+          "from": -4.9103828758,
+          "source_entry": "retro-qmbl-evidence-2026-11-26 recompute-digits-2 (Hchain FCI)"
         }
       ]
     },

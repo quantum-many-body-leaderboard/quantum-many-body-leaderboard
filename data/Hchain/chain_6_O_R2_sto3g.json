@@ -335,7 +335,7 @@
         "checked_on": "2026-10-20",
         "method": "source text of arXiv:2305.05168 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading (Sonnet reader)",
         "reported_as": "-3.2173 Ha per total",
-        "note": "Table I; sources/2305.05168.txt line 227; version read: arXiv text; no journal version found | Table I caption line 216: 'energies (in Hartree)'; R in 'a.u.' (R_H-H=2.0 a.u.); magnitude consistent with total energy incl. nuclear repulsion | Boundary not stated; 'linear chains' of H atoms, taken as open. Column header gives (2.0 a.u)/(3.0 a.u). Nuclear repulsion not stated; value magnitude suggests included. QFlow value is from the primary active space (footnote a). | reader confidence medium",
+        "note": "Table I; sources/2305.05168.txt line 227; version read: arXiv text; no journal version found | Table I caption line 216: 'energies (in Hartree)'; R in 'a.u.' (R_H-H=2.0 a.u.); magnitude consistent with total energy incl. nuclear repulsion | Boundary not stated; 'linear chains' of H atoms, taken as open. Column header gives (2.0 a.u)/(3.0 a.u). Nuclear repulsion not stated; the H6/STO-3G cells of this table (HF -3.1059, ED -3.2177) equal the total energies in hartree printed in arXiv:2609.04387 (sources/2609.04387.txt:468-477: RHF -3.10585013, FCI -3.21769929), which prints no R for its H6. QFlow value is from the primary active space (footnote a). | reader confidence medium",
         "secondary_of": null
       },
       "sampled": false,
@@ -372,6 +372,22 @@
           "checked_on": "2026-10-20",
           "reason": "Deterministic, not a Monte Carlo estimate, as the track-3 reader recorded it (pass row `sampled`); the method string alone reads the other way (units.mjs, isSampled).",
           "source_entry": "passes/track3/sweep-rows-2026-10-20-hydrogen.json"
+        },
+        {
+          "field": "verified.note",
+          "edit": [
+            "Nuclear repulsion not stated; value magnitude suggests included.",
+            "Nuclear repulsion not stated; the H6/STO-3G cells of this table (HF -3.1059, ED -3.2177) equal the total energies in hartree printed in arXiv:2609.04387 (sources/2609.04387.txt:468-477: RHF -3.10585013, FCI -3.21769929), which prints no R for its H6."
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/2305.05168.txt:216-228 Table I 'energies (in Hartree)', R_H-H=2.0 a.u., STO-3G H6 chains (:248); sources/2609.04387.txt:468-477 'H6/STO-3G total energies ... in hartree' RHF -3.10585013, FCI -3.21769929 = this table HF -3.1059, ED -3.2177. Weakness: that paper prints no R for its H6",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "Table I; sources/2305.05168.txt line 227; version read: arXiv text; no journal version found | Table I caption line 216: 'energies (in Hartree)'; R in 'a.u.' (R_H-H=2.0 a.u.); magnitude consistent with total energy incl. nuclear repulsion | Boundary not stated; 'linear chains' of H atoms, taken as open. Column header gives (2.0 a.u)/(3.0 a.u). Nuclear repulsion not stated; value magnitude suggests included. QFlow value is from the primary active space (footnote a). | reader confidence medium",
+          "to": "Table I; sources/2305.05168.txt line 227; version read: arXiv text; no journal version found | Table I caption line 216: 'energies (in Hartree)'; R in 'a.u.' (R_H-H=2.0 a.u.); magnitude consistent with total energy incl. nuclear repulsion | Boundary not stated; 'linear chains' of H atoms, taken as open. Column header gives (2.0 a.u)/(3.0 a.u). Nuclear repulsion not stated; the H6/STO-3G cells of this table (HF -3.1059, ED -3.2177) equal the total energies in hartree printed in arXiv:2609.04387 (sources/2609.04387.txt:468-477: RHF -3.10585013, FCI -3.21769929), which prints no R for its H6. QFlow value is from the primary active space (footnote a). | reader confidence medium"
         }
       ]
     },
@@ -397,7 +413,7 @@
         "checked_on": "2026-10-20",
         "method": "source text of arXiv:2305.05168 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; single reading (Sonnet reader)",
         "reported_as": "-3.2177 Ha per total",
-        "note": "Table I; sources/2305.05168.txt line 228; version read: arXiv text; no journal version found | Table I caption line 216: 'energies (in Hartree)'; R in 'a.u.' (R_H-H=2.0 a.u.); magnitude consistent with total energy incl. nuclear repulsion | Boundary not stated; 'linear chains' of H atoms, taken as open. Column header gives (2.0 a.u)/(3.0 a.u). Nuclear repulsion not stated; value magnitude suggests included. | reader confidence medium",
+        "note": "Table I; sources/2305.05168.txt line 228; version read: arXiv text; no journal version found | Table I caption line 216: 'energies (in Hartree)'; R in 'a.u.' (R_H-H=2.0 a.u.); magnitude consistent with total energy incl. nuclear repulsion | Boundary not stated; 'linear chains' of H atoms, taken as open. Column header gives (2.0 a.u)/(3.0 a.u). Nuclear repulsion not stated; the H6/STO-3G cells of this table (HF -3.1059, ED -3.2177) equal the total energies in hartree printed in arXiv:2609.04387 (sources/2609.04387.txt:468-477: RHF -3.10585013, FCI -3.21769929), which prints no R for its H6. | reader confidence medium",
         "secondary_of": null
       },
       "corrections": [
@@ -424,6 +440,22 @@
           "conversion": "none",
           "reason": "Published in Phys. Rev. Lett. 131, 200601 (2023) (peer reviewed). The journal Tables I and II are identical to arXiv v2 in every cell of this row. The evidence string ('no journal version found') changes with it: with peer_reviewed true the template at gen/readers.mjs line 77 would write 'journal copy not reached (HTTP 403...)', which is also wrong; the journal PDF was reached on 2026-10-24 and agrees.",
           "source_entry": "h-p-2305-05168-c2#9 (qmbl-verify 2026-10-23/24, correction; skeptic upheld)"
+        },
+        {
+          "field": "verified.note",
+          "edit": [
+            "Nuclear repulsion not stated; value magnitude suggests included.",
+            "Nuclear repulsion not stated; the H6/STO-3G cells of this table (HF -3.1059, ED -3.2177) equal the total energies in hartree printed in arXiv:2609.04387 (sources/2609.04387.txt:468-477: RHF -3.10585013, FCI -3.21769929), which prints no R for its H6."
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/2305.05168.txt:216-228 Table I 'energies (in Hartree)', R_H-H=2.0 a.u., STO-3G H6 chains (:248); sources/2609.04387.txt:468-477 'H6/STO-3G total energies ... in hartree' RHF -3.10585013, FCI -3.21769929 = this table HF -3.1059, ED -3.2177. Weakness: that paper prints no R for its H6",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "Table I; sources/2305.05168.txt line 228; version read: arXiv text; no journal version found | Table I caption line 216: 'energies (in Hartree)'; R in 'a.u.' (R_H-H=2.0 a.u.); magnitude consistent with total energy incl. nuclear repulsion | Boundary not stated; 'linear chains' of H atoms, taken as open. Column header gives (2.0 a.u)/(3.0 a.u). Nuclear repulsion not stated; value magnitude suggests included. | reader confidence medium",
+          "to": "Table I; sources/2305.05168.txt line 228; version read: arXiv text; no journal version found | Table I caption line 216: 'energies (in Hartree)'; R in 'a.u.' (R_H-H=2.0 a.u.); magnitude consistent with total energy incl. nuclear repulsion | Boundary not stated; 'linear chains' of H atoms, taken as open. Column header gives (2.0 a.u)/(3.0 a.u). Nuclear repulsion not stated; the H6/STO-3G cells of this table (HF -3.1059, ED -3.2177) equal the total energies in hartree printed in arXiv:2609.04387 (sources/2609.04387.txt:468-477: RHF -3.10585013, FCI -3.21769929), which prints no R for its H6. | reader confidence medium"
         }
       ]
     }

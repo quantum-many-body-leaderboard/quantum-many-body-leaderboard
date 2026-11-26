@@ -171,7 +171,7 @@
         "checked_on": "2026-10-16",
         "method": "source text of arXiv:2203.15472 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.013840(1)",
-        "note": "Supplementary Table 11, row rs=2, column 'Net'; sources/2203.15472.txt line 1015; printed in Ha per electron; version read: arXiv:2203.15472v2 text, Supplementary Table 11; Nature Communications copy not read | Ha per electron, 54-electron closed-shell gas in a simple cubic cell (27 + 27); QMBL's HF check: at rs = 0.5 the energy 3.221226 sits 0.044 Ha below QMBL's HF energy 3.2653295.",
+        "note": "Supplementary Table 11, row rs=2, column 'Net'; sources/2203.15472.txt line 1015; printed in Ha per electron; version read: arXiv:2203.15472v2 text, Supplementary Table 11; Nature Communications copy not read | Ha per electron, 54-electron closed-shell gas in a simple cubic cell (27 + 27). Printed in the source (arXiv:2203.15472, sources/2203.15472.txt): Supplementary Table 11 gives the 54-electron gas with 'energies are all given in Hartree' (lines 1013-1019) and prints Net beside BF-DMC and BF-VMC; at rs = 0.5 (BF-DMC 3.22112(4), BF-VMC 3.22132(7)) and rs = 1 (0.52989(4), 0.53009(3)) these equal Table I of arXiv:0801.0518. Madelung term as stated for those rows, arXiv:2103.03176 Table II 'including the Madelung constant' (sources/2103.03176.txt lines 389-397).",
         "secondary_of": null,
         "second_read": {
           "checked_on": "2026-10-19",
@@ -184,6 +184,24 @@
           "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#132"
         }
       },
+      "corrections": [
+        {
+          "field": "verified.note",
+          "edit": [
+            "; QMBL's HF check: at rs = 0.5 the energy 3.221226 sits 0.044 Ha below QMBL's HF energy 3.2653295.",
+            ". Printed in the source (arXiv:2203.15472, sources/2203.15472.txt): Supplementary Table 11 gives the 54-electron gas with 'energies are all given in Hartree' (lines 1013-1019) and prints Net beside BF-DMC and BF-VMC; at rs = 0.5 (BF-DMC 3.22112(4), BF-VMC 3.22132(7)) and rs = 1 (0.52989(4), 0.53009(3)) these equal Table I of arXiv:0801.0518. Madelung term as stated for those rows, arXiv:2103.03176 Table II 'including the Madelung constant' (sources/2103.03176.txt lines 389-397)."
+          ],
+          "reported_as": "-0.013840(1)",
+          "location": "see edit text (printed lines cited there)",
+          "version_read": "sources/ text of the cited papers, as stated in the edit",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 219",
+          "from": "Supplementary Table 11, row rs=2, column 'Net'; sources/2203.15472.txt line 1015; printed in Ha per electron; version read: arXiv:2203.15472v2 text, Supplementary Table 11; Nature Communications copy not read | Ha per electron, 54-electron closed-shell gas in a simple cubic cell (27 + 27); QMBL's HF check: at rs = 0.5 the energy 3.221226 sits 0.044 Ha below QMBL's HF energy 3.2653295.",
+          "to": "Supplementary Table 11, row rs=2, column 'Net'; sources/2203.15472.txt line 1015; printed in Ha per electron; version read: arXiv:2203.15472v2 text, Supplementary Table 11; Nature Communications copy not read | Ha per electron, 54-electron closed-shell gas in a simple cubic cell (27 + 27). Printed in the source (arXiv:2203.15472, sources/2203.15472.txt): Supplementary Table 11 gives the 54-electron gas with 'energies are all given in Hartree' (lines 1013-1019) and prints Net beside BF-DMC and BF-VMC; at rs = 0.5 (BF-DMC 3.22112(4), BF-VMC 3.22132(7)) and rs = 1 (0.52989(4), 0.53009(3)) these equal Table I of arXiv:0801.0518. Madelung term as stated for those rows, arXiv:2103.03176 Table II 'including the Madelung constant' (sources/2103.03176.txt lines 389-397)."
+        }
+      ],
       "artifacts": {
         "code": "https://github.com/bytedance/DeepSolid",
         "read_from": {
@@ -216,9 +234,27 @@
         "checked_on": "2026-10-17",
         "method": "source text of arXiv:0801.0518 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "0.0186(2)",
-        "note": "Table I, rs=2.0, row HF; sources/0801.0518.txt line 253; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read; qmbl-verify 2026-10-19 SP6-heg3d-heg2d-hubbard#129: energy_variance null -> 4.9 (The VMC variance is printed beside every VMC energy in Table I and the first reading left it out (var_per_site null, variance_as_reported null). Energy and sigma verified: 0.0186(2) -> 1.0044, sigma 0) | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+        "note": "Table I, rs=2.0, row HF; sources/0801.0518.txt line 253; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read; qmbl-verify 2026-10-19 SP6-heg3d-heg2d-hubbard#129: energy_variance null -> 4.9 (The VMC variance is printed beside every VMC energy in Table I and the first reading left it out (var_per_site null, variance_as_reported null). Energy and sigma verified: 0.0186(2) -> 1.0044, sigma 0) | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference).",
         "secondary_of": null
       },
+      "corrections": [
+        {
+          "field": "verified.note",
+          "edit": [
+            "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+            "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+          ],
+          "reported_as": "0.0186(2)",
+          "location": "see edit text (printed lines cited there)",
+          "version_read": "sources/ text of the cited papers, as stated in the edit",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 177",
+          "from": "Table I, rs=2.0, row HF; sources/0801.0518.txt line 253; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read; qmbl-verify 2026-10-19 SP6-heg3d-heg2d-hubbard#129: energy_variance null -> 4.9 (The VMC variance is printed beside every VMC energy in Table I and the first reading left it out (var_per_site null, variance_as_reported null). Energy and sigma verified: 0.0186(2) -> 1.0044, sigma 0) | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+          "to": "Table I, rs=2.0, row HF; sources/0801.0518.txt line 253; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read; qmbl-verify 2026-10-19 SP6-heg3d-heg2d-hubbard#129: energy_variance null -> 4.9 (The VMC variance is printed beside every VMC energy in Table I and the first reading left it out (var_per_site null, variance_as_reported null). Energy and sigma verified: 0.0186(2) -> 1.0044, sigma 0) | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+        }
+      ],
       "artifacts": {
         "libraries": [
           {
@@ -257,9 +293,27 @@
         "checked_on": "2026-10-17",
         "method": "source text of arXiv:0801.0518 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.01246(3)",
-        "note": "Table I, rs=2.0, row SJ; sources/0801.0518.txt line 254; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read; qmbl-verify 2026-10-19 SP6-heg3d-heg2d-hubbard#130: energy_variance null -> 0.147 (The VMC variance is printed beside every VMC energy in Table I and the first reading left it out (var_per_site null, variance_as_reported null). Energy and sigma verified: −0.01246(3) -> -0.67284, sig) | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+        "note": "Table I, rs=2.0, row SJ; sources/0801.0518.txt line 254; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read; qmbl-verify 2026-10-19 SP6-heg3d-heg2d-hubbard#130: energy_variance null -> 0.147 (The VMC variance is printed beside every VMC energy in Table I and the first reading left it out (var_per_site null, variance_as_reported null). Energy and sigma verified: −0.01246(3) -> -0.67284, sig) | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference).",
         "secondary_of": null
       },
+      "corrections": [
+        {
+          "field": "verified.note",
+          "edit": [
+            "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+            "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+          ],
+          "reported_as": "−0.01246(3)",
+          "location": "see edit text (printed lines cited there)",
+          "version_read": "sources/ text of the cited papers, as stated in the edit",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 178",
+          "from": "Table I, rs=2.0, row SJ; sources/0801.0518.txt line 254; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read; qmbl-verify 2026-10-19 SP6-heg3d-heg2d-hubbard#130: energy_variance null -> 0.147 (The VMC variance is printed beside every VMC energy in Table I and the first reading left it out (var_per_site null, variance_as_reported null). Energy and sigma verified: −0.01246(3) -> -0.67284, sig) | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+          "to": "Table I, rs=2.0, row SJ; sources/0801.0518.txt line 254; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read; qmbl-verify 2026-10-19 SP6-heg3d-heg2d-hubbard#130: energy_variance null -> 0.147 (The VMC variance is printed beside every VMC energy in Table I and the first reading left it out (var_per_site null, variance_as_reported null). Energy and sigma verified: −0.01246(3) -> -0.67284, sig) | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+        }
+      ],
       "artifacts": {
         "libraries": [
           {
@@ -298,7 +352,7 @@
         "checked_on": "2026-10-17",
         "method": "source text of arXiv:0801.0518 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.01311(2)",
-        "note": "Table I, rs=2.0, row SJ, column ED; sources/0801.0518.txt line 254; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+        "note": "Table I, rs=2.0, row SJ, column ED; sources/0801.0518.txt line 254; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference).",
         "secondary_of": null,
         "second_read": {
           "checked_on": "2026-10-19",
@@ -311,6 +365,24 @@
           "source_entry": "SP6-heg3d-heg2d-hubbard#131"
         }
       },
+      "corrections": [
+        {
+          "field": "verified.note",
+          "edit": [
+            "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+            "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+          ],
+          "reported_as": "−0.01311(2)",
+          "location": "see edit text (printed lines cited there)",
+          "version_read": "sources/ text of the cited papers, as stated in the edit",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 179",
+          "from": "Table I, rs=2.0, row SJ, column ED; sources/0801.0518.txt line 254; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+          "to": "Table I, rs=2.0, row SJ, column ED; sources/0801.0518.txt line 254; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+        }
+      ],
       "artifacts": {
         "libraries": [
           {
@@ -349,9 +421,27 @@
         "checked_on": "2026-10-17",
         "method": "source text of arXiv:0801.0518 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.01252(3)",
-        "note": "Table I, rs=2.0, row SJ3; sources/0801.0518.txt line 255; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read; qmbl-verify 2026-10-19 SP6-heg3d-heg2d-hubbard#132: energy_variance null -> 0.138 (The VMC variance is printed beside every VMC energy in Table I and the first reading left it out (var_per_site null, variance_as_reported null). Energy and sigma verified: −0.01252(3) -> -0.67608, sig) | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+        "note": "Table I, rs=2.0, row SJ3; sources/0801.0518.txt line 255; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read; qmbl-verify 2026-10-19 SP6-heg3d-heg2d-hubbard#132: energy_variance null -> 0.138 (The VMC variance is printed beside every VMC energy in Table I and the first reading left it out (var_per_site null, variance_as_reported null). Energy and sigma verified: −0.01252(3) -> -0.67608, sig) | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference).",
         "secondary_of": null
       },
+      "corrections": [
+        {
+          "field": "verified.note",
+          "edit": [
+            "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+            "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+          ],
+          "reported_as": "−0.01252(3)",
+          "location": "see edit text (printed lines cited there)",
+          "version_read": "sources/ text of the cited papers, as stated in the edit",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 180",
+          "from": "Table I, rs=2.0, row SJ3; sources/0801.0518.txt line 255; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read; qmbl-verify 2026-10-19 SP6-heg3d-heg2d-hubbard#132: energy_variance null -> 0.138 (The VMC variance is printed beside every VMC energy in Table I and the first reading left it out (var_per_site null, variance_as_reported null). Energy and sigma verified: −0.01252(3) -> -0.67608, sig) | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+          "to": "Table I, rs=2.0, row SJ3; sources/0801.0518.txt line 255; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read; qmbl-verify 2026-10-19 SP6-heg3d-heg2d-hubbard#132: energy_variance null -> 0.138 (The VMC variance is printed beside every VMC energy in Table I and the first reading left it out (var_per_site null, variance_as_reported null). Energy and sigma verified: −0.01252(3) -> -0.67608, sig) | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+        }
+      ],
       "artifacts": {
         "libraries": [
           {
@@ -390,9 +480,27 @@
         "checked_on": "2026-10-17",
         "method": "source text of arXiv:0801.0518 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.01382(2)",
-        "note": "Table I, rs=2.0, row BF; sources/0801.0518.txt line 256; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read; qmbl-verify 2026-10-19 SP6-heg3d-heg2d-hubbard#133: energy_variance null -> 0.0342 (The VMC variance is printed beside every VMC energy in Table I and the first reading left it out (var_per_site null, variance_as_reported null). Energy and sigma verified: −0.01382(2) -> -0.74628, sig) | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+        "note": "Table I, rs=2.0, row BF; sources/0801.0518.txt line 256; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read; qmbl-verify 2026-10-19 SP6-heg3d-heg2d-hubbard#133: energy_variance null -> 0.0342 (The VMC variance is printed beside every VMC energy in Table I and the first reading left it out (var_per_site null, variance_as_reported null). Energy and sigma verified: −0.01382(2) -> -0.74628, sig) | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference).",
         "secondary_of": null
       },
+      "corrections": [
+        {
+          "field": "verified.note",
+          "edit": [
+            "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+            "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+          ],
+          "reported_as": "−0.01382(2)",
+          "location": "see edit text (printed lines cited there)",
+          "version_read": "sources/ text of the cited papers, as stated in the edit",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 181",
+          "from": "Table I, rs=2.0, row BF; sources/0801.0518.txt line 256; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read; qmbl-verify 2026-10-19 SP6-heg3d-heg2d-hubbard#133: energy_variance null -> 0.0342 (The VMC variance is printed beside every VMC energy in Table I and the first reading left it out (var_per_site null, variance_as_reported null). Energy and sigma verified: −0.01382(2) -> -0.74628, sig) | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+          "to": "Table I, rs=2.0, row BF; sources/0801.0518.txt line 256; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read; qmbl-verify 2026-10-19 SP6-heg3d-heg2d-hubbard#133: energy_variance null -> 0.0342 (The VMC variance is printed beside every VMC energy in Table I and the first reading left it out (var_per_site null, variance_as_reported null). Energy and sigma verified: −0.01382(2) -> -0.74628, sig) | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+        }
+      ],
       "artifacts": {
         "libraries": [
           {
@@ -431,7 +539,7 @@
         "checked_on": "2026-10-17",
         "method": "source text of arXiv:0801.0518 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.013966(9)",
-        "note": "Table I, rs=2.0, row BF, column ED; sources/0801.0518.txt line 256; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+        "note": "Table I, rs=2.0, row BF, column ED; sources/0801.0518.txt line 256; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference).",
         "secondary_of": null,
         "second_read": {
           "checked_on": "2026-10-19",
@@ -444,6 +552,24 @@
           "source_entry": "SP6-heg3d-heg2d-hubbard#134"
         }
       },
+      "corrections": [
+        {
+          "field": "verified.note",
+          "edit": [
+            "The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+            "Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+          ],
+          "reported_as": "−0.013966(9)",
+          "location": "see edit text (printed lines cited there)",
+          "version_read": "sources/ text of the cited papers, as stated in the edit",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The sentence reported a check against QMBL's own Hartree-Fock energy. By the rulings of 2026-11-24/26 (RULES.md 5, 8) no fact, convention or label rests on a computation of QMBL's own, so the sentence goes and the printed passages that state the same conventions replace it. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26 heg-hf-2 entry 182",
+          "from": "Table I, rs=2.0, row BF, column ED; sources/0801.0518.txt line 256; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. The paper's Hartree-Fock energies (VMC of the plane-wave determinant) match QMBL's HF energy within their error bars at all six rs, e.g. 0.5689(4) against 0.569245 at rs = 1 (checks/heg-hf/convention-check-2026-10-17.json).",
+          "to": "Table I, rs=2.0, row BF, column ED; sources/0801.0518.txt line 256; printed in Ha per electron; version read: arXiv text, Table I; APS copy not read | Ha per electron, 54 electrons (27 + 27) in a simple cubic cell. Printed in the source (arXiv:0801.0518, sources/0801.0518.txt): 'Hartree atomic units ... are used throughout' (line 70); '54 electrons in a simple cubic simulation cell' (line 187). Madelung term: arXiv:2103.03176 Table II, 'Total energy (a.u./electron), including the Madelung constant, of the 54-electron 3D UEG' (sources/2103.03176.txt lines 389-397), prints BF-DMC 3.22112(4) at rs = 0.5 and 0.52989(4) at rs = 1, equal to the BF-DMC entries of Table I here (lines 243-250); read across to the other rows of this table (same-table inference)."
+        }
+      ],
       "artifacts": {
         "libraries": [
           {

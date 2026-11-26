@@ -79,7 +79,7 @@
       "family": "other",
       "bound_type": "exact",
       "bound_type_reason": "exact diagonalization|ex",
-      "reference": "[code](https://github.com/varbench/methods/blob/main/scripts/Impurity/SB-DMFT-MI-HF_9.py) (a forkTPS DMRG script; QMBL's exact diagonalization reproduces this number to 3.3e-15 relative, checks/cost/ed/results/Impurity--SB-DMFT-MI-HF_9.json)",
+      "reference": "[code](https://github.com/varbench/methods/blob/main/scripts/Impurity/SB-DMFT-MI-HF_9.py) (a forkTPS DMRG script; the value and the label 'Exact diagonalization' are printed in the VarBench dataset, vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4; the script runs no exact diagonalization)",
       "source": "varbench@2024-10-22",
       "provenance": "imported",
       "compute": {
@@ -133,6 +133,22 @@
           "reason": "The linked SB-DMFT-MI-HF_9.py runs forkTPS DMRG (S.solve with DMRG parameters) and writes that run's energy; the reader found no exact-diagonalization driver in forkTPS or in varbench/methods (VA2). QMBL's exact diagonalization of the instance (213444 states) reproduces the stored number, so the row cites that reproduction beside the link; the number keeps its digits. The row is the instance's only exact reference. Ruling E5 (2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged.",
           "source_entry": "VA2-10-1103-physrevx-7-031013#6 (qmbl-verify 2026-09-29, ambiguous; skeptic upheld); ruling E5, 2026-10-02",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/Impurity/SB-DMFT-MI-HF_9.py)"
+        },
+        {
+          "field": "reference",
+          "edit": [
+            "QMBL's exact diagonalization reproduces this number to 3.3e-15 relative, checks/cost/ed/results/Impurity--SB-DMFT-MI-HF_9.json",
+            "the value and the label 'Exact diagonalization' are printed in the VarBench dataset, vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4; the script runs no exact diagonalization"
+          ],
+          "reported_as": "none (text field)",
+          "location": "varbench-methods ed31bb0 scripts/Impurity/SB-DMFT-MI-HF_9.py:17 \"Nbath=9\", :18 \"U=8.0\", :21 \"Filling=1.0\", :41 \"if abs(U-8.0) < 0.1 and Filling==1.0:\", :44 \"Nb=Nbath+1\"; energies and Einf printed in vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (instances-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/instances-1 (keep-reword)",
+          "from": "[code](https://github.com/varbench/methods/blob/main/scripts/Impurity/SB-DMFT-MI-HF_9.py) (a forkTPS DMRG script; QMBL's exact diagonalization reproduces this number to 3.3e-15 relative, checks/cost/ed/results/Impurity--SB-DMFT-MI-HF_9.json)",
+          "to": "[code](https://github.com/varbench/methods/blob/main/scripts/Impurity/SB-DMFT-MI-HF_9.py) (a forkTPS DMRG script; the value and the label 'Exact diagonalization' are printed in the VarBench dataset, vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4; the script runs no exact diagonalization)"
         }
       ],
       "baseline": true
