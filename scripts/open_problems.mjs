@@ -73,7 +73,7 @@ export async function loadOpenProblems(instances, dir = process.env.OPEN_PROBLEM
   const citation = fs.existsSync(cff)
     ? (await import(pathToFileURL(path.join(root, "scripts/citation.mjs")).href)).citationOf(fs.readFileSync(cff, "utf8"))
     : null;
-  return { targets, entries, citation };
+  return { targets, entries, citation, root };
 }
 
 // qrec_verify/instance.py best_variational (quantum-many-body-leaderboard/verifier): the lowest unflagged variational row, with
@@ -152,6 +152,6 @@ header.site nav a.op:hover { color: var(--bg); background: var(--ink); border-co
 header.site nav a.op[aria-current] { color: var(--bg); background: var(--ink); border-color: var(--ink); box-shadow: none; }
 @media (max-width: 480px) {
   header.site nav { gap: 0.4rem 0.75rem; font-size: 0.9rem; }
-  header.site nav a.op, header.site nav button.cite-btn { padding: 0.4rem 0.6rem; font-size: 0.8rem; }
+  header.site nav a.op { padding: 0.4rem 0.6rem; font-size: 0.8rem; }
 }
 `;

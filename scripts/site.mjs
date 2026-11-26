@@ -30,6 +30,7 @@ import { FRONTIER } from "./views.mjs";
 import { pickerFacets, drawnRows } from "./ladders.mjs";
 import { SUB_RING, pickerSlug, formula, about, modelGlyph, latticeGlyph, heroHtml, HERO_CSS } from "./hero.mjs";
 import { loadOpenProblems, openProblemsLlms, score as scoreOpenProblems, OPEN_PROBLEMS_NAV_CSS } from "./open_problems.mjs";
+import { arenaData, openPullRequests, arenaHtml, arenaCiteHtml, arenaCitation, agentPrompt, OP_REPO } from "./arena.mjs";
 
 const OUT = "_site";
 const REPO = "https://github.com/quantum-many-body-leaderboard/quantum-many-body-leaderboard";
@@ -79,27 +80,34 @@ const esc = s => String(s)
 // beside this one or at OPEN_PROBLEMS_DIR; without it those pages are left out. Its targets
 // are this build's instances with no exact energy (the checkout's scripts/targets.mjs).
 const OPEN_PROBLEMS = await loadOpenProblems(instances);
+// The open pull requests that add an entry, for the arena's latest entries (arena.mjs); null offline.
+const PULLS = OPEN_PROBLEMS ? await openPullRequests() : null;
 
 // The front page is the picker (hero.mjs); the wordmark leads there, so the menu starts at the Table.
 const NAV = [
   ["/instances/", "Table"],
 ];
-// Open Problems is a button at the very right of the menu, after Cite.
+// The arena's switch is the last item of the menu, after Cite.
 const opButton = url => (OPEN_PROBLEMS
-  ? `<a href="/?open" class="op">Open Problems</a>` : "");
+  ? `<a href="/?open" class="op">Arena</a>` : "");
 
-// With JavaScript the button is a switch, "Mark open problems" (2026-11-11): ?open in the address
+// With JavaScript the button is a switch, "Arena" (2026-11-26; "Mark open problems" since 2026-11-11): ?open in the address
 // sets html.op-on, which marks the open problems (the instances with no exact energy) on every
 // page that knows them: count badges on the picker, solved Hamiltonians faded, solved instances
 // grey in the charts and the table. A page that marks them through CSS (data-op-live: the picker,
 // the table) switches in place, so the change animates; any other page reloads. Links to other
-// pages of the site carry ?open along. Without JavaScript the button leads to /?open.
+// pages of the site carry ?open along. Without JavaScript the button leads to /?open. While on, the
+// menu's Cite button copies the QMBL: Open Problems citation and the GitHub link opens its repository.
+// On the front page the switch is the arena's (arena.mjs): arena.js animates the click and lets it through.
+const OP_LINKS = { cite: OPEN_PROBLEMS?.citation ? arenaCitation(OPEN_PROBLEMS.citation) : null, repo: OP_REPO };
 const OP_EARLY_SCRIPT = `<script>if (/[?&]open(&|=|$)/.test(location.search)) document.documentElement.classList.add("op-on");</script>`;
 const OP_SWITCH_SCRIPT = `<script>
 (() => {
   const root = document.documentElement, b = document.querySelector("header.site a.op");
   if (!b) return;
-  b.classList.add("op-toggle"); b.innerHTML = '<i aria-hidden="true"></i>Mark open problems'; b.removeAttribute("aria-current");
+  b.classList.add("op-toggle"); b.innerHTML = '<i aria-hidden="true"></i>Arena'; b.removeAttribute("aria-current");
+  const cite = document.querySelector("header.site button.cite-btn"), gh = document.querySelector("header.site a.ext"), op = ${JSON.stringify(OP_LINKS)};
+  const own = { cite: cite && cite.dataset.cite, href: gh && gh.href, label: gh && gh.getAttribute("aria-label"), tip: gh && gh.title };
   const links = on => { for (const a of document.querySelectorAll('a[href^="/"]')) {
     if (a === b) continue;
     const [path, hash] = a.getAttribute("href").split("#"), bare = path.replace(/[?]open$/, "");
@@ -109,7 +117,9 @@ const OP_SWITCH_SCRIPT = `<script>
   const set = on => {
     root.classList.toggle("op-on", on);
     b.setAttribute("aria-pressed", String(on));
-    b.title = on ? "Stop marking the open problems" : "Mark the open problems: the instances with no exact energy";
+    b.title = on ? "Leave the arena" : "Enter the arena: the open problems, the instances with no exact energy";
+    if (cite && op.cite) cite.dataset.cite = on ? op.cite : own.cite;
+    if (gh) { gh.href = on ? op.repo : own.href; gh.setAttribute("aria-label", on ? "QMBL: Open Problems on GitHub" : own.label); gh.title = on ? "QMBL: Open Problems on GitHub" : own.tip; }
     b.href = location.pathname + (on ? "" : "?open") + location.hash;
     links(on);
   };
@@ -199,11 +209,12 @@ function instanceLd(inst, label, lede) {
 }
 
 // `css` is a page's own stylesheet, after the site's (open-problems.css). `ogTitle` is the
-// link-preview title; by default a subpage's title followed by " · " and the full name.
-function page({ url, title, description, body, wide = false, jsonld = null, css = null, ogTitle = null }) {
+// link-preview title; by default a subpage's title followed by " · " and the full name. `htmlClass`
+// marks a page for the stylesheet (arena-page: the front page, where the switch opens the arena).
+function page({ url, title, description, body, wide = false, jsonld = null, css = null, ogTitle = null, htmlClass = null }) {
   const head = title === null ? CITE_TITLE : `${title} &middot; ${CITE_TITLE}`;
   return `<!doctype html>
-<html lang="en">
+<html lang="en"${htmlClass ? ` class="${htmlClass}"` : ""}>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${head}</title>
@@ -775,6 +786,9 @@ const FIG_COLOURS = new Map();
 }
 const FIG_DARK = [...FIG_COLOURS].filter(([l, d]) => l !== d)
   .map(([l, d]) => `  figure.chart [fill="${l}"] { fill: ${d}; }\n  figure.chart [stroke="${l}"] { stroke: ${d}; }`).join("\n");
+// The arena's stylesheet (arena.mjs), and its figures in the dark colours whatever the scheme, on the arena's surface.
+const ARENA_CSS = fs.readFileSync("scripts/assets/arena.css", "utf8") + FIG_DARK.replace(/figure\.chart/g, ".arena-page.op-on figure.chart")
+  + `\n.arena-page.op-on figure.chart [fill="#fcfcfb"], .arena-page.op-on figure.chart [fill="#ffffff"] { fill: var(--surface); }\n`;
 
 // The figure's own <title> and <desc> are dropped (a tooltip over the whole chart, and an id
 // repeated per inlined figure); the entry's title and caption label it instead. Marks are
@@ -938,6 +952,22 @@ const picker = () => pickerCache ??= MODELS.filter(([m]) => PICKS.has(m)).map(([
   };
 });
 const HERO_SCRIPT = fs.readFileSync("scripts/assets/hero.js", "utf8");
+const ARENA_SCRIPT = fs.readFileSync("scripts/assets/arena.js", "utf8");
+
+// The arena's panels and their data (arena.mjs), under the ring; shown while the switch is on.
+// An instance is named only where it may be: open with a variational energy, or solved.
+function arena(models) {
+  if (!OPEN_PROBLEMS) return "";
+  const { targets, entries } = scoreOpenProblems(OPEN_PROBLEMS, instances);
+  const hidden = new Set(targets.filter(x => !x.row).map(x => x.t.instance_id));
+  const byId = new Map(instances.map(i => [i.instance_id, i]));
+  const shown = new Set(instances.map(i => i.instance_id).filter(id => !hidden.has(id)));
+  const label = id => { const inst = byId.get(id); return `${modelName(inst.model)} ${instanceLabel(inst)}`; };
+  const prompt = agentPrompt(OPEN_PROBLEMS.root);
+  if (!prompt) throw new Error("open-problems README.md: no agent prompt (its first text block)");
+  return arenaHtml({ prompt, entries, pulls: PULLS, shown, label })
+    + `\n<script type="application/json" id="arena-data">${JSON.stringify(arenaData(targets, models)).replace(/</g, "\\u003c")}</script>`;
+}
 
 function homePage() {
   const [overview, byFamily] = FIGURES;
@@ -953,8 +983,9 @@ function homePage() {
   const models = picker().map(p => p.info);
   const data = { sub: [...SUB_RING], models, open: OPEN.size, instances: instances.length };
   const body = `
-${heroHtml({ models, energies: instances.reduce((a, i) => a + i.rows.length, 0), open: OPEN.size, instances: instances.length })}
+${heroHtml({ models, energies: instances.reduce((a, i) => a + i.rows.length, 0) })}
 <script type="application/json" id="pk-data">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>
+${arena(models)}
 <div class="pk-tip-host"><div id="pk-tip" role="tooltip" hidden></div></div>
 <div class="pk-more-wrap" id="pk-more-wrap">
 <nav class="pk-more" aria-label="More views">
@@ -963,7 +994,7 @@ ${panels.map(([id, label]) => `  <button class="pk-more-l" type="button" aria-ex
 ${panels.map(([id, , html]) => `<div class="pk-panel" id="pk-p-${id}" hidden>\n${html}\n</div>`).join("\n")}
 <template id="fig-cards">${cards.join("\n")}</template>
 ${FIG_SCRIPT}
-
+${OPEN_PROBLEMS?.citation ? arenaCiteHtml(OPEN_PROBLEMS.citation) : ""}
 <section class="cite" id="cite">
   <h2>Citing QMBL</h2>
   <blockquote class="citation">${esc(CITE_HEAD)}, <em>${esc(CITE_TITLE)}</em>,
@@ -973,9 +1004,9 @@ ${FIG_SCRIPT}
   <p>Individual energies should be cited to the primary paper named on the row, not to this site.</p>
 </section>
 </div>
-<script>${HERO_SCRIPT}</script>`;
+<script>${HERO_SCRIPT}</script>${OPEN_PROBLEMS ? `\n<script>${ARENA_SCRIPT}</script>` : ""}`;
   return page({
-    url: "/", title: null, body, wide: true, jsonld: datasetLd(),
+    url: "/", title: null, body, wide: true, jsonld: datasetLd(), htmlClass: OPEN_PROBLEMS ? "arena-page" : null,
     description: `Published ground-state energies for ${summary.instances} Hamiltonian instances, with the exact energy and the best of each bound type on each, every row citing its primary paper.`,
   });
 }
@@ -1834,13 +1865,16 @@ header.site nav a[aria-current] { color: var(--ink); box-shadow: inset 0 -2px 0 
 header.site nav a.ext { color: var(--muted); display: inline-flex; }
 header.site nav a.ext:hover { color: var(--ink); }
 header.site nav a.ext svg { display: block; }
+/* The Cite button is the grey quote mark alone (2026-11-26); its word stays for screen readers, and
+   the title says what a click does. A copy turns the mark green for 2 s. */
 button.cite-btn {
-  font: inherit; font-size: 0.85rem; line-height: 1; cursor: pointer;
-  display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.7rem;
-  color: var(--ink2); background: var(--surface); border: 1px solid var(--grid); border-radius: 999px;
+  font: inherit; font-size: 1.15rem; line-height: 1; cursor: pointer;
+  display: inline-flex; align-items: center; padding: 0.25rem 0.3rem;
+  color: var(--muted); background: none; border: 0; border-radius: 3px;
 }
-button.cite-btn:hover { color: var(--accent); border-color: var(--accent); }
-button.cite-btn.copied { color: var(--exact); border-color: var(--exact); }
+button.cite-btn:hover { color: var(--ink); }
+button.cite-btn.copied { color: var(--exact); }
+button.cite-btn span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 main { padding: 2.4rem clamp(1rem, 4vw, 3rem) 4rem; max-width: 52rem; margin: 0 auto; }
 main.wide { max-width: 78rem; }
@@ -2090,16 +2124,18 @@ button.qn.open::after, button.qn:focus-visible:not(.shut)::after {
   font-family: var(--sans); font-size: 0.8rem; line-height: 1.35; color: var(--ink);
   background: var(--surface); border: 1px solid var(--grid); border-radius: 4px;
   padding: 0.3rem 0.5rem; box-shadow: 0 2px 8px rgb(0 0 0 / 0.12); }
-` + LOGO_CSS + HERO_CSS + (OPEN_PROBLEMS ? OPEN_PROBLEMS_NAV_CSS + `
+` + LOGO_CSS + HERO_CSS + (OPEN_PROBLEMS ? OPEN_PROBLEMS_NAV_CSS + ARENA_CSS + `
 /* the Open Problems switch (OP_SWITCH_SCRIPT) while on */
 header.site nav a.op[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); }
 header.site nav a.op[aria-pressed="true"]::before { content: "\\2713"; margin-right: 0.4em; }
-header.site nav a.op.op-toggle, header.site nav a.op.op-toggle:hover { background: none; border: 0; padding: 0.3rem 0; color: var(--ink2); gap: 0.5rem; font-size: 0.92rem; }
+/* one round pill around the switch and the word; on, both in the arena's amber on every page */
+header.site nav a.op.op-toggle, header.site nav a.op.op-toggle:hover { position: relative; background: none; border: 1px solid var(--ink2); border-radius: 999px; padding: 0.2rem 0.85rem 0.2rem 0.25rem; color: var(--ink); font-weight: 600; gap: 0.5rem; font-size: 0.92rem; }
+header.site nav a.op.op-toggle:hover { border-color: var(--flag); }
 header.site nav a.op.op-toggle::before { content: none; }
 header.site nav a.op.op-toggle i { width: 34px; height: 20px; border-radius: 999px; background: var(--grid); position: relative; transition: background .2s; flex: none; }
 header.site nav a.op.op-toggle i::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--surface); box-shadow: 0 1px 2px rgb(0 0 0 / 0.3); transition: transform .2s; }
-header.site nav a.op.op-toggle[aria-pressed="true"] { color: var(--ink); }
-header.site nav a.op.op-toggle[aria-pressed="true"] i { background: var(--flag); }
+header.site nav a.op.op-toggle[aria-pressed="true"] { color: var(--ink); border-color: #ffb454; }
+header.site nav a.op.op-toggle[aria-pressed="true"] i { background: #ffb454; }
 header.site nav a.op.op-toggle[aria-pressed="true"] i::after { transform: translateX(14px); }
 /* the table while marking: a solved instance greys out */
 .leaderboard tbody.inst { transition: opacity .5s ease; }
@@ -2252,6 +2288,7 @@ if (OPEN_PROBLEMS) {
       method: r.method, ansatz: r.ansatz ?? null, reference: r.reference };
   };
   const entryOf = s => ({ instance_id: s.e.instance_id, system: s.e.system, team: s.e.team, ai_involvement: s.e.ai_involvement,
+    ai_model: s.e.ai_model ?? null, harness: s.e.harness ?? null,
     energy_per_site: s.e.energy_per_site, sigma_per_site: s.e.sigma_per_site ?? null, measured: s.e.measured ?? null,
     gap: s.gap ?? null, new_record: !!s.record, first_state: !!s.first, solved: !!s.solved, live: !!s.live, flags: s.e.flags ?? [],
     compute: s.e.compute ?? null, links: s.e.links ?? null });

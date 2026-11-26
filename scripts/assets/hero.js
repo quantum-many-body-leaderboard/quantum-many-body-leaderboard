@@ -57,7 +57,9 @@
   function tick(t) {
     const dt = last ? Math.min(t - last, 50) : 16; last = t;
     speed += ((paused || still.matches ? 0 : 1) - speed) * (1 - Math.exp(-dt / 450));
-    if (speed > 0.001 && !narrow.matches && !hero.hidden) { phase += speed * dt * 2 * Math.PI / 200000; place(); }
+    // window.__arena.spin: the arena's spin-up (arena.js), on top of the drift.
+    const spin = speed + (window.__arena?.spin ?? 0);
+    if (spin > 0.001 && !narrow.matches && !hero.hidden) { phase += spin * dt * 2 * Math.PI / 200000; place(); }
     requestAnimationFrame(tick);
   }
   stage.addEventListener("pointerenter", () => { paused = true; });

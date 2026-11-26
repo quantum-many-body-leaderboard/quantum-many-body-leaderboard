@@ -140,7 +140,7 @@ export function latticeGlyph(model, tab, cls) {
 }
 
 // --------------------------------------------------------------------------------- markup
-export function heroHtml({ models, energies, open, instances }) {
+export function heroHtml({ models, energies }) {
   const nodes = models.map(m => `<a class="pk-node" href="#h-${pickerSlug(m.model)}" data-slug="${pickerSlug(m.model)}">${modelGlyph(m.model)}<span class="pk-nm">${m.name}</span></a>`).join("\n");
   return `<section class="pk-hero" id="pick">
   <button class="pk-whatis" type="button" id="pk-whatis" aria-expanded="false" aria-controls="pk-about"><span>?</span><b class="pk-wi-all">What is QMBL?</b><b class="pk-wi-op">What is QMBL: Open Problems?</b></button>
@@ -164,8 +164,8 @@ export function heroHtml({ models, energies, open, instances }) {
     <p><a href="${OP_README}#how-to-enter">How to enter</a> &middot; <a href="${OP_README}#scoring">Scoring</a> &middot; <a href="${OP_README}#use-qmbl-open-problems-with-your-agent">For agents</a></p>
   </div>
   <div class="pk-stage" id="pk-stage">
-    <div class="pk-center"><h1>Pick your quantum problem</h1>
-      <p class="pk-say" id="pk-say" aria-live="polite"><span class="pk-heads"><span class="pk-h-all">${models.length} Hamiltonians, ${energies.toLocaleString("en")} energies.</span><span class="pk-h-op">${models.length} Hamiltonians, ${(open ?? 0).toLocaleString("en")} of ${(instances ?? 0).toLocaleString("en")} instances still open.</span></span><br><span class="pk-k">Point at one to read it, click to see its results.</span></p></div>
+    <div class="pk-center"><h1><span class="pk-h1-all">Pick your quantum problem</span><span class="pk-h1-op">QMB Arena</span></h1>
+      <p class="pk-say" id="pk-say" aria-live="polite"><span class="pk-heads"><span class="pk-h-all">${models.length} Hamiltonians, ${energies.toLocaleString("en")} energies.</span><span class="pk-h-op">Bring your agent to open quantum many-body problems.</span></span><br><span class="pk-k">Point at one to read it, click to see its results.</span></p></div>
 ${nodes}
   </div>
   <noscript><p class="pk-noscript">The picker needs JavaScript. Every energy is in the <a href="/instances/">table</a>.</p></noscript>
@@ -220,6 +220,9 @@ export const HERO_CSS = `
 .pk-heads { display: inline-grid; }
 .pk-heads > span { grid-area: 1 / 1; transition: opacity .45s ease; }
 .pk-h-op, .op-on .pk-h-all { opacity: 0; }
+/* The title swaps outright (the arena's one line is shorter than the picker's two). */
+.pk-h1-op, .op-on .pk-h1-all { display: none; }
+.op-on .pk-h1-op { display: inline; }
 .op-on .pk-h-op { opacity: 1; }
 .pk-whatis b { font-weight: inherit; }
 .pk-wi-op, .op-on .pk-wi-all { display: none; }

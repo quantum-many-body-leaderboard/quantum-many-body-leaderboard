@@ -1,0 +1,57 @@
+/* The arena (arena.mjs): the front page (html.arena-page) with the Open Problems switch on (html.op-on).
+   Dark whatever the colour scheme; amber is the spark. arena.js adds html.arena-run while the ring spins up. */
+.arena-page.op-on { --bg: #0b0d12; --surface: #141821; --ink: #f4f1ea; --ink2: #b9bccb; --muted: #7f8496; --grid: #272d3a; --accent: #ffb454; --flag: #ff7a3c; --record: #ffb454; color-scheme: dark; }
+.arena-page body, .arena-page header.site, .arena-page .pk-node .pk-glyph { transition: background-color .5s ease, color .5s ease, border-color .5s ease; }
+#arena-fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+#arena-flash { position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: 0; background: radial-gradient(circle at 50% 45%, #fff3d6 0, #ffb454 22%, rgb(255 122 60 / 0.35) 48%, transparent 72%); }
+#arena-flash.go { animation: arena-flash .65s ease-out; }
+@keyframes arena-flash { 0% { opacity: 0; } 18% { opacity: .95; } 100% { opacity: 0; } }
+.arena-run .pk-center { animation: arena-center 2.5s ease both; }
+@keyframes arena-center { 0% { opacity: 1; } 22%, 62% { opacity: 0; transform: translate(-50%, -50%) scale(.9); } 100% { opacity: 1; transform: translate(-50%, -50%); } }
+.arena-run .pk-stage { pointer-events: none; }
+.arena-run .pk-nm { opacity: 0; }
+/* The glow sits on a layer of its own behind the icon (a shadow on the svg itself drew a dark square in some browsers).
+   --g is 0..1 from the open problems: the more, the stronger. A recent record adds the amber rim and the sparks. */
+.arena-page.op-on .pk-hot .pk-glyph { border-color: var(--accent); }
+.pk-node { --gs: 78px; --gt: .3rem; }
+.arena-page.op-on .pk-node[style*="--g"]:not(.pk-done)::before { content: ""; position: absolute; z-index: -1; left: 50%; top: var(--gt); width: var(--gs); height: var(--gs); margin-left: calc(var(--gs) / -2); border-radius: 50%; pointer-events: none;
+  box-shadow: 0 0 calc(6px + 30px * var(--g)) calc(1px + 9px * var(--g)) rgb(255 140 60 / calc(.18 + .6 * var(--g))); animation: arena-glow 2.6s ease-in-out infinite; }
+@keyframes arena-glow { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+.arena-run .pk-node::before { animation: none; opacity: 0; }
+#arena { display: none; margin-top: 2.5rem; }
+/* Under the ring in the arena: no figure links, and the citation block cites QMBL: Open Problems instead of QMBL. */
+.arena-page.op-on #pk-more-wrap .pk-more, .arena-page.op-on #pk-more-wrap .pk-panel, .arena-page.op-on #cite, #ar-cite { display: none; }
+.arena-page.op-on #ar-cite { display: block; }
+.op-on #pick:not([hidden]) ~ #arena { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem 2.4rem; }
+/* Ruled sections like the site's text pages: no boxes, square, a 1px rule over each panel. */
+.ar-card { min-width: 0; border-top: 1px solid var(--grid); padding-top: 1.1rem; }
+.ar-card h2 { margin: .8rem 0 .2rem; font-size: 1.45rem; }
+.ar-card p { margin: .2rem 0 .8rem; font-size: .88rem; color: var(--ink2); max-width: 46em; }
+.ar-stand { grid-column: span 7; } .ar-feed { grid-column: span 5; } .ar-agent { grid-column: 1 / -1; } .ar-entries { grid-column: span 5; }
+.ar-agent:has(~ .ar-entries) { grid-column: span 7; }
+.ar-entries td a { color: var(--ink); } .ar-entries td span { color: var(--ink2); } .ar-entries td small { display: block; color: var(--muted); font-size: .8rem; }
+#arena td.ar-step { width: 6.6rem; font-family: var(--mono); font-size: .76rem; color: var(--accent); }
+.ar-rec { font-family: var(--mono); font-size: .7rem; font-weight: 500; color: var(--bg); background: var(--accent); padding: .05rem .4rem; border-radius: 3px; }
+.ar-seg { display: flex; flex-wrap: wrap; gap: .4rem; margin: .2rem 0 .7rem; align-items: center; }
+.ar-seg select { font: inherit; font-size: .85rem; padding: .25rem .6rem; border: 1px solid var(--grid); border-radius: 3px; background: var(--surface); color: var(--ink2); cursor: pointer; }
+#arena table { font-size: .9rem; table-layout: fixed; }
+#arena td, #arena th { padding: .4rem .8rem .4rem 0; vertical-align: middle; }
+#arena tbody tr:hover { background: none; }
+#arena th.rk { width: 2rem; } #arena th.n { width: 3rem; text-align: right; } #arena td.num { text-align: right; } #arena th.bar { width: 34%; }
+.ar-stand td:nth-child(2) a { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink); }
+.ar-rank { color: var(--muted); font-family: var(--mono); font-size: .78rem; }
+.ar-bar { height: 8px; background: var(--accent); min-width: 3px; transition: width .5s cubic-bezier(.2,.7,.2,1); }
+#arena th.mo { width: 5.2rem; }
+.ar-feed td a { color: var(--ink); } .ar-feed td span { color: var(--ink2); } .ar-feed td small { display: block; color: var(--muted); font-size: .8rem; }
+.ar-feed time { font-family: var(--mono); font-size: .76rem; color: var(--muted); }
+.ar-more { border: 0; background: none; padding: .5rem 0 0; cursor: pointer; color: var(--muted); font: inherit; font-size: .88rem; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.ar-more:hover { color: var(--ink2); }
+.ar-prompt { font-family: var(--mono); font-size: .76rem; line-height: 1.5; white-space: pre-wrap; max-height: 9.5em; overflow: auto; background: var(--bg); border: 1px solid var(--grid); border-radius: 3px; padding: .7rem .8rem; color: var(--ink2); }
+.ar-cta { font: inherit; font-weight: 600; font-size: .92rem; border: 1px solid var(--accent); border-radius: 3px; padding: .45rem 1.1rem; background: var(--accent); color: #0b0d12; cursor: pointer; margin-top: .8rem; }
+.ar-cta:hover { background: #ffc980; } .ar-agent a { margin-left: 1rem; font-size: .88rem; }
+.ar-steps { list-style: none; margin: .4rem 0 0; padding: 0; font-size: .88rem; color: var(--ink2); } .ar-steps li { display: flex; gap: .6rem; align-items: baseline; padding: .28rem 0; border-top: 1px solid var(--grid); } .ar-steps b { font-family: var(--mono); font-size: .76rem; color: var(--accent); min-width: 6.2rem; }
+@media (max-width: 900px) { html.op-on #pick:not([hidden]) ~ #arena { grid-template-columns: minmax(0, 1fr); } .op-on #pick:not([hidden]) ~ #arena > * { grid-column: 1 / -1; } #arena th.bar { width: 22%; } }
+@media (min-width: 721px) and (max-width: 1100px) { .pk-node { --gs: 62px; } }
+@media (max-width: 720px) { .arena-run .pk-center { animation: none; } .arena-run .pk-nm { opacity: 1; } .pk-node { --gs: 56px; --gt: .6rem; } .arena-page.op-on .pk-node { border-radius: 3px; } }
+@media (prefers-reduced-motion: reduce) { .arena-page body, .arena-page header.site, .ar-bar { transition: none; } .arena-page.op-on .pk-node::before { animation: none; opacity: 1; } }
+#ar-btn-fx { position: absolute; left: -18px; top: -18px; width: calc(100% + 36px); height: calc(100% + 36px); pointer-events: none; }
