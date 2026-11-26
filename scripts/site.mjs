@@ -2194,8 +2194,8 @@ write("contribute/index.html", contributePage());
 // Open Problems is a switch on QMBL's own pages since 2026-11-11 (OP_SWITCH_SCRIPT): its old
 // addresses, linked from the Open Problems README and papers, forward to the switched views.
 if (OPEN_PROBLEMS) {
-  write("open-problems/index.html", redirectPage("/?open", "Open Problems", "QMBL: Open Problems is QMBL with the Open Problems switch on"));
-  write("open-problems/table/index.html", redirectPage("/instances/?open", "Open Problems: Table", "The open problems are QMBL's table with the Open Problems switch on"));
+  write("open-problems/index.html", redirectPage("/?open", "Open Problems", "QMBL: Open Problems is QMBL with the Arena switch on"));
+  write("open-problems/table/index.html", redirectPage("/instances/?open", "Open Problems: Table", "The open problems are QMBL's table with the Arena switch on"));
 }
 write("404.html", notFoundPage());
 write("style.css", CSS);

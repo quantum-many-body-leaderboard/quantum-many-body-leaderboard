@@ -132,8 +132,8 @@ export function score(op, instances) {
 
 // Two lines for llms.txt.
 export const openProblemsLlms = op => [
-  `- [Open Problems](https://qmbl.org/?open): QMBL's pages with the Open Problems switch on, marking the ${op.targets.length} instances with no exact ground-state energy; the same data, with the verified entries, is in https://qmbl.org/api/open-problems.json.`,
-  `- [Open Problems table](https://qmbl.org/instances/?open): the table with the switch on (the marking needs JavaScript; agents read the JSON above).`,
+  `- [Open Problems](https://qmbl.org/?open): QMBL's pages with the Arena switch on, marking the ${op.targets.length} instances with no exact ground-state energy; the same data, with the verified entries, is in https://qmbl.org/api/open-problems.json.`,
+  `- [Open Problems table](https://qmbl.org/instances/?open): the table with the Arena switch on (the marking needs JavaScript; agents read the JSON above).`,
 ];
 
 // The menu button, last in the menu (site.mjs) on every page, so its rules go into the site's

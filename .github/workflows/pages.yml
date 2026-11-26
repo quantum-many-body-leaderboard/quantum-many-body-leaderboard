@@ -7,9 +7,13 @@
 # an Actions deploy ignores a CNAME file.
 name: pages
 
+# Hourly too: the arena's latest entries list the open pull requests of the Open Problems
+# repository as they are at build time (scripts/arena.mjs), and its glow follows the month.
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: '17 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -47,6 +51,8 @@ jobs:
         env:
           OPEN_PROBLEMS_DIR: open-problems
           PREV_LASTMOD: ${{ runner.temp }}/lastmod.json
+          # GitHub's API reads the open pull requests (scripts/arena.mjs) at the token's rate limit.
+          GITHUB_TOKEN: ${{ github.token }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
