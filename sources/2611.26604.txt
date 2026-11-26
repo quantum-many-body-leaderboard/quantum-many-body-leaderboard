@@ -1,0 +1,959 @@
+                              Scalable Simulation of Strongly Correlated Fermions
+                                          with Neural Gaussian Tensor Networks
+
+                                    Runze  Chi,1, 2,∗   Ao  Chen,1, 2  and  Garnet  Kin-Lic  Chan1, 2,†
+                                             1Division  of  Chemistry  and  Chemical  Engineering,
+                                 California  Institute  of  Technology,  Pasadena,  California  91125,  USA
+       2Marcus Center for Theoretical Chemistry, California Institute of Technology, Pasadena, California 91125, USA
+                                                                        (Dated:)
+
+                   Accurate simulations of strongly correlated electrons remain a central challenge in computational
+                physics. We introduce neural-network Gaussian projected entangled-pair states (NN-GPEPS), which
+                exploit the locally-entangled subspace of Gaussian states to give an architecture more compatible
+                with modern neural networks and an exact contraction cost ofO(N          3/2   ) on two-dimensional lattices.
+                For  the  Hubbard  model  atU/t=  8  and  1/8  hole  doping,  we  obtain  state-of-the-art  variational
+                energies in large lattices of up to 1024 sites.  These results demonstrate an accurate approach to
+                strongly correlated fermions by connecting neural networks with Gaussian tensor networks.
+
+
+   Devising  compact  representations  of  strongly  corre-                     act contraction structure of GTNS for each amplitude.
+lated fermionic states is a central challenge in quantum                        The ansatz can be systematically improved by increas-
+many-body  physics.   In  recent  years,  neural  networks                      ing the number of virtual fermionic modes as well as the
+have been explored as flexible variational representations                      expressivity of the neural network.  The amplitude can
+of wavefunctions [1].  To capture the sign structure as-                        be exactly computed withO(N               3/2   ) cost [15] in two di-
+sociated with fermions, it is necessary to incorporate an                       mensions, and generallyO(N                        3−3/p     ) inp≥2 dimensions.
+underlying  bias  into  the  neural  network  ansatz.   Some                    If  truncation  is  allowed,  approximate  Gaussian  bound-
+widely used approaches for this thus use the neural net-                        ary contraction can further reduce the cost toO(N) [13].
+work to parametrize determinant or Pfaffian (Gaussian)                          We apply the NN-GPEPS ansatz to study the Hubbard
+wavefunctions [2–5], an ansatz often known as neural net-                       model atU/t= 8 and 1/8 hole doping on the 16×4 and
+work backflow (NNBF). Fermionic tensor network states                           16×16 lattices.  There, we achieve results that are com-
+(TNS) provide an alternative representation of fermionic                        petitive  with,  or  improve  upon,  all  prior  results  in  the
+signs,  incorporating  them  through  aZ  2-graded  tensor                      literature.  Further, we show that direct transfer of the
+algebra  [6–9].    Recent  work  has  demonstrated  the  ef-                    optimized parameters to a 32×32 lattice also achieves,
+fectiveness  of  neural-network  parametrized  TNS  (NN-                        without further optimization, state-of-the-art variational
+TNS)  [10].    Both  NNBF  and  NN-TNS  have  achieved                          energies on the larger lattice.
+highly  competitive  variational  energies  in  challenging                        Method.—We  consider  the  repulsive  Hubbard  model
+fermionic lattice problems [5,10,11].                                           on a periodic lattice ofNsites,
+   A  general  Gaussian  state  requiresO(N                      2)  pairing-
+matrix elements.  However, modern neural architectures                                   H=−t       ∑     (c †iσcjσ + h.c.) +U      ∑   ni↑ ni↓ ,     (1)
+such as convolutional neural networks (CNNs) and trans-                                             ⟨ij⟩,σ                           i
+formers naturally produce sitewise features,O(N) in to-
+tal.   Tensor  network  states,  in  contrast,  provide  a  lo-                 wherec         †iσ  creates an electron with spinσ,n           iσ =c   †iσciσ,
+cal parametrization compatible withO(N) features, but                           and⟨ij⟩counts each nearest-neighbor bond once.  In this
+their  evaluation  on  large  two-dimensional  lattices  typi-                  paper,  we  sett=  1  and  focus  onU=  8  at  1/8  hole
+cally relies on approximate contraction.  Gaussian tensor                       doping.
+network states (GTNS) lie at the intersection of these two                         To approximate its ground state, we introduce a NN-
+families [12–14], as illustrated in Figure1(a).  Built from                     GPEPS ansatz, which takes the form
+local  Gaussian  tensors,  they  describe  Gaussian  states                                             ψθ(n) =⟨n|G             θ(n)⟩,                       (2)
+with  area-law  entanglement.    In  the  current  context,
+the  essential  feature  is  that  they  combine  anO(N)  lo-                   where|n⟩is an occupation-basis state, andθrepresents
+cal parametrization with the possibility of efficientexact                      parameters in the neural network. For each configuration
+contraction.                                                                    n, we construct the Gaussian PEPS by contracting the
+   Utilizing   the   advantages   of   GTNS,   we   introduce                   virtual modes of local Gaussian states [7],
+neural-network Gaussian projected entangled-pair states
+(NN-GPEPS).  Analogous  to  NN-TNS,  neural  networks                                         |G θ(n)⟩= (1          phys ⊗ ⟨Ω|)    ⨂|Z s(n)⟩,          (3)
+in  NN-GPEPS  generate  configuration-dependent  local                                                                         s
+Gaussian tensors [Fig.1(b)]. This yields a generally non-
+Gaussian wavefunction, while preserving the efficient ex-                       where|Z            s(n)⟩is a local fermionic Gaussian state contain-
+                                                                                ing  two  physical  modes  andN       v  virtual  modes  on  each
+                                                                                                                                                           2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1. Construction of NN-GPEPS. (a) GPEPS as an intersection of Gaussian states and fPEPS. (b) A translation-equivariant
+convolutional neural network (CNN) with circular padding maps an occupation configurationnto local pairing matricesZ                                          s(n),
+which define Gaussian states on the physical and virtual modes at each site.  Each site has two physical modes andN       v virtual
+modes on each of its four legs.  Contracting neighboring virtual modes with fixed entangled bond states gives the Gaussian
+PEPS|G            θ(n)⟩.  Projection onto|n⟩yields the amplitudeψ                                   θ(n).  Dashed bonds denote periodic boundaries.
+
+
+of its four legs.  It is specified bym(m−1)/2 indepen-                           tion cost
+dent real parameters in a skew-symmetric pairing matrix
+Zs(n),  withm=  2 + 4N                  v.   The  matrix  entries  specify                               TTN =O(N         3v N 3/2   ).                       (5)
+pair creation amplitudes among the modes at sites. The                           The computational cost of the neural network scales as
+identity operator1            phys acts on the physical modes (leav-             O(N),  and the contraction cost can also be reduced to
+ing them uncontracted), while⟨Ω|contracts neighboring                            O(N) by using approximate boundary contraction [13].
+virtual modes through normalized entangled bond states                              We optimize the neural-network parametersθby min-
+(|00⟩+|11⟩)/              √2.  We generate the independent entries of            imizing  the  variational  energy  using  variational  Monte
+Zs(n) using a translation-equivariant CNN with trainable                         Carlo  (VMC)  [16].   The  automatic  differentiation  pro-
+parametersθand circular padding, which implements the                            vides  the  derivatives  needed  for  optimization.   We  use
+periodic  boundary  conditions  [Fig.1].   Combined  with                        these  derivatives  to  optimize  the  parameters  with  the
+uniform virtual bonds, this construction encodes lattice                         AdamSR  optimizer  [17]  and  the  iterative  least-squares
+translation  symmetry  directly  in  the  ansatz.   The  net-                    minimal residual (LSMR) solver [18].  After optimizing
+work architecture is given in AppendixB. The full wave-                          the original wavefunction, we impose mirror reflections in
+function|Ψ                θ⟩is  generally  non-Gaussian  because  a  dif-        thexandydirections and spin inversion through a pro-
+ferent set of local pairing matrices is generated for each                       jection over eight symmetry-group elements [4,19].  The
+configuration.                                                                   symmetry-projected  wavefunction  is  then  further  opti-
+   For each amplitudeψ                   θ(n), we evaluate the overlap in        mized.  During training, CNN products use TensorFloat-
+Eq. (2) by contracting the virtual bonds and projecting                          32  (TF32),  while  Gaussian  tensor  network  contraction
+the physical modes onton.  Using the Gaussian overlap                            uses single (FP32) or double (FP64) precision.  For final-
+identities in AppendixA, we obtain                                               state measurements, we use FP32 for both CNN products
+                                [⨁                   ]
+              Mθ(n) = ˜n ⋆             Zs(n) +B        ⋆˜n,                      and Gaussian tensor network contraction.  Optimization
+                                   s                                   (4)       and measurement protocols are given in AppendixD.
+               ψθ(n) = 2    −b/2      PfM    θ(n).                                  Why NN-GPEPS?—It seems that NN-GPEPS is sim-
+                                                                                 ply another way to encode fermionic sign structures in
+Here ⨁s Zs(n) describes the local Gaussian states, while                         neural wavefunctions, while here we want to explain why
+Bis  a  fixed  sparse  skew-symmetric  matrix  represent-                        it is a much more natural choice compared with NNBF
+ing  the  virtual  bonds.   The  selection  ˜nretains  all  vir-                 or NN-fPEPS.
+tual  modes  and  the  occupied  physical  modes  ofnand                            In NNBF, the Gaussian state is essentially a long-range
+⋆slices the corresponding rows and columns.  The num-                            correlated  state,  requiringO(N                        2)  information  to  con-
+ber of virtual mode pairs isb= 2NN       v.  Note that,  al-                     struct the correlation matrix.  Nevertheless, the informa-
+thoughM             θ(n) is sparse in the expanded space of phys-                tion provided by the output of modern neural networks,
+ical and virtual modes, the amplitude is the Pfaffian of                         either  convolutional  neural  networks  (CNNs)  or  trans-
+a dense matrix on the physical modes:  labeling the vir-                         formers, represents local properties at each site and scales
+tual  and  occupied  physical  modesVandP, ψ                   θ(n)  =           asO(N).  The mismatch betweenO(N                          2) andO(N) be-
+2−b/2      Pf(M  V V ) Pf(M  PP −M   PV M−1V V MV P ).                           comes an unfavorable scaling in large systems.  It forces
+   Nested-dissection Pfaffian elimination exploits the two-                      one to useO(N) neural outputs as a sparse representa-
+dimensional sparsity ofM   θ(n) to give the exact contrac-                       tion ofO(N          2) elements in Gaussian states, transformed
+                                                                                                                                                         3
+
+through simple linear expansions without a clear physical
+interpretation [4,5,11,20]. In GPEPS, we instead choose
+the area-law entangled subspace of Gaussian states that
+requires only local parametrization withO(N) elements
+from neural outputs.  This is a much more natural choice
+than a normal Gaussian state.  TheO(N              3/2   ) computa-
+tional cost of GPEPS is also lower than theO(N            3) cost
+of Gaussian states.
+   On  the  other  hand,  NN-fPEPS  requires  a  favorable
+amount ofO(N) information due to area-law entangle-
+ment, and it indeed shows great accuracy in small sys-
+tems where exact contractions are available.  Neverthe-
+less, exact contraction of general PEPS in two or more
+dimensions  is  exponentially  costly.   Although  approxi-                     FIG. 2.  Time per amplitude for Gaussian PEPS contraction
+mate contractions withO(N) complexity are available,                            and dense determinant and Pfaffian evaluation on one A100
+we observe a clear loss of accuracy when these approx-                          80GB GPU, for periodicL×Llattices withN=L                                2  sites.
+imate  methods  are  employed.   GPEPS,  instead,  allows                       GPEPS usesN        v  = 3 and FP32 contraction.  Dense evalua-
+exact contractions withO(N               3/2   ) cost due to its Gaussian       tions use fermix [21] with TF32×3 arithmetic.  Dashed and
+structure, avoiding the problem of approximate contrac-                         dotted lines indicateN                3 andN        3/2   , respectively.
+tions.
+   Therefore, GPEPS provides favorableO(N) informa-
+tion  scaling  as  well  as  efficient  exact  contraction,  at                 flow  parametrizations  can  work  well.   The  symmetry-
+the cost of reduced expressivity, which can be compen-                          projectedN      v  =  3  and  4  states  reach  energies  per  site
+sated  for  by  the  expressive  power  of  neural  networks.                   of−0.765883(26) and−0.766152(16), respectively.  The
+NN-GPEPS hence serves as a natural choice to encode                             Nv  = 4 energy is competitive with previous NNBF and
+fermionic  sign  structures  in  fermionic  neural  wavefunc-                   ACE results [11,22].  A joint zero-variance extrapolation
+tions.                                                                          of the two projected trajectories gives−0.7673(5).  The
+   Amplitude cost.—We first benchmark the contraction                           optimized states also exhibit pronounced spin-stripe cor-
+of Gaussian tensor networks on periodicL×Llattices,                             relations and weak finite-distance pairing.  Detailed en-
+withN=L                2.   We  takeN  v  =  3,  giving  three  virtual         ergy comparisons and correlation functions are presented
+fermionic modes on each leg, and evaluate amplitudes for                        in AppendixG, while the extrapolation procedure is de-
+half-filled configurations using Gaussian tensor network                        scribed in AppendixF.
+contraction on one A100 80GB GPU. Figure2compares                                  We  next  assess  the  accuracy  on  the  larger  16×16
+FP32  Gaussian  tensor  network  contraction  with  dense                       square lattice, where the advantages of the GPEPS can
+determinant and Pfaffian evaluation using fermix [21].                          be  expected  to  appear.    For  eachN  v,  we  reuse  the
+   Nested-dissection Pfaffian elimination has a computa-                        CNN  parameters  learned  on  16×4  and  continue  op-
+tional cost ofO(N          3/2   ) at fixedN         v, compared withO(N               3)timization  with  the  same  architecture.   The  projected
+for  a  dense  determinant  or  Pfaffian.   The  guiding  lines                 Nv  = 3 and 4 states reachE/N=−0.759835(14) and
+in  Fig.2show  these  asymptotic  scalings.   At  32×32,                        −0.760115(11),  respectively.   Both  energies  improve  on
+Gaussian tensor network contraction has a cost compa-                           the earlier variational energies reported in TableI. The
+rable to dense Pfaffian and determinant evaluation, and                         Nv  = 4 variational energy is already consistent,  within
+at 64×64 it is roughly an order of magnitude faster than                        the  reported  uncertainty,  with  the  MR-nVAFQMC  ex-
+dense Pfaffian and determinant evaluation. The determi-                         trapolation [23].  A joint zero-variance extrapolation of
+nant and Pfaffian computations in fermix are highly op-                         the  projectedN           v  =  3  and  4  optimization  trajectories
+timized through customized kernels, while our Gaussian                          givesE    0/N=−0.7622(7).
+tensor network contraction still has room for further opti-                        To characterize the optimized 16×16 states, we mea-
+mization. Thus we can expect the time cost of GPEPS to                          sure spin, charge and singlet-pair correlations. We define
+be reduced in the future.  AppendixCfurther separates                           Cs(r)  =⟨S         0 ·S r⟩andC         c(r)  =⟨δn         0δnr⟩,  whereδn             i  =
+the CNN and contraction costs in a complete amplitude                           ni −7/8.  The structure factors areS(k) =            ∑r eik·r    Cs(r)
+evaluation and compares FP32 and FP64 Gaussian ten-                             andN       c(k) =   ∑r eik·r    Cc(r), and the figures show these
+sor network contraction times.                                                  divided  byN.     For  pairing,  we  use  the  normalized
+   Accuracy.—We  first  benchmark  NN-GPEPS  on  the                            nearest-neighbor  singletB          †ij  =  (c †i↑ c†j↓  −c   †i↓ c†j↑ )/ √2  to
+16×4  lattice  atU/t=  8  and  1/8  hole  doping.   We
+note that this small system size is not expected to show
+the advantage of the GPEPS Gaussian parametrization,
+but  we  study  it  since  it  is  one  where  existing  back-
+                                                                                                                                                                     4
+
+
+TABLE  I.  Energies  and  local-energy  variances  per  site  at
+U/t= 8 and 1/8 hole doping on the periodic 16×16 lattice.
+Parentheses give reported uncertainties.  The NN-GPEPS ex-
+trapolation  procedure  is  described  in  AppendixF.  A  dash
+denotes an unavailable variance.
+Method                                               E/N              σ   2/N
+Transformer backflow [20]               −0.7563               —
+HFPS [24]                               −0.7515(1)         0.0638
+SCALE [11]                               −0.7529               —
+ACE [11]                                  −0.7573               —
+VAFQMC [25,26]                      −0.75865(3)      0.0059(8)
+MR-nVAFQMC [23]                   −0.7589(19)            —
+NN-GPEPS,N                     v = 3                 −0.759835(14)    0.0149(7)
+NN-GPEPS,N                     v = 4                 −0.760115(11)   0.01287(24)
+MR-nVAFQMC (extrapolated) [23]  −0.7604(32)            —
+NN-GPEPS (extrapolated)     −0.7622(7)            —
+
+
+define
+                        ∆†            ∑        fδB†
+                           i =  14                  i,i+δ     ,
+                                   δ=±ˆx,±ˆy                                (6)
+                    Cp(r) =⟨∆       †0∆r⟩ − N0,r  ,
+
+wheref         ±ˆx     = 1 andf      ±ˆy     =−1.  The termN                 0,r    removes
+the disconnected products⟨c          †c⟩⟨c    †c⟩in the Wick decom-
+position of⟨∆    †0∆r⟩.  We define ∆  2SC as the mean ofC   p(r)
+overd(r)≥d                max/2, whered(r) is the shortest Euclidean
+distance under periodic boundary conditions andd        max is
+its maximum over all lattice displacements.
+   Figure3resolves  the  stripe  pattern  in  the  projected
+Nv  =  4  state.    The  real-space  spin  correlations  have
+a modulated antiferromagnetic envelope,  with peaks in
+S(k    x, π) atk      x =π±π/8 and inN               c(k  x,0) atk     x =±π/4.
+These  spin  and  charge  periods  of  16  and  8  are  con-
+sistent  with  the  filled  stripes  found  in  previous  stud-
+ies  [23, 24, 27].    Averaging  the  spin  structure  factor                         FIG. 3.  Correlations of the projected 16×16,N             v  = 4 NN-
+overQ={(π±π/8, π),(π, π±π/8)}givesM                                                     2str   =∑GPEPS state atU/t= 8 and 1/8 doping.  (a) Staggered real-
+ 1
+4N      Q∈Q   S(Q) = 0.013725(10).  The stripe strength is                            space spin correlations.  (b) Spin (blue, left axis) and charge
+comparable to that found with MR-nVAFQMC [23].                                        (orange, right axis) structure-factor cuts, with peak positions
+   Pair correlations decrease rapidly with distance but re-                           labeled.   (c)  Connected  pair  correlations  averaged  over  dis-
+tain a small positive mean, ∆2SC = 1.37(20)×10               −4  , over               placements  of  equal  shortest  periodic  distancer.   The  gray
+r≥4   √2. MR-nVAFQMC finds the same distant-window                                    region marksr≥4           √2, and the dashed line gives the mean
+measure  compatible  with  zero  [23],  while  HFPS  finds                            over these displacements, ∆2SC.  Panel (a) uses a symmetric
+long-distance pairing correlations nearly zero within sta-                            logarithmic color scale.  Panel (c) shows positive means on a
+tistical uncertainties [24].  The resolved finite-size signal                         logarithmic axis, while the dashed-line average includes both
+here  does  not  establish  superconducting  long-range  or-                          signs.  Error bars show statistical uncertainties.
+der, which requires scaling to larger lattices. TheN  v = 3
+and 4 states show similar qualitative stripe and pairing                              plying  the  projection  at  evaluation  lowers  the  energies
+behavior on each lattice (AppendixG).                                                 to−0.758414(27) and−0.758727(33), with variances per
+   Parameter transfer to the32×32lattice.—Finally, we                                 site  of  0.01647(64)  and  0.01606(82).   All  four  energies
+test a direct transfer from the 16×16 to 32×32 lattice                                lie substantially below the SCALE and SCALE+GFMC
+using the unprojectedN           v = 3 and 4 states.  We reuse the                    values  and  are  comparable  to  the  MR-nVAFQMC  (in-
+learned  CNN  parameters  without  further  optimization                              cluding extrapolation) results, within their large uncer-
+and evaluate each state without and with the symmetry                                 tainty  [11, 23].   This  improvement  is  obtained  without
+projection. Both sampling and evaluation use FP32 (Ap-                                enlarging the network or performing an optimization at
+pendixE). The transferred states give energies per site                               the target size.  The projected transferred states retain
+of−0.757451(21) and−0.758019(22), respectively.  Ap-
+                                                                                                                                                            5
+
+TABLE  II.  Energies  and  local-energy  variances  per  site  on                the  simulation  and  analysis  code,  launch  and  monitor
+32×32 at the parameters of TableI. NN-GPEPS results are                          jobs on the computing clusters, prepare figures, and draft
+obtained by direct transfer of unprojected 16×16 states, eval-                   parts  of  the  manuscript.   The  authors  reviewed  all  AI-
+uated without and with (P) the symmetry projection.  Other                       assisted code, results and writing and are responsible for
+rows give published finite accuracy results and an estimated                     the final content.
+extrapolation to the exact energy. A dash denotes an unavail-
+able variance.
+Method                                               E/N              σ   2/N               DATA AND CODE AVAILABILITY
+NN-GPEPSN                    v = 3                  −0.757451(21)   0.02407(51)
+NN-GPEPSN                    v = 4                  −0.758019(22)   0.02013(42)     The code and data supporting this work are available
+NN-GPEPSN                    v = 3 (P)           −0.758414(27)   0.01647(64)     at Ref. [28].
+NN-GPEPSN                    v = 4 (P)           −0.758727(33)   0.01606(82)
+SCALE [11]                               −0.7501               —
+SCALE + GFMC [11]                   −0.7548               —
+MR-nVAFQMC [23]                   −0.7577(26)            —
+MR-nVAFQMC (extrapolated) [23]  −0.7581(17)            —
+                                                                                    ∗  mr.rzchi@gmail.com
+                                                                                    †  gkc1000@gmail.com
+variance densities comparable to those on 16×16, pro-                              [1]G.  Carleo  and  M.  Troyer,  Solving  the  quantum  many-
+viding a useful starting point for further optimization.                               body  problem  with  artificial  neural  networks,Science
+   Conclusion   and   discussion.—We   introduce   neural-                             355, 602 (2017).
+network  Gaussian  projected  entangled-pair  states  for                          [2]D.  Luo  and  B.  K.  Clark,  Backflow  transformations  via
+                                                                                       neural networks for quantum many-body wave functions,
+strongly  correlated  fermions.     The  Gaussian  tensor-                             Phys. Rev. Lett.122, 226401 (2019).
+network  structure  enables  exact  amplitude  evaluation                          [3]J.  R.  Moreno,  G.  Carleo,  A.  Georges,  and  J.  Stokes,
+withO(N               3/2   ) cost in two dimensions, while neural net-                Fermionic   wave   functions   from   neural-network   con-
+works  make  the  local  tensors  depend  on  the  occupa-                             strained  hidden  states,Proceedings  of  the  National
+tion configuration.  For the doped Hubbard model, NN-                                  Academy of Sciences119, e2122059119 (2022).
+GPEPS achieves state-of-the-art variational energies on                            [4]A.  Chen,  Z.-Q.  Wan,  A.  Sengupta,  A.  Georges,  and
+16×16, while direct parameter transfer yields competi-                                 C.   Roth,   Neural   network–augmented   Pfaffian   wave-
+                                                                                       functions for scalable simulations of interacting fermions,
+tive energies on 32×32 without further optimization.                                   Proceedings  of  the  National  Academy  of  Sciences123,
+   The observed accuracy suggests that the local Gaus-                                 e2535288123 (2026).
+sian parametrization provides an architecture more com-                            [5]R.   Rende,    L.   L.   Viteritti,   and   A.   Georges,Su-
+patible with neural networks, while retaining efficient ex-                            perconductivity   in   thet-t       ′   Hubbard   model   from
+act contraction. These results highlight the close connec-                             symmetry-preserving   neural-network   quantum   states
+tion between tensor networks and neural-network wave-                                  (2026),arXiv:2608.12465 [cond-mat.str-el].
+functions and provide a practical route to scalable studies                        [6]P.  Corboz,  R.  Or´us,  B.  Bauer,  and  G.  Vidal,  Simula-
+                                                                                       tion  of  strongly  correlated  fermions  in  two  spatial  di-
+of strongly correlated fermions and their phase diagrams.                              mensions with fermionic projected entangled-pair states,
+                                                                                       Phys. Rev. B81, 165104 (2010).
+                                                                                   [7]C. V. Kraus, N. Schuch, F. Verstraete, and J. I. Cirac,
+                   ACKNOWLEDGMENTS                                                     Fermionic projected entangled pair states,Phys. Rev. A
+                                                                                       81, 052338 (2010).
+   We  thank  Si-Jing  Du  and  Gunhee  Park  for  help-                           [8]Q.  Mortier,   L.  Devos,   L.  Burgelman,   B.  Vanhecke,
+ful   discussions.      This   work   was   supported   by   the                       N.  Bultinck,  F.  Verstraete,  J.  Haegeman,  and  L.  Van-
+U.S.  Department  of  Energy,  Office  of  Science,  Acceler-                          derstraeten, Fermionic tensor network methods,SciPost
+                                                                                       Phys.18, 012 (2025).
+ated Research in Quantum Computing Centers, through                                [9]W.-Y.  Liu,  H.  Zhai,  R.  Peng,  Z.-C.  Gu,  and  G.  K.-L.
+the Quantum Utility through Advanced Computational                                     Chan, Accurate simulation of the Hubbard model with fi-
+Quantum  Algorithms  (QuACQ)  program  under  Award                                    nite fermionic projected entangled pair states,Phys. Rev.
+No.  DE-SC0025572.      The  calculations  were  carried                               Lett.134, 256502 (2025).
+out  mainly  at  the  National  Energy  Research  Scien-                         [10]S.-J.  Du,   A.  Chen,  and  G.  K.-L.  Chan,  Neuralized
+tific  Computing  Center  (NERSC),  a  U.S.  Department                                fermionic tensor networks for quantum many-body sys-
+                                                                                       tems,Phys. Rev. B113, 085134 (2026),arXiv:2506.08329
+of  Energy  Office  of  Science  User  Facility  at  Lawrence                          [cond-mat.dis-nn].
+Berkeley   National   Laboratory   operated   under   Con-                       [11]Y.  Gu,  Z.  Han,  W.  Li,  Z.  Xiao,  T.  Xiang,  M.  Qin,
+tract  No.  DE-AC02-05CH11231,  using  NERSC  awards                                   L. Wang, and D. Lv, Pareto frontier of neural quantum
+ASCR-ERCAP0037872  and  DDR-ERCAP0038682,  and                                         states:  Scalable,  affordable,  and accurate convolutional
+in part at the Caltech Resnick High Performance Com-                                   backflow  for  strongly  correlated  lattice  fermions,PRX
+puting Center.  We used the AI coding assistants Claude                                Intelligence1, 023001 (2026).
+Code (Anthropic) and Codex (OpenAI) to help develop                              [12]S. Bravyi, Lagrangian representation for fermionic linear
+                                                                                       optics, Quantum Inf. Comput.5, 216 (2005).
+                                                                                                                                                               6
+
+[13]N. Schuch and B. Bauer, Matrix product state algorithms                        [29]I.  S.  Duff  and  J.  K.  Reid,  The  multifrontal  solution  of
+     for gaussian fermionic states,Phys. Rev. B100, 245121                               indefinite sparse symmetric linear equations,ACM Trans.
+     (2019).                                                                             Math. Softw.9, 302 (1983).
+[14]Q.  Yang,   X.-Y.  Zhang,   H.-J.  Liao,   H.-H.  Tu,  and                     [30]I. S. Duff and S. Pralet, Strategies for scaling and piv-
+     L.  Wang,  Projectedd-wave  superconducting  state:   A                             oting for sparse symmetric indefinite problems,SIAM J.
+     fermionic  projected  entangled  pair  state  study, Phys.                          Matrix Anal. Appl.27, 313 (2005).
+     Rev.  B107,  125128  (2023), arXiv:2208.04566  [cond-                         [31]A. George, Nested dissection of a regular finite element
+     mat.str-el].                                                                        mesh,SIAM J. Numer. Anal.10, 345 (1973).
+[15]C. K. Thomas and A. A. Middleton, Numerically exact                            [32]K. He, X. Zhang, S. Ren, and J. Sun, Deep residual learn-
+     correlations  and  sampling  in  the  two-dimensional  Ising                        ing  for  image  recognition,  inProceedings  of  the  IEEE
+     spin glass,Phys. Rev. E87, 043303 (2013).                                           Conference on Computer Vision and Pattern Recognition
+[16]F.  Becca  and  S.  Sorella,Quantum  Monte  Carlo  Ap-                               (CVPR)(2016).
+     proaches  for  Correlated  Systems(Cambridge University                       [33]K. He, X. Zhang, S. Ren, and J. Sun, Identity mappings
+     Press, 2017).                                                                       in deep residual networks, inComputer Vision – ECCV
+[17]A. Chen and C. Roth,Quantax: Flexible neural quantum                                 2016(2016) pp. 630–645.
+     states in JAX(2024).                                                          [34]B. Zhang and R. Sennrich, Root mean square layer nor-
+[18]D. C.-L. Fong and M. Saunders, LSMR: An iterative al-                                malization, inAdvances  in  Neural  Information  Process-
+     gorithm for sparse least-squares problems,SIAM Journal                              ing Systems, Vol. 32 (2019).
+     on Scientific Computing33, 2950 (2011).                                       [35]D. Hendrycks and K. Gimpel,Gaussian error linear units
+[19]Y.   Nomura,   Helping   restricted   boltzmann   machines                           (GELUs)(2023),arXiv:1606.08415 [cs.LG].
+     with  quantum-state  representation  by  restoring  sym-                      [36]Y. LeCun, L. Bottou, G. B. Orr, and K.-R. M¨uller, Effi-
+     metry, J.  Phys.:   Condens.  Matter33,  174003  (2021),                            cient BackProp, inNeural Networks:  Tricks of the Trade,
+     arXiv:2009.14777.                                                                   Lecture Notes in Computer Science, Vol. 1524 (Springer,
+[20]Y. Gu, W. Li, H. Lin, B. Zhan, R. Li, Y. Huang, D. He,                               1998) pp. 9–50.
+     Y.  Wu,  T.  Xiang,  M.  Qin,  L.  Wang,  and  D.  Lv,  Solv-
+     ing the Hubbard model with neural quantum states,Na-
+     ture Communications17, 7838 (2026),arXiv:2507.02644
+     [cond-mat.str-el].
+[21]A. Chen, fermix:  Fast batched determinants and Pfaffi-
+     ans in JAX,https://github.com/ChenAo-Phys/fermix
+     (2026).
+[22]K.  Loehr  and  B.  K.  Clark,Enhancing  neural  network
+     backflow(2025),arXiv:2510.26906 [cond-mat.str-el].
+[23]H. Shang and J. Yang,Multi-reference variational states
+     resolve  stripe  selection  and  local  d-wave  pairing  in
+     the  Hubbard  model(2026),arXiv:2611.16430  [cond-
+     mat.mtrl-sci].
+[24]C.  Roth,   A.  Chen,   A.  Sengupta,  and  A.  Georges,
+     Superconductivity   in   the   two-dimensional   Hubbard
+     model   revealed   by   neural   quantum   states(2025),
+     arXiv:2511.07566 [cond-mat.supr-con].
+[25]D.   Wu,   R.   Rossi,   F.   Vicentini,   N.   Astrakhantsev,
+     F. Becca, X. Cao, J. Carrasquilla, F. Ferrari, A. Georges,
+     M. Hibat-Allah, M. Imada, A. M. L¨auchli, G. Mazzola,
+     A.  Mezzacapo,  A.  Millis,  J.  R.  Moreno,  T.  Neupert,
+     Y. Nomura,  J. Nys,  O. Parcollet,  R. Pohle,  I. Romero,
+     M.  Schmid,  J.  M.  Silvester,  S.  Sorella,  L.  F.  Tocchio,
+     L.  Wang,  S.  R.  White,  A.  Wietek,  Q.  Yang,  Y.  Yang,
+     S.  Zhang,  and  G.  Carleo,  Variational  benchmarks  for
+     quantum many-body problems,Science386, 296 (2024).
+[26]S.  Sorella,  Systematically  improvable  mean-field  varia-
+     tional  ansatz  for  strongly  correlated  systems:  Applica-
+     tion to the Hubbard model,Phys. Rev. B107, 115133
+     (2023).
+[27]B.-X. Zheng, C.-M. Chung, P. Corboz, G. Ehlers, M.-P.
+     Qin, R. M. Noack, H. Shi, S. R. White, S. Zhang, and
+     G. K.-L. Chan, Stripe order in the underdoped region of
+     the two-dimensional Hubbard model,Science358, 1155
+     (2017).
+[28]R.    Chi,    A.    Chen,    and    G.    K.-L.    Chan,    neu-
+     ral  gpeps:       Code    and    data    for    neural-network
+     Gaussian    projected    entangled-pair    states,https:
+     //github.com/Chi-RZ/neural_gpeps(2026).
+                                                                                                                                                                        7
+
+                                             Appendix A: Gaussian tensor network contraction
+   An even fermionic Gaussian state in pairing form is
+                                                                (∑                 )
+                                               |Ψ Z⟩= exp               Zab c†ac†b    |0⟩=    ∏(1 +Z   abc†ac†b)|0⟩                                         (A1)
+                                                                  a<b                          a<b
+where the summation covers allmfermionic modes, andZis a skew-symmetricm×mmatrix.  The state is unnor-
+malized, with vacuum amplitude⟨0|Ψ                        Z⟩= 1.  For an input basis staten           I, its wavefunction amplitude is
+                                                          ψZ(n  I) =⟨n     I|Ψ Z⟩= Pf(n   I ⋆ Z ⋆ nI),                                                     (A2)
+wheren           I ⋆ZandZ ⋆n          I slice the rows and columns ofZaccording to the occupied fermionic modes ofn          I, respectively.
+   A Gaussian tensor-network state is obtained from a product of local Gaussian states by projecting virtual-mode
+pairs onto maximally entangled states [7].  As illustrated in Fig.A1(a), it can be written as
+                                                                    |Ψ⟩= (1        phys ⊗ ⟨Ω|)|G⟩,                                                               (A3)
+where|G⟩is the product ofNlocal Gaussian states, each parametrized by a skew-symmetric matrixZ                           s,
+
+                                                                 N⨂                                       N⨁
+                                                       |G⟩=           |Ψ Zs⟩=|Ψ      Z⟩,       Z=             Zs.                                                  (A4)
+                                                                s=1                                     s=1
+Each site hasdphysical modes andN               v virtual modes on each of four legs, soZ  s has dimensiond+ 4N                       v, withd= 2
+for the Hubbard model.  The bond state|Ω⟩is a product of maximally entangled virtual pairs (|00⟩                      pq +|11⟩         pq)/ √2.
+Its bra can be written as                                                                        (∑                 )
+
+                                               ⟨Ω|= 2     −NN    v   ⨂           ⟨11|      pq exp        Babc†ac†b      .                                         (A5)
+
+                                                                     (p,q)∈bond                       a<b
+The matrixBhas the same dimensionN(d+ 4N                                            v) asZ.   Its only nonzero entries areB            pq  =−B       qp  =  1 on each
+oriented virtual bond (p, q).  The amplitude of a physical configurationn                            I  is
+                                                            ψ(n    I) =⟨n     I|Ψ⟩= (⟨n         I| ⊗ ⟨Ω|)|G⟩.                                                       (A6)
+Substituting Eqs. (A4) and (A5) into Eq. (A6) and applying Eq. (A2) gives
+                                          ψ(n    I) = 2−NN    v⟨˜n    I|Ψ Z+B    ⟩= 2 −NN    v Pf[˜n  I ⋆(Z+B)⋆˜n                   I].                                    (A7)
+Here ˜n  I  denotes the configuration with physical occupationsn  I  and all virtual modes occupied.  Reordering physical
+and virtual modes can introduce a fermionic sign.  We use site-major ordering, with (up,left,phys,down,right) within
+each site, so moving then      s occupied physical modes past two fully occupied virtual legs gives (−1)      2N  vns = +1.
+   The amplitude is obtained by computing the Pfaffian of the sparse matrixM=  ˜n                   I ⋆(Z+B)⋆˜n                   I.  Following a
+strategy similar to that in Ref. [15], we evaluate this Pfaffian by eliminating modes in pairs from the leaves to the
+root of the nested-dissection tree in Fig.A1(b,c).
+   Each tree node corresponds to a lattice region, whose mode indices are divided intoC, eligible for local elimination,
+andU, retained for the parent.  EliminatingCfrom the regional matrixMyields a reduced matrixM                                                                      newUU  onU.  With
+modes ordered as (C, U) andM           CC  invertible, the Pfaffian Schur identity gives
+                                      M newUU  =M   UU −M   UCM−1CCMCU,       PfM= PfM              CC  PfM     newUU .                                (A8)
+For a pairk, r∈Cwith pivota=M                        kr ̸= 0, Eq. (A8) reduces to
+
+                                         M′ij =M   ij − MirMkj −M   ikMrja              ,       i, j∈(C∪U)\ {k, r},                                                (A9)
+
+                                       PfM= sgn(π                kr)aPfM       ′.
+ Hereπ         kr  brings  (k, r)  first  in  the  mode  ordering  and  preserves  the  order  of  the  remaining  modes.   To  improve
+numerical stability, we select the largest-magnitude entry withinCfor each candidate row and accept a nonzero pivot
+only if its magnitude is at leastutimes the maximum magnitude in the full row overC∪U.  During elimination, we
+record the original mode labels in the ordered listP.  The full procedure is summarized in AlgorithmA1.
+                                                                                                                                                                       8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. A1.  Gaussian tensor network and its hierarchical contraction on a 4×4 periodic lattice.  (a) Network geometry with
+blue site tensors,  purple entangled virtual pairs and orange physical legs.  Dashed legs indicate periodic continuations.  (b)
+Neighboring regions merge from two-site leaves into 2×2 blocks, 2×4 strips and the full lattice.  (c) Contraction tree.
+
+Algorithm A1.Local Pfaffian elimination with threshold pivoting.
+
+   1:Input:M, index setsCandU, threshold 0< u≤1.
+   2:P ←(),ℓ←0,σ←1.
+   3:while|C| ≥2do
+   4:     Find the firstk∈Cfor which
+   5:           r= arg max     j∈C\{k}        |M kj|,       a=M       kr ̸= 0,
+   6:         |a| ≥umax            j∈C∪U      |M kj|.
+   7:     ifno suchkexiststhen break.
+   8:     ℓ←ℓ+ log|a|,σ←σsgn(a).
+   9:     Append the original mode labels (k, r) toP.
+  10:    Apply the matrix update in Eq. (A9) toMand removek, rfromC.
+  11:end while
+  12:Return:ℓ, σ,P, M, C.
+
+   If no admissible pair remains, modes left inCare delayed to the parent, as in delayed pivoting for sparse multifrontal
+factorization [29,30]. The parent then combines its children’s remaining matrices with its assigned entries and repeats
+AlgorithmA1.  Once all modes are eliminated,ψ(n                                                 I) = 2−NN    v sgn(π)      ∏Kt=1  at, which we evaluate in signed-log form:
+
+                                                                                        K∏
+                                                           sgnψ(n           I) = sgn(π)     sgn(a        t),
+                                                                                       t=1                                                                       (A10)
+                                                                              K∑
+                                                         log|ψ(n           I)|=   log|a       t| −NN   v log 2.
+                                                                             t=1
+ HereKcounts the eliminated pairs, andπmaps the selected site-major order toP= (k                                 1, r1, . . . , kK, rK).  Pivot
+signs and log magnitudes accumulate during elimination,  and the permutation parity is applied at the end.  With
+nested-dissection ordering and bounded pivot delays, the contraction requiresO(N                      3v N 3/2   ) work andO(N             2v NlogN)
+                                                                                                                                                                   9
+
+storage [15,31].
+
+                                                   Appendix B: Neural-network architecture
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. B1.  Residual CNN for NN-GPEPS. (a) Occupation embedding, residual blocks, rescaling and an affine head generate the
+Gaussian site matrices.  Blue cells mark the independent matrix entries.  (b) Pre-activation residual block.
+
+
+
+TABLE B1.  Residual CNN settings for theN      v = 3 and 4 ansatzes.  Parameter totals include the embedding and output head.
+                                                                                           Nv = 3                                                          N  v = 4
+Local Gaussian matrix sizem                                                            14                                                                     18
+Independent outputs per site                                                                 91                                                                    153
+Feature channelsC                                                                             91                                                                    153
+Residual blocksn    b                                                                                 16                                                                     24
+Trainable parameters                                                                        2 396 485                                                           10 144 053
+
+   We generate the Gaussian site matrices with a real-valued residual CNN [32] (Fig.B1).  A learned embedding maps
+each local occupation state to aC-dimensional feature vector,  with the same embedding table used at every site.
+These features then pass through a sequence ofn    b  pre-activation residual blocks [33] built from 3×3 convolutions
+with circular padding.  Each block applies a parameter-free RMSNorm [34] over all channels and sites, followed by
+GELU nonlinearities [35] before each convolution [Fig.B1(b)].
+   The  features  are  rescaled  by  1/ √nb + 1  before  an  affine  1×1  head  maps  them  to  the  strict  upper  triangle  of
+Zs(n;θ).  We keep the channel width equal to the output dimension,C=m(m−1)/2, wherem=d+ 4N                                                                          v andd= 2.
+Antisymmetry determines the remaining entries.  The network settings are listed in TableB1.
+   We initialize the embedding table with standard normal entries, use LeCun normal initialization [36] for convolution
+weights, and set all biases to zero.  The last convolution of every residual block is additionally scaled by 0.1 (N     v = 3)
+or 0.02 (N     v  = 4) at initialization, so that each block starts close to the identity map.  All learned maps are shared
+across sites, so the parameter count is independent of lattice size and the same weights can be transferred between
+periodic lattices.
+
+                                                        Appendix C: Runtime benchmarks
+                                                          1.    CNN and contraction costs
+   NN-GPEPS amplitude evaluation consists of constructing a configuration-dependent Gaussian tensor network with
+the CNN, followed by its contraction.  We benchmark the CNN evaluation in TF32, Gaussian tensor network con-
+traction in FP32, and the complete amplitude evaluation on A100-SXM4-80GB GPUs of NERSC Perlmutter.  These
+measurements use theN      v = 3 network of AppendixB, with identical initial weights across lattice sizes and randomly
+sampled half-filled configurations, without symmetry projection.
+                                                                                                                                                                         10
+
+   We report GPU-synchronized timings per amplitude after compilation and warm-up, using the batch sizes listed in
+TableC1.
+   FigureC1and TableC1summarize the results.  The ratio of CNN time to complete evaluation time decreases from
+70% at 8×8 to 43% at 64×64.  At the latter size, contraction accounts for the larger contribution and the complete
+evaluation requires 1.009 ms per amplitude.  The contraction times are plotted in Fig.2.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. C1.  Time per amplitude for the complete evaluation, CNN and contraction of theN      v = 3 network on one A100-SXM4-
+80GB GPU of NERSC Perlmutter.  Points show median timings.  Dotted and dashed guides indicateNandN              3/2   , respectively.
+
+
+
+TABLE C1.  CNN, contraction and complete amplitude-evaluation times in microseconds, with batch sizeB, for theN                v = 3
+network on a Perlmutter A100 80GB GPU, as shown in Fig.C1.  The final column gives the CNN time divided by the complete
+evaluation time.  The CNN runs in TF32 and the contraction in FP32.
+Lattice                 B                      CNN                      Contraction                      Complete                      CNN share
+  8×8                        16384                          8.42                                  3.60                             11.99                                 70%
+16×16                        2048                        32.35                                 18.37                             50.62                                 64%
+32×32                        1024                      110.56                               103.29                           213.21                                 52%
+64×64                          512                      430.76                               573.16                         1009.17                                 43%
+
+   TableC2reports the floating-point operation countFper contraction, the achieved throughputF/tand the model
+FLOPs utilization MFU =F/(tP), whereP= 19.5 TFLOP/s is the A100’s peak FP32 throughput.
+
+
+   TABLE C2.  Floating-point operation counts,  times per amplitude,  achieved throughput and model FLOPs utilization
+   (MFU) of Gaussian tensor network contraction on one Perlmutter A100 80GB GPU, atN    v = 3 in FP32 with the batch
+   sizes of TableC1.
+   Lattice                F(MFLOP)                           Time (µs)                       F/t(TFLOP/s)                           MFU
+   8×8                                           1.04                                    3.60                                             0.29                           1.5%
+   16×16                                        6.71                                  18.37                                             0.37                           1.9%
+   32×32                                        47.4                                103.29                                             0.46                           2.4%
+   64×64                                      353.5                                573.16                                             0.62                           3.2%
+
+
+                                                   2.    Single- and double-precision contraction
+   We next compare FP32 and FP64 Gaussian tensor network contraction times atN    v = 3 and 4 on the same GPU.
+To isolate the contraction cost, the site-matrix entries are generated directly with standard deviation 0.5 and rounded
+to FP32 before conversion to either working precision.  Both calculations therefore use identical matrix entries and
+half-filled configurations.  All contraction benchmarks use two-site leaves, a pivot threshold of 0.05 and 20 delay slots
+per child.  In the FP32 implementation, global-front updates use FP64 Tensor Cores while the contraction matrices
+remain stored in FP32.  FP32 and FP64 timings use identical inputs and batch sizes and include only the Gaussian
+tensor-network contraction.  FigureC2and TableC3show that FP32 is faster throughout the tested range.
+                                                                                                                                                               11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. C2.  FP32 and FP64 Gaussian tensor network contraction times on one A100-SXM4-80GB GPU of NERSC Perlmutter
+for (a)N     v = 3 and (b)N      v = 4.  Each precision pair uses identical inputs and batch sizes.  Points show median timings.
+
+
+TABLE C3.  Signed-amplitude contraction time in microseconds on one A100-SXM4-80GB GPU of NERSC Perlmutter, with
+batch sizeB.
+                                               Nv = 3                                                                           N  v = 4
+Lattice     B          FP32            FP64           FP64/FP32B            FP32              FP64           FP64/FP32
+  8×8             8192              3.65              4.73                       1.29           8192                5.91                9.15                       1.55
+16×16           2048             18.32             26.19                       1.43           2048              32.16              51.51                       1.60
+32×32           1024           103.12           133.03                       1.29           1024             176.20             266.74                       1.51
+64×64             512           574.91           739.29                       1.29             512           1064.17           1493.48                       1.40
+
+
+                                               Appendix D: Optimization and measurements
+                                                          1.    Sampling and optimization
+   We use the mixed Metropolis sampler implemented in Quantax [17], with equal probabilities for nearest-neighbor
+electron hops and site exchanges.  Each update uses 8192 configurations in a fixed (N ↑, N↓) sector, separated by 4N
+proposals per chain.  Sampling follows the squared amplitude of the wavefunction being optimized.
+   We optimize the network with the Quantax implementation of AdamSR [17], with first- and second-moment decay
+factorsµ= 0.95 andβ= 0.995, respectively.  The associated least-squares problems are solved using an adaptation of
+Quantax’s LSMR solver [17,18] with relative tolerance 10         −4  , absolute tolerance 0 and at most 500 iterations, without
+an explicit diagonal shift.  Local energies entering the gradient are clipped to the sampled mean±5σ, whereσis their
+sampled standard deviation [20].
+   We constrain the Euclidean norm of each parameter update [20]. At iterationt, the proposed update ∆θ                           t is rescaled
+as
+                                      ∆θ    t ←            Ctmax(C          t,∥∆θ       t∥2) ∆θ    t,       Ct =               C01 + max(t−t                0,0)/T     .                                  (D1)
+
+The norm bound remains atC    0 until iterationt                 0, then decreases on the scaleT.  Updates whose norms lie below this
+bound are unchanged.  A typical setting isC   0 = 0.5,t       0 = 1000 andT= 1500, with tighter norm bounds and adjusted
+schedules for continued and projected optimization.
+
+                                                         2.    Training and measurements
+   We first optimize without symmetry projection (U), then continue with the eight-image projection.  TableD1gives
+the training lengths and contraction settings, using the architectures of AppendixB. CNN products use TF32 during
+training.
+   When no pivot passes the relative threshold of AlgorithmA1, the corresponding modes are delayed and eliminated
+at the parent node. Because the GPU implementation uses fixed-size arrays, each parent node reserves a fixed number
+of delay slots for each child; we refer to this number as the delay capacity.  A sampled configuration is dropped from
+the energy and gradient estimates of an update when one of its connected configurations exceeds the delay capacity.
+All reported energies and correlations are measured at fixed neural parameters with FP32 CNN products and FP32
+Gaussian tensor network contraction for both sampling and observable evaluation.  TableD2lists the measurement
+                                                                                                                                                                               12
+
+
+TABLE D1. Training and contraction settings atU/t= 8 and 1/8 doping. U and P denote unprojected and symmetry-projected
+optimization, respectively.  Training steps are listed as U + P, the 16×16 states start from weights trained on 16×4.
+Lattice                                                                                            16×4                                                  16×16
+Nv                                                                                       3                             4                            3                            4
+Electrons (N ↑, N↓)                                                         (28,28)                    (28,28)                 (112,112)               (112,112)
+Proposals between samples                                                256                          256                        1024                      1024
+Gaussian tensor network contraction precision                 FP32                       FP64                      FP32                     FP64
+Pivot threshold                                                                 0.05                         0.05                        0.05                    0.1/0.05
+Delay slots per child                                                           20                            16                           20                       24/20
+Training steps (U + P)                                              10000 + 5000           10000 + 5000           4321 + 1520           5340 + 1500
+
+
+settings. A configuration whose contraction exceeds the delay capacity is assigned zero amplitude, both when proposed
+by the sampler and when it enters a local estimator,  so that sampling and evaluation refer to the same state and
+the measured energy is its variational energy.  In the reported measurements no configuration exceeded the capacity.
+Statistical uncertainties are the largest block-jackknife standard errors obtained with blocks of 1, 2, 4 and 8 consecutive
+measurement batches.
+
+TABLE  D2.   Measurement  settings  for  the  projected  states  of  TableD1and  for  the  16×16  states  transferred  to  32×32
+(AppendixE), the latter measured without (U) or with (P) the projection.Nis the number of sites.
+Lattice                                                                          16×4                     16×16                                  32×32
+Nv                                                                             3              4              3              4                     3                            4
+CNN products                                                        FP32       FP32       FP32       FP32              FP32                     FP32
+Gaussian tensor network contraction precision       FP32       FP32       FP32       FP32              FP32                     FP32
+Pivot threshold                                                       0.05         0.05         0.05         0.05                0.05                       0.05
+Delay slots per child                                                 24            20            32            32                   64                          64
+Equilibration proposals per chain                            40N      40N      40N      40N             40N                    40N
+Proposals between batches                                       4N        4N        4N        4N               4N                      4N
+Measurement batches                                               64            64            64            64          64 (U), 32 (P)       64 (U), 32 (P)
+Configurations per batch                                        8192         8192         8192         8192               1024                      1024
+
+
+
+                                                    Appendix E: Evaluation after weight transfer
+   We transfer the weights of the unprojectedN           v = 3 and 4 networks trained on 16×16 with TF32 CNN products
+to 32×32 and measure their energies and local-energy variances.  We compare three schemes:  FP32 sampling and
+evaluation, TF32 sampling with FP32 reweighting, and TF32 sampling and evaluation.  All three use FP32 Gaussian
+tensor network contraction.
+   TableE1shows similar energies across the three schemes, but TF32 evaluation increases the variance relative to
+FP32 by a factor of about 2.3 forN        v = 3 and 4.  FP32 reweighting agrees with direct FP32 sampling in both energy
+and variance.
+   Letψ(n)  and         ~ψ(n)  denote  amplitudes  evaluated  with  FP32  and  TF32  CNN  products.   Direct  sampling  from
+p(n)∝ |ψ(n)|                   2 gives the usual mean ofE    FP32loc   .  Samples fromq(n)∝ |          ~ψ(n)|         2 instead receive importance weights
+
+                                                                 ri = |ψ(n      i)|  2|~ψ(n    i)|  2 ,       wi =    ri∑
+                                                                                                          j rj .                                                          (E1)
+The sums run over one measurement batch.  Averaging the normalized moments over batches gives
+                                                              ˆErw =    ∑wiEFP32
+                                                                                    loc   (n  i),
+                                                                          i                                                                                                (E2)
+                                                             ˆσ2rw =    ∑                                 ⏐⏐⏐ˆErw⏐⏐⏐2 .
+                                                                              wi ⏐⏐EFP32loc   (n  i)⏐⏐2 −
+                                                                          i
+Here the overbar denotes an equal-weight average over batches, and all local-energy ratios use FP32 amplitudes.
+   At eachN  v, all schemes use the same source weights, held fixed throughout, and collect 64 measurement batches
+of  1024  configurations,  with  4NMetropolis  proposals  per  chain  between  batches.   Each  run  starts  from  random
+configurations  and  equilibrates  for  40Nproposals  per  chain.   The  FP32  scheme  is  a  separate  run,  while  the  two
+TF32-sampling estimators are evaluated on the same TF32-sampled configurations of one run.
+                                                                                                                                                                  13
+
+   Statistical uncertainties are the largest block-jackknife standard errors obtained with blocks of 1, 2, 4 and 8 con-
+secutive measurement batches.
+
+
+TABLE E1.  Precision comparison for unprojectedN           v  = 3 and 4 states transferred from 16×16 to 32×32.  Energies and
+local-energy variances are per site.  All three schemes use FP32 Gaussian tensor network contraction and were run on NVIDIA
+A100 GPUs.  Parentheses give statistical uncertainties.
+Sampling and estimator                                                        E/N                                                            σ                   2/N
+                                                                             Nv = 3
+FP32 sampling and evaluation                                   −0.757451(21)                                                  0.02407(51)
+TF32 sampling, FP32 reweighting                                   −0.757429(27)                                                  0.02398(76)
+TF32 sampling and evaluation                                   −0.757396(36)                                                  0.05573(81)
+                                                                             Nv = 4
+FP32 sampling and evaluation                                   −0.758019(22)                                                  0.02013(42)
+TF32 sampling, FP32 reweighting                                   −0.758021(18)                                                  0.02051(68)
+TF32 sampling and evaluation                                   −0.757979(28)                                                  0.04781(75)
+
+
+   Numerical errors in amplitude ratios can partly cancel in the mean energy while contributing strongly to its variance.
+The reported transfer results therefore use FP32 sampling and evaluation.  The same importance weights can also
+enter the means and covariances in SR, allowing TF32 sampling with FP32 local energies during training, although
+we did not use that here.
+
+                                                              Appendix F: Extrapolation
+   We jointly extrapolate the symmetry-projectedN           v = 3 and 4 training trajectories on each lattice to zero variance.
+Each fit uses a window of consecutive updates ending at the last update of each projected trajectory:  the final 100,
+200 or 400 updates forN     v = 3, and the portion starting at 30, 40, 50, 60 or 70% of the trajectory forN     v = 4.  Within
+each window, we average the training estimates ofE/Nandσ               2/Nover bins of consecutive updates, aligned to the
+end of the trajectory.  Each line in Fig.F1(a,b) combines all bins from oneN               v = 3 window and oneN      v = 4 window,
+using the same bin size for both.  We fit these points to
+                                                                    E/N=ϵ       0 +a σ    2/N                                                                 (F1)
+by orthogonal-distance regression, using errors on both axes estimated within each bin.
+   We repeat the fit using different training windows and bin sizes (TableF1).  The reported energy is the mean of
+the fitted intercepts.  Its uncertainty covers the two-standard-error interval of every fit, giving
+                                                            16×4 :      E          0/N=−0.7673(5),
+                                                          16×16 :      E          0/N=−0.7622(7).                                                                               (F2)
+The energies and variances are the sampled training-window values, with TF32 CNN products.  The quoted uncer-
+tainties reflect fitting sensitivity within the linear energy–variance model.
+                                                                                                                                                                                                14
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. F1.  Joint zero-variance extrapolation of the projectedN           v = 3 and 4 trajectories.  (a,b) Points use 25-update bins from
+the final 400N      v = 3 updates and the 30–100% portion of theN      v = 4 trajectory.  Lines show fits using 25-, 50- and 100-update
+bins,  with the dark line giving their mean fitted energy.  The blue envelope contains their two-standard-error bands.  (c,d)
+Fitted interceptsE               j/Nrelative to their meanE              0/Nversus theN         v = 4 window start, with two-standard-error bars.  Black bars
+in (a,b) and gray bands in (c,d) mark the reported uncertainties.
+
+TABLE F1.  Joint zero-variance energies per site.  Each row fixes theN      v = 3 window length and bin size and summarizes five
+Nv = 4 windows starting at 30, 40, 50, 60 and 70% of the training trajectory.  All windows end at the last recorded update and
+contain at least four complete bins.  The energy range spans these five fits.Mcounts retained/requested fits, ands                    max is the
+largest fitting standard error ofE    0/N.
+
+LatticeN             v = 3 final updates          Steps/binM       MeanE                                   0/N              Range ofE       0/N                   smax
+16×4                         100                             25                5/5     −0.767322           [−0.767429,−0.767258]          0.000172
+16×4                         200                             25                5/5     −0.767292           [−0.767397,−0.767245]          0.000126
+16×4                         200                             50                5/5     −0.767319           [−0.767509,−0.767240]          0.000123
+16×4                         400                             25                5/5     −0.767265           [−0.767351,−0.767235]          0.000092
+16×4                         400                             50                5/5     −0.767303           [−0.767435,−0.767258]          0.000091
+16×4                         400                            100               5/5     −0.767326           [−0.767448,−0.767273]          0.000105
+16×16                       100                             25                5/5     −0.762155           [−0.762235,−0.762023]          0.000267
+16×16                       200                             25                5/5     −0.762231           [−0.762300,−0.762112]          0.000236
+16×16                       200                             50                5/5     −0.762164           [−0.762218,−0.762099]          0.000234
+16×16                       400                             25                5/5     −0.762276           [−0.762312,−0.762213]          0.000183
+16×16                       400                             50                5/5     −0.762295           [−0.762323,−0.762238]          0.000189
+16×16                       400                            100               5/5     −0.762087           [−0.762123,−0.761994]          0.000272
+Extrapolated energy, 16×4                                                                             −0.7673(5)
+Extrapolated energy, 16×16                                                                          −0.7622(7)
+                                                                                                                                                                                      15
+
+                                               Appendix G: Additional benchmarks and convergence
+                                                                       1.    The16×4benchmark
+   TableG1compares energies and local-energy variances on the 16×4 lattice atU/t= 8 and 1/8 hole doping.  The
+correlation functions below use the definitions given in the main text.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. G1.  Correlations of the projected 16×4,N           v = 4 NN-GPEPS state (Hubbard modelU/t= 8, 1/8 doping).  (a) Staggered
+spin  correlations  (−1)     x+y    Cs(x, y)  at  relative  site  separation  (x, y).   The  color  scale  is  symmetric  logarithmic  and  saturates
+outside [−0.2,0.2].  (b) Spin structure factorS(k                             x, π)/N(left axis) and charge structure factorN               c(k  x,0)/N(right axis).  (c)
+Pair correlationC                    p(x,2).  Error bars indicate statistical uncertainties.
+
+TABLE  G1.   Energies  and  local-energy  variances  per  site  atU/t=  8  and  1/8  hole  doping  on  the  periodic  16×4  lattice.
+Parentheses give reported uncertainties.  The NN-GPEPS extrapolation procedure is described in AppendixF. A dash denotes
+an unavailable variance.
+ Method                                                                                            E/N                                                                      σ   2/N
+ Transformer backflow [20]                                                  −0.76298                                                                            —
+ HFPS [4]                                                                   −0.76413(3)                                                                      0.0313
+ ACE [11]                                                                   −0.76623(1)                                                                          —
+ NNBF [22]                                                                 −0.766073(6)                                                                         —
+ NN-GPEPS,N                     v = 3                                                    −0.765883(26)                                                                  0.0133(7)
+ NN-GPEPS,N                     v = 4                                                    −0.766152(16)                                                                 0.01095(42)
+ NN-GPEPS (extrapolated)                                        −0.7673(5)                                                                          —
+
+   FigureG1shows the correlations of the projectedN                             v = 4 state. The alternating spin correlations have a modulated
+envelope, andS(k           x, π) peaks atk      x =π±π/8, identifying spin stripes with period 16.  The charge structure factor
+has a weaker shoulder neark        x =π/4, consistent with the stripe pattern.  Pair correlations decrease rapidly at short
+distances and give a far-distance average ∆2SC = 8.4(4)×10            −4  .  The stripe therefore displays pronounced spin-stripe
+correlations together with weak pairing at finite distances, qualitatively consistent with earlier HFPS results [4].
+                                                                                                                                                                          16
+
+                                                                  2.    Convergence withN         v
+We compare energies and observables of the projectedN           v = 3 and 4 states atU/t= 8 and 1/8 hole doping.  TableG2
+compares training energies and independent FP32 measurements on the 16×16 lattice. The correlation measurements
+follow AppendixD. Since the neural networks also differ in width and depth (AppendixB), the comparison tests the
+achieved accuracy of the variational states rather thanN         v alone.
+
+TABLE G2. Energies per site on 16×16, optimized and evaluated without or with the eight-image projection. Asterisks denote
+training-window means over the final 200 (N  v = 3, without projection), 50 (N  v = 3, with projection) or 100 (N  v = 4) updates,
+chosen where each trajectory had flattened.  Independent fixed-parameter measurements use FP32 sampling and evaluation.
+Parentheses give statistical uncertainties.
+Nv                     Estimate                                                               Without projection                     With projection
+  3                      Training-window mean                              −0.758558(8)              ∗                    −0.759839(13)      ∗
+  3                      Fixed-parameter FP32 measurement                                                          −0.759835(14)
+  4                      Training-window mean                              −0.758920(13)              ∗                    −0.760102(8)      ∗
+  4                      Fixed-parameter FP32 measurement                                                          −0.760115(11)
+   FigureG2shows the connected pair correlation of Eq. (6) along the cut (x,2) on both lattices.  In TableG3,M                                             2str
+averagesS(Q)/Nover the two wavevectors (π±π/8, π) on 16×4 and the four wavevectors (π±π/8, π) and (π, π±π/8)
+on 16×16.  The pairing measure ∆        2SC  averages over all displacements with shortest periodic distanced≥d                       max/2,
+giving cutoffs √17 and 4√2, respectively.  Both order parametersM          2str and ∆2SC are consistent between the projected
+Nv = 3 and 4 states.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. G2. Connected pair correlationsC                   p(x,2) of projected NN-GPEPS states on (a) 16×4 and (b) 16×16. Error bars indicate
+statistical uncertainties.
+
+TABLE G3.  Stripe and pairing measures of projected NN-GPEPS states.  Parentheses give statistical uncertainties.
+Lattice                            N             v                                             M 2str                                                       ∆2SC
+ 16×4                                         3                                         0.032464(31)                                        8.18(33)×10                        −4
+                                                  4                                         0.032403(27)                                        8.43(41)×10           −4
+16×16                                        3                                        0.0138749(78)                                       1.23(13)×10                        −4
+                                                  4                                         0.013725(10)                                        1.37(20)×10           −4

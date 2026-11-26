@@ -1,0 +1,53 @@
+{
+  "model": "TFIsing",
+  "lattice": "square",
+  "n_sites": 256,
+  "boundary": "P",
+  "params": {
+    "h": 3.05
+  },
+  "instance_id": "TFIsing/square_256_P_3.05",
+  "rows": [
+    {
+      "energy": -829.329408,
+      "sigma": 0.000512,
+      "energy_variance": null,
+      "dof": 256,
+      "einf": 0,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "aCNN",
+      "method_detail": "symmetric: C4v",
+      "method_as_published": "aCNN (C4v)",
+      "family": "CNN / ResNet",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Wang, Wu, He & Lu, Variational optimization of the amplitude of neural-network quantum many-body ground states, Phys. Rev. B 109, 245120 (2024), arXiv:2308.09664",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2308.09664 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading (2026-11-26)",
+        "reported_as": "-3.239568(2)",
+        "note": "Table II, row 'aCNN(C4v)', column L = 16; sources/2308.09664.txt line 283; version read: arXiv v2 text (sources/2308.09664.txt); journal version Phys. Rev. B 109, 245120 (2024) not read in this pass | Eq. (15): H = -sum_<i,j> σ^z_i σ^z_j - λ sum_i σ^x_i with Pauli matrices, λ = 3.05, periodic L x L lattices; Table II caption: 'Ground state energies of the two-dimensional transverse field Ising model with L = 8 and 16'. per site implied, not stated (RULES.md 8, 2026-11-26): the table prints no normalisation, and only the per-site reading fits the printed numbers: totals would be about -207 (L = 8) and -829 (L = 16), so the printed -3.24 are energies per site.",
+        "secondary_of": null
+      }
+    }
+  ],
+  "coverage": [
+    {
+      "checked_on": "2026-11-26",
+      "method": "table harvest of cached arXiv sources (match_tables.mjs --all), every matched paper read for this instance",
+      "screened": [
+        "arXiv:2403.07795",
+        "arXiv:2608.18065",
+        "arXiv:2211.07749",
+        "arXiv:2110.06390",
+        "arXiv:2308.09664"
+      ],
+      "found": 1,
+      "note": "Only papers whose tables matched the instance by size were read; not a citation screen. Energies from: arXiv:2308.09664."
+    }
+  ]
+}

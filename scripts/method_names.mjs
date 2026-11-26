@@ -33,7 +33,7 @@ export const SYMMETRY_TERMS = new Set(["SU(2)", "U(1) charge", "U(1) spin", "tra
   "C4", "C4v", "C6v", "sublattice", "full symmetry group", "unspecified",
   "unspecified (symmetry optimization)", "unspecified (symmetrized variants)"]);
 const SLOTS = ["symmetric", "projected", "extrapolated"];
-const EXTRAPOLATION = /^(?:(?:variance|truncation error|Δτ|1\/M) → 0|χ → ∞)(?: \([^()]+\))?$/; // 1/M: the one-particle basis size (track 2)
+const EXTRAPOLATION = /^(?:(?:variance|truncation error|Δτ|1\/M|1\/τ³) → 0|χ → ∞)(?: \([^()]+\))?$/; // 1/M: the one-particle basis size (track 2); 1/τ³: the projection time of nVAFQMC (arXiv:2611.16430)
 // Symmetry or extrapolation wording outside a slot. A Gutzwiller projection removes double
 // occupancy; it is part of the state, not a symmetry.
 // An antisymmetric layer is the fermion statistics, not a symmetry (atoms and molecules, 2026-11-12).
@@ -1208,6 +1208,59 @@ NAMES["block MPS alternating optimization (reference, bond dimension up to 5000)
 }
 
 // Systematic families of strings, matched when no exact entry exists.
+// Pass sweep-rows-2026-11-26-kbgap and -kbgapnew: the Ketboard/tachys gap of 2026-11-26.
+const TN = { family: "tensor network" }, AF = { family: "AFQMC / GFMC" };
+const GPEPS_PROJ = "projected: point group (simplified), spin parity"; // arXiv:2611.26604: 'mirror reflections in the x and y directions and spin inversion'
+Object.assign(NAMES, {
+  "NN-GPEPS, Nv = 3 (projected)": ["NN-GPEPS", `N_v = 3; ${GPEPS_PROJ}`, TN],
+  "NN-GPEPS, Nv = 4 (projected)": ["NN-GPEPS", `N_v = 4; ${GPEPS_PROJ}`, TN],
+  "NN-GPEPS (extrapolated)": ["NN-GPEPS", `${GPEPS_PROJ}; extrapolated: variance → 0 (joint fit of the N_v = 3 and 4 trajectories)`, TN],
+  "NN-GPEPS, Nv = 3": ["NN-GPEPS", "N_v = 3, transferred from 16 x 16", TN], // arXiv:2611.26604 Table II: the 16 x 16 state on 32 x 32, not re-optimised
+  "NN-GPEPS, Nv = 4": ["NN-GPEPS", "N_v = 4, transferred from 16 x 16", TN],
+  "NN-GPEPS, Nv = 3 (P)": ["NN-GPEPS", `N_v = 3, transferred from 16 x 16; ${GPEPS_PROJ}`, TN],
+  "NN-GPEPS, Nv = 4 (P)": ["NN-GPEPS", `N_v = 4, transferred from 16 x 16; ${GPEPS_PROJ}`, TN],
+  // arXiv:2611.16430 Table I: K references, projection time τ, |G| symmetry images.
+  "MR-nVAFQMC (K= 4, τ= 1.40, |G|= 128)": ["MR-nVAFQMC", "K = 4, τ = 1.40, |G| = 128", AF],
+  "MR-nVAFQMC (K= 4, τ= 1.31, |G|= 8)": ["MR-nVAFQMC", "K = 4, τ = 1.31, |G| = 8", AF],
+  "MR-nVAFQMC (K= 8, τ= 1.45, |G|= 8)": ["MR-nVAFQMC", "K = 8, τ = 1.45, |G| = 8", AF],
+  "MR-nVAFQMC (K = 4, τ = 1.26, |G| = 8)": ["MR-nVAFQMC", "K = 4, τ = 1.26, |G| = 8", AF],
+  "MR-nVAFQMC (K= 4, |G|= 8, τ→∞ extrap.)": ["MR-nVAFQMC", "K = 4, |G| = 8; extrapolated: 1/τ³ → 0", AF],
+  "MR-nVAFQMC, τ^-3 → 0 extrapolation (K = 4, |G| = 8)": ["MR-nVAFQMC", "K = 4, |G| = 8; extrapolated: 1/τ³ → 0", AF],
+  "nVAFQMC (K= 1, |G|= 8, τ→∞ extrap.)": ["nVAFQMC", "|G| = 8; extrapolated: 1/τ³ → 0", AF],
+  "nVAFQMC (K= 1, |G|= 64, τ→∞ extrap.)": ["nVAFQMC", "|G| = 64; extrapolated: 1/τ³ → 0", AF],
+  // arXiv:2506.08329 Supplemental Tables 2-5: SU simple update, GO gradient optimization.
+  ...Object.fromEntries([4, 6, 8].flatMap(D => [
+    [`fMPS-SU, D = ${D}`, ["fMPS", "simple update", { ...TN, bond_dimension: D }]],
+    [`fMPS-GO, D = ${D}`, ["fMPS", "gradient optimization", { ...TN, bond_dimension: D }]],
+    [`NN-fMPS-GO, D = ${D}`, ["NN-fMPS", "gradient optimization", { ...TN, bond_dimension: D }]]])),
+  ...Object.fromEntries([4, 6, 8, 10].map(D => [`NN-fPEPS-GO, D = ${D}`, ["NN-fPEPS", "gradient optimization", { ...TN, bond_dimension: D }]])),
+  "DMRG, fMPS bond dimension 1000": ["DMRG", "truncated weight 1.6 × 10^-10", { bond_dimension: 1000 }],
+  "NN": ["NN", "pure neural network", { family: "other NQS" }],
+  "NN-SD (MLP)": ["NN-SD", "two-layer MLP", BF],
+  "NN-SD (CNN)": ["NN-SD", "CNN", BF],
+  "NN-SD (ViT)": ["NN-SD", "ViT", BF],
+  // arXiv:2403.07795 Table I.
+  "DMRG (bond dimension up to 10^3)": ["DMRG", "bond dimension up to 1000"],
+  "ViT, trained from scratch": ["ViT", "trained from scratch"],
+  "ViT, pretrained at J2/J1 = 0.4 and fine-tuned": ["ViT", "pretrained at J2/J1 = 0.4, fine-tuned"],
+  // arXiv:2608.18065 Table 2.
+  "2D cRNN (d_h=200) with Adam": ["cRNN", "2D, hidden dimension 200, Adam", { family: "RNN" }],
+  "2D cRNN (d_h=200) with minSR": ["cRNN", "2D, hidden dimension 200, MinSR", { family: "RNN" }],
+  "pRNN (GRU), Adam": ["pRNN", "GRU, Adam"],
+  "pRNN (GRU), minSR": ["pRNN", "GRU, MinSR"],
+  "free-fermion solution": ["Exact solution", "free fermions (Pfeuty 1970)"],
+  // arXiv:2602.02665 Sec. IV: 'no symmetry [-0.496375(1)], translational symmetry [-0.496698(1)], and full point-group (C4v)'.
+  "ViT with Spatial Attention, no symmetry": ["ViT", "spatial attention, b = 4"],
+  "ViT with Spatial Attention, translational symmetry": ["ViT", "spatial attention, b = 4; projected: translations"],
+  // arXiv:1601.06018 Tables III and IV (J2 = 1/8 tori).
+  "DSL, 0 Lanczos steps": ["VMC", DIRAC],
+  "DSL, 1 Lanczos step": ["VMC", `${DIRAC}, ${LANCZOS(1)}`],
+  "DSL, 2 Lanczos steps": ["VMC", `${DIRAC}, ${LANCZOS(2)}`],
+  "DSL, zero-variance extrapolation": ["VMC", `${DIRAC}; extrapolated: variance → 0 (p = 0, 1, 2)`],
+  "DMRG, truncation-error extrapolation": ["DMRG", "at most 8000 SU(2) states; extrapolated: truncation error → 0"],
+  "aCNN (C4v)": ["aCNN", "symmetric: C4v"],
+});
+
 export const PATTERNS = [
   // arXiv:1911.05163 (Stair, Huang & Evangelista), H6 and H8 in STO-6G: quantum Krylov runs by Krylov dimension N (re-read 2026-11-26).
   [/^QK \[single determinant \(Hartree-Fock reference\), N = (\d+) Krylov basis states, dt = 0\.5 a\.u\., exact time evolution\]$/, m => ["QK", `Hartree-Fock reference, ${m[1]} Krylov states, exact time evolution`, { family: "other" }]],

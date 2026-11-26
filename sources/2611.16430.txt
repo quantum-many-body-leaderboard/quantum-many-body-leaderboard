@@ -1,0 +1,717 @@
+Multi-reference variational states resolve stripe selection and local  d-wave pairing in the
+                                                             Hubbard model
+
+                                                Honghui Shang1,∗  and Jinlong Yang1,†
+                                    1State  Key  Laboratory  of  Precision  and  Intelligent  Chemistry,
+                               University  of  Science  and  Technology  of  China,  Hefei  230026,  China
+                                                         (Dated: November 13, 2026)
+                  Whether stripes compete with d-wave superconductivity or promote pairing through fluctuations
+                remains unsettled in the two-dimensional Hubbard model. Using multi-reference neural variational
+                auxiliary-field quantum Monte Carlo (MR-nVAFQMC) at U/t = 8, we superpose unpaired Slater de-
+                terminants across stripe periods and domain-wall positions, reaching variational energies competitive
+                with leading benchmarks on periodic lattices up to32   × 32sites. For cuprate next-nearest-neighbor
+                hopping (t′/t = −0.2), diagonal hopping preserves electron-doped antiferromagnetism while kinet-
+                ically frustrating hole motion into Yamada stripes with a dome of short-range connected d-wave
+                pairing. At1 /8hole doping, hole delocalization across antiphase spin boundaries outweighs on-site
+                repulsion, splitting the filled stripes of the pure model into half-filled walls with strong local pairing.
+                Coherently delocalizing shifted walls strongly suppresses static charge modulation yet leaves short-
+                range pairing unchanged, showing that local pairing is intrinsic to half-filled walls rather than driven
+                by stripe fluctuations. Across intervening antiferromagnetic domains, however, pairing correlations
+                become unresolved at one stripe period and beyond. Both parameter transfer to larger lattices
+                without reoptimization and deep benchmark checkpoints retain stripe spin order without resolving
+                long-range pairing, within uncertainties allowing weak superconductivity. Half-filled antiphase walls
+                thus generate local d-wave pairs, whereas suppressing static stripe order alone yields no resolved
+                coherence across stripes in the states studied.
+
+
+
+
+                                                           I.  INTRODUCTION
+
+   How unidirectional spin and charge stripes interact with d-wave superconductivity has been a central question
+in the physics of high-Tc cuprates for more than three decades [1–3]. In La2−x    SrxCuO4, neutron scattering reveals
+incommensurate magnetic peaks displaced from(       π, π)by  ϵspin, which grows approximately linearly with hole concen-
+tration (ϵspin ≈δ  , the Yamada relation) up to δ≈   1/8before saturating at higher doping [ 4]. The suppression of bulk
+superconductivity near1       /8doping in   La2−x    BaxCuO4 is the longstanding1                   /8anomaly[        5]. In La1.875  Ba0.125  CuO4,
+static period-four charge order (λc  = 4) and period-eight antiphase spin order (  λs  = 8) coexist with a strongly
+depressed bulk three-dimensional (3D) transition at Tc ≈ 4 K, whereas transport and magnetization measurements
+indicate two-dimensional (2D) superconducting fluctuations below about40    K and a Berezinskii–Kosterlitz–Thouless
+transition near16    K [6]. A proposed explanation for the suppressed interlayer coherence is an intra-plane pair-density
+wave (PDW), whose pairing phase alternates across adjacent stripes and whose stripe direction rotates by90  ◦ between
+layers, frustrating interlayer Josephson coupling [2, 7]. Because unidirectional antiphase stripes of charge period λc
+and linear hole filling f = δλc carry magnetic incommensurability ϵspin = δ/(2f), the observed slope   ϵspin = δ points
+directly to half-filled domain walls (f = 1/2) rather than filled walls (  f = 1,   ϵspin = δ/2). Whether a single-layer 2D
+Hubbard model atδ= 1/8develops phase coherence across half-filled stripes—as uniformd-wave or antiphase PDW
+order—or supports only short-range intra-wall pairing remains a central microscopic question [2,8–10].
+   Whether the single-band 2D repulsive Hubbard model captures these intertwined phenomena has been investigated
+intensively with modern many-body methods [11–16]. For the nearest-neighbor model (t′ = 0) at   δ = 1/8and   U/t = 8,
+combined density-matrix renormalization group (DMRG), auxiliary-field quantum Monte Carlo (AFQMC), density-
+matrix embedding, and tensor-network calculations established an insulating filled-stripe ground state (λc = 8, λs = 16)
+without long-range superconductivity [17–19]. Negative next-nearest-neighbor hopping t′/t < 0, relevant to cuprate
+Fermi surfaces and electron–hole asymmetry [20–22], favors shorter stripe wavelengths; atδ= 1/8, infinite projected
+entangled-pair states find period-four stripes with suppressed superconductivity [23]. Pairing also depends sensitively
+on cylinder width: four-leg calculations find algebraically decaying pairing at finite t′ [24], whereas eight-leg calculations
+find extremely short-ranged superconducting correlations for t′ ≤ 0[ 25]. In a distinct setting, periodically modulating
+nearest-neighbor hopping enhances superconducting correlations on four- and six-leg cylinders [26]. Finite-temperature
+
+
+
+
+
+∗ shanghui.ustc@gmail.com
+† jlyang@ustc.edu.cn
+                                                                                                                                                    2
+
+simulations reveal fluctuating stripes and intertwined spin, charge, and pair correlations [27, 28]. Complementary
+cold-atom experiments observe precursors of individual stripes in mixed-dimensional settings [29] and a pseudogap in a
+two-dimensional Fermi–Hubbard simulator [30].
+   Determiningthe2Dzero-fieldbehaviorat δ = 1/8with   t′ ̸= 0hasnonethelessproveddelicatebecausedistinctuniform,
+superconducting-stripe, and non-superconducting-stripe states compete on the milli-t (10 −3  t) energy scale per site and
+respond sensitively to boundary conditions, applied fields, and variational bias. Combining DMRG with constrained-
+path AFQMC under twist-averaged boundary conditions and applied pairing fields—taking the thermodynamic limit
+at fixed pairing field before extrapolating the field to zero—Xuet al.reported                   d-wave superconductivity coexisting
+with partially filled stripes (f≈   0.6–0   .8) on the hole-doped side and Néel antiferromagnetism on the electron-doped
+side [31]. Working directly at zero external field on periodic 2D tori with neural quantum states [32–34], Rendeet al.
+reported finite extrapolated d-wave pairing up to24   × 24using symmetry-preserving BCS backflow [  35]. Extending
+Pfaffian backflow [36, 37] and neural-network fermionic projected entangled pair states (NN-fPEPS) up to32   × 32
+tori, Chenet al.reached lower variational energies and revealed a near-degeneracy between a nearly uniform       d-wave
+state and lower-energy striped states carrying very weak or statistically unresolved long-range superconductivity [10].
+On8    × 8, Viterittiet al.found that near-degenerate determinant and Pfaffian backflow states can exhibit different
+pair correlations, but that symmetry restoration and variance reduction bring the three wavefunction families toward
+a common picture of coexisting stripe and pairing correlations on this finite lattice [38]. Related neural backflow
+calculations show how symmetry projection and multi-determinant improvements change both energies and correlation
+functions [39].
+   Two methodological considerations motivate probing this competing regime with multi-reference unpaired auxiliary-
+field wavefunctions. First, a single-reference variational state—even after space-group projection—inherits a single
+reference stripe period and rigid inter-wall spacing, preventing inequivalent stripe periods and shifted domain-wall
+arrangements from competing or fluctuating coherently within one quantum state. Second, variational families differ
+in how pairing enters their reference states. Canonical number-projected BCS and Pfaffian wavefunctions conserve
+total particle number just as Slater determinants do, but embed explicit pairing fields into their reference geminals; by
+contrast, each individual unprojected particle-conserving Slater determinant |Φk⟩ carries no explicit pairing field and
+has vanishing connected two-body pairing (Cp = 0), whereas space-group projection, multi-determinant superposition,
+and the shared imaginary-time auxiliary-field projector generate non-Wick four-fermion correlations without geminal
+pairing initialization. Although a variational upper bound on total energy implies neither upper nor lower bounds on
+order parameters, reaching competitive energies from particle-conserving Slater pools provides a complementary test of
+which features of stripe order govern local pair formation and which limit long-distance coherence.
+   Here we develop multi-reference neural variational auxiliary-field quantum Monte Carlo (MR-nVAFQMC) to study
+the 2D square-latticet–t      ′–UHubbard Hamiltonian (Fig.1A) on periodicL                      x ×L   y tori (N=L        xLy sites),
+
+                                ˆH=−t       ∑  (ˆc  †iσˆc  jσ + H.c.)−t          ′  ∑(ˆc  †iσˆc  jσ + H.c.) +U       ∑ˆn  i↑ ˆn  i↓ ,                  (1)
+
+                                         ⟨ij⟩,σ                         ⟨⟨ij⟩⟩,σ                          i
+
+where ⟨ij⟩   and ⟨⟨ij⟩⟩    denote nearest- and next-nearest-neighbor pairs, ˆn  iσ = ˆc  †iσˆc  iσ, and we set t = 1with   U/t = 8.
+Hole doping δ = 1 −N   e/N is studied in the spin-balanced canonical sector N↑ = N↓ = Ne/2for both   t′ = 0and
+cuprate hopping t′/t = −0.2; physical electron doping (  n = 1 + |δ|  at t′/t = −0.2) maps via the bipartite particle–hole
+transformation ˆc  iσ → (−1)xi+y   iˆc  †iσ to filling1        − |δ|  at reversed diagonal hopping t′/t = +0.2, displayed at signed
+dopingδ <0.
+
+
+                                                                II.  RESULTS
+
+            A.  Doping asymmetry, the Yamada relation, and kinetic stabilization of half-filled stripes
+
+   Figure1B–E traces how magnetic order and local            d-wave pairing evolve across electron and hole doping in the absence
+of external pinning fields. On the electron-doped branch (δ < 0,   t′/t = +0.2), doped carriers move coherently on the
+same magnetic sublattice without nucleating antiphase domain walls: the staggered spin correlation(              −1)x+y    Cs(r)
+remains uniformly positive across the12     × 12torus at     δ = −1/8(Fig.1C), keeping the magnetic Bragg peak locked
+at the commensurate Néel wavevector(        π, π)( ϵspin = 0; Fig.1B, top), while no local connected           d-wave pairing dome
+develops (Fig.1B, bottom). On the hole-doped branch (         δ > 0,   t′/t = −0.2), by contrast, the magnetic peak splits into
+incommensurate pairs(       π±   2πϵspin, π)whose shift follows the half-filled Yamada relation  ϵspin = δ across commensurate
+lattices at δ = 1/16(    λs = 16),     δ = 1/12(    λs = 12), and     δ = 1/8(  λs = 8). Above   δ = 1/8on16     × 4, the magnetic
+wavevector saturates at the ϵspin = 1/8plateau at   δ = 3/16—raising the linear wall filling from     f = 1/2to   f = 3/4
+while the stripe spin peak weakens nearly threefold—before departing from the  ϵspin  = 1/8plateau to a weaker
+                                                                                                                                                            3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1.Square-lattice  t–t′–U Hubbard model, Yamada relation, and real-space stripe correlations across doping.
+(A) Schematic of the 2D square      t–t′–U Hubbard model (U/t = 8; top) and competing filled (  λc = 8, λs = 16) versus half-filled
+(λc = 4, λs = 8) antiphase stripe orders at   δ = 1/8(bottom). (B) Spin incommensurability       ϵspin = 1/λs (top) and nearest-
+neighbor connected d-wave pairing vertex Cp(∆y = 1)(bottom) versus signed doping    δ (δ < 0:   t′/t = +0.2;   δ > 0:   t′/t = −0.2)
+on16    × 4(circles),12             × 12(squares), and16        × 16at     δ = 1/8(diamonds: blue,   t′ = 0; vermilion,   t′/t = −0.2, coinciding
+with ϵspin = 1/8in the top panel). Top: open symbols denote spin peaks below3    σ; the grey band guides the Yamada trend
+(ϵspin = δ up to δ = 1/8followed by an   ϵspin = 1/8plateau across   δ≤   3/16), and the dashed blue line marks filled stripes
+(ϵspin = δ/2). (C–E) Intrinsic 1D carrier-density profiles           δ(x)[or  |δ|  (x)in (C); top] and five-row 2D staggered spin-correlation
+maps(       −1)x+y    Cs(r)around a reference site (open circle; bottom) for (C) electron-doped12           × 12at     δ = −1/8(  t′/t = +0.2,
+commensurate AFM), (D)16     × 16at     δ = 1/8,   t′ = 0(filled stripe,   λc = 8, λs = 16), and (E)16        × 16at     δ = 1/8,   t′/t = −0.2
+(half-filled stripe,λ   c = 4, λ  s = 8). Error bars denote 1 s.e.
+
+
+ϵspin = 1/16peak at heavy overdoping (    δ = 1/4), where static charge modulation falls below3    σ. Across the entire
+hole-doped range δ∈   [1/16, 1/4], the nearest-neighbor connected    d-wave pairing vertex Cp(∆y = 1)(SectionIII) forms
+a broad positive dome, reaching its maximum around δ = 3/16where period-eight spin stripe order begins to soften
+(Fig.1B, bottom).
+   To identify how negative t′/t selects half-filled Yamada stripes over the filled stripes of the pure Hubbard model,
+we compare candidate charge periods λc ∈ {2, 4, 6, 8,∞} at δ = 1/8in Fig.2. On the four-leg16                  × 4torus, whose
+length Lx = 16accommodates both     λs = 16and     λs = 8at deep projection (  τ = 1.6), the filled   λc = 8stripe (  f = 1)
+is favored at t′ = 0whereas introducing   t′/t = −0.2reverses the energetic ordering (Fig.2A): the half-filled            λc = 4
+manifold (f  = 1/2) becomes the clear variational minimum among all single-period sectors, lying(41         .0 ± 1.1) mt
+per site below λc = 8and well below   λc = 2,   λc = 6, and the uniform (  λc = ∞) state. When all candidate periods
+compete simultaneously inside unbiased K = 8and   K = 12multi-period pools (Fig.2A, shaded column), the optimized
+wavefunctions spontaneously select the λs = 8(  λc = 4) sector and match or slightly improve upon the independently
+                                                                                                                                                       4
+
+optimizedλ                  c = 4energy.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.Stripe wavelength switch and kinetic stabilization at    δ = 1/8.(A) Ground-state energy per site        E/N on16    × 4
+across charge periods λc ∈ {2, 4, 6, 8,∞} for t′/t = 0(blue circles) and   t′/t = −0.2(vermilion squares,   τ  = 1.6), alongside
+unbiased K = 8RR-CV and   K = 12multi-period pools (shaded column). (B) Longitudinal spin structure factor         Sz(qx, π)
+on16    × 16at     δ = 1/8, shifting from   q∗x/2π = 7/16(    λs = 16,     t′ = 0) to3     /8(  λs = 8,   t′/t = −0.2). (C) Kinetic (∆       Ekin/N),
+interaction (U∆d), and total (∆ E/N) energy changes on16  × 4(  t′/t = −0.2,   τ = 1.6) from   λc = 8to   λc = 4single-sector
+control (left), λc = 8to   λc = 4multi-sector   K = 8(middle), and pinned   K = 1to multi-sector   K = 8at fixed   λc = 4(right).
+Error bars denote 1 s.e.
+
+   The same period-halving transition occurs on the isotropic 256-site16          × 16torus at     δ = 1/8: the Bragg peak of
+Sz(qx, π)shifts from   q∗x/2π = 7/16(    λs  = 16, λc  = 8) at   t′  = 0to3     /8(  λs  = 8, λc  = 4) at   t′/t = −0.2(Fig.2B),
+replacing two broad filled walls with four half-filled antiphase walls in real space (Fig.1D,E) and increasing the
+intra-wall nearest-neighbor pairing vertex more than fivefold. Decomposing the total energy into hopping and on-site
+repulsion, E/N  = Ekin/N + Ud with double occupancy d = ⟨ˆn   ↑ˆn  ↓⟩ (Fig.2C), reveals why half-filled stripes win:
+splitting filled λc = 8walls into twice as many half-filled   λc = 4walls increases local double occupancy and raises
+the Hubbard interaction energy (U∆d > 0), yet this repulsion penalty is outweighed more than twofold by the gain
+in transverse kinetic energy (∆ Ekin/N < 0) as holes hop across closer antiphase domain boundaries without leaving
+extended strings of overturned spins. Sublattice kinetic frustration thus unifies both sides of the phase diagram:
+positive effective t′/t on the electron-doped side assists intrasublattice motion within a uniform Néel background,
+whereas negative t′/t frustrates intrasublattice hopping on the hole-doped side and stabilizes half-filled antiphase walls.
+
+
+                 B.  Controlled stripe superpositions: pinned and delocalized domain walls pair alike
+
+   Testing whether transverse stripe fluctuations amplify d-wave pairing requires separating three situations that are
+easily conflated: (i) apinned stripe, whose domain walls sit at fixed lattice columns with static hole-density modulation
+A4 > 0; (ii) anincoherent translation mixtureof shifted copies of that pinned stripe, which sets the one-body modulation
+to A4 = 0and transfers its Bragg weight    N4 A24 into the connected density structure factor Nc(π/2, 0)while leaving
+every linear translation-averaged observable—total energy E/N, full Scc(q) =      N4 A24δq,(±π/2,0)          + Nc(q), bare      Pd(r),
+and bare d-wave Bloch eigenvalues—identically unchanged [whereas Wick-subtracted Cp(r) =    Pd(r)   −N    0[ ¯G](r)shifts
+slightly only because  ¯G is translation-averaged before squaring]; and (iii) acoherent quantum superpositionof shifted
+stripe sectors, which differs from the classical mixture solely through off-diagonal quantum interference between distinct
+domain-wall positions.
+   Figure3carries out this controlled comparison on16            × 4at fixed Hamiltonian and projection depth (  δ = 1/8,
+t′/t = −0.2,   τ = 1.60), contrasting a pinned single-reference stripe (    K = 1), a single-sector   K = 8control localized
+in one wall sector, and delocalized multi-sector  K  = 8and   K  = 16superpositions distributed across translated
+wall positions. Relative to the matched single-sector K  = 8control, coherent multi-sector mixing suppresses the
+intrinsic-frame period-four hole amplitude A4 roughly threefold while shifting weight into the connected charge peak
+Nc(π/2, 0)at conserved total    Scc(π/2, 0)(Fig.3A), and re-optimizing the projector under coherent shifted-stripe
+superposition lowers the variational energy by∼3 mtper site below the pinned state.
+                                                                                                                                                     5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3.Multi-reference stripe unpinning and local    d-wave pairing at δ = 1/8,   t′/t = −0.2.(A) Intrinsic 2D hole-density
+maps comparing the K = 8single-sector control and fluctuating multi-sector   K = 8state on16     × 4(  τ = 1.60; top), together
+with 1D hole profiles δ(x)and period-four amplitudes   A4 × 103 across K = 1pinned,   K = 8control,   K = 8fluctuating, and
+K= 16fluctuating states (bottom). (B) Nearest-neighbor connectedd-wave vertex along the walls [C                      p(0,1)], across the walls
+[Cp(1, 0)], and scaled cumulative short-range sum      14χvtxSC (R≤   4)across the    K = 1 → 16unpinning series, showing surviving local
+d-wave pairing without finite-range enhancement. Error bars denote 1 s.e.
+
+
+   Across the entire K = 1 → 16unpinning series, short-range connected     d-wave pairing remains robust and essentially
+unchanged (Fig.3B). Subtracting the normal Wick contraction          N0(r)from      Pd(r)yields a positive nearest-neighbor
+connected vertex along the walls in all four states; by contrast, matched-depth uniform paramagnetic and filled
+λc = 8reference controls at identical Hamiltonian and projector architecture collapse both variational energy and local
+Cp(0, 1)toward zero, confirming that the half-filled antiphase wall geometry itself generates the local pairing vertex.
+While expanding from K = 1to   K≥    8restores local bond isotropy between   Cp(1, 0)and    Cp(0, 1), this restoration is
+already present in the pinned K = 8single-sector control; comparing the delocalized   K = 8superposition directly
+against its matched single-sector control reveals no statistically resolved change in either the cumulative short-range
+vertex χvtxSC (R≤   4)or its strictly non-overlapping bond subset where three-site contact terms vanish identically. At
+inter-stripe separations (∆ x = λc = 4) and across distant bond pairs, connected pair correlations remain unresolved
+within uncertainty, and split-block cross-validated Rayleigh quotients of the full2     N×    2N bond-singlet pair matrix
+Γbb′ = ⟨ˆb†bˆbb′⟩ on64-site (16       ×4and8      ×8) tori remain non-extensive (  λCV1   /N≈    8–9×10−3 ) with comparable connected
+weight in uniformq= (0              , 0)and period-eight(    π/4, 0)modes. Local    d-wave pairing is therefore already an intrinsic
+property of an individual half-filled domain wall, whereas unpinning the charge profile within our multi-reference
+subspace neither amplifies local pairing nor induces resolved inter-stripe coherence.
+
+
+                       C.  Ground-state energy benchmarks on large two-dimensional square tori
+
+   Figure4and TableIbenchmark the ground-state energies of our multi-reference MR-nVAFQMC wavefunctions at
+δ = 1/8and   U/t = 8across periodic16     ×16(256-site)and32       ×32(1,024-site)square tori. Throughout, we separate fixed-
+checkpoint variational upper bounds from empirical Sorella projection-depth extrapolations E(τ)/N = E∞/N + aτ−3
+[19] (marked “not variational” in TableIand shown as open stars in Fig.4), alongside both variational and extrapolated
+literature benchmarks. For the periodic16    × 16VAFQMC benchmark,     E/N = −0.75865(3)is the Sorella–Tocchio
+result reported in the V-score dataset of Wuet al.[   34] and reproduced in Table S4 of Chenet al.[       10]; Ref. [19]
+describes the underlying method and its twist-averaged TDL extrapolation.
+   Across both16    × 16and32        × 32tori, MR-nVAFQMC reaches variational energies competitive with the most accurate
+neural- and tensor-network simulations reported to date (Fig.4and TableI). In the nearest-neighbor model (                t′/t = 0;
+Fig.4A), our         K = 4states (  τ  = 1.40on16       × 16,     τ  = 1.31on32       × 32) match or lie slightly below BCS backflow,
+Sorella VAFQMC, Pfaffian backflow, ACE backflow, and D = 4NN-fPEPS within statistical uncertainty while lying
+well below unprojected SCALE and variational D = 16fPEPS [  10, 19, 34, 41]; extrapolating E(τ)/N in τ−3  on
+16 × 16(   −0.7604(32)) further agrees closely with both16              × 16 D→ ∞  extrapolated fPEPS (−0.7602(14)) [        10] and
+Sorella’s twist-averaged 2D thermodynamic-limit τ→ ∞  estimate (−0.7605(1)) [       19]. In the frustrated cuprate model
+                                                                                                                                                        6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 4.Ground-state energy benchmarks across large periodic 2D square tori at    δ = 1/8(  U/t = 8).Filled or
+solid-outlined symbols denote strictly variational energies; open symbols denote empirical τ→ ∞  or D→ ∞  extrapolations.
+Because Monte Carlo standard errors span two orders of magnitude across sign-free VMC and finite-sign VAFQMC, error bars
+are omitted from the plot and listed in TableI. (A) Energy per site             E/N on16    × 16and32        × 32tori for the nearest-neighbor
+Hubbard model (t′/t = 0), comparing HFPS [ 36], Transformer-BF [40], SCALE and ACE-BF [41],16  × 16PBC variational
+VAFQMC [10, 19, 34] and twist-averaged thermodynamic-limit (TDL) τ→ ∞  Sorella VAFQMC [19], variational (D = 16) and
+D→ ∞  extrapolated fPEPS, NN-fPEPS (D = 4), BCS backflow, and Pfaffian backflow [ 10] with our multi-reference (K = 4)
+variational curve and same-manifold τ−3   → 0extrapolations (  K = 4on16     × 16,     K = 1on32     × 32; open vermilion stars). (B)
+Energy per site E/N for the cuprate Hubbard model (t′/t = −0.2) across16         × 16,24    × 24, and32     × 32, comparing HFPS [  36],
+SCALE and ACE-BF [41], symmetry-preserving BCS backflow [35], and NN-fPEPS (D = 4) and Pfaffian backflow [ 10] with
+our multi-reference variational benchmarks (K = 8on16     × 16,     K = 4on32     × 32) and same-manifold     τ−3   → 0extrapolations
+(K= 1on16×16,K= 4on32×32; open vermilion stars).
+
+
+(t′/t = −0.2; Fig.4B), our           K = 8(  τ  = 1.45) checkpoint on16       × 16and     K = 4(  τ  = 1.26) checkpoint on32       × 32
+likewise match or lie slightly below Pfaffian backflow, symmetry-preserving BCS backflow, and D = 4NN-fPEPS
+within statistical error [10, 35], demonstrating that particle-conserving multi-determinant neural auxiliary-field states
+access the same milli-tlow-energy regime without geminal pairing initialization.
+
+
+                       D.  Directional pairing decay and exploratory transferred-parameter scaling
+
+   We next examine how connected d-wave pairing correlations decay spatially on16    × 16and how spin and pairing
+observables behave in an exploratory fixed-depth series up to32   × 32(Fig.5). Along the stripe direction on16              × 16
+(t′/t = −0.2; Fig.5A, top), the bare two-bond correlator      Pd(0, ∆y)at short distance is dominated by the disconnected
+one-body Wick contribution N0(0, ∆y), underscoring the need to subtract   N0. The resulting connected intra-stripe
+vertex Cp(0, ∆y) = Pd −N    0 is clearly positive at nearest-neighbor separation (∆ y = 1) across   K = 1, 4, 8, but drops
+sharply already by∆  y = 2—where   K = 1, 4lie near zero within1            σ and K = 8fluctuates slightly negative within
+uncertainty—and remains statistically indistinguishable from zero over∆   y = 6–8(Fig.5A, inset). Perpendicular to
+the stripes (Fig.5A, bottom),          Cp(∆x, 0)decays even more rapidly, becoming indistinguishable from zero within a
+single charge-stripe period (∆ x = λc = 4) and beyond. Deepening projection on16     × 16up to    τ = 1.45–1     .52closes the
+energy offset relative to Pfaffian backflow while leaving both stripe spin order and distant-window pairing unchanged
+within1          σ, and doping scans into δ = 1/6and2       /9on12     × 12similarly enhance quasi-1D along-stripe     Cp(0, 1)while
+transverse and distant-window pairing remain unresolved.
+   To compare distant-window pairing directly with Chenet al.[       10] across commensurate square tori up to32   × 32,
+Fig.5B,C evaluates the full-        SU(2)four-peak stripe spin order      M 2,fullstr,4p   together with the exact four-bond site-centered
+singlet pairing order parameter∆                     2SC,4b    (L)matching Eq. (2) of Ref. [ 10] (SectionIII). Two caveats govern the
+interpretation of the common-depth multi-size series and motivate labeling Fig.5B,C asexploratory. First, the
+fixed-depth series (τ  = 1.16at     t′ = 0;   τ  = 1.15at     t′/t = −0.2) uses shallower wavefunctions at higher variational
+                                                                                                                                                                       7
+
+
+TABLE I.Best MR-nVAFQMC ground-state energies per site (this work) on large 2D square tori at    δ = 1/8
+(U/t = 8) compared with leading published benchmarks.For each periodic                L×L    torus and t′/t, our best multi-reference
+strictly variational state and same-manifold τ−3   → 0extrapolation (marked “not variational”) plotted in Fig.4are listed alongside
+the lowest published periodic-torus benchmarks [10, 19, 34, 35, 41] [for reference, Sorella’s twist-averaged 2D thermodynamic-limit
+τ→ ∞  extrapolation at t′ = 0is  −0.7605(1)[       19]]. Numbers in parentheses denote 1 s.e. statistical uncertainty in the last
+displayed digit(s) [e.g., −0.7589(19)denotes           −0.7589 ± 0.0019];      |G|     = 8denotes projection onto lattice reflections (  Rx, Ry) and
+global spin flip (D  2 ×Z    spin2  ), while|G|= 64,128additionally include commensurate stripe translations (SectionIII).
+
+                 Lattice,t           ′/t Method                                                                                                                       E/N(t)
+                 16×16,0     MR-nVAFQMC (this work)(K= 4,|G|= 8,τ→ ∞extrap., not variational)−0.7604(32)
+                                   fPEPS,D→ ∞extrap. (Chen 2026, not variational)                        −0.7602(14)
+                                   MR-nVAFQMC (this work)(K= 4,τ= 1.40,|G|= 128)                         −0.7589(19)
+                                   BCS backflow (Chen 2026)                                                              −0.75878(2)
+                                   VAFQMC (Sorella 2023; via Wu 2024, Chen 2026)                                 −0.75865(3)
+                                   NN-fPEPS,D= 4(Chen 2026)                                                        −0.75851(2)
+                 16×16,−0.2nVAFQMC (this work)(K= 1,|G|= 64,τ→ ∞extrap., not variational)−0.7482(19)
+                                   MR-nVAFQMC (this work)(K= 8,τ= 1.45,|G|= 8)                            −0.7466(38)
+                                   Pfaffian backflow (Chen 2026)                                                          −0.74533(1)
+                                   NN-fPEPS,D= 4(Chen 2026)                                                        −0.74467(2)
+                                   SBP (Rende 2026)                                                                        −0.74411(1)
+                 32×32,0     nVAFQMC (this work)(K= 1,|G|= 8,τ→ ∞extrap., not variational)     −0.7581(17)
+                                   MR-nVAFQMC (this work)(K= 4,τ= 1.31,|G|= 8)                            −0.7577(26)
+                                   NN-fPEPS,D= 4(Chen 2026)                                                        −0.75677(1)
+                                   BCS backflow (Chen 2026)                                                              −0.75617(1)
+                                   SCALE det. backflow (Gu 2026) [41]                                                            −0.7501
+                 32×32,−0.2MR-nVAFQMC (this work)(K= 4,|G|= 8,τ→ ∞extrap., not variational)−0.7494(35)
+                                   MR-nVAFQMC (this work)(K= 4,τ= 1.26,|G|= 8)                            −0.7476(37)
+                                   Pfaffian backflow (Chen 2026)                                                          −0.74569(1)
+                                   NN-fPEPS,D= 4(Chen 2026)                                                        −0.74257(2)
+
+
+
+
+
+
+energies than the deeper τ = 1.26–1     .45energy-benchmark checkpoints of TableI[for instance, on32            ×32at    t′/t = −0.2,
+the τ = 1.15evaluation gives     E/N = −0.736(6)compared with         −0.7476(37)for the              τ = 1.26checkpoint in TableI].
+Second, the24     × 24and32        × 32wavefunctions in the common-depth series are constructed by tiling and transferring
+parameters optimized on16    × 16without independent variational re-optimization on the larger tori (    steps = 0on
+32 × 32), and under     G = D2 ×Z    spin2   (|G|     = 8) these large-torus states remain frame-pinned (  A4 > 0). To remove
+checkpoint mismatch directly at L = 16and    L = 32, we additionally perform unified same-checkpoint joint evaluations
+of energy, M 2,fullstr,4p   , and four-bond∆       2SC,4b   on the exact TableISOTA wavefunctions (16        × 16,     K = 8, τ = 1.45;32    × 32,
+K= 4, τ= 1.26; purple diamonds in Fig.5C).
+
+
+   Within both the common-depth transferred series and the unified TableISOTA checkpoints,         M 2,fullstr,4p    (L)retains
+pronounced period-16 (t′ = 0; Fig.5B, top) and period-8 (         t′/t = −0.2; Fig.5C, top) stripe spin order up to32           × 32,
+comparable in magnitude to D = 4NN-fPEPS and Pfaffian backflow [ 10], whereas C4v -symmetric BCS backflow
+suppresses stripe magnetism toward a nearly uniform state [10, 35]. In the four-bond pairing channel (Fig.5B,C,
+bottom),∆               2SC,4b     (L)is compatible with zero at every torus size in the transferred series [giving a three-point linear1          /L
+intercept of(  −0.01 ± 0.06) × 10−3  at t′/t = −0.2] and remains statistically indistinguishable from zero on the exact
+TableISOTA checkpoints on16        × 16and32        × 32(purple diamonds); likewise, the maximum site-centered    dx2−y    2 Bloch
+eigenvalue density maxQ ˜Γd(Q)    /N across all momentaQ—including uniform(0                 , 0)and PDW(      π/4, 0), (π/2, 0)—scales
+downward as O(1/N)from8      × 8to32     × 32. By comparison, while     C4v -symmetric BCS backflow extrapolates to a
+sizable uniform order parameter [10, 35], the lower-energy striped wavefunctions of Chenet al.[       10] retain positive
+finite-size pairing on16    × 16–32     × 32that extrapolates to very weak or fit-window-sensitive superconductivity in
+the thermodynamic limit [∆ SC = 0.007(2)for           D = 4NN-fPEPS, and0       .010(3)from           L = 24, 32versus a1     σ bound
+∆SC < 0.006from       L = 16, 24, 32for Pfaffian backflow]. Because∆                     SC ≈ 0.007corresponds to∆           2SC ≈ 0.05 × 10−3 ,
+comparable to our statistical uncertainty, our results neither resolve long-range pairing nor statistically exclude weak
+superconductivity at the NN-fPEPS scale; establishing fully converged ground-state scaling across all sizes will still
+require independent per-size variational re-optimization at matched deepτacrossL= 16,24,32.
+                                                                                                                                                          8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 5.Directional decay of connected    d-wave pairing on16    × 16and exploratory transferred-parameter scaling
+up to32    × 32at     δ = 1/8. (A) Directional 1D two-bond cuts on16          × 16(    t′/t = −0.2). Top: along-stripe bare   Pd(0, ∆y)
+(open diamonds), Wick background N0(0, ∆y)(grey squares) for   K = 1(  τ = 1.52), and connected vertex     Cp(0, ∆y) = Pd −N    0
+for K = 1, 4, 8(inset:∆           y = 6–8). Bottom: across-stripe       Cp(∆x, 0)(∆    x = λc = 4shaded). (B,C) Exploratory fixed-depth
+transferred-parameter scaling (1 /L→     0) at (B)       t′/t = 0(  K = 1, τ = 1.16;     L = 16, 32) and (C)         t′/t = −0.2(  K = 4, τ = 1.15;
+L = 16, 24, 32), comparing full-   SU(2)stripe spin order     M2,fullstr,4p   (top) and the exact four-bond site-centered singlet distant-window
+pairing∆              2SC,4b    × 103 [Eq. (5), matching Ref. [  10]; bottom] ofThis work (transf.)(vermilion circles and dashed guides;
+L = 24, 32parameters transferred from16         × 16without per-size re-optimization) together with unified same-checkpointTable 1
+SOTAevaluations on16      × 16(    K = 8, τ = 1.45) and32        × 32(    K = 4, τ = 1.26) (purple diamonds inC) against NN-fPEPS,
+Pfaffian backflow, and BCS backflow [10, 35] as well as pinned-field CP-AFQMC [31] (open star). Error bars denote 1 s.e.
+[omitted for Ref. [10] points whose uncertainties lie below the quoted3     × 10−4  plot-unit threshold; the Ref. [31] star shows the
+asymmetric1σinterval propagated from∆                                  d = 0.017(3)].
+
+
+                                                                  III.  METHOD
+
+                            A.  Multi-reference neural VAFQMC (MR-nVAFQMC) wavefunction
+
+   Building on the general strategy of superposing nonorthogonal, symmetry-projected determinants [42], we construct
+the multi-reference, symmetry-restored neural VAFQMC (MR-nVAFQMC) wavefunction
+
+                                                                         K∑
+                                                         |Ψ(θ,c)⟩=           ck  ˆPG ˆPθ(τ)|Φ      k⟩,                                   (2)
+                                                                        k=1
+where {|Φk⟩}Kk=1  is a pool of inequivalent canonical particle-conserving Slater determinants spanning candidate
+stripe periods and shifted domain-wall configurations,  ˆPG  = |G|    −1  ∑g∈G     ˆUg projects onto a discrete lattice and
+spin-flip symmetry group G of order |G|  , and  ˆPθ(τ)is a shared parameterized auxiliary-field correlation projector
+of imaginary-time depth τ, extending single-reference VAFQMC [19] to coherent multi-determinant superpositions.
+Applying symmetric Suzuki–Trotter factorization and discrete Hubbard–Stratonovich decoupling across Lτ slices writesˆPθ(τ) = ∑
+              x pθ(x)    ˆBθ(x), wherex            ∈ {±1}LτN denotes the auxiliary Ising fields and  ˆBθ(x)is a product of spin-factored
+one-body exponentials. Beyond tunable Trotter slice weights, we incorporate a neural network in the auxiliary-field
+sector that takes the auxiliary-field configurationxas input and modulates the auxiliary-field path weights and effective
+one-body slice couplings shared across all K reference determinants, increasing expressive flexibility while keeping every
+field configuration an exact one-body Slater-determinant propagation. On64-site (16        × 4,8   × 8) and16       × 16tori we
+also employ stripe or full space-group projections (|G|     = 64, 128, 256, 512), whereas for the16         × 16(   t′/t = −0.2,   K = 8)
+and32     × 32multi-reference benchmarks in TableIwe use the eight-element group            G = D2 ×Z    spin2   (|G|     = 8) generated
+by lattice reflections Rx, Ry and global spin flip ↑↔↓, because summing many off-diagonal translations at large τ
+increases computational cost and sign fluctuations while the sub-extensive projection gain∆       Esymm/N∼ O   (1/N)
+                                                                                                                                                                  9
+
+becomes small on256–1          , 024-site tori where shifted stripe sectors are represented through the multi-reference pool and
+translation-averaged observables. Whereas each individual unprojected Slater determinant |Φk⟩ carries no explicit BCS
+or Pfaffian pairing field and has zero connected two-body pairing (Cp = 0), symmetry restoration   ˆPG, multi-determinant
+interference (K > 1), and the neural auxiliary-field projector    ˆPθ(τ)together generate non-Gaussian spin, charge, and
+pairing correlations without geminal pairing initialization. Superposition weightsc(     c1 ≡ 1), reference orbitals, and
+projector parameters θ are optimized jointly by damped stochastic reconfiguration, followed by frozen-checkpoint
+sign-reweighted Markov-chain evaluation [19] with statistical uncertainties estimated by coarse-grained block jackknife
+over independent Markov chains after thermalization burn-in.
+
+
+                                          B.  Spin, charge, and connected pairing observables
+
+   From the equal-time spin and density correlators ⟨ˆSi · ˆSj⟩ = ⟨ ˆSzi ˆSzj ⟩ + 12⟨ ˆS+i  ˆS−j  + ˆS−i  ˆS+j ⟩ and ⟨ˆn    iˆn  j⟩ (ˆn  i = ˆn  i↑  + ˆn  i↓ ),
+longitudinal spin structure factors and the full-SU(2)four-peak stripe magnetic order parameter (matching Ref. [   10])
+are obtained from
+                                                      ∑                                                         4∑
+                                      Sz(q) =      1N       eiq·(r      i−r   j)⟨ ˆSzi ˆSzj ⟩,       M  2,fullstr,4p     =   14NS(q    α),                     (3)
+                                                       i,j                                                     α=1
+
+where S(q) =    N−1  ∑i,j eiq·(r      i−r   j)⟨ˆSi · ˆSj⟩ andq       α ∈ {(π±   2πϵspin, π), (π, π±   2πϵspin)} with spin incommensurability
+ϵspin = 1/λs. Static 1D hole-density modulation δ(x) = 1−L   −1y  ∑y⟨ˆn    x,y⟩ at commensurate stripe period λc (wavevector
+qx = 2π/λ  c, e.g.,A        4 atq    x =π/2) and translation-invariant connected charge fluctuations are quantified by
+                                       ⏐⏐⏐⏐⏐Lx−1∑                 ⏐⏐⏐⏐⏐ ,       Nc(q) =      1∑
+                        Aλc =   2Lx            δ(x)e      −2πix/λ     c                  N        eiq·(r      i−r   j)(⟨ˆn    iˆn  j⟩ − ⟨ˆn    i⟩⟨ˆn     j⟩),            (4)
+                                         x=0                                                  i,j
+
+satisfyingN                  c(0) = 0identically in the canonical ensemble.
+   With normalized nearest-neighbor singlet creation operator  ˆb†ij  =  (ˆc  †i↑ ˆc  †j↓  −ˆc     †i↓ ˆc  †j↑ )/√2 and  dx2−y    2 bond signs
+h±ˆx     = +1,      h±ˆy     = −1, we distinguish two standard   d-wave pair operators: the two-bond link-origin operator  ˆ∆†2b,r
+used for short-range vertices and 1D directional cuts (Figs.1B,3B, and5A), and the four-bond site-centered operator
+ˆ∆†4b,r   matching Eq. (2) of Ref. [10] used for distant-window comparisons in Fig.5B,C,
+
+                                    ˆ∆†                ∑         hη ˆb†                                 ∑         hη ˆb†
+                                       2b,r     = 12                  r,r+η      ,        ˆ∆†4b,r     = 14              r,r+η      .                    (5)
+                                                   η∈{+ˆx,+ˆy}                                      η∈{±ˆx,±ˆy}
+
+From the bare pair correlator Pd(r) =    N−1  ∑r0⟨ ˆ∆†r0 ˆ∆r0+r  ⟩ built from bond-singlet amplitudes ⟨ˆb†bˆbb′⟩ [b = (i, j),
+b′ = (k, l)], subtracting the disconnected normal Wick contraction built from the full state’s symmetrized equal-time
+one-body Green’s function  ¯Gσ;ij    =⟨ˆc      †iσˆc  jσ⟩,
+                 Cp(r) =P       d(r)−N         0(r),       N      0, bb    ′ =  1( ¯G↑;ik   ¯G↓;jl   +  ¯G↑;il   ¯G↓;jk   +  ¯G↓;ik   ¯G↑;jl   +  ¯G↓;il   ¯G↑;jk  ),        (6)
+                                                                      2
+isolates genuine connected two-body pairing in either convention [10, 43] [used throughout Figs.3and5; the broad
+doping scan in Fig.1B uses a uniform archive transition-        N0 subtraction across all points that agrees within statistical
+uncertainty with Eq. (6), e.g.,    Cp(0, 1) = (+4.14 ± 0.47) × 10−3  versus(+4        .35 ± 0.61) × 10−3  on16    × 4at   δ = 1/8].
+From the two-bond vertex we form the cumulative short-range sum χvtxSC (R≤   4) = ∑0<|r|≤4         C(2b)p    (r), while from the
+four-bond vertex we evaluate the 2D distant-window average matching Ref. [10],
+                                                                                     ∑
+                                                       ∆2SC,4b     (L) =       1ML             C(4b)p    (r),                                (7)
+
+                                                                                |r|≥L/(2         √2)
+
+over the ML = 159,355, and623periodic minimum-image displacements outside                       L/(2√2)on  L = 16,24, and32. On
+64-site tori, we also construct the full2        N×   2N bond-singlet matrixΓ            bb′ = ⟨ˆb†bˆbb′⟩ [44] and suppress positive noisy-matrix(v†
+diagonalization bias via the 50/50 split-block cross-validated Rayleigh quotient λCV1    =  12                                 1,A  ΓBv1,A  +v   †1,B  ΓAv1,B ),
+which provides a conservative (downward-biased in expectation relative to  λ1(Γ), up to finite-sample ratio bias)
+estimate of the leading pair-matrix weight.
+                                                                                                                                                  10
+
+                                              IV.  DISCUSSION AND CONCLUSION
+
+   Using MR-nVAFQMC wavefunctions built from particle-conserving Slater determinants without explicit pairing
+fields—at variational energies matching or improving upon leading neural- and tensor-network benchmarks up to
+32 × 32sites—our single-layer calculations establish a clear separation between intra-stripe local pair formation and
+inter-stripe phase coherence in the 2D t–t′–U Hubbard model. Negative next-nearest-neighbor hopping t′/t = −0.2
+switches the δ = 1/8state from filled (  λc = 8) to half-filled (  λc = 4, λs = 8) antiphase stripes obeying the Yamada
+relation ϵspin  = δ, stabilized by transverse kinetic delocalization against an opposing Hubbard repulsion penalty.
+Crucially, each half-filled domain wall already hosts robust short-range d-wave singlet pairing: the connected intra-wall
+vertex is enhanced more than fivefold over the filled stripes at t′ = 0, absent on the electron-doped Néel branch,
+peaking on the overdoped side near δ = 3/16where period-eight spin stripe order softens, and unchanged within
+uncertainty at δ = 1/8whether the walls are pinned or coherently delocalized across translated stripe sectors so that
+static charge modulation drops threefold.
+   Comparing these strictly single-layer results with the experimental1 /8anomaly in   La1.875  Ba0.125  CuO4 highlights
+both an encouraging microscopic agreement and an instructive open tension [2, 5–7]. Experimentally, bulk 3D super-
+conductivity at x = 1/8occurs at only   Tc ≈ 4 K [6], whereas each individual CuO2 layer exhibits 2D superconducting
+fluctuations setting in near the spin-stripe ordering scale (∼ 40 K) and reaches a 2D zero-resistance state near16     K;
+the suppression of 3D Tc arises from interlayer Josephson decoupling, widely attributed to an intra-plane period-eight
+PDW that alternates sign between adjacent stripes and rotates by90  ◦ from layer to layer [2, 6, 7]. On the local
+scale, our finding that half-filled λc  = 4domain walls intrinsically form short-range   d-wave pairs—with uniform
+q= (0  , 0)and period-eight PDWq= (         π/4, 0)modes nearly degenerate in64-site pair-matrix spectra because inter-wall
+Josephson coupling across the antiphase spin domain is very weak—captures the microscopic origin of intra-wall
+pairing and near-degenerate0- versus                           π-phase inter-stripe channels. On the macroscopic 2D scale, however, our
+single-layer states show transverse pair correlations decaying within one stripe spacing (∆  x = 4) and resolve no
+long-range 2D superconducting order up to32   × 32, in contrast to the 2D planar superconductivity observed below
+16 K in La1.875  Ba0.125  CuO4 [6] and consistent with the weak or statistically unresolved 2D pairing in lower-energy
+striped Pfaffian and NN-fPEPS wavefunctions [10].
+   Three concrete possibilities can reconcile this tension and define a clear roadmap for future work. First, a weak
+2D intra-plane condensate at the scale corresponding to TBKT ≈ 16 K∼    4 × 10−3  t—such as the small amplitude
+∆SC = 0.007(2)(∆              2SC ≈ 5 × 10−5 ) suggested by D = 4NN-fPEPS [ 10]—lies at the statistical noise floor of our present
+distant-window estimator, and the spatially uniform average∆          2SC,4b     (L)cancels any sign-alternatingq= (                          π/4, 0)PDW
+component. Second, although unified same-checkpoint evaluations on the lowest-energy TableIwavefunctions at
+16 × 16and32        × 32confirm strong stripe spin order with unresolved four-bond∆            2SC,4b   , the common-depth multi-size
+series in Fig.5B,C still relies on transferred16                    × 16parameters on24      × 24and32     × 32under frame-pinned    D2 ×Z    spin2
+symmetry (A4  > 0). Independent per-size variational re-optimization at matched deep   τ, combined with direct
+superfluid-stiffness and translation-restored multi-sector scaling [45, 46], will test whether full large-torus relaxation
+resolves weak 2D uniform or PDW coherence. Third, if converged ground states of the pure single-band 2D t–t′–U
+model at δ = 1/8remain devoid of long-range 2D order, then stabilizing planar coherence at commensurate1                       /8lock-in
+requires ingredients beyond the minimal single-band Hubbard Hamiltonian—such as multi-orbital  CuO2 physics,
+longer-range interactions, or low-temperature-tetragonal lattice couplings [2, 3, 7]—or doping away from1   /8lock-in
+into theδ≳3/16regime where spin stripes soften.
+
+
+
+
+
+ [1] J. M. Tranquada, B. J. Sternlieb, J. D. Axe, Y. Nakamura, S. Uchida, Evidence for stripe correlations of spins and holes in
+     copper oxide superconductors.Nature375, 561–563 (1995).
+ [2]E. Fradkin, S. A. Kivelson, J. M. Tranquada, Colloquium: Theory of intertwined orders in high temperature
+     superconductors.Rev. Mod. Phys.87, 457–482 (2015).
+ [3]B. Keimer, S. A. Kivelson, M. R. Norman, S. Uchida, J. Zaanen, From quantum matter to high-temperature
+     superconductivity in copper oxides.Nature518, 179–186 (2015).
+ [4]K. Yamadaet al., Doping dependence of the spatially modulated dynamical spin correlations and the
+     superconducting-transition temperature in La2−x  SrxCuO4.Phys. Rev. B57, 6165–6172 (1998).
+ [5]A. R. Moodenbaugh, Y. Xu, M. Suenaga, T. J. Folkerts, R. N. Shelton, Superconducting properties of La     2−x  BaxCuO4.
+     Phys. Rev. B38, 4596–4600 (1988).
+ [6]Q. Li, M. Hücker, G. D. Gu, A. M. Tsvelik, J. M. Tranquada, Two-dimensional superconducting fluctuations in
+     stripe-ordered La1.875 Ba0.125 CuO4.Phys. Rev. Lett.99, 067001 (2007).
+ [7] E. Berg, E. Fradkin, E.-A. Kim, S. A. Kivelson, V. Oganesyan, J. M. Tranquada, S. C. Zhang, Dynamical layer decoupling
+     in a stripe-ordered high-T         c superconductor.Phys. Rev. Lett.99, 127003 (2007).
+                                                                                                                                                            11
+
+ [8] V. J. Emery, S. A. Kivelson, O. Zachar, Spin-gap proximity effect mechanism of high-temperature superconductivity.Phys.
+     Rev. B56, 6120–6147 (1997).
+ [9]S. A. Kivelson, E. Fradkin, V. J. Emery, Electronic liquid-crystal phases of a doped Mott insulator.Nature393, 550–553
+     (1998).
+[10] A. Chen, J. Gray, S.-J. Du, G. K.-L. Chan, Extreme competition between stripes and superconductivity in the hole-doped
+     Hubbard model. arXiv:2610.30321v2 (2026).
+[11]P. W. Anderson, The resonating valence bond state in La       2CuO4 and superconductivity.Science235, 1196–1198 (1987).
+[12]F. C. Zhang, T. M. Rice, Effective Hamiltonian for the superconducting Cu oxides.Phys. Rev. B37, 3759–3761 (1988).
+[13]D. J. Scalapino, A common thread: The pairing interaction for unconventional superconductors.Rev. Mod. Phys.84,
+     1383–1417 (2012).
+[14]D. P. Arovas, E. Berg, S. A. Kivelson, S. Raghu, The Hubbard model.Annu. Rev. Condens. Matter Phys.13, 239–274
+     (2022).
+[15]M. Qin, T. Schäfer, S. Andergassen, P. Corboz, E. Gull, The Hubbard model: A computational perspective.Annu. Rev.
+     Condens. Matter Phys.13, 275–302 (2022).
+[16] J. P. F. LeBlancet al.(Simons Collaboration on the Many-Electron Problem), Solutions of the two-dimensional Hubbard
+     model: Benchmarks and results from a wide range of numerical algorithms.Phys. Rev. X5, 041041 (2015).
+[17] B.-X. Zhenget al., Stripe order in the underdoped region of the two-dimensional Hubbard model.Science358, 1155–1160
+     (2017).
+[18] M. Qin, C.-M. Chung, H. Shi, E. Vitali, C. Hubig, U. Schollwöck, S. R. White, S. Zhang, Absence of superconductivity in
+     the pure two-dimensional Hubbard model.Phys. Rev. X10, 031016 (2020).
+[19]S. Sorella, Systematically improvable mean-field variational ansatz for strongly correlated systems: Application to the
+     Hubbard model.Phys. Rev. B107, 115133 (2023).
+[20] O. K. Andersen, A. I. Liechtenstein, O. Jepsen, F. Paulsen, LDA energy bands, low-energy Hamiltonians, t′, t′′, t⊥(k), and
+     J⊥.J. Phys. Chem. Solids56, 1573–1591 (1995).
+[21] E. Pavarini, I. Dasgupta, T. Saha-Dasgupta, O. Jepsen, O. K. Andersen, Band-structure trend in hole-doped cuprates and
+     correlation withT          maxc   .Phys. Rev. Lett.87, 047003 (2001).
+[22] M. Hirayama, Y. Yamaji, T. Misawa, M. Imada, Ab initio effective Hamiltonians for cuprate superconductors.Phys. Rev. B
+     98, 134501 (2018).
+[23] B. Ponsioen, S. S. Chung, P. Corboz, Period 4 stripe in the extended two-dimensional Hubbard model.Phys. Rev. B100,
+     195141 (2019).
+[24] H.-C. Jiang, T. P. Devereaux, Superconductivity in the doped Hubbard model and its interplay with next-nearest hopping
+     t′.Science365, 1424–1428 (2019).
+[25]H.-C. Jiang, T. P. Devereaux, S. A. Kivelson, Competition between charge-density-wave and superconducting orders on
+     eight-leg square Hubbard cylinders.npj Quantum Mater.11, 80 (2026).
+[26] H.-C. Jiang, S. A. Kivelson, Stripe order enhanced superconductivity in the Hubbard model.Proc. Natl. Acad. Sci. U.S.A.
+     119, e2109406119 (2022).
+[27] E. W. Huang, C. B. Mendl, S. Liu, S. Johnston, H.-C. Jiang, B. Moritz, T. P. Devereaux, Numerical evidence of fluctuating
+     stripes in the normal state of high-T c cuprate superconductors.Science358, 1161–1164 (2017).
+[28]P. Mai, S. Karakuzu, G. Balduzzi, S. Johnston, T. A. Maier, Intertwined spin, charge and pair correlations in the
+     two-dimensional Hubbard model in the thermodynamic limit.Proc. Natl. Acad. Sci. U.S.A.119, e2112806119 (2022).
+[29] D. Bourgundet al., Formation of individual stripes in a mixed-dimensional cold-atom Fermi–Hubbard system.Nature637,
+     57–62 (2025).
+[30]L. H. Kendricket al., Pseudogap in a Fermi–Hubbard quantum simulator.Nature656, 602–608 (2026).
+[31] H. Xu, C.-M. Chung, M. Qin, U. Schollwöck, S. R. White, S. Zhang, Coexistence of superconductivity with partially filled
+     stripes in the Hubbard model.Science384, eadh7691 (2024).
+[32]G. Carleo, M. Troyer, Solving the quantum many-body problem with artificial neural networks.Science355, 602–606
+     (2017).
+[33]D. Luo, B. K. Clark, Backflow transformations via neural networks for quantum many-body wave functions.Phys. Rev.
+     Lett.122, 226401 (2019).
+[34]D. Wuet al., Variational benchmarks for quantum many-body problems.Science386, 296–301 (2024).
+[35]R. Rende, L. L. Viteritti, A. Georges, Superconductivity in thet-t             ′ Hubbard model from symmetry-preserving
+     neural-network quantum states. arXiv:2608.12465 (2026).
+[36] C. Roth, A. Chen, A. Sengupta, A. Georges, Superconductivity in the two-dimensional Hubbard model revealed by neural
+     quantum states. arXiv:2511.07566 (2025).
+[37]A. Chen, Z.-Q. Wan, A. Sengupta, A. Georges, C. Roth, Neural network-augmented Pfaffian wave-functions for scalable
+     simulations of interacting fermions.Proc. Natl. Acad. Sci. U.S.A.123, e2535288123 (2026).
+[38]L. L. Viteritti, R. Rende, C. Roth, A. Sengupta, G. Carleo, A. Georges, Beyond variational bias: Resolving intertwined
+     orders in the Hubbard model. arXiv:2604.21978 (2026).
+[39]K. Loehr, B. K. Clark, Enhancing neural network backflow. arXiv:2510.26906 (2025).
+[40]Y. Guet al., Solving the Hubbard model with neural quantum states.Nat. Commun.17, 7838 (2026).
+[41]Y. Gu, Z. Han, W. Li, Z. Xiao, T. Xiang, M. Qin, L. Wang, D. Lv, Pareto frontier of neural quantum states: Scalable,
+     affordable, and accurate convolutional backflow for strongly correlated lattice fermions.PRX Intelligence1, 023001 (2026).
+[42] C. A. Jiménez-Hoyos, R. Rodríguez-Guzmán, G. E. Scuseria, Multi-component symmetry-projected approach for molecular
+     ground state correlations.J. Chem. Phys.139, 204102 (2013).
+                                                                                                                                                                  12
+
+[43]S. Zhang, J. Carlson, J. E. Gubernatis, Pairing correlations in the two-dimensional Hubbard model.Phys. Rev. Lett.78,
+     4486–4489 (1997).
+[44]C. N. Yang, Concept of off-diagonal long-range order and the quantum phases of liquid He and of superconductors.Rev.
+     Mod. Phys.34, 694–704 (1962).
+[45]W. Kohn, Theory of the insulating state.Phys. Rev.133, A171–A181 (1964).
+[46]D. J. Scalapino, S. R. White, S. Zhang, Insulator, metal, or superconductor: The criteria.Phys. Rev. B47, 7995–8007
+     (1993).
