@@ -87,9 +87,10 @@ const PULLS = OPEN_PROBLEMS ? await openPullRequests() : null;
 const NAV = [
   ["/instances/", "Table"],
 ];
-// The arena's switch is the last item of the menu, after Cite.
+// The arena's switch is the last item of the menu, after Cite. It comes drawn as a switch, and its
+// position follows html.op-on (set in the head), so it does not change when a page loads.
 const opButton = url => (OPEN_PROBLEMS
-  ? `<a href="/?open" class="op">Arena</a>` : "");
+  ? `<a href="/?open" class="op op-toggle"><i aria-hidden="true"></i>Arena</a>` : "");
 
 // With JavaScript the button is a switch, "Arena" (2026-11-26; "Mark open problems" since 2026-11-11): ?open in the address
 // sets html.op-on, which marks the open problems (the instances with no exact energy) on every
@@ -105,7 +106,6 @@ const OP_SWITCH_SCRIPT = `<script>
 (() => {
   const root = document.documentElement, b = document.querySelector("header.site a.op");
   if (!b) return;
-  b.classList.add("op-toggle"); b.innerHTML = '<i aria-hidden="true"></i>Arena'; b.removeAttribute("aria-current");
   const cite = document.querySelector("header.site button.cite-btn"), gh = document.querySelector("header.site a.ext"), op = ${JSON.stringify(OP_LINKS)};
   const own = { cite: cite && cite.dataset.cite, href: gh && gh.href, label: gh && gh.getAttribute("aria-label"), tip: gh && gh.title };
   const links = on => { for (const a of document.querySelectorAll('a[href^="/"]')) {
@@ -2125,18 +2125,16 @@ button.qn.open::after, button.qn:focus-visible:not(.shut)::after {
   background: var(--surface); border: 1px solid var(--grid); border-radius: 4px;
   padding: 0.3rem 0.5rem; box-shadow: 0 2px 8px rgb(0 0 0 / 0.12); }
 ` + LOGO_CSS + HERO_CSS + (OPEN_PROBLEMS ? OPEN_PROBLEMS_NAV_CSS + ARENA_CSS + `
-/* the Open Problems switch (OP_SWITCH_SCRIPT) while on */
-header.site nav a.op[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); }
-header.site nav a.op[aria-pressed="true"]::before { content: "\\2713"; margin-right: 0.4em; }
+/* the Arena switch (OP_SWITCH_SCRIPT), drawn by opButton; on while html.op-on */
 /* one round pill around the switch and the word; on, both in the arena's amber on every page */
 header.site nav a.op.op-toggle, header.site nav a.op.op-toggle:hover { position: relative; background: none; border: 1px solid var(--ink2); border-radius: 999px; padding: 0.2rem 0.85rem 0.2rem 0.25rem; color: var(--ink); font-weight: 600; gap: 0.5rem; font-size: 0.92rem; }
 header.site nav a.op.op-toggle:hover { border-color: var(--flag); }
 header.site nav a.op.op-toggle::before { content: none; }
 header.site nav a.op.op-toggle i { width: 34px; height: 20px; border-radius: 999px; background: var(--grid); position: relative; transition: background .2s; flex: none; }
 header.site nav a.op.op-toggle i::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--surface); box-shadow: 0 1px 2px rgb(0 0 0 / 0.3); transition: transform .2s; }
-header.site nav a.op.op-toggle[aria-pressed="true"] { color: var(--ink); border-color: #ffb454; }
-header.site nav a.op.op-toggle[aria-pressed="true"] i { background: #ffb454; }
-header.site nav a.op.op-toggle[aria-pressed="true"] i::after { transform: translateX(14px); }
+.op-on header.site nav a.op.op-toggle { color: var(--ink); border-color: #ffb454; }
+.op-on header.site nav a.op.op-toggle i { background: #ffb454; }
+.op-on header.site nav a.op.op-toggle i::after { transform: translateX(14px); }
 /* the table while marking: a solved instance greys out */
 .leaderboard tbody.inst { transition: opacity .5s ease; }
 .op-on .leaderboard tbody.inst:not([data-open]) { opacity: 0.35; }
