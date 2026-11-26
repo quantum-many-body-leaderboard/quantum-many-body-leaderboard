@@ -557,8 +557,11 @@ function relabelNote(inst) {
   const evidence = path => { const p = path.replace(/\/$/, ""); return `<a href="${REPO}/${p === path ? "blob" : "tree"}/main/${p}">${esc(p)}</a>`; };
   if (inst.relabelled) {
     const from = instances.some(i => i.instance_id === inst.relabelled.from) ? link(inst.relabelled.from) : `<code>${esc(inst.relabelled.from)}</code>`;
+    if (inst.relabelled.paper_label) return `${esc(inst.relabelled.reason)} The rows VarBench's run scripts ran are on ${from}. Evidence: ${evidence(inst.relabelled.evidence)}.`;
     return `Upstream this instance is ${from}. ${esc(inst.relabelled.reason)} Evidence: ${evidence(inst.relabelled.evidence)}.`;
   }
+  if (inst.split?.to == null) return null;
+  if (inst.split.paper_label) return `${esc(inst.split.reason)} The rows printed at the paper's label are on ${link(inst.split.to)}. Evidence: ${evidence(inst.split.evidence)}.`;
   if (inst.split) return `${esc(inst.split.reason)} The published results for this Hamiltonian are on ${link(inst.split.to)}. Evidence: ${evidence(inst.split.evidence)}.`;
   return null;
 }
@@ -919,6 +922,7 @@ const splitNote = i => {
   const to = i.split && BY_ID.get(i.split.to);
   if (!to) return null;
   const keys = Object.keys(i.params ?? {}).filter(k => i.params[k] !== to.params?.[k] && typeof i.params[k] === "number");
+  if (i.split.paper_label) return keys.length ? Object.fromEntries(keys.map(k => [k, `Results run at ${k} = ${i.params[k]}, as VarBench's run script sets it. The results the paper prints at ${k} = ${to.params[k]} have their own badge.`])) : null;
   return keys.length ? Object.fromEntries(keys.map(k => [k, `Results run at ${k} = ${i.params[k]}, as the upstream file name gives it. ${k} = ${to.params[k]}, the coupling that name stands for, has its own badge.`])) : null;
 };
 // Built on first use: rowCard needs helpers defined further down.

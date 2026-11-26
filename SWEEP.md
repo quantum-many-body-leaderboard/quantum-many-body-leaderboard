@@ -185,7 +185,7 @@ tables and the unit conversion. `add_stored_rows.mjs` appends the rows and fills
 | `sweep-rows-2026-09-28.json` | tables read before their J1-J2 instances existed: Golubev et al. (arXiv:2606.04558) Table I, Chen et al. (arXiv:2206.14307) Tables 2, 4, 5, Nomura & Imada (PRX 11, 031034) Table I, Schulz, Ziman & Poilblanc 1996 Table II |
 | `sweep-rows-2026-09-28-triangular.json` | Table 1 of arXiv:2602.02665 and the primaries it quotes |
 | `sweep-rows-2026-10-07-records.json` | J1-J2 away from J2 = 0.5, 6x48 Hubbard stripes, 16x16 Hubbard with t′ |
-| `sweep-rows-2026-10-16-nqspapers.json` | nine papers behind lattice results another leaderboard lists |
+| `sweep-rows-2026-10-16-nqspapers.json` | nine papers behind lattice results another leaderboard lists; the Hubbard 4x4 tables of arXiv:2111.10420 are on the instances at the paper's printed labels, U = 0.6, 2.15, 3.6, 7.75 (ruled 2026-11-26) |
 | `sweep-rows-2026-10-16-heg.json` | electron gas: nine NQS papers |
 | `sweep-rows-2026-10-17-heglit.json` | electron gas: the primaries those papers compare with (DMC, FCIQMC, coupled cluster) |
 | `sweep-rows-2026-10-19-hegcorr.json` | electron gas: correlation energies stored as QMBL Hartree-Fock + E_c ([RULES.md §12](RULES.md#12-track-2-the-homogeneous-electron-gas)) |

@@ -670,6 +670,7 @@ Object.assign(NAMES, {
   "USD (RBM) (Table II)": ["RBM", "unrestricted Slater determinant × RBM"],
   "Gutzwiller inspired CF (Table II)": ["HFDS", "Gutzwiller-inspired constraint function"],
   "Unrestricted hidden spin (Table II)": ["HFDS", "unrestricted hidden-spin constraint function"],
+  "Unrestricted hidden spin": ["HFDS", "unrestricted hidden-spin constraint function"],
   "Jastrow inspired CF (Table II)": ["HFDS", "Jastrow-inspired constraint function"],
   "Gutzwiller inspired CF(RBM) (Table II)": ["HFDS", "Gutzwiller-inspired constraint function + RBM in the augmented space"],
   "Unrestricted hid. spin(RBM) (Table II)": ["HFDS", "unrestricted hidden-spin constraint function + RBM in the augmented space"],

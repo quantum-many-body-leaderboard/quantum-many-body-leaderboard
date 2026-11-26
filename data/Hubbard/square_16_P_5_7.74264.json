@@ -1,0 +1,198 @@
+{
+  "model": "Hubbard",
+  "lattice": "square",
+  "n_sites": 16,
+  "boundary": "P",
+  "params": {
+    "Nf": 5,
+    "U": 7.74264
+  },
+  "instance_id": "Hubbard/square_16_P_5_7.74264",
+  "rows": [
+    {
+      "energy": -17.60373155517909,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 10,
+      "einf": 12.097875,
+      "v_score": null,
+      "method": "ED",
+      "ansatz": null,
+      "method_detail": "",
+      "method_as_published": "Exact diagonalization",
+      "family": "other",
+      "bound_type": "exact",
+      "bound_type_reason": "exact diagonalization|ex",
+      "reference": "[code](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_16_P_5_7.74264/ed_lattice_symmetries.sh)",
+      "source": "varbench@2024-10-22",
+      "provenance": "imported",
+      "baseline": true,
+      "verified": {
+        "checked_on": "2026-10-15",
+        "scope": "value",
+        "method": "published SI Appendix PDF, PNAS 119(32), e2122059119 (2022) (Europe PMC PMC9371695 supplementary bundle; pnas.org PDF and Europe PMC render return Cloudflare 403), sources/journal/pnas119-e2122059119-si.pdf, sha256 c6e62d9c (byte-identical to the SI read 2026-09-29), pypdf layout + plain; main text: published full-text XML (Europe PMC), sources/journal/pnas119-e2122059119.fulltext.xml, sha256 761defc3; arXiv compared: 2111.10420v2 (Appendix H, via the 2026-09-29 extraction)",
+        "location": "SI Sec. 8 B, Table 3 (p. 9), row 'ED', column U = 7.75",
+        "reported_as": "-17.6037315(5) (total energy, units of t)",
+        "conversion": "none; stored -17.60373155517909 is VarBench's value, which rounds to the printed value; VarBench's run script sets U = 7.74264 and the row stays on that U (ruled 2026-11-26)",
+        "note": "Exact. Journal = arXiv v2.",
+        "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#14",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -17.6037303,
+      "sigma": null,
+      "energy_variance": 0.0000035781,
+      "dof": 10,
+      "einf": 12.097875,
+      "v_score": 4.055950339685628e-8,
+      "method": "DMRG",
+      "ansatz": null,
+      "method_detail": "",
+      "method_as_published": "DMRG (MaxBondDim = 7000)",
+      "family": "tensor network",
+      "bound_type": "variational",
+      "bound_type_reason": "vmc|\\brbm\\b|\\brnn\\b|jast",
+      "reference": "[code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_5_7.74264.jl)",
+      "source": "varbench@2024-10-22",
+      "provenance": "imported",
+      "baseline": true,
+      "compute": {
+        "parameters": null,
+        "gpu_hours": null,
+        "device": null,
+        "n_devices": null,
+        "samples": null,
+        "wall_clock": null,
+        "cpu_core_hours": null,
+        "bond_dimension": 7000,
+        "iterations": 32,
+        "sweep_schedule": {
+          "code": "ITensors.jl 0.6.16",
+          "eigensolver_applications": 3,
+          "eigensolver_source": "ITensors.jl 0.6.16 dmrg(): eigsolve_krylovdim = 3, eigsolve_maxiter = 1 (defaults, not overridden)",
+          "maxdim": [
+            4,
+            4,
+            8,
+            8,
+            16,
+            16,
+            32,
+            32,
+            64,
+            64,
+            128,
+            128,
+            256,
+            256,
+            500,
+            500,
+            800,
+            800,
+            1300,
+            1300,
+            2000,
+            2000,
+            3000,
+            3000,
+            4000,
+            4000,
+            5000,
+            5000,
+            6000,
+            6000,
+            7000,
+            7000
+          ],
+          "start": "product state",
+          "cutoff": null,
+          "variance_after": [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30,
+            32
+          ],
+          "lattice": {
+            "order": "snake",
+            "rows": 4,
+            "cols": 4,
+            "wrap_row": true,
+            "wrap_col": true,
+            "diagonals": [],
+            "site_dimension": 4,
+            "operators_per_bond": 4
+          }
+        },
+        "reported_as": "method string: \"DMRG (MaxBondDim = 7000)\" || programs/dmrg_itensors_hubbard/square_16_P_5_7.74264.jl: \"dims = [4,8,16,32,64,128,256,500,800,1300,2000,3000,4000,5000,6000,7000]\" || \"for dim in dims; sweeps = Sweeps(2); setmaxdim!(sweeps,dim); E,ψ = dmrg(H,ψ,sweeps); var = inner(H,ψ,H,ψ) - E^2\" || README: \"Requires Julia 1.10.4 and ITensors 0.6.16\"",
+        "source": "run script, VarBench methods repository at ed31bb0: https://github.com/varbench/methods/blob/ed31bb0f7949cce5be9274bfa67a2d5e7d4383cc/programs/dmrg_itensors_hubbard/square_16_P_5_7.74264.jl (compute pass 2026-09-23)",
+        "scope": "row",
+        "confidence": "medium",
+        "note": "Sweep schedule, eigensolver setting and lattice order read from the run script; 32 sweeps, maximum bond dimension 7000. No time is recorded anywhere in the repository."
+      },
+      "verified": {
+        "checked_on": "2026-09-29",
+        "scope": "config",
+        "method": "run script programs/dmrg_itensors_hubbard/square_16_P_5_7.74264.jl (varbench/methods@ed31bb0) read in full (author copy MaxSilvester/Hubbard-and-Heisenberg-codes identical in physics); VarBench history (git clone of github.com/varbench/varbench, partial, read with git log --follow; old names normalised); energy compared with the QMBL full-space recompute",
+        "location": "let block: 'U = 7.74264', 'nx = 4', 'ny = 4', 'yperiodic = true', 'xperiodic = true', spins alternating Up/Dn with sites 6:11 set to Emp -> 5 up + 5 down, dims [4,...,6000,7000], 2 sweeps each (32 sweeps), E and var printed after each maxdim on the optimized state",
+        "reported_as": "-17.6037303 | | 3.5781e-6 | DMRG(MaxBondDim = 7000) (VarBench upload, J. Maxwell Silvester)",
+        "conversion": "none (total). E - E0(U = 7.74264, 5+5) = 8.0e-8 (E0 = -17.603730380085874)",
+        "note": "4x4 torus (32 bonds), t = 1, U n_up n_dn with no shift, N_up = N_dn = 5, run at U = 7.74264, the U its script sets; it stays on that U (ruled 2026-11-26). The energy is the reached DMRG energy at the final maxdim and lies above the exact energy at the script's U, as a variational energy must; variational correct. Temple check (E - E0 <= Var/(E1 - E), E1 = -16.482401761570816 the next level, lanczos ritz (no reorth)): E - E0 = 8.0e-8 vs bound 3.2e-6, consistent. History: uploaded 2022-09-12 (2f88471), unchanged. No output log (scope config).",
+        "source_entry": "VB2-varbench-code-hubbard#44 (qmbl-verify 2026-09-29)",
+        "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_5_7.74264.jl",
+        "script": "programs/dmrg_itensors_hubbard/square_16_P_5_7.74264.jl",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_5_7.74264.jl)",
+          "location": "VarBench table vendor/varbench/Hubbard/square_16_P_5_7.74264.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
+    }
+  ],
+  "coverage": [
+    {
+      "checked_on": "2026-09-15",
+      "method": "table harvest of cached arXiv sources (match_tables.mjs --all), every matched paper read for this instance",
+      "screened": [
+        "arXiv:2502.17144",
+        "arXiv:2506.08329",
+        "arXiv:2507.10705",
+        "arXiv:2511.07566",
+        "arXiv:2511.12551",
+        "arXiv:2606.00924"
+      ],
+      "found": 0,
+      "note": "Only papers whose tables matched the instance by size were read; not a citation screen."
+    },
+    {
+      "checked_on": "2026-09-15",
+      "method": "citation screen of Robledo Moreno et al. 2022 (PNAS, HFDS): citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
+      "screened_count": 29,
+      "found": 0,
+      "note": "142 citing works, 118 on arXiv, 118 fetched; 29 read in full, 89 excluded by a text filter (no energy to four decimals, or no QMBL model named)."
+    }
+  ],
+  "split": {
+    "to": "Hubbard/square_16_P_5_7.75",
+    "checked_on": "2026-11-26",
+    "reason": "The paper (arXiv:2111.10420) prints its tables at U = 7.75, and VarBench's run scripts for the same tables set U = 7.74264. Ruled 2026-11-26: each row goes on the U its own source prints, and the paper's label is taken as printed; this instance holds the rows printed at U = 7.75, the VMC rows VarBench takes from the paper among them, and the instance at U = 7.74264 holds the rows VarBench's scripts ran.",
+    "evidence": "sources/2111.10420.txt",
+    "paper_label": true
+  }
+}

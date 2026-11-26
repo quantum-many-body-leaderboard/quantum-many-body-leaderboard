@@ -5,16 +5,16 @@
   "boundary": "P",
   "params": {
     "Nf": 4,
-    "U": 3.59381366
+    "U": 3.6
   },
-  "instance_id": "Hubbard/square_16_P_4_3.59381366",
+  "instance_id": "Hubbard/square_16_P_4_3.6",
   "rows": [
     {
-      "energy": -17.698030018702067,
-      "sigma": null,
+      "energy": -17.69803,
+      "sigma": 9.92e-8,
       "energy_variance": null,
       "dof": 8,
-      "einf": 3.59381366,
+      "einf": 3.6,
       "v_score": null,
       "method": "ED",
       "ansatz": null,
@@ -22,111 +22,17 @@
       "method_as_published": "Exact diagonalization",
       "family": "other",
       "bound_type": "exact",
-      "bound_type_reason": "exact diagonalization|ex",
-      "reference": "[paper](https://www.pnas.org/doi/full/10.1073/pnas.2122059119)",
-      "source": "varbench@2024-10-22",
-      "provenance": "imported",
-      "baseline": false,
-      "corrections": [
-        {
-          "field": "reference",
-          "to": "[paper](https://www.pnas.org/doi/full/10.1073/pnas.2122059119)",
-          "reported_as": "ED -17.6980300(1)",
-          "location": "SI Table I, row U = 3.6, ED column",
-          "version_read": "arXiv:2111.10420v2 PDF, pypdf layout mode (Robledo Moreno et al., PNAS 119, e2122059119, 2022)",
-          "conversion": "none",
-          "checked_on": "2026-09-17",
-          "reason": "The linked lattice-symmetries script passes the U in VarBench's instance name and cannot have produced this energy, which is the ground state at the grid U (checks/hubbard-u-labels/). The number was uploaded by Robledo Moreno on 2022-08-23 as \"Lanczos (Quspin + Scipy)\"; the script link was attached on 2024-07-23 (VarBench 3604bb4). It is printed in the paper that produced it, which the row now cites (ruling 2026-09-17).",
-          "source_entry": "RB1-varbench-code-hubbard#2, ruling 3a (qmbl-verify 2026-09-17)",
-          "from": "[code](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_16_P_4_3.5981/ed_lattice_symmetries.sh)"
-        },
-        {
-          "field": "baseline",
-          "to": false,
-          "reported_as": "ED -17.6980300(1)",
-          "location": "SI Table I, row U = 3.6, ED column",
-          "version_read": "arXiv:2111.10420v2 PDF, pypdf layout mode (Robledo Moreno et al., PNAS 119, e2122059119, 2022)",
-          "conversion": "none",
-          "checked_on": "2026-09-17",
-          "reason": "Collected from the authors' paper, not computed by VarBench: see the reference correction on this row (RULES.md 8.2).",
-          "source_entry": "RB1-varbench-code-hubbard#2, ruling 3a (qmbl-verify 2026-09-17)",
-          "from": true
-        }
-      ],
+      "bound_type_reason": "numerically exact reference as stated by the source (assigned during source reading)",
+      "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-16",
+      "provenance": "primary",
       "verified": {
-        "checked_on": "2026-09-16",
-        "scope": "value",
-        "method": "recomputed: Lanczos ED over the full fixed-(N_up, N_dn) space by two independent codes (checks/hubbard-u-labels/)",
-        "location": "checks/hubbard-u-labels/",
-        "reported_as": "-17.698030018702013 (ed_check.py) | -17.69803001870263 (ed_lib.mjs)",
-        "conversion": "none",
-        "note": "Reproduced at the grid U the instance now carries, not at the U of VarBench's name (relabels.mjs).",
-        "source_entry": "B2-baseline-hubbard and E1-exact-recompute (qmbl-verify 2026-09-16)",
-        "secondary_of": null,
-        "journal_read": {
-          "checked_on": "2026-10-15",
-          "scope": "value",
-          "method": "published SI Appendix PDF, PNAS 119(32), e2122059119 (2022) (Europe PMC PMC9371695 supplementary bundle; pnas.org PDF and Europe PMC render return Cloudflare 403), sources/journal/pnas119-e2122059119-si.pdf, sha256 c6e62d9c (byte-identical to the SI read 2026-09-29), pypdf layout + plain; main text: published full-text XML (Europe PMC), sources/journal/pnas119-e2122059119.fulltext.xml, sha256 761defc3; arXiv compared: 2111.10420v2 (Appendix H, via the 2026-09-29 extraction)",
-          "location": "SI Sec. 8 A, Table 1 (p. 8), row U = 3.6, column 'ED energy'",
-          "reported_as": "-17.6980300(1) (total energy, units of t)",
-          "conversion": "none; stored -17.698030018702067 is QMBL's recomputation at the grid U 3.59381366 (two ED codes, checks/hubbard-u-labels/), which rounds to the printed value",
-          "note": "Exact; the paper's ED column is its benchmark reference ('Exact diagonalization energies used in the benchmarks are also provided'). U label 3.6 = grid U per the 2026-09-16 ruling. Journal = arXiv v2. sigma null is right for an exact row.",
-          "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#5"
-        }
-      }
-    },
-    {
-      "energy": -17.69357,
-      "sigma": 0.00004,
-      "energy_variance": 0.033,
-      "dof": 8,
-      "einf": 3.59381366,
-      "v_score": 0.0005825850716567659,
-      "method": "VMC",
-      "ansatz": "HFDS",
-      "method_detail": "8 hidden fermions, 1-layer FFN with α = 32",
-      "method_as_published": "VMC Hidden Fermion Determinant State Ansatz (N_hidden = 8. Single hidden layer fully connected net with alpha = 32)",
-      "family": "backflow / Pfaffian",
-      "bound_type": "variational",
-      "bound_type_reason": "vmc|\\brbm\\b|\\brnn\\b|jast",
-      "reference": "[paper](https://www.pnas.org/doi/full/10.1073/pnas.2122059119)",
-      "source": "varbench@2024-10-22",
-      "provenance": "imported",
-      "verified": {
-        "checked_on": "2026-09-29",
-        "scope": "value",
-        "method": "PNAS 119(32), e2122059119 (2022), SI Appendix PDF (PMC9371695; sources/pnas.2122059119.sapp.PMC9371695.pdf, sha256 c6e62d9c...), pypdf layout mode, re-extracted 2026-09-29 (byte-identical to the earlier extraction); same cell read in arXiv:2111.10420v2 (18 Jun 2022) Appendix H (sources/2111.10420v2.pdf, pypdf layout)",
-        "location": "SI Sec. 8 A, Table 1 (p. 8), row U = 3.6, column 'HFDS (α= 32)'; arXiv v2 Table I identical",
-        "reported_as": "-17.69357(4) (total energy, units of t)",
-        "conversion": "none (total); sigma = printed (4) in the fifth decimal = 0.00004",
-        "note": "Record row (best variational bound; the instance record is the ED row, 0.00446 below). 4 x 4 torus, n = 1/2 = 4 + 4 at zero magnetization ('In all cases we focus on the zero magnetization and fixed visible- and hidden-particle subspaces', p. 5), t = 1, U n_up n_dn with no shift (Eq. 1). U '3.6' is the grid value 3.59381366 (the paper's own ED in this row is the ground state there). N~ = 8 (main Fig. 3 caption, 'Average physical site occupation is n = 1/2 and N~ = 8'), single hidden layer, alpha = 32: method string and detail right. Variational VMC bound, own computation. Stored sigma equals the printed bar. energy_variance 0.033 is the upload's (7f646d3: -17.69357 | 0.00004 | 0.033(2)); not printed as a number. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'; 'This article is a PNAS Direct Submission'); the imported row carries no peer_reviewed field (loader-level, see report). No duplicate (the only other row is the ED).",
-        "source_entry": "VA3-10-1073-pnas-2122059119#1 (qmbl-verify 2026-09-29)",
-        "secondary_of": null,
-        "journal_read": {
-          "checked_on": "2026-10-15",
-          "scope": "value",
-          "method": "published SI Appendix PDF, PNAS 119(32), e2122059119 (2022) (Europe PMC PMC9371695 supplementary bundle; pnas.org PDF and Europe PMC render return Cloudflare 403), sources/journal/pnas119-e2122059119-si.pdf, sha256 c6e62d9c (byte-identical to the SI read 2026-09-29), pypdf layout + plain; main text: published full-text XML (Europe PMC), sources/journal/pnas119-e2122059119.fulltext.xml, sha256 761defc3; arXiv compared: 2111.10420v2 (Appendix H, via the 2026-09-29 extraction)",
-          "location": "SI Sec. 8 A, Table 1 (p. 8), row U = 3.6, column 'HFDS (alpha = 32)'",
-          "reported_as": "-17.69357(4) (total energy, units of t)",
-          "conversion": "none",
-          "note": "4 x 4, 4 + 4, U = grid 3.59381366, N~ = 8, alpha = 32; variational, 0.00446 above the ED of the same table row; sigma 0.00004 = printed bar. Journal = arXiv v2. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'). No duplicate.",
-          "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#6"
-        }
-      },
-      "artifacts": {
-        "libraries": [
-          {
-            "name": "NetKet",
-            "version": null,
-            "url": "https://www.netket.org/"
-          }
-        ],
-        "libraries_read_from": {
-          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
-          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
-          "checked_on": "2026-10-22",
-          "pass": "passes/code/libraries-2026-10-22.json"
-        }
+        "checked_on": "2026-10-16",
+        "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-17.6980300(1)",
+        "note": "Appendix H Table I, U=3.6, column ED; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29 | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
+        "secondary_of": null
       }
     },
     {
@@ -134,7 +40,7 @@
       "sigma": 0.00007,
       "energy_variance": null,
       "dof": 8,
-      "einf": 3.59381366,
+      "einf": 3.6,
       "v_score": null,
       "method": "VMC",
       "ansatz": "HFDS",
@@ -151,7 +57,7 @@
         "checked_on": "2026-10-16",
         "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-17.65651(7)",
-        "note": "Appendix H Table I, U=3.6, column HFDS alpha=0.5; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#61: sigma 0.0000704 -> 0.00007 (The table prints totals, so the bar is 0.00007 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.6%. Same fix as the trailing-float-noise ruling: store sigma_per_) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+        "note": "Appendix H Table I, U=3.6, column HFDS alpha=0.5; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#61: sigma 0.0000704 -> 0.00007 (The table prints totals, so the bar is 0.00007 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.6%. Same fix as the trailing-float-noise ruling: store sigma_per_) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
         "secondary_of": null
       },
       "artifacts": {
@@ -175,7 +81,7 @@
       "sigma": 0.00009,
       "energy_variance": null,
       "dof": 8,
-      "einf": 3.59381366,
+      "einf": 3.6,
       "v_score": null,
       "method": "VMC",
       "ansatz": "HFDS",
@@ -192,7 +98,7 @@
         "checked_on": "2026-10-16",
         "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-17.68383(9)",
-        "note": "Appendix H Table I, U=3.6, column HFDS alpha=1; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#62: sigma 0.0000896 -> 0.00009 (The table prints totals, so the bar is 0.00009 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.4%. Same fix as the trailing-float-noise ruling: store sigma_per_) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+        "note": "Appendix H Table I, U=3.6, column HFDS alpha=1; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#62: sigma 0.0000896 -> 0.00009 (The table prints totals, so the bar is 0.00009 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.4%. Same fix as the trailing-float-noise ruling: store sigma_per_) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
         "secondary_of": null
       },
       "artifacts": {
@@ -216,7 +122,7 @@
       "sigma": 0.0001,
       "energy_variance": null,
       "dof": 8,
-      "einf": 3.59381366,
+      "einf": 3.6,
       "v_score": null,
       "method": "VMC",
       "ansatz": "HFDS",
@@ -233,7 +139,7 @@
         "checked_on": "2026-10-16",
         "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-17.6893(1)",
-        "note": "Appendix H Table I, U=3.6, column HFDS alpha=2; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#63: sigma 0.0001008 -> 0.0001 (The table prints totals, so the bar is 0.0001 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+        "note": "Appendix H Table I, U=3.6, column HFDS alpha=2; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#63: sigma 0.0001008 -> 0.0001 (The table prints totals, so the bar is 0.0001 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
         "secondary_of": null
       },
       "artifacts": {
@@ -257,7 +163,7 @@
       "sigma": 0.0004,
       "energy_variance": null,
       "dof": 8,
-      "einf": 3.59381366,
+      "einf": 3.6,
       "v_score": null,
       "method": "VMC",
       "ansatz": "HFDS",
@@ -274,7 +180,7 @@
         "checked_on": "2026-10-16",
         "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-17.6897(4)",
-        "note": "Appendix H Table I, U=3.6, column HFDS alpha=4; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29 | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+        "note": "Appendix H Table I, U=3.6, column HFDS alpha=4; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29 | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
         "secondary_of": null,
         "second_read": {
           "checked_on": "2026-10-19",
@@ -308,7 +214,7 @@
       "sigma": 0.0006,
       "energy_variance": null,
       "dof": 8,
-      "einf": 3.59381366,
+      "einf": 3.6,
       "v_score": null,
       "method": "VMC",
       "ansatz": "HFDS",
@@ -325,7 +231,7 @@
         "checked_on": "2026-10-16",
         "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-17.6925(6)",
-        "note": "Appendix H Table I, U=3.6, column HFDS alpha=8; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#65: sigma 0.000608 -> 0.0006 (The table prints totals, so the bar is 0.0006 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+        "note": "Appendix H Table I, U=3.6, column HFDS alpha=8; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#65: sigma 0.000608 -> 0.0006 (The table prints totals, so the bar is 0.0006 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
         "secondary_of": null
       },
       "artifacts": {
@@ -349,7 +255,7 @@
       "sigma": 0.0008,
       "energy_variance": null,
       "dof": 8,
-      "einf": 3.59381366,
+      "einf": 3.6,
       "v_score": null,
       "method": "VMC",
       "ansatz": "HFDS",
@@ -366,7 +272,7 @@
         "checked_on": "2026-10-16",
         "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-17.6929(8)",
-        "note": "Appendix H Table I, U=3.6, column HFDS alpha=16; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29 | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+        "note": "Appendix H Table I, U=3.6, column HFDS alpha=16; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29 | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
         "secondary_of": null,
         "second_read": {
           "checked_on": "2026-10-19",
@@ -400,7 +306,7 @@
       "sigma": 0.08,
       "energy_variance": null,
       "dof": 8,
-      "einf": 3.59381366,
+      "einf": 3.6,
       "v_score": null,
       "method": "HF",
       "ansatz": null,
@@ -417,7 +323,7 @@
         "checked_on": "2026-10-16",
         "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-16.85(8)",
-        "note": "Appendix H Table II, U=3.6, row USD; sources/2111.10420.txt line 1194; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29 | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+        "note": "Appendix H Table II, U=3.6, row USD; sources/2111.10420.txt line 1194; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29 | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
         "secondary_of": null,
         "second_read": {
           "checked_on": "2026-10-19",
@@ -436,7 +342,7 @@
       "sigma": 0.001,
       "energy_variance": null,
       "dof": 8,
-      "einf": 3.59381366,
+      "einf": 3.6,
       "v_score": null,
       "method": "VMC",
       "ansatz": "SJ",
@@ -453,7 +359,7 @@
         "checked_on": "2026-10-16",
         "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-17.552(1)",
-        "note": "Appendix H Table II, U=3.6, row USD (Gutzwiller); sources/2111.10420.txt line 1195; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#69: sigma 0.001008 -> 0.001 (The table prints totals, so the bar is 0.001 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_si) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+        "note": "Appendix H Table II, U=3.6, row USD (Gutzwiller); sources/2111.10420.txt line 1195; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#69: sigma 0.001008 -> 0.001 (The table prints totals, so the bar is 0.001 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_si) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
         "secondary_of": null
       }
     },
@@ -462,7 +368,7 @@
       "sigma": 0.0003,
       "energy_variance": null,
       "dof": 8,
-      "einf": 3.59381366,
+      "einf": 3.6,
       "v_score": null,
       "method": "VMC",
       "ansatz": "SJ",
@@ -479,7 +385,7 @@
         "checked_on": "2026-10-16",
         "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-17.5487(3)",
-        "note": "Appendix H Table II, U=3.6, row USD (Jastrow); sources/2111.10420.txt line 1196; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#70: sigma 0.000304 -> 0.0003 (The table prints totals, so the bar is 0.0003 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+        "note": "Appendix H Table II, U=3.6, row USD (Jastrow); sources/2111.10420.txt line 1196; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#70: sigma 0.000304 -> 0.0003 (The table prints totals, so the bar is 0.0003 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
         "secondary_of": null
       }
     },
@@ -488,7 +394,7 @@
       "sigma": 0.0001,
       "energy_variance": null,
       "dof": 8,
-      "einf": 3.59381366,
+      "einf": 3.6,
       "v_score": null,
       "method": "VMC",
       "ansatz": "RBM",
@@ -505,7 +411,7 @@
         "checked_on": "2026-10-16",
         "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-17.6184(1)",
-        "note": "Appendix H Table II, U=3.6, row USD (RBM); sources/2111.10420.txt line 1197; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#71: sigma 0.0001008 -> 0.0001 (The table prints totals, so the bar is 0.0001 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+        "note": "Appendix H Table II, U=3.6, row USD (RBM); sources/2111.10420.txt line 1197; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#71: sigma 0.0001008 -> 0.0001 (The table prints totals, so the bar is 0.0001 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
         "secondary_of": null
       }
     },
@@ -514,7 +420,7 @@
       "sigma": 0.00009,
       "energy_variance": null,
       "dof": 8,
-      "einf": 3.59381366,
+      "einf": 3.6,
       "v_score": null,
       "method": "VMC",
       "ansatz": "HFDS",
@@ -531,7 +437,7 @@
         "checked_on": "2026-10-16",
         "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-17.58269(9)",
-        "note": "Appendix H Table II, U=3.6, row Gutzwiller inspired CF; sources/2111.10420.txt line 1198; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#72: sigma 0.0000896 -> 0.00009 (The table prints totals, so the bar is 0.00009 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.4%. Same fix as the trailing-float-noise ruling: store sigma_per_) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+        "note": "Appendix H Table II, U=3.6, row Gutzwiller inspired CF; sources/2111.10420.txt line 1198; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#72: sigma 0.0000896 -> 0.00009 (The table prints totals, so the bar is 0.00009 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.4%. Same fix as the trailing-float-noise ruling: store sigma_per_) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
         "secondary_of": null
       },
       "artifacts": {
@@ -555,7 +461,7 @@
       "sigma": 0.00008,
       "energy_variance": null,
       "dof": 8,
-      "einf": 3.59381366,
+      "einf": 3.6,
       "v_score": null,
       "method": "VMC",
       "ansatz": "HFDS",
@@ -572,7 +478,7 @@
         "checked_on": "2026-10-16",
         "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-17.58288(8)",
-        "note": "Appendix H Table II, U=3.6, row Unrestricted hidden spin; sources/2111.10420.txt line 1199; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29 | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+        "note": "Appendix H Table II, U=3.6, row Unrestricted hidden spin; sources/2111.10420.txt line 1199; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29 | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
         "secondary_of": null,
         "second_read": {
           "checked_on": "2026-10-19",
@@ -606,7 +512,7 @@
       "sigma": 0.0002,
       "energy_variance": null,
       "dof": 8,
-      "einf": 3.59381366,
+      "einf": 3.6,
       "v_score": null,
       "method": "VMC",
       "ansatz": "HFDS",
@@ -623,7 +529,7 @@
         "checked_on": "2026-10-16",
         "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-16.8694(2)",
-        "note": "Appendix H Table II, U=3.6, row Jastrow inspired CF; sources/2111.10420.txt line 1200; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#74: sigma 0.000208 -> 0.0002 (The table prints totals, so the bar is 0.0002 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 4.0%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+        "note": "Appendix H Table II, U=3.6, row Jastrow inspired CF; sources/2111.10420.txt line 1200; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#74: sigma 0.000208 -> 0.0002 (The table prints totals, so the bar is 0.0002 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 4.0%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
         "secondary_of": null
       },
       "artifacts": {
@@ -647,7 +553,7 @@
       "sigma": 0.000208,
       "energy_variance": null,
       "dof": 8,
-      "einf": 3.59381366,
+      "einf": 3.6,
       "v_score": null,
       "method": "VMC",
       "ansatz": "HFDS",
@@ -664,7 +570,7 @@
         "checked_on": "2026-10-16",
         "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-17.6184(2)",
-        "note": "Appendix H Table II, U=3.6, row Gutzwiller inspired CF(RBM); sources/2111.10420.txt line 1201; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29 | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+        "note": "Appendix H Table II, U=3.6, row Gutzwiller inspired CF(RBM); sources/2111.10420.txt line 1201; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29 | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
         "secondary_of": null
       }
     },
@@ -673,7 +579,7 @@
       "sigma": 0.00009,
       "energy_variance": null,
       "dof": 8,
-      "einf": 3.59381366,
+      "einf": 3.6,
       "v_score": null,
       "method": "VMC",
       "ansatz": "HFDS",
@@ -690,8 +596,62 @@
         "checked_on": "2026-10-16",
         "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-17.64362(9)",
-        "note": "Appendix H Table II, U=3.6, row Unrestricted hid. spin(RBM); sources/2111.10420.txt line 1202; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#75: sigma 0.0000896 -> 0.00009 (The table prints totals, so the bar is 0.00009 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.4%. Same fix as the trailing-float-noise ruling: store sigma_per_) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+        "note": "Appendix H Table II, U=3.6, row Unrestricted hid. spin(RBM); sources/2111.10420.txt line 1202; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#75: sigma 0.0000896 -> 0.00009 (The table prints totals, so the bar is 0.00009 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.4%. Same fix as the trailing-float-noise ruling: store sigma_per_) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
         "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
+    },
+    {
+      "energy": -17.69357,
+      "sigma": 0.00004,
+      "energy_variance": 0.033,
+      "dof": 8,
+      "einf": 3.6,
+      "v_score": 0.0005822466083747602,
+      "method": "VMC",
+      "ansatz": "HFDS",
+      "method_detail": "8 hidden fermions, 1-layer FFN with α = 32",
+      "method_as_published": "VMC Hidden Fermion Determinant State Ansatz (N_hidden = 8. Single hidden layer fully connected net with alpha = 32)",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "vmc|\\brbm\\b|\\brnn\\b|jast",
+      "reference": "[paper](https://www.pnas.org/doi/full/10.1073/pnas.2122059119)",
+      "source": "varbench@2024-10-22",
+      "provenance": "imported",
+      "verified": {
+        "checked_on": "2026-09-29",
+        "scope": "value",
+        "method": "PNAS 119(32), e2122059119 (2022), SI Appendix PDF (PMC9371695; sources/pnas.2122059119.sapp.PMC9371695.pdf, sha256 c6e62d9c...), pypdf layout mode, re-extracted 2026-09-29 (byte-identical to the earlier extraction); same cell read in arXiv:2111.10420v2 (18 Jun 2022) Appendix H (sources/2111.10420v2.pdf, pypdf layout)",
+        "location": "SI Sec. 8 A, Table 1 (p. 8), row U = 3.6, column 'HFDS (α= 32)'; arXiv v2 Table I identical",
+        "reported_as": "-17.69357(4) (total energy, units of t)",
+        "conversion": "none (total); sigma = printed (4) in the fifth decimal = 0.00004",
+        "note": "Record row (best variational bound; the instance record is the ED row, 0.00446 below). 4 x 4 torus, n = 1/2 = 4 + 4 at zero magnetization ('In all cases we focus on the zero magnetization and fixed visible- and hidden-particle subspaces', p. 5), t = 1, U n_up n_dn with no shift (Eq. 1). U '3.6' is the label the table prints and the instance carries (ruled 2026-11-26). N~ = 8 (main Fig. 3 caption, 'Average physical site occupation is n = 1/2 and N~ = 8'), single hidden layer, alpha = 32: method string and detail right. Variational VMC bound, own computation. Stored sigma equals the printed bar. energy_variance 0.033 is the upload's (7f646d3: -17.69357 | 0.00004 | 0.033(2)); not printed as a number. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'; 'This article is a PNAS Direct Submission'); the imported row carries no peer_reviewed field (loader-level, see report). No duplicate (the only other row is the ED).",
+        "source_entry": "VA3-10-1073-pnas-2122059119#1 (qmbl-verify 2026-09-29)",
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published SI Appendix PDF, PNAS 119(32), e2122059119 (2022) (Europe PMC PMC9371695 supplementary bundle; pnas.org PDF and Europe PMC render return Cloudflare 403), sources/journal/pnas119-e2122059119-si.pdf, sha256 c6e62d9c (byte-identical to the SI read 2026-09-29), pypdf layout + plain; main text: published full-text XML (Europe PMC), sources/journal/pnas119-e2122059119.fulltext.xml, sha256 761defc3; arXiv compared: 2111.10420v2 (Appendix H, via the 2026-09-29 extraction)",
+          "location": "SI Sec. 8 A, Table 1 (p. 8), row U = 3.6, column 'HFDS (alpha = 32)'",
+          "reported_as": "-17.69357(4) (total energy, units of t)",
+          "conversion": "none",
+          "note": "4 x 4, 4 + 4, U = 3.6 (as printed), N~ = 8, alpha = 32; variational, 0.00446 above the ED of the same table row; sigma 0.00004 = printed bar. Journal = arXiv v2. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'). No duplicate.",
+          "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#6"
+        }
       },
       "artifacts": {
         "libraries": [
@@ -712,57 +672,37 @@
   ],
   "coverage": [
     {
-      "checked_on": "2026-09-15",
+      "checked_on": "2026-11-11",
       "method": "table harvest of cached arXiv sources (match_tables.mjs --all), every matched paper read for this instance",
       "screened": [
-        "arXiv:2502.17144",
-        "arXiv:2506.08329",
-        "arXiv:2507.10705",
-        "arXiv:2511.07566",
-        "arXiv:2511.12551",
-        "arXiv:2606.00924"
+        "arXiv:2610.30321",
+        "arXiv:2611.04333",
+        "arXiv:2111.10420",
+        "arXiv:2606.00924",
+        "arXiv:2210.05871"
       ],
-      "found": 0,
-      "note": "Only papers whose tables matched the instance by size were read; not a citation screen."
+      "found": 1,
+      "note": "Only papers whose tables matched the instance by size were read; not a citation screen. Energies from: arXiv:2111.10420."
     },
     {
-      "checked_on": "2026-09-15",
-      "method": "citation screen of Robledo Moreno et al. 2022 (PNAS, HFDS): citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
-      "screened_count": 29,
-      "found": 0,
-      "note": "142 citing works, 118 on arXiv, 118 fetched; 29 read in full, 89 excluded by a text filter (no energy to four decimals, or no QMBL model named)."
+      "checked_on": "2026-11-11",
+      "method": "citation screen of ketboard-hubbard: citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
+      "screened": [
+        "arXiv:2610.30321",
+        "arXiv:2611.04333",
+        "arXiv:2111.10420",
+        "arXiv:2606.00924",
+        "arXiv:2210.05871"
+      ],
+      "found": 1,
+      "note": "5 citing works, 5 on arXiv, 5 fetched; 5 read in full, 0 excluded by a text filter (no energy to four decimals, or no QMBL model named). Energies from: arXiv:2111.10420."
     }
   ],
   "relabelled": {
     "from": "Hubbard/square_16_P_4_3.5981",
-    "checked_on": "2026-09-16",
-    "reason": "The name's 3.5981 has two digits swapped: the coupling of this Hamiltonian is 3.59381366 (10^(5/9)). The exact diagonalization, -17.698030018702067, is the ground state there; at U = 3.5981 the ground state is 1.79e-3 higher, so the stored exact energy sat below the ground state of the instance as named.",
-    "evidence": "checks/hubbard-u-labels/"
-  },
-  "qmbl_ed_cost": {
-    "core_hours": 0.09579,
-    "wall_clock": "00:05:45",
-    "cores": 1,
-    "cpu": "AMD EPYC 7H12 64-Core Processor",
-    "energy": -17.698030018702024,
-    "reproduces": {
-      "energy": -17.698030018702067,
-      "method": "Exact diagonalization",
-      "relative_difference": 2.41e-15
-    },
-    "sector": {
-      "conserved": "N_up = N_dn = 4",
-      "dimension": 3312400,
-      "nonzeros": 87208940,
-      "lattice_symmetries": "none"
-    },
-    "lanczos_steps": 151,
-    "peak_memory_gb": 10.59,
-    "code": "NetKet 3.22.4 (sparse matrix) and SciPy 1.18.1 eigsh (ARPACK Lanczos)",
-    "note": "Measured by QMBL, not reported: wall-clock from process start to the eigenvalue on 1 core (imports 9 s, Hamiltonian 0 s, sparse matrix 280 s, Lanczos 56 s); core_hours = wall-clock x cores. Process CPU time 98 % of wall-clock x cores, core clock 3.15 GHz on average, node load 28.9 of 128 CPUs.",
-    "script": "checks/cost/ed/run_ed.py",
-    "results_file": "checks/cost/ed/results/Hubbard--square_16_P_4_3.59381366.json",
-    "commit": "716e043",
-    "measured_on": "2026-09-24"
+    "checked_on": "2026-11-26",
+    "reason": "The paper (arXiv:2111.10420) prints its tables at U = 3.6, and VarBench's run scripts for the same tables set U = 3.5981. Ruled 2026-11-26: each row goes on the U its own source prints, and the paper's label is taken as printed; this instance holds the rows printed at U = 3.6, the VMC rows VarBench takes from the paper among them, and the instance at U = 3.5981 holds the rows VarBench's scripts ran.",
+    "evidence": "sources/2111.10420.txt",
+    "paper_label": true
   }
 }

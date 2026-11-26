@@ -23,15 +23,9 @@ const HEISENBERG = [
   [24, "-0.6696127(5)", -1542.7876608, "-0.66960434(2)", -1542.76839936],
   [28, "-0.6695580(4)", -2099.733888, "-0.66954496(3)", -2099.69299456],
 ];
-// instance after relabels.mjs, stored exact energy, what reproduces it
-const HUBBARD_ED = [
-  ["Hubbard/square_16_P_4_3.59381366", -17.698030018702067, "-17.698030018702013 (ed_check.py) | -17.69803001870263 (ed_lib.mjs)"],
-  ["Hubbard/square_16_P_4_7.74263683", -16.509154825265142, "-16.50915482526524 (ed_check.py) | -16.509154825269405 (ed_lib.mjs)"],
-  ["Hubbard/square_16_P_5_2.15443469", -21.21223577699911, "-21.21223577699904 (ed_check.py) | -21.212235776995612 (ed_lib.mjs) | -21.212235776999105 (skeptic_ed.py)"],
-  ["Hubbard/square_16_P_5_3.59381366", -19.891637199948672, "-19.891637199948637 (ed_check.py) | -19.89163719987478 (ed_lib.mjs)"],
-  ["Hubbard/square_16_P_5_7.74263683", -17.60373155517909, "-17.60373155517896 (ed_check.py) | -17.603731555119207 (ed_lib.mjs)"],
-  ["Hubbard/chain_14_P_4_4.64158883", -10.896957984833337, "-10.896957984833353 (ed_check.py) | -10.896957984834266 (ed_lib.mjs)"],
-];
+// 2026-11-26: the six entries that recomputed VarBench's 4x4 and chain exact energies by QMBL's own
+// diagonalization (at the grid U, which no instance carries any more) are withdrawn: no fact rests
+// on a computation of QMBL's own, and the rows stand on the digits VarBench's files print.
 
 export const VERIFICATIONS = [
   ...HEISENBERG.flatMap(([L, moss, eMoss, sandvik, eSse]) => [
@@ -48,21 +42,14 @@ export const VERIFICATIONS = [
       note: "Agrees with the QMC column of Moss et al. (arXiv:2502.17144, Table III) and with Chen and Heyl's SSE to at most 2.0 sigma.",
       source_entry: "RP1-heisenberg (qmbl-verify 2026-09-17)" },
   ]),
-  ...HUBBARD_ED.map(([instance, energy, recomputed]) => ({
-    match: { instance, method: "Exact diagonalization", energy },
-    checked_on: "2026-09-16", scope: "value",
-    method: "recomputed: Lanczos ED over the full fixed-(N_up, N_dn) space by two independent codes (checks/hubbard-u-labels/)",
-    location: "checks/hubbard-u-labels/", reported_as: recomputed, conversion: "none",
-    note: "Reproduced at the grid U the instance now carries, not at the U of VarBench's name (relabels.mjs).",
-    source_entry: "B2-baseline-hubbard and E1-exact-recompute (qmbl-verify 2026-09-16)" })),
   // The row sat on the instance named for U = 7.74264 from 2026-10-02 (ruling E6) until the merge of
   // 2026-11-13 (relabels.mjs).
-  { match: { instance: "Hubbard/square_16_P_4_7.74263683", method: "DMRG (MaxBondDim ~3200)", energy: -16.5091541 },
+  { match: { instance: "Hubbard/square_16_P_4_7.75", method: "DMRG (MaxBondDim ~3200)", energy: -16.5091541 },
     checked_on: "2026-09-16", scope: "config",
     method: "run script varbench/methods programs/dmrg_itensors_hubbard/square_16_P_4_7.74264.jl read in full",
     location: "line setting U", reported_as: "U = 10", conversion: "none",
-    note: "The linked script is a copy of the U = 10 file, so it did not produce this number. The energy sits 1.1e-7 above the ground state at U = 7.74264 and 7.3e-7 above the one at 7.74263683: a valid bound at either. The pass of 2026-09-16 kept it with the instance at 7.74263683; the pass of 2026-09-29 (VB2#46) placed it at 7.74264, where the sibling 5 + 5 script runs and where its variance-to-error ratio, 1.16, fits the 4 + 4 DMRG series (0.18 at 7.74263683), so it stayed on the instance named for U = 7.74264 (ruling E6, 2026-10-02). Since 2026-11-13 the two instances are one: the couplings differ by 3.2e-6 and the row is a valid bound at either (ruled 2026-11-13).",
-    source_entry: "B2-baseline-hubbard (qmbl-verify 2026-09-16); VB2-varbench-code-hubbard#46 (qmbl-verify 2026-09-29); ruling E6, 2026-10-02; merge ruled 2026-11-13" },
+    note: "The linked script is a copy of the U = 10 file (line 99 sets U = 10), so it did not produce this number; VarBench's file name, Einf column and code link say 7.74264. Printed numbers: the energy -16.5091541 lies 0.3659460 below the printed exact energy at U = 10 (-16.1432081, arXiv:2111.10420 Table I and vendor/varbench/Hubbard/square_16_P_4_10.md), which no variational energy can, and 7e-7 above the printed exact energy at U = 7.75 (-16.5091548, Table I). Ruled 2026-11-26: the row goes on the instance at the paper's label U = 7.75, whose printed exact energy it fits; the instance at U = 7.74264 keeps VarBench's exact row.",
+    source_entry: "B2-baseline-hubbard (qmbl-verify 2026-09-16); VB2-varbench-code-hubbard#46 (qmbl-verify 2026-09-29); ruling E6, 2026-10-02; ruled 2026-11-26 (retro-qmbl-evidence hubbard-u)" },
   // qmbl-verify 2026-09-18 (RA1): the t-V rows whose committed LCT-INT output reproduces the stored
   // total through the code's V (n - 1/2)(n - 1/2) shift, and the square V = 2 row, whose committed
   // output is a sibling run 0.75 sigma away (ruling 3a, 2026-09-19: the table's value stays).
@@ -93,7 +80,7 @@ export const VERIFICATIONS = [
   // of one row are merged, the first is the entry and the others are named in its note.
   {
     "match": {
-      "instance": "Hubbard/square_16_P_4_3.59381366",
+      "instance": "Hubbard/square_16_P_4_3.6",
       "method": "VMC Hidden Fermion Determinant State Ansatz (N_hidden = 8. Single hidden layer fully connected net with alpha = 32)",
       "energy": -17.69357
     },
@@ -103,12 +90,12 @@ export const VERIFICATIONS = [
     "location": "SI Sec. 8 A, Table 1 (p. 8), row U = 3.6, column 'HFDS (α= 32)'; arXiv v2 Table I identical",
     "reported_as": "-17.69357(4) (total energy, units of t)",
     "conversion": "none (total); sigma = printed (4) in the fifth decimal = 0.00004",
-    "note": "Record row (best variational bound; the instance record is the ED row, 0.00446 below). 4 x 4 torus, n = 1/2 = 4 + 4 at zero magnetization ('In all cases we focus on the zero magnetization and fixed visible- and hidden-particle subspaces', p. 5), t = 1, U n_up n_dn with no shift (Eq. 1). U '3.6' is the grid value 3.59381366 (the paper's own ED in this row is the ground state there). N~ = 8 (main Fig. 3 caption, 'Average physical site occupation is n = 1/2 and N~ = 8'), single hidden layer, alpha = 32: method string and detail right. Variational VMC bound, own computation. Stored sigma equals the printed bar. energy_variance 0.033 is the upload's (7f646d3: -17.69357 | 0.00004 | 0.033(2)); not printed as a number. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'; 'This article is a PNAS Direct Submission'); the imported row carries no peer_reviewed field (loader-level, see report). No duplicate (the only other row is the ED).",
+    "note": "Record row (best variational bound; the instance record is the ED row, 0.00446 below). 4 x 4 torus, n = 1/2 = 4 + 4 at zero magnetization ('In all cases we focus on the zero magnetization and fixed visible- and hidden-particle subspaces', p. 5), t = 1, U n_up n_dn with no shift (Eq. 1). U '3.6' is the label the table prints and the instance carries (ruled 2026-11-26). N~ = 8 (main Fig. 3 caption, 'Average physical site occupation is n = 1/2 and N~ = 8'), single hidden layer, alpha = 32: method string and detail right. Variational VMC bound, own computation. Stored sigma equals the printed bar. energy_variance 0.033 is the upload's (7f646d3: -17.69357 | 0.00004 | 0.033(2)); not printed as a number. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'; 'This article is a PNAS Direct Submission'); the imported row carries no peer_reviewed field (loader-level, see report). No duplicate (the only other row is the ED).",
     "source_entry": "VA3-10-1073-pnas-2122059119#1 (qmbl-verify 2026-09-29)"
   },
   {
     "match": {
-      "instance": "Hubbard/square_16_P_5_2.15443469",
+      "instance": "Hubbard/square_16_P_5_2.15",
       "method": "VMC Hidden Fermion Determinant State Ansatz (N_hidden = 10. Single hidden layer fully connected net with alpha = 64). C4 and K = 0 projections",
       "energy": -21.211896
     },
@@ -118,12 +105,12 @@ export const VERIFICATIONS = [
     "location": "SI Sec. 8 B, Table 3 (p. 9), row 'HFSD (α= 64) + (C4∩K = 0)', column U = 2.15; arXiv v2 Table III identical",
     "reported_as": "-21.211896(2) (total energy, units of t)",
     "conversion": "none (total); sigma = printed (2) = 0.000002",
-    "note": "Record row (best variational bound; ED holds the instance record, 0.00034 below). 4 x 4 torus, 5 + 5, grid U = 2.15443469, N~ = 10 and alpha = 64 (main Fig. 3 caption B: 'n = 5/8 average site occupancy (first closed shell) and N~ = 10. The rows of the hidden submatrix are given by single-hidden-layer neural networks with α = 64'). Projection: 'Projections to different symmetry subspaces are applied to the converged trial state: rotation of π/2 (C4), translations of momentum K = 0 and the intersection of both subspaces' (SI Sec. 8 B); the stored row is the intersection, as the method string says. A projected state's energy is at least its sector's minimum and so still an upper bound on the ground state: variational is right. Stored sigma equals the printed bar. Upload 5a046db: -21.211896 | 0.000002 | 0.027(4); energy_variance upload-only. Own computation. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'; 'This article is a PNAS Direct Submission'); the imported row carries no peer_reviewed field (loader-level, see report). No duplicate.",
+    "note": "Record row (best variational bound; ED holds the instance record, 0.00034 below). 4 x 4 torus, 5 + 5, U = 2.15 (as printed), N~ = 10 and alpha = 64 (main Fig. 3 caption B: 'n = 5/8 average site occupancy (first closed shell) and N~ = 10. The rows of the hidden submatrix are given by single-hidden-layer neural networks with α = 64'). Projection: 'Projections to different symmetry subspaces are applied to the converged trial state: rotation of π/2 (C4), translations of momentum K = 0 and the intersection of both subspaces' (SI Sec. 8 B); the stored row is the intersection, as the method string says. A projected state's energy is at least its sector's minimum and so still an upper bound on the ground state: variational is right. Stored sigma equals the printed bar. Upload 5a046db: -21.211896 | 0.000002 | 0.027(4); energy_variance upload-only. Own computation. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'; 'This article is a PNAS Direct Submission'); the imported row carries no peer_reviewed field (loader-level, see report). No duplicate.",
     "source_entry": "VA3-10-1073-pnas-2122059119#8 (qmbl-verify 2026-09-29)"
   },
   {
     "match": {
-      "instance": "Hubbard/square_16_P_5_3.59381366",
+      "instance": "Hubbard/square_16_P_5_3.6",
       "method": "VMC Hidden Fermion Determinant State Ansatz (N_hidden = 10. Single hidden layer fully connected net with alpha = 64). C4 and K = 0 projections",
       "energy": -19.890443
     },
@@ -133,12 +120,12 @@ export const VERIFICATIONS = [
     "location": "SI Sec. 8 B, Table 3 (p. 9), row 'HFSD (α= 64) + (C4∩K = 0)', column U = 3.6; arXiv v2 Table III identical",
     "reported_as": "-19.890443(6) (total energy, units of t)",
     "conversion": "none (total); sigma = printed (6) = 0.000006",
-    "note": "Record row (best variational bound; ED 0.00119 below holds the record). 4 x 4 torus, 5 + 5, grid U = 3.59381366, N~ = 10, alpha = 64. Projection: 'Projections to different symmetry subspaces are applied to the converged trial state: rotation of π/2 (C4), translations of momentum K = 0 and the intersection of both subspaces' (SI Sec. 8 B); the stored row is the intersection, as the method string says. A projected state's energy is at least its sector's minimum and so still an upper bound on the ground state: variational is right. Stored sigma equals the printed bar. Upload 5a046db: -19.890443 | 0.000006 | 0.031(3). Own computation. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'; 'This article is a PNAS Direct Submission'); the imported row carries no peer_reviewed field (loader-level, see report). No duplicate.",
+    "note": "Record row (best variational bound; ED 0.00119 below holds the record). 4 x 4 torus, 5 + 5, U = 3.6 (as printed), N~ = 10, alpha = 64. Projection: 'Projections to different symmetry subspaces are applied to the converged trial state: rotation of π/2 (C4), translations of momentum K = 0 and the intersection of both subspaces' (SI Sec. 8 B); the stored row is the intersection, as the method string says. A projected state's energy is at least its sector's minimum and so still an upper bound on the ground state: variational is right. Stored sigma equals the printed bar. Upload 5a046db: -19.890443 | 0.000006 | 0.031(3). Own computation. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'; 'This article is a PNAS Direct Submission'); the imported row carries no peer_reviewed field (loader-level, see report). No duplicate.",
     "source_entry": "VA3-10-1073-pnas-2122059119#10 (qmbl-verify 2026-09-29)"
   },
   {
     "match": {
-      "instance": "Hubbard/square_16_P_5_7.74263683",
+      "instance": "Hubbard/square_16_P_5_7.75",
       "method": "VMC Hidden Fermion Determinant State Ansatz (N_hidden = 10. Single hidden layer fully connected net with alpha = 64). C4 and K = 0 projections",
       "energy": -17.602
     },
@@ -148,7 +135,7 @@ export const VERIFICATIONS = [
     "location": "SI Sec. 8 B, Table 3 (p. 9), row 'HFSD (α= 64) + (C4∩K = 0)', column U = 7.75; arXiv v2 Table III identical",
     "reported_as": "-17.60200(1) (total energy, units of t)",
     "conversion": "none (total); sigma = printed (1) in the fifth decimal = 0.00001",
-    "note": "Record row (best variational bound; ED 0.00173 below holds the record). 4 x 4 torus, 5 + 5, grid U = 7.74263683, N~ = 10, alpha = 64. Projection: 'Projections to different symmetry subspaces are applied to the converged trial state: rotation of π/2 (C4), translations of momentum K = 0 and the intersection of both subspaces' (SI Sec. 8 B); the stored row is the intersection, as the method string says. A projected state's energy is at least its sector's minimum and so still an upper bound on the ground state: variational is right. Stored sigma equals the printed bar. Upload 5a046db: -17.60200 | 0.00001 | 0.037(4). Own computation. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'; 'This article is a PNAS Direct Submission'); the imported row carries no peer_reviewed field (loader-level, see report). No duplicate.",
+    "note": "Record row (best variational bound; ED 0.00173 below holds the record). 4 x 4 torus, 5 + 5, U = 7.75 (as printed), N~ = 10, alpha = 64. Projection: 'Projections to different symmetry subspaces are applied to the converged trial state: rotation of π/2 (C4), translations of momentum K = 0 and the intersection of both subspaces' (SI Sec. 8 B); the stored row is the intersection, as the method string says. A projected state's energy is at least its sector's minimum and so still an upper bound on the ground state: variational is right. Stored sigma equals the printed bar. Upload 5a046db: -17.60200 | 0.00001 | 0.037(4). Own computation. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'; 'This article is a PNAS Direct Submission'); the imported row carries no peer_reviewed field (loader-level, see report). No duplicate.",
     "source_entry": "VA3-10-1073-pnas-2122059119#12 (qmbl-verify 2026-09-29)"
   },
   {
@@ -1668,7 +1655,7 @@ export const VERIFICATIONS = [
   },
   {
     "match": {
-      "instance": "Hubbard/square_16_P_5_7.74263683",
+      "instance": "Hubbard/square_16_P_5_7.74264",
       "method": "DMRG (MaxBondDim = 7000)",
       "energy": -17.6037303
     },
@@ -1678,7 +1665,7 @@ export const VERIFICATIONS = [
     "location": "let block: 'U = 7.74264', 'nx = 4', 'ny = 4', 'yperiodic = true', 'xperiodic = true', spins alternating Up/Dn with sites 6:11 set to Emp -> 5 up + 5 down, dims [4,...,6000,7000], 2 sweeps each (32 sweeps), E and var printed after each maxdim on the optimized state",
     "reported_as": "-17.6037303 | | 3.5781e-6 | DMRG(MaxBondDim = 7000) (VarBench upload, J. Maxwell Silvester)",
     "conversion": "none (total). E - E0(U = 7.74264, 5+5) = 8.0e-8 (E0 = -17.603730380085874)",
-    "note": "4x4 torus (32 bonds), t = 1, U n_up n_dn with no shift, N_up = N_dn = 5, run at U = 7.74264; since 2026-11-13 on the instance at U = 7.74263683, 3.2e-6 away, where it sits 1.26e-6 above the ground state (merge ruled 2026-11-13). The energy is the reached DMRG energy at the final maxdim and lies above the exact energy at the script's U, as a variational energy must; variational correct. Temple check (E - E0 <= Var/(E1 - E), E1 = -16.482401761570816 the next level, lanczos ritz (no reorth)): E - E0 = 8.0e-8 vs bound 3.2e-6, consistent. History: uploaded 2022-09-12 (2f88471), unchanged. No output log (scope config).",
+    "note": "4x4 torus (32 bonds), t = 1, U n_up n_dn with no shift, N_up = N_dn = 5, run at U = 7.74264, the U its script sets; it stays on that U (ruled 2026-11-26). The energy is the reached DMRG energy at the final maxdim and lies above the exact energy at the script's U, as a variational energy must; variational correct. Temple check (E - E0 <= Var/(E1 - E), E1 = -16.482401761570816 the next level, lanczos ritz (no reorth)): E - E0 = 8.0e-8 vs bound 3.2e-6, consistent. History: uploaded 2022-09-12 (2f88471), unchanged. No output log (scope config).",
     "source_entry": "VB2-varbench-code-hubbard#44 (qmbl-verify 2026-09-29)"
   },
   {
@@ -4463,7 +4450,7 @@ export const VERIFICATIONS = [
   // commit, or that an entry above already verifies, is left out (479 rows).
   {
     "match": {
-      "instance": "Hubbard/square_16_P_4_7.74263683",
+      "instance": "Hubbard/square_16_P_4_7.75",
       "method": "VMC Hidden Fermion Determinant State Ansatz (N_hidden = 8. Single hidden layer fully connected net with alpha = 32)",
       "energy": -16.505
     },
@@ -4473,7 +4460,7 @@ export const VERIFICATIONS = [
     "location": "SI Sec. 8 A, Table 1 (p. 8), row U = 7.75, column 'HFDS (α= 32)'; arXiv v2 Table I identical",
     "reported_as": "-16.505(1) (total energy, units of t)",
     "conversion": "none (total)",
-    "note": "Energy verified; sigma differs from the printed bar (ambiguous entry). 4 x 4 torus, 4 + 4, U '7.75' = grid 7.74263683, N~ = 8, alpha = 32, variational (0.00415 above ED), own computation; not the record (VarBench DMRG -16.5091541 lies lower). Upload 7f646d3: -16.505 | 0.0001 | 0.055(1); energy_variance upload-only. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'; 'This article is a PNAS Direct Submission'); the imported row carries no peer_reviewed field (loader-level, see report). No duplicate.",
+    "note": "Energy verified; sigma differs from the printed bar (ambiguous entry). 4 x 4 torus, 4 + 4, U = 7.75 (as printed), N~ = 8, alpha = 32, variational (0.00415 above ED), own computation; not the record (VarBench DMRG -16.5091541 lies lower). Upload 7f646d3: -16.505 | 0.0001 | 0.055(1); energy_variance upload-only. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'; 'This article is a PNAS Direct Submission'); the imported row carries no peer_reviewed field (loader-level, see report). No duplicate.",
     "source_entry": "VA3-10-1073-pnas-2122059119#3 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
   },
   {
@@ -13323,7 +13310,7 @@ export const VERIFICATIONS = [
   },
   {
     "match": {
-      "instance": "Hubbard/square_16_P_4_3.59381366",
+      "instance": "Hubbard/square_16_P_4_3.5981",
       "method": "Exact diagonalization",
       "energy": -17.698030018702067
     },
@@ -13332,14 +13319,14 @@ export const VERIFICATIONS = [
     "method": "published SI Appendix PDF, PNAS 119(32), e2122059119 (2022) (Europe PMC PMC9371695 supplementary bundle; pnas.org PDF and Europe PMC render return Cloudflare 403), sources/journal/pnas119-e2122059119-si.pdf, sha256 c6e62d9c (byte-identical to the SI read 2026-09-29), pypdf layout + plain; main text: published full-text XML (Europe PMC), sources/journal/pnas119-e2122059119.fulltext.xml, sha256 761defc3; arXiv compared: 2111.10420v2 (Appendix H, via the 2026-09-29 extraction)",
     "location": "SI Sec. 8 A, Table 1 (p. 8), row U = 3.6, column 'ED energy'",
     "reported_as": "-17.6980300(1) (total energy, units of t)",
-    "conversion": "none; stored -17.698030018702067 is QMBL's recomputation at the grid U 3.59381366 (two ED codes, checks/hubbard-u-labels/), which rounds to the printed value",
-    "note": "Exact; the paper's ED column is its benchmark reference ('Exact diagonalization energies used in the benchmarks are also provided'). U label 3.6 = grid U per the 2026-09-16 ruling. Journal = arXiv v2. sigma null is right for an exact row.",
+    "conversion": "none; stored -17.698030018702067 is VarBench's value, which rounds to the printed value; VarBench's run script sets U = 3.5981 and the row stays on that U (ruled 2026-11-26)",
+    "note": "Exact; the paper's ED column is its benchmark reference ('Exact diagonalization energies used in the benchmarks are also provided'). The table's U label is 3.6; the paper's ED value is the paper's row at U = 3.6, and VarBench's ED row (the same number) is on U = 3.5981, the U its script sets (ruled 2026-11-26). Journal = arXiv v2. sigma null is right for an exact row.",
     "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#5",
     "journal": true
   },
   {
     "match": {
-      "instance": "Hubbard/square_16_P_4_3.59381366",
+      "instance": "Hubbard/square_16_P_4_3.6",
       "method": "VMC Hidden Fermion Determinant State Ansatz (N_hidden = 8. Single hidden layer fully connected net with alpha = 32)",
       "energy": -17.69357
     },
@@ -13349,13 +13336,13 @@ export const VERIFICATIONS = [
     "location": "SI Sec. 8 A, Table 1 (p. 8), row U = 3.6, column 'HFDS (alpha = 32)'",
     "reported_as": "-17.69357(4) (total energy, units of t)",
     "conversion": "none",
-    "note": "4 x 4, 4 + 4, U = grid 3.59381366, N~ = 8, alpha = 32; variational, 0.00446 above the ED of the same table row; sigma 0.00004 = printed bar. Journal = arXiv v2. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'). No duplicate.",
+    "note": "4 x 4, 4 + 4, U = 3.6 (as printed), N~ = 8, alpha = 32; variational, 0.00446 above the ED of the same table row; sigma 0.00004 = printed bar. Journal = arXiv v2. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'). No duplicate.",
     "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#6",
     "journal": true
   },
   {
     "match": {
-      "instance": "Hubbard/square_16_P_4_7.74263683",
+      "instance": "Hubbard/square_16_P_4_7.74264",
       "method": "Exact diagonalization",
       "energy": -16.509154825265142
     },
@@ -13364,14 +13351,14 @@ export const VERIFICATIONS = [
     "method": "published SI Appendix PDF, PNAS 119(32), e2122059119 (2022) (Europe PMC PMC9371695 supplementary bundle; pnas.org PDF and Europe PMC render return Cloudflare 403), sources/journal/pnas119-e2122059119-si.pdf, sha256 c6e62d9c (byte-identical to the SI read 2026-09-29), pypdf layout + plain; main text: published full-text XML (Europe PMC), sources/journal/pnas119-e2122059119.fulltext.xml, sha256 761defc3; arXiv compared: 2111.10420v2 (Appendix H, via the 2026-09-29 extraction)",
     "location": "SI Sec. 8 A, Table 1 (p. 8), row U = 7.75, column 'ED energy'",
     "reported_as": "-16.5091548(2) (total energy, units of t)",
-    "conversion": "none; stored -16.509154825265142 is QMBL's recomputation at grid U 7.74263683, rounds to the printed value",
+    "conversion": "none; stored -16.509154825265142 is VarBench's value, which rounds to the printed value; VarBench's run script sets U = 7.74264 and the row stays on that U (ruled 2026-11-26)",
     "note": "Exact. Note: SI Table 2 (other trial states, p. 9) prints the same -16.509154(8) in both its U = 7.75 and U = 10 ED cells; Table 1 prints -16.1432081(7) for U = 10, so Table 2's U = 10 ED cell is a copy slip in the journal SI (not a stored row).",
     "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#7",
     "journal": true
   },
   {
     "match": {
-      "instance": "Hubbard/square_16_P_4_7.74263683",
+      "instance": "Hubbard/square_16_P_4_7.75",
       "method": "VMC Hidden Fermion Determinant State Ansatz (N_hidden = 8. Single hidden layer fully connected net with alpha = 32)",
       "energy": -16.505
     },
@@ -13381,7 +13368,7 @@ export const VERIFICATIONS = [
     "location": "SI Sec. 8 A, Table 1 (p. 8), row U = 7.75, column 'HFDS (alpha = 32)'",
     "reported_as": "-16.505(1) (total energy, units of t)",
     "conversion": "none",
-    "note": "4 x 4, 4 + 4, U = grid 7.74263683, N~ = 8, alpha = 32; variational, 0.00415 above ED. Printed bar 0.001 vs stored 0.0001: Stored sigma is the first author's VarBench upload (Robledo Moreno, 2022-07/08), not the printed bar; kept under the 2026-10-02 handoff ruling R4/E2 ('the author's finer uploaded sigma stays where the printed bar is display rounding (HFDS x12)'), so no new correction. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022').",
+    "note": "4 x 4, 4 + 4, U = 7.75 (as printed), N~ = 8, alpha = 32; variational, 0.00415 above ED. Printed bar 0.001 vs stored 0.0001: Stored sigma is the first author's VarBench upload (Robledo Moreno, 2022-07/08), not the printed bar; kept under the 2026-10-02 handoff ruling R4/E2 ('the author's finer uploaded sigma stays where the printed bar is display rounding (HFDS x12)'), so no new correction. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022').",
     "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#8",
     "journal": true
   },
@@ -13403,7 +13390,7 @@ export const VERIFICATIONS = [
   },
   {
     "match": {
-      "instance": "Hubbard/square_16_P_5_2.15443469",
+      "instance": "Hubbard/square_16_P_5_2.1544",
       "method": "Exact diagonalization",
       "energy": -21.21223577699911
     },
@@ -13412,14 +13399,14 @@ export const VERIFICATIONS = [
     "method": "published SI Appendix PDF, PNAS 119(32), e2122059119 (2022) (Europe PMC PMC9371695 supplementary bundle; pnas.org PDF and Europe PMC render return Cloudflare 403), sources/journal/pnas119-e2122059119-si.pdf, sha256 c6e62d9c (byte-identical to the SI read 2026-09-29), pypdf layout + plain; main text: published full-text XML (Europe PMC), sources/journal/pnas119-e2122059119.fulltext.xml, sha256 761defc3; arXiv compared: 2111.10420v2 (Appendix H, via the 2026-09-29 extraction)",
     "location": "SI Sec. 8 B, Table 3 (p. 9), row 'ED', column U = 2.15",
     "reported_as": "-21.2122357(7) (total energy, units of t)",
-    "conversion": "none; stored -21.21223577699911 (grid U 2.15443469, QMBL recomputation) rounds to the printed value",
+    "conversion": "none; stored -21.21223577699911 is VarBench's value, which rounds to the printed value; VarBench's run script sets U = 2.1544 and the row stays on that U (ruled 2026-11-26)",
     "note": "Exact; 5 + 5. Journal = arXiv v2.",
     "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#10",
     "journal": true
   },
   {
     "match": {
-      "instance": "Hubbard/square_16_P_5_2.15443469",
+      "instance": "Hubbard/square_16_P_5_2.15",
       "method": "VMC Hidden Fermion Determinant State Ansatz (N_hidden = 10. Single hidden layer fully connected net with alpha = 64). C4 and K = 0 projections",
       "energy": -21.211896
     },
@@ -13429,13 +13416,13 @@ export const VERIFICATIONS = [
     "location": "SI Sec. 8 B, Table 3 (p. 9), row 'HFSD (alpha = 64) + (C4 ∩ K = 0)', column U = 2.15",
     "reported_as": "-21.211896(2) (total energy, units of t)",
     "conversion": "none",
-    "note": "5 + 5, U = grid 2.15443469; variational 0.00034 above ED; sigma = printed. Journal = arXiv v2. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022').",
+    "note": "5 + 5, U = 2.15 (as printed); variational 0.00034 above ED; sigma = printed. Journal = arXiv v2. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022').",
     "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#11",
     "journal": true
   },
   {
     "match": {
-      "instance": "Hubbard/square_16_P_5_3.59381366",
+      "instance": "Hubbard/square_16_P_5_3.5981",
       "method": "Exact diagonalization",
       "energy": -19.891637199948672
     },
@@ -13444,14 +13431,14 @@ export const VERIFICATIONS = [
     "method": "published SI Appendix PDF, PNAS 119(32), e2122059119 (2022) (Europe PMC PMC9371695 supplementary bundle; pnas.org PDF and Europe PMC render return Cloudflare 403), sources/journal/pnas119-e2122059119-si.pdf, sha256 c6e62d9c (byte-identical to the SI read 2026-09-29), pypdf layout + plain; main text: published full-text XML (Europe PMC), sources/journal/pnas119-e2122059119.fulltext.xml, sha256 761defc3; arXiv compared: 2111.10420v2 (Appendix H, via the 2026-09-29 extraction)",
     "location": "SI Sec. 8 B, Table 3 (p. 9), row 'ED', column U = 3.6",
     "reported_as": "-19.8916371(9) (total energy, units of t)",
-    "conversion": "none; stored -19.891637199948672 rounds to the printed value",
+    "conversion": "none; stored -19.891637199948672 is VarBench's value, which rounds to the printed value; VarBench's run script sets U = 3.5981 and the row stays on that U (ruled 2026-11-26)",
     "note": "Exact. Journal = arXiv v2.",
     "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#12",
     "journal": true
   },
   {
     "match": {
-      "instance": "Hubbard/square_16_P_5_3.59381366",
+      "instance": "Hubbard/square_16_P_5_3.6",
       "method": "VMC Hidden Fermion Determinant State Ansatz (N_hidden = 10. Single hidden layer fully connected net with alpha = 64). C4 and K = 0 projections",
       "energy": -19.890443
     },
@@ -13461,13 +13448,13 @@ export const VERIFICATIONS = [
     "location": "SI Sec. 8 B, Table 3 (p. 9), row 'HFSD (alpha = 64) + (C4 ∩ K = 0)', column U = 3.6",
     "reported_as": "-19.890443(6) (total energy, units of t)",
     "conversion": "none",
-    "note": "5 + 5, grid U 3.59381366; variational 0.00119 above ED; sigma = printed. Journal = arXiv v2. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022').",
+    "note": "5 + 5, U = 3.6 (as printed); variational 0.00119 above ED; sigma = printed. Journal = arXiv v2. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022').",
     "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#13",
     "journal": true
   },
   {
     "match": {
-      "instance": "Hubbard/square_16_P_5_7.74263683",
+      "instance": "Hubbard/square_16_P_5_7.74264",
       "method": "Exact diagonalization",
       "energy": -17.60373155517909
     },
@@ -13476,14 +13463,14 @@ export const VERIFICATIONS = [
     "method": "published SI Appendix PDF, PNAS 119(32), e2122059119 (2022) (Europe PMC PMC9371695 supplementary bundle; pnas.org PDF and Europe PMC render return Cloudflare 403), sources/journal/pnas119-e2122059119-si.pdf, sha256 c6e62d9c (byte-identical to the SI read 2026-09-29), pypdf layout + plain; main text: published full-text XML (Europe PMC), sources/journal/pnas119-e2122059119.fulltext.xml, sha256 761defc3; arXiv compared: 2111.10420v2 (Appendix H, via the 2026-09-29 extraction)",
     "location": "SI Sec. 8 B, Table 3 (p. 9), row 'ED', column U = 7.75",
     "reported_as": "-17.6037315(5) (total energy, units of t)",
-    "conversion": "none; stored -17.60373155517909 rounds to the printed value",
+    "conversion": "none; stored -17.60373155517909 is VarBench's value, which rounds to the printed value; VarBench's run script sets U = 7.74264 and the row stays on that U (ruled 2026-11-26)",
     "note": "Exact. Journal = arXiv v2.",
     "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#14",
     "journal": true
   },
   {
     "match": {
-      "instance": "Hubbard/square_16_P_5_7.74263683",
+      "instance": "Hubbard/square_16_P_5_7.75",
       "method": "VMC Hidden Fermion Determinant State Ansatz (N_hidden = 10. Single hidden layer fully connected net with alpha = 64). C4 and K = 0 projections",
       "energy": -17.602
     },
@@ -13493,7 +13480,7 @@ export const VERIFICATIONS = [
     "location": "SI Sec. 8 B, Table 3 (p. 9), row 'HFSD (alpha = 64) + (C4 ∩ K = 0)', column U = 7.75",
     "reported_as": "-17.60200(1) (total energy, units of t)",
     "conversion": "none",
-    "note": "5 + 5, grid U 7.74263683; variational 0.00173 above ED; sigma = printed. Journal = arXiv v2. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022').",
+    "note": "5 + 5, U = 7.75 (as printed); variational 0.00173 above ED; sigma = printed. Journal = arXiv v2. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022').",
     "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#15",
     "journal": true
   },
@@ -27102,7 +27089,7 @@ export const VERIFICATIONS = [
   },
   {
    "match": {
-    "instance": "Hubbard/square_16_P_4_0.59948425",
+    "instance": "Hubbard/square_16_P_4_0.6",
     "method": "Jastrow inspired CF (Table II)",
     "energy": -19.44978
    },
@@ -27162,7 +27149,7 @@ export const VERIFICATIONS = [
   },
   {
    "match": {
-    "instance": "Hubbard/square_16_P_4_2.15443469",
+    "instance": "Hubbard/square_16_P_4_2.15",
     "method": "Gutzwiller inspired CF (Table II)",
     "energy": -18.32346
    },
@@ -27177,7 +27164,7 @@ export const VERIFICATIONS = [
   },
   {
    "match": {
-    "instance": "Hubbard/square_16_P_4_3.59381366",
+    "instance": "Hubbard/square_16_P_4_3.6",
     "method": "HFDS (8 hidden fermions, single hidden layer, α = 4)",
     "energy": -17.6897
    },
@@ -27192,7 +27179,7 @@ export const VERIFICATIONS = [
   },
   {
    "match": {
-    "instance": "Hubbard/square_16_P_4_3.59381366",
+    "instance": "Hubbard/square_16_P_4_3.6",
     "method": "HFDS (8 hidden fermions, single hidden layer, α = 16)",
     "energy": -17.6929
    },
@@ -27207,7 +27194,7 @@ export const VERIFICATIONS = [
   },
   {
    "match": {
-    "instance": "Hubbard/square_16_P_4_3.59381366",
+    "instance": "Hubbard/square_16_P_4_3.6",
     "method": "USD (Table II)",
     "energy": -16.85
    },
@@ -27222,7 +27209,7 @@ export const VERIFICATIONS = [
   },
   {
    "match": {
-    "instance": "Hubbard/square_16_P_4_3.59381366",
+    "instance": "Hubbard/square_16_P_4_3.6",
     "method": "Unrestricted hidden spin (Table II)",
     "energy": -17.58288
    },
@@ -27237,7 +27224,7 @@ export const VERIFICATIONS = [
   },
   {
    "match": {
-    "instance": "Hubbard/square_16_P_4_7.74263683",
+    "instance": "Hubbard/square_16_P_4_7.75",
     "method": "HFDS (8 hidden fermions, single hidden layer, α = 0.5)",
     "energy": -16.4196
    },
@@ -27252,7 +27239,7 @@ export const VERIFICATIONS = [
   },
   {
    "match": {
-    "instance": "Hubbard/square_16_P_4_7.74263683",
+    "instance": "Hubbard/square_16_P_4_7.75",
     "method": "HFDS (8 hidden fermions, single hidden layer, α = 4)",
     "energy": -16.4959
    },
@@ -27267,7 +27254,7 @@ export const VERIFICATIONS = [
   },
   {
    "match": {
-    "instance": "Hubbard/square_16_P_4_7.74263683",
+    "instance": "Hubbard/square_16_P_4_7.75",
     "method": "USD (Table II)",
     "energy": -14.36
    },
@@ -27282,7 +27269,7 @@ export const VERIFICATIONS = [
   },
   {
    "match": {
-    "instance": "Hubbard/square_16_P_4_7.74263683",
+    "instance": "Hubbard/square_16_P_4_7.75",
     "method": "Jastrow inspired CF (Table II)",
     "energy": -14.1253
    },
@@ -27297,7 +27284,7 @@ export const VERIFICATIONS = [
   },
   {
    "match": {
-    "instance": "Hubbard/square_16_P_5_2.15443469",
+    "instance": "Hubbard/square_16_P_5_2.15",
     "method": "HFDS (10 hidden fermions, α = 64)",
     "energy": -21.211411
    },
@@ -27312,7 +27299,7 @@ export const VERIFICATIONS = [
   },
   {
    "match": {
-    "instance": "Hubbard/square_16_P_5_2.15443469",
+    "instance": "Hubbard/square_16_P_5_2.15",
     "method": "HFDS (10 hidden fermions, α = 64) + C4",
     "energy": -21.211811
    },
@@ -27327,7 +27314,7 @@ export const VERIFICATIONS = [
   },
   {
    "match": {
-    "instance": "Hubbard/square_16_P_5_3.59381366",
+    "instance": "Hubbard/square_16_P_5_3.6",
     "method": "HFDS (10 hidden fermions, α = 64)",
     "energy": -19.888814
    },

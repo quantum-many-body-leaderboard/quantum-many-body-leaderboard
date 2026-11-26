@@ -1,90 +1,101 @@
 // Instances whose name carries a different coupling or size from the one their rows were computed
-// at (see RULES.md 11). Read by apply_relabels.mjs.
+// at (see RULES.md 11), and Hubbard rows that go on the U their own source prints. Read by
+// apply_relabels.mjs.
 //
-// VarBench's Hubbard couplings between 1 and 10 are the grid 10^(k/9). The 14-site chain
-// instances carry the grid value to eight decimals; five 4x4 instance names carry a rounded
-// or mistyped one (2.1544, 3.5981 for 3.5938, 7.74264), and one chain name ends in ...82
-// where the value used rounds to ...83. The exact diagonalization and the HFDS rows on these
-// instances were computed at the grid value: two independent ED codes reproduce each stored
-// exact energy there to 1e-10 or better, and at the named U four of those energies would sit
-// below the ground state, which no eigenvalue can. The DMRG rows were run at the named U,
-// taken from the file name. Evidence and codes: checks/hubbard-u-labels/.
-//
-// The instance moves to the grid U, and the rows computed at the named U stay behind on an
-// instance of their own, with the ground state at that U as its exact row (`keep`, `exact`).
-// Where the two ground states differ by less than any row could resolve, nothing stays behind.
-//
+// VarBench's Hubbard couplings between 1 and 10 are the grid 10^(k/9). Five 4x4 instance names
+// carry a rounded or mistyped one (2.1544, 3.5981, 7.74264) and the run scripts behind them set
+// that U, and the Robledo Moreno et al. paper (arXiv:2111.10420) prints its tables at the rounded
+// labels 0.6, 2.15, 3.6 and 7.75. Ruled 2026-11-26 (RULES.md 5, 11): no fact rests on a computation
+// of QMBL's own, so every row goes on the U its own source prints and the labels are taken as
+// printed. A row VarBench's run script ran (its exact diagonalization and its DMRG) stays on the U
+// the script sets; a row whose source is the paper (every paper table cell, and the VMC rows
+// VarBench takes from the paper) goes on the instance at the paper's label. The paper rows are
+// loaded onto those instances by their pass files; the entries below move the VarBench rows that
+// link the paper, and leave the QMBL exact row where it was (its fate is a separate decision).
+// The Nf = 4 DMRG row of square_16_P_4_7.74264 is the one VarBench row whose script and name
+// disagree: programs/dmrg_itensors_hubbard/square_16_P_4_7.74264.jl sets U = 10 (a copy of the
+// U = 10 file), but its energy -16.5091541 lies 0.37 below the printed exact energy at U = 10
+// (-16.1432081, arXiv:2111.10420 Table I) and 7e-7 above the printed one at 7.75 (-16.5091548),
+// so it goes on the 7.75 instance (ruled 2026-11-26).
 // VarBench's impurity names end in the number of bath sites per spin-orbital (its Impurity/README.md,
 // "Naming"), which QMBL reads as n_sites. SB-DMFT-MI-HF_9 has ten: at U = 8 and half filling its run
 // script discretises the bath with Nbath + 1 sites, the Hamiltonian file holds ten per spin, and QMBL's
 // exact diagonalization reproduces both rows on eleven orbitals per spin (impurity and bath).
 //
-// from, to:  instance ids; `to` takes every row not listed in `keep`, and the coverage
+// from, to:  instance ids; `to` takes every row not listed in `keep`; `to: null` moves nothing
 // params:    the instance parameters that change
 // n_sites:   the size, where that is what the name has wrong
 // keep:      rows that stay on `from`: published method string and energy, and why
-// exact:     the ground state at the named U, from the two codes (the first is stored)
-// reason:    what was wrong with the name, for the instance page
+// exact:     the ground state at `from`'s U, from the two codes (the first is stored), or null for none
+// ruled:    the date a ruling set the entry's current form (the instance pages show it)
+// paper_label: the rows move to the instance at the paper's rounded label (the pass files create
+//            it); coverage stays where its pass put it
+// reason:    what was wrong with the name, or why the rows moved, for the instance page
 // evidence:  where the reader checks it (default checks/hubbard-u-labels/); checked_on, codes:
 //            the date and the codes of the check (default the U relabels' own)
 
 const CHECKED = "2026-09-16";
 const CODES = "Lanczos ED over the full fixed-(N_up, N_dn) space, no symmetry, t = 1: numpy/scipy (checks/hubbard-u-labels/ed_check.py) and node (ed_lib.mjs, run_fermions.mjs)";
 const EVIDENCE = "checks/hubbard-u-labels/";
+const RULED = "2026-11-26";
+const PAPER = "sources/2111.10420.txt";
+const why = (U, extra = "") => `its run script sets U = ${U}; it stays on the U its script sets (ruled 2026-11-26).${extra}`;
+const reason = (label, U) => `The paper (arXiv:2111.10420) prints its tables at U = ${label}, and VarBench's run scripts for the same tables set U = ${U}. Ruled 2026-11-26: each row goes on the U its own source prints, and the paper's label is taken as printed; this instance holds the rows printed at U = ${label}, the VMC rows VarBench takes from the paper among them, and the instance at U = ${U} holds the rows VarBench's scripts ran.`;
 
 export const RELABELS = [
   {
-    from: "Hubbard/square_16_P_4_3.5981", to: "Hubbard/square_16_P_4_3.59381366", params: { U: 3.59381366 },
-    reason: "The name's 3.5981 has two digits swapped: the coupling of this Hamiltonian is 3.59381366 (10^(5/9)). The exact diagonalization, -17.698030018702067, is the ground state there; at U = 3.5981 the ground state is 1.79e-3 higher, so the stored exact energy sat below the ground state of the instance as named.",
-    keep: [{ method: "DMRG (MaxBondDim ~3200)", energy: -17.69623,
-      why: "its run script sets U = 3.5981. It sits 5.05e-6 above the ground state at that U (variance per unit energy error 0.41), and 1.80e-3 above the one at 3.59381366." }],
+    from: "Hubbard/square_16_P_4_3.5981", to: "Hubbard/square_16_P_4_3.6", params: { U: 3.6 }, paper_label: true,
+    reason: reason("3.6", "3.5981"),
+    keep: [{ method: "Exact diagonalization", energy: -17.698030018702067, why: why("3.5981") },
+      { method: "DMRG (MaxBondDim ~3200)", energy: -17.69623, why: why("3.5981", " It sits 5.05e-6 above the ground state at that U (variance per unit energy error 0.41).") }],
     exact: [-17.69623505010233, -17.696235050104434],
     computed_by: "qmbl",
+    ruled: RULED, evidence: PAPER,
   },
   {
-    from: "Hubbard/square_16_P_5_3.5981", to: "Hubbard/square_16_P_5_3.59381366", params: { U: 3.59381366 },
-    reason: "The name's 3.5981 has two digits swapped: the coupling of this Hamiltonian is 3.59381366 (10^(5/9)). The exact diagonalization, -19.891637199948672, is the ground state there; at U = 3.5981 the ground state is 3.41e-3 higher, and the HFDS row would sit 369 sigma below it.",
-    keep: [{ method: "DMRG (MaxBondDim = 7000)", energy: -19.88822918,
-      why: "its run script sets U = 3.5981. It sits 1.45e-8 above the ground state at that U (variance per unit energy error 20), and 3.41e-3 above the one at 3.59381366." }],
+    from: "Hubbard/square_16_P_5_3.5981", to: "Hubbard/square_16_P_5_3.6", params: { U: 3.6 }, paper_label: true,
+    reason: reason("3.6", "3.5981"),
+    keep: [{ method: "Exact diagonalization", energy: -19.891637199948672, why: why("3.5981") },
+      { method: "DMRG (MaxBondDim = 7000)", energy: -19.88822918, why: why("3.5981", " It sits 1.45e-8 above the ground state at that U (variance per unit energy error 20).") }],
     exact: [-19.88822919448899, -19.88822919445522],
     computed_by: "qmbl",
+    ruled: RULED, evidence: PAPER,
   },
   {
-    from: "Hubbard/square_16_P_5_2.1544", to: "Hubbard/square_16_P_5_2.15443469", params: { U: 2.15443469 },
-    reason: "The name's 2.1544 cuts off the coupling of this Hamiltonian, 2.15443469 (10^(3/9)). The exact diagonalization, -21.21223577699911, is the ground state there and 3.65e-5 above the ground state at U = 2.1544.",
-    keep: [{ method: "DMRG (MaxBondDim 7000)", energy: -21.2122722,
-      why: "its run script sets U = 2.1544. It sits 3.21e-8 above the ground state at that U (variance per unit energy error 0.81), and 3.64e-5 below the one at 2.15443469, which no variational energy can." }],
+    from: "Hubbard/square_16_P_5_2.1544", to: "Hubbard/square_16_P_5_2.15", params: { U: 2.15 }, paper_label: true,
+    reason: reason("2.15", "2.1544"),
+    keep: [{ method: "Exact diagonalization", energy: -21.21223577699911, why: why("2.1544") },
+      { method: "DMRG (MaxBondDim 7000)", energy: -21.2122722, why: why("2.1544", " It sits 3.21e-8 above the ground state at that U (variance per unit energy error 0.81).") }],
     exact: [-21.212272232092317, -21.212272232074348],
     computed_by: "qmbl",
+    ruled: RULED, evidence: PAPER,
   },
   {
-    from: "Hubbard/square_16_P_5_7.74264", to: "Hubbard/square_16_P_5_7.74263683", params: { U: 7.74263683 },
-    reason: "The name's 7.74264 rounds the coupling of this Hamiltonian, 7.74263683 (10^(8/9)). The exact diagonalization, -17.60373155517909, is the ground state there; at U = 7.74264 the ground state is 1.18e-6 higher, so the stored exact energy sat below the ground state of the instance as named. The DMRG row was run at U = 7.74264; the two couplings differ by 3.2e-6 and its energy is a valid bound at either, so it sits here too (merged 2026-11-13).",
-    // Merged 2026-11-13: the DMRG row, run at U = 7.74264, moves here too. The couplings differ by
-    // 3.2e-6 and the row is a valid bound at either (1.26e-6 above the ground state here), so no row
-    // tells the two instances apart.
-    keep: [],
+    from: "Hubbard/square_16_P_5_7.74264", to: "Hubbard/square_16_P_5_7.75", params: { U: 7.75 }, paper_label: true,
+    reason: reason("7.75", "7.74264"),
+    keep: [{ method: "Exact diagonalization", energy: -17.60373155517909, why: why("7.74264") },
+      { method: "DMRG (MaxBondDim = 7000)", energy: -17.6037303, why: why("7.74264") }],
+    exact: null,
+    ruled: RULED, evidence: PAPER,
   },
   {
-    // The DMRG run script here is a copy of the U = 10 file, so the script does not say at which U the
-    // row ran; its energy is a valid bound at 7.74264 and at 7.74263683. It stayed at 7.74264 from
-    // 2026-10-02 (the sibling 5 + 5 script and the variance pattern of the 4 + 4 series place it there)
-    // until the merge of 2026-11-13: the couplings differ by 3.2e-6, below any row's resolution.
-    from: "Hubbard/square_16_P_4_7.74264", to: "Hubbard/square_16_P_4_7.74263683", params: { U: 7.74263683 },
-    reason: "The name's 7.74264 rounds the coupling of this Hamiltonian, 7.74263683 (10^(8/9)). The exact diagonalization, -16.509154825265142, is the ground state there; at U = 7.74264 the ground state is 6.1e-7 higher, so the stored exact energy sat below the ground state of the instance as named. The DMRG row was run at U = 7.74264; the two couplings differ by 3.2e-6 and its energy is a valid bound at either, so it sits here too (merged 2026-11-13).",
-    keep: [],
+    // The DMRG row (-16.5091541) leaves for 7.75: see the header.
+    from: "Hubbard/square_16_P_4_7.74264", to: "Hubbard/square_16_P_4_7.75", params: { U: 7.75 }, paper_label: true,
+    reason: reason("7.75", "7.74264") + " The DMRG row of the 4 + 4 sector is here too: its script sets U = 10 (a copy of the U = 10 file), and its energy fits the printed exact energy at 7.75 to 7e-7 (ruled 2026-11-26).",
+    keep: [{ method: "Exact diagonalization", energy: -16.509154825265142, why: why("7.74264") }],
+    exact: null,
+    ruled: RULED, evidence: PAPER,
   },
   {
-    // Ground states at the two couplings differ by 3.0e-9. The DMRG row, run at 4.64158882, resolves
-    // them: its variance puts it within 7e-11 of the ground state there, and it sits 2.2e-9 below the
-    // one at 4.64158883, inside the validator's 1e-8 band. It stays at its own U.
-    from: "Hubbard/chain_14_P_4_4.64158882", to: "Hubbard/chain_14_P_4_4.64158883", params: { U: 4.64158883 },
-    reason: "The name's 4.64158882 misrounds the coupling of this Hamiltonian, 4.6415888336 (10^(6/9)). The exact diagonalization, -10.896957984833337, is the ground state at U = 4.64158883 and 3.03e-9 above the ground state at 4.64158882.",
-    keep: [{ method: "DMRG (MaxBondDim ~1500)", energy: -10.896957987,
-      why: "its run script sets U = 4.64158882. Its value is the ground state at that U truncated at the ninth decimal (8.6e-10 above it), and its variance, 8.2e-12, places the state within 7e-11 of that ground state (Temple's bound, next level -10.77209441); it sits 2.2e-9 below the ground state at 4.64158883, which no variational energy can." }],
+    // VarBench's run scripts set U = 4.64158882 for both rows; nothing moves. The exact row QMBL
+    // computed stays on the instance.
+    from: "Hubbard/chain_14_P_4_4.64158882", to: null, params: {}, paper_label: true,
+    reason: "VarBench's run scripts for both rows set U = 4.64158882. Ruled 2026-11-26: each row goes on the U its own source prints.",
+    keep: [{ method: "Exact diagonalization", energy: -10.896957984833337, why: why("4.64158882") },
+      { method: "DMRG (MaxBondDim ~1500)", energy: -10.896957987, why: why("4.64158882", " Its variance, 8.2e-12, places the state within 7e-11 of the ground state at that U.") }],
     exact: [-10.896957987861226, -10.896957987860604],
-    // The exact row left at the old coupling is marked as a row QMBL computed (DATA.md, computed_by).
     computed_by: "qmbl",
+    ruled: RULED,
   },
   {
     // Nothing was computed at nine bath sites, so both rows move and nothing stays behind.

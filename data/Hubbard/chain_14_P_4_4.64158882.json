@@ -10,6 +10,35 @@
   "instance_id": "Hubbard/chain_14_P_4_4.64158882",
   "rows": [
     {
+      "energy": -10.896957984833337,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": 5.304672937142857,
+      "v_score": null,
+      "method": "ED",
+      "ansatz": null,
+      "method_detail": "",
+      "method_as_published": "Exact diagonalization",
+      "family": "other",
+      "bound_type": "exact",
+      "bound_type_reason": "exact diagonalization|ex",
+      "reference": "[code](https://github.com/varbench/methods/blob/main/scripts/Hubbard/chain_14_P_4_4.64158882/ed_netket.sh)",
+      "source": "varbench@2024-10-22",
+      "provenance": "imported",
+      "baseline": true,
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/scripts/Hubbard/chain_14_P_4_4.64158882/ed_netket.sh",
+        "script": "scripts/Hubbard/chain_14_P_4_4.64158882/ed_netket.sh",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/scripts/Hubbard/chain_14_P_4_4.64158882/ed_netket.sh)",
+          "location": "VarBench table vendor/varbench/Hubbard/chain_14_P_4_4.64158882.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
+    },
+    {
       "energy": -10.896957987,
       "sigma": null,
       "energy_variance": 8.2e-12,
@@ -108,7 +137,7 @@
         "checked_on": "2026-09-16",
         "method": "Lanczos ED over the full fixed-(N_up, N_dn) space, no symmetry, t = 1: numpy/scipy (checks/hubbard-u-labels/ed_check.py) and node (ed_lib.mjs, run_fermions.mjs)",
         "reported_as": "-10.896957987861226 (ed_check.py) | -10.896957987860604 (ed_lib.mjs)",
-        "note": "Two independent codes agree to 6.2e-13. The DMRG (MaxBondDim ~1500) row: its run script sets U = 4.64158882. Its value is the ground state at that U truncated at the ninth decimal (8.6e-10 above it), and its variance, 8.2e-12, places the state within 7e-11 of that ground state (Temple's bound, next level -10.77209441); it sits 2.2e-9 below the ground state at 4.64158883, which no variational energy can.",
+        "note": "Two independent codes agree to 6.2e-13. The Exact diagonalization row: its run script sets U = 4.64158882; it stays on the U its script sets (ruled 2026-11-26). The DMRG (MaxBondDim ~1500) row: its run script sets U = 4.64158882; it stays on the U its script sets (ruled 2026-11-26). Its variance, 8.2e-12, places the state within 7e-11 of the ground state at that U.",
         "secondary_of": null
       },
       "artifacts": {
@@ -124,10 +153,15 @@
       }
     }
   ],
-  "split": {
-    "to": "Hubbard/chain_14_P_4_4.64158883",
-    "checked_on": "2026-09-16",
-    "reason": "Holds the rows run at U = 4.64158882, the coupling in VarBench's name, after the instance moved to U = 4.64158883. The name's 4.64158882 misrounds the coupling of this Hamiltonian, 4.6415888336 (10^(6/9)). The exact diagonalization, -10.896957984833337, is the ground state at U = 4.64158883 and 3.03e-9 above the ground state at 4.64158882.",
-    "evidence": "checks/hubbard-u-labels/"
-  }
+  "coverage": [
+    {
+      "checked_on": "2026-09-15",
+      "method": "table harvest of cached arXiv sources (match_tables.mjs --all), every matched paper read for this instance",
+      "screened": [
+        "arXiv:2502.17144"
+      ],
+      "found": 0,
+      "note": "Only papers whose tables matched the instance by size were read; not a citation screen."
+    }
+  ]
 }

@@ -959,6 +959,12 @@ coupling, the old id stays, with `split` and an exact row QMBL computed
 ([`checks/hubbard-u-labels/`](checks/hubbard-u-labels/)). The cases are listed in
 [`scripts/relabels.mjs`](scripts/relabels.mjs).
 
+The Hubbard 4x4 instances at U = 3.5981, 2.1544 and 7.74264 are not renamed (ruled 2026-11-26):
+they keep the rows VarBench's run scripts ran, and the instances at the paper's printed labels
+(U = 0.6, 2.15, 3.6, 7.75) hold the rows arXiv:2111.10420 prints there, with `relabelled.paper_label`
+and `split.paper_label` set on the entry's two ends. The exact row QMBL computed at the script's U
+stays on the instance (`computed_by`); whether it stays is a separate decision.
+
 ### Defects
 
 A `defect` carries:

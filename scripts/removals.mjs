@@ -3,6 +3,10 @@
 // them out after every row is in, so each removal is one entry here and the import scripts
 // stay unchanged.
 export const REMOVALS = [
+  // Ruled 2026-11-26: the four removals of the paper's 7-digit Hubbard 4x4 exact rows (U = 7.75, 2.15, 3.6,
+  // 7.75) as duplicates of VarBench's exact rows are withdrawn: VarBench's rows sit on the U their
+  // scripts set and the paper's on the paper's label, two instances. The duplicates of VarBench's VMC rows
+  // stay, on the instances at the paper's label, where those rows now are.
   // Duplicates: the same number carried twice. The row read from the original paper stays.
   {
     match: { instance: "Hubbard/square_256_PA_128_8", method: "AFQMC", energy: -134.25 },
@@ -149,15 +153,18 @@ export const REMOVALS = [
    "reason": "second exact row: the instance already carries ED -16.143208170202413 (varbench@2024-10-22); the printed value is that energy to 7 decimals (|diff| 7.0e-8), so this row repeats it (RULES.md 11, duplicates: remove, keep the earlier row)",
    "source_entry": "SE-exact-recompute#3 (qmbl-verify 2026-10-19)"
   },
+  // Ruled 2026-11-26 (Hubbard rows go on the U their own source prints): the paper's exact row of
+  // Table II at U = 7.75 repeats the one of Table I on the same instance, no longer repeated by
+  // VarBench's row (which sits on U = 7.74264).
   {
    "match": {
-    "instance": "Hubbard/square_16_P_4_7.74263683",
+    "instance": "Hubbard/square_16_P_4_7.75",
     "method": "Exact diagonalization",
     "energy": -16.509154
    },
-   "ruled": "2026-10-20: duplicate, the earlier row stays",
-   "reason": "second exact row: the instance already carries ED -16.509154825265142 (varbench@2024-10-22); the printed value is that energy to 7 decimals (|diff| 8.3e-7), so this row repeats it (RULES.md 11, duplicates: remove, keep the earlier row)",
-   "source_entry": "SE-exact-recompute#5 (qmbl-verify 2026-10-19)"
+   "ruled": "2026-11-26: duplicate, the earlier row stays",
+   "reason": "second exact row: the instance already carries the paper's ED -16.5091548(2) (arXiv:2111.10420 Table I, column U = 7.75, sources/2111.10420.txt line 1178); Table II prints the same value as -16.509154(8) in its U = 7.75 column (line 1193), |diff| 8.0e-7, so this row repeats it (RULES.md 11, duplicates: remove, keep the earlier row). Table II prints the same -16.509154(8) in its U = 10 column as well (line 1193), where Table I prints -16.1432081(7).",
+   "source_entry": "SE-exact-recompute#5 (qmbl-verify 2026-10-19); ruled 2026-11-26 (retro-qmbl-evidence hubbard-u)"
   },
   {
    "match": {
@@ -168,36 +175,6 @@ export const REMOVALS = [
    "ruled": "2026-10-20: duplicate, the earlier row stays",
    "reason": "second exact row: the instance already carries ED -16.903559984243547 (varbench@2024-10-22); the printed value is that energy to 7 decimals (|diff| 8.4e-8), so this row repeats it (RULES.md 11, duplicates: remove, keep the earlier row)",
    "source_entry": "SE-exact-recompute#6 (qmbl-verify 2026-10-19)"
-  },
-  {
-   "match": {
-    "instance": "Hubbard/square_16_P_5_2.15443469",
-    "method": "Exact diagonalization",
-    "energy": -21.2122357
-   },
-   "ruled": "2026-10-20: duplicate, the earlier row stays",
-   "reason": "second exact row: the instance already carries ED -21.21223577699911 (varbench@2024-10-22); the printed value is that energy to 7 decimals (|diff| 7.7e-8), so this row repeats it (RULES.md 11, duplicates: remove, keep the earlier row)",
-   "source_entry": "SE-exact-recompute#7 (qmbl-verify 2026-10-19)"
-  },
-  {
-   "match": {
-    "instance": "Hubbard/square_16_P_5_3.59381366",
-    "method": "Exact diagonalization",
-    "energy": -19.8916371
-   },
-   "ruled": "2026-10-20: duplicate, the earlier row stays",
-   "reason": "second exact row: the instance already carries ED -19.891637199948672 (varbench@2024-10-22); the printed value is that energy to 7 decimals (|diff| 1.0e-7), so this row repeats it (RULES.md 11, duplicates: remove, keep the earlier row)",
-   "source_entry": "SE-exact-recompute#8 (qmbl-verify 2026-10-19)"
-  },
-  {
-   "match": {
-    "instance": "Hubbard/square_16_P_5_7.74263683",
-    "method": "Exact diagonalization",
-    "energy": -17.6037315
-   },
-   "ruled": "2026-10-20: duplicate, the earlier row stays",
-   "reason": "second exact row: the instance already carries ED -17.60373155517909 (varbench@2024-10-22); the printed value is that energy to 7 decimals (|diff| 5.5e-8), so this row repeats it (RULES.md 11, duplicates: remove, keep the earlier row)",
-   "source_entry": "SE-exact-recompute#9 (qmbl-verify 2026-10-19)"
   },
   {
    "match": {
@@ -251,7 +228,7 @@ export const REMOVALS = [
   },
   {
    "match": {
-    "instance": "Hubbard/square_16_P_4_3.59381366",
+    "instance": "Hubbard/square_16_P_4_3.6",
     "method": "HFDS (8 hidden fermions, single hidden layer, α = 32)",
     "energy": -17.69357
    },
@@ -261,7 +238,7 @@ export const REMOVALS = [
   },
   {
    "match": {
-    "instance": "Hubbard/square_16_P_4_7.74263683",
+    "instance": "Hubbard/square_16_P_4_7.75",
     "method": "HFDS (8 hidden fermions, single hidden layer, α = 32)",
     "energy": -16.505
    },
@@ -281,7 +258,7 @@ export const REMOVALS = [
   },
   {
    "match": {
-    "instance": "Hubbard/square_16_P_5_2.15443469",
+    "instance": "Hubbard/square_16_P_5_2.15",
     "method": "HFDS (10 hidden fermions, α = 64) + (C4 ∩ K = 0)",
     "energy": -21.211896
    },
@@ -291,7 +268,7 @@ export const REMOVALS = [
   },
   {
    "match": {
-    "instance": "Hubbard/square_16_P_5_3.59381366",
+    "instance": "Hubbard/square_16_P_5_3.6",
     "method": "HFDS (10 hidden fermions, α = 64) + (C4 ∩ K = 0)",
     "energy": -19.890443
    },
@@ -301,7 +278,7 @@ export const REMOVALS = [
   },
   {
    "match": {
-    "instance": "Hubbard/square_16_P_5_7.74263683",
+    "instance": "Hubbard/square_16_P_5_7.75",
     "method": "HFDS (10 hidden fermions, α = 64) + (C4 ∩ K = 0)",
     "energy": -17.602
    },

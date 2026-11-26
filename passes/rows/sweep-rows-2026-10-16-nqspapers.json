@@ -954,7 +954,17 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_3.5981",
+  "instance_id": "Hubbard/square_16_P_4_3.6",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 3.6
+   }
+  },
   "eps": -1.106126875,
   "tol": 3.2e-9,
   "sigma_per_site": 6.2e-9,
@@ -966,7 +976,7 @@
   "method": "Exact diagonalization",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table I, U=3.6, column ED; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.6980300(1)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -974,7 +984,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_3.5981",
+  "instance_id": "Hubbard/square_16_P_4_3.6",
   "eps": -1.103531875,
   "tol": 3.2e-7,
   "sigma_per_site": 0.000004375,
@@ -986,7 +996,7 @@
   "method": "HFDS (8 hidden fermions, single hidden layer, α = 0.5)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table I, U=3.6, column HFDS alpha=0.5; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#61: sigma 0.0000704 -> 0.00007 (The table prints totals, so the bar is 0.00007 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.6%. Same fix as the trailing-float-noise ruling: store sigma_per_)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.65651(7)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -994,7 +1004,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_3.5981",
+  "instance_id": "Hubbard/square_16_P_4_3.6",
   "eps": -1.105239375,
   "tol": 3.2e-7,
   "sigma_per_site": 0.000005625,
@@ -1006,7 +1016,7 @@
   "method": "HFDS (8 hidden fermions, single hidden layer, α = 1)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table I, U=3.6, column HFDS alpha=1; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#62: sigma 0.0000896 -> 0.00009 (The table prints totals, so the bar is 0.00009 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.4%. Same fix as the trailing-float-noise ruling: store sigma_per_)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.68383(9)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -1014,7 +1024,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_3.5981",
+  "instance_id": "Hubbard/square_16_P_4_3.6",
   "eps": -1.10558125,
   "tol": 0.0000032,
   "sigma_per_site": 0.00000625,
@@ -1026,7 +1036,7 @@
   "method": "HFDS (8 hidden fermions, single hidden layer, α = 2)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table I, U=3.6, column HFDS alpha=2; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#63: sigma 0.0001008 -> 0.0001 (The table prints totals, so the bar is 0.0001 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_s)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.6893(1)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -1034,7 +1044,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_3.5981",
+  "instance_id": "Hubbard/square_16_P_4_3.6",
   "eps": -1.10560625,
   "tol": 0.0000032,
   "sigma_per_site": 0.000025,
@@ -1046,7 +1056,7 @@
   "method": "HFDS (8 hidden fermions, single hidden layer, α = 4)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table I, U=3.6, column HFDS alpha=4; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.6897(4)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -1054,7 +1064,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_3.5981",
+  "instance_id": "Hubbard/square_16_P_4_3.6",
   "eps": -1.10578125,
   "tol": 0.0000032,
   "sigma_per_site": 0.0000375,
@@ -1066,7 +1076,7 @@
   "method": "HFDS (8 hidden fermions, single hidden layer, α = 8)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table I, U=3.6, column HFDS alpha=8; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#65: sigma 0.000608 -> 0.0006 (The table prints totals, so the bar is 0.0006 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_s)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.6925(6)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -1074,7 +1084,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_3.5981",
+  "instance_id": "Hubbard/square_16_P_4_3.6",
   "eps": -1.10580625,
   "tol": 0.0000032,
   "sigma_per_site": 0.00005,
@@ -1086,7 +1096,7 @@
   "method": "HFDS (8 hidden fermions, single hidden layer, α = 16)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table I, U=3.6, column HFDS alpha=16; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.6929(8)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -1094,7 +1104,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_3.5981",
+  "instance_id": "Hubbard/square_16_P_4_3.6",
   "eps": -1.105848125,
   "tol": 3.2e-7,
   "sigma_per_site": 0.0000025,
@@ -1106,7 +1116,7 @@
   "method": "HFDS (8 hidden fermions, single hidden layer, α = 32)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table I, U=3.6, column HFDS alpha=32; sources/2111.10420.txt line 1177; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.69357(4)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -1114,7 +1124,17 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_7.74264",
+  "instance_id": "Hubbard/square_16_P_4_7.75",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 7.75
+   }
+  },
   "eps": -1.031822175,
   "tol": 3.2e-9,
   "sigma_per_site": 1.2e-8,
@@ -1126,7 +1146,7 @@
   "method": "Exact diagonalization",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table I, U=7.75, column ED; sources/2111.10420.txt line 1178; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-16.5091548(2)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -1134,7 +1154,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_7.74264",
+  "instance_id": "Hubbard/square_16_P_4_7.75",
   "eps": -1.026225,
   "tol": 0.0000032,
   "sigma_per_site": 0.000025,
@@ -1146,7 +1166,7 @@
   "method": "HFDS (8 hidden fermions, single hidden layer, α = 0.5)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table I, U=7.75, column HFDS alpha=0.5; sources/2111.10420.txt line 1178; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-16.4196(4)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -1154,7 +1174,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_7.74264",
+  "instance_id": "Hubbard/square_16_P_4_7.75",
   "eps": -1.03014375,
   "tol": 0.0000032,
   "sigma_per_site": 0.0000375,
@@ -1166,7 +1186,7 @@
   "method": "HFDS (8 hidden fermions, single hidden layer, α = 1)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table I, U=7.75, column HFDS alpha=1; sources/2111.10420.txt line 1178; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#77: sigma 0.000608 -> 0.0006 (The table prints totals, so the bar is 0.0006 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_s)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-16.4823(6)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -1174,7 +1194,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_7.74264",
+  "instance_id": "Hubbard/square_16_P_4_7.75",
   "eps": -1.03058125,
   "tol": 0.0000032,
   "sigma_per_site": 0.00001875,
@@ -1186,7 +1206,7 @@
   "method": "HFDS (8 hidden fermions, single hidden layer, α = 2)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table I, U=7.75, column HFDS alpha=2; sources/2111.10420.txt line 1178; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#78: sigma 0.000304 -> 0.0003 (The table prints totals, so the bar is 0.0003 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_s)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-16.4893(3)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -1194,7 +1214,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_7.74264",
+  "instance_id": "Hubbard/square_16_P_4_7.75",
   "eps": -1.03099375,
   "tol": 0.0000032,
   "sigma_per_site": 0.000025,
@@ -1206,7 +1226,7 @@
   "method": "HFDS (8 hidden fermions, single hidden layer, α = 4)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table I, U=7.75, column HFDS alpha=4; sources/2111.10420.txt line 1178; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-16.4959(4)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -1214,7 +1234,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_7.74264",
+  "instance_id": "Hubbard/square_16_P_4_7.75",
   "eps": -1.031,
   "tol": 0.0000032,
   "sigma_per_site": 0.00001875,
@@ -1226,7 +1246,7 @@
   "method": "HFDS (8 hidden fermions, single hidden layer, α = 8)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table I, U=7.75, column HFDS alpha=8; sources/2111.10420.txt line 1178; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#80: sigma 0.000304 -> 0.0003 (The table prints totals, so the bar is 0.0003 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_s)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-16.4960(3)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -1234,7 +1254,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_7.74264",
+  "instance_id": "Hubbard/square_16_P_4_7.75",
   "eps": -1.031375,
   "tol": 0.000032,
   "sigma_per_site": 0.0001875,
@@ -1246,7 +1266,7 @@
   "method": "HFDS (8 hidden fermions, single hidden layer, α = 16)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table I, U=7.75, column HFDS alpha=16; sources/2111.10420.txt line 1178; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#81: sigma 0.00304 -> 0.003 (The table prints totals, so the bar is 0.003 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_si)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-16.502(3)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -1254,7 +1274,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_7.74264",
+  "instance_id": "Hubbard/square_16_P_4_7.75",
   "eps": -1.0315625,
   "tol": 0.000032,
   "sigma_per_site": 0.000063,
@@ -1266,7 +1286,7 @@
   "method": "HFDS (8 hidden fermions, single hidden layer, α = 32)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table I, U=7.75, column HFDS alpha=32; sources/2111.10420.txt line 1178; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-16.505(1)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -1464,7 +1484,17 @@
   }
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_0.59948425",
+  "instance_id": "Hubbard/square_16_P_4_0.6",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 0.6
+   }
+  },
   "eps": -1.21717270625,
   "tol": 3.2e-9,
   "sigma_per_site": null,
@@ -1476,22 +1506,12 @@
   "method": "Exact diagonalization",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=0.6, row ED; sources/2111.10420.txt line 1193; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#18: sigma 1.92e-7 -> null (RULES.md 6: \"A deterministic energy has no sigma to give\" (exact diagonalization). The parenthesised digit in the ED column is the precision of the printed ED number, not a statistical error; every ot)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-19.4747633(2)",
   "confidence": "high",
   "verified_by": "single reading",
   "variance_as_reported": null,
-  "defect": null,
-  "create": {
-   "model": "Hubbard",
-   "lattice": "square",
-   "n_sites": 16,
-   "boundary": "P",
-   "params": {
-    "Nf": 4,
-    "U": 0.59948425
-   }
-  }
+  "defect": null
  },
  {
   "instance_id": "Hubbard/square_16_P_4_1",
@@ -1524,7 +1544,17 @@
   }
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_2.15443469",
+  "instance_id": "Hubbard/square_16_P_4_2.15",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 2.15
+   }
+  },
   "eps": -1.15033255,
   "tol": 3.2e-9,
   "sigma_per_site": null,
@@ -1536,25 +1566,15 @@
   "method": "Exact diagonalization",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=2.15, row ED; sources/2111.10420.txt line 1193; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#52: sigma 8e-7 -> null (RULES.md 6: \"A deterministic energy has no sigma to give\" (exact diagonalization). The parenthesised digit in the ED column is the precision of the printed ED number, not a statistical error; every ot)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-18.4053208(8)",
   "confidence": "high",
   "verified_by": "single reading",
   "variance_as_reported": null,
-  "defect": null,
-  "create": {
-   "model": "Hubbard",
-   "lattice": "square",
-   "n_sites": 16,
-   "boundary": "P",
-   "params": {
-    "Nf": 4,
-    "U": 2.15443469
-   }
-  }
+  "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_3.5981",
+  "instance_id": "Hubbard/square_16_P_4_3.6",
   "eps": -1.106126875,
   "tol": 3.2e-8,
   "sigma_per_site": 6.2e-8,
@@ -1566,7 +1586,7 @@
   "method": "Exact diagonalization",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=3.6, row ED; sources/2111.10420.txt line 1193; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.698030(1)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -1574,7 +1594,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_7.74264",
+  "instance_id": "Hubbard/square_16_P_4_7.75",
   "eps": -1.031822125,
   "tol": 3.2e-8,
   "sigma_per_site": 5e-7,
@@ -1586,7 +1606,7 @@
   "method": "Exact diagonalization",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=7.75, row ED; sources/2111.10420.txt line 1193; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-16.509154(8)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -1624,7 +1644,17 @@
   }
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_0.59948425",
+  "instance_id": "Hubbard/square_16_P_4_0.6",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 0.6
+   }
+  },
   "eps": -1.214375,
   "tol": 0.00032,
   "sigma_per_site": 0.001875,
@@ -1636,22 +1666,12 @@
   "method": "USD (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=0.6, row USD; sources/2111.10420.txt line 1194; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#19: sigma 0.0304 -> 0.03 (The table prints totals, so the bar is 0.03 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_sit)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-19.43(3)",
   "confidence": "high",
   "verified_by": "single reading",
   "variance_as_reported": null,
-  "defect": null,
-  "create": {
-   "model": "Hubbard",
-   "lattice": "square",
-   "n_sites": 16,
-   "boundary": "P",
-   "params": {
-    "Nf": 4,
-    "U": 0.59948425
-   }
-  }
+  "defect": null
  },
  {
   "instance_id": "Hubbard/square_16_P_4_1",
@@ -1684,7 +1704,17 @@
   }
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_2.15443469",
+  "instance_id": "Hubbard/square_16_P_4_2.15",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 2.15
+   }
+  },
   "eps": -1.12875,
   "tol": 0.00032,
   "sigma_per_site": 0.00375,
@@ -1696,25 +1726,15 @@
   "method": "USD (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=2.15, row USD; sources/2111.10420.txt line 1194; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#53: sigma 0.0592 -> 0.06 (The table prints totals, so the bar is 0.06 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_sit)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-18.06(6)",
   "confidence": "high",
   "verified_by": "single reading",
   "variance_as_reported": null,
-  "defect": null,
-  "create": {
-   "model": "Hubbard",
-   "lattice": "square",
-   "n_sites": 16,
-   "boundary": "P",
-   "params": {
-    "Nf": 4,
-    "U": 2.15443469
-   }
-  }
+  "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_3.5981",
+  "instance_id": "Hubbard/square_16_P_4_3.6",
   "eps": -1.053125,
   "tol": 0.00032,
   "sigma_per_site": 0.005,
@@ -1726,7 +1746,7 @@
   "method": "USD (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=3.6, row USD; sources/2111.10420.txt line 1194; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-16.85(8)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -1734,7 +1754,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_7.74264",
+  "instance_id": "Hubbard/square_16_P_4_7.75",
   "eps": -0.8975,
   "tol": 0.00032,
   "sigma_per_site": 0.005,
@@ -1746,7 +1766,7 @@
   "method": "USD (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=7.75, row USD; sources/2111.10420.txt line 1194; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-14.36(8)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -1804,7 +1824,17 @@
   }
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_0.59948425",
+  "instance_id": "Hubbard/square_16_P_4_0.6",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 0.6
+   }
+  },
   "eps": -1.21675,
   "tol": 0.000032,
   "sigma_per_site": 0.0000625,
@@ -1816,22 +1846,12 @@
   "method": "USD (Gutzwiller) (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=0.6, row USD (Gutzwiller); sources/2111.10420.txt line 1195; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#20: sigma 0.001008 -> 0.001 (The table prints totals, so the bar is 0.001 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_si)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-19.468(1)",
   "confidence": "high",
   "verified_by": "single reading",
   "variance_as_reported": null,
-  "defect": null,
-  "create": {
-   "model": "Hubbard",
-   "lattice": "square",
-   "n_sites": 16,
-   "boundary": "P",
-   "params": {
-    "Nf": 4,
-    "U": 0.59948425
-   }
-  }
+  "defect": null
  },
  {
   "instance_id": "Hubbard/square_16_P_4_1",
@@ -1864,7 +1884,17 @@
   }
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_2.15443469",
+  "instance_id": "Hubbard/square_16_P_4_2.15",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 2.15
+   }
+  },
   "eps": -1.144125,
   "tol": 0.000032,
   "sigma_per_site": 0.0001875,
@@ -1876,25 +1906,15 @@
   "method": "USD (Gutzwiller) (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=2.15, row USD (Gutzwiller); sources/2111.10420.txt line 1195; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#54: sigma 0.00304 -> 0.003 (The table prints totals, so the bar is 0.003 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_si)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-18.306(3)",
   "confidence": "high",
   "verified_by": "single reading",
   "variance_as_reported": null,
-  "defect": null,
-  "create": {
-   "model": "Hubbard",
-   "lattice": "square",
-   "n_sites": 16,
-   "boundary": "P",
-   "params": {
-    "Nf": 4,
-    "U": 2.15443469
-   }
-  }
+  "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_3.5981",
+  "instance_id": "Hubbard/square_16_P_4_3.6",
   "eps": -1.097,
   "tol": 0.000032,
   "sigma_per_site": 0.0000625,
@@ -1906,7 +1926,7 @@
   "method": "USD (Gutzwiller) (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=3.6, row USD (Gutzwiller); sources/2111.10420.txt line 1195; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#69: sigma 0.001008 -> 0.001 (The table prints totals, so the bar is 0.001 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_si)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.552(1)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -1914,7 +1934,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_7.74264",
+  "instance_id": "Hubbard/square_16_P_4_7.75",
   "eps": -1.0136875,
   "tol": 0.000032,
   "sigma_per_site": 0.0000625,
@@ -1926,7 +1946,7 @@
   "method": "USD (Gutzwiller) (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=7.75, row USD (Gutzwiller); sources/2111.10420.txt line 1195; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#85: sigma 0.001008 -> 0.001 (The table prints totals, so the bar is 0.001 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_si)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-16.219(1)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -1984,7 +2004,17 @@
   }
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_0.59948425",
+  "instance_id": "Hubbard/square_16_P_4_0.6",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 0.6
+   }
+  },
   "eps": -1.21677,
   "tol": 3.2e-7,
   "sigma_per_site": 0.00000375,
@@ -1996,22 +2026,12 @@
   "method": "USD (Jastrow) (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=0.6, row USD (Jastrow); sources/2111.10420.txt line 1196; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#21: sigma 0.0000608 -> 0.00006 (The table prints totals, so the bar is 0.00006 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-19.46832(6)",
   "confidence": "high",
   "verified_by": "single reading",
   "variance_as_reported": null,
-  "defect": null,
-  "create": {
-   "model": "Hubbard",
-   "lattice": "square",
-   "n_sites": 16,
-   "boundary": "P",
-   "params": {
-    "Nf": 4,
-    "U": 0.59948425
-   }
-  }
+  "defect": null
  },
  {
   "instance_id": "Hubbard/square_16_P_4_1",
@@ -2044,7 +2064,17 @@
   }
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_2.15443469",
+  "instance_id": "Hubbard/square_16_P_4_2.15",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 2.15
+   }
+  },
   "eps": -1.14483125,
   "tol": 0.0000032,
   "sigma_per_site": 0.0000125,
@@ -2056,25 +2086,15 @@
   "method": "USD (Jastrow) (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=2.15, row USD (Jastrow); sources/2111.10420.txt line 1196; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#55: sigma 0.000208 -> 0.0002 (The table prints totals, so the bar is 0.0002 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 4.0%. Same fix as the trailing-float-noise ruling: store sigma_per_s)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-18.3173(2)",
   "confidence": "high",
   "verified_by": "single reading",
   "variance_as_reported": null,
-  "defect": null,
-  "create": {
-   "model": "Hubbard",
-   "lattice": "square",
-   "n_sites": 16,
-   "boundary": "P",
-   "params": {
-    "Nf": 4,
-    "U": 2.15443469
-   }
-  }
+  "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_3.5981",
+  "instance_id": "Hubbard/square_16_P_4_3.6",
   "eps": -1.09679375,
   "tol": 0.0000032,
   "sigma_per_site": 0.00001875,
@@ -2086,7 +2106,7 @@
   "method": "USD (Jastrow) (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=3.6, row USD (Jastrow); sources/2111.10420.txt line 1196; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#70: sigma 0.000304 -> 0.0003 (The table prints totals, so the bar is 0.0003 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_s)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.5487(3)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -2094,7 +2114,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_7.74264",
+  "instance_id": "Hubbard/square_16_P_4_7.75",
   "eps": -1.018325,
   "tol": 0.0000032,
   "sigma_per_site": 0.00003125,
@@ -2106,7 +2126,7 @@
   "method": "USD (Jastrow) (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=7.75, row USD (Jastrow); sources/2111.10420.txt line 1196; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#86: sigma 0.000496 -> 0.0005 (The table prints totals, so the bar is 0.0005 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_s)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-16.2932(5)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -2164,7 +2184,17 @@
   }
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_0.59948425",
+  "instance_id": "Hubbard/square_16_P_4_0.6",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 0.6
+   }
+  },
   "eps": -1.2170525,
   "tol": 3.2e-7,
   "sigma_per_site": 6.25e-7,
@@ -2176,22 +2206,12 @@
   "method": "USD (RBM) (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=0.6, row USD (RBM); sources/2111.10420.txt line 1197; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#22: sigma 0.00001008 -> 0.00001 (The table prints totals, so the bar is 0.00001 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-19.47284(1)",
   "confidence": "high",
   "verified_by": "single reading",
   "variance_as_reported": null,
-  "defect": null,
-  "create": {
-   "model": "Hubbard",
-   "lattice": "square",
-   "n_sites": 16,
-   "boundary": "P",
-   "params": {
-    "Nf": 4,
-    "U": 0.59948425
-   }
-  }
+  "defect": null
  },
  {
   "instance_id": "Hubbard/square_16_P_4_1",
@@ -2224,7 +2244,17 @@
   }
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_2.15443469",
+  "instance_id": "Hubbard/square_16_P_4_2.15",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 2.15
+   }
+  },
   "eps": -1.1483875,
   "tol": 3.2e-7,
   "sigma_per_site": 0.000004375,
@@ -2236,25 +2266,15 @@
   "method": "USD (RBM) (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=2.15, row USD (RBM); sources/2111.10420.txt line 1197; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#56: sigma 0.0000704 -> 0.00007 (The table prints totals, so the bar is 0.00007 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.6%. Same fix as the trailing-float-noise ruling: store sigma_per_)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-18.37420(7)",
   "confidence": "high",
   "verified_by": "single reading",
   "variance_as_reported": null,
-  "defect": null,
-  "create": {
-   "model": "Hubbard",
-   "lattice": "square",
-   "n_sites": 16,
-   "boundary": "P",
-   "params": {
-    "Nf": 4,
-    "U": 2.15443469
-   }
-  }
+  "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_3.5981",
+  "instance_id": "Hubbard/square_16_P_4_3.6",
   "eps": -1.10115,
   "tol": 0.0000032,
   "sigma_per_site": 0.00000625,
@@ -2266,7 +2286,7 @@
   "method": "USD (RBM) (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=3.6, row USD (RBM); sources/2111.10420.txt line 1197; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#71: sigma 0.0001008 -> 0.0001 (The table prints totals, so the bar is 0.0001 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_s)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.6184(1)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -2274,7 +2294,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_7.74264",
+  "instance_id": "Hubbard/square_16_P_4_7.75",
   "eps": -1.02254375,
   "tol": 0.0000032,
   "sigma_per_site": 0.0000125,
@@ -2286,7 +2306,7 @@
   "method": "USD (RBM) (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=7.75, row USD (RBM); sources/2111.10420.txt line 1197; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#87: sigma 0.000208 -> 0.0002 (The table prints totals, so the bar is 0.0002 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 4.0%. Same fix as the trailing-float-noise ruling: store sigma_per_s)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-16.3607(2)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -2344,7 +2364,17 @@
   }
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_0.59948425",
+  "instance_id": "Hubbard/square_16_P_4_0.6",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 0.6
+   }
+  },
   "eps": -1.216666875,
   "tol": 3.2e-7,
   "sigma_per_site": 0.00000125,
@@ -2356,22 +2386,12 @@
   "method": "Gutzwiller inspired CF (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=0.6, row Gutzwiller inspired CF; sources/2111.10420.txt line 1198; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#23: sigma 0.0000208 -> 0.00002 (The table prints totals, so the bar is 0.00002 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 4.0%. Same fix as the trailing-float-noise ruling: store sigma_per_)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-19.46667(2)",
   "confidence": "high",
   "verified_by": "single reading",
   "variance_as_reported": null,
-  "defect": null,
-  "create": {
-   "model": "Hubbard",
-   "lattice": "square",
-   "n_sites": 16,
-   "boundary": "P",
-   "params": {
-    "Nf": 4,
-    "U": 0.59948425
-   }
-  }
+  "defect": null
  },
  {
   "instance_id": "Hubbard/square_16_P_4_1",
@@ -2404,7 +2424,17 @@
   }
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_2.15443469",
+  "instance_id": "Hubbard/square_16_P_4_2.15",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 2.15
+   }
+  },
   "eps": -1.14521625,
   "tol": 3.2e-7,
   "sigma_per_site": 0.000005,
@@ -2416,25 +2446,15 @@
   "method": "Gutzwiller inspired CF (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=2.15, row Gutzwiller inspired CF; sources/2111.10420.txt line 1198; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-18.32346(8)",
   "confidence": "high",
   "verified_by": "single reading",
   "variance_as_reported": null,
-  "defect": null,
-  "create": {
-   "model": "Hubbard",
-   "lattice": "square",
-   "n_sites": 16,
-   "boundary": "P",
-   "params": {
-    "Nf": 4,
-    "U": 2.15443469
-   }
-  }
+  "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_3.5981",
+  "instance_id": "Hubbard/square_16_P_4_3.6",
   "eps": -1.098918125,
   "tol": 3.2e-7,
   "sigma_per_site": 0.000005625,
@@ -2446,7 +2466,7 @@
   "method": "Gutzwiller inspired CF (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=3.6, row Gutzwiller inspired CF; sources/2111.10420.txt line 1198; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#72: sigma 0.0000896 -> 0.00009 (The table prints totals, so the bar is 0.00009 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.4%. Same fix as the trailing-float-noise ruling: store sigma_per_)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.58269(9)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -2454,7 +2474,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_7.74264",
+  "instance_id": "Hubbard/square_16_P_4_7.75",
   "eps": -1.01496875,
   "tol": 0.0000032,
   "sigma_per_site": 0.00000625,
@@ -2466,7 +2486,7 @@
   "method": "Gutzwiller inspired CF (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=7.75, row Gutzwiller inspired CF; sources/2111.10420.txt line 1198; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#88: sigma 0.0001008 -> 0.0001 (The table prints totals, so the bar is 0.0001 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_s)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-16.2395(1)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -2524,7 +2544,17 @@
   }
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_0.59948425",
+  "instance_id": "Hubbard/square_16_P_4_0.6",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 0.6
+   }
+  },
   "eps": -1.21682375,
   "tol": 3.2e-7,
   "sigma_per_site": 6.25e-7,
@@ -2536,22 +2566,12 @@
   "method": "Unrestricted hidden spin (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=0.6, row Unrestricted hidden spin; sources/2111.10420.txt line 1199; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#24: sigma 0.00001008 -> 0.00001 (The table prints totals, so the bar is 0.00001 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-19.46918(1)",
   "confidence": "high",
   "verified_by": "single reading",
   "variance_as_reported": null,
-  "defect": null,
-  "create": {
-   "model": "Hubbard",
-   "lattice": "square",
-   "n_sites": 16,
-   "boundary": "P",
-   "params": {
-    "Nf": 4,
-    "U": 0.59948425
-   }
-  }
+  "defect": null
  },
  {
   "instance_id": "Hubbard/square_16_P_4_1",
@@ -2584,7 +2604,17 @@
   }
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_2.15443469",
+  "instance_id": "Hubbard/square_16_P_4_2.15",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 2.15
+   }
+  },
   "eps": -1.146051875,
   "tol": 3.2e-7,
   "sigma_per_site": 0.000004375,
@@ -2596,25 +2626,15 @@
   "method": "Unrestricted hidden spin (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=2.15, row Unrestricted hidden spin; sources/2111.10420.txt line 1199; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#58: sigma 0.0000704 -> 0.00007 (The table prints totals, so the bar is 0.00007 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.6%. Same fix as the trailing-float-noise ruling: store sigma_per_)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-18.33683(7)",
   "confidence": "high",
   "verified_by": "single reading",
   "variance_as_reported": null,
-  "defect": null,
-  "create": {
-   "model": "Hubbard",
-   "lattice": "square",
-   "n_sites": 16,
-   "boundary": "P",
-   "params": {
-    "Nf": 4,
-    "U": 2.15443469
-   }
-  }
+  "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_3.5981",
+  "instance_id": "Hubbard/square_16_P_4_3.6",
   "eps": -1.09893,
   "tol": 3.2e-7,
   "sigma_per_site": 0.000005,
@@ -2626,7 +2646,7 @@
   "method": "Unrestricted hidden spin (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=3.6, row Unrestricted hidden spin; sources/2111.10420.txt line 1199; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.58288(8)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -2664,7 +2684,17 @@
   }
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_0.59948425",
+  "instance_id": "Hubbard/square_16_P_4_0.6",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 0.6
+   }
+  },
   "eps": -1.21561125,
   "tol": 3.2e-7,
   "sigma_per_site": 0.0000025,
@@ -2676,22 +2706,12 @@
   "method": "Jastrow inspired CF (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=0.6, row Jastrow inspired CF; sources/2111.10420.txt line 1200; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-19.44978(4)",
   "confidence": "high",
   "verified_by": "single reading",
   "variance_as_reported": null,
-  "defect": null,
-  "create": {
-   "model": "Hubbard",
-   "lattice": "square",
-   "n_sites": 16,
-   "boundary": "P",
-   "params": {
-    "Nf": 4,
-    "U": 0.59948425
-   }
-  }
+  "defect": null
  },
  {
   "instance_id": "Hubbard/square_16_P_4_1",
@@ -2724,7 +2744,17 @@
   }
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_2.15443469",
+  "instance_id": "Hubbard/square_16_P_4_2.15",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 2.15
+   }
+  },
   "eps": -1.11433125,
   "tol": 0.0000032,
   "sigma_per_site": 0.0000125,
@@ -2736,25 +2766,15 @@
   "method": "Jastrow inspired CF (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=2.15, row Jastrow inspired CF; sources/2111.10420.txt line 1200; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#59: sigma 0.000208 -> 0.0002 (The table prints totals, so the bar is 0.0002 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 4.0%. Same fix as the trailing-float-noise ruling: store sigma_per_s)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.8293(2)",
   "confidence": "high",
   "verified_by": "single reading",
   "variance_as_reported": null,
-  "defect": null,
-  "create": {
-   "model": "Hubbard",
-   "lattice": "square",
-   "n_sites": 16,
-   "boundary": "P",
-   "params": {
-    "Nf": 4,
-    "U": 2.15443469
-   }
-  }
+  "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_3.5981",
+  "instance_id": "Hubbard/square_16_P_4_3.6",
   "eps": -1.0543375,
   "tol": 0.0000032,
   "sigma_per_site": 0.0000125,
@@ -2766,7 +2786,7 @@
   "method": "Jastrow inspired CF (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=3.6, row Jastrow inspired CF; sources/2111.10420.txt line 1200; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#74: sigma 0.000208 -> 0.0002 (The table prints totals, so the bar is 0.0002 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 4.0%. Same fix as the trailing-float-noise ruling: store sigma_per_s)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-16.8694(2)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -2774,7 +2794,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_7.74264",
+  "instance_id": "Hubbard/square_16_P_4_7.75",
   "eps": -0.88283125,
   "tol": 0.0000032,
   "sigma_per_site": 0.000025,
@@ -2786,7 +2806,7 @@
   "method": "Jastrow inspired CF (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=7.75, row Jastrow inspired CF; sources/2111.10420.txt line 1200; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-14.1253(4)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -2845,7 +2865,17 @@
   }
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_0.59948425",
+  "instance_id": "Hubbard/square_16_P_4_0.6",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 0.6
+   }
+  },
   "eps": -1.2170525,
   "tol": 3.2e-7,
   "sigma_per_site": 6.3e-7,
@@ -2858,22 +2888,12 @@
   "same_value_distinct_method": true,
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=0.6, row Gutzwiller inspired CF(RBM); sources/2111.10420.txt line 1201; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-19.47284(1)",
   "confidence": "high",
   "verified_by": "single reading",
   "variance_as_reported": null,
-  "defect": null,
-  "create": {
-   "model": "Hubbard",
-   "lattice": "square",
-   "n_sites": 16,
-   "boundary": "P",
-   "params": {
-    "Nf": 4,
-    "U": 0.59948425
-   }
-  }
+  "defect": null
  },
  {
   "instance_id": "Hubbard/square_16_P_4_1",
@@ -2907,7 +2927,17 @@
   }
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_2.15443469",
+  "instance_id": "Hubbard/square_16_P_4_2.15",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 2.15
+   }
+  },
   "eps": -1.1483875,
   "tol": 3.2e-7,
   "sigma_per_site": 0.0000038,
@@ -2920,25 +2950,15 @@
   "same_value_distinct_method": true,
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=2.15, row Gutzwiller inspired CF(RBM); sources/2111.10420.txt line 1201; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-18.37420(6)",
   "confidence": "high",
   "verified_by": "single reading",
   "variance_as_reported": null,
-  "defect": null,
-  "create": {
-   "model": "Hubbard",
-   "lattice": "square",
-   "n_sites": 16,
-   "boundary": "P",
-   "params": {
-    "Nf": 4,
-    "U": 2.15443469
-   }
-  }
+  "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_3.5981",
+  "instance_id": "Hubbard/square_16_P_4_3.6",
   "eps": -1.10115,
   "tol": 0.0000032,
   "sigma_per_site": 0.000013,
@@ -2951,7 +2971,7 @@
   "same_value_distinct_method": true,
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=3.6, row Gutzwiller inspired CF(RBM); sources/2111.10420.txt line 1201; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.6184(2)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -2959,7 +2979,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_7.74264",
+  "instance_id": "Hubbard/square_16_P_4_7.75",
   "eps": -1.02254375,
   "tol": 0.0000032,
   "sigma_per_site": 0.000013,
@@ -2972,7 +2992,7 @@
   "same_value_distinct_method": true,
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=7.75, row Gutzwiller inspired CF(RBM); sources/2111.10420.txt line 1201; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-16.3607(2)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -3030,7 +3050,17 @@
   }
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_0.59948425",
+  "instance_id": "Hubbard/square_16_P_4_0.6",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 0.6
+   }
+  },
   "eps": -1.217159375,
   "tol": 3.2e-7,
   "sigma_per_site": 6.25e-7,
@@ -3042,22 +3072,12 @@
   "method": "Unrestricted hid. spin(RBM) (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=0.6, row Unrestricted hid. spin(RBM); sources/2111.10420.txt line 1202; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#26: sigma 0.00001008 -> 0.00001 (The table prints totals, so the bar is 0.00001 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-19.47455(1)",
   "confidence": "high",
   "verified_by": "single reading",
   "variance_as_reported": null,
-  "defect": null,
-  "create": {
-   "model": "Hubbard",
-   "lattice": "square",
-   "n_sites": 16,
-   "boundary": "P",
-   "params": {
-    "Nf": 4,
-    "U": 0.59948425
-   }
-  }
+  "defect": null
  },
  {
   "instance_id": "Hubbard/square_16_P_4_1",
@@ -3090,7 +3110,17 @@
   }
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_2.15443469",
+  "instance_id": "Hubbard/square_16_P_4_2.15",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 4,
+    "U": 2.15
+   }
+  },
   "eps": -1.148626875,
   "tol": 3.2e-7,
   "sigma_per_site": 0.000003125,
@@ -3102,25 +3132,15 @@
   "method": "Unrestricted hid. spin(RBM) (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=2.15, row Unrestricted hid. spin(RBM); sources/2111.10420.txt line 1202; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#60: sigma 0.0000496 -> 0.00005 (The table prints totals, so the bar is 0.00005 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-18.37803(5)",
   "confidence": "high",
   "verified_by": "single reading",
   "variance_as_reported": null,
-  "defect": null,
-  "create": {
-   "model": "Hubbard",
-   "lattice": "square",
-   "n_sites": 16,
-   "boundary": "P",
-   "params": {
-    "Nf": 4,
-    "U": 2.15443469
-   }
-  }
+  "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_3.5981",
+  "instance_id": "Hubbard/square_16_P_4_3.6",
   "eps": -1.10272625,
   "tol": 3.2e-7,
   "sigma_per_site": 0.000005625,
@@ -3132,7 +3152,7 @@
   "method": "Unrestricted hid. spin(RBM) (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=3.6, row Unrestricted hid. spin(RBM); sources/2111.10420.txt line 1202; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#75: sigma 0.0000896 -> 0.00009 (The table prints totals, so the bar is 0.00009 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.4%. Same fix as the trailing-float-noise ruling: store sigma_per_)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.64362(9)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -3140,7 +3160,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_4_7.74264",
+  "instance_id": "Hubbard/square_16_P_4_7.75",
   "eps": -1.02498125,
   "tol": 0.0000032,
   "sigma_per_site": 0.0000125,
@@ -3152,7 +3172,7 @@
   "method": "Unrestricted hid. spin(RBM) (Table II)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table II, U=7.75, row Unrestricted hid. spin(RBM); sources/2111.10420.txt line 1202; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#90: sigma 0.000208 -> 0.0002 (The table prints totals, so the bar is 0.0002 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 4.0%. Same fix as the trailing-float-noise ruling: store sigma_per_s)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-16.3997(2)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -3180,7 +3200,17 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_5_2.1544",
+  "instance_id": "Hubbard/square_16_P_5_2.15",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 5,
+    "U": 2.15
+   }
+  },
   "eps": -1.32576473125,
   "tol": 3.2e-9,
   "sigma_per_site": 4.4e-8,
@@ -3192,7 +3222,7 @@
   "method": "Exact diagonalization",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table III, U=2.15, row ED; sources/2111.10420.txt line 1226; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-21.2122357(7)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -3200,7 +3230,17 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_5_3.5981",
+  "instance_id": "Hubbard/square_16_P_5_3.6",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 5,
+    "U": 3.6
+   }
+  },
   "eps": -1.24322731875,
   "tol": 3.2e-9,
   "sigma_per_site": 5.6e-8,
@@ -3212,7 +3252,7 @@
   "method": "Exact diagonalization",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table III, U=3.6, row ED; sources/2111.10420.txt line 1226; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-19.8916371(9)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -3220,7 +3260,17 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_5_7.74264",
+  "instance_id": "Hubbard/square_16_P_5_7.75",
+  "create": {
+   "model": "Hubbard",
+   "lattice": "square",
+   "n_sites": 16,
+   "boundary": "P",
+   "params": {
+    "Nf": 5,
+    "U": 7.75
+   }
+  },
   "eps": -1.10023321875,
   "tol": 3.2e-9,
   "sigma_per_site": 3.1e-8,
@@ -3232,7 +3282,7 @@
   "method": "Exact diagonalization",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table III, U=7.75, row ED; sources/2111.10420.txt line 1226; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.6037315(5)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -3260,7 +3310,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_5_2.1544",
+  "instance_id": "Hubbard/square_16_P_5_2.15",
   "eps": -1.3257131875,
   "tol": 3.2e-8,
   "sigma_per_site": 2.5e-7,
@@ -3272,7 +3322,7 @@
   "method": "HFDS (10 hidden fermions, α = 64)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table III, U=2.15, row HFSD (alpha=64); sources/2111.10420.txt line 1227; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-21.211411(4)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -3280,7 +3330,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_5_3.5981",
+  "instance_id": "Hubbard/square_16_P_5_3.6",
   "eps": -1.243050875,
   "tol": 3.2e-8,
   "sigma_per_site": 5e-7,
@@ -3292,7 +3342,7 @@
   "method": "HFDS (10 hidden fermions, α = 64)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table III, U=3.6, row HFSD (alpha=64); sources/2111.10420.txt line 1227; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-19.888814(8)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -3300,7 +3350,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_5_7.74264",
+  "instance_id": "Hubbard/square_16_P_5_7.75",
   "eps": -1.100010625,
   "tol": 3.2e-7,
   "sigma_per_site": 0.00000125,
@@ -3312,7 +3362,7 @@
   "method": "HFDS (10 hidden fermions, α = 64)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table III, U=7.75, row HFSD (alpha=64); sources/2111.10420.txt line 1227; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#107: sigma 0.0000208 -> 0.00002 (The table prints totals, so the bar is 0.00002 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 4.0%. Same fix as the trailing-float-noise ruling: store sigma_per_)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.60017(2)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -3340,7 +3390,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_5_2.1544",
+  "instance_id": "Hubbard/square_16_P_5_2.15",
   "eps": -1.3257381875,
   "tol": 3.2e-8,
   "sigma_per_site": 2.5e-7,
@@ -3352,7 +3402,7 @@
   "method": "HFDS (10 hidden fermions, α = 64) + C4",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table III, U=2.15, row HFSD (alpha=64)+C4; sources/2111.10420.txt line 1228; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-21.211811(4)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -3360,7 +3410,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_5_3.5981",
+  "instance_id": "Hubbard/square_16_P_5_3.6",
   "eps": -1.243078125,
   "tol": 3.2e-8,
   "sigma_per_site": 4.375e-7,
@@ -3372,7 +3422,7 @@
   "method": "HFDS (10 hidden fermions, α = 64) + C4",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table III, U=3.6, row HFSD (alpha=64)+C4; sources/2111.10420.txt line 1228; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#103: sigma 0.00000704 -> 0.000007 (The table prints totals, so the bar is 0.000007 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.6%. Same fix as the trailing-float-noise ruling: store sigma_per)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-19.889250(7)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -3380,7 +3430,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_5_7.74264",
+  "instance_id": "Hubbard/square_16_P_5_7.75",
   "eps": -1.1000625,
   "tol": 3.2e-7,
   "sigma_per_site": 0.00000125,
@@ -3392,7 +3442,7 @@
   "method": "HFDS (10 hidden fermions, α = 64) + C4",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table III, U=7.75, row HFSD (alpha=64)+C4; sources/2111.10420.txt line 1228; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#108: sigma 0.0000208 -> 0.00002 (The table prints totals, so the bar is 0.00002 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 4.0%. Same fix as the trailing-float-noise ruling: store sigma_per_)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.60100(2)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -3420,7 +3470,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_5_2.1544",
+  "instance_id": "Hubbard/square_16_P_5_2.15",
   "eps": -1.3257408125,
   "tol": 3.2e-8,
   "sigma_per_site": 1.875e-7,
@@ -3432,7 +3482,7 @@
   "method": "HFDS (10 hidden fermions, α = 64) + K = 0",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table III, U=2.15, row HFSD (alpha=64)+K=0; sources/2111.10420.txt line 1229; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#99: sigma 0.00000304 -> 0.000003 (The table prints totals, so the bar is 0.000003 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-21.211853(3)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -3440,7 +3490,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_5_3.5981",
+  "instance_id": "Hubbard/square_16_P_5_3.6",
   "eps": -1.24314025,
   "tol": 3.2e-8,
   "sigma_per_site": 3.75e-7,
@@ -3452,7 +3502,7 @@
   "method": "HFDS (10 hidden fermions, α = 64) + K = 0",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table III, U=3.6, row HFSD (alpha=64)+K=0; sources/2111.10420.txt line 1229; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#104: sigma 0.00000608 -> 0.000006 (The table prints totals, so the bar is 0.000006 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-19.890244(6)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -3460,7 +3510,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_5_7.74264",
+  "instance_id": "Hubbard/square_16_P_5_7.75",
   "eps": -1.1000875,
   "tol": 3.2e-7,
   "sigma_per_site": 0.00000125,
@@ -3472,7 +3522,7 @@
   "method": "HFDS (10 hidden fermions, α = 64) + K = 0",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table III, U=7.75, row HFSD (alpha=64)+K=0; sources/2111.10420.txt line 1229; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#109: sigma 0.0000208 -> 0.00002 (The table prints totals, so the bar is 0.00002 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 4.0%. Same fix as the trailing-float-noise ruling: store sigma_per_)",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.60140(2)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -3500,7 +3550,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_5_2.1544",
+  "instance_id": "Hubbard/square_16_P_5_2.15",
   "eps": -1.3257435,
   "tol": 3.2e-8,
   "sigma_per_site": 1.2e-7,
@@ -3512,7 +3562,7 @@
   "method": "HFDS (10 hidden fermions, α = 64) + (C4 ∩ K = 0)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table III, U=2.15, row HFSD (alpha=64)+(C4 and K=0); sources/2111.10420.txt line 1230; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-21.211896(2)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -3520,7 +3570,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_5_3.5981",
+  "instance_id": "Hubbard/square_16_P_5_3.6",
   "eps": -1.2431526875,
   "tol": 3.2e-8,
   "sigma_per_site": 3.8e-7,
@@ -3532,7 +3582,7 @@
   "method": "HFDS (10 hidden fermions, α = 64) + (C4 ∩ K = 0)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table III, U=3.6, row HFSD (alpha=64)+(C4 and K=0); sources/2111.10420.txt line 1230; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-19.890443(6)",
   "confidence": "high",
   "verified_by": "single reading",
@@ -3540,7 +3590,7 @@
   "defect": null
  },
  {
-  "instance_id": "Hubbard/square_16_P_5_7.74264",
+  "instance_id": "Hubbard/square_16_P_5_7.75",
   "eps": -1.100125,
   "tol": 3.2e-7,
   "sigma_per_site": 6.3e-7,
@@ -3552,7 +3602,7 @@
   "method": "HFDS (10 hidden fermions, α = 64) + (C4 ∩ K = 0)",
   "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
   "evidence": "Appendix H Table III, U=7.75, row HFSD (alpha=64)+(C4 and K=0); sources/2111.10420.txt line 1230; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29",
-  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The rounded U of the tables (0.6, 2.15, 3.6, 7.75) are the grid 10^(k/9): QMBL's ED at U = 0.59948425 gives -19.47476333 and at 2.15443469 (n = 1/2) -18.40532088, the printed ED values, against -19.47434179 at U = 0.6 and -18.40534078 at U = 2.1544 (checks/hubbard-u-labels/results-2026-10-16/, run_fermions.mjs).",
+  "convention_check": "Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
   "reported_as": "-17.60200(1)",
   "confidence": "high",
   "verified_by": "single reading",

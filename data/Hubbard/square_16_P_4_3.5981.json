@@ -10,6 +10,36 @@
   "instance_id": "Hubbard/square_16_P_4_3.5981",
   "rows": [
     {
+      "energy": -17.698030018702067,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": 3.5981,
+      "v_score": null,
+      "method": "ED",
+      "ansatz": null,
+      "method_detail": "",
+      "method_as_published": "Exact diagonalization",
+      "family": "other",
+      "bound_type": "exact",
+      "bound_type_reason": "exact diagonalization|ex",
+      "reference": "[code](https://github.com/varbench/methods/blob/main/scripts/Hubbard/square_16_P_4_3.5981/ed_lattice_symmetries.sh)",
+      "source": "varbench@2024-10-22",
+      "provenance": "imported",
+      "baseline": true,
+      "verified": {
+        "checked_on": "2026-10-15",
+        "scope": "value",
+        "method": "published SI Appendix PDF, PNAS 119(32), e2122059119 (2022) (Europe PMC PMC9371695 supplementary bundle; pnas.org PDF and Europe PMC render return Cloudflare 403), sources/journal/pnas119-e2122059119-si.pdf, sha256 c6e62d9c (byte-identical to the SI read 2026-09-29), pypdf layout + plain; main text: published full-text XML (Europe PMC), sources/journal/pnas119-e2122059119.fulltext.xml, sha256 761defc3; arXiv compared: 2111.10420v2 (Appendix H, via the 2026-09-29 extraction)",
+        "location": "SI Sec. 8 A, Table 1 (p. 8), row U = 3.6, column 'ED energy'",
+        "reported_as": "-17.6980300(1) (total energy, units of t)",
+        "conversion": "none; stored -17.698030018702067 is VarBench's value, which rounds to the printed value; VarBench's run script sets U = 3.5981 and the row stays on that U (ruled 2026-11-26)",
+        "note": "Exact; the paper's ED column is its benchmark reference ('Exact diagonalization energies used in the benchmarks are also provided'). The table's U label is 3.6; the paper's ED value is the paper's row at U = 3.6, and VarBench's ED row (the same number) is on U = 3.5981, the U its script sets (ruled 2026-11-26). Journal = arXiv v2. sigma null is right for an exact row.",
+        "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#5",
+        "secondary_of": null
+      }
+    },
+    {
       "energy": -17.69623,
       "sigma": null,
       "energy_variance": 0.00000209,
@@ -148,7 +178,7 @@
         "checked_on": "2026-09-16",
         "method": "Lanczos ED over the full fixed-(N_up, N_dn) space, no symmetry, t = 1: numpy/scipy (checks/hubbard-u-labels/ed_check.py) and node (ed_lib.mjs, run_fermions.mjs)",
         "reported_as": "-17.69623505010233 (ed_check.py) | -17.696235050104434 (ed_lib.mjs)",
-        "note": "Two independent codes agree to 2.1e-12. The DMRG (MaxBondDim ~3200) row: its run script sets U = 3.5981. It sits 5.05e-6 above the ground state at that U (variance per unit energy error 0.41), and 1.80e-3 above the one at 3.59381366.",
+        "note": "Two independent codes agree to 2.1e-12. The Exact diagonalization row: its run script sets U = 3.5981; it stays on the U its script sets (ruled 2026-11-26). The DMRG (MaxBondDim ~3200) row: its run script sets U = 3.5981; it stays on the U its script sets (ruled 2026-11-26). It sits 5.05e-6 above the ground state at that U (variance per unit energy error 0.41).",
         "secondary_of": null,
         "second_read": {
           "checked_on": "2026-09-29",
@@ -174,11 +204,35 @@
       }
     }
   ],
+  "coverage": [
+    {
+      "checked_on": "2026-09-15",
+      "method": "table harvest of cached arXiv sources (match_tables.mjs --all), every matched paper read for this instance",
+      "screened": [
+        "arXiv:2502.17144",
+        "arXiv:2506.08329",
+        "arXiv:2507.10705",
+        "arXiv:2511.07566",
+        "arXiv:2511.12551",
+        "arXiv:2606.00924"
+      ],
+      "found": 0,
+      "note": "Only papers whose tables matched the instance by size were read; not a citation screen."
+    },
+    {
+      "checked_on": "2026-09-15",
+      "method": "citation screen of Robledo Moreno et al. 2022 (PNAS, HFDS): citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
+      "screened_count": 29,
+      "found": 0,
+      "note": "142 citing works, 118 on arXiv, 118 fetched; 29 read in full, 89 excluded by a text filter (no energy to four decimals, or no QMBL model named)."
+    }
+  ],
   "split": {
-    "to": "Hubbard/square_16_P_4_3.59381366",
-    "checked_on": "2026-09-16",
-    "reason": "Holds the rows run at U = 3.5981, the coupling in VarBench's name, after the instance moved to U = 3.59381366. The name's 3.5981 has two digits swapped: the coupling of this Hamiltonian is 3.59381366 (10^(5/9)). The exact diagonalization, -17.698030018702067, is the ground state there; at U = 3.5981 the ground state is 1.79e-3 higher, so the stored exact energy sat below the ground state of the instance as named.",
-    "evidence": "checks/hubbard-u-labels/"
+    "to": "Hubbard/square_16_P_4_3.6",
+    "checked_on": "2026-11-26",
+    "reason": "The paper (arXiv:2111.10420) prints its tables at U = 3.6, and VarBench's run scripts for the same tables set U = 3.5981. Ruled 2026-11-26: each row goes on the U its own source prints, and the paper's label is taken as printed; this instance holds the rows printed at U = 3.6, the VMC rows VarBench takes from the paper among them, and the instance at U = 3.5981 holds the rows VarBench's scripts ran.",
+    "evidence": "sources/2111.10420.txt",
+    "paper_label": true
   },
   "qmbl_ed_cost": {
     "core_hours": 0.08533,

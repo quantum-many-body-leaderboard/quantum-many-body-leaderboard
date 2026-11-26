@@ -394,6 +394,18 @@ export const DEFECTS = [
     "finding": "arXiv:2606.04558 Table I prints -0.515658 per site at J2 = 0.45. The exact ground-state energy of the 6 x 6 torus is printed twice as -0.51565739: J. Richter's exact diagonalization in arXiv:1112.3331, Table I, column 'L=6 (ED)', and arXiv:2206.14307, row Energy(Exact). -0.515658 lies 6.1e-7 per site below it, beyond the half-unit of its own six decimals whether rounded or truncated. A Lanczos run stopped short lies above the ground state, as the values of that column at J2 = 0.4, 0.7, 0.8, 0.9 and 1 do (removed, removals.mjs); a value below it cannot come from a converged diagonalization of the same Hamiltonian, so the printed digit is wrong (a rounding or transcription slip) or the run differs. The same column also lies below the printed exact energy at J2 = 0.65 by 2.1e-6. The row stays with this flag.",
     "source_entry": "RP1#J1J2-36-0.45 (qmbl-verify 2026-11-26-reread); ruled 2026-11-26"
   },
+  // Ruled 2026-11-26 (Hubbard rows go on the U their own source prints): VarBench's two rows for
+  // U = 2.1544 disagree, and both stay as VarBench prints them.
+  {
+    "match": {
+      "instance": "Hubbard/square_16_P_5_2.1544",
+      "method": "DMRG (MaxBondDim 7000)",
+      "energy": -21.2122722
+    },
+    "flag": "below-exact",
+    "finding": "VarBench's DMRG row -21.2122722 (its script programs/dmrg_itensors_hubbard/square_16_P_5_2.1544.jl sets U = 2.1544) lies 3.64e-5 below VarBench's exact diagonalization row -21.21223577699911 on the same instance (vendor/varbench/Hubbard/square_16_P_5_2.1544.md; its script scripts/Hubbard/square_16_P_5_2.1544/ed_lattice_symmetries.sh sets --U 2.1544). A variational energy cannot lie below the exact energy of the same Hamiltonian, so the U or the digits of one of the two VarBench files differ from what its script states. The paper prints the exact digits of the ED row (-21.2122357(7), arXiv:2111.10420 Table III, sources/2111.10420.txt) at its label U = 2.15. Both rows stay as VarBench prints them (ruled 2026-11-26: each row stays on the U its own source prints).",
+    "source_entry": "retro-qmbl-evidence-2026-11-26 hubbard-u"
+  },
 ];
 
 export const SHARED = {

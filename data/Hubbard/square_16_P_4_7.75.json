@@ -1,0 +1,783 @@
+{
+  "model": "Hubbard",
+  "lattice": "square",
+  "n_sites": 16,
+  "boundary": "P",
+  "params": {
+    "Nf": 4,
+    "U": 7.75
+  },
+  "instance_id": "Hubbard/square_16_P_4_7.75",
+  "rows": [
+    {
+      "energy": -16.5091548,
+      "sigma": 1.92e-7,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": 7.75,
+      "v_score": null,
+      "method": "ED",
+      "ansatz": null,
+      "method_detail": "",
+      "method_as_published": "Exact diagonalization",
+      "family": "other",
+      "bound_type": "exact",
+      "bound_type_reason": "numerically exact reference as stated by the source (assigned during source reading)",
+      "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-16",
+        "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-16.5091548(2)",
+        "note": "Appendix H Table I, U=7.75, column ED; sources/2111.10420.txt line 1178; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29 | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -16.4196,
+      "sigma": 0.0004,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": 7.75,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "HFDS",
+      "method_detail": "8 hidden fermions, 1-layer FFN with α = 0.5",
+      "method_as_published": "HFDS (8 hidden fermions, single hidden layer, α = 0.5)",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-16",
+        "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-16.4196(4)",
+        "note": "Appendix H Table I, U=7.75, column HFDS alpha=0.5; sources/2111.10420.txt line 1178; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29 | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-10-19",
+          "scope": "value",
+          "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+          "location": "SI Table 1 / arXiv Table I, row U = 7.75, column \"HFDS (α = 0.5)\"",
+          "reported_as": "-16.4196(4) (total, units of t)",
+          "conversion": "total as printed; bar 0.0004",
+          "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+          "source_entry": "SP2-arxiv-2111-10420#76"
+        }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
+    },
+    {
+      "energy": -16.4823,
+      "sigma": 0.0006,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": 7.75,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "HFDS",
+      "method_detail": "8 hidden fermions, 1-layer FFN with α = 1",
+      "method_as_published": "HFDS (8 hidden fermions, single hidden layer, α = 1)",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-16",
+        "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-16.4823(6)",
+        "note": "Appendix H Table I, U=7.75, column HFDS alpha=1; sources/2111.10420.txt line 1178; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#77: sigma 0.000608 -> 0.0006 (The table prints totals, so the bar is 0.0006 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
+        "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
+    },
+    {
+      "energy": -16.4893,
+      "sigma": 0.0003,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": 7.75,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "HFDS",
+      "method_detail": "8 hidden fermions, 1-layer FFN with α = 2",
+      "method_as_published": "HFDS (8 hidden fermions, single hidden layer, α = 2)",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-16",
+        "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-16.4893(3)",
+        "note": "Appendix H Table I, U=7.75, column HFDS alpha=2; sources/2111.10420.txt line 1178; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#78: sigma 0.000304 -> 0.0003 (The table prints totals, so the bar is 0.0003 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
+        "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
+    },
+    {
+      "energy": -16.4959,
+      "sigma": 0.0004,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": 7.75,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "HFDS",
+      "method_detail": "8 hidden fermions, 1-layer FFN with α = 4",
+      "method_as_published": "HFDS (8 hidden fermions, single hidden layer, α = 4)",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-16",
+        "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-16.4959(4)",
+        "note": "Appendix H Table I, U=7.75, column HFDS alpha=4; sources/2111.10420.txt line 1178; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29 | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-10-19",
+          "scope": "value",
+          "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+          "location": "SI Table 1 / arXiv Table I, row U = 7.75, column \"HFDS (α = 4)\"",
+          "reported_as": "-16.4959(4) (total, units of t)",
+          "conversion": "total as printed; bar 0.0004",
+          "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+          "source_entry": "SP2-arxiv-2111-10420#79"
+        }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
+    },
+    {
+      "energy": -16.496,
+      "sigma": 0.0003,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": 7.75,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "HFDS",
+      "method_detail": "8 hidden fermions, 1-layer FFN with α = 8",
+      "method_as_published": "HFDS (8 hidden fermions, single hidden layer, α = 8)",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-16",
+        "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-16.4960(3)",
+        "note": "Appendix H Table I, U=7.75, column HFDS alpha=8; sources/2111.10420.txt line 1178; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#80: sigma 0.000304 -> 0.0003 (The table prints totals, so the bar is 0.0003 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
+        "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
+    },
+    {
+      "energy": -16.502,
+      "sigma": 0.003,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": 7.75,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "HFDS",
+      "method_detail": "8 hidden fermions, 1-layer FFN with α = 16",
+      "method_as_published": "HFDS (8 hidden fermions, single hidden layer, α = 16)",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-16",
+        "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-16.502(3)",
+        "note": "Appendix H Table I, U=7.75, column HFDS alpha=16; sources/2111.10420.txt line 1178; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#81: sigma 0.00304 -> 0.003 (The table prints totals, so the bar is 0.003 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 1.3%. Same fix as the trailing-float-noise ruling: store sigma_per_si) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
+        "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
+    },
+    {
+      "energy": -14.36,
+      "sigma": 0.08,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": 7.75,
+      "v_score": null,
+      "method": "HF",
+      "ansatz": null,
+      "method_detail": "unrestricted Slater determinant",
+      "method_as_published": "USD (Table II)",
+      "family": "mean field",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-16",
+        "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-14.36(8)",
+        "note": "Appendix H Table II, U=7.75, row USD; sources/2111.10420.txt line 1194; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29 | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-10-19",
+          "scope": "value",
+          "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+          "location": "SI Table 2 / arXiv Table II, row \"USD\", column U = 7.75",
+          "reported_as": "-14.36(8) (total, units of t)",
+          "conversion": "total as printed; bar 0.08",
+          "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+          "source_entry": "SP2-arxiv-2111-10420#84"
+        }
+      }
+    },
+    {
+      "energy": -16.219,
+      "sigma": 0.001,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": 7.75,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "SJ",
+      "method_detail": "unrestricted Slater determinant + Gutzwiller factor",
+      "method_as_published": "USD (Gutzwiller) (Table II)",
+      "family": "classic VMC",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-16",
+        "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-16.219(1)",
+        "note": "Appendix H Table II, U=7.75, row USD (Gutzwiller); sources/2111.10420.txt line 1195; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#85: sigma 0.001008 -> 0.001 (The table prints totals, so the bar is 0.001 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_si) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -16.2932,
+      "sigma": 0.0005,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": 7.75,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "SJ",
+      "method_detail": "unrestricted Slater determinant + Jastrow factor",
+      "method_as_published": "USD (Jastrow) (Table II)",
+      "family": "classic VMC",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-16",
+        "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-16.2932(5)",
+        "note": "Appendix H Table II, U=7.75, row USD (Jastrow); sources/2111.10420.txt line 1196; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#86: sigma 0.000496 -> 0.0005 (The table prints totals, so the bar is 0.0005 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -16.3607,
+      "sigma": 0.0002,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": 7.75,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "RBM",
+      "method_detail": "unrestricted Slater determinant × RBM",
+      "method_as_published": "USD (RBM) (Table II)",
+      "family": "RBM",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-16",
+        "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-16.3607(2)",
+        "note": "Appendix H Table II, U=7.75, row USD (RBM); sources/2111.10420.txt line 1197; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#87: sigma 0.000208 -> 0.0002 (The table prints totals, so the bar is 0.0002 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 4.0%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -16.2395,
+      "sigma": 0.0001,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": 7.75,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "HFDS",
+      "method_detail": "Gutzwiller-inspired constraint function",
+      "method_as_published": "Gutzwiller inspired CF (Table II)",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-16",
+        "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-16.2395(1)",
+        "note": "Appendix H Table II, U=7.75, row Gutzwiller inspired CF; sources/2111.10420.txt line 1198; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#88: sigma 0.0001008 -> 0.0001 (The table prints totals, so the bar is 0.0001 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 0.8%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
+        "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
+    },
+    {
+      "energy": -14.1253,
+      "sigma": 0.0004,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": 7.75,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "HFDS",
+      "method_detail": "Jastrow-inspired constraint function",
+      "method_as_published": "Jastrow inspired CF (Table II)",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-16",
+        "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-14.1253(4)",
+        "note": "Appendix H Table II, U=7.75, row Jastrow inspired CF; sources/2111.10420.txt line 1200; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29 | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-10-19",
+          "scope": "value",
+          "method": "arXiv:2111.10420v2 (sources/2111.10420.pdf, pypdf layout, Appendix H pp. 19-21) and PNAS 119, e2122059119 (2022) SI Appendix PDF (PMC9371695, sha256 c6e62d9c..., pypdf layout, Sec. 8 Tables 1-5, pp. 8-9); 131 parenthesised table numbers in each, exactly two differ",
+          "location": "SI Table 2 / arXiv Table II, row \"Jastrow inspired CF\", column U = 7.75",
+          "reported_as": "-14.1253(4) (total, units of t)",
+          "conversion": "total as printed; bar 0.0004",
+          "note": "Hubbard H = -sum t (c+c + h.c.) + U sum n_up n_dn (Eq. 1), no shift; lattice, boundary, filling (N_up = N_dn = 4), U, bound_type variational (VMC, MCMC sampled) agree; journal SI and arXiv v2 cells identical; peer_reviewed true (PNAS).",
+          "source_entry": "SP2-arxiv-2111-10420#89"
+        }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
+    },
+    {
+      "energy": -16.3607,
+      "sigma": 0.000208,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": 7.75,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "HFDS",
+      "method_detail": "Gutzwiller-inspired constraint function + RBM in the augmented space",
+      "method_as_published": "Gutzwiller inspired CF(RBM) (Table II)",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-16",
+        "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-16.3607(2)",
+        "note": "Appendix H Table II, U=7.75, row Gutzwiller inspired CF(RBM); sources/2111.10420.txt line 1201; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29 | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -16.3997,
+      "sigma": 0.0002,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": 7.75,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "HFDS",
+      "method_detail": "unrestricted hidden-spin constraint function + RBM in the augmented space",
+      "method_as_published": "Unrestricted hid. spin(RBM) (Table II)",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "J. Robledo Moreno, G. Carleo, A. Georges & J. Stokes, Fermionic Wave Functions from Neural-Network Constrained Hidden States, Proc. Natl. Acad. Sci. 119, e2122059119 (2022), arXiv:2111.10420, doi:10.1073/pnas.2122059119",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-10-16",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-10-16",
+        "method": "source text of arXiv:2111.10420 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-16.3997(2)",
+        "note": "Appendix H Table II, U=7.75, row Unrestricted hid. spin(RBM); sources/2111.10420.txt line 1202; version read: arXiv:2111.10420v2 text, Appendix H (sources/2111.10420.txt); the PNAS SI (Cloudflare 403 on 2026-10-16) was read for this paper's earlier rows on 2026-09-29; qmbl-verify 2026-10-19 SP2-arxiv-2111-10420#90: sigma 0.000208 -> 0.0002 (The table prints totals, so the bar is 0.0002 as printed; the round trip through a rounded per-site sigma inflates or shrinks it by 4.0%. Same fix as the trailing-float-noise ruling: store sigma_per_s) | Eq. (1): H = -sum t_ij (c+c + h.c.) + U sum n_up n_dn, t = 1. Tables I-III print totals on the 4x4 torus (ED -17.698 on 16 sites); Tables IV and V print 'energy per site'. The U of each table is the label it prints (0.6, 2.15, 3.6, 7.75), carried as printed: the instance is at that U (ruled 2026-11-26).",
+        "secondary_of": null
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
+    },
+    {
+      "energy": -16.505,
+      "sigma": 0.0001,
+      "energy_variance": 0.055,
+      "dof": 8,
+      "einf": 7.75,
+      "v_score": 0.0007479113407198927,
+      "method": "VMC",
+      "ansatz": "HFDS",
+      "method_detail": "8 hidden fermions, 1-layer FFN with α = 32",
+      "method_as_published": "VMC Hidden Fermion Determinant State Ansatz (N_hidden = 8. Single hidden layer fully connected net with alpha = 32)",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "vmc|\\brbm\\b|\\brnn\\b|jast",
+      "reference": "[paper](https://www.pnas.org/doi/full/10.1073/pnas.2122059119)",
+      "source": "varbench@2024-10-22",
+      "provenance": "imported",
+      "verified": {
+        "checked_on": "2026-09-29",
+        "scope": "value",
+        "method": "PNAS 119(32), e2122059119 (2022), SI Appendix PDF (PMC9371695; sources/pnas.2122059119.sapp.PMC9371695.pdf, sha256 c6e62d9c...), pypdf layout mode, re-extracted 2026-09-29 (byte-identical to the earlier extraction); same cell read in arXiv:2111.10420v2 (18 Jun 2022) Appendix H (sources/2111.10420v2.pdf, pypdf layout)",
+        "location": "SI Sec. 8 A, Table 1 (p. 8), row U = 7.75, column 'HFDS (α= 32)'; arXiv v2 Table I identical",
+        "reported_as": "-16.505(1) (total energy, units of t)",
+        "conversion": "none (total)",
+        "note": "Energy verified; sigma differs from the printed bar (ambiguous entry). 4 x 4 torus, 4 + 4, U = 7.75 (as printed), N~ = 8, alpha = 32, variational (0.00415 above ED), own computation; not the record (VarBench DMRG -16.5091541 lies lower). Upload 7f646d3: -16.505 | 0.0001 | 0.055(1); energy_variance upload-only. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022'; 'This article is a PNAS Direct Submission'); the imported row carries no peer_reviewed field (loader-level, see report). No duplicate.",
+        "source_entry": "VA3-10-1073-pnas-2122059119#3 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)",
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-10-15",
+          "scope": "value",
+          "method": "published SI Appendix PDF, PNAS 119(32), e2122059119 (2022) (Europe PMC PMC9371695 supplementary bundle; pnas.org PDF and Europe PMC render return Cloudflare 403), sources/journal/pnas119-e2122059119-si.pdf, sha256 c6e62d9c (byte-identical to the SI read 2026-09-29), pypdf layout + plain; main text: published full-text XML (Europe PMC), sources/journal/pnas119-e2122059119.fulltext.xml, sha256 761defc3; arXiv compared: 2111.10420v2 (Appendix H, via the 2026-09-29 extraction)",
+          "location": "SI Sec. 8 A, Table 1 (p. 8), row U = 7.75, column 'HFDS (alpha = 32)'",
+          "reported_as": "-16.505(1) (total energy, units of t)",
+          "conversion": "none",
+          "note": "4 x 4, 4 + 4, U = 7.75 (as printed), N~ = 8, alpha = 32; variational, 0.00415 above ED. Printed bar 0.001 vs stored 0.0001: Stored sigma is the first author's VarBench upload (Robledo Moreno, 2022-07/08), not the printed bar; kept under the 2026-10-02 handoff ruling R4/E2 ('the author's finer uploaded sigma stays where the printed bar is display rounding (HFDS x12)'), so no new correction. Venue PNAS, peer reviewed ('Edited by Angel Rubio ... received December 6, 2021; accepted June 28, 2022').",
+          "source_entry": "JA1-hubbard-j1j2-tv-heisenberg#8"
+        }
+      },
+      "artifacts": {
+        "libraries": [
+          {
+            "name": "NetKet",
+            "version": null,
+            "url": "https://www.netket.org/"
+          }
+        ],
+        "libraries_read_from": {
+          "quote": "We use the Python library NetKet45 for the implementation (see the SI36 for details), where gradients of the wave function amplitudes with respect to the variational parameters are computed by the so called automatic differentiation implemented in the Python library Jax46.",
+          "location": "arXiv:2111.10420 (sources/2111.10420.txt), Sec. II, subsection 'Parametrized constraint function, practical implementation' (VMC of the hidden fermion determinant state); SI Appendix G describes the NetKet implementation",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/libraries-2026-10-22.json"
+        }
+      }
+    },
+    {
+      "energy": -16.5091541,
+      "sigma": null,
+      "energy_variance": 1.331e-7,
+      "dof": 8,
+      "einf": 7.75,
+      "v_score": 1.8093256331014454e-9,
+      "method": "DMRG",
+      "ansatz": null,
+      "method_detail": "bond dimension ~3200",
+      "method_as_published": "DMRG (MaxBondDim ~3200)",
+      "family": "tensor network",
+      "bound_type": "variational",
+      "bound_type_reason": "vmc|\\brbm\\b|\\brnn\\b|jast",
+      "reference": "[code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_4_7.74264.jl)",
+      "source": "varbench@2024-10-22",
+      "provenance": "imported",
+      "baseline": true,
+      "compute": {
+        "parameters": null,
+        "gpu_hours": null,
+        "device": null,
+        "n_devices": null,
+        "samples": null,
+        "wall_clock": null,
+        "cpu_core_hours": null,
+        "bond_dimension": null,
+        "iterations": 26,
+        "sweep_schedule": {
+          "code": "ITensors.jl 0.6.16",
+          "eigensolver_applications": 3,
+          "eigensolver_source": "ITensors.jl 0.6.16 dmrg(): eigsolve_krylovdim = 3, eigsolve_maxiter = 1 (defaults, not overridden)",
+          "maxdim": [
+            4,
+            4,
+            8,
+            8,
+            16,
+            16,
+            32,
+            32,
+            64,
+            64,
+            128,
+            128,
+            256,
+            256,
+            500,
+            500,
+            800,
+            800,
+            1200,
+            1200,
+            1700,
+            1700,
+            2400,
+            2400,
+            3200,
+            3200
+          ],
+          "start": "product state",
+          "cutoff": null,
+          "variance_after": [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26
+          ],
+          "lattice": {
+            "order": "snake",
+            "rows": 4,
+            "cols": 4,
+            "wrap_row": true,
+            "wrap_col": true,
+            "diagonals": [],
+            "site_dimension": 4,
+            "operators_per_bond": 4
+          }
+        },
+        "reported_as": "method string: \"DMRG (MaxBondDim ~3200)\" || programs/dmrg_itensors_hubbard/square_16_P_4_7.74264.jl: \"dims = [4,8,16,32,64,128,256,500,800,1200,1700,2400,3200]\" || \"for dim in dims; sweeps = Sweeps(2); setmaxdim!(sweeps,dim); E,ψ = dmrg(H,ψ,sweeps); var = inner(H,ψ,H,ψ) - E^2\" || README: \"Requires Julia 1.10.4 and ITensors 0.6.16\"",
+        "source": "run script, VarBench methods repository at ed31bb0: https://github.com/varbench/methods/blob/ed31bb0f7949cce5be9274bfa67a2d5e7d4383cc/programs/dmrg_itensors_hubbard/square_16_P_4_7.74264.jl (compute pass 2026-09-23)",
+        "scope": "row",
+        "confidence": "medium",
+        "note": "Sweep schedule, eigensolver setting and lattice order read from the run script; 26 sweeps, maximum bond dimension 3200 (the method string gives the reached bond dimension only approximately). No time is recorded anywhere in the repository."
+      },
+      "verified": {
+        "checked_on": "2026-09-16",
+        "scope": "config",
+        "method": "run script varbench/methods programs/dmrg_itensors_hubbard/square_16_P_4_7.74264.jl read in full",
+        "location": "line setting U",
+        "reported_as": "U = 10",
+        "conversion": "none",
+        "note": "The linked script is a copy of the U = 10 file (line 99 sets U = 10), so it did not produce this number; VarBench's file name, Einf column and code link say 7.74264. Printed numbers: the energy -16.5091541 lies 0.3659460 below the printed exact energy at U = 10 (-16.1432081, arXiv:2111.10420 Table I and vendor/varbench/Hubbard/square_16_P_4_10.md), which no variational energy can, and 7e-7 above the printed exact energy at U = 7.75 (-16.5091548, Table I). Ruled 2026-11-26: the row goes on the instance at the paper's label U = 7.75, whose printed exact energy it fits; the instance at U = 7.74264 keeps VarBench's exact row.",
+        "source_entry": "B2-baseline-hubbard (qmbl-verify 2026-09-16); VB2-varbench-code-hubbard#46 (qmbl-verify 2026-09-29); ruling E6, 2026-10-02; ruled 2026-11-26 (retro-qmbl-evidence hubbard-u)",
+        "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_4_7.74264.jl",
+        "script": "programs/dmrg_itensors_hubbard/square_16_P_4_7.74264.jl",
+        "read_from": {
+          "quote": "VarBench README.md: \"`Reference`: the literature reference and the code repository to reproduce the result.\" | Reference cell: [code](https://github.com/varbench/methods/blob/main/programs/dmrg_itensors_hubbard/square_16_P_4_7.74264.jl)",
+          "location": "VarBench table vendor/varbench/Hubbard/square_16_P_4_7.74264.md, Reference column (VarBench 390a21e); README.md defines the column",
+          "checked_on": "2026-10-22",
+          "pass": "passes/code/code-links-2026-10-22.json"
+        }
+      }
+    }
+  ],
+  "coverage": [
+    {
+      "checked_on": "2026-11-11",
+      "method": "table harvest of cached arXiv sources (match_tables.mjs --all), every matched paper read for this instance",
+      "screened": [
+        "arXiv:2610.30321",
+        "arXiv:2611.04333",
+        "arXiv:2111.10420",
+        "arXiv:2606.00924",
+        "arXiv:2210.05871"
+      ],
+      "found": 1,
+      "note": "Only papers whose tables matched the instance by size were read; not a citation screen. Energies from: arXiv:2111.10420."
+    },
+    {
+      "checked_on": "2026-11-11",
+      "method": "citation screen of ketboard-hubbard: citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
+      "screened": [
+        "arXiv:2610.30321",
+        "arXiv:2611.04333",
+        "arXiv:2111.10420",
+        "arXiv:2606.00924",
+        "arXiv:2210.05871"
+      ],
+      "found": 1,
+      "note": "5 citing works, 5 on arXiv, 5 fetched; 5 read in full, 0 excluded by a text filter (no energy to four decimals, or no QMBL model named). Energies from: arXiv:2111.10420."
+    }
+  ],
+  "relabelled": {
+    "from": "Hubbard/square_16_P_4_7.74264",
+    "checked_on": "2026-11-26",
+    "reason": "The paper (arXiv:2111.10420) prints its tables at U = 7.75, and VarBench's run scripts for the same tables set U = 7.74264. Ruled 2026-11-26: each row goes on the U its own source prints, and the paper's label is taken as printed; this instance holds the rows printed at U = 7.75, the VMC rows VarBench takes from the paper among them, and the instance at U = 7.74264 holds the rows VarBench's scripts ran. The DMRG row of the 4 + 4 sector is here too: its script sets U = 10 (a copy of the U = 10 file), and its energy fits the printed exact energy at 7.75 to 7e-7 (ruled 2026-11-26).",
+    "evidence": "sources/2111.10420.txt",
+    "paper_label": true
+  }
+}

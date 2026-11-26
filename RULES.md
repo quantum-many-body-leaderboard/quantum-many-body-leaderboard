@@ -776,7 +776,11 @@ published before stay on its rows.
 An instance whose name carries a different parameter from the one its rows were computed at
 (a coupling, or an impurity's bath size) is renamed, with the old name and the reason
 recorded on it (`scripts/relabels.mjs`). Rows computed at the named parameter keep the old
-name.
+name. Where the name's parameter rests on a computation of QMBL's own, it does not: each row goes
+on the parameter its own source prints (ruled 2026-11-26). The Hubbard 4x4 and 14-site chain rows
+are the case: a row VarBench's run script ran stays on the U that script sets, a row whose source
+is the paper (arXiv:2111.10420) goes on the instance at the paper's printed label (0.6, 2.15, 3.6,
+7.75, taken as printed), and the paper's labels are not read as rounded grid values.
 
 ## 12. Track 2: the homogeneous electron gas
 

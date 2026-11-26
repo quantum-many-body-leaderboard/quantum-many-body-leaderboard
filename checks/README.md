@@ -162,6 +162,13 @@ U = 7.74264 by its sibling 5 + 5 script and its variance-to-error ratio (1.16 th
 7.74263683, against about 1.3 for the series). Their exact rows at the named U are in
 `ed_results.jsonl` and `logs_fermions_small.log`.
 
+**Superseded 2026-11-26.** No fact rests on a computation of QMBL's own (RULES.md 5, 11), so the
+result above no longer places any row: the instances at the grid U are gone, VarBench's exact and DMRG
+rows sit on the U their run scripts set (3.5981, 2.1544, 7.74264, 4.64158882) and the paper's rows on
+the labels the paper prints (0.6, 2.15, 3.6, 7.75). This section stays as the record of what the two
+codes computed; the four exact rows QMBL computed at the script's U stay where they are until a
+separate decision.
+
 **Reproduce.**
 
 ```bash
