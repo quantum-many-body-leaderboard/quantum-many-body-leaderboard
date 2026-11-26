@@ -1,0 +1,44 @@
+{
+  "model": "HubbardHolstein",
+  "lattice": "chain",
+  "n_sites": 32,
+  "boundary": "A",
+  "params": {
+    "t": 1,
+    "U": 0.025,
+    "w": 0.5,
+    "g": 0.353553390593,
+    "spinless": false,
+    "N_up": 16,
+    "N_dn": 16
+  },
+  "instance_id": "HubbardHolstein/chain_32_A_e32_U0.025_w0.5_g0.353553",
+  "rows": [
+    {
+      "energy": -49.472,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 32,
+      "einf": null,
+      "v_score": null,
+      "method": "DMET",
+      "ansatz": null,
+      "method_detail": "2-site impurity cluster, exact-diagonalization solver, phonon cutoff 8",
+      "method_as_published": "DMET (2-site cluster), 8 phonons",
+      "family": "other",
+      "bound_type": "approximate",
+      "bound_type_reason": "built on a fixed approximation (RPA, MP2, channel-truncated CC, or a transcorrelated Hamiltonian with its three-body term dropped); error of unknown sign (RULES.md 4; assigned during source reading)",
+      "reference": "Sandhoefer & Chan, Density matrix embedding theory for interacting electron-phonon systems, Phys. Rev. B 94, 085115 (2016), doi:10.1103/PhysRevB.94.085115, arXiv:1602.04195",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:1602.04195 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; first reading (2026-11-16), full reading of the paper and of Ref. 22 (2026-11-25)",
+        "reported_as": "-1.546",
+        "note": "Table I, ω = 0.5, λ = 0.5, U = 0.025, column DMET Energy (32) (line 254); version read: the journal text (PRB 94, 085115, same Table I) and the arXiv text (sources/1602.04195.txt), 2026-11-25 | Eq. (1), lines 44-50: H = sum_<ij>,s t c+_is c_js + U sum n_i,up n_i,dn + w0 sum a+_i a_i + g sum n_i (a+_i + a_i), coupling to n_i, no zero-point term; lambda = 2 g^2 / w0 and all units t = 1 (line 190), so g = sqrt(lambda w0 / 2). Table I (lines 247-266): energies per site, phmax = 8; DMRG with open, DMET with antiperiodic boundaries and a 2-site impurity cluster (lines 193-197), DMET also on 504 sites (lines 210-212). Implied, not stated (RULES.md 8): (1) half filling. The g = 0, U -> infinity limit is called a Mott insulator (lines 206-209), and the DMRG reference energies are Fehske and Jeckelmann's (lines 186-187, 342), whose study of this chain is 'Metallicity in the half-filled Holstein-Hubbard model' (Ref. 22, EPL 84, 57001, energies 'at half-filling with Ne=N'). (2) the energy zero of Eq. (1), not of the shifted Eq. (2), which drops a constant of lambda/2 per site at half filling (3.2 at lambda = 6.4): the DMET and DMRG columns differ by 0.3 to 5.6 %, so they share one zero, and Fehske and Jeckelmann's Hamiltonian (EPL Eq. (1)) couples to n_i with no shift. No conversion.",
+        "secondary_of": null
+      }
+    }
+  ]
+}

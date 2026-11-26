@@ -1,0 +1,396 @@
+          Density matrix embedding theory for interacting electron-phonon systems
+
+                                          Barbara  Sandhoefer  and  Garnet  Kin-Lic  Chan∗
+                     Department  of  Chemistry,  Frick  Laboratory,  Princeton  University,  NJ  08544,  USA  and
+                         Princeton  Center  for  Theoretical  Science,  Princeton  University,  NJ  08544,  USA
+                                                            (Dated:  July 3, 2018)
+                  We describe the extension of the density matrix embedding theory (DMET) framework to coupled
+               interacting fermion-boson systems.  This provides a frequency-independent,  entanglement embed-
+               ding formalism to treat bulk fermion-boson problems.  We illustrate the concepts within the context
+               of the one-dimensional Hubbard-Holstein model, where the phonon bath states are obtained from
+               the Schmidt decomposition of a self-consistently adjusted coherent state.  We benchmark our results
+               against accurate density matrix renormalization group calculations.
+
+               PACS numbers:  71.10.Fd, 74.72.-h, 71.27.+a, 71.30.+h
+
+
+                    I.   INTRODUCTION                                       degrees of freedom, and the bosonic degrees of freedom,
+                                                                            on an equal footing.
+  Density  matrix  embedding  theory  (DMET)  has  re-                         In this work, we describe the extension of the DMET
+cently   been   introduced   as   an   entanglement-based,                  framework   to   treat   coupled-fermion   boson   systems.
+frequency-independent quantum embedding method for                          Strong  electron-electron  interaction  physics  are  often
+strongly  coupled  degrees  of  freedom1–3.   Similar  to  the              modeled using an on-site interaction, such as in the Hub-
+earlier dynamical mean-ﬁeld theory (DMFT) and its clus-                     bard model, and the prototypical extension to electron-
+ter  variants4–7,  DMET  reformulates  a  bulk  problem  as                 phonon  coupling  is  provided  by  the  Hubbard-Holstein
+a  quantum  impurity  problem,  where  the  impurity  is  a                 model21.  While we will not focus here on detailed physics
+subset  of  the  bulk  sites.   However,  unlike  DMFT,  the                of  the  Hubbard-Holstein  model  itself,  reserving  such  a
+impurity embedding is not based on reproducing the lat-                     more  comprehensive  study  for future  work,  we  will  use
+tice  Green’s  function,  but  rather  the  entanglement  be-               this model to illustrate how to extend the DMET frame-
+tween  the  impurity  and  its  environment.    This  time-                 work to treat electron-phonon coupling speciﬁcally, and
+independent formulation leads to several advantages over                    fermion-boson  systems  more  generally.    In  section  II
+the Green’s function formulations of DMFT, including a                      we describe the extension of DMET to electron-phonon
+lower computational cost due to the need to describe only                   problems,  using  the  Hubbard-Holstein  model  as  a  con-
+stationary states, and the ability to use non-trivial bulk                  crete  example.    In  section  III  we  provide  some  illus-
+states,  for  example,  with  topological  order,  to  describe             trate proof-of-concept calculations on the 1D Hubbard-
+the entanglement between the impurity and environment.                      Holstein model,  comparing to accurate DMRG calcula-
+So far, DMET has been applied with signiﬁcant success                       tions.  Finally, in section IV we describe the possible ex-
+to a variety of condensed matter problems in both model                     tensions  of  this  work  such  as  to  coupled  fermion-boson
+and ab-initio settings, e.g.  to accurate phase diagrams of                 systems with interacting bosons.
+the Hubbard model on several lattices3,8,9; to frustrated
+spin systems10; to spectral functions11; and to compute
+ab-initio  binding curves of  bulk  materials12,  to  name  a                      II.   DMET FOR ELECTRON-PHONON
+few examples.                                                                                           SYSTEMS
+  Coupled fermion-boson systems provide a rich setting
+in which to explore new correlated quantum phases13.  A                        The Hubbard-Holstein Hamiltonian is deﬁned as
+prototypical example is a system of electrons interacting
+with lattice phonons.  Such electron-phonon coupling is                                   H = ∑       ˜tijc†iσcjσ +∑Uniαniβ
+famously the mechanism for the BCS theory of supercon-                                          ⟨ij⟩,σ                i
+ductivity, where Migdal-Eliashberg theory and its gener-                                     +∑     ω0˜a†            gni(˜a†
+alizations14–16 provide a quantitative route to transition                                               i ˜ai +∑           i + ˜ai),             (1)
+temperatures and other properties17,18.  Within this pic-                                        i                i
+ture  the  primary  eﬀect  of  the  electron-electron  interac-
+tions is to renormalize the phonon frequency, while the                     where⟨ij⟩ denotes nearest neighbours,c†iσ, ˜a†i  create spin
+phonons renormalize the electron mass.  When stronger                       σ ∈ {α,β}-electrons  and  phonons  at  site i,  respec-
+Coulomb interactions dominate, however, as is the case in                   tively,U is the on-site electron-electron interaction,g, the
+unconventional superconductors such as the cuprates and                     electron-phonon interaction, t, the electron hopping and
+fullerenes19,20,  the  interplay  between  electron-electron                ω0, the phonon frequency.  As is common, we will work
+and  electron-phonon  interactions  is  less  clear.    Thus,               in a phonon basis that eliminates the zero-phonon mode
+there  is  an  important  demand  for  numerical  methods                   through the shift toa†i = ˜a†i + gω0⟨n⟩, where⟨n⟩ =  NelNsites  is
+that  can  correctly  treat  both  the  interacting  fermionic              the average electronic ﬁlling.  After this change in basis,
+                                                                                                                                                   2
+
+the Hamiltonian becomes, up to a constant,                                  and ∑C  denotes  summation  over  the Nsites/Nc  cluster
+                                                                            tiles (with the “impurity” corresponding to C = 0), and
+       H = ∑tijc†iσcjσ +∑            Uniαniβ +∑         ω0a†iai             ε is a constant to be chosen later.  The ground-state Φ of
+             ij,σ                 i                  i                      h takes the form
+          +∑     g(ni−⟨n⟩)(a†i +ai),                              (2)                                 |Φ⟩ =|Φel⟩|Φph⟩                           (9)
+              i
+                                                                            where|Φel⟩ is the ground-state of (hel+vel) and is a Slater
+where tij = ˜tij−  2g2ω0⟨n⟩niδij.                                           determinant as in the original DMET while|Φph⟩ is the
+  In DMET for ground-states1–3 the ground-state Ψ and                       ground-state of (hph +uph +ζph).
+expectation values of an interacting lattice Hamiltonian                       We  use |Φel⟩  to  deﬁne  the  electronic  bath  states
+such  as  Eq.  (2)  are  approximated  by  solving  for  the                through its Schmidt decomposition between the impurity
+ground-state of two coupled model problems:  a (cluster)                    cluster  and  the  remaining  lattice  sites  (see  the  original
+impurity model, and an auxiliary non-interacting lattice                    DMET procedure1–3)
+system.  We ﬁrst introduce these two models in a qualita-
+tive fashion.  The impurity model with HamiltonianHimp                                           |Φel⟩ = ∑λm|αm⟩|βm⟩                   (10)
+and ground-state Ψimp, consists of a set ofNc cluster sites                                                 i
+(denoted C) cut from the interacting lattice, coupled to                    where {|αm⟩}, {|βm⟩}  denote  the  impurity  and  bath
+Nc bath sites.  The bath sites are deﬁned from the auxil-                   many-body  Schmidt  states.    Because  of  the  Gaussian
+iary non-interacting lattice system.  The auxiliary lattice                 form  of|Φel⟩,  the  impurity  bath  space  has  the  special
+Hamiltonian h yields a ground-state Φ, and by perform-                      structure
+ing a Schmidt decomposition between the cluster and the
+remaining  (environment)  sites  in  Φ  we  obtain  a  set  of                            {|βm⟩} =F({diσ})⊗∏e†
+bath states.  For quadratic h, the Hilbert space of these                                                                  jσ|vacel⟩           (11)
+bath  states  can  be  identiﬁed  with  the  Hilbert  space  of                                                       jσ
+a set of single-particle bath sites which become the bath                   where{diσ} are a set of single-particle bath orbitals and
+sites in the impurity model.  The bath sites capture the                    F  denotes  the  corresponding  Fock  space  of  these  or-
+relevant one-particle physics (e.g.  hybridization eﬀects)                  bitals2,3.  These bath orbitals together with the impurity
+between the bare cluster and its environment in the impu-                   cluster sites constitute the electron degrees of freedom in
+rity problem.  Finally, a self-consistency condition linksh                 the  impurity  model,  while,  in  the  absence  of  non-local
+andHimp, where the parameters ofh are varied to match                       two-particle, or non-number-conserving interactions, the
+the local cluster expectation values of Φ and Ψimp.  At                     non-entangled environment orbitals{eiσ} can be ignored.
+convergence, expectation values are deﬁned from Ψimp.                       (This is because for the H  under consideration,  matrix
+  We  now  illustrate  the  above  general  procedure  by                   elements⟨αmβ′m|H|αnβ′n⟩  vanish  unless|β′m⟩  and|β′n⟩
+deﬁning h and Himp  precisely for the Hubbard-Holstein                      have the same set of occupied environment orbitals, and
+model.   We  ﬁrst  specify h  and  the  construction  of  the               these contribute only a constant term to the energy3).
+bath sites.  In DMET for pure fermionic problems, h is                         Similarly,|Φph⟩ deﬁnes phonon bath states through its
+typically chosen as a quadratic fermion Hamiltonian with                    Schmidt decomposition.  However, ifε inhph (Eq. (5)) is
+an associated fermionic Gaussian (Slater determinant1 or                    identically zero, then in this limit the impurity clusters
+BCS3) ground-state Φ.  For the Hubbard-Holstein model,                      tiling  the  lattice  have  no  entanglement  between  them,
+we  choose h  to  be  the  sum  of  quadratic  electron  and                |Φph⟩ is a product state of the phonon vacuum on each
+phonon Hamiltonians                                                         cluster tiling the lattice: ∏
+                                                                                                              i|vacph,i⟩, and the bath states
+                h =hel +vel +hph +vph +ζph                (3)               are not well deﬁned.  For inﬁnitesimal ε, this degeneracy
+                                                                            is  broken,  and  in  the  absence  of  disorder,  the  phonons
+where                                                                       spread  through  the  lattice,  creating  entanglement.   We
+                                                                            choose to deﬁne ϵ to be 0+  in this work. |Φph⟩ is then
+    hel = ∑     tijc†iσcjσ                                                   (4)the coherent state
+
+           ij,σ                                                                               |Φph⟩ = expz†|vacph⟩
+   hph = ∑      ω0a†iai +∑      εa†iaj−∑        g⟨n⟩(a†i +ai)    (5)                                  = exp(−∑zja†
+             i              ⟨ij⟩             i                                                                            j)|vacph⟩,           (12)
+                 ∑                                                                                                 j
+    vel = ∑             vel,ijc†iσcjσ                                      (6)             wherezj = ∑        ζkXTkiϵ−1
+            C   ij∈C,σ                                                                                                i Xij.
+                ∑                                                                                         ki
+   vph = ∑            vph,ija†iaj                                          (7)X   and ϵ  are  the  eigenvectors  and  eigenvalues  from
+            C   ij∈C                                                        ∑
+                ∑                                                              j (ω0δij +εij)Xjk =ϵkXik.
+   ζph = ∑          ζph,i(a†i +ai)                                      (8)    The  Schmidt  decomposition  of  the  coherent  state
+            C   i∈C                                                         Eq.  (12)  between  the  impurity  cluster C  =  0  and  its
+                                                                                                                                                3
+
+environment,  can be carried out conveniently by divid-                    where P  projects onto the space of the impurity model,
+ing z†  = ∑j∈C=0zja†j +z†E,  where the ﬁrst term is on                     i.e. P  = ∑n|Φ(n)⟩⟨Φ(n)| where|Φ⟩ is a product state
+the  impurity  cluster  and  the  second  on  the  remaining               in  the  Fock  space  of  the  impurity  and  bath  degrees  of
+sites. z†E  deﬁnes a single bath orbital, which is a result                freedom,  and n  is  an  occupancy  vector.    The  projec-
+of the simple structure of the coherent state representa-                  tor  eﬀects  a  change  of  basis  from  the  original  electron
+tion.  We can carry out calculations with a single phonon                  and phonon basis deﬁned by operators{c†i},{a†i}, to the
+bath  orbital,  however  since  the  fermionic  bath  consists             cluster  plus  bath  operators, {C†i}  = {c†i∈C=0}⊕{d†i},
+of the same number of bath orbitals as there are impu-                     {A†i} ={a†i∈C=0}⊕{b†i}.  After projection,Himp becomes
+rity sites, it seems desirable to obtain a larger set of Nc
+phonon  bath  orbitals.   To  do  so,  we  can  further  deﬁne             Himp = ∑       TijC†iσCjσ + ∑         Uniαniβ +  ∑          Vel,ijd†iσdjσ
+an artiﬁcial division of z†E  into Nc  components through                              ij                 i∈imp                ij∈bath
+z†E = ∑Ncj=1 ˜zjb†j  and                                                          +∑      ΩijA†                  ˜Vph,ijb†
+                                                                                                iAj +  ∑                 ibj
+                            ∑jN                                                       ij                ij∈bath
+                     b†     ∑jNi=(j−1)Nzia†i
+                       j =                                                        + ∑       g(ni−⟨n⟩)(a†i +ai) +  ∑            Zi(b†i +bi).
+                               i=(j−1)N|zi|2.                     (13)               i∈imp                              i∈bath
+N  =  (Nsites−Nc)/Nc.   The  decomposition  of  Eq.  (13)                                                                                    (17)
+to deﬁne additional phonon bath sites is not unique and                    where T ,  Ω, V  and Z  represent the matrix elements t,
+others can be imagined.                                                    ω,v,ζ appearing inh′ after projecting into the impurity
+  The      bath      space      is      then      spanned      by          plus bath site basis, and niσ = c†
+{|vacph⟩,b†                                                                                                          iσciσ.  (Note i∈ imp is
+             j|vacph⟩,b†ib†j|vacph⟩,...}, where{b†j|vacph⟩}                equivalent to i∈C = 0).
+are the phonon bath orbitals.  The space of the impurity                      Solving  the  interacting  impurity  model  deﬁned  by
+problem is ﬁnally given by the Nc  electron and phonon                     Himp  is  much  more  tractable  than  the  interacting  lat-
+cluster  sites,  and Nc  electron  and  phonon  bath  sites.               tice problem.  If we enforce a maximum on the phonon
+Note  that  in  the  above  Schmidt  decomposition  and                    number  (phmax)  then  the  eigenstate Himp|Ψimp⟩   =
+in  the  coherent  state  in  Eq.  (12)  we  assume  no  upper             Eimp|Ψimp⟩ can be obtained straightforwardly by exact
+limit on the number of phonons.  If, as in the numerical                   diagonalization.  This is the impurity solver we use in this
+calculations below,  we have such a cutoﬀ,  the coherent                   work, although other solvers (such as the density matrix
+state  no  longer  represents  the  exact  eigenstate  of hph,             renormalization group and coupled cluster theory) have
+and  the  Schmidt  decomposition  is  only  approximately                  also been employed in DMET3,8,12.
+represented by the phonon operators in Eq. (13).                              The last step to specify is the DMET self-consistency,
+  With  the  bath  sites  at  hand,  we  can  now  deﬁne  the              which connects h and Himp  and deﬁnes vel, vph, and ζ.
+impurity  Hamiltonian Himp.   In  DMET,  there  are  two                   These  ﬁelds  are  ﬁxed  to  best  match  the  single-particle
+conventions  of  how  to  construct  the  impurity  Hamilto-               electron  and  phonon  density  matrices  in  the  impurity
+nian.  The ﬁrst results in an impurity Hamiltonian of the                  problem  corresponding  to|Ψimp⟩  and  those  of  the  lat-
+Anderson type, i.e.  the many-particle interactions only                   tice wavefunction|Φ⟩.  We carry out the minimization of
+appear on the impurity.  The second results in an impu-                    the Frobenius norm of the matrix with elements
+rity Hamiltonian which has interactions also on the bath
+sites.  Here we use (as previously done in work on lattice                         ∆ρelij =⟨Φ|C†iCj|Φ⟩−⟨Ψimp|C†iCj|Ψimp⟩         (18)
+Hamiltonians) the ﬁrst, Anderson impurity construction.                    for the electrons, and
+Starting from the Anderson-Holstein like lattice Hamil-
+tonian H′                                                                    ∆˜ρph
+                                                                                 ij  =⟨Φ|a†iaj|Φ⟩−⟨Ψimp|A†iAj|Ψimp⟩
+   H′ =h′ +  ∑          Uniαniβ +  ∑         gni(a†i +ai),     (14)                  +⟨Φ|A†i|Φ⟩δj(2Nc+1)−⟨Ψimp|a†i|Ψimp⟩δj(2Nc+1)
+                i∈C=0                 i∈C=0                                                                                                  (19)
+where h′ is of the same form as Eq. (3), but with v and                    for  the  phonons,  where i,j  run  over  the  impurity  and
+ζ terms restricted to sites outside the impurity, i.e. vel is              bath sites.  The procedure is carried out self-consistently
+replaced by v′el where                                                     as  the  new  ﬁelds  lead  to  a  new  lattice  Hamiltonian h,
+                                ∑                                          which leads to new bath sites, a new impurity problem,
+                  v′el = ∑            vel,ijc†iσcjσ,                 (15)  and a new Himp.  The self-consistency can develop mul-
+                         C⁄=0 ij∈C,σ                                       tiple  branches,  which  indicates  the  appearance  of  new
+andC⁄= 0 excludes summation over the impurity cluster                      phases.
+and similarly forv′ph andζ′ph.  Then, the impurity Hamil-                     As  with  the  original  fermionic  DMET,  the  electron-
+tonian is given by the projection ofH′ onto the impurity                   phonon DMET constructed above is exact in various lim-
+model space                                                                its of the Hubbard-Holstein model.  First, it is exact in
+                          Himp =PH′P,                          (16)        the limits where the electron-phonon problem is decou-
+                                                                           pled and ordinary fermionic DMET is exact,  i.e.  when
+                                                                                                                                                4
+
+U/t→ 0,g→ 0 (and the interacting lattice H  reduces                           We  ﬁrst  compare  the  energies  obtained  from  DMET
+to h) or U/t→∞,g→ 0 (the atomic limit).  It is also                        with the DMRG energies of Fehske and Jeckelmann for
+exact for U/t→ 0,g→∞ and U/t→∞,g→∞ as the                                  14 diﬀerent parameters of a 32 site 1D Hubbard–Holstein
+ground-state wavefunction reduces to the product form                      model covering adiabatic (ω0  = 0.5) and anti-adiabatic
+in Eq. (9) and the phonon part is a simple product state                   (ω0  =  5.0)  regimes,  and  various  values  of  the  coupling
+over localized phonon vacua.  Between these various ex-                    λ = 2g2/ω0  and Hubbard U  (all units in t=1).  The re-
+act  limits,  the  DMET  procedure  provides  a  physically                sults are illustrated graphically in Fig. 1 and the detailed
+motivated interpolation.                                                   energies  per  site  are  reported  in  Table  I.  The  DMRG
+                                                                           calculations used open boundary conditions (OBC) and
+                                                                           a  phonon  cutoﬀ  of  phmax  =  8  phonons  per  site,  while
+             III.   BENCHMARK STUDIES                                      the  DMET  calculations  used  a  2-site  impurity  cluster
+                                                                           and anti-periodic boundary conditions (APBC), with the
+                                                                           same phonon cutoﬀ.  APBC were used to prevent an ex-
+  We  have  implemented  a  pilot  version  of  the  DMET                  actly zero gap for the 32-site cluster.  Because of the large
+electron-phonon  formalism  above,  using  an  exact  diag-                phonon cutoﬀs, larger impurity clusters would be costly
+onalization  solver  for  the  impurity  problem.   To  assess             to solve using the ED solver and are reserved for a future
+the above procedure numerically, we now compute a few                      study.   The  DMET  calculations  were  allowed  to  break
+benchmarks  for  the  one-dimensional  Hubbard–Holstein                    spin symmetry, but not number symmetry.  The diﬀerent
+model.    The  one-dimensional  Hubbard-Holstein  model                    boundary conditions mean that we do not expect perfect
+has been the target of extensive numerical studies.  Here                  agreement; in the limit of free fermions (U  = 0, λ = 0),
+we  will  compare  to  accurate  DMRG  results  on  ﬁnite                  the diﬀerence between OBC and APBC energies is 1.9%.
+chains  obtained  earlier  by  Fehske  and  Jeckelman22.   In              On this scale, the diﬀerences in the DMET and DMRG
+the two limits of g→∞, U  = 0 and g = 0, U→∞, it                           energies are small and range between 0.5%-5.5% across
+is analytically known that the ground-state is a Peierls                   the parameter ranges.  DMET naturally allows a simple
+insulator and Mott insulator respectively.  In the DMRG                    extension to larger lattices than 32 sites.  In Table I we
+calculations,  the  two  insulating  phases  appear  with  a               further show the DMET energies computed over a larger
+boundary  roughly  in  the  region  of λ  =   2g2ω0   = U.   In            lattice of 504 sites, with the same 2-site impurity and a
+addition, Fehske and Jeckelmann observed an intermedi-                     maximum  phonon  number  phmax  =  8.   We  see  that  in
+ate metallic phase which was subdivided into Luttinger                     this  1D  system,  the  energies  are  in  fact  well  converged
+liquid  and  bipolaronic  phases.   The  presence  of  an  in-             by  32  sites,  and  change  only  by  about  0.1%  going  to
+termediate phase in one-dimension is well supported by                     the larger lattice, with the largest change coming in the
+other numerical studies with various techniques including                  itinerant regime.  However, as seen in studies on the 2D
+variable-displacement Lang-Firsov23, other DMRG stud-                      Hubbard model, we can expect the ability of the DMET
+ies24,25,  SSE QMC26,27,  and variational Monte Carlo28.                   to treat larger lattices to become important in higher di-
+However, the order of the intermediate phase remains in-                   mensions, e.g.  for the two-dimensional Hubbard-Holstein
+completely resolved and depends on the numerical tech-                     model3,8,29,30.
+nique used22,24–26,28.                                                        We now study the competition of phases at the cou-
+                                                                           pling value λ = 4,  in the anti-adiabatic regime, ω  = 5.
+                                                                           At this coupling value, the DMRG calculations observe
+                                                                           three phases:  a Peierls insulating phase for U < 1.5 and
+                                                                           intermediate phase for 1.5 < U < 3.9, and a Mott insu-
+                                                                           lating phase for U > 3.9.  As mentioned above, because
+                                                                           the DMET calculations do not break number symmetry,
+                                                                           we can detect magnetic orders and charge orders, but not
+                                                                           superconducting orders.  We identify the Peierls phase as
+                                                                           a charge-ordered phase with order parameter
+
+                                                                                                       Nc/2∑
+                                                                                           Φco =   2Nc       |n2i−n2i+1|⁄= 0             (20)
+FIG. 1.    Errors of the DMET calculation (32 sites, APBC)                                              i=0
+in percent of the DMRG energy (32 sites, OBC). The radius                  and an accompanying charge-excitation gap ∆c1 > 0 and
+of  the  circle  corresponds  to  the  0.1×  error.   The  left  panel     the Mott phase, as an anti-ferromagnetic (AFM) ordered
+shows results for the adiabatic regimeω = 0.5, the right panel             phase with order parameter
+the anti-adiabatic regime ω  = 5.0.  For ω  = 0.5, the largest                                             Nc∑
+energy  error  is  1.3%,  the  smallest  0.46%.   For ω  =  5.0,  the                       Φafm =   1         |nαi −nβ
+largest energy error is 5.63%, the smallest 0.31%.  Note that                                         Nc                i|⁄= 0,               (21)
+the  diﬀerence  in  the  APBC  and  OBC  boundary  conditions                                              i=0
+employed in DMET and DMRG calculations itself introduces                   also  and  a  charge  gap.   When  both  orders  vanish  and
+a 1.9% diﬀerence at the free fermion (U = 0, λ = 0) level.                 there is no gap, we identify the phase as an intermediate
+                                                                                                                                                             5
+
+
+TABLE I.   Comparison between DMET (APBC, 2-site cluster) and DMRG (OBC) energies per site for a 32-site Hubbard-
+Holstein chain with various parameters.  phmax  = 8 for all calculations.  The diﬀerence between APBC and OBC boundary
+conditions at U  = 0, λ = 0 is 1.9%.  Additionally DMET energies for 504-site Hubbard-Holstein chain (APBC, 2-site cluster)
+are also shown.
+                                   ω  λ  U     DMRG Energy  DMET Energy (32)  DMET Energy (504)
+                                  0.5  1.5  0.025         -2.108                    -2.136                        -2.136
+                                  0.5  1.1  0.025         -1.878                    -1.886                        -1.886
+                                  0.5  0.5  0.025         -1.539                    -1.546                        -1.545
+                                  0.5  1.5   0.4           -2.002                    -2.022                        -2.022
+                                  0.5  1.0   0.4           -1.722                    -1.732                        -1.730
+                                  0.5  1.4   0.8           -1.843                    -1.858                        -1.857
+                                  0.5  0.5   1.6           -1.182                    -1.188                        -1.188
+                                  5.0  6.4   1.0           -6.083                    -6.125                        -6.125
+                                  5.0  4.0   1.0           -3.933                    -3.945                        -3.945
+                                  5.0  2.0   1.0           -2.380                    -2.408                        -2.407
+                                  5.0  4.8   2.0           -4.211                    -4.229                        -4.229
+                                  5.0  4.0   2.0           -3.558                    -3.593                        -3.588
+                                  5.0  6.0   4.0           -4.435                    -4.473                        -4.470
+                                  5.0  2.0   5.0           -1.582                    -1.671                        -1.671
+
+
+phase.  In addition to these order parameters, we can also                        DMET  data  closely  corresponds  to  the  3-phase  picture
+compute a variety of other correlation functions such as                          in the DMRG calculations, and we observe similar phase
+the double-occupancy on site 0,⟨nα0nβ0⟩, and the displace-                        boundaries.
+ment x0 =⟨a†0 +a0⟩.  (Note that we use here the single
+particle gap of the auxiliary lattice system h as a proxy                                               IV.   CONCLUSIONS
+for the charge gap.  While not a rigorous measurement it
+is close to the true single-particle gap in our earlier stud-
+ies  of  the  Hubbard  model  on  the  1D,  honeycomb,  and                          In this work we described the extension of the density
+square lattices1,11).                                                             matrix embedding theory to systems of coupled fermions
+                                                                                  and bosons, using the electron-phonon Hubbard-Holstein
+   In  the  left  panel  of  Fig.  2  we  show  the  charge-order                 Hamiltonian as a particular example.  We performed pi-
+and  AFM  order  parameters  from  a  set  of  calculations                       lot calculations on the 1D Hubbard-Holstein model us-
+that  sweep  from  low  U  to  high  U,  and  from  high  U  to                   ing  a  small  two-site  impurity  cluster,  and  found  good
+low U. These show clear hysteresis, indicating ﬁrst order                         agreement   with   the   energetics   of   earlier   benchmark
+phase transitions.  The right panel shows the energies of                         DMRG  calculations.    In  the  antiadiabatic  regime,  we
+the diﬀerent DMET coexisting solutions.  For U < 2.5,                             also observed a three-phase behaviour,  including an in-
+the CO (Peierls phase) is lowest in energy.  In the region                        termediate phase between the charge-ordered and Mott-
+U = 2.5 toU = 4 CO (and AFM order) is vanishing and                               insulating states, with similar phase boundaries as found
+a  new  phase  develops.   Interestingly,  as  seen  from  the                    in the earlier DMRG work.
+middle panel which shows the single-particle gap, in this                            We can imagine further extensions of the ideas in this
+region the single-particle gap drops to a very small but                          report, both respect to the physics and the methodology.
+ﬁnite  value  (∼  0.1t).   We  identify  this  phase  as  the  in-                For example, here we carried out a preliminary study of
+termediate phase.  Similar to as observed in the DMRG                             the  one-dimensional  Hubbard-Holstein  model.   Extend-
+studies,  the  intermediate  phase  in  the  DMET  calcula-                       ing this to studies in two-30  and higher-dimensions31,32
+tions does not show charge or magnetic order, but has a                           is of clear interest.  Further, while the Hubbard-Holstein
+small gap rather than being gapless as suggested by the                           model only contains non-interacting phonons, the DMET
+DMRG calculations. It is not clear whether the small gap                          formalism  is  equally  applicable  to  interacting  phonons,
+we observe here would vanish with larger impurity clus-                           which would allow us to study many interesting coupled
+ters.   For U >  4  antiferromagnetic  order  develops,  and                      interacting  fermion-boson  systems,  or  even  interacting
+we  enter  the  Mott  insulator  phase.   In  Fig.  3  we  show                   pure boson systems, as found, for example in cold atomic
+additional  observables:  the  double  occupancy,  and  the                       gases13.
+displacement.  The maximum double occupancy on site 0                                With  respect  to  the  DMET  formulation  itself,  a  key
+is observed in the charge ordered phase and this vanishes                         question to explore is alternative deﬁnitions of the auxil-
+as U  increases.  Similarly we ﬁnd that the displacement                          iary phonon system.  While we here used a simple coher-
+decreases to zero away from the CO phase.  Overall, our                           ent  state  ground-state  to  deﬁne  the  phonon  bath  sites,
+                                                                                                                                                    6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.  The left panel shows the transition from the charge-ordered to the spin-ordered phase for λ = 4 and ω  = 5.0.  In
+the forward scan at U  = 4,  the charge-order parameter vanishes,  while the anti-ferromagnetic order parameter grows.  The
+backward scan ﬁnds a (small) gapped phase without any order parameter for U  = [2, 4].  The middle panel shows the change
+of the HOMO-LUMO (auxiliary system single-particle) gap with U.  Extrapolation from Nsites = 102, 502, 1002 is performed
+to account for ﬁnite-size eﬀects.  The diﬀerent phases are depicted in the right panel.  The energy is converged at a maximum
+phonon number phmax = 10 and order parameters are given for the chain of lengthNsites = 1002.  Periodic boundary conditions
+are used throughout.
+
+
+                                                                             problem.  Extensions to other ground-state solvers, such
+                                                                             as the density matrix renormalization group, or diﬀusion
+                                                                             or auxiliary ﬁeld quantum Monte Carlo, would open up
+                                                                             the possibility of more deﬁnitive calculations using larger
+                                                                             impurities and realistic interactions.
+
+
+
+
+                                                                                            V.   ACKNOWLEDGEMENTS
+FIG. 3.   The left panel shows the double occupancy as a func-
+tion of U  for λ = 2, 3, 4 and ω0 = 0.5.  The right panel shows                 We are grateful to Eric Jeckelmann and Holger Fehske
+the displacement as a function of U.  Calculations are carried
+out  with  maximum  phonon  number  phmax  =  10  and  chain                 for supplying the DMRG reference energies. We acknowl-
+length Nsites = 1002 using periodic boundary conditions.                     edge helpful discussions with Boxiao Zheng.  This work
+                                                                             was primarily supported by the US Department of En-
+                                                                             ergy via de-sc0010530.  Additional support was provided
+other  choices  which  describe  less  classical  phonons  can               by the US Department of Energy, SciDAC de-sc0008624,
+be  used.   Finally,  on  the  numerical  front,  we  employed               as well as through the Simons Foundation, through the
+an exact diagonalization solver for the DMET impurity                        Simons Collaboration on the Many-Electron Problem.
+
+
+
+
+
+
+
+ ∗  gkchan@princeton.edu                                                      6  T. Maier, M. Jarrell, T. Pruschke, and M. H. Hettler, Re-
+ 1  G.  Knizia  and  G.  K.-L.  Chan,  Phys.  Rev.  Lett.  109,                  views of Modern Physics 77, 1027 (2005)
+   186404 (Nov 2012),  http://link.aps.org/doi/10.1103/                       7  G. Kotliar, S. Y. Savrasov, G. P´alsson, and G. Biroli, Phys.
+   PhysRevLett.109.186404                                                        Rev. Lett. 87, 186401 (Oct 2001), http://link.aps.org/
+ 2  G.   Knizia   and   G.   K.-L.   Chan,   Journal   of   Chem-                doi/10.1103/PhysRevLett.87.186401
+   ical    Theory    and    Computation    9,    1428    (2013),              8  Q. Chen, G. H. Booth, S. Sharma, G. Knizia, and G. K.-L.
+   http://pubs.acs.org/doi/pdf/10.1021/ct301044e,                                Chan, Phys. Rev. B 89, 165134 (Apr 2014), http://link.
+   http://pubs.acs.org/doi/abs/10.1021/ct301044e                                 aps.org/doi/10.1103/PhysRevB.89.165134
+ 3  B.-X.   Zheng   and   G.   K.-L.   Chan,   arXiv   preprint               9  I. W. Bulik, G. E. Scuseria, and J. Dukelsky, Physical Re-
+   arXiv:1504.01784(2015)                                                        view B 89, 035140 (2014)
+ 4  A. Georges, G. Kotliar, W. Krauth, and M. J. Rozenberg,                  10  Z. Fan and Q.-l. Jie, Physical Review B 91, 195118 (2015)
+   Rev.  Mod.  Phys. 68,  13  (Jan  1996),  http://link.aps.                 11  G. H. Booth and G. K.-L. Chan, Physical Review B 91,
+   org/doi/10.1103/RevModPhys.68.13                                              155107 (2015)
+ 5  H. Fotso, S. Yang, K. Chen, S. Pathak, J. Moreno, M. Jar-                12  I. W. Bulik, W. Chen, and G. E. Scuseria, The Journal of
+   rell,  K.  Mikelsons,  E.  Khatami,  and  D.  Galanakis,  in                  chemical physics 141, 054113 (2014)
+   Strongly Correlated Systems  (Springer, 2012) pp. 271–302                 13  I. Bloch,  J. Dalibard, and W. Zwerger, Rev. Mod. Phys.
+                                                                                 80, 885 (2008)
+                                                                                                                                                              7
+
+
+14  A. B. Migdal, Sov. Phys. JETP 7, 996 (1958)                                   25  M. Tezuka, R. Arita, and H. Aoki, Phys. Rev. B 76, 155114
+15  G. M. Eliashberg, Sov. Phys. JETP 11, 696 (1960)                                  (Oct 2007)
+16  L. Oliveira, E. Gross, and W. Kohn, Physical review letters                   26  R. T. Clay and R. P. Hardikar, Phys. Rev. Lett. 95, 096401
+   60, 2430 (1988)                                                                    (Aug 2005)
+17  D. Scalapino, J. Schrieﬀer, and J. Wilkins, Physical Review                   27  R. P. Hardikar and R. T. Clay, Phys. Rev. B 75, 245103
+   148, 263 (1966)                                                                    (Jun 2007)
+18  J. Bauer, J. E. Han, and O. Gunnarsson, Phys. Rev. B 84,                      28  T.  Ohgoe  and  M.  Imada,  Physical  Review  B 89,  195139
+   184531 (2011)                                                                      (2014)
+19  B. Keimer, S. Kivelson, M. Norman, S. Uchida, and J. Za-                      29  J.  P.  F.  LeBlanc,  A.  E.  Antipov,  F.  Becca,  I.  W.  Bulik,
+   anen, Nature 518, 179 (2015)                                                       G. K.-L. Chan, C.-M. Chung, Y. Deng, M. Ferrero, T. M.
+20  Y.   Takabayashi,   A.   Y.   Ganin,   P.   Jegliˇc,   D.   Arˇcon,               Henderson, C. A. Jimnez-Hoyos, E. Kozik, X.-W. Liu, A. J.
+   T. Takano, Y. Iwasa, Y. Ohishi, M. Takata, N. Takeshita,                           Millis,  N.  V.  Prokof’ev,  M.  Qin,  G.  E.  Scuseria,  H.  Shi,
+   K. Prassides, et al., Science 323, 1585 (2009)                                     B. V. Svistunov, L. F. Tocchio, I. S. Tupitsyn, S. R. White,
+21  T. Holstein, Ann. Phys. 8, 325 (1959)                                             S. Zhang, B.-X. Zheng, Z. Zhu, and E. Gull, Phys. Rev. X
+22  H.  Fehske,  G.  Hager,  and  E.  Jeckelmann,  EPL  (Euro-                        5, 041041 (2015)
+   physics Letters) 84, 57001 (2008)                                              30  E. Nowadnick,  S. Johnston,  B. Moritz,  R. Scalettar, and
+23  Y.  Takada  and  A.  Chatterjee,  Phys.  Rev.  B 67,  081102                      T. Devereaux, Physical review letters 109, 246404 (2012)
+   (Feb 2003)                                                                     31  G. Sangiovanni, M. Capone, C. Castellani, and M. Grilli,
+24  M.  Tezuka,  R.  Arita,  and  H.  Aoki,  Phys.  Rev.  Lett. 95,                   Phys. Rev. Lett. 94, 026401 (2005)
+   226401 (Nov 2005)                                                              32  P.  Werner  and  A.  J.  Millis,  Phys.  Rev.  Lett. 99,  146404
+                                                                                      (2007)

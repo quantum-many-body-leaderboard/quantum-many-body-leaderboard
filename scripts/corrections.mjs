@@ -26856,13 +26856,13 @@ export const CORRECTIONS = [
     },
     "field": "reference",
     "from": "H. Fehske, private communication: exact diagonalization of the 16-site chain, printed in Bonča, Trugman & Batistić, Holstein polaron, Phys. Rev. B 60, 1633 (1999), Table I and Ref. [26], doi:10.1103/PhysRevB.60.1633, arXiv:cond-mat/9812252",
-    "to": "H. Fehske, private communication: exact diagonalization of the 16-site chain, printed in Bonča, Trugman & Batistić, Holstein polaron, Phys. Rev. B 60, 1633 (1999), Table I and Ref. 28 (Ref. [26] in arXiv:cond-mat/9812252v1), doi:10.1103/PhysRevB.60.1633, arXiv:cond-mat/9812252",
+    "to": "H. Fehske, unpublished exact diagonalization of the 16-site chain (private communication), printed in Bonča, Trugman & Batistić, Holstein polaron, Phys. Rev. B 60, 1633 (1999), Table I and Ref. 28 (Ref. [26] in arXiv:cond-mat/9812252v1), doi:10.1103/PhysRevB.60.1633, arXiv:cond-mat/9812252",
     "reported_as": "−2.99882816 (column 'ED N=16', λ/ω = √2)",
     "location": "Table I (arXiv line 1146-1147; journal p. 1636) and the footnote naming the ED: journal Ref. 28, arXiv Ref. [26]",
     "version_read": "arXiv:cond-mat/9812252v1 (qmbl sources/cond-mat-9812252.txt) and journal Phys. Rev. B 60, 1633 (1999), APS PDF (run sources/J-PhysRevB.60.1633.txt, pypdf layout; old font: '2' is the minus sign)",
     "conversion": "total for one electron, t = 1 ('assumed here and throughout this work'), ω = 1, H = −t Σ(c†c + H.c.) − λ Σ c†c(a+a†) + ω Σ a†a: λ is the instance g; no shift",
     "checked_on": "2026-11-18",
-    "reason": "Value, cluster and couplings verified; the journal prints the same digits. The footnote that names H. Fehske's unpublished ED ('12 phonons, 3.0 × 10^7 basis states') is Ref. 28 in the journal (Ref. 26 there is Trugman in Plenum Press), Ref. [26] only in arXiv v1; the journal reference wins (RULES.md 8). Boundary: Bonča et al. state that finite-N ED energies are for chains 'with periodic boundary conditions' and the ED basis is 'symmetrized'; the basis size matches one electron on 16 sites with total phonon number ≤ 12 (C(28,12) = 30,421,755), so the truncation is in the total phonon number. bound_type variational (truncated ED) agrees.",
+    "reason": "Value, cluster and couplings verified; the journal prints the same digits. The footnote that names H. Fehske's unpublished ED ('12 phonons, 3.0 × 10^7 basis states') is Ref. 28 in the journal (Ref. 26 there is Trugman in Plenum Press), Ref. [26] only in arXiv v1; the journal reference wins (RULES.md 8). Boundary: Bonča et al. state that finite-N ED energies are for chains 'with periodic boundary conditions' and the ED basis is 'symmetrized'; the basis size matches one electron on 16 sites with total phonon number ≤ 12 (C(28,12) = 30,421,755), so the truncation is in the total phonon number. bound_type variational (truncated ED) agrees. The reference opens with the person and 'unpublished', as the journal footnote calls the ED, so the source cell names H. Fehske (unpublished), quoted in Bonča et al. (1999) (2026-11-26).",
     "source_entry": "SP1-holstein#30 (qmbl-verify 2026-11-18)"
   },
   {
@@ -26873,13 +26873,47 @@ export const CORRECTIONS = [
     },
     "field": "reference",
     "from": "H. Fehske, private communication: exact diagonalization of the 16-site chain, printed in Bonča, Trugman & Batistić, Holstein polaron, Phys. Rev. B 60, 1633 (1999), Table I and Ref. [26], doi:10.1103/PhysRevB.60.1633, arXiv:cond-mat/9812252",
-    "to": "H. Fehske, private communication: exact diagonalization of the 16-site chain, printed in Bonča, Trugman & Batistić, Holstein polaron, Phys. Rev. B 60, 1633 (1999), Table I and Ref. 28 (Ref. [26] in arXiv:cond-mat/9812252v1), doi:10.1103/PhysRevB.60.1633, arXiv:cond-mat/9812252",
+    "to": "H. Fehske, unpublished exact diagonalization of the 16-site chain (private communication), printed in Bonča, Trugman & Batistić, Holstein polaron, Phys. Rev. B 60, 1633 (1999), Table I and Ref. 28 (Ref. [26] in arXiv:cond-mat/9812252v1), doi:10.1103/PhysRevB.60.1633, arXiv:cond-mat/9812252",
     "reported_as": "−2.46968477 (column 'ED N=16', λ/ω = 1)",
     "location": "Table I (arXiv line 1146-1147; journal p. 1636) and the footnote naming the ED: journal Ref. 28, arXiv Ref. [26]",
     "version_read": "arXiv:cond-mat/9812252v1 (qmbl sources/cond-mat-9812252.txt) and journal Phys. Rev. B 60, 1633 (1999), APS PDF (run sources/J-PhysRevB.60.1633.txt, pypdf layout; old font: '2' is the minus sign)",
     "conversion": "total for one electron, t = 1 ('assumed here and throughout this work'), ω = 1, H = −t Σ(c†c + H.c.) − λ Σ c†c(a+a†) + ω Σ a†a: λ is the instance g; no shift",
     "checked_on": "2026-11-18",
-    "reason": "Value, cluster and couplings verified; the journal prints the same digits. The footnote that names H. Fehske's unpublished ED ('10 phonons, 5.3 × 10^6 basis states') is Ref. 28 in the journal (Ref. 26 there is Trugman in Plenum Press), Ref. [26] only in arXiv v1; the journal reference wins (RULES.md 8). Boundary: Bonča et al. state that finite-N ED energies are for chains 'with periodic boundary conditions' and the ED basis is 'symmetrized'; the basis size matches one electron on 16 sites with total phonon number ≤ 10 (C(26,10) = 5,311,735), so the truncation is in the total phonon number. bound_type variational (truncated ED) agrees.",
+    "reason": "Value, cluster and couplings verified; the journal prints the same digits. The footnote that names H. Fehske's unpublished ED ('10 phonons, 5.3 × 10^6 basis states') is Ref. 28 in the journal (Ref. 26 there is Trugman in Plenum Press), Ref. [26] only in arXiv v1; the journal reference wins (RULES.md 8). Boundary: Bonča et al. state that finite-N ED energies are for chains 'with periodic boundary conditions' and the ED basis is 'symmetrized'; the basis size matches one electron on 16 sites with total phonon number ≤ 10 (C(26,10) = 5,311,735), so the truncation is in the total phonon number. bound_type variational (truncated ED) agrees. The reference opens with the person and 'unpublished', as the journal footnote calls the ED, so the source cell names H. Fehske (unpublished), quoted in Bonča et al. (1999) (2026-11-26).",
     "source_entry": "SP1-holstein#31 (qmbl-verify 2026-11-18)"
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_16_P_f1_w1_g1",
+      "method": "ED, 10 phonons",
+      "energy": -2.46968477
+    },
+    "field": "verified.secondary_of",
+    "from": "arXiv:cond-mat/9812252",
+    "to": "Bonča, Trugman & Batistić, Holstein polaron, Phys. Rev. B 60, 1633 (1999), doi:10.1103/PhysRevB.60.1633, arXiv:cond-mat/9812252",
+    "reported_as": "−2.46968477",
+    "location": "Table I, column 'ED N=16', and journal Ref. 28 (H. Fehske's unpublished ED)",
+    "version_read": "journal Phys. Rev. B 60, 1633 (1999) and arXiv:cond-mat/9812252v1, as in the reference correction above (2026-11-18)",
+    "conversion": "none",
+    "checked_on": "2026-11-26",
+    "reason": "secondary_of named the quoting paper by its arXiv id while the reference names it by its DOI first, so the citation code took Bonča et al. for the row's own paper and the cell read 'Bonča et al. (1999)', as if they had produced the number. Naming the paper by its DOI makes the cell read 'H. Fehske (unpublished), quoted in Bonča et al. (1999)', as for the 26-site t-J rows (2026-10-27). Energy, provenance and quoting paper unchanged.",
+    "source_entry": "display of numbers that exist only in the quoting paper (2026-11-26)"
+  },
+  {
+    "match": {
+      "instance": "Holstein/chain_16_P_f1_w1_g1.41421",
+      "method": "ED, 12 phonons",
+      "energy": -2.99882816
+    },
+    "field": "verified.secondary_of",
+    "from": "arXiv:cond-mat/9812252",
+    "to": "Bonča, Trugman & Batistić, Holstein polaron, Phys. Rev. B 60, 1633 (1999), doi:10.1103/PhysRevB.60.1633, arXiv:cond-mat/9812252",
+    "reported_as": "−2.99882816",
+    "location": "Table I, column 'ED N=16', and journal Ref. 28 (H. Fehske's unpublished ED)",
+    "version_read": "journal Phys. Rev. B 60, 1633 (1999) and arXiv:cond-mat/9812252v1, as in the reference correction above (2026-11-18)",
+    "conversion": "none",
+    "checked_on": "2026-11-26",
+    "reason": "secondary_of named the quoting paper by its arXiv id while the reference names it by its DOI first, so the citation code took Bonča et al. for the row's own paper and the cell read 'Bonča et al. (1999)', as if they had produced the number. Naming the paper by its DOI makes the cell read 'H. Fehske (unpublished), quoted in Bonča et al. (1999)', as for the 26-site t-J rows (2026-10-27). Energy, provenance and quoting paper unchanged.",
+    "source_entry": "display of numbers that exist only in the quoting paper (2026-11-26)"
   },
 ];

@@ -342,8 +342,9 @@ Stored conventions follow VarBench and are asserted per instance, not per row:
 Any submitted number is converted by the loader, never by hand. It is converted only from what
 the source prints (its Hamiltonian, couplings and units), and the row records the conversion. A
 source that does not print them is `needs_review` (§10) until they are found. A convention is
-never inferred, and never checked by a computation of QMBL's own (2026-11-24). The conventions of every
-model are listed in [DATA.md](DATA.md#units-and-conventions).
+never guessed, and never checked by a computation of QMBL's own (2026-11-24). One the source
+implies without stating it counts as printed only under the rule for implied facts (§8,
+2026-11-26). The conventions of every model are listed in [DATA.md](DATA.md#units-and-conventions).
 
 ## 6. Best values and ties
 
@@ -476,6 +477,16 @@ present and is never ranked on.
   holds for the t-V VMC energies the first author of arXiv:2406.09077 uploaded before that
   paper existed, the shuriken mVMC energies of PRB 104, L220408, and the open 10x10
   Tensor-RNN energy of PRR 5, L032001.
+- A fact the source implies but does not state counts as read when only one reading of it agrees
+  with what the source prints: a number, an equation, or a line of the code or data the source
+  cites (2026-11-26). The row names the implied fact and gives that evidence. Where the evidence
+  favours one reading without excluding the others, the value is held. Before a value is held for
+  a fact the source does not print, the whole source is read, then the code or data it cites.
+  Case: Sandhoefer & Chan, PRB 94, 085115, do not state the filling of their Table I. They call
+  the g = 0, U → ∞ limit of their chain a Mott insulator, and their DMRG reference energies come
+  from a study of the half-filled chain, so only half filling fits. Case held: the boundary of the
+  8-site chain of Anderson, Scott & Booth, PRB 106, 155158. Their sign-free argument favours
+  antiperiodic boundaries, but an open chain is sign-free too.
 - A private communication printed in a paper is admissible, as `secondary`. Case: Nomura's
   12x12 and 16x16 RBM+PP energies exist only as the "Ref. [7]" cells of Roth, Szabo &
   MacDonald, PRB 108, 054410 (2023), numbers Nomura shared with them. The paper of the

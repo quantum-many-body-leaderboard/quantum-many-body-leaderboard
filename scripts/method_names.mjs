@@ -1091,6 +1091,13 @@ Object.assign(NAMES, {
   "SC-VAED": ["ED", "self-consistently grown variational basis (SC-VAED)"],
   "fb-BE, BE2": ["bootstrap embedding", "BE2 fragments (a site and its nearest neighbours), phonons in a coherent-state mean field", { family: "other" }], // arXiv:2603.11463
   "fb-BE, BE3": ["bootstrap embedding", "BE3 fragments, phonons in a coherent-state mean field", { family: "other" }],
+  // Pass 2026-11-26 (scripts/holstein_2026_11_26.mjs): arXiv:1602.04195 and arXiv:2405.08701, Fig. 2.
+  "DMET (2-site cluster), 8 phonons": ["DMET", "2-site impurity cluster, exact-diagonalization solver, phonon cutoff 8", { family: "other" }],
+  "DMRG (Fehske & Jeckelmann), 8 phonons": ["DMRG", "phonon cutoff 8", { family: "tensor network" }],
+  "MLP (nH = 1)": ["MLP", "1 hidden neuron", { family: "other NQS" }],
+  "MLP (nH = 5)": ["MLP", "5 hidden neurons", { family: "other NQS" }],
+  "MLP (nH = 10)": ["MLP", "10 hidden neurons", { family: "other NQS" }],
+  "MLP (nH = 20)": ["MLP", "20 hidden neurons", { family: "other NQS" }],
   "CP-AFQMC/TP-LLF(2)": ["CP-AFQMC", "trial state: TP-LLF(2), two Lang-Firsov states", { family: "AFQMC / GFMC" }],
   "Global-Local variation": ["Global-Local variation", "", { family: "other" }],
   "|Ψel-ph⟩ (α = 0)": ["VMC", "electron-phonon entangled wave function without the RBM factor, phonon cutoff 15", { family: "classic VMC" }], // arXiv:2001.02106
