@@ -232,10 +232,28 @@
           "location": "Table 2 (System L = 4, Np = 5), row 'arSJVMC (this work)', column V/t = 0.01; txt line 1734",
           "reported_as": "-11.97996(5)",
           "conversion": "total energy, units of t, stored as printed; sigma 5e-5",
-          "note": "Eq. (5) H = H_int({n}) - 1/2 sum t_sr (c+c + h.c.); the paper's own 'Lanczos ED (QuSpin)' cell -11.980026 equals QMBL's ED row -11.980026283 on this instance, which fixes the convention (Np total = Nf = 5, PBC, no constant shift). Variational, own computation, peer reviewed. No duplicate on the instance.",
+          "note": "Eq. (5) H = H_int({n}) - 1/2 sum t_sr (c+c + h.c.); the paper's own 'Lanczos ED (QuSpin)' cell -11.980026 equals the VarBench ED row -11.980026283 on this instance (the imported number), which fixes the convention (Np total = Nf = 5, PBC, no constant shift). Variational, own computation, peer reviewed. No duplicate on the instance.",
           "source_entry": "RP2-heg3d-hubbard-tv-heisenberg#18 (qmbl-verify 2026-11-10b)"
         }
-      }
+      },
+      "corrections": [
+        {
+          "field": "verified.second_read.note",
+          "edit": [
+            "equals QMBL's ED row -11.980026283 on this instance",
+            "equals the VarBench ED row -11.980026283 on this instance (the imported number)"
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/2210.05871.txt:1731-1735 \"System (L = 4, Np = 5) ... arSJVMC (this work) -11.97996(5) ... Lanczos ED (QuSpin) -11.980026\"",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)",
+          "from": "Eq. (5) H = H_int({n}) - 1/2 sum t_sr (c+c + h.c.); the paper's own 'Lanczos ED (QuSpin)' cell -11.980026 equals QMBL's ED row -11.980026283 on this instance, which fixes the convention (Np total = Nf = 5, PBC, no constant shift). Variational, own computation, peer reviewed. No duplicate on the instance.",
+          "to": "Eq. (5) H = H_int({n}) - 1/2 sum t_sr (c+c + h.c.); the paper's own 'Lanczos ED (QuSpin)' cell -11.980026 equals the VarBench ED row -11.980026283 on this instance (the imported number), which fixes the convention (Np total = Nf = 5, PBC, no constant shift). Variational, own computation, peer reviewed. No duplicate on the instance."
+        }
+      ]
     }
   ],
   "coverage": [

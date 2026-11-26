@@ -46,7 +46,7 @@
           "method": "published PDF Phys. Rev. B 83, 212401 (2011), sources/journal/prb83-212401.pdf, sha256 389bb52b (no Supplemental Material linked); compared with arXiv:1103.1159v2 (8 Mar 2011, latest, sha256 c77b836e); pypdf layout + plain",
           "location": "Table I, row N = 42 b, basis vectors (-2,4), (4,-1), column 'Total E (J)'",
           "reported_as": "–18.401 988 921 (total, J, S.S); E/N –0.438 143",
-          "conversion": "-18.401988921 x 4 = -73.607955684; stored -73.607955684 carries QMBL's recomputed digits where applied (ruling 2026-09-30 / A3); |stored/4 - printed| = 0.0e+00 < 1e-9",
+          "conversion": "-18.401988921 x 4 = -73.607955684; stored -73.607955684 is the printed value times 4 (sources/1103.1159.txt:81, Table I, N = 42b); |stored/4 - printed| = 0.0e+00 < 1e-9",
           "note": "Journal and arXiv v2 identical for this cluster. H = J sum<ij> Si.Sj (Eq. 1), J = 1, periodic torus with the listed basis vectors, S = 0 ground state, Lanczos ED (own computation). Only row on its instance; no duplicate.",
           "source_entry": "JP7-j1j2-heisenberg#59"
         }
@@ -66,7 +66,25 @@
         "scope": "paper",
         "confidence": "medium",
         "note": "Large-scale Lanczos ED with distributed-memory parallelisation; the paper gives only the cost model N_it x M x t and the machines, no core count, node count, CPU-hours, wall-clock or Lanczos iteration count for any cluster. For the 42-site clusters (this row) the paper states the maximal Hilbert-space dimension without lattice symmetries, (42 choose 21)/2 = 269,128,937,220 (printed with garbled digit grouping in the PDF text), and that only very few simple symmetries were used. Symmetry group orders |G| per cluster are listed in Table I. Fetched as fetched/1103.1159.pdf/.txt."
-      }
+      },
+      "corrections": [
+        {
+          "field": "verified.journal_read.conversion",
+          "edit": [
+            "stored -73.607955684 carries QMBL's recomputed digits where applied (ruling 2026-09-30 / A3)",
+            "stored -73.607955684 is the printed value times 4 (sources/1103.1159.txt:81, Table I, N = 42b)"
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/1103.1159.txt:81 Table I N=42b (-2,4),(4,-1) -18.401 988 921; x4 = -73.607955684",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "-18.401988921 x 4 = -73.607955684; stored -73.607955684 carries QMBL's recomputed digits where applied (ruling 2026-09-30 / A3); |stored/4 - printed| = 0.0e+00 < 1e-9",
+          "to": "-18.401988921 x 4 = -73.607955684; stored -73.607955684 is the printed value times 4 (sources/1103.1159.txt:81, Table I, N = 42b); |stored/4 - printed| = 0.0e+00 < 1e-9"
+        }
+      ]
     }
   ],
   "coverage": [

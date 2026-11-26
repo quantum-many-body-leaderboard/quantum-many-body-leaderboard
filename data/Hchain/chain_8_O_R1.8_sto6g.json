@@ -197,11 +197,45 @@
           "location": "Table S2 (SI p. S4, PDF page 30), row H8, column FCI under 1.8 Bohr; my extraction 2305.12776v2-layout.txt line 1182",
           "reported_as": "−4.34508",
           "conversion": "printed value is already the total in Ha: -4.34508 Ha total = -0.5431350000 Ha per atom (divided by N = 8); stored eps per atom matches",
-          "note": "Instance (open chain, N = 8, R = 1.8 bohr, STO-6G, neutral, Sz = 0) and column agree. Total in Ha with nuclear repulsion: the same table's FCI cell agrees with QMBL's pyscf FCI -4.3450794 Ha to the printed 5 decimals, so unit and constant are fixed although the paper prints no unit. Printed value - QMBL FCI = -5.97e-7 Ha. Exact; agrees with QMBL's recompute within half a unit of the 5th decimal (|diff| 5.97e-7 < 5e-6). Only exact row on the instance. No other row on this instance from another batch (sweep-rows has only this paper's 4 rows here; data/Hchain does not exist): no duplicate.",
+          "note": "Instance (open chain, N = 8, R = 1.8 bohr, STO-6G, neutral, Sz = 0) and column agree. Total in Ha with nuclear repulsion: the paper prints no unit; the same table's H10 FCI cells (sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (sources/1705.01608.txt:1256, :1261), which fixes unit and constant table-wide. Exact: the FCI cell of the table, printed to 5 decimals. Only exact row on the instance. No other row on this instance from another batch (sweep-rows has only this paper's 4 rows here; data/Hchain does not exist): no duplicate.",
           "secondary_of": null,
           "source_entry": "h-p-2305-12776-c1#24 (qmbl-verify 2026-10-23/24, verified)"
         }
-      }
+      },
+      "corrections": [
+        {
+          "field": "verified.second_read.note",
+          "edit": [
+            "the same table's FCI cell agrees with QMBL's pyscf FCI -4.3450794 Ha to the printed 5 decimals, so unit and constant are fixed although the paper prints no unit",
+            "the paper prints no unit; the same table's H10 FCI cells (sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (sources/1705.01608.txt:1256, :1261), which fixes unit and constant table-wide"
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/2305.12776.txt:1152 Table S2 H8 row (-4.34508); same table as H10 cell matching Motta (:1153); caption :1145-46. Table-wide convention only",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "Instance (open chain, N = 8, R = 1.8 bohr, STO-6G, neutral, Sz = 0) and column agree. Total in Ha with nuclear repulsion: the same table's FCI cell agrees with QMBL's pyscf FCI -4.3450794 Ha to the printed 5 decimals, so unit and constant are fixed although the paper prints no unit. Printed value - QMBL FCI = -5.97e-7 Ha. Exact; agrees with QMBL's recompute within half a unit of the 5th decimal (|diff| 5.97e-7 < 5e-6). Only exact row on the instance. No other row on this instance from another batch (sweep-rows has only this paper's 4 rows here; data/Hchain does not exist): no duplicate.",
+          "to": "Instance (open chain, N = 8, R = 1.8 bohr, STO-6G, neutral, Sz = 0) and column agree. Total in Ha with nuclear repulsion: the paper prints no unit; the same table's H10 FCI cells (sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (sources/1705.01608.txt:1256, :1261), which fixes unit and constant table-wide. Printed value - QMBL FCI = -5.97e-7 Ha. Exact; agrees with QMBL's recompute within half a unit of the 5th decimal (|diff| 5.97e-7 < 5e-6). Only exact row on the instance. No other row on this instance from another batch (sweep-rows has only this paper's 4 rows here; data/Hchain does not exist): no duplicate."
+        },
+        {
+          "field": "verified.second_read.note",
+          "edit": [
+            "Printed value - QMBL FCI = -5.97e-7 Ha. Exact; agrees with QMBL's recompute within half a unit of the 5th decimal (|diff| 5.97e-7 < 5e-6).",
+            "Exact: the FCI cell of the table, printed to 5 decimals."
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/2305.12776.txt:1152 Table S2 H8 row (-4.34508); same table as H10 cell matching Motta (:1153); caption :1145-46. Table-wide convention only",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "Instance (open chain, N = 8, R = 1.8 bohr, STO-6G, neutral, Sz = 0) and column agree. Total in Ha with nuclear repulsion: the paper prints no unit; the same table's H10 FCI cells (sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (sources/1705.01608.txt:1256, :1261), which fixes unit and constant table-wide. Printed value - QMBL FCI = -5.97e-7 Ha. Exact; agrees with QMBL's recompute within half a unit of the 5th decimal (|diff| 5.97e-7 < 5e-6). Only exact row on the instance. No other row on this instance from another batch (sweep-rows has only this paper's 4 rows here; data/Hchain does not exist): no duplicate.",
+          "to": "Instance (open chain, N = 8, R = 1.8 bohr, STO-6G, neutral, Sz = 0) and column agree. Total in Ha with nuclear repulsion: the paper prints no unit; the same table's H10 FCI cells (sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (sources/1705.01608.txt:1256, :1261), which fixes unit and constant table-wide. Exact: the FCI cell of the table, printed to 5 decimals. Only exact row on the instance. No other row on this instance from another batch (sweep-rows has only this paper's 4 rows here; data/Hchain does not exist): no duplicate."
+        }
+      ]
     }
   ]
 }

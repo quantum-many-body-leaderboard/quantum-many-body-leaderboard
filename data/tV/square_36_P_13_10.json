@@ -36,7 +36,7 @@
           "version_read": "arXiv:2210.05871 v1, v3, v4 (pypdf layout, sources in the run); VarBench git history (qmbl-runs/qmbl-verify-2026-09-29/varbench-history, git log -S / git show), read 2026-10-02",
           "conversion": "none (citation)",
           "checked_on": "2026-10-02",
-          "reason": "The linked ed_lattice_symmetries.sh restricts the basis to lattice-symmetries sector 0 for both translations, both mirrors and the transpose (nk2ls.py lines 214, 245-254), and the stored number predates the link: it came from a QuSpin Lanczos run whose script is not in varbench/methods (VB4). The same value is printed, truncated to eight decimals, in Table 3 of the SciPost paper, and QMBL's recompute confirms it (VE-exact-recompute; at V = 10 every sector was computed, the ground state is Gamma B1). The row cites the printing paper beside the link; the number keeps its digits. The row is the instance's only exact reference. Ruling E5 (2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged.",
+          "reason": "The linked ed_lattice_symmetries.sh restricts the basis to lattice-symmetries sector 0 for both translations, both mirrors and the transpose (nk2ls.py lines 214, 245-254), and the stored number predates the link: it came from a QuSpin Lanczos run whose script is not in varbench/methods (VB4). The same value is printed, truncated to eight decimals, in Table 3 of the SciPost paper (row 'Lancos ED (QuSpin)'). The row cites the printing paper beside the link; the number keeps its digits. The row is the instance's only exact reference. Ruling E5 (2026-10-02, reworded 2026-11-26): an exact row cites the printing paper beside the link; the link stays and no row is flagged.",
           "source_entry": "VB4-tfising-tv#46 (qmbl-verify 2026-09-29, ambiguous); ruling E5, 2026-10-02",
           "from": "[code](https://github.com/varbench/methods/blob/main/scripts/tV/square_36_P_13_10/ed_lattice_symmetries.sh)"
         },
@@ -48,18 +48,130 @@
           "version_read": "published PDF SciPost Phys. 14, 171 (2023), doi:10.21468/SciPostPhys.14.6.171, sources/journal/scipost14-171.pdf, sha256 21fc99f7; pypdf layout mode; compared with arXiv:2210.05871v4 (latest; qmbl-runs/qmbl-verify/sources/2210.05871v4.pdf, sha256 18e3ceb6)",
           "conversion": "none",
           "checked_on": "2026-10-15",
-          "reason": "RULES.md 8.1: peer_reviewed follows the venue that printed the number. SciPost Physics (refereed physics journal) prints this value (truncated to eight decimals) in Table 3; the field is absent on this imported row and scope-pub.json lists it. Same answer as the VA1 precedent (corrections.mjs, PRX 14, 021010). Value check: journal Table 3 (p. 28), \"System (L = 6, Np = 13)\", row \"Lancos ED (QuSpin)\" (typo as printed in both versions), column V/t = 10: -7.92802624; stored -7.928026240978371 truncates to -7.92802624 (eight decimals); arXiv v4 Table 3 prints the identical row, so journal and arXiv do not differ. C1-C4 from the journal: Eq. (58) H_tV = -t sum<i,j> (c+_i c_j + c+_j c_i) + V sum<i,j> n_i n_j, t, V > 0, \"with periodic boundary conditions\"; L = 6, Np = 13 total spinless fermions; no constant shift; matches instance Nf = 13 (total), V. ED: \"The Lanczos exact diagonalization was carried out using the Quspin package [80,81], restricting to the momentum sectors which contain the ground state\" (p. 24). bound_type exact right; QMBL's recompute (VE-exact-recompute, Gamma B1) agrees to < 2e-13. Baseline code (varbench/methods ed31bb0, scripts/tV/square_36_P_13_10/ed_lattice_symmetries.sh): \"python3 ed_ls.py --ham tv --boundary peri --ham_dim 2 --L 6 --V 10 --Nf 13\"; vmc.py builds nk.graph.Grid([6,6], pbc=True) (72 bonds) and ham.tVModel: H -= c+_i c_j + c+_j c_i; H += V n_i n_j at n_fermions = 13: matches. The stored number is the QuSpin run (not in the repo), as ruled in E5. Upload history: the digits enter once in 0cd8268 (2022-12-23, Dian Wu, \"Add ED for t-V 6x6 from Imelda\") and are never changed. No duplicate: the instance has one exact row and no other row carries this number.",
+          "reason": "RULES.md 8.1: peer_reviewed follows the venue that printed the number. SciPost Physics (refereed physics journal) prints this value (truncated to eight decimals) in Table 3; the field is absent on this imported row and scope-pub.json lists it. Same answer as the VA1 precedent (corrections.mjs, PRX 14, 021010). Value check: journal Table 3 (p. 28), \"System (L = 6, Np = 13)\", row \"Lancos ED (QuSpin)\" (typo as printed in both versions), column V/t = 10: -7.92802624; stored -7.928026240978371 truncates to -7.92802624 (eight decimals); arXiv v4 Table 3 prints the identical row, so journal and arXiv do not differ. C1-C4 from the journal: Eq. (58) H_tV = -t sum<i,j> (c+_i c_j + c+_j c_i) + V sum<i,j> n_i n_j, t, V > 0, \"with periodic boundary conditions\"; L = 6, Np = 13 total spinless fermions; no constant shift; matches instance Nf = 13 (total), V. ED: \"The Lanczos exact diagonalization was carried out using the Quspin package [80,81], restricting to the momentum sectors which contain the ground state\" (p. 24). bound_type exact right (the paper's own ED, Table 3). Baseline code (varbench/methods ed31bb0, scripts/tV/square_36_P_13_10/ed_lattice_symmetries.sh): \"python3 ed_ls.py --ham tv --boundary peri --ham_dim 2 --L 6 --V 10 --Nf 13\"; vmc.py builds nk.graph.Grid([6,6], pbc=True) (72 bonds) and ham.tVModel: H -= c+_i c_j + c+_j c_i; H += V n_i n_j at n_fermions = 13: matches. The stored number is the QuSpin run (not in the repo), as ruled in E5. Upload history: the digits enter once in 0cd8268 (2022-12-23, Dian Wu, \"Add ED for t-V 6x6 from Imelda\") and are never changed. No duplicate: the instance has one exact row and no other row carries this number.",
           "source_entry": "JB1-j1j2-tv#11"
+        },
+        {
+          "field": "corrections.0.reason",
+          "edit": [
+            "in Table 3 of the SciPost paper, and QMBL's recompute confirms it (VE-exact-recompute; at V = 10 every sector was computed, the ground state is Gamma B1).",
+            "in Table 3 of the SciPost paper (row 'Lancos ED (QuSpin)')."
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/2210.05871.txt:1752 '-7.92802624'; stored -7.928026240978371 starts with it; Eq. (58) :1449-51",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "The linked ed_lattice_symmetries.sh restricts the basis to lattice-symmetries sector 0 for both translations, both mirrors and the transpose (nk2ls.py lines 214, 245-254), and the stored number predates the link: it came from a QuSpin Lanczos run whose script is not in varbench/methods (VB4). The same value is printed, truncated to eight decimals, in Table 3 of the SciPost paper, and QMBL's recompute confirms it (VE-exact-recompute; at V = 10 every sector was computed, the ground state is Gamma B1). The row cites the printing paper beside the link; the number keeps its digits. The row is the instance's only exact reference. Ruling E5 (2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged.",
+          "to": "The linked ed_lattice_symmetries.sh restricts the basis to lattice-symmetries sector 0 for both translations, both mirrors and the transpose (nk2ls.py lines 214, 245-254), and the stored number predates the link: it came from a QuSpin Lanczos run whose script is not in varbench/methods (VB4). The same value is printed, truncated to eight decimals, in Table 3 of the SciPost paper (row 'Lancos ED (QuSpin)'). The row cites the printing paper beside the link; the number keeps its digits. The row is the instance's only exact reference. Ruling E5 (2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged."
+        },
+        {
+          "field": "corrections.0.reason",
+          "edit": [
+            "Ruling E5 (2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged.",
+            "Ruling E5 (2026-10-02, reworded 2026-11-26): an exact row cites the printing paper beside the link; the link stays and no row is flagged."
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/2210.05871.txt:1752 '-7.92802624'; stored -7.928026240978371 starts with it; Eq. (58) :1449-51",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "The linked ed_lattice_symmetries.sh restricts the basis to lattice-symmetries sector 0 for both translations, both mirrors and the transpose (nk2ls.py lines 214, 245-254), and the stored number predates the link: it came from a QuSpin Lanczos run whose script is not in varbench/methods (VB4). The same value is printed, truncated to eight decimals, in Table 3 of the SciPost paper (row 'Lancos ED (QuSpin)'). The row cites the printing paper beside the link; the number keeps its digits. The row is the instance's only exact reference. Ruling E5 (2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged.",
+          "to": "The linked ed_lattice_symmetries.sh restricts the basis to lattice-symmetries sector 0 for both translations, both mirrors and the transpose (nk2ls.py lines 214, 245-254), and the stored number predates the link: it came from a QuSpin Lanczos run whose script is not in varbench/methods (VB4). The same value is printed, truncated to eight decimals, in Table 3 of the SciPost paper (row 'Lancos ED (QuSpin)'). The row cites the printing paper beside the link; the number keeps its digits. The row is the instance's only exact reference. Ruling E5 (2026-10-02, reworded 2026-11-26): an exact row cites the printing paper beside the link; the link stays and no row is flagged."
+        },
+        {
+          "field": "corrections.1.reason",
+          "edit": [
+            "bound_type exact right; QMBL's recompute (VE-exact-recompute, Gamma B1) agrees to < 2e-13.",
+            "bound_type exact right (the paper's own ED, Table 3)."
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/2210.05871.txt:1752 '-7.92802624'; stored -7.928026240978371 starts with it; Eq. (58) :1449-51",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "RULES.md 8.1: peer_reviewed follows the venue that printed the number. SciPost Physics (refereed physics journal) prints this value (truncated to eight decimals) in Table 3; the field is absent on this imported row and scope-pub.json lists it. Same answer as the VA1 precedent (corrections.mjs, PRX 14, 021010). Value check: journal Table 3 (p. 28), \"System (L = 6, Np = 13)\", row \"Lancos ED (QuSpin)\" (typo as printed in both versions), column V/t = 10: -7.92802624; stored -7.928026240978371 truncates to -7.92802624 (eight decimals); arXiv v4 Table 3 prints the identical row, so journal and arXiv do not differ. C1-C4 from the journal: Eq. (58) H_tV = -t sum<i,j> (c+_i c_j + c+_j c_i) + V sum<i,j> n_i n_j, t, V > 0, \"with periodic boundary conditions\"; L = 6, Np = 13 total spinless fermions; no constant shift; matches instance Nf = 13 (total), V. ED: \"The Lanczos exact diagonalization was carried out using the Quspin package [80,81], restricting to the momentum sectors which contain the ground state\" (p. 24). bound_type exact right; QMBL's recompute (VE-exact-recompute, Gamma B1) agrees to < 2e-13. Baseline code (varbench/methods ed31bb0, scripts/tV/square_36_P_13_10/ed_lattice_symmetries.sh): \"python3 ed_ls.py --ham tv --boundary peri --ham_dim 2 --L 6 --V 10 --Nf 13\"; vmc.py builds nk.graph.Grid([6,6], pbc=True) (72 bonds) and ham.tVModel: H -= c+_i c_j + c+_j c_i; H += V n_i n_j at n_fermions = 13: matches. The stored number is the QuSpin run (not in the repo), as ruled in E5. Upload history: the digits enter once in 0cd8268 (2022-12-23, Dian Wu, \"Add ED for t-V 6x6 from Imelda\") and are never changed. No duplicate: the instance has one exact row and no other row carries this number.",
+          "to": "RULES.md 8.1: peer_reviewed follows the venue that printed the number. SciPost Physics (refereed physics journal) prints this value (truncated to eight decimals) in Table 3; the field is absent on this imported row and scope-pub.json lists it. Same answer as the VA1 precedent (corrections.mjs, PRX 14, 021010). Value check: journal Table 3 (p. 28), \"System (L = 6, Np = 13)\", row \"Lancos ED (QuSpin)\" (typo as printed in both versions), column V/t = 10: -7.92802624; stored -7.928026240978371 truncates to -7.92802624 (eight decimals); arXiv v4 Table 3 prints the identical row, so journal and arXiv do not differ. C1-C4 from the journal: Eq. (58) H_tV = -t sum<i,j> (c+_i c_j + c+_j c_i) + V sum<i,j> n_i n_j, t, V > 0, \"with periodic boundary conditions\"; L = 6, Np = 13 total spinless fermions; no constant shift; matches instance Nf = 13 (total), V. ED: \"The Lanczos exact diagonalization was carried out using the Quspin package [80,81], restricting to the momentum sectors which contain the ground state\" (p. 24). bound_type exact right (the paper's own ED, Table 3). Baseline code (varbench/methods ed31bb0, scripts/tV/square_36_P_13_10/ed_lattice_symmetries.sh): \"python3 ed_ls.py --ham tv --boundary peri --ham_dim 2 --L 6 --V 10 --Nf 13\"; vmc.py builds nk.graph.Grid([6,6], pbc=True) (72 bonds) and ham.tVModel: H -= c+_i c_j + c+_j c_i; H += V n_i n_j at n_fermions = 13: matches. The stored number is the QuSpin run (not in the repo), as ruled in E5. Upload history: the digits enter once in 0cd8268 (2022-12-23, Dian Wu, \"Add ED for t-V 6x6 from Imelda\") and are never changed. No duplicate: the instance has one exact row and no other row carries this number."
+        },
+        {
+          "field": "verified.method",
+          "edit": [
+            "this pass on an AMD EPYC 9654 server: ed_fsym.py (E2 ed_sym.py structure with fermionic signs), sectors of translations x C4v",
+            "source text of arXiv:2210.05871v4 (Table 3, row 'Lancos ED (QuSpin)', V/t = 10) read against the stored value"
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/2210.05871.txt:1752 '-7.92802624'; stored -7.928026240978371 starts with it; Eq. (58) :1449-51",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "this pass on an AMD EPYC 9654 server: ed_fsym.py (E2 ed_sym.py structure with fermionic signs), sectors of translations x C4v",
+          "to": "source text of arXiv:2210.05871v4 (Table 3, row 'Lancos ED (QuSpin)', V/t = 10) read against the stored value"
+        },
+        {
+          "field": "verified.location",
+          "edit": [
+            "out/VE-exact-recompute/results/tvsq/tV__square_36_P_13__V_10__k0-0__c4v-irrep2.json",
+            "arXiv:2210.05871v4 Table 3 (sources/2210.05871.txt:1752), column V/t = 10"
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/2210.05871.txt:1752 '-7.92802624'; stored -7.928026240978371 starts with it; Eq. (58) :1449-51",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "out/VE-exact-recompute/results/tvsq/tV__square_36_P_13__V_10__k0-0__c4v-irrep2.json",
+          "to": "arXiv:2210.05871v4 Table 3 (sources/2210.05871.txt:1752), column V/t = 10"
+        },
+        {
+          "field": "verified.reported_as",
+          "edit": [
+            "-7.9280262409783155 (true residual 3.84e-10)",
+            "-7.92802624 (Table 3, 'Lancos ED (QuSpin)', V/t = 10; the stored value starts with these digits)"
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/2210.05871.txt:1752 '-7.92802624'; stored -7.928026240978371 starts with it; Eq. (58) :1449-51",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "-7.9280262409783155 (true residual 3.84e-10)",
+          "to": "-7.92802624 (Table 3, 'Lancos ED (QuSpin)', V/t = 10; the stored value starts with these digits)"
+        },
+        {
+          "field": "verified.conversion",
+          "edit": [
+            "none (recomputed directly as the stored Pauli / fermion total)",
+            "none (the printed total; the stored value starts with the printed digits)"
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/2210.05871.txt:1752 '-7.92802624'; stored -7.928026240978371 starts with it; Eq. (58) :1449-51",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "none (recomputed directly as the stored Pauli / fermion total)",
+          "to": "none (the printed total; the stored value starts with the printed digits)"
         }
       ],
       "peer_reviewed": true,
       "verified": {
         "checked_on": "2026-09-29",
         "scope": "value",
-        "method": "this pass on an AMD EPYC 9654 server: ed_fsym.py (E2 ed_sym.py structure with fermionic signs), sectors of translations x C4v",
-        "location": "out/VE-exact-recompute/results/tvsq/tV__square_36_P_13__V_10__k0-0__c4v-irrep2.json",
-        "reported_as": "-7.9280262409783155 (true residual 3.84e-10)",
-        "conversion": "none (recomputed directly as the stored Pauli / fermion total)",
+        "method": "source text of arXiv:2210.05871v4 (Table 3, row 'Lancos ED (QuSpin)', V/t = 10) read against the stored value",
+        "location": "arXiv:2210.05871v4 Table 3 (sources/2210.05871.txt:1752), column V/t = 10",
+        "reported_as": "-7.92802624 (Table 3, 'Lancos ED (QuSpin)', V/t = 10; the stored value starts with these digits)",
+        "conversion": "none (the printed total; the stored value starts with the printed digits)",
         "note": "H = -t sum_<ij> (c+c + h.c.) + V sum n_i n_j, t = 1, V = 10, 13 spinless fermions on the 6x6 torus (72 bonds). ed_fsym.py (fermionic symmetric basis: translations x C4v, sign sigma(g, rep) in the table; validated on the 4x4 torus, N_f = 5, against the stored values at V = 0.01, 0.1, 1, 10 with all 16 momenta). Ground state in the sectors computed: Gamma B1, -7.9280262409783155 (true residual 3.84e-10, sector dimension 8026392 of C(36,13) = 2.31e9). Sectors computed (Lanczos to 1e-9 with second pass): Gamma {C2:-1,sigma_axis(j->-j):1,sigma_axis(i->-i):-1} -6.91618234; Gamma A1 -7.10991483; Gamma A2 -6.02200005; Gamma B1 -7.92802624; Gamma B2 -5.82664355; k=(1,0) (translations only: all irreps at this k) -7.83501530; k=(1,1) (translations only: all irreps at this k) -7.77429202; k=(2,0) (translations only: all irreps at this k) -7.72881151; k=(2,1) (translations only: all irreps at this k) -7.72050574; k=(2,2) (translations only: all irreps at this k) -7.77135552; k=(3,0) (translations only: all irreps at this k) -7.69167783; k=(3,1) (translations only: all irreps at this k) -7.72663375; k=(3,2) (translations only: all irreps at this k) -7.84092710; M {C2:1,sigma_axis(j->-j):1,sigma_axis(i->-i):1} -7.91872065; M {C2:-1,sigma_axis(j->-j):1,sigma_axis(i->-i):-1} -6.91641124; M {C2:1,sigma_axis(j->-j):-1,sigma_axis(i->-i):-1} -6.02199047. All 10 momentum stars of the 6x6 torus are covered (Gamma and M with every point-group irrep, the other 8 stars with translations only, which holds every irrep at that k), so this is the global ground state; the next level is M {C2:1,sigma_axis(j->-j):1,sigma_axis(i->-i):1} -7.91872065 (+0.00931). |E - stored| = 5.51e-14 (relative 6.95e-15). Second determination: the stored value is VarBench's own ED (lattice-symmetries, a different code and basis); E2's unconverged full-space Ritz value -7.928026237338893 (estimate 1.4e-4) is an upper bound 3.64e-9 above it.",
         "source_entry": "VE-exact-recompute#164 (qmbl-verify 2026-09-29)",
         "secondary_of": null

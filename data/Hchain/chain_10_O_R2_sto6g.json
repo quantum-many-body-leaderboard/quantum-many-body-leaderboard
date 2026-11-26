@@ -1063,8 +1063,8 @@
           "method": "arXiv:1904.01131v1 PDF fetched 2026-10-24 (byte-identical to qmbl-wt-hydrogen/sources/1904.01131.pdf), pypdf layout mode (raw/1904.01131v1-layout.txt) and plain mode (raw/1904.01131v1-plain.txt); mechanical comparison check.mjs -> check-out.json; ancillary NWChem inputs h10_<R>.nw (geometry units bohr, equally spaced linear H10, sto-6g, singlet RHF, qela 5 qelb 5)",
           "location": "Table II (p. 28), row R = 2.0 a.u., column CCSDTQ under 'Difference from FCI (10^-3 Hartree)', FCI column for the reference; layout line 1785, plain line 1624",
           "reported_as": "R 2.0: FCI (Hartree) -5.38963; CCSDTQ difference 0.0",
-          "conversion": "-5.38963 + (0.0) x 1e-3 = -5.389630 Ha total (nuclear repulsion included: the FCI column equals QMBL pyscf FCI -5.38962588 to 0.0041 mHa); / 10 = -0.538963 per atom = stored eps -0.538963",
-          "note": "Instance agrees (H10 equally spaced linear chain, open, R = 2 bohr per ancillary h10_2.0.nw 'geometry units bohr', STO-6G '20 spin orbitals', RHF singlet 5/5 electrons). Row lies -0.0041 mHa from QMBL FCI, at or above it within print rounding. Own computation ('also have not been studied in Ref. [66]'; refs 73-77 are method papers). bound_type projected per RULES §13.4 (coupled cluster). No sigma printed; deterministic. peer_reviewed null: arXiv preprint, no journal version located. No duplicate: no other CCSDTQ row on this instance in sweep-rows-2026-10-20-hydrogen.json; data/Hchain does not exist (track held).",
+          "conversion": "-5.38963 + (0.0) x 1e-3 = -5.389630 Ha total (nuclear repulsion included: the printed FCI -5.38963 = 10 x Motta et al.'s printed FCI per atom -0.538963, sources/1705.01608.txt:1257); / 10 = -0.538963 per atom = stored eps -0.538963",
+          "note": "Instance agrees (H10 equally spaced linear chain, open, R = 2 bohr per ancillary h10_2.0.nw 'geometry units bohr', STO-6G '20 spin orbitals', RHF singlet 5/5 electrons). Row minus the printed FCI -5.38963 (Table II, sources/1904.01131.txt) = +0.0000 mHa. Own computation ('also have not been studied in Ref. [66]'; refs 73-77 are method papers). bound_type projected per RULES §13.4 (coupled cluster). No sigma printed; deterministic. peer_reviewed null: arXiv preprint, no journal version located. No duplicate: no other CCSDTQ row on this instance in sweep-rows-2026-10-20-hydrogen.json; data/Hchain does not exist (track held).",
           "secondary_of": null,
           "source_entry": "h-p-1904-01131-c2#1 (qmbl-verify 2026-10-23/24, verified)"
         }
@@ -1091,6 +1091,38 @@
           "checked_on": "2026-10-20",
           "reason": "Deterministic, not a Monte Carlo estimate, as the track-3 reader recorded it (pass row `sampled`); the method string alone reads the other way (units.mjs, isSampled).",
           "source_entry": "passes/track3/sweep-rows-2026-10-20-hydrogen.json"
+        },
+        {
+          "field": "verified.second_read.conversion",
+          "edit": [
+            "(nuclear repulsion included: the FCI column equals QMBL pyscf FCI -5.38962588 to 0.0041 mHa)",
+            "(nuclear repulsion included: the printed FCI -5.38963 = 10 x Motta et al.'s printed FCI per atom -0.538963, sources/1705.01608.txt:1257)"
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/1904.01131.txt:1757 FCI -5.38963 = 10 x Motta -0.538963 (sources/1705.01608.txt:1257); caption :1763-65",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "-5.38963 + (0.0) x 1e-3 = -5.389630 Ha total (nuclear repulsion included: the FCI column equals QMBL pyscf FCI -5.38962588 to 0.0041 mHa); / 10 = -0.538963 per atom = stored eps -0.538963",
+          "to": "-5.38963 + (0.0) x 1e-3 = -5.389630 Ha total (nuclear repulsion included: the printed FCI -5.38963 = 10 x Motta et al.'s printed FCI per atom -0.538963, sources/1705.01608.txt:1257); / 10 = -0.538963 per atom = stored eps -0.538963"
+        },
+        {
+          "field": "verified.second_read.note",
+          "edit": [
+            "Row lies -0.0041 mHa from QMBL FCI, at or above it within print rounding",
+            "Row minus the printed FCI -5.38963 (Table II, sources/1904.01131.txt) = +0.0000 mHa"
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/1904.01131.txt:1757 FCI -5.38963 = 10 x Motta -0.538963 (sources/1705.01608.txt:1257); caption :1763-65",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "Instance agrees (H10 equally spaced linear chain, open, R = 2 bohr per ancillary h10_2.0.nw 'geometry units bohr', STO-6G '20 spin orbitals', RHF singlet 5/5 electrons). Row lies -0.0041 mHa from QMBL FCI, at or above it within print rounding. Own computation ('also have not been studied in Ref. [66]'; refs 73-77 are method papers). bound_type projected per RULES §13.4 (coupled cluster). No sigma printed; deterministic. peer_reviewed null: arXiv preprint, no journal version located. No duplicate: no other CCSDTQ row on this instance in sweep-rows-2026-10-20-hydrogen.json; data/Hchain does not exist (track held).",
+          "to": "Instance agrees (H10 equally spaced linear chain, open, R = 2 bohr per ancillary h10_2.0.nw 'geometry units bohr', STO-6G '20 spin orbitals', RHF singlet 5/5 electrons). Row minus the printed FCI -5.38963 (Table II, sources/1904.01131.txt) = +0.0000 mHa. Own computation ('also have not been studied in Ref. [66]'; refs 73-77 are method papers). bound_type projected per RULES §13.4 (coupled cluster). No sigma printed; deterministic. peer_reviewed null: arXiv preprint, no journal version located. No duplicate: no other CCSDTQ row on this instance in sweep-rows-2026-10-20-hydrogen.json; data/Hchain does not exist (track held)."
         }
       ]
     },

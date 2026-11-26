@@ -935,6 +935,10 @@ new one was read, and why. This holds for imported rows and for rows QMBL added
 - a field of its verification (`verified.note`, and `verified.secondary_of` where the paper a
   number was quoted from turns out to have produced it);
 - an instance's `params`, whose old value stays in the instance's own `corrections`.
+- a passage of text further in (`edit: [old, new]`, which must occur exactly once or the build
+  stops): the other fields of `verified`, a reading (`verified.second_read`, `verified.journal_read`),
+  an earlier entry of the row's `corrections`, or an instance's `cluster` and `relabelled` text.
+  The edit's own entry keeps the old and the new text (`from`, `to`).
 
 An exact row whose printed value is QMBL's recomputed energy rounded or truncated carries
 QMBL's digits, with the printed value in `corrections`.

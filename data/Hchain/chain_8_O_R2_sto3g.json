@@ -349,7 +349,7 @@
           "location": "Table I, row QFlow(4e,4o)^a, column H8 (2.0 a.u.)",
           "version_read": "arXiv:2305.05168v2 PDF (8 Aug 2023) and Phys. Rev. Lett. 131, 200601 (2023) publisher PDF (journals.aps.org, fetched 2026-10-24), pypdf layout mode; arXiv v1 Table I also compared",
           "conversion": "none (reference field)",
-          "reason": "The paper is published: Phys. Rev. Lett. 131, 200601 (2023), doi:10.1103/PhysRevLett.131.200601 (Crossref, title and authors match; PRL PDF read). refs.mjs only follows the arXiv API <arxiv:doi> field, which is empty for 2305.05168, so the Crossref step never ran. Value check passed: printed -4.2847 Ha (PRL) = -4.2847 Ha (arXiv v2), total energy, stored eps -0.5355875 x 8 = -4.2847; QMBL pyscf FCI on this instance -4.2860111 Ha, row minus FCI = 1.3111 mHa; instance (open linear chain, N = 8, R = 2 bohr, STO-3G, S_z = 0) and bound_type variational agree.",
+          "reason": "The paper is published: Phys. Rev. Lett. 131, 200601 (2023), doi:10.1103/PhysRevLett.131.200601 (Crossref, title and authors match; PRL PDF read). refs.mjs only follows the arXiv API <arxiv:doi> field, which is empty for 2305.05168, so the Crossref step never ran. Value check passed: printed -4.2847 Ha (PRL) = -4.2847 Ha (arXiv v2), total energy, stored eps -0.5355875 x 8 = -4.2847; the printed ED value of the same table -4.286 Ha, row minus printed ED = +1.3000 mHa; instance (open linear chain, N = 8, R = 2 bohr, STO-3G, S_z = 0) and bound_type variational agree.",
           "source_entry": "h-p-2305-05168-c2#4 (qmbl-verify 2026-10-23/24, correction; skeptic upheld)"
         },
         {
@@ -388,6 +388,22 @@
           "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
           "from": "Table I; sources/2305.05168.txt line 227; version read: arXiv text; no journal version found | Table I caption line 216: 'energies (in Hartree)'; R in 'a.u.' (R_H-H=2.0 a.u.); magnitude consistent with total energy incl. nuclear repulsion | Boundary not stated; 'linear chains' of H atoms, taken as open. Column header gives (2.0 a.u)/(3.0 a.u). Nuclear repulsion not stated; value magnitude suggests included. QFlow value is from the primary active space (footnote a). | reader confidence medium",
           "to": "Table I; sources/2305.05168.txt line 227; version read: arXiv text; no journal version found | Table I caption line 216: 'energies (in Hartree)'; R in 'a.u.' (R_H-H=2.0 a.u.); magnitude consistent with total energy incl. nuclear repulsion | Boundary not stated; 'linear chains' of H atoms, taken as open. Column header gives (2.0 a.u)/(3.0 a.u). Nuclear repulsion not stated; the H6 (2.0 a.u.) column of this table equals the total energies in hartree printed in arXiv:2609.04387 (sources/2609.04387.txt:468-477: RHF -3.10585013, FCI -3.21769929), which prints no R for its H6; the convention is carried over within the same table. QFlow value is from the primary active space (footnote a). | reader confidence medium"
+        },
+        {
+          "field": "corrections.0.reason",
+          "edit": [
+            "QMBL pyscf FCI on this instance -4.2860111 Ha, row minus FCI = 1.3111 mHa",
+            "the printed ED value of the same table -4.286 Ha, row minus printed ED = +1.3000 mHa"
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/2305.05168.txt:216-228 Table I caption 'energies (in Hartree)'; same-table extension of the H6 match to sources/2609.04387.txt:468-477",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "The paper is published: Phys. Rev. Lett. 131, 200601 (2023), doi:10.1103/PhysRevLett.131.200601 (Crossref, title and authors match; PRL PDF read). refs.mjs only follows the arXiv API <arxiv:doi> field, which is empty for 2305.05168, so the Crossref step never ran. Value check passed: printed -4.2847 Ha (PRL) = -4.2847 Ha (arXiv v2), total energy, stored eps -0.5355875 x 8 = -4.2847; QMBL pyscf FCI on this instance -4.2860111 Ha, row minus FCI = 1.3111 mHa; instance (open linear chain, N = 8, R = 2 bohr, STO-3G, S_z = 0) and bound_type variational agree.",
+          "to": "The paper is published: Phys. Rev. Lett. 131, 200601 (2023), doi:10.1103/PhysRevLett.131.200601 (Crossref, title and authors match; PRL PDF read). refs.mjs only follows the arXiv API <arxiv:doi> field, which is empty for 2305.05168, so the Crossref step never ran. Value check passed: printed -4.2847 Ha (PRL) = -4.2847 Ha (arXiv v2), total energy, stored eps -0.5355875 x 8 = -4.2847; the printed ED value of the same table -4.286 Ha, row minus printed ED = +1.3000 mHa; instance (open linear chain, N = 8, R = 2 bohr, STO-3G, S_z = 0) and bound_type variational agree."
         }
       ]
     },
@@ -426,7 +442,7 @@
           "location": "Table I, row ED, column H8 (2.0 a.u.)",
           "version_read": "arXiv:2305.05168v2 PDF (8 Aug 2023) and Phys. Rev. Lett. 131, 200601 (2023) publisher PDF (journals.aps.org, fetched 2026-10-24), pypdf layout mode; arXiv v1 Table I also compared",
           "conversion": "none (reference field)",
-          "reason": "The paper is published: Phys. Rev. Lett. 131, 200601 (2023), doi:10.1103/PhysRevLett.131.200601 (Crossref, title and authors match; PRL PDF read). refs.mjs only follows the arXiv API <arxiv:doi> field, which is empty for 2305.05168, so the Crossref step never ran. Value check passed: printed -4.2860 Ha (PRL) = -4.2860 Ha (arXiv v2), total energy, stored eps -0.53575 x 8 = -4.286; QMBL pyscf FCI on this instance -4.2860111 Ha, row minus FCI = 0.0111 mHa; instance (open linear chain, N = 8, R = 2 bohr, STO-3G, S_z = 0) and bound_type exact agree.",
+          "reason": "The paper is published: Phys. Rev. Lett. 131, 200601 (2023), doi:10.1103/PhysRevLett.131.200601 (Crossref, title and authors match; PRL PDF read). refs.mjs only follows the arXiv API <arxiv:doi> field, which is empty for 2305.05168, so the Crossref step never ran. Value check passed: printed -4.2860 Ha (PRL) = -4.2860 Ha (arXiv v2), total energy, stored eps -0.53575 x 8 = -4.286; the printed ED value of the same table -4.286 Ha, row minus printed ED = +0.0000 mHa; instance (open linear chain, N = 8, R = 2 bohr, STO-3G, S_z = 0) and bound_type exact agree.",
           "source_entry": "h-p-2305-05168-c2#12 (qmbl-verify 2026-10-23/24, correction; skeptic upheld)"
         },
         {
@@ -456,6 +472,22 @@
           "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
           "from": "Table I; sources/2305.05168.txt line 228; version read: arXiv text; no journal version found | Table I caption line 216: 'energies (in Hartree)'; R in 'a.u.' (R_H-H=2.0 a.u.); magnitude consistent with total energy incl. nuclear repulsion | Boundary not stated; 'linear chains' of H atoms, taken as open. Column header gives (2.0 a.u)/(3.0 a.u). Nuclear repulsion not stated; value magnitude suggests included. | reader confidence medium",
           "to": "Table I; sources/2305.05168.txt line 228; version read: arXiv text; no journal version found | Table I caption line 216: 'energies (in Hartree)'; R in 'a.u.' (R_H-H=2.0 a.u.); magnitude consistent with total energy incl. nuclear repulsion | Boundary not stated; 'linear chains' of H atoms, taken as open. Column header gives (2.0 a.u)/(3.0 a.u). Nuclear repulsion not stated; the H6 (2.0 a.u.) column of this table equals the total energies in hartree printed in arXiv:2609.04387 (sources/2609.04387.txt:468-477: RHF -3.10585013, FCI -3.21769929), which prints no R for its H6; the convention is carried over within the same table. | reader confidence medium"
+        },
+        {
+          "field": "corrections.0.reason",
+          "edit": [
+            "QMBL pyscf FCI on this instance -4.2860111 Ha, row minus FCI = 0.0111 mHa",
+            "the printed ED value of the same table -4.286 Ha, row minus printed ED = +0.0000 mHa"
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/2305.05168.txt:216-228 Table I caption 'energies (in Hartree)'; same-table extension of the H6 match to sources/2609.04387.txt:468-477",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "The paper is published: Phys. Rev. Lett. 131, 200601 (2023), doi:10.1103/PhysRevLett.131.200601 (Crossref, title and authors match; PRL PDF read). refs.mjs only follows the arXiv API <arxiv:doi> field, which is empty for 2305.05168, so the Crossref step never ran. Value check passed: printed -4.2860 Ha (PRL) = -4.2860 Ha (arXiv v2), total energy, stored eps -0.53575 x 8 = -4.286; QMBL pyscf FCI on this instance -4.2860111 Ha, row minus FCI = 0.0111 mHa; instance (open linear chain, N = 8, R = 2 bohr, STO-3G, S_z = 0) and bound_type exact agree.",
+          "to": "The paper is published: Phys. Rev. Lett. 131, 200601 (2023), doi:10.1103/PhysRevLett.131.200601 (Crossref, title and authors match; PRL PDF read). refs.mjs only follows the arXiv API <arxiv:doi> field, which is empty for 2305.05168, so the Crossref step never ran. Value check passed: printed -4.2860 Ha (PRL) = -4.2860 Ha (arXiv v2), total energy, stored eps -0.53575 x 8 = -4.286; the printed ED value of the same table -4.286 Ha, row minus printed ED = +0.0000 mHa; instance (open linear chain, N = 8, R = 2 bohr, STO-3G, S_z = 0) and bound_type exact agree."
         }
       ]
     }

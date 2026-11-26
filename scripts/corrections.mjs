@@ -24,6 +24,18 @@
 //        the value it replaces, `from`, or for text the one passage it rewrites, `edit: [old, new]`
 //        in place of `to`, and the build stops if the block no longer holds it. A correction never
 //        creates a block.
+//        Further text is edited by `edit: [old, new]` only, the build stopping unless the old passage is in it
+//        exactly once, and the edit's own record keeps the old and the new text (`from`, `to`): the
+//        other fields of the verification block (verified.method, .location, .reported_as,
+//        .conversion), a reading of it (verified.second_read.<field>, verified.journal_read.<field>,
+//        field = note, reported_as, location, conversion, version_read), an earlier correction of the
+//        row (corrections.<index>.<field>, field = reason, location, reported_as, conversion,
+//        version_read, to; the index counts the row's list as the earlier entries built it), and
+//        an instance's text (`cluster`, relabelled.reason, relabelled.evidence; the match names the
+//        instance alone and the record goes to the instance's `corrections`). These apply after
+//        every other entry of the instance, since verifications.mjs (read by the same script)
+//        writes the readings and this script writes the earlier corrections; editing the
+//        verification's own text would leave no trace on the row.
 //        params is the instance's own (RULES.md 2): the match names the instance alone, the entry
 //        states `from`, and the old value stays on the instance, in its `corrections`.
 // to:    the corrected value in the stored convention (RULES.md 5); `conversion` shows the arithmetic.
@@ -36475,6 +36487,3764 @@ export const CORRECTIONS = [
     ],
     "reported_as": "none (text field)",
     "location": "sources/2305.05168.txt:216-228 Table I caption 'energies (in Hartree)'; same-table extension of the H6 match to sources/2609.04387.txt:468-477",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  // Retroactive rule of 2026-11-26: a note that presents a QMBL computation as evidence cites the printed evidence instead.
+  // Text edits of fields the header-listed fields did not reach (readings, earlier corrections, instance text).
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1_sto6g",
+      "method": "CCSDT [RHF orbitals]",
+      "energy": -3.82439
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Printed FCI -3.82439 equals QMBL pyscf STO-6G FCI -3.8243885 rounded to 5 decimals (so the column is a total with nuclear repulsion, neutral singlet H10, open chain, R in bohr)",
+      "Printed FCI -3.82439 = 10 x Motta et al.'s printed STO-6G FCI per atom -0.382439 (arXiv:1705.01608 Table II, sources/1705.01608.txt:1252; Hartree per atom, R in bohr, sources/1705.01608.txt:1238), so the column is a total; the Table II caption (sources/1904.01131.txt:1763-65) names the STO-6G basis and restricted Hartree-Fock orbitals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1763-65 'H10 system in the STO-6G basis set ... restricted Hartree-Fock molecular orbitals'; FCI -3.82439 = 10 x Motta FCI -0.382439 (sources/1705.01608.txt:1252; units Hartree/Bohr :1238)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1_sto6g",
+      "method": "CCSDT [RHF orbitals]",
+      "energy": -3.82439
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Row minus QMBL FCI = -0.0015 mHa",
+      "Row minus the printed FCI -3.82439 = +0.0000 mHa (stored -3.82439 - -3.82439, both printed numbers)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1763-65 'H10 system in the STO-6G basis set ... restricted Hartree-Fock molecular orbitals'; FCI -3.82439 = 10 x Motta FCI -0.382439 (sources/1705.01608.txt:1252; units Hartree/Bohr :1238)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1_sto6g",
+      "method": "CCSDT [RHF orbitals]",
+      "energy": -3.82439
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Note: this row lies 1.5e-06 Ha below QMBL's FCI only because the printed FCI is rounded to 1e-5 Ha (within the printed precision of +-5.5e-5 Ha)",
+      "Note: the printed FCI is rounded to 1e-5 Ha and the row is that FCI plus the printed difference, so the row carries the same rounding (printed precision +-5.5e-5 Ha)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1763-65 'H10 system in the STO-6G basis set ... restricted Hartree-Fock molecular orbitals'; FCI -3.82439 = 10 x Motta FCI -0.382439 (sources/1705.01608.txt:1252; units Hartree/Bohr :1238)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -3.82439
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Printed FCI -3.82439 equals QMBL pyscf STO-6G FCI -3.8243885 rounded to 5 decimals (so the column is a total with nuclear repulsion, neutral singlet H10, open chain, R in bohr)",
+      "Printed FCI -3.82439 = 10 x Motta et al.'s printed STO-6G FCI per atom -0.382439 (arXiv:1705.01608 Table II, sources/1705.01608.txt:1252; Hartree per atom, R in bohr, sources/1705.01608.txt:1238), so the column is a total; the Table II caption (sources/1904.01131.txt:1763-65) names the STO-6G basis and restricted Hartree-Fock orbitals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1763-65 'H10 system in the STO-6G basis set ... restricted Hartree-Fock molecular orbitals'; FCI -3.82439 = 10 x Motta FCI -0.382439 (sources/1705.01608.txt:1252; units Hartree/Bohr :1238)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -3.82439
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Row minus QMBL FCI = -0.0015 mHa",
+      "Row minus the printed FCI -3.82439 = +0.0000 mHa (stored -3.82439 - -3.82439, both printed numbers)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1763-65 'H10 system in the STO-6G basis set ... restricted Hartree-Fock molecular orbitals'; FCI -3.82439 = 10 x Motta FCI -0.382439 (sources/1705.01608.txt:1252; units Hartree/Bohr :1238)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -3.82439
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Note: this row lies 1.5e-06 Ha below QMBL's FCI only because the printed FCI is rounded to 1e-5 Ha (within the printed precision of +-5.5e-5 Ha)",
+      "Note: the printed FCI is rounded to 1e-5 Ha and the row is that FCI plus the printed difference, so the row carries the same rounding (printed precision +-5.5e-5 Ha)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1763-65 'H10 system in the STO-6G basis set ... restricted Hartree-Fock molecular orbitals'; FCI -3.82439 = 10 x Motta FCI -0.382439 (sources/1705.01608.txt:1252; units Hartree/Bohr :1238)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1_sto6g",
+      "method": "MkMRCCSD [RHF orbitals]",
+      "energy": -3.82429
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Printed FCI -3.82439 equals QMBL pyscf STO-6G FCI -3.8243885 rounded to 5 decimals (so the column is a total with nuclear repulsion, neutral singlet H10, open chain, R in bohr)",
+      "Printed FCI -3.82439 = 10 x Motta et al.'s printed STO-6G FCI per atom -0.382439 (arXiv:1705.01608 Table II, sources/1705.01608.txt:1252; Hartree per atom, R in bohr, sources/1705.01608.txt:1238), so the column is a total; the Table II caption (sources/1904.01131.txt:1763-65) names the STO-6G basis and restricted Hartree-Fock orbitals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1763-65 'H10 system in the STO-6G basis set ... restricted Hartree-Fock molecular orbitals'; FCI -3.82439 = 10 x Motta FCI -0.382439 (sources/1705.01608.txt:1252; units Hartree/Bohr :1238)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1_sto6g",
+      "method": "MkMRCCSD [RHF orbitals]",
+      "energy": -3.82429
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Row minus QMBL FCI = +0.0985 mHa",
+      "Row minus the printed FCI -3.82439 = +0.1000 mHa (stored -3.82429 - -3.82439, both printed numbers)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1763-65 'H10 system in the STO-6G basis set ... restricted Hartree-Fock molecular orbitals'; FCI -3.82439 = 10 x Motta FCI -0.382439 (sources/1705.01608.txt:1252; units Hartree/Bohr :1238)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1_sto6g",
+      "method": "MkMRCCSD(T) [RHF orbitals]",
+      "energy": -3.82449
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Printed FCI -3.82439 equals QMBL pyscf STO-6G FCI -3.8243885 rounded to 5 decimals (so the column is a total with nuclear repulsion, neutral singlet H10, open chain, R in bohr)",
+      "Printed FCI -3.82439 = 10 x Motta et al.'s printed STO-6G FCI per atom -0.382439 (arXiv:1705.01608 Table II, sources/1705.01608.txt:1252; Hartree per atom, R in bohr, sources/1705.01608.txt:1238), so the column is a total; the Table II caption (sources/1904.01131.txt:1763-65) names the STO-6G basis and restricted Hartree-Fock orbitals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1763-65 'H10 system in the STO-6G basis set ... restricted Hartree-Fock molecular orbitals'; FCI -3.82439 = 10 x Motta FCI -0.382439 (sources/1705.01608.txt:1252; units Hartree/Bohr :1238)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1_sto6g",
+      "method": "MkMRCCSD(T) [RHF orbitals]",
+      "energy": -3.82449
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Row minus QMBL FCI = -0.1015 mHa",
+      "Row minus the printed FCI -3.82439 = -0.1000 mHa (stored -3.82449 - -3.82439, both printed numbers)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1763-65 'H10 system in the STO-6G basis set ... restricted Hartree-Fock molecular orbitals'; FCI -3.82439 = 10 x Motta FCI -0.382439 (sources/1705.01608.txt:1252; units Hartree/Bohr :1238)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.2_sto6g",
+      "method": "CCSDT [RHF orbitals]",
+      "energy": -4.76638
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Printed FCI -4.76638 equals QMBL pyscf STO-6G FCI -4.7663777 rounded to 5 decimals (so the column is a total with nuclear repulsion, neutral singlet H10, open chain, R in bohr)",
+      "Printed FCI -4.76638 = 10 x Motta et al.'s printed STO-6G FCI per atom -0.476638 (arXiv:1705.01608 Table II, sources/1705.01608.txt:1253; Hartree per atom, R in bohr, sources/1705.01608.txt:1238), so the column is a total; the Table II caption (sources/1904.01131.txt:1763-65) names the STO-6G basis and restricted Hartree-Fock orbitals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1753 'FCI -4.76638' = 10 x Motta FCI -0.476638 (sources/1705.01608.txt:1253); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.2_sto6g",
+      "method": "CCSDT [RHF orbitals]",
+      "energy": -4.76638
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Row minus QMBL FCI = -0.0023 mHa",
+      "Row minus the printed FCI -4.76638 = +0.0000 mHa (stored -4.76638 - -4.76638, both printed numbers)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1753 'FCI -4.76638' = 10 x Motta FCI -0.476638 (sources/1705.01608.txt:1253); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.2_sto6g",
+      "method": "CCSDT [RHF orbitals]",
+      "energy": -4.76638
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Note: this row lies 2.3e-06 Ha below QMBL's FCI only because the printed FCI is rounded to 1e-5 Ha (within the printed precision of +-5.5e-5 Ha)",
+      "Note: the printed FCI is rounded to 1e-5 Ha and the row is that FCI plus the printed difference, so the row carries the same rounding (printed precision +-5.5e-5 Ha)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1753 'FCI -4.76638' = 10 x Motta FCI -0.476638 (sources/1705.01608.txt:1253); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.2_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -4.76638
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Printed FCI -4.76638 equals QMBL pyscf STO-6G FCI -4.7663777 rounded to 5 decimals (so the column is a total with nuclear repulsion, neutral singlet H10, open chain, R in bohr)",
+      "Printed FCI -4.76638 = 10 x Motta et al.'s printed STO-6G FCI per atom -0.476638 (arXiv:1705.01608 Table II, sources/1705.01608.txt:1253; Hartree per atom, R in bohr, sources/1705.01608.txt:1238), so the column is a total; the Table II caption (sources/1904.01131.txt:1763-65) names the STO-6G basis and restricted Hartree-Fock orbitals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1753 'FCI -4.76638' = 10 x Motta FCI -0.476638 (sources/1705.01608.txt:1253); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.2_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -4.76638
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Row minus QMBL FCI = -0.0023 mHa",
+      "Row minus the printed FCI -4.76638 = +0.0000 mHa (stored -4.76638 - -4.76638, both printed numbers)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1753 'FCI -4.76638' = 10 x Motta FCI -0.476638 (sources/1705.01608.txt:1253); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.2_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -4.76638
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Note: this row lies 2.3e-06 Ha below QMBL's FCI only because the printed FCI is rounded to 1e-5 Ha (within the printed precision of +-5.5e-5 Ha)",
+      "Note: the printed FCI is rounded to 1e-5 Ha and the row is that FCI plus the printed difference, so the row carries the same rounding (printed precision +-5.5e-5 Ha)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1753 'FCI -4.76638' = 10 x Motta FCI -0.476638 (sources/1705.01608.txt:1253); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.2_sto6g",
+      "method": "MkMRCCSD [RHF orbitals]",
+      "energy": -4.76638
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Printed FCI -4.76638 equals QMBL pyscf STO-6G FCI -4.7663777 rounded to 5 decimals (so the column is a total with nuclear repulsion, neutral singlet H10, open chain, R in bohr)",
+      "Printed FCI -4.76638 = 10 x Motta et al.'s printed STO-6G FCI per atom -0.476638 (arXiv:1705.01608 Table II, sources/1705.01608.txt:1253; Hartree per atom, R in bohr, sources/1705.01608.txt:1238), so the column is a total; the Table II caption (sources/1904.01131.txt:1763-65) names the STO-6G basis and restricted Hartree-Fock orbitals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1753 'FCI -4.76638' = 10 x Motta FCI -0.476638 (sources/1705.01608.txt:1253); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.2_sto6g",
+      "method": "MkMRCCSD [RHF orbitals]",
+      "energy": -4.76638
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Row minus QMBL FCI = -0.0023 mHa",
+      "Row minus the printed FCI -4.76638 = +0.0000 mHa (stored -4.76638 - -4.76638, both printed numbers)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1753 'FCI -4.76638' = 10 x Motta FCI -0.476638 (sources/1705.01608.txt:1253); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.2_sto6g",
+      "method": "MkMRCCSD [RHF orbitals]",
+      "energy": -4.76638
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Note: this row lies 2.3e-06 Ha below QMBL's FCI only because the printed FCI is rounded to 1e-5 Ha (within the printed precision of +-5.5e-5 Ha)",
+      "Note: the printed FCI is rounded to 1e-5 Ha and the row is that FCI plus the printed difference, so the row carries the same rounding (printed precision +-5.5e-5 Ha)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1753 'FCI -4.76638' = 10 x Motta FCI -0.476638 (sources/1705.01608.txt:1253); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.2_sto6g",
+      "method": "MkMRCCSD(T) [RHF orbitals]",
+      "energy": -4.76658
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Printed FCI -4.76638 equals QMBL pyscf STO-6G FCI -4.7663777 rounded to 5 decimals (so the column is a total with nuclear repulsion, neutral singlet H10, open chain, R in bohr)",
+      "Printed FCI -4.76638 = 10 x Motta et al.'s printed STO-6G FCI per atom -0.476638 (arXiv:1705.01608 Table II, sources/1705.01608.txt:1253; Hartree per atom, R in bohr, sources/1705.01608.txt:1238), so the column is a total; the Table II caption (sources/1904.01131.txt:1763-65) names the STO-6G basis and restricted Hartree-Fock orbitals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1753 'FCI -4.76638' = 10 x Motta FCI -0.476638 (sources/1705.01608.txt:1253); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.2_sto6g",
+      "method": "MkMRCCSD(T) [RHF orbitals]",
+      "energy": -4.76658
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Row minus QMBL FCI = -0.2023 mHa",
+      "Row minus the printed FCI -4.76638 = -0.2000 mHa (stored -4.76658 - -4.76638, both printed numbers)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1753 'FCI -4.76638' = 10 x Motta FCI -0.476638 (sources/1705.01608.txt:1253); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.4_sto6g",
+      "method": "CCSDT [RHF orbitals]",
+      "energy": -5.20519
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Printed FCI -5.20509 equals QMBL pyscf STO-6G FCI -5.2050941 rounded to 5 decimals (so the column is a total with nuclear repulsion, neutral singlet H10, open chain, R in bohr)",
+      "Printed FCI -5.20509 = 10 x Motta et al.'s printed STO-6G FCI per atom -0.520509 (arXiv:1705.01608 Table II, sources/1705.01608.txt:1254; Hartree per atom, R in bohr, sources/1705.01608.txt:1238), so the column is a total; the Table II caption (sources/1904.01131.txt:1763-65) names the STO-6G basis and restricted Hartree-Fock orbitals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1754 FCI -5.20509 = 10 x Motta -0.520509 (sources/1705.01608.txt:1254); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.4_sto6g",
+      "method": "CCSDT [RHF orbitals]",
+      "energy": -5.20519
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Row minus QMBL FCI = -0.0959 mHa",
+      "Row minus the printed FCI -5.20509 = -0.1000 mHa (stored -5.20519 - -5.20509, both printed numbers)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1754 FCI -5.20509 = 10 x Motta -0.520509 (sources/1705.01608.txt:1254); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.4_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -5.20509
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Printed FCI -5.20509 equals QMBL pyscf STO-6G FCI -5.2050941 rounded to 5 decimals (so the column is a total with nuclear repulsion, neutral singlet H10, open chain, R in bohr)",
+      "Printed FCI -5.20509 = 10 x Motta et al.'s printed STO-6G FCI per atom -0.520509 (arXiv:1705.01608 Table II, sources/1705.01608.txt:1254; Hartree per atom, R in bohr, sources/1705.01608.txt:1238), so the column is a total; the Table II caption (sources/1904.01131.txt:1763-65) names the STO-6G basis and restricted Hartree-Fock orbitals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1754 FCI -5.20509 = 10 x Motta -0.520509 (sources/1705.01608.txt:1254); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.4_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -5.20509
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Row minus QMBL FCI = +0.0041 mHa",
+      "Row minus the printed FCI -5.20509 = +0.0000 mHa (stored -5.20509 - -5.20509, both printed numbers)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1754 FCI -5.20509 = 10 x Motta -0.520509 (sources/1705.01608.txt:1254); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.4_sto6g",
+      "method": "MkMRCCSD [RHF orbitals]",
+      "energy": -5.20509
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Printed FCI -5.20509 equals QMBL pyscf STO-6G FCI -5.2050941 rounded to 5 decimals (so the column is a total with nuclear repulsion, neutral singlet H10, open chain, R in bohr)",
+      "Printed FCI -5.20509 = 10 x Motta et al.'s printed STO-6G FCI per atom -0.520509 (arXiv:1705.01608 Table II, sources/1705.01608.txt:1254; Hartree per atom, R in bohr, sources/1705.01608.txt:1238), so the column is a total; the Table II caption (sources/1904.01131.txt:1763-65) names the STO-6G basis and restricted Hartree-Fock orbitals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1754 FCI -5.20509 = 10 x Motta -0.520509 (sources/1705.01608.txt:1254); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.4_sto6g",
+      "method": "MkMRCCSD [RHF orbitals]",
+      "energy": -5.20509
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Row minus QMBL FCI = +0.0041 mHa",
+      "Row minus the printed FCI -5.20509 = +0.0000 mHa (stored -5.20509 - -5.20509, both printed numbers)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1754 FCI -5.20509 = 10 x Motta -0.520509 (sources/1705.01608.txt:1254); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.4_sto6g",
+      "method": "MkMRCCSD(T) [RHF orbitals]",
+      "energy": -5.20559
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Printed FCI -5.20509 equals QMBL pyscf STO-6G FCI -5.2050941 rounded to 5 decimals (so the column is a total with nuclear repulsion, neutral singlet H10, open chain, R in bohr)",
+      "Printed FCI -5.20509 = 10 x Motta et al.'s printed STO-6G FCI per atom -0.520509 (arXiv:1705.01608 Table II, sources/1705.01608.txt:1254; Hartree per atom, R in bohr, sources/1705.01608.txt:1238), so the column is a total; the Table II caption (sources/1904.01131.txt:1763-65) names the STO-6G basis and restricted Hartree-Fock orbitals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1754 FCI -5.20509 = 10 x Motta -0.520509 (sources/1705.01608.txt:1254); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.4_sto6g",
+      "method": "MkMRCCSD(T) [RHF orbitals]",
+      "energy": -5.20559
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Row minus QMBL FCI = -0.4959 mHa",
+      "Row minus the printed FCI -5.20509 = -0.5000 mHa (stored -5.20559 - -5.20509, both printed numbers)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1754 FCI -5.20509 = 10 x Motta -0.520509 (sources/1705.01608.txt:1254); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.6_sto6g",
+      "method": "CCSDT [RHF orbitals]",
+      "energy": -5.38456
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Printed FCI -5.38436 equals QMBL pyscf STO-6G FCI -5.3843611 rounded to 5 decimals (so the column is a total with nuclear repulsion, neutral singlet H10, open chain, R in bohr)",
+      "Printed FCI -5.38436 = 10 x Motta et al.'s printed STO-6G FCI per atom -0.538436 (arXiv:1705.01608 Table II, sources/1705.01608.txt:1255; Hartree per atom, R in bohr, sources/1705.01608.txt:1238), so the column is a total; the Table II caption (sources/1904.01131.txt:1763-65) names the STO-6G basis and restricted Hartree-Fock orbitals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1755 FCI -5.38436 = 10 x Motta -0.538436 (sources/1705.01608.txt:1255); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.6_sto6g",
+      "method": "CCSDT [RHF orbitals]",
+      "energy": -5.38456
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Row minus QMBL FCI = -0.1989 mHa",
+      "Row minus the printed FCI -5.38436 = -0.2000 mHa (stored -5.38456 - -5.38436, both printed numbers)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1755 FCI -5.38436 = 10 x Motta -0.538436 (sources/1705.01608.txt:1255); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.6_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -5.38436
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Printed FCI -5.38436 equals QMBL pyscf STO-6G FCI -5.3843611 rounded to 5 decimals (so the column is a total with nuclear repulsion, neutral singlet H10, open chain, R in bohr)",
+      "Printed FCI -5.38436 = 10 x Motta et al.'s printed STO-6G FCI per atom -0.538436 (arXiv:1705.01608 Table II, sources/1705.01608.txt:1255; Hartree per atom, R in bohr, sources/1705.01608.txt:1238), so the column is a total; the Table II caption (sources/1904.01131.txt:1763-65) names the STO-6G basis and restricted Hartree-Fock orbitals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1755 FCI -5.38436 = 10 x Motta -0.538436 (sources/1705.01608.txt:1255); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.6_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -5.38436
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Row minus QMBL FCI = +0.0011 mHa",
+      "Row minus the printed FCI -5.38436 = +0.0000 mHa (stored -5.38436 - -5.38436, both printed numbers)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1755 FCI -5.38436 = 10 x Motta -0.538436 (sources/1705.01608.txt:1255); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.6_sto6g",
+      "method": "MkMRCCSD [RHF orbitals]",
+      "energy": -5.38446
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Printed FCI -5.38436 equals QMBL pyscf STO-6G FCI -5.3843611 rounded to 5 decimals (so the column is a total with nuclear repulsion, neutral singlet H10, open chain, R in bohr)",
+      "Printed FCI -5.38436 = 10 x Motta et al.'s printed STO-6G FCI per atom -0.538436 (arXiv:1705.01608 Table II, sources/1705.01608.txt:1255; Hartree per atom, R in bohr, sources/1705.01608.txt:1238), so the column is a total; the Table II caption (sources/1904.01131.txt:1763-65) names the STO-6G basis and restricted Hartree-Fock orbitals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1755 FCI -5.38436 = 10 x Motta -0.538436 (sources/1705.01608.txt:1255); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.6_sto6g",
+      "method": "MkMRCCSD [RHF orbitals]",
+      "energy": -5.38446
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Row minus QMBL FCI = -0.0989 mHa",
+      "Row minus the printed FCI -5.38436 = -0.1000 mHa (stored -5.38446 - -5.38436, both printed numbers)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1755 FCI -5.38436 = 10 x Motta -0.538436 (sources/1705.01608.txt:1255); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.6_sto6g",
+      "method": "MkMRCCSD(T) [RHF orbitals]",
+      "energy": -5.38516
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Printed FCI -5.38436 equals QMBL pyscf STO-6G FCI -5.3843611 rounded to 5 decimals (so the column is a total with nuclear repulsion, neutral singlet H10, open chain, R in bohr)",
+      "Printed FCI -5.38436 = 10 x Motta et al.'s printed STO-6G FCI per atom -0.538436 (arXiv:1705.01608 Table II, sources/1705.01608.txt:1255; Hartree per atom, R in bohr, sources/1705.01608.txt:1238), so the column is a total; the Table II caption (sources/1904.01131.txt:1763-65) names the STO-6G basis and restricted Hartree-Fock orbitals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1755 FCI -5.38436 = 10 x Motta -0.538436 (sources/1705.01608.txt:1255); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.6_sto6g",
+      "method": "MkMRCCSD(T) [RHF orbitals]",
+      "energy": -5.38516
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Row minus QMBL FCI = -0.7989 mHa",
+      "Row minus the printed FCI -5.38436 = -0.8000 mHa (stored -5.38516 - -5.38436, both printed numbers)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1755 FCI -5.38436 = 10 x Motta -0.538436 (sources/1705.01608.txt:1255); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.8_sto6g",
+      "method": "CCSDT [RHF orbitals]",
+      "energy": -5.42489
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Printed FCI -5.42439 equals QMBL pyscf STO-6G FCI -5.4243854 rounded to 5 decimals (so the column is a total with nuclear repulsion, neutral singlet H10, open chain, R in bohr)",
+      "Printed FCI -5.42439 = 10 x Motta et al.'s printed STO-6G FCI per atom -0.542439 (arXiv:1705.01608 Table II, sources/1705.01608.txt:1256; Hartree per atom, R in bohr, sources/1705.01608.txt:1238), so the column is a total; the Table II caption (sources/1904.01131.txt:1763-65) names the STO-6G basis and restricted Hartree-Fock orbitals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1756 FCI -5.42439 = 10 x Motta -0.542439 (sources/1705.01608.txt:1256); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.8_sto6g",
+      "method": "CCSDT [RHF orbitals]",
+      "energy": -5.42489
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Row minus QMBL FCI = -0.5046 mHa",
+      "Row minus the printed FCI -5.42439 = -0.5000 mHa (stored -5.42489 - -5.42439, both printed numbers)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1756 FCI -5.42439 = 10 x Motta -0.542439 (sources/1705.01608.txt:1256); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.8_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -5.42439
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Printed FCI -5.42439 equals QMBL pyscf STO-6G FCI -5.4243854 rounded to 5 decimals (so the column is a total with nuclear repulsion, neutral singlet H10, open chain, R in bohr)",
+      "Printed FCI -5.42439 = 10 x Motta et al.'s printed STO-6G FCI per atom -0.542439 (arXiv:1705.01608 Table II, sources/1705.01608.txt:1256; Hartree per atom, R in bohr, sources/1705.01608.txt:1238), so the column is a total; the Table II caption (sources/1904.01131.txt:1763-65) names the STO-6G basis and restricted Hartree-Fock orbitals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1756 FCI -5.42439 = 10 x Motta -0.542439 (sources/1705.01608.txt:1256); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.8_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -5.42439
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Row minus QMBL FCI = -0.0046 mHa",
+      "Row minus the printed FCI -5.42439 = +0.0000 mHa (stored -5.42439 - -5.42439, both printed numbers)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1756 FCI -5.42439 = 10 x Motta -0.542439 (sources/1705.01608.txt:1256); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.8_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -5.42439
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Note: this row lies 4.6e-06 Ha below QMBL's FCI only because the printed FCI is rounded to 1e-5 Ha (within the printed precision of +-5.5e-5 Ha)",
+      "Note: the printed FCI is rounded to 1e-5 Ha and the row is that FCI plus the printed difference, so the row carries the same rounding (printed precision +-5.5e-5 Ha)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1756 FCI -5.42439 = 10 x Motta -0.542439 (sources/1705.01608.txt:1256); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.8_sto6g",
+      "method": "MkMRCCSD [RHF orbitals]",
+      "energy": -5.42469
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Printed FCI -5.42439 equals QMBL pyscf STO-6G FCI -5.4243854 rounded to 5 decimals (so the column is a total with nuclear repulsion, neutral singlet H10, open chain, R in bohr)",
+      "Printed FCI -5.42439 = 10 x Motta et al.'s printed STO-6G FCI per atom -0.542439 (arXiv:1705.01608 Table II, sources/1705.01608.txt:1256; Hartree per atom, R in bohr, sources/1705.01608.txt:1238), so the column is a total; the Table II caption (sources/1904.01131.txt:1763-65) names the STO-6G basis and restricted Hartree-Fock orbitals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1756 FCI -5.42439 = 10 x Motta -0.542439 (sources/1705.01608.txt:1256); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.8_sto6g",
+      "method": "MkMRCCSD [RHF orbitals]",
+      "energy": -5.42469
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Row minus QMBL FCI = -0.3046 mHa",
+      "Row minus the printed FCI -5.42439 = -0.3000 mHa (stored -5.42469 - -5.42439, both printed numbers)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1756 FCI -5.42439 = 10 x Motta -0.542439 (sources/1705.01608.txt:1256); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.8_sto6g",
+      "method": "MkMRCCSD(T) [RHF orbitals]",
+      "energy": -5.42579
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Printed FCI -5.42439 equals QMBL pyscf STO-6G FCI -5.4243854 rounded to 5 decimals (so the column is a total with nuclear repulsion, neutral singlet H10, open chain, R in bohr)",
+      "Printed FCI -5.42439 = 10 x Motta et al.'s printed STO-6G FCI per atom -0.542439 (arXiv:1705.01608 Table II, sources/1705.01608.txt:1256; Hartree per atom, R in bohr, sources/1705.01608.txt:1238), so the column is a total; the Table II caption (sources/1904.01131.txt:1763-65) names the STO-6G basis and restricted Hartree-Fock orbitals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1756 FCI -5.42439 = 10 x Motta -0.542439 (sources/1705.01608.txt:1256); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.8_sto6g",
+      "method": "MkMRCCSD(T) [RHF orbitals]",
+      "energy": -5.42579
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Row minus QMBL FCI = -1.4046 mHa",
+      "Row minus the printed FCI -5.42439 = -1.4000 mHa (stored -5.42579 - -5.42439, both printed numbers)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1756 FCI -5.42439 = 10 x Motta -0.542439 (sources/1705.01608.txt:1256); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.8_sto6g",
+      "method": "CCSD(T)",
+      "energy": -5.42419
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "QMBL pyscf FCI (fci/results.jsonl) -5.4243854 Ha; this row - FCI = 0.1954 mHa",
+      "Printed FCI of the same table -5.4243853763 Ha (sources/2305.12776.txt Table S2); this row - printed FCI = +0.1954 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1756 FCI -5.42439 = 10 x Motta -0.542439 (sources/1705.01608.txt:1256); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.8_sto6g",
+      "method": "CCSD(T)",
+      "energy": -5.42419
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals",
+      "Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1756 FCI -5.42439 = 10 x Motta -0.542439 (sources/1705.01608.txt:1256); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R2_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -5.38963
+    },
+    "field": "verified.second_read.conversion",
+    "edit": [
+      "(nuclear repulsion included: the FCI column equals QMBL pyscf FCI -5.38962588 to 0.0041 mHa)",
+      "(nuclear repulsion included: the printed FCI -5.38963 = 10 x Motta et al.'s printed FCI per atom -0.538963, sources/1705.01608.txt:1257)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1757 FCI -5.38963 = 10 x Motta -0.538963 (sources/1705.01608.txt:1257); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R2_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -5.38963
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Row lies -0.0041 mHa from QMBL FCI, at or above it within print rounding",
+      "Row minus the printed FCI -5.38963 (Table II, sources/1904.01131.txt) = +0.0000 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1757 FCI -5.38963 = 10 x Motta -0.538963 (sources/1705.01608.txt:1257); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R2.4_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -5.22794
+    },
+    "field": "verified.second_read.conversion",
+    "edit": [
+      "(nuclear repulsion included: the FCI column equals QMBL pyscf FCI -5.22793649 to 0.0035 mHa)",
+      "(nuclear repulsion included: the printed FCI -5.22794 = 10 x Motta et al.'s printed FCI per atom -0.522794, sources/1705.01608.txt:1258)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1758 FCI -5.22794 = 10 x Motta -0.522794 (sources/1705.01608.txt:1258); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R2.4_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -5.22794
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Row lies -0.0035 mHa from QMBL FCI, at or above it within print rounding",
+      "Row minus the printed FCI -5.22794 (Table II, sources/1904.01131.txt) = +0.0000 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1758 FCI -5.22794 = 10 x Motta -0.522794 (sources/1705.01608.txt:1258); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R2.4_sto6g",
+      "method": "MkMRCCSD [RHF orbitals]",
+      "energy": -5.22764
+    },
+    "field": "verified.second_read.conversion",
+    "edit": [
+      "(nuclear repulsion included: the FCI column equals QMBL pyscf FCI -5.22793649 to 0.0035 mHa)",
+      "(nuclear repulsion included: the printed FCI -5.22794 = 10 x Motta et al.'s printed FCI per atom -0.522794, sources/1705.01608.txt:1258)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1758 FCI -5.22794 = 10 x Motta -0.522794 (sources/1705.01608.txt:1258); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R2.4_sto6g",
+      "method": "MkMRCCSD [RHF orbitals]",
+      "energy": -5.22764
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Row lies 0.2965 mHa from QMBL FCI, at or above it within print rounding",
+      "Row minus the printed FCI -5.22794 (Table II, sources/1904.01131.txt) = +0.3000 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1758 FCI -5.22794 = 10 x Motta -0.522794 (sources/1705.01608.txt:1258); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R2.8_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -5.04964
+    },
+    "field": "verified.second_read.conversion",
+    "edit": [
+      "(nuclear repulsion included: the FCI column equals QMBL pyscf FCI -5.05024496 to 0.0050 mHa)",
+      "(nuclear repulsion included: the printed FCI -5.05024 = 10 x Motta et al.'s printed FCI per atom -0.505024, sources/1705.01608.txt:1259)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1759 FCI -5.05024 = 10 x Motta -0.505024 (sources/1705.01608.txt:1259); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R2.8_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -5.04964
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Row lies 0.6050 mHa from QMBL FCI, at or above it within print rounding",
+      "Row minus the printed FCI -5.05024 (Table II, sources/1904.01131.txt) = +0.6000 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1759 FCI -5.05024 = 10 x Motta -0.505024 (sources/1705.01608.txt:1259); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R2.8_sto6g",
+      "method": "MkMRCCSD [RHF orbitals]",
+      "energy": -5.04964
+    },
+    "field": "verified.second_read.conversion",
+    "edit": [
+      "(nuclear repulsion included: the FCI column equals QMBL pyscf FCI -5.05024496 to 0.0050 mHa)",
+      "(nuclear repulsion included: the printed FCI -5.05024 = 10 x Motta et al.'s printed FCI per atom -0.505024, sources/1705.01608.txt:1259)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1759 FCI -5.05024 = 10 x Motta -0.505024 (sources/1705.01608.txt:1259); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R2.8_sto6g",
+      "method": "MkMRCCSD [RHF orbitals]",
+      "energy": -5.04964
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Row lies 0.6050 mHa from QMBL FCI, at or above it within print rounding",
+      "Row minus the printed FCI -5.05024 (Table II, sources/1904.01131.txt) = +0.6000 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1759 FCI -5.05024 = 10 x Motta -0.505024 (sources/1705.01608.txt:1259); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R3.2_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -4.90688
+    },
+    "field": "verified.second_read.conversion",
+    "edit": [
+      "(nuclear repulsion included: the FCI column equals QMBL pyscf FCI -4.91038288 to 0.0029 mHa)",
+      "(nuclear repulsion included: the printed FCI -4.91038 = 10 x Motta et al.'s printed FCI per atom -0.491038, sources/1705.01608.txt:1260)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1760 FCI -4.91038 = 10 x Motta -0.491038 (sources/1705.01608.txt:1260); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R3.2_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -4.90688
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Row lies 3.5029 mHa from QMBL FCI, at or above it within print rounding",
+      "Row minus the printed FCI -4.91038 (Table II, sources/1904.01131.txt) = +3.5000 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1760 FCI -4.91038 = 10 x Motta -0.491038 (sources/1705.01608.txt:1260); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R3.6_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -4.8142
+    },
+    "field": "verified.second_read.conversion",
+    "edit": [
+      "(nuclear repulsion included: the FCI column equals QMBL pyscf FCI -4.81870081 to 0.0008 mHa)",
+      "(nuclear repulsion included: the printed FCI -4.81870 = 10 x Motta et al.'s printed FCI per atom -0.481870, sources/1705.01608.txt:1261)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1761 FCI -4.81870 = 10 x Motta -0.481870 (sources/1705.01608.txt:1261); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R3.6_sto6g",
+      "method": "CCSDTQ [RHF orbitals]",
+      "energy": -4.8142
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Row lies 4.5008 mHa from QMBL FCI, at or above it within print rounding",
+      "Row minus the printed FCI -4.81870 (Table II, sources/1904.01131.txt) = +4.5000 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1761 FCI -4.81870 = 10 x Motta -0.481870 (sources/1705.01608.txt:1261); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R3.6_sto6g",
+      "method": "CCSD(T)",
+      "energy": -4.96708
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "QMBL pyscf FCI (fci/results.jsonl) -4.8187008 Ha; this row - FCI = -148.3792 mHa",
+      "Printed FCI of the same table -4.8187008121 Ha (sources/2305.12776.txt Table S2); this row - printed FCI = -148.3792 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1761 FCI -4.81870 = 10 x Motta -0.481870 (sources/1705.01608.txt:1261); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R3.6_sto6g",
+      "method": "CCSD(T)",
+      "energy": -4.96708
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals",
+      "Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1761 FCI -4.81870 = 10 x Motta -0.481870 (sources/1705.01608.txt:1261); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.8_sto6g",
+      "method": "CMO (NQS optimized using the SC iteration scheme)",
+      "energy": -5.41879
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "QMBL pyscf FCI (fci/results.jsonl) -5.4243854 Ha; this row - FCI = 5.5954 mHa",
+      "Printed FCI of the same table -5.4243853763 Ha (sources/2305.12776.txt Table S2); this row - printed FCI = +5.5954 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1756 FCI -5.42439 = 10 x Motta -0.542439 (sources/1705.01608.txt:1256); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.8_sto6g",
+      "method": "CMO (NQS optimized using the SC iteration scheme)",
+      "energy": -5.41879
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals",
+      "Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1756 FCI -5.42439 = 10 x Motta -0.542439 (sources/1705.01608.txt:1256); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R3.6_sto6g",
+      "method": "CMO (NQS optimized using the SC iteration scheme)",
+      "energy": -4.78592
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "QMBL pyscf FCI (fci/results.jsonl) -4.8187008 Ha; this row - FCI = 32.7808 mHa",
+      "Printed FCI of the same table -4.8187008121 Ha (sources/2305.12776.txt Table S2); this row - printed FCI = +32.7808 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1761 FCI -4.81870 = 10 x Motta -0.481870 (sources/1705.01608.txt:1261); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R3.6_sto6g",
+      "method": "CMO (NQS optimized using the SC iteration scheme)",
+      "energy": -4.78592
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals",
+      "Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1904.01131.txt:1761 FCI -4.81870 = 10 x Motta -0.481870 (sources/1705.01608.txt:1261); caption :1763-65",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_12_O_R1.8_sto6g",
+      "method": "CMO (NQS optimized using the SC iteration scheme)",
+      "energy": -6.49092
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "QMBL pyscf FCI (fci/results.jsonl) -6.5042270 Ha; this row - FCI = 13.307 mHa",
+      "Printed FCI of the same table -6.50423 Ha (sources/2305.12776.txt Table S2); this row - printed FCI = +13.3100 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1154 Table S2 H12 row; same table as the H10 cell that matches Motta (:1153 vs sources/1705.01608.txt:1256); caption :1145-46. No Motta cell for H12: relies on one convention per table",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_12_O_R1.8_sto6g",
+      "method": "CMO (NQS optimized using the SC iteration scheme)",
+      "energy": -6.49092
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals",
+      "Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1154 Table S2 H12 row; same table as the H10 cell that matches Motta (:1153 vs sources/1705.01608.txt:1256); caption :1145-46. No Motta cell for H12: relies on one convention per table",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_12_O_R1.8_sto6g",
+      "method": "CCSD(T)",
+      "energy": -6.50387
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "QMBL pyscf FCI (fci/results.jsonl) -6.5042270 Ha; this row - FCI = 0.357 mHa",
+      "Printed FCI of the same table -6.50423 Ha (sources/2305.12776.txt Table S2); this row - printed FCI = +0.3600 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1154 Table S2 H12 row; same table as the H10 cell that matches Motta (:1153 vs sources/1705.01608.txt:1256); caption :1145-46. No Motta cell for H12: relies on one convention per table",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_12_O_R1.8_sto6g",
+      "method": "CCSD(T)",
+      "energy": -6.50387
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals",
+      "Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1154 Table S2 H12 row; same table as the H10 cell that matches Motta (:1153 vs sources/1705.01608.txt:1256); caption :1145-46. No Motta cell for H12: relies on one convention per table",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_12_O_R1.8_sto6g",
+      "method": "FCI",
+      "energy": -6.50423
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals",
+      "Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1154 Table S2 H12 row; same table as the H10 cell that matches Motta (:1153 vs sources/1705.01608.txt:1256); caption :1145-46. No Motta cell for H12: relies on one convention per table",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_12_O_R1.8_sto6g",
+      "method": "FCI",
+      "energy": -6.50423
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Own PySCF FCI in STO-6G: exact per RULES 13.4. QMBL pyscf FCI (fci/results.jsonl) -6.5042270 Ha; this row - FCI = -0.003 mHa (printed 5-decimal rounding of QMBL's value)",
+      "The paper's own PySCF FCI in STO-6G (SI section 1: 'full configuration interaction (FCI) were utilized through the PySCF packages'): exact per RULES 13.4. This row is the H12 FCI cell of Table S2, printed to 5 decimals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1154 Table S2 H12 row; same table as the H10 cell that matches Motta (:1153 vs sources/1705.01608.txt:1256); caption :1145-46. No Motta cell for H12: relies on one convention per table",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_12_O_R3.6_sto6g",
+      "method": "CMO (NQS optimized using the SC iteration scheme)",
+      "energy": -5.65181
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "QMBL pyscf FCI (fci/results.jsonl) -5.7828501 Ha; this row - FCI = 131.0401 mHa",
+      "Printed FCI of the same table -5.78285 Ha (sources/2305.12776.txt Table S2); this row - printed FCI = +131.0400 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1154 Table S2 H12 row; same table as H10 cell matching Motta (:1153 vs 1705.01608.txt:1261); caption :1145-46",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_12_O_R3.6_sto6g",
+      "method": "CMO (NQS optimized using the SC iteration scheme)",
+      "energy": -5.65181
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals",
+      "Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1154 Table S2 H12 row; same table as H10 cell matching Motta (:1153 vs 1705.01608.txt:1261); caption :1145-46",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_12_O_R3.6_sto6g",
+      "method": "CCSD(T)",
+      "energy": -5.98789
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "QMBL pyscf FCI (fci/results.jsonl) -5.7828501 Ha; this row - FCI = -205.0399 mHa",
+      "Printed FCI of the same table -5.78285 Ha (sources/2305.12776.txt Table S2); this row - printed FCI = -205.0400 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1154 Table S2 H12 row; same table as H10 cell matching Motta (:1153 vs 1705.01608.txt:1261); caption :1145-46",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_12_O_R3.6_sto6g",
+      "method": "CCSD(T)",
+      "energy": -5.98789
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals",
+      "Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1154 Table S2 H12 row; same table as H10 cell matching Motta (:1153 vs 1705.01608.txt:1261); caption :1145-46",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_12_O_R3.6_sto6g",
+      "method": "FCI",
+      "energy": -5.78285
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals",
+      "Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1154 Table S2 H12 row; same table as H10 cell matching Motta (:1153 vs 1705.01608.txt:1261); caption :1145-46",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_12_O_R3.6_sto6g",
+      "method": "FCI",
+      "energy": -5.78285
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Own PySCF FCI in STO-6G: exact per RULES 13.4. QMBL pyscf FCI (fci/results.jsonl) -5.7828501 Ha; this row - FCI = 0.0001 mHa (printed 5-decimal rounding of QMBL's value)",
+      "The paper's own PySCF FCI in STO-6G (SI section 1: 'full configuration interaction (FCI) were utilized through the PySCF packages'): exact per RULES 13.4. This row is the H12 FCI cell of Table S2, printed to 5 decimals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1154 Table S2 H12 row; same table as H10 cell matching Motta (:1153 vs 1705.01608.txt:1261); caption :1145-46",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_4_O_R1.8_sto6g",
+      "method": "FCI",
+      "energy": -2.19038
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "the same table's FCI cell agrees with QMBL's pyscf FCI -2.1903842 Ha to the printed 5 decimals, so unit and constant are fixed although the paper prints no unit",
+      "the paper prints no unit; the same table's H10 FCI cells (sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (sources/1705.01608.txt:1256, :1261), which fixes unit and constant table-wide"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1150 Table S2 H4 row (-2.19038); same table as H10 cell matching Motta (:1153); caption :1145-46. Table-wide convention only",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_4_O_R1.8_sto6g",
+      "method": "FCI",
+      "energy": -2.19038
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Printed value - QMBL FCI = 4.22e-6 Ha. Exact; agrees with QMBL's recompute within half a unit of the 5th decimal (|diff| 4.22e-6 < 5e-6).",
+      "Exact: the FCI cell of the table, printed to 5 decimals."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1150 Table S2 H4 row (-2.19038); same table as H10 cell matching Motta (:1153); caption :1145-46. Table-wide convention only",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_4_O_R3.6_sto6g",
+      "method": "FCI",
+      "energy": -1.92658
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "the same table's FCI cell agrees with QMBL's pyscf FCI -1.9265819 Ha to the printed 5 decimals, so unit and constant are fixed although the paper prints no unit",
+      "the paper prints no unit; the same table's H10 FCI cells (sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (sources/1705.01608.txt:1256, :1261), which fixes unit and constant table-wide"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1150 Table S2 H4 row (-1.92658); same table as H10 cell matching Motta (:1153); caption :1145-46. Table-wide convention only",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_4_O_R3.6_sto6g",
+      "method": "FCI",
+      "energy": -1.92658
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Printed value - QMBL FCI = 1.91e-6 Ha. Exact; agrees with QMBL's recompute within half a unit of the 5th decimal (|diff| 1.91e-6 < 5e-6).",
+      "Exact: the FCI cell of the table, printed to 5 decimals."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1150 Table S2 H4 row (-1.92658); same table as H10 cell matching Motta (:1153); caption :1145-46. Table-wide convention only",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_6_O_R1.8_sto6g",
+      "method": "FCI",
+      "energy": -3.26674
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "the same table's FCI cell agrees with QMBL's pyscf FCI -3.2667431 Ha to the printed 5 decimals, so unit and constant are fixed although the paper prints no unit",
+      "the paper prints no unit; the same table's H10 FCI cells (sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (sources/1705.01608.txt:1256, :1261), which fixes unit and constant table-wide"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1151 Table S2 H6 row (-3.26674); same table as H10 cell matching Motta (:1153); caption :1145-46. Table-wide convention only",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_6_O_R1.8_sto6g",
+      "method": "FCI",
+      "energy": -3.26674
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Printed value - QMBL FCI = 3.10e-6 Ha. Exact; agrees with QMBL's recompute within half a unit of the 5th decimal (|diff| 3.10e-6 < 5e-6).",
+      "Exact: the FCI cell of the table, printed to 5 decimals."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1151 Table S2 H6 row (-3.26674); same table as H10 cell matching Motta (:1153); caption :1145-46. Table-wide convention only",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_6_O_R3.6_sto6g",
+      "method": "FCI",
+      "energy": -2.89052
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "the same table's FCI cell agrees with QMBL's pyscf FCI -2.8905209 Ha to the printed 5 decimals, so unit and constant are fixed although the paper prints no unit",
+      "the paper prints no unit; the same table's H10 FCI cells (sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (sources/1705.01608.txt:1256, :1261), which fixes unit and constant table-wide"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1151 Table S2 H6 row (-2.89052); same table as H10 cell matching Motta (:1153); caption :1145-46. Table-wide convention only",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_6_O_R3.6_sto6g",
+      "method": "FCI",
+      "energy": -2.89052
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Printed value - QMBL FCI = 8.85e-7 Ha. Exact; agrees with QMBL's recompute within half a unit of the 5th decimal (|diff| 8.85e-7 < 5e-6).",
+      "Exact: the FCI cell of the table, printed to 5 decimals."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1151 Table S2 H6 row (-2.89052); same table as H10 cell matching Motta (:1153); caption :1145-46. Table-wide convention only",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_8_O_R1.8_sto6g",
+      "method": "FCI",
+      "energy": -4.34508
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "the same table's FCI cell agrees with QMBL's pyscf FCI -4.3450794 Ha to the printed 5 decimals, so unit and constant are fixed although the paper prints no unit",
+      "the paper prints no unit; the same table's H10 FCI cells (sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (sources/1705.01608.txt:1256, :1261), which fixes unit and constant table-wide"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1152 Table S2 H8 row (-4.34508); same table as H10 cell matching Motta (:1153); caption :1145-46. Table-wide convention only",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_8_O_R1.8_sto6g",
+      "method": "FCI",
+      "energy": -4.34508
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Printed value - QMBL FCI = -5.97e-7 Ha. Exact; agrees with QMBL's recompute within half a unit of the 5th decimal (|diff| 5.97e-7 < 5e-6).",
+      "Exact: the FCI cell of the table, printed to 5 decimals."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1152 Table S2 H8 row (-4.34508); same table as H10 cell matching Motta (:1153); caption :1145-46. Table-wide convention only",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_8_O_R3.6_sto6g",
+      "method": "CMO (NQS optimized using the SC iteration scheme)",
+      "energy": -3.83743
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "QMBL pyscf FCI (fci/results.jsonl) -3.8545825 Ha; this row - FCI = 17.1525 mHa",
+      "Printed FCI of the same table -3.85458 Ha (sources/2305.12776.txt Table S2); this row - printed FCI = +17.1500 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1152 Table S2 H8 row; same table as H10 cell matching Motta (:1153 vs 1705.01608.txt:1261); caption :1145-46. Table-wide convention only",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_8_O_R3.6_sto6g",
+      "method": "CMO (NQS optimized using the SC iteration scheme)",
+      "energy": -3.83743
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals",
+      "Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1152 Table S2 H8 row; same table as H10 cell matching Motta (:1153 vs 1705.01608.txt:1261); caption :1145-46. Table-wide convention only",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_8_O_R3.6_sto6g",
+      "method": "CCSD(T)",
+      "energy": -3.88834
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "QMBL pyscf FCI (fci/results.jsonl) -3.8545825 Ha; this row - FCI = -33.7575 mHa",
+      "Printed FCI of the same table -3.85458 Ha (sources/2305.12776.txt Table S2); this row - printed FCI = -33.7600 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1152 Table S2 H8 row; same table as H10 cell matching Motta (:1153 vs 1705.01608.txt:1261); caption :1145-46. Table-wide convention only",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_8_O_R3.6_sto6g",
+      "method": "CCSD(T)",
+      "energy": -3.88834
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals",
+      "Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1152 Table S2 H8 row; same table as H10 cell matching Motta (:1153 vs 1705.01608.txt:1261); caption :1145-46. Table-wide convention only",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_8_O_R3.6_sto6g",
+      "method": "FCI",
+      "energy": -3.85458
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals",
+      "Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1152 Table S2 H8 row; same table as H10 cell matching Motta (:1153 vs 1705.01608.txt:1261); caption :1145-46. Table-wide convention only",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_8_O_R3.6_sto6g",
+      "method": "FCI",
+      "energy": -3.85458
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Own PySCF FCI in STO-6G: exact per RULES 13.4. QMBL pyscf FCI (fci/results.jsonl) -3.8545825 Ha; this row - FCI = 0.0025 mHa (printed 5-decimal rounding of QMBL's value)",
+      "The paper's own PySCF FCI in STO-6G (SI section 1: 'full configuration interaction (FCI) were utilized through the PySCF packages'): exact per RULES 13.4. This row is the H12 FCI cell of Table S2, printed to 5 decimals"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.12776.txt:1152 Table S2 H8 row; same table as H10 cell matching Motta (:1153 vs 1705.01608.txt:1261); caption :1145-46. Table-wide convention only",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_6_O_R2_sto3g",
+      "method": "QFlow(4e,4o)",
+      "energy": -3.2173
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "QMBL pyscf FCI on this instance -3.2176993 Ha, row minus FCI = 0.3993 mHa",
+      "the printed ED value of the same table -3.2177 Ha, row minus printed ED = +0.4000 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.05168.txt:216-228 Table I 'energies (in Hartree)', R_H-H=2.0 a.u., STO-3G H6 chains (:248); sources/2609.04387.txt:468-477 'H6/STO-3G total energies ... in hartree' RHF -3.10585013, FCI -3.21769929 = this table HF -3.1059, ED -3.2177. Weakness: that paper prints no R for its H6",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_6_O_R2_sto3g",
+      "method": "ED",
+      "energy": -3.2177
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "QMBL pyscf FCI on this instance -3.2176993 Ha, row minus FCI = -0.0007 mHa",
+      "the printed ED value of the same table -3.2177 Ha, row minus printed ED = +0.0000 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.05168.txt:216-228 Table I 'energies (in Hartree)', R_H-H=2.0 a.u., STO-3G H6 chains (:248); sources/2609.04387.txt:468-477 'H6/STO-3G total energies ... in hartree' RHF -3.10585013, FCI -3.21769929 = this table HF -3.1059, ED -3.2177. Weakness: that paper prints no R for its H6",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_6_O_R3_sto3g",
+      "method": "QFlow(4e,4o)",
+      "energy": -2.9521
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "QMBL pyscf FCI on this instance -2.9576461 Ha, row minus FCI = 5.5461 mHa",
+      "the printed ED value of the same table -2.9576 Ha, row minus printed ED = +5.5000 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.05168.txt:216-228 Table I caption 'energies (in Hartree)'; convention pinned only by the H6 (2.0 a.u.) column match to sources/2609.04387.txt:468-477; same-table extension",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_6_O_R3_sto3g",
+      "method": "ED",
+      "energy": -2.9576
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "QMBL pyscf FCI on this instance -2.9576461 Ha, row minus FCI = 0.0461 mHa",
+      "the printed ED value of the same table -2.9576 Ha, row minus printed ED = +0.0000 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.05168.txt:216-228 Table I caption 'energies (in Hartree)'; convention pinned only by the H6 (2.0 a.u.) column match to sources/2609.04387.txt:468-477; same-table extension",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_8_O_R2_sto3g",
+      "method": "QFlow(4e,4o)",
+      "energy": -4.2847
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "QMBL pyscf FCI on this instance -4.2860111 Ha, row minus FCI = 1.3111 mHa",
+      "the printed ED value of the same table -4.286 Ha, row minus printed ED = +1.3000 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.05168.txt:216-228 Table I caption 'energies (in Hartree)'; same-table extension of the H6 match to sources/2609.04387.txt:468-477",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_8_O_R2_sto3g",
+      "method": "ED",
+      "energy": -4.286
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "QMBL pyscf FCI on this instance -4.2860111 Ha, row minus FCI = 0.0111 mHa",
+      "the printed ED value of the same table -4.286 Ha, row minus printed ED = +0.0000 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.05168.txt:216-228 Table I caption 'energies (in Hartree)'; same-table extension of the H6 match to sources/2609.04387.txt:468-477",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_8_O_R3_sto3g",
+      "method": "QFlow(4e,4o)",
+      "energy": -3.9322
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "QMBL pyscf FCI on this instance -3.9447480 Ha, row minus FCI = 12.548 mHa",
+      "the printed ED value of the same table -3.9447 Ha, row minus printed ED = +12.5000 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.05168.txt:216-228 Table I caption 'energies (in Hartree)'; same-table extension of the H6 match to sources/2609.04387.txt:468-477",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_8_O_R3_sto3g",
+      "method": "ED",
+      "energy": -3.9447
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "QMBL pyscf FCI on this instance -3.9447480 Ha, row minus FCI = 0.048 mHa",
+      "the printed ED value of the same table -3.9447 Ha, row minus printed ED = +0.0000 mHa"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2305.05168.txt:216-228 Table I caption 'energies (in Hartree)'; same-table extension of the H6 match to sources/2609.04387.txt:468-477",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.41729_sto6g",
+      "method": "FCI",
+      "energy": -5.22856
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "QMBL pyscf FCI (fci/results.jsonl, Hchain/chain_10_O_R1.41729_sto6g) gives -5.228559990 Ha, |diff| = 1.0e-8 Ha, S^2 = 1.9e-13 (singlet)",
+      "the column header 'EFCI /Eh' (sources/2005.11349.txt:424) gives the unit as Hartree; the paper prints no spin state"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2005.11349.txt:425 Table I 'H10 1DChain 0.75 -5.228560' column 'EFCI /Eh' (:424); STO-6G (:323); r = nearest-neighbour H-H distance (:375). Nuclear repulsion only implied by 'ground-state energy in Eh' of a molecule: weak, see report",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.41729_sto6g",
+      "method": "FCI",
+      "energy": -5.22856
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Nuclear repulsion included (agreement with the pyscf total, which includes E_nuc = 13.610214 Ha, to 1e-8)",
+      "Nuclear repulsion included is implied, not stated: 'EFCI /Eh' is the ground-state energy of a molecule (sources/2005.11349.txt:424); weak evidence"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2005.11349.txt:425 Table I 'H10 1DChain 0.75 -5.228560' column 'EFCI /Eh' (:424); STO-6G (:323); r = nearest-neighbour H-H distance (:375). Nuclear repulsion only implied by 'ground-state energy in Eh' of a molecule: weak, see report",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.88973_sto6g",
+      "method": "FCI",
+      "energy": -5.415393
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "QMBL pyscf FCI (fci/results.jsonl, Hchain/chain_10_O_R1.88973_sto6g) gives -5.415393318 Ha, |diff| = 3.2e-7 Ha, S^2 = 2.8e-13 (singlet)",
+      "the column header 'EFCI /Eh' (sources/2005.11349.txt:424) gives the unit as Hartree; the paper prints no spin state"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2005.11349.txt:426 'H10 1DChain 1.00 -5.415393' (:424 EFCI /Eh); STO-6G :323; r :375",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R1.88973_sto6g",
+      "method": "FCI",
+      "energy": -5.415393
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Nuclear repulsion included (agreement with the pyscf total, which includes E_nuc = 10.207660 Ha, to 1e-8)",
+      "Nuclear repulsion included is implied, not stated: 'EFCI /Eh' is the ground-state energy of a molecule (sources/2005.11349.txt:424); weak evidence"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2005.11349.txt:426 'H10 1DChain 1.00 -5.415393' (:424 EFCI /Eh); STO-6G :323; r :375",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R2.83459_sto6g",
+      "method": "FCI",
+      "energy": -5.036293
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "QMBL pyscf FCI (fci/results.jsonl, Hchain/chain_10_O_R2.83459_sto6g) gives -5.036292997 Ha, |diff| = 2.9e-9 Ha, S^2 = 4.8e-12 (singlet)",
+      "the column header 'EFCI /Eh' (sources/2005.11349.txt:424) gives the unit as Hartree; the paper prints no spin state"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2005.11349.txt:427 'H10 1DChain 1.50 -5.036293' (:424 EFCI /Eh); STO-6G :323; r :375",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R2.83459_sto6g",
+      "method": "FCI",
+      "energy": -5.036293
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Nuclear repulsion included (agreement with the pyscf total, which includes E_nuc = 6.805107 Ha, to 1e-8)",
+      "Nuclear repulsion included is implied, not stated: 'EFCI /Eh' is the ground-state energy of a molecule (sources/2005.11349.txt:424); weak evidence"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2005.11349.txt:427 'H10 1DChain 1.50 -5.036293' (:424 EFCI /Eh); STO-6G :323; r :375",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R3.77945_sto6g",
+      "method": "FCI",
+      "energy": -4.790989
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "QMBL pyscf FCI (fci/results.jsonl, Hchain/chain_10_O_R3.77945_sto6g) gives -4.790988648 Ha, |diff| = 3.5e-7 Ha, S^2 = 5.7e-10 (singlet)",
+      "the column header 'EFCI /Eh' (sources/2005.11349.txt:424) gives the unit as Hartree; the paper prints no spin state"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2005.11349.txt:428 'H10 1DChain 2.00 -4.790989' (:424 EFCI /Eh); STO-6G :323; r :375",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_10_O_R3.77945_sto6g",
+      "method": "FCI",
+      "energy": -4.790989
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Nuclear repulsion included (agreement with the pyscf total, which includes E_nuc = 5.103830 Ha, to 1e-8)",
+      "Nuclear repulsion included is implied, not stated: 'EFCI /Eh' is the ground-state energy of a molecule (sources/2005.11349.txt:424); weak evidence"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2005.11349.txt:428 'H10 1DChain 2.00 -4.790989' (:424 EFCI /Eh); STO-6G :323; r :375",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_6_O_R2.83459_sto6g",
+      "method": "FCI",
+      "energy": -3.020198
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "QMBL pyscf FCI (fci/results.jsonl) -3.020198097: difference 9.7e-8 Ha, inside the printed 6-decimal rounding, so the paper's total includes nuclear repulsion",
+      "Table 1 caption (sources/1911.05163.txt:268) calls the cells 'Ground-state energies (in Eh)'; nuclear repulsion is implied by 'ground-state energies' of a molecule, not stated"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1911.05163.txt:268 'Ground-state energies (in Eh) of H6 and H8 at a site-site distance of 1.5 A'; FCI -3.020198 (:283); RHF/STO-6G (:299)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Hchain/chain_8_O_R2.83459_sto6g",
+      "method": "FCI",
+      "energy": -4.028152
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "QMBL pyscf FCI (fci/results.jsonl) -4.028151632: difference -3.7e-7 Ha, inside the printed 6-decimal rounding, so the paper's total includes nuclear repulsion",
+      "Table 1 caption (sources/1911.05163.txt:268) calls the cells 'Ground-state energies (in Eh)'; nuclear repulsion is implied by 'ground-state energies' of a molecule, not stated"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1911.05163.txt:268 Table 1 caption (Eh, 1.5 A); FCI -4.028152 (:291); STO-6G :299",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-42a_42_P",
+      "method": "Exact diagonalization (Lanczos)",
+      "energy": -73.583839936
+    },
+    "field": "verified.journal_read.conversion",
+    "edit": [
+      "stored -73.583839936 carries QMBL's recomputed digits where applied (ruling 2026-09-30 / A3)",
+      "stored -73.583839936 is the printed value times 4 (sources/1103.1159.txt:80, Table I, N = 42a)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1103.1159.txt:80 Table I N=42a (-1,3),(5,-1) -18.395 959 984; x4 = -73.583839936",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-42b_42_P",
+      "method": "Exact diagonalization (Lanczos)",
+      "energy": -73.607955684
+    },
+    "field": "verified.journal_read.conversion",
+    "edit": [
+      "stored -73.607955684 carries QMBL's recomputed digits where applied (ruling 2026-09-30 / A3)",
+      "stored -73.607955684 is the printed value times 4 (sources/1103.1159.txt:81, Table I, N = 42b)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1103.1159.txt:81 Table I N=42b (-2,4),(4,-1) -18.401 988 921; x4 = -73.607955684",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.1",
+      "method": "Exact diagonalization",
+      "energy": -91.885824
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "QMBL's recompute (checks/exact-recompute-2026-09/, 2026-09-29): -91.88574274986225 = -0.638095436 per site, three determinations agreeing to 6e-13 (C4v A1 at k = 0, z = +1, residual 2.1e-10; a second basis, c2v_axes; qmbl-ed-2026-09-28), 8.1e-5 above the printed -0.638096; the published",
+      "Golubev et al. (arXiv:2606.04558 Table I) print -0.638095 for the same 6x6 cluster, 1e-6 per site from this cell; the published"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/cond-mat-9402061.txt:1644 row 0.10 col 36(A1) -0.638096; PBC :239; N=36 untilted six-by-six :247-49; H = J1 Si.Sj + J2 Si.Sj' :127; per site, J1 unity (Table II caption). Golubev et al. arXiv:2606.04558 Table I prints -0.638095",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.1",
+      "method": "Exact diagonalization",
+      "energy": -91.885824
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "The value itself is questioned in the ambiguous entry for this row (below the recomputed ground state).",
+      "The value itself is questioned in the ambiguous entry for this row."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/cond-mat-9402061.txt:1644 row 0.10 col 36(A1) -0.638096; PBC :239; N=36 untilted six-by-six :247-49; H = J1 Si.Sj + J2 Si.Sj' :127; per site, J1 unity (Table II caption). Golubev et al. arXiv:2606.04558 Table I prints -0.638095",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_0.01",
+      "method": "Exact diagonalization",
+      "energy": -27.933405318364226
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "in Table 3 of the SciPost paper, and QMBL's recompute confirms it (VE-exact-recompute).",
+      "in Table 3 of the SciPost paper (row 'Lancos ED (QuSpin)')."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 'Lancos ED (QuSpin) -27.93340531'; stored -27.933405318364226 starts with it; Eq. (58) periodic :1449-51; 'System (L = 6, Np = 13)' :1748",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_0.01",
+      "method": "Exact diagonalization",
+      "energy": -27.933405318364226
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Ruling E5 (2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged.",
+      "Ruling E5 (2026-10-02, reworded 2026-11-26): an exact row cites the printing paper beside the link; the link stays and no row is flagged."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 'Lancos ED (QuSpin) -27.93340531'; stored -27.933405318364226 starts with it; Eq. (58) periodic :1449-51; 'System (L = 6, Np = 13)' :1748",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_0.01",
+      "method": "Exact diagonalization",
+      "energy": -27.933405318364226
+    },
+    "field": "corrections.1.reason",
+    "edit": [
+      "bound_type exact right; QMBL's recompute (VE-exact-recompute, Gamma B1) agrees to < 2e-13.",
+      "bound_type exact right (the paper's own ED, Table 3)."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 'Lancos ED (QuSpin) -27.93340531'; stored -27.933405318364226 starts with it; Eq. (58) periodic :1449-51; 'System (L = 6, Np = 13)' :1748",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_0.01",
+      "method": "Exact diagonalization",
+      "energy": -27.933405318364226
+    },
+    "field": "verified.method",
+    "edit": [
+      "this pass on an AMD EPYC 9654 server: ed_fsym.py (E2 ed_sym.py structure with fermionic signs), sectors of translations x C4v",
+      "source text of arXiv:2210.05871v4 (Table 3, row 'Lancos ED (QuSpin)', V/t = 0.01) read against the stored value"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 'Lancos ED (QuSpin) -27.93340531'; stored -27.933405318364226 starts with it; Eq. (58) periodic :1449-51; 'System (L = 6, Np = 13)' :1748",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_0.01",
+      "method": "Exact diagonalization",
+      "energy": -27.933405318364226
+    },
+    "field": "verified.location",
+    "edit": [
+      "out/VE-exact-recompute/results/tvsq/tV__square_36_P_13__V_0.01__k0-0__c4v-irrep2.json",
+      "arXiv:2210.05871v4 Table 3 (sources/2210.05871.txt:1752), column V/t = 0.01"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 'Lancos ED (QuSpin) -27.93340531'; stored -27.933405318364226 starts with it; Eq. (58) periodic :1449-51; 'System (L = 6, Np = 13)' :1748",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_0.01",
+      "method": "Exact diagonalization",
+      "energy": -27.933405318364226
+    },
+    "field": "verified.reported_as",
+    "edit": [
+      "-27.9334053183641 (true residual 1.48e-10)",
+      "-27.93340531 (Table 3, 'Lancos ED (QuSpin)', V/t = 0.01; the stored value starts with these digits)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 'Lancos ED (QuSpin) -27.93340531'; stored -27.933405318364226 starts with it; Eq. (58) periodic :1449-51; 'System (L = 6, Np = 13)' :1748",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_0.01",
+      "method": "Exact diagonalization",
+      "energy": -27.933405318364226
+    },
+    "field": "verified.conversion",
+    "edit": [
+      "none (recomputed directly as the stored Pauli / fermion total)",
+      "none (the printed total; the stored value starts with the printed digits)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 'Lancos ED (QuSpin) -27.93340531'; stored -27.933405318364226 starts with it; Eq. (58) periodic :1449-51; 'System (L = 6, Np = 13)' :1748",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_0.1",
+      "method": "Exact diagonalization",
+      "energy": -27.340544159534836
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "in Table 3 of the SciPost paper, and QMBL's recompute confirms it (VE-exact-recompute).",
+      "in Table 3 of the SciPost paper (row 'Lancos ED (QuSpin)')."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-27.34054415'; stored -27.340544159534836 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_0.1",
+      "method": "Exact diagonalization",
+      "energy": -27.340544159534836
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Ruling E5 (2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged.",
+      "Ruling E5 (2026-10-02, reworded 2026-11-26): an exact row cites the printing paper beside the link; the link stays and no row is flagged."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-27.34054415'; stored -27.340544159534836 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_0.1",
+      "method": "Exact diagonalization",
+      "energy": -27.340544159534836
+    },
+    "field": "corrections.1.reason",
+    "edit": [
+      "bound_type exact right; QMBL's recompute (VE-exact-recompute, Gamma B1) agrees to < 2e-13.",
+      "bound_type exact right (the paper's own ED, Table 3)."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-27.34054415'; stored -27.340544159534836 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_0.1",
+      "method": "Exact diagonalization",
+      "energy": -27.340544159534836
+    },
+    "field": "verified.method",
+    "edit": [
+      "this pass on an AMD EPYC 9654 server: ed_fsym.py (E2 ed_sym.py structure with fermionic signs), sectors of translations x C4v",
+      "source text of arXiv:2210.05871v4 (Table 3, row 'Lancos ED (QuSpin)', V/t = 0.1) read against the stored value"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-27.34054415'; stored -27.340544159534836 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_0.1",
+      "method": "Exact diagonalization",
+      "energy": -27.340544159534836
+    },
+    "field": "verified.location",
+    "edit": [
+      "out/VE-exact-recompute/results/tvsq/tV__square_36_P_13__V_0.1__k0-0__c4v-irrep2.json",
+      "arXiv:2210.05871v4 Table 3 (sources/2210.05871.txt:1752), column V/t = 0.1"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-27.34054415'; stored -27.340544159534836 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_0.1",
+      "method": "Exact diagonalization",
+      "energy": -27.340544159534836
+    },
+    "field": "verified.reported_as",
+    "edit": [
+      "-27.340544159534655 (true residual 4.34e-10)",
+      "-27.34054415 (Table 3, 'Lancos ED (QuSpin)', V/t = 0.1; the stored value starts with these digits)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-27.34054415'; stored -27.340544159534836 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_0.1",
+      "method": "Exact diagonalization",
+      "energy": -27.340544159534836
+    },
+    "field": "verified.conversion",
+    "edit": [
+      "none (recomputed directly as the stored Pauli / fermion total)",
+      "none (the printed total; the stored value starts with the printed digits)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-27.34054415'; stored -27.340544159534836 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_1",
+      "method": "Exact diagonalization",
+      "energy": -22.07737235783086
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "in Table 3 of the SciPost paper, and QMBL's recompute confirms it (VE-exact-recompute).",
+      "in Table 3 of the SciPost paper (row 'Lancos ED (QuSpin)')."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-22.07737235'; stored -22.07737235783086 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_1",
+      "method": "Exact diagonalization",
+      "energy": -22.07737235783086
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Ruling E5 (2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged.",
+      "Ruling E5 (2026-10-02, reworded 2026-11-26): an exact row cites the printing paper beside the link; the link stays and no row is flagged."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-22.07737235'; stored -22.07737235783086 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_1",
+      "method": "Exact diagonalization",
+      "energy": -22.07737235783086
+    },
+    "field": "corrections.1.reason",
+    "edit": [
+      "bound_type exact right; QMBL's recompute (VE-exact-recompute, Gamma B1) agrees to < 2e-13.",
+      "bound_type exact right (the paper's own ED, Table 3)."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-22.07737235'; stored -22.07737235783086 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_1",
+      "method": "Exact diagonalization",
+      "energy": -22.07737235783086
+    },
+    "field": "verified.method",
+    "edit": [
+      "prior recomputation: E2 ed_full.py, output qmbl-runs/qmbl-verify/out/E2-exact-remote/results/tV__square_36_P_13_1.json (evidence cited by the plan: qmbl-verify/out/E2-exact-remote (verified))",
+      "source text of arXiv:2210.05871v4 (Table 3, row 'Lancos ED (QuSpin)', V/t = 1) read against the stored value"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-22.07737235'; stored -22.07737235783086 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_1",
+      "method": "Exact diagonalization",
+      "energy": -22.07737235783086
+    },
+    "field": "verified.location",
+    "edit": [
+      "qmbl-runs/qmbl-verify/out/E2-exact-remote/results/tV__square_36_P_13_1.json: E_ritz",
+      "arXiv:2210.05871v4 Table 3 (sources/2210.05871.txt:1752), column V/t = 1"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-22.07737235'; stored -22.07737235783086 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_1",
+      "method": "Exact diagonalization",
+      "energy": -22.07737235783086
+    },
+    "field": "verified.reported_as",
+    "edit": [
+      "-22.077372357830814 (Lanczos Ritz value; estimate beta_m|s_m| = 6.24e-10; no second pass, so no true residual); N_f = 13, full space (2.31e9)",
+      "-22.07737235 (Table 3, 'Lancos ED (QuSpin)', V/t = 1; the stored value starts with these digits)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-22.07737235'; stored -22.07737235783086 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_1",
+      "method": "Exact diagonalization",
+      "energy": -22.07737235783086
+    },
+    "field": "verified.conversion",
+    "edit": [
+      "none (recomputed directly as the stored Pauli / fermion total)",
+      "none (the printed total; the stored value starts with the printed digits)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-22.07737235'; stored -22.07737235783086 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_10",
+      "method": "Exact diagonalization",
+      "energy": -7.928026240978371
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "in Table 3 of the SciPost paper, and QMBL's recompute confirms it (VE-exact-recompute; at V = 10 every sector was computed, the ground state is Gamma B1).",
+      "in Table 3 of the SciPost paper (row 'Lancos ED (QuSpin)')."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-7.92802624'; stored -7.928026240978371 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_10",
+      "method": "Exact diagonalization",
+      "energy": -7.928026240978371
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Ruling E5 (2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged.",
+      "Ruling E5 (2026-10-02, reworded 2026-11-26): an exact row cites the printing paper beside the link; the link stays and no row is flagged."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-7.92802624'; stored -7.928026240978371 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_10",
+      "method": "Exact diagonalization",
+      "energy": -7.928026240978371
+    },
+    "field": "corrections.1.reason",
+    "edit": [
+      "bound_type exact right; QMBL's recompute (VE-exact-recompute, Gamma B1) agrees to < 2e-13.",
+      "bound_type exact right (the paper's own ED, Table 3)."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-7.92802624'; stored -7.928026240978371 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_10",
+      "method": "Exact diagonalization",
+      "energy": -7.928026240978371
+    },
+    "field": "verified.method",
+    "edit": [
+      "this pass on an AMD EPYC 9654 server: ed_fsym.py (E2 ed_sym.py structure with fermionic signs), sectors of translations x C4v",
+      "source text of arXiv:2210.05871v4 (Table 3, row 'Lancos ED (QuSpin)', V/t = 10) read against the stored value"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-7.92802624'; stored -7.928026240978371 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_10",
+      "method": "Exact diagonalization",
+      "energy": -7.928026240978371
+    },
+    "field": "verified.location",
+    "edit": [
+      "out/VE-exact-recompute/results/tvsq/tV__square_36_P_13__V_10__k0-0__c4v-irrep2.json",
+      "arXiv:2210.05871v4 Table 3 (sources/2210.05871.txt:1752), column V/t = 10"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-7.92802624'; stored -7.928026240978371 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_10",
+      "method": "Exact diagonalization",
+      "energy": -7.928026240978371
+    },
+    "field": "verified.reported_as",
+    "edit": [
+      "-7.9280262409783155 (true residual 3.84e-10)",
+      "-7.92802624 (Table 3, 'Lancos ED (QuSpin)', V/t = 10; the stored value starts with these digits)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-7.92802624'; stored -7.928026240978371 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_10",
+      "method": "Exact diagonalization",
+      "energy": -7.928026240978371
+    },
+    "field": "verified.conversion",
+    "edit": [
+      "none (recomputed directly as the stored Pauli / fermion total)",
+      "none (the printed total; the stored value starts with the printed digits)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-7.92802624'; stored -7.928026240978371 starts with it; Eq. (58) :1449-51",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tJ/square_16_O_h2_J0.4"
+    },
+    "field": "cluster",
+    "edit": [
+      "(arXiv:1908.10000, lines 79-80); QMBL's diagonalization gives -0.564366793 per site (checks/tj-ed-2026-10/)",
+      "(arXiv:1908.10000, lines 79-80)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/1908.10000.txt:98-99 'extrapolated ground state energy in the thermodynamic limit is E_inf = -0.6701' (per site, extrapolated in sqrt(L1 L2), :79-80 caption); :79-80 'open boundary conditions'; :49 Eq. (1) with -n_i n_j/4; :93 'E_fPEPS = -0.56428'; SI Table S2 '4x4 -0.56428(2)' (1908.10000-si.txt:64)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/pyrochlore-2x2x2_32_P",
+      "method": "SU(2) DMRG, extrapolated (χ→∞, linear fit vs two-site variance), snake path",
+      "energy": -66.1504
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "the same cluster QMBL diagonalised (StdFace W = L = H = 2, checks/pyrochlore-32-ed): its triplet gap 0.6872005 reproduces the paper's 0.6872, which also settles M9.",
+      "the paper's 'cluster c1 c2 c3: 32 | 2a1 | 2a2 | 2a3' (sources/2010.03563.txt:461) with periodic boundary conditions (:120, cf. Table IV) and H = J sum S_i.S_j, S = 1/2, J = 1 (:105-108)."
+    ],
+    "reported_as": "none (text field)",
+    "location": "2010.03563.txt:461 'cluster c1 c2 c3: 32 | 2a1 | 2a2 | 2a3'; :120 'periodic boundary conditions (cf. Tab. IV)'; :105-108 'H = J Σ S_i·S_j' S = 1/2; :126 '32 −0.5168'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/pyrochlore-2x2x2_32_P",
+      "method": "SU(2) DMRG, extrapolated (χ→∞, linear fit vs two-site variance), snake path",
+      "energy": -66.1504
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Against the fixed exact row (-66.15792523719963 = -0.51685879 per site, qmbl 9d68f63) the printed -0.5168 is the exact energy truncated to four decimals (rounding would give -0.5169): 5.9e-5 per site, 0.0075 total above it, harmless for an extrapolated row.",
+      "The stored value is the printed -0.5168 per site (sources/2010.03563.txt:126, '32 -0.5168') times 128 = -66.1504."
+    ],
+    "reported_as": "none (text field)",
+    "location": "2010.03563.txt:461 'cluster c1 c2 c3: 32 | 2a1 | 2a2 | 2a3'; :120 'periodic boundary conditions (cf. Tab. IV)'; :105-108 'H = J Σ S_i·S_j' S = 1/2; :126 '32 −0.5168'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/pyrochlore-2x2x2_32_P",
+      "method": "SU(2) DMRG, extrapolated (χ→∞, linear fit vs two-site variance), snake path",
+      "energy": -66.1504
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "(rows: VarBench RBM -65.949, VarBench mVMC -66.082, QMBL exact -66.157925, this)",
+      "(rows: VarBench RBM -65.949, VarBench mVMC -66.082, this)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "2010.03563.txt:461 'cluster c1 c2 c3: 32 | 2a1 | 2a2 | 2a3'; :120 'periodic boundary conditions (cf. Tab. IV)'; :105-108 'H = J Σ S_i·S_j' S = 1/2; :126 '32 −0.5168'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-DMFT-MT-HF_9",
+      "method": "Exact diagonalization",
+      "energy": -23.300947155759474
+    },
+    "field": "corrections.0.location",
+    "edit": [
+      "VarBench dataset Impurity/SB-DMFT-MT-HF_9.md data row 2 (Zenodo v1.0.0 and v1.1.0, vendor 390a21e); checks/cost/ed/results/Impurity--SB-DMFT-MT-HF_9.json; qmbl-verify/out/A2-prx7-031013-impurity/ed_sb_results.json",
+      "VarBench dataset Impurity/SB-DMFT-MT-HF_9.md data row 2 (Zenodo v1.0.0 and v1.1.0, vendor 390a21e)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/Impurity/SB-DMFT-MT-HF_9.md:4 '| -23.300947155759474 | ... | Exact diagonalization |'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-DMFT-MT-HF_9",
+      "method": "Exact diagonalization",
+      "energy": -23.300947155759474
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "the value stands on QMBL's two independent recomputations (value_check)",
+      "the value and the label 'Exact diagonalization' stand on the VarBench dataset line (vendor/varbench/Impurity/SB-DMFT-MT-HF_9.md:4)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/Impurity/SB-DMFT-MT-HF_9.md:4 '| -23.300947155759474 | ... | Exact diagonalization |'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-DMFT-MT-HF_9",
+      "method": "Exact diagonalization",
+      "energy": -23.300947155759474
+    },
+    "field": "corrections.2.to",
+    "edit": [
+      "QMBL's exact diagonalization reproduces this number to 1.8e-15 relative, checks/cost/ed/results/Impurity--SB-DMFT-MT-HF_9.json",
+      "the value and the label 'Exact diagonalization' are printed in the VarBench dataset, vendor/varbench/Impurity/SB-DMFT-MT-HF_9.md:4; the script runs no exact diagonalization"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/Impurity/SB-DMFT-MT-HF_9.md:4 '| -23.300947155759474 | ... | Exact diagonalization |'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-DMFT-MT-HF_9",
+      "method": "Exact diagonalization",
+      "energy": -23.300947155759474
+    },
+    "field": "corrections.2.reported_as",
+    "edit": [
+      "checks/cost/ed/results/Impurity--SB-DMFT-MT-HF_9.json: energy -23.30094715575943, stored_exact -23.300947155759474, relative_difference 1.8296494069799302e-15, reproduces_stored true",
+      "vendor/varbench/Impurity/SB-DMFT-MT-HF_9.md:4: the 'Exact diagonalization' row"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/Impurity/SB-DMFT-MT-HF_9.md:4 '| -23.300947155759474 | ... | Exact diagonalization |'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-DMFT-MT-HF_9",
+      "method": "Exact diagonalization",
+      "energy": -23.300947155759474
+    },
+    "field": "corrections.2.location",
+    "edit": [
+      "checks/cost/ed/results/Impurity--SB-DMFT-MT-HF_9.json (checks/cost/ed/run_ed.py at commit 716e043, measured 2026-09-24); the stored number",
+      "vendor/varbench/Impurity/SB-DMFT-MT-HF_9.md:4; the stored number"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/Impurity/SB-DMFT-MT-HF_9.md:4 '| -23.300947155759474 | ... | Exact diagonalization |'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-DMFT-MT-HF_9",
+      "method": "Exact diagonalization",
+      "energy": -23.300947155759474
+    },
+    "field": "corrections.2.reason",
+    "edit": [
+      "QMBL's exact diagonalization of the instance (63504 states) reproduces the stored number, so the row cites that reproduction beside the link; the number keeps its digits.",
+      "The row cites the VarBench dataset line beside the link; the number keeps its digits."
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/Impurity/SB-DMFT-MT-HF_9.md:4 '| -23.300947155759474 | ... | Exact diagonalization |'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-DMFT-MT-HF_9",
+      "method": "Exact diagonalization",
+      "energy": -23.300947155759474
+    },
+    "field": "corrections.2.reason",
+    "edit": [
+      "Ruling E5 (2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged.",
+      "Ruling E5 (2026-10-02, reworded 2026-11-26): an exact row cites the printing paper beside the link; the link stays and no row is flagged."
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/Impurity/SB-DMFT-MT-HF_9.md:4 '| -23.300947155759474 | ... | Exact diagonalization |'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-IMP_9",
+      "method": "Exact diagonalization",
+      "energy": -10.487128484702636
+    },
+    "field": "corrections.0.location",
+    "edit": [
+      "VarBench dataset Impurity/SB-IMP_9.md data row 2 (Zenodo v1.0.0 and v1.1.0, vendor 390a21e); checks/cost/ed/results/Impurity--SB-IMP_9.json; qmbl-verify/out/A2-prx7-031013-impurity/ed_sb_results.json",
+      "VarBench dataset Impurity/SB-IMP_9.md data row 2 (Zenodo v1.0.0 and v1.1.0, vendor 390a21e)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/Impurity/SB-IMP_9.md:4 '| -10.487128484702636 | ... | Exact diagonalization |'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-IMP_9",
+      "method": "Exact diagonalization",
+      "energy": -10.487128484702636
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "the value stands on QMBL's two independent recomputations (value_check)",
+      "the value and the label 'Exact diagonalization' stand on the VarBench dataset line (vendor/varbench/Impurity/SB-IMP_9.md:4)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/Impurity/SB-IMP_9.md:4 '| -10.487128484702636 | ... | Exact diagonalization |'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-IMP_9",
+      "method": "Exact diagonalization",
+      "energy": -10.487128484702636
+    },
+    "field": "corrections.2.to",
+    "edit": [
+      "QMBL's exact diagonalization reproduces this number to 1.5e-15 relative, checks/cost/ed/results/Impurity--SB-IMP_9.json",
+      "the value and the label 'Exact diagonalization' are printed in the VarBench dataset, vendor/varbench/Impurity/SB-IMP_9.md:4; the script runs no exact diagonalization"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/Impurity/SB-IMP_9.md:4 '| -10.487128484702636 | ... | Exact diagonalization |'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-IMP_9",
+      "method": "Exact diagonalization",
+      "energy": -10.487128484702636
+    },
+    "field": "corrections.2.reported_as",
+    "edit": [
+      "checks/cost/ed/results/Impurity--SB-IMP_9.json: energy -10.487128484702652, stored_exact -10.487128484702636, relative_difference 1.5244603494581457e-15, reproduces_stored true",
+      "vendor/varbench/Impurity/SB-IMP_9.md:4: the 'Exact diagonalization' row"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/Impurity/SB-IMP_9.md:4 '| -10.487128484702636 | ... | Exact diagonalization |'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-IMP_9",
+      "method": "Exact diagonalization",
+      "energy": -10.487128484702636
+    },
+    "field": "corrections.2.location",
+    "edit": [
+      "checks/cost/ed/results/Impurity--SB-IMP_9.json (checks/cost/ed/run_ed.py at commit 716e043, measured 2026-09-24); the stored number",
+      "vendor/varbench/Impurity/SB-IMP_9.md:4; the stored number"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/Impurity/SB-IMP_9.md:4 '| -10.487128484702636 | ... | Exact diagonalization |'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-IMP_9",
+      "method": "Exact diagonalization",
+      "energy": -10.487128484702636
+    },
+    "field": "corrections.2.reason",
+    "edit": [
+      "QMBL's exact diagonalization of the instance (63504 states) reproduces the stored number, so the row cites that reproduction beside the link; the number keeps its digits.",
+      "The row cites the VarBench dataset line beside the link; the number keeps its digits."
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/Impurity/SB-IMP_9.md:4 '| -10.487128484702636 | ... | Exact diagonalization |'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-IMP_9",
+      "method": "Exact diagonalization",
+      "energy": -10.487128484702636
+    },
+    "field": "corrections.2.reason",
+    "edit": [
+      "Ruling E5 (2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged.",
+      "Ruling E5 (2026-10-02, reworded 2026-11-26): an exact row cites the printing paper beside the link; the link stays and no row is flagged."
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/Impurity/SB-IMP_9.md:4 '| -10.487128484702636 | ... | Exact diagonalization |'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-DMFT-MI-HF_10",
+      "method": "Exact diagonalization",
+      "energy": -34.58052046520682
+    },
+    "field": "corrections.0.location",
+    "edit": [
+      "VarBench dataset Impurity/SB-DMFT-MI-HF_9.md data row 2 (Zenodo v1.0.0 and v1.1.0, vendor 390a21e); checks/cost/ed/results/Impurity--SB-DMFT-MI-HF_9.json; qmbl-verify/out/A2-prx7-031013-impurity/ed_sb_results.json",
+      "VarBench dataset Impurity/SB-DMFT-MI-HF_9.md data row 2 (Zenodo v1.0.0 and v1.1.0, vendor 390a21e)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "varbench-methods ed31bb0 scripts/Impurity/SB-DMFT-MI-HF_9.py:17 \"Nbath=9\", :18 \"U=8.0\", :21 \"Filling=1.0\", :41 \"if abs(U-8.0) < 0.1 and Filling==1.0:\", :44 \"Nb=Nbath+1\"; energies and Einf printed in vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (instances-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/instances-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-DMFT-MI-HF_10",
+      "method": "Exact diagonalization",
+      "energy": -34.58052046520682
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "the value stands on QMBL's two independent recomputations (value_check)",
+      "the value and the label 'Exact diagonalization' stand on the VarBench dataset line (vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "varbench-methods ed31bb0 scripts/Impurity/SB-DMFT-MI-HF_9.py:17 \"Nbath=9\", :18 \"U=8.0\", :21 \"Filling=1.0\", :41 \"if abs(U-8.0) < 0.1 and Filling==1.0:\", :44 \"Nb=Nbath+1\"; energies and Einf printed in vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (instances-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/instances-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-DMFT-MI-HF_10",
+      "method": "Exact diagonalization",
+      "energy": -34.58052046520682
+    },
+    "field": "corrections.2.to",
+    "edit": [
+      "QMBL's exact diagonalization reproduces this number to 3.3e-15 relative, checks/cost/ed/results/Impurity--SB-DMFT-MI-HF_9.json",
+      "the value and the label 'Exact diagonalization' are printed in the VarBench dataset, vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4; the script runs no exact diagonalization"
+    ],
+    "reported_as": "none (text field)",
+    "location": "varbench-methods ed31bb0 scripts/Impurity/SB-DMFT-MI-HF_9.py:17 \"Nbath=9\", :18 \"U=8.0\", :21 \"Filling=1.0\", :41 \"if abs(U-8.0) < 0.1 and Filling==1.0:\", :44 \"Nb=Nbath+1\"; energies and Einf printed in vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (instances-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/instances-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-DMFT-MI-HF_10",
+      "method": "Exact diagonalization",
+      "energy": -34.58052046520682
+    },
+    "field": "corrections.2.reported_as",
+    "edit": [
+      "checks/cost/ed/results/Impurity--SB-DMFT-MI-HF_9.json: energy -34.5805204652067, stored_exact -34.58052046520682, relative_difference 3.2875976472361663e-15, reproduces_stored true",
+      "vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4: the 'Exact diagonalization' row"
+    ],
+    "reported_as": "none (text field)",
+    "location": "varbench-methods ed31bb0 scripts/Impurity/SB-DMFT-MI-HF_9.py:17 \"Nbath=9\", :18 \"U=8.0\", :21 \"Filling=1.0\", :41 \"if abs(U-8.0) < 0.1 and Filling==1.0:\", :44 \"Nb=Nbath+1\"; energies and Einf printed in vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (instances-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/instances-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-DMFT-MI-HF_10",
+      "method": "Exact diagonalization",
+      "energy": -34.58052046520682
+    },
+    "field": "corrections.2.location",
+    "edit": [
+      "checks/cost/ed/results/Impurity--SB-DMFT-MI-HF_9.json (checks/cost/ed/run_ed.py at commit 716e043, measured 2026-09-24); the stored number",
+      "vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4; the stored number"
+    ],
+    "reported_as": "none (text field)",
+    "location": "varbench-methods ed31bb0 scripts/Impurity/SB-DMFT-MI-HF_9.py:17 \"Nbath=9\", :18 \"U=8.0\", :21 \"Filling=1.0\", :41 \"if abs(U-8.0) < 0.1 and Filling==1.0:\", :44 \"Nb=Nbath+1\"; energies and Einf printed in vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (instances-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/instances-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-DMFT-MI-HF_10",
+      "method": "Exact diagonalization",
+      "energy": -34.58052046520682
+    },
+    "field": "corrections.2.reason",
+    "edit": [
+      "QMBL's exact diagonalization of the instance (213444 states) reproduces the stored number, so the row cites that reproduction beside the link; the number keeps its digits.",
+      "The row cites the VarBench dataset line beside the link; the number keeps its digits."
+    ],
+    "reported_as": "none (text field)",
+    "location": "varbench-methods ed31bb0 scripts/Impurity/SB-DMFT-MI-HF_9.py:17 \"Nbath=9\", :18 \"U=8.0\", :21 \"Filling=1.0\", :41 \"if abs(U-8.0) < 0.1 and Filling==1.0:\", :44 \"Nb=Nbath+1\"; energies and Einf printed in vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (instances-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/instances-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-DMFT-MI-HF_10",
+      "method": "Exact diagonalization",
+      "energy": -34.58052046520682
+    },
+    "field": "corrections.2.reason",
+    "edit": [
+      "Ruling E5 (2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged.",
+      "Ruling E5 (2026-10-02, reworded 2026-11-26): an exact row cites the printing paper beside the link; the link stays and no row is flagged."
+    ],
+    "reported_as": "none (text field)",
+    "location": "varbench-methods ed31bb0 scripts/Impurity/SB-DMFT-MI-HF_9.py:17 \"Nbath=9\", :18 \"U=8.0\", :21 \"Filling=1.0\", :41 \"if abs(U-8.0) < 0.1 and Filling==1.0:\", :44 \"Nb=Nbath+1\"; energies and Einf printed in vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (instances-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/instances-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-DMFT-MI-HF_10",
+      "method": "DMRG (bond dimension 100) using fork tensor product states with U(1) symmetries for charge and spin sector",
+      "energy": -34.58052046520677
+    },
+    "field": "corrections.0.location",
+    "edit": [
+      "VarBench dataset Impurity/SB-DMFT-MI-HF_9.md data row 1 (Zenodo v1.0.0 and v1.1.0, vendor 390a21e); checks/cost/ed/results/Impurity--SB-DMFT-MI-HF_9.json; qmbl-verify/out/A2-prx7-031013-impurity/ed_sb_results.json",
+      "VarBench dataset Impurity/SB-DMFT-MI-HF_9.md data row 2 (Zenodo v1.0.0 and v1.1.0, vendor 390a21e)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "varbench-methods ed31bb0 scripts/Impurity/SB-DMFT-MI-HF_9.py:17 \"Nbath=9\", :18 \"U=8.0\", :21 \"Filling=1.0\", :41 \"if abs(U-8.0) < 0.1 and Filling==1.0:\", :44 \"Nb=Nbath+1\"; energies and Einf printed in vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (instances-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/instances-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-DMFT-MI-HF_10"
+    },
+    "field": "relabelled.reason",
+    "edit": [
+      "Both rows were computed there: QMBL's exact diagonalization on eleven orbitals per spin (the impurity and ten bath sites; N_up = 6, N_dn = 5, dimension 213444) reproduces both to 1e-13, and the stored E_inf follows only from the ten-site bath.",
+      "Both rows were computed there; the script prints Nbath = 9 (line 17), U = 8.0 (line 18), Filling = 1.0 (line 21), the branch 'if abs(U-8.0) < 0.1 and Filling==1.0:' (line 41) and Nb = Nbath+1 (line 44), and the dataset prints both rows (vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4)."
+    ],
+    "reported_as": "none (text field)",
+    "location": "varbench-methods ed31bb0 scripts/Impurity/SB-DMFT-MI-HF_9.py:17 \"Nbath=9\", :18 \"U=8.0\", :21 \"Filling=1.0\", :41 \"if abs(U-8.0) < 0.1 and Filling==1.0:\", :44 \"Nb=Nbath+1\"; energies and Einf printed in vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (instances-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/instances-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "Impurity/SB-DMFT-MI-HF_10"
+    },
+    "field": "relabelled.evidence",
+    "edit": [
+      "checks/cost/ed/results/Impurity--SB-DMFT-MI-HF_9.json",
+      "varbench-methods ed31bb0 scripts/Impurity/SB-DMFT-MI-HF_9.py lines 17, 18, 21, 41-44; vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4"
+    ],
+    "reported_as": "none (text field)",
+    "location": "varbench-methods ed31bb0 scripts/Impurity/SB-DMFT-MI-HF_9.py:17 \"Nbath=9\", :18 \"U=8.0\", :21 \"Filling=1.0\", :41 \"if abs(U-8.0) < 0.1 and Filling==1.0:\", :44 \"Nb=Nbath+1\"; energies and Einf printed in vendor/varbench/Impurity/SB-DMFT-MI-HF_9.md:3-4",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (instances-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/instances-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/chain_32_P_16_1",
+      "method": "Exact diagonalization",
+      "energy": -15.946847944277561
+    },
+    "field": "corrections.0.to",
+    "edit": [
+      "(QMBL's exact diagonalization of the full N_f = 16 space, 601080390 states, reproduces this number to 8.8e-14 relative: checks/exact-recompute-2026-09/results/tV__chain_32_P_16_1.json; the stored number is",
+      "(vendor/varbench/tV/chain_32_P_16_1.md:3 prints this number with the label 'Exact diagonalization' and this script; the stored number is"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/tV/chain_32_P_16_1.md:3 '| -15.946847944277561 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--ham tv --boundary peri --L 32 --V 1 --Nf 16' (per the row's value_check)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/chain_32_P_16_1",
+      "method": "Exact diagonalization",
+      "energy": -15.946847944277561
+    },
+    "field": "corrections.0.reported_as",
+    "edit": [
+      "checks/exact-recompute-2026-09/results/tV__chain_32_P_16_1.json: E -15.946847944278966, residual 9.45e-10, sector 'N_f = 16, no spatial symmetry'",
+      "vendor/varbench/tV/chain_32_P_16_1.md:3: the 'Exact diagonalization' row"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/tV/chain_32_P_16_1.md:3 '| -15.946847944277561 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--ham tv --boundary peri --L 32 --V 1 --Nf 16' (per the row's value_check)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/chain_32_P_16_1",
+      "method": "Exact diagonalization",
+      "energy": -15.946847944277561
+    },
+    "field": "corrections.0.location",
+    "edit": [
+      "checks/exact-recompute-2026-09/results/tV__chain_32_P_16_1.json (ed_full.py, the qmbl-verify pass of 2026-09-17); VarBench history",
+      "vendor/varbench/tV/chain_32_P_16_1.md:3; VarBench history"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/tV/chain_32_P_16_1.md:3 '| -15.946847944277561 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--ham tv --boundary peri --L 32 --V 1 --Nf 16' (per the row's value_check)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/chain_32_P_16_1",
+      "method": "Exact diagonalization",
+      "energy": -15.946847944277561
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "QMBL's exact diagonalization of the full space, no spatial symmetry, reproduces it (translation expectation ~0, the K = +-pi/2 doublet the reader expected); the files are copied into checks/exact-recompute-2026-09/ with this commit. The row cites that reproduction beside the link; the number keeps its digits.",
+      "The row cites the VarBench dataset line (vendor/varbench/tV/chain_32_P_16_1.md:3) beside the link; the number keeps its digits."
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/tV/chain_32_P_16_1.md:3 '| -15.946847944277561 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--ham tv --boundary peri --L 32 --V 1 --Nf 16' (per the row's value_check)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/chain_32_P_16_1",
+      "method": "Exact diagonalization",
+      "energy": -15.946847944277561
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Ruling E5 (2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged.",
+      "Ruling E5 (2026-10-02, reworded 2026-11-26): an exact row cites the printing paper beside the link; the link stays and no row is flagged."
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/tV/chain_32_P_16_1.md:3 '| -15.946847944277561 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--ham tv --boundary peri --L 32 --V 1 --Nf 16' (per the row's value_check)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/chain_32_P_16_1",
+      "method": "Exact diagonalization",
+      "energy": -15.946847944277561
+    },
+    "field": "verified.method",
+    "edit": [
+      "prior recomputation: E2 ed_full.py (numba, no spatial symmetry), output qmbl-runs/qmbl-verify/out/E2-exact-remote/results/tV__chain_32_P_16_1.json (evidence cited by the plan: qmbl-verify/out/E2-exact-remote (verified))",
+      "VarBench dataset line and linked script read against the stored value"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/tV/chain_32_P_16_1.md:3 '| -15.946847944277561 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--ham tv --boundary peri --L 32 --V 1 --Nf 16' (per the row's value_check)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/chain_32_P_16_1",
+      "method": "Exact diagonalization",
+      "energy": -15.946847944277561
+    },
+    "field": "verified.location",
+    "edit": [
+      "qmbl-runs/qmbl-verify/out/E2-exact-remote/results/tV__chain_32_P_16_1.json: E, residual",
+      "vendor/varbench/tV/chain_32_P_16_1.md:3"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/tV/chain_32_P_16_1.md:3 '| -15.946847944277561 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--ham tv --boundary peri --L 32 --V 1 --Nf 16' (per the row's value_check)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/chain_32_P_16_1",
+      "method": "Exact diagonalization",
+      "energy": -15.946847944277561
+    },
+    "field": "verified.reported_as",
+    "edit": [
+      "-15.946847944278966 (true residual ||Hx-Ex||/||x|| = 9.45e-10); N_f = 16, full space",
+      "-15.946847944277561 (VarBench dataset line)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/tV/chain_32_P_16_1.md:3 '| -15.946847944277561 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--ham tv --boundary peri --L 32 --V 1 --Nf 16' (per the row's value_check)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/chain_32_P_16_1",
+      "method": "Exact diagonalization",
+      "energy": -15.946847944277561
+    },
+    "field": "verified.conversion",
+    "edit": [
+      "none (recomputed directly as the stored Pauli / fermion total)",
+      "none (the dataset's printed total)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/tV/chain_32_P_16_1.md:3 '| -15.946847944277561 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--ham tv --boundary peri --L 32 --V 1 --Nf 16' (per the row's value_check)",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/chain_32_P_16_2",
+      "method": "Exact diagonalization",
+      "energy": -12.32869972364372
+    },
+    "field": "corrections.0.to",
+    "edit": [
+      "(QMBL's exact diagonalization of the full N_f = 16 space, 601080390 states, reproduces this number to 2.1e-13 relative: checks/exact-recompute-2026-09/results/tV__chain_32_P_16_2.json; the stored number is",
+      "(vendor/varbench/tV/chain_32_P_16_2.md:3 prints this number with the label 'Exact diagonalization' and this script; the stored number is"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/tV/chain_32_P_16_2.md:3 '| -12.32869972364372 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--V 2 --Nf 16 --boundary peri --L 32'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/chain_32_P_16_2",
+      "method": "Exact diagonalization",
+      "energy": -12.32869972364372
+    },
+    "field": "corrections.0.reported_as",
+    "edit": [
+      "checks/exact-recompute-2026-09/results/tV__chain_32_P_16_2.json: E -12.328699723641177, residual 1.87e-10, sector 'N_f = 16, no spatial symmetry'",
+      "vendor/varbench/tV/chain_32_P_16_2.md:3: the 'Exact diagonalization' row"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/tV/chain_32_P_16_2.md:3 '| -12.32869972364372 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--V 2 --Nf 16 --boundary peri --L 32'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/chain_32_P_16_2",
+      "method": "Exact diagonalization",
+      "energy": -12.32869972364372
+    },
+    "field": "corrections.0.location",
+    "edit": [
+      "checks/exact-recompute-2026-09/results/tV__chain_32_P_16_2.json (ed_full.py, the qmbl-verify pass of 2026-09-17); VarBench history",
+      "vendor/varbench/tV/chain_32_P_16_2.md:3; VarBench history"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/tV/chain_32_P_16_2.md:3 '| -12.32869972364372 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--V 2 --Nf 16 --boundary peri --L 32'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/chain_32_P_16_2",
+      "method": "Exact diagonalization",
+      "energy": -12.32869972364372
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "QMBL's exact diagonalization of the full space, no spatial symmetry, reproduces it (translation expectation ~0, the K = +-pi/2 doublet the reader expected); the files are copied into checks/exact-recompute-2026-09/ with this commit. The row cites that reproduction beside the link; the number keeps its digits.",
+      "The row cites the VarBench dataset line (vendor/varbench/tV/chain_32_P_16_2.md:3) beside the link; the number keeps its digits."
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/tV/chain_32_P_16_2.md:3 '| -12.32869972364372 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--V 2 --Nf 16 --boundary peri --L 32'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/chain_32_P_16_2",
+      "method": "Exact diagonalization",
+      "energy": -12.32869972364372
+    },
+    "field": "corrections.0.reason",
+    "edit": [
+      "Ruling E5 (2026-10-02): an exact row cites the printing paper or QMBL's reproduction beside the link; the link stays and no row is flagged.",
+      "Ruling E5 (2026-10-02, reworded 2026-11-26): an exact row cites the printing paper beside the link; the link stays and no row is flagged."
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/tV/chain_32_P_16_2.md:3 '| -12.32869972364372 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--V 2 --Nf 16 --boundary peri --L 32'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/chain_32_P_16_2",
+      "method": "Exact diagonalization",
+      "energy": -12.32869972364372
+    },
+    "field": "verified.method",
+    "edit": [
+      "prior recomputation: E2 ed_full.py, output qmbl-runs/qmbl-verify/out/E2-exact-remote/results/tV__chain_32_P_16_2.json (evidence cited by the plan: qmbl-verify/out/E2-exact-remote (verified))",
+      "VarBench dataset line and linked script read against the stored value"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/tV/chain_32_P_16_2.md:3 '| -12.32869972364372 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--V 2 --Nf 16 --boundary peri --L 32'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/chain_32_P_16_2",
+      "method": "Exact diagonalization",
+      "energy": -12.32869972364372
+    },
+    "field": "verified.location",
+    "edit": [
+      "qmbl-runs/qmbl-verify/out/E2-exact-remote/results/tV__chain_32_P_16_2.json: E, residual",
+      "vendor/varbench/tV/chain_32_P_16_2.md:3"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/tV/chain_32_P_16_2.md:3 '| -12.32869972364372 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--V 2 --Nf 16 --boundary peri --L 32'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/chain_32_P_16_2",
+      "method": "Exact diagonalization",
+      "energy": -12.32869972364372
+    },
+    "field": "verified.reported_as",
+    "edit": [
+      "-12.328699723641177 (true residual ||Hx-Ex||/||x|| = 1.87e-10); N_f = 16, full space",
+      "-12.32869972364372 (VarBench dataset line)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/tV/chain_32_P_16_2.md:3 '| -12.32869972364372 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--V 2 --Nf 16 --boundary peri --L 32'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/chain_32_P_16_2",
+      "method": "Exact diagonalization",
+      "energy": -12.32869972364372
+    },
+    "field": "verified.conversion",
+    "edit": [
+      "none (recomputed directly as the stored Pauli / fermion total)",
+      "none (the dataset's printed total)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "vendor/varbench/tV/chain_32_P_16_2.md:3 '| -12.32869972364372 | ... | Exact diagonalization | [code] ed_lattice_symmetries.sh'; script args '--V 2 --Nf 16 --boundary peri --L 32'",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_16_O_1",
+      "method": "block MPS alternating optimization (reference, bond dimension up to 5000)",
+      "energy": -26.86050464
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Against QMBL's ED (-26.86050463952785): printed − ED = -4.72e-10, i.e. the printed value lies 4.7e-10 below exact, inside its eighth-decimal rounding (tolerance 5e-9); not a bound violation.",
+      "The printed accuracy statement ('relative accuracy of order 10-6 for Lx <= 8', sources/2510.20063.txt:743-744) is the stated precision of this reference energy, a variational MPS value."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2510.20063.txt:704 \"HTFI = - sum sigma^z sigma^z - g sum sigma^x\"; 737-738 \"open boundary conditions ... Pauli matrices\"; 743-744 \"relative accuracy of order 10^-6\"; 824 \"1.0 0 -26.86050464\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_16_O_2",
+      "method": "block MPS alternating optimization (reference, bond dimension up to 5000)",
+      "energy": -35.90725762
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Against QMBL's ED (-35.907257620408934): printed − ED = 4.09e-10 (above, as a variational value must).",
+      "The printed accuracy statement ('relative accuracy of order 10-6 for Lx <= 8', sources/2510.20063.txt:743-744) is the stated precision of this reference energy, a variational MPS value."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2510.20063.txt:737-744 as above; 820 \"2.0 0 -35.90725762\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_16_O_3",
+      "method": "block MPS alternating optimization (reference, bond dimension up to 5000)",
+      "energy": -50.18662388
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Against QMBL's ED (-50.18662388277763): printed − ED = 2.78e-9 (above, as a variational value must).",
+      "The printed accuracy statement ('relative accuracy of order 10-6 for Lx <= 8', sources/2510.20063.txt:743-744) is the stated precision of this reference energy, a variational MPS value."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2510.20063.txt:737-744 as above; 822 \"3.0 0 -50.18662388\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_16_O_3.5",
+      "method": "block MPS alternating optimization (reference, bond dimension up to 5000)",
+      "energy": -57.82436977
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "Against QMBL's ED (-57.8243697764037): printed − ED = 6.40e-9 (above, as a variational value must).",
+      "The printed accuracy statement ('relative accuracy of order 10-6 for Lx <= 8', sources/2510.20063.txt:743-744) is the stated precision of this reference energy, a variational MPS value."
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2510.20063.txt:737-744 as above; 818 \"3.5 0 -57.82436977\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_16_P_5_0.01",
+      "method": "arSJVMC (this work)",
+      "energy": -11.97996
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "equals QMBL's ED row -11.980026283 on this instance",
+      "equals the VarBench ED row -11.980026283 on this instance (the imported number)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1731-1735 \"System (L = 4, Np = 5) ... arSJVMC (this work) -11.97996(5) ... Lanczos ED (QuSpin) -11.980026\"",
+    "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (qmbl-ed-1)",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-26",
+    "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+    "source_entry": "retro-qmbl-evidence-2026-11-26/qmbl-ed-1 (keep-reword)"
+  },
+  {
+    "match": {
+      "instance": "tV/square_36_P_13_0.1",
+      "method": "arSJVMC (this work)",
+      "energy": -27.33199992
+    },
+    "field": "verified.second_read.note",
+    "edit": [
+      "equals QMBL's ED row -27.3405441595 on the instance",
+      "equals the VarBench ED row -27.3405441595 on the instance"
+    ],
+    "reported_as": "none (text field)",
+    "location": "sources/2210.05871.txt:1752 '-27.34054415'; stored -27.340544159534836 starts with it; Eq. (58) :1449-51",
     "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
     "conversion": "none (text field)",
     "checked_on": "2026-11-26",

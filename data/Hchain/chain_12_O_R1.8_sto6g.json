@@ -42,7 +42,7 @@
           "location": "Supporting Information Table S2, row H12, 1.8 Bohr block, column CMO (v2 layout text line 1154)",
           "reported_as": "−6.49092 (Ha, total; unit not printed, fixed by FCI agreement)",
           "conversion": "printed total in Ha incl. nuclear repulsion: −6.49092 Ha = -6.49092 Ha total; per atom −6.49092/12 = -0.54091000 (stored eps -0.54091)",
-          "note": "Instance Hchain/chain_12_O_R1.8_sto6g (open equidistant chain, R = 1.8 bohr, STO-6G, N_up = N_dn = 6) agrees with the source. Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals. bound_type variational: RBM NQS (alpha = 4) optimised with the SC scheme at selection cutoff 1e-5 (SI section 4); the paper's C2 test shows eq 12 and the variational eq 13 differ by < 1e-6 Ha at cutoff <= 1e-5, below the 1e-5 print precision. Deterministic selection: no sampling error, sigma null is right. method_detail could carry 'RBM alpha = 4, lambda = 1e-5, epsilon = 1e-5, canonical HF orbitals' (optional). QMBL pyscf FCI (fci/results.jsonl) -6.5042270 Ha; this row - FCI = 13.307 mHa. Journal version not reached (403), arXiv v2 only.",
+          "note": "Instance Hchain/chain_12_O_R1.8_sto6g (open equidistant chain, R = 1.8 bohr, STO-6G, N_up = N_dn = 6) agrees with the source. Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide. bound_type variational: RBM NQS (alpha = 4) optimised with the SC scheme at selection cutoff 1e-5 (SI section 4); the paper's C2 test shows eq 12 and the variational eq 13 differ by < 1e-6 Ha at cutoff <= 1e-5, below the 1e-5 print precision. Deterministic selection: no sampling error, sigma null is right. method_detail could carry 'RBM alpha = 4, lambda = 1e-5, epsilon = 1e-5, canonical HF orbitals' (optional). Printed FCI of the same table -6.50423 Ha (sources/2305.12776.txt Table S2); this row - printed FCI = +13.3100 mHa. Journal version not reached (403), arXiv v2 only.",
           "secondary_of": null,
           "source_entry": "h-p-2305-12776-c2#10 (qmbl-verify 2026-10-23/24, verified)"
         }
@@ -57,6 +57,38 @@
           "checked_on": "2026-10-20",
           "reason": "Deterministic, not a Monte Carlo estimate, as the track-3 reader recorded it (pass row `sampled`); the method string alone reads the other way (units.mjs, isSampled).",
           "source_entry": "passes/track3/sweep-rows-2026-10-20-hydrogen.json"
+        },
+        {
+          "field": "verified.second_read.note",
+          "edit": [
+            "QMBL pyscf FCI (fci/results.jsonl) -6.5042270 Ha; this row - FCI = 13.307 mHa",
+            "Printed FCI of the same table -6.50423 Ha (sources/2305.12776.txt Table S2); this row - printed FCI = +13.3100 mHa"
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/2305.12776.txt:1154 Table S2 H12 row; same table as the H10 cell that matches Motta (:1153 vs sources/1705.01608.txt:1256); caption :1145-46. No Motta cell for H12: relies on one convention per table",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "Instance Hchain/chain_12_O_R1.8_sto6g (open equidistant chain, R = 1.8 bohr, STO-6G, N_up = N_dn = 6) agrees with the source. Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals. bound_type variational: RBM NQS (alpha = 4) optimised with the SC scheme at selection cutoff 1e-5 (SI section 4); the paper's C2 test shows eq 12 and the variational eq 13 differ by < 1e-6 Ha at cutoff <= 1e-5, below the 1e-5 print precision. Deterministic selection: no sampling error, sigma null is right. method_detail could carry 'RBM alpha = 4, lambda = 1e-5, epsilon = 1e-5, canonical HF orbitals' (optional). QMBL pyscf FCI (fci/results.jsonl) -6.5042270 Ha; this row - FCI = 13.307 mHa. Journal version not reached (403), arXiv v2 only.",
+          "to": "Instance Hchain/chain_12_O_R1.8_sto6g (open equidistant chain, R = 1.8 bohr, STO-6G, N_up = N_dn = 6) agrees with the source. Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals. bound_type variational: RBM NQS (alpha = 4) optimised with the SC scheme at selection cutoff 1e-5 (SI section 4); the paper's C2 test shows eq 12 and the variational eq 13 differ by < 1e-6 Ha at cutoff <= 1e-5, below the 1e-5 print precision. Deterministic selection: no sampling error, sigma null is right. method_detail could carry 'RBM alpha = 4, lambda = 1e-5, epsilon = 1e-5, canonical HF orbitals' (optional). Printed FCI of the same table -6.50423 Ha (sources/2305.12776.txt Table S2); this row - printed FCI = +13.3100 mHa. Journal version not reached (403), arXiv v2 only."
+        },
+        {
+          "field": "verified.second_read.note",
+          "edit": [
+            "Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals",
+            "Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide"
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/2305.12776.txt:1154 Table S2 H12 row; same table as the H10 cell that matches Motta (:1153 vs sources/1705.01608.txt:1256); caption :1145-46. No Motta cell for H12: relies on one convention per table",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "Instance Hchain/chain_12_O_R1.8_sto6g (open equidistant chain, R = 1.8 bohr, STO-6G, N_up = N_dn = 6) agrees with the source. Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals. bound_type variational: RBM NQS (alpha = 4) optimised with the SC scheme at selection cutoff 1e-5 (SI section 4); the paper's C2 test shows eq 12 and the variational eq 13 differ by < 1e-6 Ha at cutoff <= 1e-5, below the 1e-5 print precision. Deterministic selection: no sampling error, sigma null is right. method_detail could carry 'RBM alpha = 4, lambda = 1e-5, epsilon = 1e-5, canonical HF orbitals' (optional). Printed FCI of the same table -6.50423 Ha (sources/2305.12776.txt Table S2); this row - printed FCI = +13.3100 mHa. Journal version not reached (403), arXiv v2 only.",
+          "to": "Instance Hchain/chain_12_O_R1.8_sto6g (open equidistant chain, R = 1.8 bohr, STO-6G, N_up = N_dn = 6) agrees with the source. Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide. bound_type variational: RBM NQS (alpha = 4) optimised with the SC scheme at selection cutoff 1e-5 (SI section 4); the paper's C2 test shows eq 12 and the variational eq 13 differ by < 1e-6 Ha at cutoff <= 1e-5, below the 1e-5 print precision. Deterministic selection: no sampling error, sigma null is right. method_detail could carry 'RBM alpha = 4, lambda = 1e-5, epsilon = 1e-5, canonical HF orbitals' (optional). Printed FCI of the same table -6.50423 Ha (sources/2305.12776.txt Table S2); this row - printed FCI = +13.3100 mHa. Journal version not reached (403), arXiv v2 only."
         }
       ]
     },
@@ -137,7 +169,7 @@
           "location": "Supporting Information Table S2, row H12, 1.8 Bohr block, column CCSD(T) (v2 layout text line 1154)",
           "reported_as": "−6.50387 (Ha, total; unit not printed, fixed by FCI agreement)",
           "conversion": "printed total in Ha incl. nuclear repulsion: −6.50387 Ha = -6.50387 Ha total; per atom −6.50387/12 = -0.54198917 (stored eps -0.5419891666666666)",
-          "note": "Instance Hchain/chain_12_O_R1.8_sto6g (open equidistant chain, R = 1.8 bohr, STO-6G, N_up = N_dn = 6) agrees with the source. Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals. Own PySCF calculation (SI section 1: 'Hartree-Fock (HF), coupled cluster with singles, doubles, and perturbatively corrected triples (CCSD(T)), and full configuration interaction (FCI) were utilized through the PySCF packages'); HF reference type (RHF/UHF) not stated. bound_type approximate per RULES 13.4 (CCSD(T) in track 3). QMBL pyscf FCI (fci/results.jsonl) -6.5042270 Ha; this row - FCI = 0.357 mHa. Journal version not reached (403), arXiv v2 only.",
+          "note": "Instance Hchain/chain_12_O_R1.8_sto6g (open equidistant chain, R = 1.8 bohr, STO-6G, N_up = N_dn = 6) agrees with the source. Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide. Own PySCF calculation (SI section 1: 'Hartree-Fock (HF), coupled cluster with singles, doubles, and perturbatively corrected triples (CCSD(T)), and full configuration interaction (FCI) were utilized through the PySCF packages'); HF reference type (RHF/UHF) not stated. bound_type approximate per RULES 13.4 (CCSD(T) in track 3). Printed FCI of the same table -6.50423 Ha (sources/2305.12776.txt Table S2); this row - printed FCI = +0.3600 mHa. Journal version not reached (403), arXiv v2 only.",
           "secondary_of": null,
           "source_entry": "h-p-2305-12776-c2#12 (qmbl-verify 2026-10-23/24, verified)"
         }
@@ -152,6 +184,38 @@
           "checked_on": "2026-10-20",
           "reason": "Deterministic, not a Monte Carlo estimate, as the track-3 reader recorded it (pass row `sampled`); the method string alone reads the other way (units.mjs, isSampled).",
           "source_entry": "passes/track3/sweep-rows-2026-10-20-hydrogen.json"
+        },
+        {
+          "field": "verified.second_read.note",
+          "edit": [
+            "QMBL pyscf FCI (fci/results.jsonl) -6.5042270 Ha; this row - FCI = 0.357 mHa",
+            "Printed FCI of the same table -6.50423 Ha (sources/2305.12776.txt Table S2); this row - printed FCI = +0.3600 mHa"
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/2305.12776.txt:1154 Table S2 H12 row; same table as the H10 cell that matches Motta (:1153 vs sources/1705.01608.txt:1256); caption :1145-46. No Motta cell for H12: relies on one convention per table",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "Instance Hchain/chain_12_O_R1.8_sto6g (open equidistant chain, R = 1.8 bohr, STO-6G, N_up = N_dn = 6) agrees with the source. Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals. Own PySCF calculation (SI section 1: 'Hartree-Fock (HF), coupled cluster with singles, doubles, and perturbatively corrected triples (CCSD(T)), and full configuration interaction (FCI) were utilized through the PySCF packages'); HF reference type (RHF/UHF) not stated. bound_type approximate per RULES 13.4 (CCSD(T) in track 3). QMBL pyscf FCI (fci/results.jsonl) -6.5042270 Ha; this row - FCI = 0.357 mHa. Journal version not reached (403), arXiv v2 only.",
+          "to": "Instance Hchain/chain_12_O_R1.8_sto6g (open equidistant chain, R = 1.8 bohr, STO-6G, N_up = N_dn = 6) agrees with the source. Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals. Own PySCF calculation (SI section 1: 'Hartree-Fock (HF), coupled cluster with singles, doubles, and perturbatively corrected triples (CCSD(T)), and full configuration interaction (FCI) were utilized through the PySCF packages'); HF reference type (RHF/UHF) not stated. bound_type approximate per RULES 13.4 (CCSD(T) in track 3). Printed FCI of the same table -6.50423 Ha (sources/2305.12776.txt Table S2); this row - printed FCI = +0.3600 mHa. Journal version not reached (403), arXiv v2 only."
+        },
+        {
+          "field": "verified.second_read.note",
+          "edit": [
+            "Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals",
+            "Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide"
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/2305.12776.txt:1154 Table S2 H12 row; same table as the H10 cell that matches Motta (:1153 vs sources/1705.01608.txt:1256); caption :1145-46. No Motta cell for H12: relies on one convention per table",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "Instance Hchain/chain_12_O_R1.8_sto6g (open equidistant chain, R = 1.8 bohr, STO-6G, N_up = N_dn = 6) agrees with the source. Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals. Own PySCF calculation (SI section 1: 'Hartree-Fock (HF), coupled cluster with singles, doubles, and perturbatively corrected triples (CCSD(T)), and full configuration interaction (FCI) were utilized through the PySCF packages'); HF reference type (RHF/UHF) not stated. bound_type approximate per RULES 13.4 (CCSD(T) in track 3). Printed FCI of the same table -6.50423 Ha (sources/2305.12776.txt Table S2); this row - printed FCI = +0.3600 mHa. Journal version not reached (403), arXiv v2 only.",
+          "to": "Instance Hchain/chain_12_O_R1.8_sto6g (open equidistant chain, R = 1.8 bohr, STO-6G, N_up = N_dn = 6) agrees with the source. Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide. Own PySCF calculation (SI section 1: 'Hartree-Fock (HF), coupled cluster with singles, doubles, and perturbatively corrected triples (CCSD(T)), and full configuration interaction (FCI) were utilized through the PySCF packages'); HF reference type (RHF/UHF) not stated. bound_type approximate per RULES 13.4 (CCSD(T) in track 3). Printed FCI of the same table -6.50423 Ha (sources/2305.12776.txt Table S2); this row - printed FCI = +0.3600 mHa. Journal version not reached (403), arXiv v2 only."
         }
       ]
     },
@@ -186,11 +250,45 @@
           "location": "Supporting Information Table S2, row H12, 1.8 Bohr block, column FCI (v2 layout text line 1154)",
           "reported_as": "−6.50423 (Ha, total; unit not printed, fixed by FCI agreement)",
           "conversion": "printed total in Ha incl. nuclear repulsion: −6.50423 Ha = -6.50423 Ha total; per atom −6.50423/12 = -0.54201917 (stored eps -0.5420191666666666)",
-          "note": "Instance Hchain/chain_12_O_R1.8_sto6g (open equidistant chain, R = 1.8 bohr, STO-6G, N_up = N_dn = 6) agrees with the source. Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals. Own PySCF FCI in STO-6G: exact per RULES 13.4. QMBL pyscf FCI (fci/results.jsonl) -6.5042270 Ha; this row - FCI = -0.003 mHa (printed 5-decimal rounding of QMBL's value). No other exact row on this instance in the sweep (the two H10 FCI cells of this table were correctly held as duplicates of Motta 2017's FCI). Journal version not reached (403), arXiv v2 only.",
+          "note": "Instance Hchain/chain_12_O_R1.8_sto6g (open equidistant chain, R = 1.8 bohr, STO-6G, N_up = N_dn = 6) agrees with the source. Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide. The paper's own PySCF FCI in STO-6G (SI section 1: 'full configuration interaction (FCI) were utilized through the PySCF packages'): exact per RULES 13.4. This row is the H12 FCI cell of Table S2, printed to 5 decimals. No other exact row on this instance in the sweep (the two H10 FCI cells of this table were correctly held as duplicates of Motta 2017's FCI). Journal version not reached (403), arXiv v2 only.",
           "secondary_of": null,
           "source_entry": "h-p-2305-12776-c2#13 (qmbl-verify 2026-10-23/24, verified)"
         }
-      }
+      },
+      "corrections": [
+        {
+          "field": "verified.second_read.note",
+          "edit": [
+            "Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals",
+            "Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide"
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/2305.12776.txt:1154 Table S2 H12 row; same table as the H10 cell that matches Motta (:1153 vs sources/1705.01608.txt:1256); caption :1145-46. No Motta cell for H12: relies on one convention per table",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "Instance Hchain/chain_12_O_R1.8_sto6g (open equidistant chain, R = 1.8 bohr, STO-6G, N_up = N_dn = 6) agrees with the source. Unit and nuclear repulsion settled: every FCI cell of Table S2 (H8/H10/H12 at 1.8 and 3.6 Bohr) equals QMBL's own pyscf FCI rounded to 5 decimals. Own PySCF FCI in STO-6G: exact per RULES 13.4. QMBL pyscf FCI (fci/results.jsonl) -6.5042270 Ha; this row - FCI = -0.003 mHa (printed 5-decimal rounding of QMBL's value). No other exact row on this instance in the sweep (the two H10 FCI cells of this table were correctly held as duplicates of Motta 2017's FCI). Journal version not reached (403), arXiv v2 only.",
+          "to": "Instance Hchain/chain_12_O_R1.8_sto6g (open equidistant chain, R = 1.8 bohr, STO-6G, N_up = N_dn = 6) agrees with the source. Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide. Own PySCF FCI in STO-6G: exact per RULES 13.4. QMBL pyscf FCI (fci/results.jsonl) -6.5042270 Ha; this row - FCI = -0.003 mHa (printed 5-decimal rounding of QMBL's value). No other exact row on this instance in the sweep (the two H10 FCI cells of this table were correctly held as duplicates of Motta 2017's FCI). Journal version not reached (403), arXiv v2 only."
+        },
+        {
+          "field": "verified.second_read.note",
+          "edit": [
+            "Own PySCF FCI in STO-6G: exact per RULES 13.4. QMBL pyscf FCI (fci/results.jsonl) -6.5042270 Ha; this row - FCI = -0.003 mHa (printed 5-decimal rounding of QMBL's value)",
+            "The paper's own PySCF FCI in STO-6G (SI section 1: 'full configuration interaction (FCI) were utilized through the PySCF packages'): exact per RULES 13.4. This row is the H12 FCI cell of Table S2, printed to 5 decimals"
+          ],
+          "reported_as": "none (text field)",
+          "location": "sources/2305.12776.txt:1154 Table S2 H12 row; same table as the H10 cell that matches Motta (:1153 vs sources/1705.01608.txt:1256); caption :1145-46. No Motta cell for H12: relies on one convention per table",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (recompute-digits-1)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)",
+          "from": "Instance Hchain/chain_12_O_R1.8_sto6g (open equidistant chain, R = 1.8 bohr, STO-6G, N_up = N_dn = 6) agrees with the source. Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide. Own PySCF FCI in STO-6G: exact per RULES 13.4. QMBL pyscf FCI (fci/results.jsonl) -6.5042270 Ha; this row - FCI = -0.003 mHa (printed 5-decimal rounding of QMBL's value). No other exact row on this instance in the sweep (the two H10 FCI cells of this table were correctly held as duplicates of Motta 2017's FCI). Journal version not reached (403), arXiv v2 only.",
+          "to": "Instance Hchain/chain_12_O_R1.8_sto6g (open equidistant chain, R = 1.8 bohr, STO-6G, N_up = N_dn = 6) agrees with the source. Unit and nuclear repulsion are not printed. The H10 FCI cells of Table S2 (-5.42439 at 1.8 bohr, -4.81870 at 3.6 bohr; sources/2305.12776.txt:1153) equal 10 x Motta et al.'s printed STO-6G FCI per atom (-0.542439, -0.481870; sources/1705.01608.txt:1256, :1261; Hartree and bohr, :1238); Motta is ref. 40 of this paper (:597-600). The convention is applied table-wide. The paper's own PySCF FCI in STO-6G (SI section 1: 'full configuration interaction (FCI) were utilized through the PySCF packages'): exact per RULES 13.4. This row is the H12 FCI cell of Table S2, printed to 5 decimals. No other exact row on this instance in the sweep (the two H10 FCI cells of this table were correctly held as duplicates of Motta 2017's FCI). Journal version not reached (403), arXiv v2 only."
+        }
+      ]
     }
   ]
 }

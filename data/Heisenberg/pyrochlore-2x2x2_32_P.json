@@ -192,7 +192,7 @@
           "location": "Table I, row 'Cluster 32', column 'GS energy' (identical in v1 and v2)",
           "reported_as": "−0.5168 per site (TeX: '32& $-0.5168$ & 0.0318 & 0.6872'), units of J, S.S; no error bar printed",
           "conversion": "-0.5168 x 4 x 32 = -66.1504 (agrees); no sigma in the source (stored null, correct)",
-          "note": "Second reading from the source. Cluster 2a1, 2a2, 2a3 = pyrochlore-2x2x2_32_P, the same cluster QMBL diagonalised (StdFace W = L = H = 2, checks/pyrochlore-32-ed): its triplet gap 0.6872005 reproduces the paper's 0.6872, which also settles M9. Extrapolated (chi -> infinity), bound_type right. Against the fixed exact row (-66.15792523719963 = -0.51685879 per site, qmbl 9d68f63) the printed -0.5168 is the exact energy truncated to four decimals (rounding would give -0.5169): 5.9e-5 per site, 0.0075 total above it, harmless for an extrapolated row. The row's stored 'verified' note compares it with VarBench's removed -0.5168078 exact value; that comparison is out of date since the fix, the data are not. Own number. No duplicate on the instance (rows: VarBench RBM -65.949, VarBench mVMC -66.082, QMBL exact -66.157925, this).",
+          "note": "Second reading from the source. Cluster 2a1, 2a2, 2a3 = pyrochlore-2x2x2_32_P, the paper's 'cluster c1 c2 c3: 32 | 2a1 | 2a2 | 2a3' (sources/2010.03563.txt:461) with periodic boundary conditions (:120, cf. Table IV) and H = J sum S_i.S_j, S = 1/2, J = 1 (:105-108). Extrapolated (chi -> infinity), bound_type right. The stored value is the printed -0.5168 per site (sources/2010.03563.txt:126, '32 -0.5168') times 128 = -66.1504. The row's stored 'verified' note compares it with VarBench's removed -0.5168078 exact value; that comparison is out of date since the fix, the data are not. Own number. No duplicate on the instance (rows: VarBench RBM -65.949, VarBench mVMC -66.082, this).",
           "source_entry": "VP15-hubbard-j1j2-heisenberg#54 (qmbl-verify 2026-09-29; reader verification, not in a skeptic's scope; applied by ruling A2, 2026-10-02)"
         },
         "journal_read": {
@@ -221,7 +221,57 @@
         "scope": "row",
         "confidence": "high",
         "note": "bond_dimension = maximal SU(2) bond dimension stated for the 32-site cluster (Fig. 5 caption; also the paper-wide maximum of 20000 SU(2) states ≈ ≳80000 U(1) states); the row energy is the χ→∞ extrapolation (linear in the two-site variance) of the finite-χ series up to that value. No wall-clock, core count, memory or hours stated anywhere (main text, Figs. 1-8 captions, Tables I-IV, Appendices A-D); only the qualitative remarks quoted. Code: SyTen."
-      }
+      },
+      "corrections": [
+        {
+          "field": "verified.second_read.note",
+          "edit": [
+            "the same cluster QMBL diagonalised (StdFace W = L = H = 2, checks/pyrochlore-32-ed): its triplet gap 0.6872005 reproduces the paper's 0.6872, which also settles M9.",
+            "the paper's 'cluster c1 c2 c3: 32 | 2a1 | 2a2 | 2a3' (sources/2010.03563.txt:461) with periodic boundary conditions (:120, cf. Table IV) and H = J sum S_i.S_j, S = 1/2, J = 1 (:105-108)."
+          ],
+          "reported_as": "none (text field)",
+          "location": "2010.03563.txt:461 'cluster c1 c2 c3: 32 | 2a1 | 2a2 | 2a3'; :120 'periodic boundary conditions (cf. Tab. IV)'; :105-108 'H = J Σ S_i·S_j' S = 1/2; :126 '32 −0.5168'",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)",
+          "from": "Second reading from the source. Cluster 2a1, 2a2, 2a3 = pyrochlore-2x2x2_32_P, the same cluster QMBL diagonalised (StdFace W = L = H = 2, checks/pyrochlore-32-ed): its triplet gap 0.6872005 reproduces the paper's 0.6872, which also settles M9. Extrapolated (chi -> infinity), bound_type right. Against the fixed exact row (-66.15792523719963 = -0.51685879 per site, qmbl 9d68f63) the printed -0.5168 is the exact energy truncated to four decimals (rounding would give -0.5169): 5.9e-5 per site, 0.0075 total above it, harmless for an extrapolated row. The row's stored 'verified' note compares it with VarBench's removed -0.5168078 exact value; that comparison is out of date since the fix, the data are not. Own number. No duplicate on the instance (rows: VarBench RBM -65.949, VarBench mVMC -66.082, QMBL exact -66.157925, this).",
+          "to": "Second reading from the source. Cluster 2a1, 2a2, 2a3 = pyrochlore-2x2x2_32_P, the paper's 'cluster c1 c2 c3: 32 | 2a1 | 2a2 | 2a3' (sources/2010.03563.txt:461) with periodic boundary conditions (:120, cf. Table IV) and H = J sum S_i.S_j, S = 1/2, J = 1 (:105-108). Extrapolated (chi -> infinity), bound_type right. Against the fixed exact row (-66.15792523719963 = -0.51685879 per site, qmbl 9d68f63) the printed -0.5168 is the exact energy truncated to four decimals (rounding would give -0.5169): 5.9e-5 per site, 0.0075 total above it, harmless for an extrapolated row. The row's stored 'verified' note compares it with VarBench's removed -0.5168078 exact value; that comparison is out of date since the fix, the data are not. Own number. No duplicate on the instance (rows: VarBench RBM -65.949, VarBench mVMC -66.082, QMBL exact -66.157925, this)."
+        },
+        {
+          "field": "verified.second_read.note",
+          "edit": [
+            "Against the fixed exact row (-66.15792523719963 = -0.51685879 per site, qmbl 9d68f63) the printed -0.5168 is the exact energy truncated to four decimals (rounding would give -0.5169): 5.9e-5 per site, 0.0075 total above it, harmless for an extrapolated row.",
+            "The stored value is the printed -0.5168 per site (sources/2010.03563.txt:126, '32 -0.5168') times 128 = -66.1504."
+          ],
+          "reported_as": "none (text field)",
+          "location": "2010.03563.txt:461 'cluster c1 c2 c3: 32 | 2a1 | 2a2 | 2a3'; :120 'periodic boundary conditions (cf. Tab. IV)'; :105-108 'H = J Σ S_i·S_j' S = 1/2; :126 '32 −0.5168'",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)",
+          "from": "Second reading from the source. Cluster 2a1, 2a2, 2a3 = pyrochlore-2x2x2_32_P, the paper's 'cluster c1 c2 c3: 32 | 2a1 | 2a2 | 2a3' (sources/2010.03563.txt:461) with periodic boundary conditions (:120, cf. Table IV) and H = J sum S_i.S_j, S = 1/2, J = 1 (:105-108). Extrapolated (chi -> infinity), bound_type right. Against the fixed exact row (-66.15792523719963 = -0.51685879 per site, qmbl 9d68f63) the printed -0.5168 is the exact energy truncated to four decimals (rounding would give -0.5169): 5.9e-5 per site, 0.0075 total above it, harmless for an extrapolated row. The row's stored 'verified' note compares it with VarBench's removed -0.5168078 exact value; that comparison is out of date since the fix, the data are not. Own number. No duplicate on the instance (rows: VarBench RBM -65.949, VarBench mVMC -66.082, QMBL exact -66.157925, this).",
+          "to": "Second reading from the source. Cluster 2a1, 2a2, 2a3 = pyrochlore-2x2x2_32_P, the paper's 'cluster c1 c2 c3: 32 | 2a1 | 2a2 | 2a3' (sources/2010.03563.txt:461) with periodic boundary conditions (:120, cf. Table IV) and H = J sum S_i.S_j, S = 1/2, J = 1 (:105-108). Extrapolated (chi -> infinity), bound_type right. The stored value is the printed -0.5168 per site (sources/2010.03563.txt:126, '32 -0.5168') times 128 = -66.1504. The row's stored 'verified' note compares it with VarBench's removed -0.5168078 exact value; that comparison is out of date since the fix, the data are not. Own number. No duplicate on the instance (rows: VarBench RBM -65.949, VarBench mVMC -66.082, QMBL exact -66.157925, this)."
+        },
+        {
+          "field": "verified.second_read.note",
+          "edit": [
+            "(rows: VarBench RBM -65.949, VarBench mVMC -66.082, QMBL exact -66.157925, this)",
+            "(rows: VarBench RBM -65.949, VarBench mVMC -66.082, this)"
+          ],
+          "reported_as": "none (text field)",
+          "location": "2010.03563.txt:461 'cluster c1 c2 c3: 32 | 2a1 | 2a2 | 2a3'; :120 'periodic boundary conditions (cf. Tab. IV)'; :105-108 'H = J Σ S_i·S_j' S = 1/2; :126 '32 −0.5168'",
+          "version_read": "printed evidence as cited by the retro-qmbl-evidence-2026-11-26 classifier (diag-misc-2)",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-26",
+          "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
+          "source_entry": "retro-qmbl-evidence-2026-11-26/diag-misc-2 (keep-reword)",
+          "from": "Second reading from the source. Cluster 2a1, 2a2, 2a3 = pyrochlore-2x2x2_32_P, the paper's 'cluster c1 c2 c3: 32 | 2a1 | 2a2 | 2a3' (sources/2010.03563.txt:461) with periodic boundary conditions (:120, cf. Table IV) and H = J sum S_i.S_j, S = 1/2, J = 1 (:105-108). Extrapolated (chi -> infinity), bound_type right. The stored value is the printed -0.5168 per site (sources/2010.03563.txt:126, '32 -0.5168') times 128 = -66.1504. The row's stored 'verified' note compares it with VarBench's removed -0.5168078 exact value; that comparison is out of date since the fix, the data are not. Own number. No duplicate on the instance (rows: VarBench RBM -65.949, VarBench mVMC -66.082, QMBL exact -66.157925, this).",
+          "to": "Second reading from the source. Cluster 2a1, 2a2, 2a3 = pyrochlore-2x2x2_32_P, the paper's 'cluster c1 c2 c3: 32 | 2a1 | 2a2 | 2a3' (sources/2010.03563.txt:461) with periodic boundary conditions (:120, cf. Table IV) and H = J sum S_i.S_j, S = 1/2, J = 1 (:105-108). Extrapolated (chi -> infinity), bound_type right. The stored value is the printed -0.5168 per site (sources/2010.03563.txt:126, '32 -0.5168') times 128 = -66.1504. The row's stored 'verified' note compares it with VarBench's removed -0.5168078 exact value; that comparison is out of date since the fix, the data are not. Own number. No duplicate on the instance (rows: VarBench RBM -65.949, VarBench mVMC -66.082, this)."
+        }
+      ]
     },
     {
       "energy": -65.6384,
