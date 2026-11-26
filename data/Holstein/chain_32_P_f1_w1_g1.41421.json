@@ -47,6 +47,32 @@
           "source_entry": "SP1-holstein#32 (qmbl-verify 2026-11-18)"
         }
       }
+    },
+    {
+      "energy": -2.99833,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 1,
+      "einf": null,
+      "v_score": null,
+      "method": "variational state",
+      "ansatz": null,
+      "method_detail": "superposition of large- and small-polaron Bloch states, k = 0",
+      "method_as_published": "Variational, superposition of large- and small-polaron Bloch states (k = 0)",
+      "family": "other",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "V. Cataudella, G. De Filippis & G. Iadonisi, Polaron features of the one-dimensional Holstein molecular crystal model, Phys. Rev. B 62, 1496 (2000), doi:10.1103/PhysRevB.62.1496, arXiv:cond-mat/0011180",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:cond-mat/0011180 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "-2.99833",
+        "note": "Table 1, row 'This paper (N = 32), column g = sqrt(2)' (arXiv line 637, journal Table I); version read: arXiv text (sources/cond-mat-0011180.txt) and the journal PDF text layer (PRB 62, 1496, qmbl-runs/qmbl-worklist/2026-11-24-holstein/txt/0011180-prb.txt), Table I agrees digit for digit | Eq. (1) (arXiv lines 155-158): H = -t sum_<i,j> c+_i c_j + w0 sum_q a+_q a_q + (w0 g/sqrt(N)) sum_{i,q} c+_i c_i [e^{iqR_i} a_q + h.c.], one electron, no zero-point term; in real space the coupling is w0 g n_i (b+_i + b_i), so the instance's g is w0 g = g at w0 = 1. Table 1 caption (arXiv lines 449-453): w0/t = 1, 'energies ... are given in units of w0', so t = w0 = 1 and the energy is a total in units of t. g = 1 and g = sqrt(2) are the two column headings. N is the number of lattice sites (Eq. (1) carries 1/sqrt(N); the paper counts parameters 'depends on the number of lattice sites'). Implied, not stated (RULES.md 8): periodic boundaries. Evidence: (1) the trial state is a translationally invariant Bloch state |psi_k> = N^(-1/2) sum_n e^{ikR_n}|psi_k(R_n)> (Eq. (2), lines 161-168) with phonon wave vectors q of the N-site lattice (Eq. (1)), and the table energy is the k = 0 ground state (line 'we will limit our attention to the one-dimensional ground state (k = 0)'); translation by one site is a symmetry of a finite chain only with periodic closure, so open ends exclude this ansatz; (2) the same Table 1 lists N = 32 and N = 6 rows of other methods (GLVM of Romero et al., DMRG, EDSC) at the same g, so the N of this paper's rows is the site count of the lattice those methods are quoted for. Only the periodic reading fits a k-resolved energy of a finite chain. Bound type: the energy is the minimum of <psi|H|psi>/<psi|psi> over the variational parameters (line 'The minimization of the quantity <psi_k|H|psi_k>/<psi_k|psi_k>'), and the text states it lies 'slightly upper than the DMRG energies', so variational. No phonon truncation (the Bloch-state ansatz uses coherent-state phonon functions). The minus sign is a leading '2' in the OCR text layer of the journal PDF (txt/0011180-prb.txt, line 160-166); the digits agree with the arXiv text.",
+        "secondary_of": null
+      }
     }
   ]
 }

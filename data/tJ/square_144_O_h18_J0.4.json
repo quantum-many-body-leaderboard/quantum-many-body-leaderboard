@@ -1,0 +1,59 @@
+{
+  "model": "tJ",
+  "lattice": "square",
+  "n_sites": 144,
+  "boundary": "O",
+  "params": {
+    "t": 1,
+    "J": 0.4,
+    "N_up": 63,
+    "N_dn": 63,
+    "nn_term": true
+  },
+  "cluster": "12 x 12 square lattice, open boundaries (arXiv:1908.10000, line 79; sizes L1 x L2 of Table S2 in the SI)",
+  "instance_id": "tJ/square_144_O_h18_J0.4",
+  "rows": [
+    {
+      "energy": -90.76608,
+      "sigma": 0.00144,
+      "energy_variance": null,
+      "dof": 126,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "fPEPS",
+      "method_detail": "gradient optimisation, contraction dimension Dc = 56",
+      "method_as_published": "E_fPEPS (D = 12, Dc = 56)",
+      "family": "tensor network",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Dong, Wang, Han, Yang & He, Stable diagonal stripes in the t-J model at n_h = 1/8 doping from fPEPS calculations, npj Quantum Mater. 5, 28 (2020), doi:10.1038/s41535-020-0226-4, arXiv:1908.10000",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:1908.10000 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "-0.63032(1)",
+        "note": "journal Supplementary Information, Table S2, row 12×12; the Table S2 caption: 'ground state energies of t-J model at n_h=1/8 doping with t=1, J/t=0.4'; Dc = 56 and D = 12 from SI Sec. A; version read: the journal's Supplementary Information (text in sources/1908.10000-si.txt) and the arXiv text (sources/1908.10000.txt) | Eq. (1) of the main text: H = -t sum (c+c + H.c.) + J sum (S_i.S_j - n_i n_j / 4), t = 1, J/t = 0.4, 'Double occupations are not allowed', open boundary conditions ('In this work, open boundary conditions (BC) are used', arXiv text line 79). 12x12 lattice at n_h = 1/8 gives 18 holes and 126 electrons. Per site: Implied, not stated (RULES.md 8): Table S2 gives no 'per site' label, but its infinity row (-0.67036) is the extrapolation in sqrt(L1 L2) of the same column, and the main text turns the extrapolated per-site E_inf = -0.6701 into the printed hole energy -1.619 through E_hole = [E(n_h) - E0]/n_h with E0 = -0.467775 (zero doping, per site): (-0.6701 + 0.467775)/0.125 = -1.6186. Only per-site values fit; the 4x4 row of the same column (-0.56428(2)) is already on the site as per site and equals the printed per-site comparison with E_ED = -0.56436. Electron split N_up = N_dn per instance (RULES.md 2.1); the source states only that U(1) conserves the electron number.",
+        "secondary_of": null
+      },
+      "compute": {
+        "parameters": null,
+        "gpu_hours": null,
+        "device": null,
+        "n_devices": null,
+        "samples": null,
+        "wall_clock": null,
+        "cpu_core_hours": null,
+        "bond_dimension": 12,
+        "iterations": null,
+        "reported_as": "method string: \"E_fPEPS (D = 12, Dc = 56)\"",
+        "source": "the row's published method string (scripts/method_names.mjs, 2026-09-17)",
+        "scope": "row",
+        "confidence": "high",
+        "note": "Only the numbers the method string states; nothing else about this run's cost is recorded."
+      }
+    }
+  ]
+}

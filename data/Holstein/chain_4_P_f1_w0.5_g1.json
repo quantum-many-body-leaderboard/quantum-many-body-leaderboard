@@ -155,6 +155,32 @@
           "source_entry": "SP1-holstein#7 (qmbl-verify 2026-11-18)"
         }
       }
+    },
+    {
+      "energy": -2.8343,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 1,
+      "einf": null,
+      "v_score": null,
+      "method": "ED",
+      "ansatz": null,
+      "method_detail": "",
+      "method_as_published": "ED",
+      "family": "other",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "F. Marsiglio, ED data (Physica C 244, 21 (1995), Ref. [5]; the acknowledgements thank F. Marsiglio for providing his ED data), printed in Ohgoe & Imada, Variational Monte Carlo method for electron-phonon coupled systems, Phys. Rev. B 89, 195139 (2014), Table I, doi:10.1103/PhysRevB.89.195139, arXiv:1403.4150",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "secondary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:1403.4150 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "-2.8343",
+        "note": "Table I, column ED (sources/1403.4150.txt line 412, caption lines 414-417: 'ED ground-state energy[5] at (Ne, N, U/t, omega/t, lambda) = (1, 4, 0, 0.5, 1)'); Ref. [5] = Marsiglio, Physica C 244, 21 (1995) (line 580); acknowledgements line 559. The cited paper plots its energies (Fig. 1) and does not print this digit string (journal scan read 2026-11-24, qmbl-worklist/2026-11-24-holstein/HELD.md), so the number exists only in the quoting paper as data supplied by the author. Version read: arXiv text; the journal text of PRB 89, 195139 gives the same Table I (chain_4_P_f1_w0.5_g1 rows verified 2026-11-18). | Eq. (34), lines 331-338: H = -t sum (c+c + h.c.) + U sum n_up n_dn - g sum (b+_i + b_i) n_i + omega sum b+_i b_i, coupling to n_i, no zero-point term; 'one-dimensional system with N = 4 sites under the periodic boundary condition' (line 341); (Ne, N, U/t, omega/t, lambda) = (1, 4, 0, 0.5, 1) (lines 415-416), lambda = g^2/(2 t omega) (line 356), so g = 1; one electron, so U drops out and spinless f1 is the same problem. Total energy in units of t; eps = -2.8343 / 4. No conversion (coupling to n_i, no shift for the instance's own form). Implied, not stated (RULES.md 8): the ED energy zero has no oscillator zero-point term. The same table prints VMC values of the Eq. (34) Hamiltonian, -2.501 to -2.796, 0.04 to 0.33 above the ED number, while a zero-point term would shift the ED number by +N omega/2 = +1.0; the same paper's Fig. 1 plots ED and VMC on one axis and states 'good agreement ... for large lambda'. Only the zero-point-free reading fits.",
+        "secondary_of": "arXiv:1403.4150"
+      }
     }
   ]
 }

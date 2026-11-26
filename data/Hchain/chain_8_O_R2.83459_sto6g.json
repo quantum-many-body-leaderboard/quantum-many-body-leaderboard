@@ -62,6 +62,338 @@
           "source_entry": "h-p-1911-05163#3 (qmbl-verify 2026-10-23/24, correction; skeptic upheld)"
         }
       ]
+    },
+    {
+      "energy": -4.017108,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": null,
+      "v_score": null,
+      "method": "QK",
+      "ansatz": null,
+      "method_detail": "Hartree-Fock reference, 4 Krylov states, exact time evolution",
+      "method_as_published": "QK [single determinant (Hartree-Fock reference), N = 4 Krylov basis states, dt = 0.5 a.u., exact time evolution]",
+      "family": "other",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "Nicholas H. Stair, Renke Huang, Francesco A. Evangelista, A Multireference Quantum Krylov Algorithm for Strongly Correlated Electrons, Journal of Chemical Theory and Computation 16, 2236-2245 (2020), arXiv:1911.05163, doi:10.1021/acs.jctc.9b01125",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:1911.05163 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "−4.017108 Eh (total)",
+        "note": "Table 1, block H8, column E_QK, N = 4; version read: arXiv text (sources/1911.05163.txt; journal version J. Chem. Theory Comput. 16, 2236 not reached), 2026-11-26 | Tables 1 and 2 captions: 'Ground-state energies (in Eh)' of H6 and H8 'at a site-site distance of 1.5 A'; Section 3: 'restricted Hartree-Fock (RHF) orbitals generated with Psi4 using a minimal (STO-6G) basis'. Same table and instance as the filed FCI rows (-3.020198, -4.028152), so the same convention (total energy). Implied, not stated (RULES.md 8): open molecule. The text uses the D2h point group and orbital labels 1ag, 2ag, 3ag, 1b1u, 2b1u, 3b1u (Eq. 17 and the lines after it), a molecular symmetry; no periodic cell is mentioned. bound_type variational: the paper writes 'Variational minimization of the energy of the state Psi leads to the following generalized eigenvalue problem' (H c = S c E), a Rayleigh-Ritz energy in the space of the Krylov states; no printed value lies below the FCI value of its table. sCI is defined as FCI determinants selected by coefficient, without a perturbative correction, and ADAPT-VQE is a parameterised circuit (RULES.md 13.4). Conversion: per atom = value / N atoms; R = 1.5 A is the instance R = 2.834589 bohr of the filed FCI rows. | reader confidence medium",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -4.017108,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": null,
+      "v_score": null,
+      "method": "MRSQK",
+      "ansatz": null,
+      "method_detail": "4 Krylov states, exact time evolution",
+      "method_as_published": "MRSQK [N = 4 Krylov basis states (s = 3, dt = 0.5 a.u.), exact time evolution (m = inf)]",
+      "family": "other",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "Nicholas H. Stair, Renke Huang, Francesco A. Evangelista, A Multireference Quantum Krylov Algorithm for Strongly Correlated Electrons, Journal of Chemical Theory and Computation 16, 2236-2245 (2020), arXiv:1911.05163, doi:10.1021/acs.jctc.9b01125",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:1911.05163 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "−4.017108 Eh (total)",
+        "note": "Table 1, block H8, column E_MRSQK, N = 4; version read: arXiv text (sources/1911.05163.txt; journal version J. Chem. Theory Comput. 16, 2236 not reached), 2026-11-26 | Tables 1 and 2 captions: 'Ground-state energies (in Eh)' of H6 and H8 'at a site-site distance of 1.5 A'; Section 3: 'restricted Hartree-Fock (RHF) orbitals generated with Psi4 using a minimal (STO-6G) basis'. Same table and instance as the filed FCI rows (-3.020198, -4.028152), so the same convention (total energy). Implied, not stated (RULES.md 8): open molecule. The text uses the D2h point group and orbital labels 1ag, 2ag, 3ag, 1b1u, 2b1u, 3b1u (Eq. 17 and the lines after it), a molecular symmetry; no periodic cell is mentioned. bound_type variational: the paper writes 'Variational minimization of the energy of the state Psi leads to the following generalized eigenvalue problem' (H c = S c E), a Rayleigh-Ritz energy in the space of the Krylov states; no printed value lies below the FCI value of its table. sCI is defined as FCI determinants selected by coefficient, without a perturbative correction, and ADAPT-VQE is a parameterised circuit (RULES.md 13.4). Conversion: per atom = value / N atoms; R = 1.5 A is the instance R = 2.834589 bohr of the filed FCI rows. | reader confidence medium",
+        "secondary_of": null
+      },
+      "sampled": false,
+      "corrections": [
+        {
+          "field": "sampled",
+          "to": false,
+          "reported_as": "−4.017108 Eh (total)",
+          "location": "Table 1, block H8, column E_MRSQK, N = 4; version read: arXiv text (sources/1911.05163.txt; journal version J. Chem. Theory Comput. 16, 2236 not reached), 2026-11-26",
+          "checked_on": "2026-11-26",
+          "reason": "Deterministic, not a Monte Carlo estimate, as the track-3 reader recorded it (pass row `sampled`); the method string alone reads the other way (units.mjs, isSampled).",
+          "source_entry": "passes/track3/sweep-rows-2026-11-26-hydrogen.json"
+        }
+      ]
+    },
+    {
+      "energy": -4.026563,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": null,
+      "v_score": null,
+      "method": "QK",
+      "ansatz": null,
+      "method_detail": "Hartree-Fock reference, 8 Krylov states, exact time evolution",
+      "method_as_published": "QK [single determinant (Hartree-Fock reference), N = 8 Krylov basis states, dt = 0.5 a.u., exact time evolution]",
+      "family": "other",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "Nicholas H. Stair, Renke Huang, Francesco A. Evangelista, A Multireference Quantum Krylov Algorithm for Strongly Correlated Electrons, Journal of Chemical Theory and Computation 16, 2236-2245 (2020), arXiv:1911.05163, doi:10.1021/acs.jctc.9b01125",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:1911.05163 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "−4.026563 Eh (total)",
+        "note": "Table 1, block H8, column E_QK, N = 8; version read: arXiv text (sources/1911.05163.txt; journal version J. Chem. Theory Comput. 16, 2236 not reached), 2026-11-26 | Tables 1 and 2 captions: 'Ground-state energies (in Eh)' of H6 and H8 'at a site-site distance of 1.5 A'; Section 3: 'restricted Hartree-Fock (RHF) orbitals generated with Psi4 using a minimal (STO-6G) basis'. Same table and instance as the filed FCI rows (-3.020198, -4.028152), so the same convention (total energy). Implied, not stated (RULES.md 8): open molecule. The text uses the D2h point group and orbital labels 1ag, 2ag, 3ag, 1b1u, 2b1u, 3b1u (Eq. 17 and the lines after it), a molecular symmetry; no periodic cell is mentioned. bound_type variational: the paper writes 'Variational minimization of the energy of the state Psi leads to the following generalized eigenvalue problem' (H c = S c E), a Rayleigh-Ritz energy in the space of the Krylov states; no printed value lies below the FCI value of its table. sCI is defined as FCI determinants selected by coefficient, without a perturbative correction, and ADAPT-VQE is a parameterised circuit (RULES.md 13.4). Conversion: per atom = value / N atoms; R = 1.5 A is the instance R = 2.834589 bohr of the filed FCI rows. | reader confidence medium",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -4.024268,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": null,
+      "v_score": null,
+      "method": "MRSQK",
+      "ansatz": null,
+      "method_detail": "8 Krylov states, exact time evolution",
+      "method_as_published": "MRSQK [N = 8 Krylov basis states (s = 3, dt = 0.5 a.u.), exact time evolution (m = inf)]",
+      "family": "other",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "Nicholas H. Stair, Renke Huang, Francesco A. Evangelista, A Multireference Quantum Krylov Algorithm for Strongly Correlated Electrons, Journal of Chemical Theory and Computation 16, 2236-2245 (2020), arXiv:1911.05163, doi:10.1021/acs.jctc.9b01125",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:1911.05163 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "−4.024268 Eh (total)",
+        "note": "Table 1, block H8, column E_MRSQK, N = 8; version read: arXiv text (sources/1911.05163.txt; journal version J. Chem. Theory Comput. 16, 2236 not reached), 2026-11-26 | Tables 1 and 2 captions: 'Ground-state energies (in Eh)' of H6 and H8 'at a site-site distance of 1.5 A'; Section 3: 'restricted Hartree-Fock (RHF) orbitals generated with Psi4 using a minimal (STO-6G) basis'. Same table and instance as the filed FCI rows (-3.020198, -4.028152), so the same convention (total energy). Implied, not stated (RULES.md 8): open molecule. The text uses the D2h point group and orbital labels 1ag, 2ag, 3ag, 1b1u, 2b1u, 3b1u (Eq. 17 and the lines after it), a molecular symmetry; no periodic cell is mentioned. bound_type variational: the paper writes 'Variational minimization of the energy of the state Psi leads to the following generalized eigenvalue problem' (H c = S c E), a Rayleigh-Ritz energy in the space of the Krylov states; no printed value lies below the FCI value of its table. sCI is defined as FCI determinants selected by coefficient, without a perturbative correction, and ADAPT-VQE is a parameterised circuit (RULES.md 13.4). Conversion: per atom = value / N atoms; R = 1.5 A is the instance R = 2.834589 bohr of the filed FCI rows. | reader confidence medium",
+        "secondary_of": null
+      },
+      "sampled": false,
+      "corrections": [
+        {
+          "field": "sampled",
+          "to": false,
+          "reported_as": "−4.024268 Eh (total)",
+          "location": "Table 1, block H8, column E_MRSQK, N = 8; version read: arXiv text (sources/1911.05163.txt; journal version J. Chem. Theory Comput. 16, 2236 not reached), 2026-11-26",
+          "checked_on": "2026-11-26",
+          "reason": "Deterministic, not a Monte Carlo estimate, as the track-3 reader recorded it (pass row `sampled`); the method string alone reads the other way (units.mjs, isSampled).",
+          "source_entry": "passes/track3/sweep-rows-2026-11-26-hydrogen.json"
+        }
+      ]
+    },
+    {
+      "energy": -4.028,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": null,
+      "v_score": null,
+      "method": "QK",
+      "ansatz": null,
+      "method_detail": "Hartree-Fock reference, 12 Krylov states, exact time evolution",
+      "method_as_published": "QK [single determinant (Hartree-Fock reference), N = 12 Krylov basis states, dt = 0.5 a.u., exact time evolution]",
+      "family": "other",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "Nicholas H. Stair, Renke Huang, Francesco A. Evangelista, A Multireference Quantum Krylov Algorithm for Strongly Correlated Electrons, Journal of Chemical Theory and Computation 16, 2236-2245 (2020), arXiv:1911.05163, doi:10.1021/acs.jctc.9b01125",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:1911.05163 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "−4.028000 Eh (total)",
+        "note": "Table 1, block H8, column E_QK, N = 12; version read: arXiv text (sources/1911.05163.txt; journal version J. Chem. Theory Comput. 16, 2236 not reached), 2026-11-26 | Tables 1 and 2 captions: 'Ground-state energies (in Eh)' of H6 and H8 'at a site-site distance of 1.5 A'; Section 3: 'restricted Hartree-Fock (RHF) orbitals generated with Psi4 using a minimal (STO-6G) basis'. Same table and instance as the filed FCI rows (-3.020198, -4.028152), so the same convention (total energy). Implied, not stated (RULES.md 8): open molecule. The text uses the D2h point group and orbital labels 1ag, 2ag, 3ag, 1b1u, 2b1u, 3b1u (Eq. 17 and the lines after it), a molecular symmetry; no periodic cell is mentioned. bound_type variational: the paper writes 'Variational minimization of the energy of the state Psi leads to the following generalized eigenvalue problem' (H c = S c E), a Rayleigh-Ritz energy in the space of the Krylov states; no printed value lies below the FCI value of its table. sCI is defined as FCI determinants selected by coefficient, without a perturbative correction, and ADAPT-VQE is a parameterised circuit (RULES.md 13.4). Conversion: per atom = value / N atoms; R = 1.5 A is the instance R = 2.834589 bohr of the filed FCI rows. | reader confidence medium",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -4.025894,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": null,
+      "v_score": null,
+      "method": "MRSQK",
+      "ansatz": null,
+      "method_detail": "12 Krylov states, exact time evolution",
+      "method_as_published": "MRSQK [N = 12 Krylov basis states (s = 3, dt = 0.5 a.u.), exact time evolution (m = inf)]",
+      "family": "other",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "Nicholas H. Stair, Renke Huang, Francesco A. Evangelista, A Multireference Quantum Krylov Algorithm for Strongly Correlated Electrons, Journal of Chemical Theory and Computation 16, 2236-2245 (2020), arXiv:1911.05163, doi:10.1021/acs.jctc.9b01125",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:1911.05163 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "−4.025894 Eh (total)",
+        "note": "Table 1, block H8, column E_MRSQK, N = 12; version read: arXiv text (sources/1911.05163.txt; journal version J. Chem. Theory Comput. 16, 2236 not reached), 2026-11-26 | Tables 1 and 2 captions: 'Ground-state energies (in Eh)' of H6 and H8 'at a site-site distance of 1.5 A'; Section 3: 'restricted Hartree-Fock (RHF) orbitals generated with Psi4 using a minimal (STO-6G) basis'. Same table and instance as the filed FCI rows (-3.020198, -4.028152), so the same convention (total energy). Implied, not stated (RULES.md 8): open molecule. The text uses the D2h point group and orbital labels 1ag, 2ag, 3ag, 1b1u, 2b1u, 3b1u (Eq. 17 and the lines after it), a molecular symmetry; no periodic cell is mentioned. bound_type variational: the paper writes 'Variational minimization of the energy of the state Psi leads to the following generalized eigenvalue problem' (H c = S c E), a Rayleigh-Ritz energy in the space of the Krylov states; no printed value lies below the FCI value of its table. sCI is defined as FCI determinants selected by coefficient, without a perturbative correction, and ADAPT-VQE is a parameterised circuit (RULES.md 13.4). Conversion: per atom = value / N atoms; R = 1.5 A is the instance R = 2.834589 bohr of the filed FCI rows. | reader confidence medium",
+        "secondary_of": null
+      },
+      "sampled": false,
+      "corrections": [
+        {
+          "field": "sampled",
+          "to": false,
+          "reported_as": "−4.025894 Eh (total)",
+          "location": "Table 1, block H8, column E_MRSQK, N = 12; version read: arXiv text (sources/1911.05163.txt; journal version J. Chem. Theory Comput. 16, 2236 not reached), 2026-11-26",
+          "checked_on": "2026-11-26",
+          "reason": "Deterministic, not a Monte Carlo estimate, as the track-3 reader recorded it (pass row `sampled`); the method string alone reads the other way (units.mjs, isSampled).",
+          "source_entry": "passes/track3/sweep-rows-2026-11-26-hydrogen.json"
+        }
+      ]
+    },
+    {
+      "energy": -4.028096,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": null,
+      "v_score": null,
+      "method": "QK",
+      "ansatz": null,
+      "method_detail": "Hartree-Fock reference, 16 Krylov states, exact time evolution",
+      "method_as_published": "QK [single determinant (Hartree-Fock reference), N = 16 Krylov basis states, dt = 0.5 a.u., exact time evolution]",
+      "family": "other",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "Nicholas H. Stair, Renke Huang, Francesco A. Evangelista, A Multireference Quantum Krylov Algorithm for Strongly Correlated Electrons, Journal of Chemical Theory and Computation 16, 2236-2245 (2020), arXiv:1911.05163, doi:10.1021/acs.jctc.9b01125",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:1911.05163 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "−4.028096 Eh (total)",
+        "note": "Table 1, block H8, column E_QK, N = 16; version read: arXiv text (sources/1911.05163.txt; journal version J. Chem. Theory Comput. 16, 2236 not reached), 2026-11-26 | Tables 1 and 2 captions: 'Ground-state energies (in Eh)' of H6 and H8 'at a site-site distance of 1.5 A'; Section 3: 'restricted Hartree-Fock (RHF) orbitals generated with Psi4 using a minimal (STO-6G) basis'. Same table and instance as the filed FCI rows (-3.020198, -4.028152), so the same convention (total energy). Implied, not stated (RULES.md 8): open molecule. The text uses the D2h point group and orbital labels 1ag, 2ag, 3ag, 1b1u, 2b1u, 3b1u (Eq. 17 and the lines after it), a molecular symmetry; no periodic cell is mentioned. bound_type variational: the paper writes 'Variational minimization of the energy of the state Psi leads to the following generalized eigenvalue problem' (H c = S c E), a Rayleigh-Ritz energy in the space of the Krylov states; no printed value lies below the FCI value of its table. sCI is defined as FCI determinants selected by coefficient, without a perturbative correction, and ADAPT-VQE is a parameterised circuit (RULES.md 13.4). Conversion: per atom = value / N atoms; R = 1.5 A is the instance R = 2.834589 bohr of the filed FCI rows. | reader confidence medium",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -4.026042,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": null,
+      "v_score": null,
+      "method": "MRSQK",
+      "ansatz": null,
+      "method_detail": "16 Krylov states, exact time evolution",
+      "method_as_published": "MRSQK [N = 16 Krylov basis states (s = 3, dt = 0.5 a.u.), exact time evolution (m = inf)]",
+      "family": "other",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "Nicholas H. Stair, Renke Huang, Francesco A. Evangelista, A Multireference Quantum Krylov Algorithm for Strongly Correlated Electrons, Journal of Chemical Theory and Computation 16, 2236-2245 (2020), arXiv:1911.05163, doi:10.1021/acs.jctc.9b01125",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:1911.05163 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "−4.026042 Eh (total)",
+        "note": "Table 1, block H8, column E_MRSQK, N = 16; version read: arXiv text (sources/1911.05163.txt; journal version J. Chem. Theory Comput. 16, 2236 not reached), 2026-11-26 | Tables 1 and 2 captions: 'Ground-state energies (in Eh)' of H6 and H8 'at a site-site distance of 1.5 A'; Section 3: 'restricted Hartree-Fock (RHF) orbitals generated with Psi4 using a minimal (STO-6G) basis'. Same table and instance as the filed FCI rows (-3.020198, -4.028152), so the same convention (total energy). Implied, not stated (RULES.md 8): open molecule. The text uses the D2h point group and orbital labels 1ag, 2ag, 3ag, 1b1u, 2b1u, 3b1u (Eq. 17 and the lines after it), a molecular symmetry; no periodic cell is mentioned. bound_type variational: the paper writes 'Variational minimization of the energy of the state Psi leads to the following generalized eigenvalue problem' (H c = S c E), a Rayleigh-Ritz energy in the space of the Krylov states; no printed value lies below the FCI value of its table. sCI is defined as FCI determinants selected by coefficient, without a perturbative correction, and ADAPT-VQE is a parameterised circuit (RULES.md 13.4). Conversion: per atom = value / N atoms; R = 1.5 A is the instance R = 2.834589 bohr of the filed FCI rows. | reader confidence medium",
+        "secondary_of": null
+      },
+      "sampled": false,
+      "corrections": [
+        {
+          "field": "sampled",
+          "to": false,
+          "reported_as": "−4.026042 Eh (total)",
+          "location": "Table 1, block H8, column E_MRSQK, N = 16; version read: arXiv text (sources/1911.05163.txt; journal version J. Chem. Theory Comput. 16, 2236 not reached), 2026-11-26",
+          "checked_on": "2026-11-26",
+          "reason": "Deterministic, not a Monte Carlo estimate, as the track-3 reader recorded it (pass row `sampled`); the method string alone reads the other way (units.mjs, isSampled).",
+          "source_entry": "passes/track3/sweep-rows-2026-11-26-hydrogen.json"
+        }
+      ]
+    },
+    {
+      "energy": -4.026387,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": null,
+      "v_score": null,
+      "method": "MRSQK",
+      "ansatz": null,
+      "method_detail": "20 Krylov states, exact time evolution",
+      "method_as_published": "MRSQK [N = 20 Krylov basis states (s = 3, dt = 0.5 a.u.), exact time evolution (m = inf)]",
+      "family": "other",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "Nicholas H. Stair, Renke Huang, Francesco A. Evangelista, A Multireference Quantum Krylov Algorithm for Strongly Correlated Electrons, Journal of Chemical Theory and Computation 16, 2236-2245 (2020), arXiv:1911.05163, doi:10.1021/acs.jctc.9b01125",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:1911.05163 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "−4.026387 Eh (total)",
+        "note": "Table 1, block H8, column E_MRSQK, N = 20; version read: arXiv text (sources/1911.05163.txt; journal version J. Chem. Theory Comput. 16, 2236 not reached), 2026-11-26 | Tables 1 and 2 captions: 'Ground-state energies (in Eh)' of H6 and H8 'at a site-site distance of 1.5 A'; Section 3: 'restricted Hartree-Fock (RHF) orbitals generated with Psi4 using a minimal (STO-6G) basis'. Same table and instance as the filed FCI rows (-3.020198, -4.028152), so the same convention (total energy). Implied, not stated (RULES.md 8): open molecule. The text uses the D2h point group and orbital labels 1ag, 2ag, 3ag, 1b1u, 2b1u, 3b1u (Eq. 17 and the lines after it), a molecular symmetry; no periodic cell is mentioned. bound_type variational: the paper writes 'Variational minimization of the energy of the state Psi leads to the following generalized eigenvalue problem' (H c = S c E), a Rayleigh-Ritz energy in the space of the Krylov states; no printed value lies below the FCI value of its table. sCI is defined as FCI determinants selected by coefficient, without a perturbative correction, and ADAPT-VQE is a parameterised circuit (RULES.md 13.4). Conversion: per atom = value / N atoms; R = 1.5 A is the instance R = 2.834589 bohr of the filed FCI rows. | reader confidence medium",
+        "secondary_of": null
+      },
+      "sampled": false,
+      "corrections": [
+        {
+          "field": "sampled",
+          "to": false,
+          "reported_as": "−4.026387 Eh (total)",
+          "location": "Table 1, block H8, column E_MRSQK, N = 20; version read: arXiv text (sources/1911.05163.txt; journal version J. Chem. Theory Comput. 16, 2236 not reached), 2026-11-26",
+          "checked_on": "2026-11-26",
+          "reason": "Deterministic, not a Monte Carlo estimate, as the track-3 reader recorded it (pass row `sampled`); the method string alone reads the other way (units.mjs, isSampled).",
+          "source_entry": "passes/track3/sweep-rows-2026-11-26-hydrogen.json"
+        }
+      ]
+    },
+    {
+      "energy": -4.026457,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 8,
+      "einf": null,
+      "v_score": null,
+      "method": "MRSQK",
+      "ansatz": null,
+      "method_detail": "24 Krylov states, exact time evolution",
+      "method_as_published": "MRSQK [N = 24 Krylov basis states (s = 3, dt = 0.5 a.u.), exact time evolution (m = inf)]",
+      "family": "other",
+      "bound_type": "variational",
+      "bound_type_reason": "the energy of a stated wave function (Hartree-Fock, DMRG at a stated bond dimension, MRCI, VMC, a neural-network state); an upper bound in the instance's basis (RULES.md 13.4; assigned during source reading)",
+      "reference": "Nicholas H. Stair, Renke Huang, Francesco A. Evangelista, A Multireference Quantum Krylov Algorithm for Strongly Correlated Electrons, Journal of Chemical Theory and Computation 16, 2236-2245 (2020), arXiv:1911.05163, doi:10.1021/acs.jctc.9b01125",
+      "peer_reviewed": true,
+      "source": "track3-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:1911.05163 read locally (pypdf layout text; the generator finds every value again on its line), no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "−4.026457 Eh (total)",
+        "note": "Table 1, block H8, column E_MRSQK, N = 24; version read: arXiv text (sources/1911.05163.txt; journal version J. Chem. Theory Comput. 16, 2236 not reached), 2026-11-26 | Tables 1 and 2 captions: 'Ground-state energies (in Eh)' of H6 and H8 'at a site-site distance of 1.5 A'; Section 3: 'restricted Hartree-Fock (RHF) orbitals generated with Psi4 using a minimal (STO-6G) basis'. Same table and instance as the filed FCI rows (-3.020198, -4.028152), so the same convention (total energy). Implied, not stated (RULES.md 8): open molecule. The text uses the D2h point group and orbital labels 1ag, 2ag, 3ag, 1b1u, 2b1u, 3b1u (Eq. 17 and the lines after it), a molecular symmetry; no periodic cell is mentioned. bound_type variational: the paper writes 'Variational minimization of the energy of the state Psi leads to the following generalized eigenvalue problem' (H c = S c E), a Rayleigh-Ritz energy in the space of the Krylov states; no printed value lies below the FCI value of its table. sCI is defined as FCI determinants selected by coefficient, without a perturbative correction, and ADAPT-VQE is a parameterised circuit (RULES.md 13.4). Conversion: per atom = value / N atoms; R = 1.5 A is the instance R = 2.834589 bohr of the filed FCI rows. | reader confidence medium",
+        "secondary_of": null
+      },
+      "sampled": false,
+      "corrections": [
+        {
+          "field": "sampled",
+          "to": false,
+          "reported_as": "−4.026457 Eh (total)",
+          "location": "Table 1, block H8, column E_MRSQK, N = 24; version read: arXiv text (sources/1911.05163.txt; journal version J. Chem. Theory Comput. 16, 2236 not reached), 2026-11-26",
+          "checked_on": "2026-11-26",
+          "reason": "Deterministic, not a Monte Carlo estimate, as the track-3 reader recorded it (pass row `sampled`); the method string alone reads the other way (units.mjs, isSampled).",
+          "source_entry": "passes/track3/sweep-rows-2026-11-26-hydrogen.json"
+        }
+      ]
     }
   ]
 }

@@ -898,6 +898,70 @@
         "confidence": "high",
         "note": "Only the numbers the method string states; nothing else about this run's cost is recorded."
       }
+    },
+    {
+      "energy": -184.8064,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 224,
+      "einf": 392,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "Tensor-Backflow",
+      "method_detail": "neural-network backflow, started from the periodic state",
+      "method_as_published": "Tensor-Backflow (NN backflow, direct optimization, Ep = 0), 16x16 OBC, started from the PBC state",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "X. Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2507.01856 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "-0.7219",
+        "note": "Table I, n = 0.875, U = 8, 16x16, OBC row, column E_p=0 (journal liang-prb.txt line 312; arXiv sources/2507.01856.txt line 254); text lines 387-391 of the journal PDF text and arXiv lines 339-340; version read: PRB 113, 155121 (journal text) and arXiv v-text, both identical in this cell, re-read 2026-11-26 | Eq. (9) of the journal text (Hamiltonian, liang-prb.txt lines 198-212): H = -t sum_<ij>,s (c+_is c_js + H.c.) - t' sum_<<ij>>,s (c+_is c_js + H.c.) + U sum_i n_i,up n_i,dn, t = 1; Table I rows are 't' = 0' ('All cases are for t' = 0'), U = 8, filling n = 0.875 (224 electrons on 256 sites, Nf = 112 per spin), 16x16, boundary column OBC. The text confirms: 'For n = 0.875, U = 8, t' = 0 on a 16x16 lattice with OBC ... The achieved state-of-the-art energy is -0.7257, as reported in Tabs. I and III'; Table III lists NN backflow on 16x16 under OBC. Energies per site (Table I header E_p=0, E_p=1); no conversion. E_p=0 is the energy of the Tensor-Backflow state without a Lanczos step. No error bar printed.",
+        "secondary_of": null
+      },
+      "compute": {
+        "parameters": 4587520,
+        "samples": 45000,
+        "reported_as": "Table III: NN backflow, 16x16, parameter number 4587520, n = 0.875 and U = 8 under OBC; energies evaluated with MC sample number O(4.5x10^4) (Sec. III)",
+        "source": "arXiv:2507.01856 Table III and Sec. III"
+      }
+    },
+    {
+      "energy": -185.7792,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 224,
+      "einf": 392,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "Tensor-Backflow",
+      "method_detail": "neural-network backflow, started from the periodic state, 1 Lanczos step",
+      "method_as_published": "Tensor-Backflow + 1 Lanczos step (NN backflow, direct optimization, Ep = 1), 16x16 OBC, started from the PBC state",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "X. Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2507.01856 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "-0.7257",
+        "note": "Table I, n = 0.875, U = 8, 16x16, OBC row, column E_p=1 (journal liang-prb.txt line 312; arXiv sources/2507.01856.txt line 254); text lines 387-391 of the journal PDF text and arXiv lines 339-340; version read: PRB 113, 155121 (journal text) and arXiv v-text, both identical in this cell, re-read 2026-11-26 | Eq. (9) of the journal text (Hamiltonian, liang-prb.txt lines 198-212): H = -t sum_<ij>,s (c+_is c_js + H.c.) - t' sum_<<ij>>,s (c+_is c_js + H.c.) + U sum_i n_i,up n_i,dn, t = 1; Table I rows are 't' = 0' ('All cases are for t' = 0'), U = 8, filling n = 0.875 (224 electrons on 256 sites, Nf = 112 per spin), 16x16, boundary column OBC. The text confirms: 'For n = 0.875, U = 8, t' = 0 on a 16x16 lattice with OBC ... The achieved state-of-the-art energy is -0.7257, as reported in Tabs. I and III'; Table III lists NN backflow on 16x16 under OBC. Energies per site (Table I header E_p=0, E_p=1); no conversion. E_p=1 is the energy after one Lanczos step applied to the variational state (variational, RULES.md 4). No error bar printed.",
+        "secondary_of": null
+      },
+      "compute": {
+        "parameters": 4587520,
+        "samples": 45000,
+        "reported_as": "Table III: NN backflow, 16x16, parameter number 4587520, n = 0.875 and U = 8 under OBC; energies evaluated with MC sample number O(4.5x10^4) (Sec. III)",
+        "source": "arXiv:2507.01856 Table III and Sec. III"
+      }
     }
   ]
 }

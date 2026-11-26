@@ -1,0 +1,80 @@
+{
+  "model": "J1J2",
+  "lattice": "square",
+  "n_sites": 16,
+  "boundary": "P",
+  "params": {
+    "J2": 0.48
+  },
+  "instance_id": "J1J2/square_16_P_0.48",
+  "rows": [
+    {
+      "energy": -34.050176,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 16,
+      "einf": 0,
+      "v_score": null,
+      "method": "ED",
+      "ansatz": null,
+      "method_detail": "",
+      "method_as_published": "L=4 (ED)",
+      "family": "other",
+      "bound_type": "exact",
+      "bound_type_reason": "numerically exact reference as stated by the source (assigned during source reading)",
+      "reference": "J. Richter's exact diagonalization data, passed to the authors and printed in Wang, Gu, Verstraete & Wen, A tensor product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: evidence for deconfined quantum criticality, arXiv:1112.3331, Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table; the rows already in data/ from this table cite v4 and the journal title)",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "secondary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:1112.3331 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "-0.532034",
+        "note": "Table I, row J2 = 0.48, column 'L=4 (ED)'; the acknowledgements thank 'J. Richter for passing their exact diagonalization data for comparison'; the caption says the table is 'compared with extrapolation from ED study'; version read: arXiv text sources/1112.3331.txt (the journal version has no table) | Eq. (1): H = J1 sum_(i,j) S_i.S_j + J2 sum_<i,j> S_i.S_j, 'we set J1 = 1 throughout the paper'; spin-1/2 (title); L x L torus (text: 'on L x L tori for L = 4, 6, 8, 12, 16, 24'). Implied, not stated (RULES.md 8): the table entries are energies per site in S.S units. Evidence: the 'L=4 (ED)' and 'L=6 (ED)' columns equal the per-site ground-state energies of Schulz, Ziman & Poilblanc, J. Phys. I 6, 675 (1996), Table II (arXiv cond-mat/9402061, which prints 'The ground state energy per site', S.S, J1 = 1) at every J2 the two share: 16 sites 0.50 -0.528620 (Wang -0.52862), 0.55 -0.523594 (Wang -0.523595, 1e-6 apart, the two printed intervals touch), 0.60 -0.525896; 36 sites 0.50 -0.503810 (Wang -0.50380965), 0.55 -0.495178 (Wang -0.49517770), 0.60 -0.493239 (Wang -0.49323859). Only per-site S.S energies fit those printed numbers. Stored = 4 x N x eps (Pauli total), by the loader. Implied, not stated (RULES.md 8): the 'ED' columns are exact diagonalization of the L x L torus ground state, the data the acknowledgements credit to J. Richter; the paper's own method is the TPS, and its ED(inf) column is labelled an extrapolation 'from ED study'. The number is first printed here (private communication printed in a paper, RULES.md 8, secondary).",
+        "secondary_of": "arXiv:1112.3331"
+      }
+    },
+    {
+      "energy": -33.9648,
+      "sigma": 0.0384,
+      "energy_variance": null,
+      "dof": 16,
+      "einf": 0,
+      "v_score": null,
+      "method": "cluster update",
+      "ansatz": "TPS",
+      "method_detail": "energy sampled by VMC; extrapolated: χ → ∞ (contraction dimension Dc, quadratic in 1/Dc²)",
+      "method_as_published": "TPS (D = 9) on the L x L torus, contraction dimension extrapolated",
+      "family": "tensor network",
+      "bound_type": "extrapolated",
+      "bound_type_reason": "zero-variance or bond-dimension extrapolation; not an upper bound (assigned during source reading)",
+      "reference": "Wang, Gu, Verstraete & Wen, A tensor product state approach to spin-1/2 square J1-J2 antiferromagnetic Heisenberg model: evidence for deconfined quantum criticality, arXiv:1112.3331, Table I (printed in the arXiv version only: the published Phys. Rev. B 94, 075143 (2016) has no table; the rows already in data/ from this table cite v4 and the journal title)",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:1112.3331 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "-0.5307(6)",
+        "note": "Table I, row J2 = 0.48, column 'L=4'; the text: 'Using a quadratic function in 1/Dc^2 we extrapolate the finite size energies to the Dc -> infinity limit', largest D = 9; the VMC energies at finite Dc are variational, the table entries are the extrapolated finite-size energies; version read: arXiv text sources/1112.3331.txt | Eq. (1): H = J1 sum_(i,j) S_i.S_j + J2 sum_<i,j> S_i.S_j, 'we set J1 = 1 throughout the paper'; spin-1/2 (title); L x L torus (text: 'on L x L tori for L = 4, 6, 8, 12, 16, 24'). Implied, not stated (RULES.md 8): the table entries are energies per site in S.S units. Evidence: the 'L=4 (ED)' and 'L=6 (ED)' columns equal the per-site ground-state energies of Schulz, Ziman & Poilblanc, J. Phys. I 6, 675 (1996), Table II (arXiv cond-mat/9402061, which prints 'The ground state energy per site', S.S, J1 = 1) at every J2 the two share: 16 sites 0.50 -0.528620 (Wang -0.52862), 0.55 -0.523594 (Wang -0.523595, 1e-6 apart, the two printed intervals touch), 0.60 -0.525896; 36 sites 0.50 -0.503810 (Wang -0.50380965), 0.55 -0.495178 (Wang -0.49517770), 0.60 -0.493239 (Wang -0.49323859). Only per-site S.S energies fit those printed numbers. Stored = 4 x N x eps (Pauli total), by the loader. bound_type follows the rows of this table already in data/ (extrapolated in Dc, ruling 2026-10-15); the text states the Dc extrapolation for the finite-size energies in general, and Fig. 1 shows it for L = 8 and 16 only, so for L = 4 and 6 the extrapolation is the same reading as for the filed rows, not a separate statement. The entry lies above the ED column of the same row.",
+        "secondary_of": null
+      },
+      "compute": {
+        "parameters": null,
+        "gpu_hours": null,
+        "device": null,
+        "n_devices": null,
+        "samples": null,
+        "wall_clock": null,
+        "cpu_core_hours": null,
+        "bond_dimension": 9,
+        "iterations": null,
+        "reported_as": "method string: \"TPS (D = 9) on the L x L torus, contraction dimension extrapolated\"",
+        "source": "the row's published method string (scripts/method_names.mjs, 2026-09-17)",
+        "scope": "row",
+        "confidence": "high",
+        "note": "Only the numbers the method string states; nothing else about this run's cost is recorded."
+      }
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "model": "Holstein",
+  "lattice": "chain",
+  "n_sites": 4,
+  "boundary": "P",
+  "params": {
+    "t": 1,
+    "w": 0.5,
+    "g": 0.707106781187,
+    "spinless": true,
+    "N": 1
+  },
+  "instance_id": "Holstein/chain_4_P_f1_w0.5_g0.707107",
+  "rows": [
+    {
+      "energy": -2.25,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 1,
+      "einf": null,
+      "v_score": null,
+      "method": "HF",
+      "ansatz": null,
+      "method_detail": "coherent-state phonons",
+      "method_as_published": "CS-HF",
+      "family": "mean field",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Z.-H. Cui, A. Mandal & D. R. Reichman, Variational Lang-Firsov approach plus Moller-Plesset perturbation theory with applications to ab initio polariton chemistry, J. Chem. Theory Comput. 20, 1143 (2024), doi:10.1021/acs.jctc.3c01166, arXiv:2310.13084",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2310.13084 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "-2.2500",
+        "note": "Table I, row 'HH model (g^2/w = 1.0)', column CS-HF (line 840); version read: arXiv text (sources/2310.13084.txt, v2 per the 2026-11-24 worklist) with the authors' code (github.com/zhcui/polar_preview, example/00-holstein_model.py); the journal version was not read | Sec. II A, Eqs. (1)-(4) of the arXiv text (lines 95-111): H = sum h_pq a+_p a_q + (1/2) sum V a+a+aa + sum_x w_x b+_x b_x + sum_x sum_pq g_xpq a+_p a_q (b+_x + b_x), no zero-point term; Hubbard-Holstein: h_pq = t on nearest neighbours, V = U delta..., w_x = w, g_xpq = g delta_xp delta_pq, so the coupling is g n_p (b+_p + b_p) and the instance's g is the printed g. Table I labels the coupling g^2/w (= 1.0 and 2.4) at w = 0.5: g = sqrt(1.0 x 0.5) = sqrt(0.5) and sqrt(2.4 x 0.5) = sqrt(1.2) (arithmetic on printed numbers). One electron, so U drops out and the instance is Holstein f1. Implied, not stated (RULES.md 8): (1) the lattice is 4 sites with periodic closure, and (2) t = 1, which gives the unit of energy; Table I prints neither. Evidence: Sec. III A (line 344) 'we consider a single electron on a 4-site Hubbard-Holstein model with different phonon frequencies (w) and coupling strengths (g^2/w)'; Fig. 2 caption (line 439): 'The periodic lattice size L is taken as 4. (b) w = 0.5, one electron'; Table I caption (lines 831-837): HH models (w = 0.5) with one electron; Table I g^2/w = 2.4 is the value Fig. 2 marks at the self-trapping transition (lines 441, 447). The code the paper cites (Code availability, Ref. [57] = github.com/zhcui/polar_preview, single commit cf180fb, cloned and read 2026-11-26), example/00-holstein_model.py, builds exactly this model: nao = 4, nelec = 1, U = 0, hcore[i, i+1] = -1.0 and hcore[nao-1, 0] = hcore[0, nao-1] = -1.0 (# PBC), w_p = 0.5, g = sqrt(alpha w_p) with alpha = g^2/w on the grid 0.0 to 3.0 in steps of 0.2 (which contains 1.0 and 2.4), coupling h_ep[x, x, x] = g. So |t| = 1; on a 4-site ring the spectrum is the same for t = +1 and -1 (bipartite). Only this reading agrees with the printed code. Bound type: CS-HF is the energy of a single-determinant coherent-state product wave function with optimised shifts; LF-HF, uniform LF-HF and GLF-HF are the energies of Lang-Firsov-transformed single determinants with variationally optimised parameters ('we call this the variational LF-HF', Sec. II C; 'variationally optimize the transformation parameters', abstract). Each is the expectation value of H in a state, so variational. arXiv text only: the ACS PDF was not reachable (HTTP 403 in the 2026-11-24 worklist), so the row is admissible but not fully verified (RULES.md 8) and must be read again against the journal version.",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -2.3711,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 1,
+      "einf": null,
+      "v_score": null,
+      "method": "HF",
+      "ansatz": null,
+      "method_detail": "Lang-Firsov transformed",
+      "method_as_published": "LF-HF",
+      "family": "mean field",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Z.-H. Cui, A. Mandal & D. R. Reichman, Variational Lang-Firsov approach plus Moller-Plesset perturbation theory with applications to ab initio polariton chemistry, J. Chem. Theory Comput. 20, 1143 (2024), doi:10.1021/acs.jctc.3c01166, arXiv:2310.13084",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2310.13084 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "-2.3711",
+        "note": "Table I, row 'HH model (g^2/w = 1.0)', column LF-HF (line 840); version read: arXiv text (sources/2310.13084.txt, v2 per the 2026-11-24 worklist) with the authors' code (github.com/zhcui/polar_preview, example/00-holstein_model.py); the journal version was not read | Sec. II A, Eqs. (1)-(4) of the arXiv text (lines 95-111): H = sum h_pq a+_p a_q + (1/2) sum V a+a+aa + sum_x w_x b+_x b_x + sum_x sum_pq g_xpq a+_p a_q (b+_x + b_x), no zero-point term; Hubbard-Holstein: h_pq = t on nearest neighbours, V = U delta..., w_x = w, g_xpq = g delta_xp delta_pq, so the coupling is g n_p (b+_p + b_p) and the instance's g is the printed g. Table I labels the coupling g^2/w (= 1.0 and 2.4) at w = 0.5: g = sqrt(1.0 x 0.5) = sqrt(0.5) and sqrt(2.4 x 0.5) = sqrt(1.2) (arithmetic on printed numbers). One electron, so U drops out and the instance is Holstein f1. Implied, not stated (RULES.md 8): (1) the lattice is 4 sites with periodic closure, and (2) t = 1, which gives the unit of energy; Table I prints neither. Evidence: Sec. III A (line 344) 'we consider a single electron on a 4-site Hubbard-Holstein model with different phonon frequencies (w) and coupling strengths (g^2/w)'; Fig. 2 caption (line 439): 'The periodic lattice size L is taken as 4. (b) w = 0.5, one electron'; Table I caption (lines 831-837): HH models (w = 0.5) with one electron; Table I g^2/w = 2.4 is the value Fig. 2 marks at the self-trapping transition (lines 441, 447). The code the paper cites (Code availability, Ref. [57] = github.com/zhcui/polar_preview, single commit cf180fb, cloned and read 2026-11-26), example/00-holstein_model.py, builds exactly this model: nao = 4, nelec = 1, U = 0, hcore[i, i+1] = -1.0 and hcore[nao-1, 0] = hcore[0, nao-1] = -1.0 (# PBC), w_p = 0.5, g = sqrt(alpha w_p) with alpha = g^2/w on the grid 0.0 to 3.0 in steps of 0.2 (which contains 1.0 and 2.4), coupling h_ep[x, x, x] = g. So |t| = 1; on a 4-site ring the spectrum is the same for t = +1 and -1 (bipartite). Only this reading agrees with the printed code. Bound type: CS-HF is the energy of a single-determinant coherent-state product wave function with optimised shifts; LF-HF, uniform LF-HF and GLF-HF are the energies of Lang-Firsov-transformed single determinants with variationally optimised parameters ('we call this the variational LF-HF', Sec. II C; 'variationally optimize the transformation parameters', abstract). Each is the expectation value of H in a state, so variational. arXiv text only: the ACS PDF was not reachable (HTTP 403 in the 2026-11-24 worklist), so the row is admissible but not fully verified (RULES.md 8) and must be read again against the journal version.",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -2.3807,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 1,
+      "einf": null,
+      "v_score": null,
+      "method": "HF",
+      "ansatz": null,
+      "method_detail": "Lang-Firsov transformed, uniform displacement",
+      "method_as_published": "LF-HF uniform",
+      "family": "mean field",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Z.-H. Cui, A. Mandal & D. R. Reichman, Variational Lang-Firsov approach plus Moller-Plesset perturbation theory with applications to ab initio polariton chemistry, J. Chem. Theory Comput. 20, 1143 (2024), doi:10.1021/acs.jctc.3c01166, arXiv:2310.13084",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2310.13084 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "-2.3807",
+        "note": "Table I, row 'HH model (g^2/w = 1.0)', column LF-HF uniform (line 840); version read: arXiv text (sources/2310.13084.txt, v2 per the 2026-11-24 worklist) with the authors' code (github.com/zhcui/polar_preview, example/00-holstein_model.py); the journal version was not read | Sec. II A, Eqs. (1)-(4) of the arXiv text (lines 95-111): H = sum h_pq a+_p a_q + (1/2) sum V a+a+aa + sum_x w_x b+_x b_x + sum_x sum_pq g_xpq a+_p a_q (b+_x + b_x), no zero-point term; Hubbard-Holstein: h_pq = t on nearest neighbours, V = U delta..., w_x = w, g_xpq = g delta_xp delta_pq, so the coupling is g n_p (b+_p + b_p) and the instance's g is the printed g. Table I labels the coupling g^2/w (= 1.0 and 2.4) at w = 0.5: g = sqrt(1.0 x 0.5) = sqrt(0.5) and sqrt(2.4 x 0.5) = sqrt(1.2) (arithmetic on printed numbers). One electron, so U drops out and the instance is Holstein f1. Implied, not stated (RULES.md 8): (1) the lattice is 4 sites with periodic closure, and (2) t = 1, which gives the unit of energy; Table I prints neither. Evidence: Sec. III A (line 344) 'we consider a single electron on a 4-site Hubbard-Holstein model with different phonon frequencies (w) and coupling strengths (g^2/w)'; Fig. 2 caption (line 439): 'The periodic lattice size L is taken as 4. (b) w = 0.5, one electron'; Table I caption (lines 831-837): HH models (w = 0.5) with one electron; Table I g^2/w = 2.4 is the value Fig. 2 marks at the self-trapping transition (lines 441, 447). The code the paper cites (Code availability, Ref. [57] = github.com/zhcui/polar_preview, single commit cf180fb, cloned and read 2026-11-26), example/00-holstein_model.py, builds exactly this model: nao = 4, nelec = 1, U = 0, hcore[i, i+1] = -1.0 and hcore[nao-1, 0] = hcore[0, nao-1] = -1.0 (# PBC), w_p = 0.5, g = sqrt(alpha w_p) with alpha = g^2/w on the grid 0.0 to 3.0 in steps of 0.2 (which contains 1.0 and 2.4), coupling h_ep[x, x, x] = g. So |t| = 1; on a 4-site ring the spectrum is the same for t = +1 and -1 (bipartite). Only this reading agrees with the printed code. Bound type: CS-HF is the energy of a single-determinant coherent-state product wave function with optimised shifts; LF-HF, uniform LF-HF and GLF-HF are the energies of Lang-Firsov-transformed single determinants with variationally optimised parameters ('we call this the variational LF-HF', Sec. II C; 'variationally optimize the transformation parameters', abstract). Each is the expectation value of H in a state, so variational. arXiv text only: the ACS PDF was not reachable (HTTP 403 in the 2026-11-24 worklist), so the row is admissible but not fully verified (RULES.md 8) and must be read again against the journal version.",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -2.3808,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 1,
+      "einf": null,
+      "v_score": null,
+      "method": "HF",
+      "ansatz": null,
+      "method_detail": "generalized Lang-Firsov transformed",
+      "method_as_published": "GLF-HF",
+      "family": "mean field",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Z.-H. Cui, A. Mandal & D. R. Reichman, Variational Lang-Firsov approach plus Moller-Plesset perturbation theory with applications to ab initio polariton chemistry, J. Chem. Theory Comput. 20, 1143 (2024), doi:10.1021/acs.jctc.3c01166, arXiv:2310.13084",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2310.13084 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "-2.3808",
+        "note": "Table I, row 'HH model (g^2/w = 1.0)', column GLF-HF (line 840); version read: arXiv text (sources/2310.13084.txt, v2 per the 2026-11-24 worklist) with the authors' code (github.com/zhcui/polar_preview, example/00-holstein_model.py); the journal version was not read | Sec. II A, Eqs. (1)-(4) of the arXiv text (lines 95-111): H = sum h_pq a+_p a_q + (1/2) sum V a+a+aa + sum_x w_x b+_x b_x + sum_x sum_pq g_xpq a+_p a_q (b+_x + b_x), no zero-point term; Hubbard-Holstein: h_pq = t on nearest neighbours, V = U delta..., w_x = w, g_xpq = g delta_xp delta_pq, so the coupling is g n_p (b+_p + b_p) and the instance's g is the printed g. Table I labels the coupling g^2/w (= 1.0 and 2.4) at w = 0.5: g = sqrt(1.0 x 0.5) = sqrt(0.5) and sqrt(2.4 x 0.5) = sqrt(1.2) (arithmetic on printed numbers). One electron, so U drops out and the instance is Holstein f1. Implied, not stated (RULES.md 8): (1) the lattice is 4 sites with periodic closure, and (2) t = 1, which gives the unit of energy; Table I prints neither. Evidence: Sec. III A (line 344) 'we consider a single electron on a 4-site Hubbard-Holstein model with different phonon frequencies (w) and coupling strengths (g^2/w)'; Fig. 2 caption (line 439): 'The periodic lattice size L is taken as 4. (b) w = 0.5, one electron'; Table I caption (lines 831-837): HH models (w = 0.5) with one electron; Table I g^2/w = 2.4 is the value Fig. 2 marks at the self-trapping transition (lines 441, 447). The code the paper cites (Code availability, Ref. [57] = github.com/zhcui/polar_preview, single commit cf180fb, cloned and read 2026-11-26), example/00-holstein_model.py, builds exactly this model: nao = 4, nelec = 1, U = 0, hcore[i, i+1] = -1.0 and hcore[nao-1, 0] = hcore[0, nao-1] = -1.0 (# PBC), w_p = 0.5, g = sqrt(alpha w_p) with alpha = g^2/w on the grid 0.0 to 3.0 in steps of 0.2 (which contains 1.0 and 2.4), coupling h_ep[x, x, x] = g. So |t| = 1; on a 4-site ring the spectrum is the same for t = +1 and -1 (bipartite). Only this reading agrees with the printed code. Bound type: CS-HF is the energy of a single-determinant coherent-state product wave function with optimised shifts; LF-HF, uniform LF-HF and GLF-HF are the energies of Lang-Firsov-transformed single determinants with variationally optimised parameters ('we call this the variational LF-HF', Sec. II C; 'variationally optimize the transformation parameters', abstract). Each is the expectation value of H in a state, so variational. arXiv text only: the ACS PDF was not reachable (HTTP 403 in the 2026-11-24 worklist), so the row is admissible but not fully verified (RULES.md 8) and must be read again against the journal version.",
+        "secondary_of": null
+      }
+    }
+  ]
+}

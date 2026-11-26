@@ -1,0 +1,159 @@
+{
+  "model": "Hubbard",
+  "lattice": "square",
+  "n_sites": 1024,
+  "boundary": "P",
+  "params": {
+    "Nf": 448,
+    "U": 8,
+    "t1": 1,
+    "t2": -0.2
+  },
+  "instance_id": "Hubbard/square_1024_P_448_8_t12_-0.2",
+  "rows": [
+    {
+      "energy": -762.39872,
+      "sigma": null,
+      "energy_variance": 49.152,
+      "dof": 896,
+      "einf": 1568,
+      "v_score": 0.008109400276229544,
+      "method": "VMC",
+      "ansatz": "Pfaffian backflow",
+      "method_detail": "",
+      "method_as_published": "Pfaffian backflow",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Chen, Gray, Du & Chan, Extreme competition between stripes and superconductivity in the hole-doped Hubbard model, arXiv:2610.30321",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2610.30321 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "-0.74453 (dagger)",
+        "note": "Table S4 (sources/2610.30321.txt lines 1779-1781), 32x32 row in the t' = -0.2 block, no-projection column; version read: arXiv 2610.30321v2 text (sources/2610.30321.txt), re-read 2026-11-26; no journal version (arXiv metadata, 2026-11-11) | Eq. (1), file lines 116-120: H = -t sum_<i,j>,s (c+_is c_js + H.c.) - t' sum_<<i,j>>,s (c+_is c_js + H.c.) + U sum_i n_i,up n_i,dn, t = 1 as the unit of energy (lines 122-126: 'square lattices of N = L x L sites with periodic boundary conditions (PBC) at 1/8 hole doping and U = 8'), so t2 = t' = -0.2 as in the instance convention. Table S4 caption: 'U = 8 and 1/8 doping on Lx x Ly lattices with PBC'; the 32x32 rows sit in the t' = -0.2 block. Energy per site E/N, no conversion. Doping 1/8 on 1024 sites gives 896 electrons, Nf = 448 per spin (arithmetic). Value carries the dagger: 'Values marked with dagger are averages over the last 50 to 100 optimization steps instead of measurements', so no sigma is stored.",
+        "secondary_of": null
+      },
+      "compute": {
+        "parameters": null,
+        "gpu_hours": null,
+        "device": "NVIDIA A100 GPUs",
+        "n_devices": null,
+        "samples": 8192,
+        "wall_clock": null,
+        "reported_as": "\"...The total number of samples is N_s = 8192. Each VMC iteration includes 2N_MCMC steps for system sizes up to 24x24, and 4N_MCMC steps for the 32x32 lattice.\"",
+        "source": "arXiv:2610.30321, located by string match in the committed source text"
+      }
+    },
+    {
+      "energy": -763.58656,
+      "sigma": 0.01024,
+      "energy_variance": 30.1056,
+      "dof": 896,
+      "einf": 1568,
+      "v_score": 0.004961948017883557,
+      "method": "VMC",
+      "ansatz": "Pfaffian backflow",
+      "method_detail": "projected: translations, point group (simplified), spin parity",
+      "method_as_published": "Pfaffian backflow with symmetry projection",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Chen, Gray, Du & Chan, Extreme competition between stripes and superconductivity in the hole-doped Hubbard model, arXiv:2610.30321",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2610.30321 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "-0.74569(1)",
+        "note": "Table S4 (sources/2610.30321.txt lines 1779-1781), 32x32 row in the t' = -0.2 block, with-projection column; version read: arXiv 2610.30321v2 text (sources/2610.30321.txt), re-read 2026-11-26; no journal version (arXiv metadata, 2026-11-11) | Eq. (1), file lines 116-120: H = -t sum_<i,j>,s (c+_is c_js + H.c.) - t' sum_<<i,j>>,s (c+_is c_js + H.c.) + U sum_i n_i,up n_i,dn, t = 1 as the unit of energy (lines 122-126: 'square lattices of N = L x L sites with periodic boundary conditions (PBC) at 1/8 hole doping and U = 8'), so t2 = t' = -0.2 as in the instance convention. Table S4 caption: 'U = 8 and 1/8 doping on Lx x Ly lattices with PBC'; the 32x32 rows sit in the t' = -0.2 block. Energy per site E/N, no conversion. Doping 1/8 on 1024 sites gives 896 electrons, Nf = 448 per spin (arithmetic). Projected state: continues the optimisation of the unprojected one under Eq. (S16); sigma is the printed error bar.",
+        "secondary_of": null
+      },
+      "compute": {
+        "parameters": null,
+        "gpu_hours": null,
+        "device": "NVIDIA A100 GPUs",
+        "n_devices": null,
+        "samples": 8192,
+        "wall_clock": null,
+        "reported_as": "\"...The total number of samples is N_s = 8192. Each VMC iteration includes 2N_MCMC steps for system sizes up to 24x24, and 4N_MCMC steps for the 32x32 lattice.\"",
+        "source": "arXiv:2610.30321, located by string match in the committed source text"
+      }
+    },
+    {
+      "energy": -758.08768,
+      "sigma": null,
+      "energy_variance": 82.944,
+      "dof": 896,
+      "einf": 1568,
+      "v_score": 0.013735384554255815,
+      "method": "VMC",
+      "ansatz": "NN-fPEPS",
+      "method_detail": "",
+      "method_as_published": "NN-fPEPS",
+      "family": "tensor network",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Chen, Gray, Du & Chan, Extreme competition between stripes and superconductivity in the hole-doped Hubbard model, arXiv:2610.30321",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2610.30321 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "-0.74032 (dagger)",
+        "note": "Table S4 (sources/2610.30321.txt lines 1779-1781), 32x32 row in the t' = -0.2 block, no-projection column; version read: arXiv 2610.30321v2 text (sources/2610.30321.txt), re-read 2026-11-26; no journal version (arXiv metadata, 2026-11-11) | Eq. (1), file lines 116-120: H = -t sum_<i,j>,s (c+_is c_js + H.c.) - t' sum_<<i,j>>,s (c+_is c_js + H.c.) + U sum_i n_i,up n_i,dn, t = 1 as the unit of energy (lines 122-126: 'square lattices of N = L x L sites with periodic boundary conditions (PBC) at 1/8 hole doping and U = 8'), so t2 = t' = -0.2 as in the instance convention. Table S4 caption: 'U = 8 and 1/8 doping on Lx x Ly lattices with PBC'; the 32x32 rows sit in the t' = -0.2 block. Energy per site E/N, no conversion. Doping 1/8 on 1024 sites gives 896 electrons, Nf = 448 per spin (arithmetic). Value carries the dagger: 'Values marked with dagger are averages over the last 50 to 100 optimization steps instead of measurements', so no sigma is stored.",
+        "secondary_of": null
+      },
+      "compute": {
+        "parameters": null,
+        "gpu_hours": null,
+        "device": "NVIDIA A100 GPUs",
+        "n_devices": null,
+        "samples": 8192,
+        "wall_clock": null,
+        "reported_as": "\"...The total number of samples is N_s = 8192. Each VMC iteration includes 2N_MCMC steps for system sizes up to 24x24, and 4N_MCMC steps for the 32x32 lattice.\"",
+        "source": "arXiv:2610.30321, located by string match in the committed source text"
+      }
+    },
+    {
+      "energy": -760.39168,
+      "sigma": 0.02048,
+      "energy_variance": 51.4048,
+      "dof": 896,
+      "einf": 1568,
+      "v_score": 0.00849570856270471,
+      "method": "VMC",
+      "ansatz": "NN-fPEPS",
+      "method_detail": "projected: translations, point group (simplified), spin parity",
+      "method_as_published": "NN-fPEPS with symmetry projection",
+      "family": "tensor network",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Chen, Gray, Du & Chan, Extreme competition between stripes and superconductivity in the hole-doped Hubbard model, arXiv:2610.30321",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2610.30321 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "-0.74257(2)",
+        "note": "Table S4 (sources/2610.30321.txt lines 1779-1781), 32x32 row in the t' = -0.2 block, with-projection column; version read: arXiv 2610.30321v2 text (sources/2610.30321.txt), re-read 2026-11-26; no journal version (arXiv metadata, 2026-11-11) | Eq. (1), file lines 116-120: H = -t sum_<i,j>,s (c+_is c_js + H.c.) - t' sum_<<i,j>>,s (c+_is c_js + H.c.) + U sum_i n_i,up n_i,dn, t = 1 as the unit of energy (lines 122-126: 'square lattices of N = L x L sites with periodic boundary conditions (PBC) at 1/8 hole doping and U = 8'), so t2 = t' = -0.2 as in the instance convention. Table S4 caption: 'U = 8 and 1/8 doping on Lx x Ly lattices with PBC'; the 32x32 rows sit in the t' = -0.2 block. Energy per site E/N, no conversion. Doping 1/8 on 1024 sites gives 896 electrons, Nf = 448 per spin (arithmetic). Projected state: continues the optimisation of the unprojected one under Eq. (S16); sigma is the printed error bar.",
+        "secondary_of": null
+      },
+      "compute": {
+        "parameters": null,
+        "gpu_hours": null,
+        "device": "NVIDIA A100 GPUs",
+        "n_devices": null,
+        "samples": 8192,
+        "wall_clock": null,
+        "reported_as": "\"...The total number of samples is N_s = 8192. Each VMC iteration includes 2N_MCMC steps for system sizes up to 24x24, and 4N_MCMC steps for the 32x32 lattice.\"",
+        "source": "arXiv:2610.30321, located by string match in the committed source text"
+      }
+    }
+  ]
+}

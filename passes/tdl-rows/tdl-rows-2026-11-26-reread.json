@@ -1,0 +1,29 @@
+[
+ {
+  "instance_id": "Heisenberg/square_inf",
+  "model": "Heisenberg",
+  "lattice": "square",
+  "params": {},
+  "eps": -0.6694886,
+  "tol": 5e-8,
+  "sigma_per_site": 5e-7,
+  "var_per_site": null,
+  "arxiv": "2502.17144",
+  "peer_reviewed": true,
+  "origin": "own",
+  "bound_type": "extrapolated",
+  "how_tdl": "finite-size extrapolation",
+  "method": "RNN (zero-variance)",
+  "method_detail": "2D RNN wavefunction; zero-variance energy per L, then linear regression of E(L) = E_inf + e1/L^3 over all L with a wild bootstrap (10^3 bootstraps)",
+  "method_as_published": "'Our extrapolated value for the ground-state energy is E_inf = -0.6694886(5)'",
+  "reference": "Moss, Wiersema, Hibat-Allah, Carrasquilla & Melko, Leveraging recurrence in neural network wavefunctions for large-scale simulations of Heisenberg antiferromagnets on the square lattice, Phys. Rev. B 112, 134450 (2025), arXiv:2502.17144",
+  "evidence": "Section on zero-variance energies, lines 394-401 of sources/2502.17144.txt (Eq. (7), periodic boundary conditions); the journal citation is the one of the existing rows of this paper in data/; the journal text was not re-read for this value; version read: arXiv text",
+  "convention_check": "Square-lattice Heisenberg antiferromagnet, energy per spin in the S.S convention (compared with the QMC reference -0.669437(5), same line); periodic boundaries (Eq. (7) is for periodic boundary conditions); every L used. No conversion; stored per site x 4 by the loader. The value is a zero-variance, finite-size extrapolation, not an upper bound. 2601.20189 quotes this number from this paper; the row is cited to Moss et al. (RULES.md 8).",
+  "reported_as": "-0.6694886(5)",
+  "confidence": "high",
+  "verified_by": "re-read 2026-11-26 and a filing check 2026-11-26",
+  "variance_as_reported": null,
+  "defect": null,
+  "sampled": true
+ }
+]

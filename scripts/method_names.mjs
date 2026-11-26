@@ -1091,6 +1091,24 @@ Object.assign(NAMES, {
   "SC-VAED": ["ED", "self-consistently grown variational basis (SC-VAED)"],
   "fb-BE, BE2": ["bootstrap embedding", "BE2 fragments (a site and its nearest neighbours), phonons in a coherent-state mean field", { family: "other" }], // arXiv:2603.11463
   "fb-BE, BE3": ["bootstrap embedding", "BE3 fragments, phonons in a coherent-state mean field", { family: "other" }],
+  // Re-read of held values, 2026-11-26 (passes/rows/sweep-rows-2026-11-26-reread.json).
+  "CS-HF": ["Hartree-Fock", "coherent-state phonons", { family: "other" }], // arXiv:2310.13084
+  "L=4 (ED)": ["ED", ""], // arXiv:1112.3331 Table I (J. Richter's data)
+  "L=6 (ED)": ["ED", ""],
+  "exact finite-size diagonalization": ["ED", ""], // arXiv:cond-mat/9402061
+  "LF-HF": ["Hartree-Fock", "Lang-Firsov transformed", { family: "other" }],
+  "LF-HF uniform": ["Hartree-Fock", "Lang-Firsov transformed, uniform displacement", { family: "other" }],
+  "GLF-HF": ["Hartree-Fock", "generalized Lang-Firsov transformed", { family: "other" }],
+  "Variational, superposition of large- and small-polaron Bloch states (k = 0)": ["variational state", "superposition of large- and small-polaron Bloch states, k = 0", { family: "other" }], // arXiv:cond-mat/0011180
+  "DMRG (SU(2), m = 3000 states)": ["DMRG", "SU(2)", { bond_dimension: 3000, family: "tensor network" }], // arXiv:1209.1858, footnote 60
+  "DMRG (U(1), m = 19860 states; S. R. White, unpublished)": ["DMRG", "U(1)", { bond_dimension: 19860, family: "tensor network" }],
+  "Gutzwiller-projected Z2[0,pi]beta RVB (VMC)": ["VMC", "Z2[0,π]β spin liquid"],
+  "gapped Z2[0,pi]beta* spin liquid (VMC)": ["VMC", "gapped Z2[0,π]β* spin liquid"],
+  "HFPS (partially-filled stripe, initialised with Delta_0 = 0.0, Table I)": ["HFPS", "partially filled stripe, initial Δ0 = 0.0"],
+  "HFPS (partially-filled stripe, initialised with Delta_0 = 0.2, Table I)": ["HFPS", "partially filled stripe, initial Δ0 = 0.2"],
+  "HFPS (partially-filled stripe, initialised with Delta_0 = 0.5, Table I)": ["HFPS", "partially filled stripe, initial Δ0 = 0.5"],
+  "Tensor-Backflow (NN backflow, direct optimization, Ep = 0), 16x16 OBC, started from the PBC state": ["Tensor-Backflow", "neural-network backflow, started from the periodic state"],
+  "Tensor-Backflow + 1 Lanczos step (NN backflow, direct optimization, Ep = 1), 16x16 OBC, started from the PBC state": ["Tensor-Backflow", `neural-network backflow, started from the periodic state, ${LANCZOS(1)}`],
   // Pass 2026-11-26 (scripts/holstein_2026_11_26.mjs): arXiv:1602.04195 and arXiv:2405.08701, Fig. 2.
   "DMET (2-site cluster), 8 phonons": ["DMET", "2-site impurity cluster, exact-diagonalization solver, phonon cutoff 8", { family: "other" }],
   "DMRG (Fehske & Jeckelmann), 8 phonons": ["DMRG", "phonon cutoff 8", { family: "tensor network" }],
@@ -1190,6 +1208,13 @@ NAMES["block MPS alternating optimization (reference, bond dimension up to 5000)
 
 // Systematic families of strings, matched when no exact entry exists.
 export const PATTERNS = [
+  // arXiv:1911.05163 (Stair, Huang & Evangelista), H6 and H8 in STO-6G: quantum Krylov runs by Krylov dimension N (re-read 2026-11-26).
+  [/^QK \[single determinant \(Hartree-Fock reference\), N = (\d+) Krylov basis states, dt = 0\.5 a\.u\., exact time evolution\]$/, m => ["QK", `Hartree-Fock reference, ${m[1]} Krylov states, exact time evolution`, { family: "other" }]],
+  [/^MRSQK \[N = (\d+) Krylov basis states \(s = 3, dt = 0\.5 a\.u\.\), exact time evolution \(m = inf\)\]$/, m => ["MRSQK", `${m[1]} Krylov states, exact time evolution`, { family: "other" }]],
+  [/^MRSQK \[N = (\d+) Krylov basis states \(s = 3, dt = 0\.5 a\.u\.\), Trotter number m = (\d+)\]$/, m => ["MRSQK", `${m[1]} Krylov states, Trotter number ${m[2]}`, { family: "other" }]],
+  [/^MRSQK \[eight individual \(uncontracted\) reference determinants, Krylov space of dimension (\d+) \(s = 3, dt = 0\.5 a\.u\.\), exact time evolution\]$/, m => ["MRSQK", `8 uncontracted references, ${m[1]} Krylov states, exact time evolution`, { family: "other" }]],
+  [/^sCI \[N = (\d+) determinants with the largest absolute coefficient in the FCI wave function\]$/, m => ["sCI", `${m[1]} determinants with the largest FCI coefficients`, { family: "other" }]],
+  [/^ADAPT-VQE \[N = (\d+) cluster amplitudes selected from the pool of spin-adapted generalized singles and doubles\]$/, m => ["ADAPT-VQE", `${m[1]} amplitudes from spin-adapted generalized singles and doubles`, { family: "other" }]],
   [/^DMRG \(chi = (\d+)\), QMBL cost-to-reproduce run$/, m => ["DMRG", "QMBL run", { bond_dimension: +m[1] }]],
   // "Exact Diagonalization Gamma.D6.A1 -1": the lowest state in one (momentum.irrep, spin flip) sector.
   [/^Exact Diagonalization (\S+\.\S+) (-?1)$/, m => ["ED", "", { sector: `${m[1]}, spin flip ${m[2] === "1" ? "+1" : "−1"}` }]],
@@ -1234,6 +1259,7 @@ const TRACK3 = {
   "GPU dp Chol": () => ["ph-AFQMC", "GPU, double precision, Cholesky integrals", { family: "AFQMC / GFMC" }],
   "LR-DMC": d => ["LR-DMC", `trial state: ${d.replace(/^LDA trial state/, "LDA determinant").replace(/^AGP trial state/, "AGP")}`, { family: "DMC" }],
   "LRDMC with JAGP(cc-pVDZ) nodes": () => ["LR-DMC", "trial state: JAGP, cc-pVDZ trial basis", { family: "DMC" }],
+  "LRDMC with CAS(4,4) nodes": () => ["LR-DMC", "trial state: CAS(4,4) multi-determinant", { family: "DMC" }], // arXiv:1905.06971, re-read 2026-11-26
   "VMC": d => /^AGP determinant with Jastrow factor/.test(d) ? ["JAGP", d.replace(/^AGP determinant with Jastrow factor, /, ""), { family: "classic VMC" }]
     : ["Slater-Jastrow", d.replace(/ with Jastrow factor/, ""), { family: "classic VMC" }],
   "JSD(cc-pVDZ)": () => ["Slater-Jastrow", "cc-pVDZ trial basis", { family: "classic VMC" }],
@@ -1302,6 +1328,8 @@ const NO_ANSATZ = new Set(["DMRG", "ED", "SSE QMC", "QMC", "CT-QMC", "DQMC", "Ex
   // Holstein (2026-11-16): sign-free GFMC with a positive guiding function, and the Global-Local
   // variational state of the polaron, which is not sampled.
   "GFMC", "Global-Local variation",
+  // Re-read 2026-11-26: quantum Krylov and selected-CI runs of arXiv:1911.05163 carry no variational ansatz.
+  "QK", "MRSQK", "sCI", "ADAPT-VQE", "Hartree-Fock", "variational state",
   // Hubbard-Holstein (2026-11-25): bootstrap embedding, an embedding method with no variational ansatz.
   "bootstrap embedding",
   // Track 3 (RULES.md 13): basis-set quantum chemistry, embedding and Green's-function methods,
