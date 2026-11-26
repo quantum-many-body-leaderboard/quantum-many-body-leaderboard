@@ -383,6 +383,17 @@ export const DEFECTS = [
    "finding": "Table IV (txt lines 383-390), ks = Γ, start 3, column SJ-DMC: −0.02848(2) transcribed correctly (-0.02848 x 90 = -2.5632 (stored -2.5632); sigma 0.00002 x 90 = 0.0018 (stored 0.0018)), but the source says this SJ-DMC energy is biased: 'The S-DMC energy obtained with the HF wave function is lower than the SJ-DMC energy obtained using the wave functions from starting points 2 and 3 ... these Jastrow factor introduce features (\"quasinodes\") that are difficult for DMC to remove (i.e., would require much smaller time steps)' and 'the SJ wave functions from starting points 2 and 3 do not correspond to a fluid phase' (txt line 318-336). Fixed-node DMC with HF nodes cannot depend on the Jastrow factor once converged, so the 3.03e-3 Ha/e gap above S-DMC is time-step error, not a fixed-node energy. Flag the row (no record impact: it sits far above the record).",
    "source_entry": "SP8-heg3d-hubbard-heg2d-heisenberg#104 (qmbl-verify 2026-10-19)"
   },
+  // qmbl-verify 2026-11-26-reread: rulings of 2026-11-26.
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.45",
+      "method": "ED",
+      "energy": -74.254752
+    },
+    "flag": "below-exact",
+    "finding": "arXiv:2606.04558 Table I prints -0.515658 per site at J2 = 0.45. The exact ground-state energy of the 6 x 6 torus is printed twice as -0.51565739: J. Richter's exact diagonalization in arXiv:1112.3331, Table I, column 'L=6 (ED)', and arXiv:2206.14307, row Energy(Exact). -0.515658 lies 6.1e-7 per site below it, beyond the half-unit of its own six decimals whether rounded or truncated. A Lanczos run stopped short lies above the ground state, as the values of that column at J2 = 0.4, 0.7, 0.8, 0.9 and 1 do (removed, removals.mjs); a value below it cannot come from a converged diagonalization of the same Hamiltonian, so the printed digit is wrong (a rounding or transcription slip) or the run differs. The same column also lies below the printed exact energy at J2 = 0.65 by 2.1e-6. The row stays with this flag.",
+    "source_entry": "RP1#J1J2-36-0.45 (qmbl-verify 2026-11-26-reread); ruled 2026-11-26"
+  },
 ];
 
 export const SHARED = {

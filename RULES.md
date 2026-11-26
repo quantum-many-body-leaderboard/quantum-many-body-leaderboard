@@ -1054,6 +1054,9 @@ infinite lattice. It has no site count, boundary or cluster.
 - Spins are S = 1/2, as in track 1, unless the instance carries a spin length `S` (Heisenberg
   at S = 1 on the pyrochlore, checkerboard and crossed ruby lattices, Schäfer et al., PRL 131,
   096702). Its id ends in `_S<S>` (`Heisenberg/pyrochlore_inf_S1`).
+- Shastry-Sutherland ids write each coupling with its letter, as the finite ids do (§2):
+  `ShastrySutherland/square_inf_J0.8_Jd1`, J on the bonds of the square lattice and Jd on the dimer
+  bonds. Honeycomb J1-J2 takes the J1-J2 form: `J1J2/honeycomb_inf_0.25` (2026-11-26).
 - Id: `<Model>/<lattice>_inf[_<couplings>]`, the couplings in the order of track 1
   (`J1J2/square_inf_0.5`, `TFIsing/square_inf_3.04438`; Hubbard: filling, then U, then t').
 

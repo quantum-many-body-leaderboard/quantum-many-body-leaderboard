@@ -1,0 +1,34 @@
+{
+  "model": "ShastrySutherland",
+  "lattice": "square",
+  "n_sites": "inf",
+  "boundary": "TDL",
+  "params": {
+    "J": 0.8,
+    "Jd": 1
+  },
+  "instance_id": "ShastrySutherland/square_inf_J0.8_Jd1",
+  "rows": [
+    {
+      "energy": -1.79376,
+      "sigma": 0.00032,
+      "method": "DMRG",
+      "method_detail": "DMRG and FAMPS (fully augmented MPS) on L x 2L cylinders, L = 8 to 16, periodic in y and open in x; each size extrapolated to zero truncation error, then linear in 1/L",
+      "method_as_published": "DMRG/FAMPS; 'linear extrapolation of the energy with 1/L'",
+      "bound_type": "extrapolated",
+      "bound_type_reason": "extrapolation to an infinite ansatz or to infinite size; not an upper bound (RULES.md 14.4)",
+      "how_tdl": "finite-size extrapolation",
+      "reference": "Qian, Lv, Lee & Qin, From the Shastry-Sutherland model to the J1-J2 Heisenberg model, arXiv:2411.17452 (version dated 27 Nov 2024)",
+      "peer_reviewed": false,
+      "source": "tdl-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "arXiv:2411.17452: undefined; re-read 2026-11-26 and a filing check 2026-11-26",
+        "reported_as": "-0.44844(8)",
+        "note": "Appendix A.1 (line 412-416) and Fig. S1 caption (lines 421-424) of sources/2411.17452.txt: '-0.44844(8)'; cylinders L x 2L (lines 103-104), periodic in y, open in x (lines 125-126); version read: arXiv text dated 27 Nov 2024; no journal version looked up (arXiv-only, RULES.md 8) | Eq. (3), lines 100-110: H = J1 sum_<ij> S_i.S_j + J3 sum_<<ij>> in blue S_i.S_j + J3' sum in red S_i.S_j; J3' = 0 is the Shastry-Sutherland model (J1 on the square bonds, J3 on the blue orthogonal dimers); alpha := J1/J3 = 0.80 (line 412); energies per site in the S.S convention, J3 = 1. Check: the 6x6 periodic exact value printed at alpha = 0.80, -0.4517531 (line 420), equals the exact energy per site of ShastrySutherland/square_36_P_J0.8_Jd1 in data/ (-0.4517531), so J = 0.8, Jd = 1 and the unit is the same. Spin-1/2 (S operators). Stored per site x 4 (S.S to Pauli) by the loader. No error bar on the 6x6 value is needed. New instance: the loader's tdlId has no ShastrySutherland entry (id by RULES 2.1: J then Jd).",
+        "secondary_of": null
+      }
+    }
+  ]
+}

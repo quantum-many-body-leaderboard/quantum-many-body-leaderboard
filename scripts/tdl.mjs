@@ -33,6 +33,7 @@ const COUPLINGS = {
   TFIsing: p => [`h = ${p.h}`],
   Hubbard: p => [`U = ${p.U}`, `n = ${p.n}`, ...(p.t2 != null ? [`t' = ${p.t2}`] : [])],
   tV: p => [`V = ${p.V}`, `n = ${p.n}`],
+  ShastrySutherland: p => [`J = ${p.J}`, `J<sub>d</sub> = ${p.Jd}`],
   Holstein: p => [`&omega; = ${p.w}`, `g = ${p.g}`, holFilling(p)],
   HubbardHolstein: p => [`U = ${p.U}`, `&omega; = ${p.w}`, `g = ${p.g}`, holFilling(p)],
 };
@@ -45,8 +46,10 @@ export function tdlId(model, lattice, params = {}) {
   // Holstein and Hubbard-Holstein: f (spinless) or e (spin-1/2) and the density, then U, w, g (RULES.md 14.1).
   if (model === "Holstein" || model === "HubbardHolstein")
     return `${model}/${[lattice, "inf", `${params.spinless ? "f" : "e"}${params.n}`, ...(params.U != null ? [`U${params.U}`] : []), `w${params.w}`, `g${params.g}`].join("_")}`;
-  const order = { Heisenberg: ["S"], J1J2: ["J2"], TFIsing: ["h"], Hubbard: ["n", "U", "t2"], tV: ["n", "V"] }[model] ?? Object.keys(params).sort();
-  // The spin length is written with its letter (`_S1`); S = 1/2 carries no parameter.
-  const vals = order.filter(k => params[k] != null).map(k => (k === "S" ? `S${params[k]}` : String(params[k])));
+  const order = { Heisenberg: ["S"], J1J2: ["J2"], TFIsing: ["h"], Hubbard: ["n", "U", "t2"], tV: ["n", "V"], ShastrySutherland: ["J", "Jd"] }[model] ?? Object.keys(params).sort();
+  // The spin length is written with its letter (`_S1`); S = 1/2 carries no parameter. Shastry-Sutherland couplings
+  // carry their letters as on finite clusters (`_J0.8_Jd1`, RULES.md 14.1).
+  const LETTER = { S: "S", ...(model === "ShastrySutherland" ? { J: "J", Jd: "Jd" } : {}) };
+  const vals = order.filter(k => params[k] != null).map(k => (LETTER[k] ? `${LETTER[k]}${params[k]}` : String(params[k])));
   return `${model}/${[lattice, "inf", ...vals].join("_")}`;
 }

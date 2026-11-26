@@ -26916,4 +26916,89 @@ export const CORRECTIONS = [
     "reason": "secondary_of named the quoting paper by its arXiv id while the reference names it by its DOI first, so the citation code took Bonča et al. for the row's own paper and the cell read 'Bonča et al. (1999)', as if they had produced the number. Naming the paper by its DOI makes the cell read 'H. Fehske (unpublished), quoted in Bonča et al. (1999)', as for the 26-site t-J rows (2026-10-27). Energy, provenance and quoting paper unchanged.",
     "source_entry": "display of numbers that exist only in the quoting paper (2026-11-26)"
   },
+  // qmbl-verify 2026-11-26-reread: rulings of 2026-11-26.
+  {
+    "match": {
+      "instance": "Heisenberg/triangular_324_P",
+      "method": "RVB wave function",
+      "energy": -709.11936
+    },
+    "field": "reference",
+    "to": "Heidarian, Sorella & Becca, Spin-1/2 Heisenberg model on the anisotropic triangular lattice: From magnetism to a one-dimensional spin liquid, Phys. Rev. B 80, 012404 (2009), arXiv:0902.2338, Fig. 3 bottom panel, 18 x 18 point at J'/J = 1 (plotted only; the digits are printed in Ghorbani, Tocchio & Becca, Phys. Rev. B 93, 085111 (2016), arXiv:1512.03356, Table II, column E/J' (Ref. [35]), and quoted in arXiv:2602.02665 Table 1)",
+    "reported_as": "-0.54716(3)",
+    "location": "Phys. Rev. B 80, 012404 Fig. 3 bottom panel (plotted); Phys. Rev. B 93, 085111 Table II, column E/J', credited to Ref. [35]",
+    "version_read": "arXiv:0902.2338 and arXiv:1512.03356 texts (qmbl sources/), arXiv:2602.02665 Table 1",
+    "conversion": "none: -0.54716 x 4 x 324 = -709.11936",
+    "checked_on": "2026-11-26",
+    "reason": "The producing paper shows the 18 x 18 point only in a figure; the digits were first printed in Table II of Phys. Rev. B 93, 085111, credited to it. The reference names the figure and the first print, as the triangular_900_P row does (ruling 2026-10-15). Value unchanged.",
+    "source_entry": "RP1#triangular_324_P (qmbl-verify 2026-11-26-reread), skeptic upheld"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/triangular_324_P",
+      "method": "RVB wave function",
+      "energy": -709.11936
+    },
+    "field": "verified.secondary_of",
+    "from": "arXiv:2602.02665",
+    "to": "arXiv:1512.03356",
+    "checked_on": "2026-11-26",
+    "reason": "The quoting work named is the earliest refereed print of the digits (Ghorbani, Tocchio & Becca, Phys. Rev. B 93, 085111 (2016)), not the 2026 preprint that reprints them (ruled 2026-11-26).",
+    "source_entry": "RP1#triangular_324_P (qmbl-verify 2026-11-26-reread)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_100_O",
+      "method": "2D Gated RNN",
+      "energy": -251.45538
+    },
+    "field": "reference",
+    "to": "[paper](https://doi.org/10.1126/science.adg9774) (Wu et al., Science 386, 296 (2024), arXiv:2302.04919: VarBench dataset, number uploaded by Mohamed Hibat-Allah on 2021-12-13 as '2D Gated RNN', commit 1ab3fe8; method: Hibat-Allah, Melko & Carrasquilla, arXiv:2207.14314 (NeurIPS 2021 ML4PS workshop), which shows this energy only as a plotted band (Fig. 2(b))) [code](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_100_O/vmc_2DgatedtensorizedRNN.sh)",
+    "reported_as": "-251.45538 / 0.00044 / 0.19397 (VarBench upload 1ab3fe8)",
+    "location": "VarBench dataset Heisenberg/square_10_OO_100, commit 1ab3fe8 (2021-12-13); arXiv:2207.14314v2 Fig. 2(b)",
+    "version_read": "arXiv:2207.14314v2 and the NeurIPS ML4PS 2021 paper 92 (no digits for the 10 x 10 energy); VarBench history",
+    "conversion": "none",
+    "checked_on": "2026-11-26",
+    "reason": "Neither version of the paper prints digits for the 10 x 10 energy; the number is first printed in the VarBench dataset by the first author. RULES.md 8: cite the dataset and keep the paper as the method reference, as for the Tensor-RNN row. The earlier check compared with a value decoded from the figure, which RULES.md 8 does not allow. Energy and sigma unchanged.",
+    "source_entry": "RA1#square_100_O (qmbl-verify 2026-11-26-reread), skeptic upheld"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "A5 residual-CNN, LR=0.005, seed 8 (HPO-selected)",
+      "energy": -198.3568
+    },
+    "field": "sigma",
+    "from": 0.0024,
+    "to": null,
+    "checked_on": "2026-11-26",
+    "reason": "The source defines neither its 'reported final value' nor the bar in parentheses; the only statistics it defines are medians and standard deviations over windows of the optimisation trace. The bar is not a stated statistical error of the energy, so the row carries none (ruled 2026-11-26). Energy unchanged.",
+    "source_entry": "RP1#NQS-Agent (qmbl-verify 2026-11-26-reread)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "A5 residual-CNN, LR=0.002, seed 9 (HPO-selected)",
+      "energy": -198.3836
+    },
+    "field": "sigma",
+    "from": 0.002,
+    "to": null,
+    "checked_on": "2026-11-26",
+    "reason": "The source defines neither its 'reported final value' nor the bar in parentheses; the only statistics it defines are medians and standard deviations over windows of the optimisation trace. The bar is not a stated statistical error of the energy, so the row carries none (ruled 2026-11-26). Energy unchanged.",
+    "source_entry": "RP1#NQS-Agent (qmbl-verify 2026-11-26-reread)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "A9 residual-CNN (wide-shallow), LR=0.008, seed 9 (HPO-selected)",
+      "energy": -198.3764
+    },
+    "field": "sigma",
+    "from": 0.0024,
+    "to": null,
+    "checked_on": "2026-11-26",
+    "reason": "The source defines neither its 'reported final value' nor the bar in parentheses; the only statistics it defines are medians and standard deviations over windows of the optimisation trace. The bar is not a stated statistical error of the energy, so the row carries none (ruled 2026-11-26). Energy unchanged.",
+    "source_entry": "RP1#NQS-Agent (qmbl-verify 2026-11-26-reread)"
+  },
 ];
