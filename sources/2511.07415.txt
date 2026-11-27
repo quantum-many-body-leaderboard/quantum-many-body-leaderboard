@@ -1,0 +1,714 @@
+                   Topological and Trivial Valence-Bond Orders in Higher-Spin Kitaev Models
+
+                        Xing-Yu Zhang,1,∗  Qi Yang,2,∗  Philippe Corboz,2 Jutho Haegeman,1 and Yuchi He1, 3,†
+                         1Department of Physics and Astronomy, Ghent University, Krijgslaan 281, 9000 Gent, Belgium
+                             2Institute for Theoretical Physics Amsterdam and Delta Institute for Theoretical Physics,
+                                University of Amsterdam, Science Park 904, 1098 XH Amsterdam, The Netherlands
+            3Rudolf Peierls Centre for Theoretical Physics, Clarendon Laboratory, Parks Road, Oxford OX1 3PU, United Kingdom
+
+                    We investigate the quantum phases of higher-spin Kitaev models using tensor network methods.   Our re-
+                 sults reveal distinct valence-bond-ordered phases for spin-1, spin- 32 , and spin-2 models.  In all cases, we find
+                 translational symmetry breaking with unit cells being tripled by forming valence-bond orders.  However, these
+                 three phases are distinct, forming plaquette order, topological dimer order, and nontopological dimer order, re-
+                 spectively.  Our findings are based on a cross-validation between variational two-dimensional tensor network
+                 calculations: an unrestricted exploration of symmetry-broken states versus the detection of symmetry breaking
+                 from cat-state behavior in symmetry-restricted states. The origin of different orders can also be understood from
+                 a theoretical analysis.  Our Letter sheds light upon the interplay between topological and symmetry-breaking
+                 orders as well as their detection via tensor networks.
+
+
+   For  quantum  spin  lattice  systems,   valence-bond  solids                       valence-bond order coexisting with topological order has been
+(VBS) break translational symmetry by forming valence-bond                            proposed [27].
+orders:   some  bonds  spontaneously  become  stronger  with                             Significant computational efforts [23,24,28–37] have al-
+lower energies than others. A quantum spin liquid (QSL) was                           ready  been  devoted  to  the  spin-1  and  spin- 32  Kitaev  honey-
+originally defined by the absence of valence-bond orders and                          comb model.   Such reference points at or near the pure Ki-
+magnetic orders [1]. The competition between QSL and VBS                              taev limit are relevant for material realizations [38–40]. How-
+is determined by whether tunneling and resonance processes                            ever, consensus is still lacking on whether the isotropic spin-1
+remain  dominant  in  the  thermodynamic  limit.   Historically,                      model is gapless or gapped [23,24,28,31,36,37], as well
+this competition echoes concepts from chemistry (e.g., Kekulé                         as on the existence of bond orders [24,32,36,37] and topo-
+bond resonance) and solid-state physics [2,3].  After the ini-                        logical  order.   For  larger  spin  up  toS =2,  the  results  re-
+tial proposal of QSLs, revolutionary concepts such as emer-                           ported in Refs. [34–36] are not in agreement with the tripled-
+gent gauge fields [4], anyons [5], topological orders [6], and                        unit cell obtained in semiclassical results. Accurate numerics
+long-range entanglement [7] were introduced to characterize                           of both the spin-1 and the spin- 32  model by exact diagonal-
+general QSLs.  These characterizations reshape the definition                         ization and density-matrix renormalization group report large
+of a QSL and motivate a renewed examination of the interplay                          finite-size effects;  scaling up the size is extremely challeng-
+between valence-bond order and QSL concepts.                                          ing.  Two-dimensional tensor network (TN) methods, specifi-
+   The Kitaev-type spin-spin interaction [8,9] involves non-                          cally infinite projected entangled-pair states (iPEPS) [41], are
+trivial energetics of quantum spin orientation and dimer reso-                        not limited by such finite-size effects.  Hence, iPEPS results
+nance, providing a platform to study the interplay of valence-                        for the higher-spin Kitaev models,  obtained using improved
+bond order, gauge theory, and topological order. For compari-                         optimization  algorithms  and  more  systematic  data  analysis
+son, the antiferromagnetic Heisenberg interaction (JS    i·S  j,J>                    that go beyond earlier studies based on imaginary-time evo-
+0) has the singlet pairing as its lowest energy state,  thereby                       lution [24,32,36], are highly desirable.
+giving  rise  to  the  well-known  dimer  picture  and  motivating                       In this Letter, we address the question of the existence and
+dimer models based on dimer resonance [10–12].  This pic-                             nature of valence-bond orders for Kitaev models with mod-
+ture can capture various conventional VBS, e.g., Refs. [13–21]                        erately  higher  spinS∈(1,                      32,2).   We  reveal  that,  for  these
+which lack QSL characters.  By contrast, the Kitaev type of                           higher-spin  models,  translational  symmetry  is  broken  with
+spin-spin interaction per bond is Ising-like (e.g.,K           xS xi S xj) with       unit cells being tripled by forming valence-bond orders. How-
+two degenerate spin orientations with lowest energy.  There-                          ever,  three distinct phases are realized for the different spin
+fore, the possible valence-bond orders of Kitaev models are                           values, namely nontopological plaquette order (spin 1), topo-
+not captured by minimal dimer models.   The spin- 12  Kitaev                          logical dimer order (spin  32), and nontopological dimer order
+honeycomb  model  [8],  an  exactly  solvable  QSL  with  aZ       2                  (spin 2). These phases are illustrated in Figs.1(b)–1(d). These
+gauge field, lacks valence-bond order.  Likewise, the higher-                         findings are obtained with high-performance iPEPS simula-
+spin Kitaev models also exhibit localZ           2 fluxes as conserved                tions and complemented with an analytical argument showing
+quantities [22], which preclude any magnetic order.  Analyti-                         that topological order is present for half-integerSand absent
+cal constructions for emergent fermions and braiding [22–25]                          for integerSas a consequence of the properties of the con-
+have  been  found  for  half-integer  spinSbut  not  for  integer                     served flux operators.
+spin.   Semiclassical  analyses  near  the  large-spin  limit  sug-                      In line with the ongoing development of variational iPEPS
+gest the possibility of valence-bond order with a tripled unit                        techniques  [42–44],  we  employ  gradient  descent  optimiza-
+cell [22,26,27]. Furthermore, the possibility of a spontaneous                        tions, integrating further algorithmic improvements to achieve
+                                                                                                                                                                           2
+
+                                                                                         nearest-neighbor pair on theγbond.  The bonds of the hon-
+                                                                                         eycomb  lattice  are  divided  intox, y, zsets,  colored  dark
+                                                                                         blue,  yellow,  and  red  in  Fig.1.   We  focus  on  the  isotropic
+                                                                                         caseK          x   =K    y   =K    z   =K=−1.    The  sign  ofKcan
+                                                                                         be  flipped  by  four-unit-cell  localπrotations  of  spins  [54].
+                                                                                         Our conclusion will equally apply to theK=1 models be-
+                                                                                         cause such rotations do not alter the physical quantities char-
+                                                                                         acterizing  the  quantum  phases  that  we  find.   For  each  unit
+                                                                                         honeycomb  plaquette,  there  is  a  locally  conserved  quantity
+                                                                                         Wp =e    iπ(S       x1+S    y2+S    z3+S    x4+S    y5+S    z6) [8,22]. Because of Elitzur’s well-
+                                                                                         known no-go theorem [55], these local flux symmetries cannot
+                                                                                         be broken in the ground state. The global symmetry ofπ-spin
+                                                                                         rotations around thex,y, andzaxes can be composed from
+                                                                                         subsets ofW     p operators, thereby also precluding magnetic or-
+                                                                                         der in the ground state(s).
+                                                                                             To  obtain  the  ground  states  of  the  spin-1,   32,  and  2  Ki-
+FIG.  1.    Ground-state  bond-energy  configurations  in  the  Kitaev                   taev  models,  we  perform  gradient-descent  optimization  of
+model  for  different  spin  values.    Different  colors  represent  spins              iPEPS. The iPEPS are a family of variational wave functions
+along thex,y, andzaxes, and line thickness indicates the relative                        in the thermodynamic  limit,  defined by a  repeated unit cell
+bond-energy  strength.   (a)  Spin- 12 :  no  bond  order,  exhibiting  uni-             of  tensors,  as  depicted  in  Fig.2(a).   The  number  of  varia-
+form bond energies. The ground state is a gapless Kitaev spin liquid.                    tional  parameters  scales  asD     3,  withDbeing  the  bond  di-
+(b) Spin-1:  plaquette order.  Each site is connected to one weak and                    mension  of  the  virtual  bonds  connecting  the  site  tensors  to
+two strong bonds.   (c) Spin- 32 :  topological dimer order.   Each site                 their nearest neighbors [Fig.2(a)].  To directly identify trans-
+connects  to  one  strong  and  two  weak  bonds.   Purple  dashed  lines
+mark entanglement between strong bonds, forming a kagome lattice.                        lational  symmetry  breaking,  we  explore  iPEPS  with  differ-
+(d) Spin-2:  trivial dimer order.  Each site connects to one weak and                    ent  enlarged  unit  cells  and  determine  the  tripled  structure
+two strong bonds, where the strong bonds form short-range entan-                         [Fig.2(b)]  as  the  optimal  choice.   Physical  observables  of
+glement. A limiting case is a configuration where one spin in a bond                     iPEPS such as bond energies are computed by controlled ap-
+(e.g., within the black dashed box) only entangles with the other spin:                  proximate  contractions.   We  developed  the  variational  uni-
+√1
+  2 (|↑↑⟩+|↓↓⟩        ), where the up and down arrows represent the largest              form matrix product state (VUMPS) [48,56–58] method to
+and smallestS                    z components, respectively.                             directly  work  with  iPEPS  on  the  honeycomb  lattice  with  a
+                                                                                         general  unit  cell.    The  VUMPS  method  aims  to  solve  the
+significantly  higher  precision  with  iPEPS  at  large  bond  di-                      fixed-point environments of the iPEPS as the top, bottom, up,
+mensions.   For  the  spin- 1                                                            and down boundary matrix product state (MPS). Parallel to
+                                   2  Kitaev  model  [45–49],  the  tran-                the  general  unit  cell  calculations,  we  also  use  a  symmetry-
+sition  from  traditional  imaginary-time  evolution  to  modern                         restricted iPEPS that is invariant under the full latticeC              3v   and
+gradient-descent  schemes  has  pushed  the  ground-state  en-                           translational symmetry—contracted using theC       3v   symmetric
+ergy precision to∼10  −7  .  Building on this progress, we use                           QR decomposition (QR) corner transfer matrix renormaliza-
+gradient-optimized  iPEPS  with  enlarged  unit  cells  to  deter-                       tion  group  (CTMRG)  method  [47, 49, 59–61]—in  order  to
+mine  the  translational  symmetry  breaking  order  of  higher-                         provide  a  cross-check  and  to  facilitate  connecting  to  previ-
+spin  Kitaev  models.   Further  evidence  is  acquired  by  con-                        ous works.  Both the VUMPS and QR-CTMRG methods are
+trasting these results with symmetry-restricted iPEPS results,                           characterized by the environment bond dimensionχ, with in-
+where  we  propose  a  novel  methodology  to  detect  cat-state                         creasingχyielding  higher  precision.   Energy  gradients  for
+behavior  associated  with  the  translational  symmetry  break-                         the  optimization  are  computed  by  automatic  differentiation
+ing.   We furthermore characterize topological order through                             (AD) [44,48,49] of VUMPS and QR-CTMRG, respectively.
+the PEPS transfer-matrix spectrum [50].  Unlike several pre-                                 We optimize iPEPS with different bond dimensionsDto
+vious  works  [24, 32, 50, 51],  we  do  not  impose  aZ                                2  vir-approximate the ground state for the spin-1,  3
+tual  symmetry  on  the  iPEPS  but  find  that  it  emerges  spon-                      and summarize the results in Fig.3.   In the left panels,  we2, and 2 models
+taneously  [52, 53]  in  the  regime  where  topological  order                          plot the average energy per site obtained with both the unre-
+is  expected.    This  is  the  case  for  spin- 32.    For  the  spin-1                 stricted PEPS with tripled unit cell, as well as with theC       3v  -
+model [23,24], our methodology avoids the problem of a cat                               symmetric and translational invariant PEPS. For comparison,
+state hiding theZ       2 condensation.                                                  we also include—to our knowledge—the best results for the
+   We start with a brief discussion of the Kitaev honeycomb                              energy per site currently available in the literature.   We are
+Hamiltonian [8] generalized to arbitrary spin:                                           able  to  consistently  achieve  lower  variational  energies  with
+                                    X                                                    the symmetry-unrestricted iPEPS with a tripled unit cell.  We
+                             H=           KγSγi Sγj,                             (1)     verify that|W          p|=1 up to 10 −7   precision.  Our results exhibit,
+                                    ⟨i,j⟩   γ
+                                                                                         to good approximation, only two distinct values of the bond
+whereγdenotes  thex, y, zbonds  and       ⟨i,j ⟩γ  denotes  the
+                                                                                                                                                                           3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 2.  iPEPS ansatz and MPS boundary solutions in VUMPS con-                           FIG.  3.   Average  ground-state  energy  per  site  (left)  and  bond  ra-
+traction. (a) Left:C            3v  -symmetric tensor for single-tensor iPEPS. The       tio (right) for higher-spin Kitaev models for (a) spin 1, (b) spin   3
+tensor on the other sublattice is identical as a function of physical leg                and  (c)  spin  2.   Our  results  are  plotted  as  points  on  extrapolated2 ,
+(dimensiond) and virtual bondsx,y, andz(dimensionD).  Right:                             dashed lines (1/D   α extrapolation [62]) for unrestricted tripled-unit-
+tripled-unit-cell structure with three independent tensors (ABC). (b)                    cell iPEPS (see Fig.2), with bond dimensionDup to 12, and as a
+Boundary MPS as the fixed-point solutions of the iPEPS transfer ma-                      square box for theC       3v  -symmetric PEPS withD=8.  The contrac-
+trix (appearing in the norm), where the physical legs of the bra and                     tion dimensionχfor the environment is ramped to be large enough
+ket  have  been  contracted.   The  MPS  is  defined  by  the  contraction               for convergence (up to 512) [62].  Previous (symmetric) iPEPS re-
+of local tensorsA                iρ along the virtual legs with dimensionχ.  (c) For     sults obtained using simple-update [(S)TN-SU] [32,36] as well as
+Z2  topologically ordered states,  the iPEPS transfer matrix exhibits                    density matrix renormalization group (DMRG) results [31] are also
+a doubly degenerate fixed point structure, represented by boundary                       indicated.  The bond ratio is defined as the ratio between strong and
+MPS with tensorsA       ρ andA    ρ′ and associated with the breaking of an              weak bond energies|⟨S      γ
+emerging virtualZ                2  symmetry.   (d) Transfer matrix spectrum then                                     i Sγj⟩|max/|⟨S   γ′i′ Sγ′j′⟩|min.
+contains trivial excitations, targeted by the ansatz in the upper panel,
+as well as domain wall excitations between the two fixed points, tar-
+geted by the lower ansatz.                                                               our gradient-optimized symmetry-restricted calculation (C  3v  -
+                                                                                         AD), thus raising the question of whether both results are cap-
+                                                                                         turing the same phase, which may furthermore be compatible
+energies.  The bond ratio is thus defined as the magnitude of                            with the symmetry breaking that is explicitly present in our
+the stronger bond energy divided by that of the weaker one, as                           symmetry-unrestricted results.
+obtained from the tripled-unit-cell data, and is plotted in the                              Indeed, while the symmetry-restricted iPEPS results (STN-
+right panels of Fig.3.                                                                   SU [23] and our ownC               3v  -AD results) cannot explicitly break
+   The  deviation  of  the  bond  ratio  from  1  indicates  the  ex-                    the translational symmetry due to the single-tensor unit cell,
+istence  of  valence-bond  solid  orders.   The  spin- 32  and  spin-                    it  is  possible  that  they  encode  a  cat-state  superposition  of
+2 states both exhibit the tripled-unit-cell dimer bond-energy                            bond-ordered  states.   Following  standard  practices  [63],  we
+configuration [Figs.1(c) and1(d)] expected in the semiclassi-                            determine  whether  the  bond-bond  correlation  function  ex-
+cal limit,  which features isolated strong bonds,  i.e.,  dimers.                        hibits  long-range  order.   As  shown  in  Fig.6,  the  data  indi-
+We  show  below  that  only  the  spin- 32  ground  state  exhibits                      cates that the tripled-unit-cell oscillation may survive in the
+topological  order.    For  spin- 32   and  2,  Ref.  [36]  obtained                     long-range limit.   The behavior is different from that of the
+anisotropic bond ordered states that do not break translational                          spin- 12  case,  where an algebraic decay with exponent 4 has
+symmetry using iPEPS, optimized with imaginary-time evo-                                 been determined [49,64,65].  Detecting cat-state superposi-
+lution using simple update (TN-SU). Our results show that the                            tions from correlation functions is standard practice in many
+tripled-unit-cell states are energetically more favored. For the                         other numerical methods.   However,  using the iPEPS trans-
+spin-1 model, our results exhibit a different bond energy con-                           fer matrix, we can probe this behavior even more explicitly.
+figuration resulting in plaquette order: connected strong bonds                          The momentum-resolved transfer-matrix spectra, parameter-
+form a unit honeycomb plaquette on the lattice [Fig.1(b)]. In                            ized by the transverse momentumk       ∥ as
+Supplemental Material [62], we provide supporting evidence                                                   λn(k∥)=exp   −ϵ    n(k∥)+iκ       n(k∥),                  (2)
+from finite-cluster results with suitable geometry.  Our spin-
+1 energy density is lower than previous results [23,31],  in-                            directly encodes both the decay rate and the oscillatory be-
+cluding a DMRG calculation for an infinite cylinder geome-                               havior of static two-point correlation functions [50,66,67],
+try with a 4-unit vector width [31] and an iPEPS calculation                             where  the  angular  frequencyκ(k)  encodes  the  longitudinal
+using imaginary time evolution with a simple update that pre-                            momentumk       ⊥ andϵ(k) can be interpreted as an inverse cor-
+serves the translational,C                              3v  , and flux conservation symmetriesrelation  length  and  serves  as  a  proxy  for  the  physical  exci-
+(STN-SU) [32]. The latter result only differs by∼0.001 with                              tation  energies  in  the  system.   We  plot  the  spectraϵ(k)  of
+                                                                                                                                                                      4
+
+the symmetry-restricted iPEPS transfer matrix for the spin-1
+model in Fig.4(a).  A gap closing tendency atKandK       ′  in-
+dicates either a slowly decaying oscillation or long-range or-
+der [68], compatible with the symmetry broken state obtained
+in the tripled unit cell.  To relate this gap closing to a specific
+order,  we use an enlarged unit cell environment to contract
+theC       3v  -AD iPEPS, after it has been optimized in a translation
+invariant  environment.   We  then  find  that  the  plaquette  and
+dimer orders appear (Fig.1), consistent with our enlarged unit
+cell iPEPS results.  This analysis thus provides more detailed
+information than the bond-bond correlation function that we
+calculated to distinguish these two orders.  Further details are
+provided in the End Matter.
+   The transfer matrix also encodes the presence or absence
+of  topological  orders.   Hereto,  we  first  determine  the  num-
+ber of dominant eigenvalues, i.e., distinct VUMPS boundary                             FIG. 4.  Spectra of inverse correlation lengths [see Eq. (2)] obtained
+MPS solutions.  Starting from random initializations, we find                          from the transfer matrix for the single-tensor unit cellC         3v  -restricted
+the twofold degeneracy characteristic ofZ     2 topological order                      iPEPS for the spin-1 model (a), the tripled-unit-cell iPEPS for spin-
+for the spin- 32  model, whereas unique boundary states are ob-                        1 (b), spin- 32  (c), and spin-2 (d).  The transverse momentum along
+tained for the spin-1 and spin-2 cases. This is consistent with                        the transverse matrix corresponds to a cut in the Brillouin zone (a)
+our  theoretical  analysis,  discussed  later,  which  explains  the                   or  in  the  threefold  reduced  Brillouin  zone  (b)–(d),  where  (±2π/3)
+odd-even 2Sdiscrepancy for the presence of topological or-                             corresponds to (reduced) K and K’ points.  Only for spin- 32  (c) do
+der.   The occurrence of different boundary states can be di-                          we find two degenerate boundary MPS, for which we can plot both a
+rectly related to the existence of 1-form (i.e., stringlike) sym-                      vacuum and a fermion spectrum, using the ansatz in Fig.2(d).
+metries in topologically ordered states.   Absorbing a virtual
+string in the boundary environment must give rise to another                           zero-correlation-length states.
+degenerate boundary solution, in order to support deconfined                              Furthermore,  we  consider  an  effective  theory  for  strong
+anyonic excitations [50], as depicted in Figs.2(c) and2(d).                            tripled-unit-cell dimer orders.  As mentioned before, the Ki-
+   With the boundary solutions at hand, we now also plot the                           taev type of spin-spin interaction per bond is Ising-like (e.g.,
+transfer matrix spectra ofϵ(k) for unrestricted iPEPS with the                         KxS xi S xj) with two degenerate spin orientations.  An effective
+tripled unit cell in Figs.4(b)–4(d).   Gapped spectra forϵ(k)                          theory can be constructed by assigning a spin variableσ               z with
+are observed for the spin-1,   32, and 2 models, indicating the                        a basis of two low-energy states of the bond. The construction
+existence of physical excitation gaps.  As we find two degen-                          gives an effective spin-       1                    1(c)] model [27].
+erate boundary MPS for the spin- 3                                                                                   2 kagome lattice [Fig.
+                                            2 case, a domain wall struc-               To reveal the discrepancy between the two classes,  we find
+ture can be used to construct a transfer matrix that encodes                           that it is enough to consider the restriction put to possible ef-
+the string correlation [see Fig.2(d)], which corresponds to the                        fective terms from the flux conservation. For half-integer spin
+two-point correlation of emergent fermions.                                            cases, one can construct a Hamiltonian withW          p symmetry:
+   Now  we  provide a  theoretical  analysis  to explain  the  ab-                                    X                                    X
+sence and presence of topological order in the case of inte-                               Htop               Jeσxiσxjσxkσxlσxmσxn +              Jmσzaσz
+ger and half-integer spin, respectively.  The idea is to exam-                               eff   =                                                       bσzc,    (3)
+                                                                                                    i,j...n∈7                             a,b,c∈△
+ine the flux operators.   For dimer orders,  one can construct
+a prototype of short-range-entangled states by maximally en-                           wherei-nanda-clabel the sites of honeycomb and triangular
+tangling the spins in a dimer:     1√2 (|↑↑⟩+|↓↓⟩        ) forK=−1                     plaquettes in the kagome lattice,  respectively.   The first and
+and    1√                                                                              second terms are effectiveW        p operators commuting with each
+        2 (|↑↓⟩+|↓↑⟩        ) forK=1.  A straightforward calcula-                      other.  This is the toric code model on the kagome lattice re-
+tion shows that a product state of such dimers is an eigenstate                        alizingZ                2 topological order, which has been obtained before
+of the flux operators for integer spins but not for half-integer                       from semiclassical analysis [27].  For the integerScase, we
+spins. This applies to all dimer coverings. The nontopological                         instead obtain a Hamiltonian:
+decoupled plaquette state can also be constructed. For plaque-                                                                X
+tte orders, the decoupled plaquette limit can be constructed by                                                      Htri          hσ   xi,                               (4)
+turning offthe couplings at the weak bonds in the pattern. We                                                           eff  =
+                                                                                                                                i
+solve an isolated plaquette and find that the ground state is
+unique for spin 1 [62].   The above constructions show that,                           whereilabels the lattice sites.  The Hamiltonian equation (4)
+for spin 1 and spin 2, there is a nontopological state with the                        commutes with the effectiveW        p operatorsW                     p,i   =Ion honey-
+same broken symmetries, indicating a possible adiabatic con-                           comb andW        p,j   =σ    xj,a σxj,b σxj,c   triangle plaquettes.  This stabi-
+nection between the optimized iPEPS and these prototypical                             lizes the trivial state of isolated dimers.
+                                                                                          The mechanism for valence-bond order formation beyond
+                                                                                       the semiclassical picture deserves discussion.  Previous theo-
+                                                                                                                                                                       5
+
+retical investigations of spin- 32 Kitaev models have developed                          [1]P. Anderson, Resonating valence bonds: A new kind of insula-
+an interacting pseudofermionic theory [34,35] for spin-               32.  It                tor?,Mater. Res. Bull.8, 153 (1973).
+has  been  found  at  the  mean-field  level,  by  assuming  trans-                      [2]L.  Pauling  and  G. W.  Wheland,  The  nature  of  the  chemical
+lational symmetry, that fermions form nearly flat bands with                                 bond. V. The quantum-mechanical calculation of the resonance
+Majorana cones. We find that the spin bond order is translated                               energy of benzene and naphthalene and the hydrocarbon free
+into interaction-induced pseudofermion bond order, while the                                 radicals,J. Chem. Phys.1, 362 (1933).
+                                                                                         [3]R. E.  Peierls,Quantum  Theory  of  Solids(Oxford  University
+Z2 gauge structure is intact.  For the spin-1 Kitaev model, as                               Press, New York, 1955).
+there is no obvious emergent fermion and braiding [23,24],                               [4]I. Affleck and J. B. Marston, Large-Nlimit of the Heisenberg-
+previous works proposed candidate symmetric phases with a                                    Hubbard  model:   Implications  for  high-T            c  superconductors,
+picture  of  anyonlessZ                 2  spin  liquids  [22–25, 69].   Our  Let-           Phys. Rev. B37, 3774 (1988).
+ter shows that the spin-1 Kitaev model forms trivial plaquette                           [5]V. Kalmeyer and R. B. Laughlin, Equivalence of the resonating-
+order.  Since the order is moderate, certain additional interac-                             valence-bond  and  fractional  quantum  Hall  states,Phys.  Rev.
+tions may help suppress the plaquette order to stabilize a pos-                              Lett.59, 2095 (1987).
+                                                                                         [6]X. G. Wen, Topological orders in rigid states,Int. J. Mod. Phys.
+sible nearby symmetric state.  Adding sufficient explicit cou-                               B04, 239 (1990).
+pling anisotropy has been shown to result in a trivial columnar                          [7]X. Chen, Z.-C. Gu, and X.-G. Wen, Local unitary transforma-
+VBS state [28–30,70].                                                                        tion, long-range quantum entanglement, wave function renor-
+   In conclusion,  we have demonstrated that the higher-spin                                 malization,  and  topological  order, Phys.  Rev.  B82,  155138
+Kitaev models provide a platform for an intriguing interplay                                 (2010).
+among valence bond orders and spin-liquid concepts. Consid-                              [8]A. Kitaev, Anyons in an exactly solved model and beyond,Ann.
+                                                                                             Phys. (Amsterdam)321, 2 (2006).
+ering additional terms relevant for Kitaev materials can lead                            [9]G. Jackeli and G. Khaliullin, Mott insulators in the strong spin-
+to rich phenomena, such as interplay between bond and mag-                                   orbit coupling limit:  From Heisenberg to a quantum compass
+netic order and between anisotropy and translational symme-                                  and Kitaev models,Phys. Rev. Lett.102, 017205 (2009).
+try breaking.  Furthermore, our Letter provides an improved                            [10]D. S.  Rokhsar  and  S. A.  Kivelson,  Superconductivity  and  the
+tensor network workflow for numerical investigations of sym-                                 quantum hard-core dimer gas,Phys. Rev. Lett.61, 2376 (1988).
+metry breaking and topological order in frustrated magnets.                            [11]R. Moessner, S. L. Sondhi, and P. Chandra, Phase diagram of
+   Acknowledgments—We  thank  Nick  Bultinck,  Naichao                                       the hexagonal lattice quantum dimer model,Phys. Rev. B64,
+Hu, Rui-Zhen Huang, Shenghan Jiang, Johannes Knolle, Sid                                     144416 (2001).
+                                                                                       [12]T. Schlittler, T. Barthel, G. Misguich, J. Vidal, and R. Mosseri,
+Parameswaran, Illya Lukin, Hong-Hao Tu, Frank Verstraete,                                    Phase  diagram  of  an  extended  quantum  dimer  model  on  the
+Victor Vanthilt, Kang Wang, Wei Tang, Fan Yang, Xu Zhang,                                    hexagonal lattice,Phys. Rev. Lett.115, 217202 (2015).
+and  Zheng  Zhu  for  discussion.   X.Y.Z.,  J.H.,  and  Y.H.  are                     [13]S.-S. Gong, W. Zhu, D. N. Sheng, O. I. Motrunich, and M. P. A.
+supported by the European Research Council under the Euro-                                   Fisher, Plaquette ordered phase and quantum phase diagram in
+pean Union’s Horizon 2020 program under Grant Agreement                                      the spin- 12 J1−J    2  square Heisenberg model,Phys. Rev. Lett.
+No. 101125822. Q.Y. and P.C. are supported by the European                                   113, 027201 (2014).
+Research Council under the European Union’s Horizon 2020                               [14]R. Ganesh, J. van den Brink, and S. Nishimoto, Deconfined crit-
+                                                                                             icality in the frustrated Heisenberg honeycomb antiferromag-
+program under Grant Agreement No. 101001604.  For code                                       net,Phys. Rev. Lett.110, 127203 (2013).
+development and numerical calculations, we are thankful for                            [15]A. F. Albuquerque, D. Schwandt, B. Hetényi, S. Capponi, M.
+the use of the University of Oxford Advanced Research Com-                                   Mambrini,  and  A. M.  Läuchli,  Phase  diagram  of  a  frustrated
+puting  facility,  and  we  thank  the  EuroHPC  Joint  Undertak-                            quantum antiferromagnet on the honeycomb lattice:  Magnetic
+ing for access to MareNostrum5 at BSC, Spain, under Grants                                   order versus valence-bond crystal formation,Phys. Rev. B84,
+No.  EHPC  DEV-2025D07-003  and  No.  DEV-2025D06-052                                        024406 (2011).
+                                                                                       [16]S.-S. Gong, D. N. Sheng, O. I. Motrunich, and M. P. A. Fisher,
+and  access  to  LUMI,  Finland,  under  Grant  No.  VSC-2025-                               Phase diagram of the spin- 12 J1−J    2 Heisenberg model on a hon-
+09-T350-JH-JULIA.                                                                            eycomb lattice,Phys. Rev. B88, 165138 (2013).
+   Views and opinions expressed are, however, those of the au-                         [17]T. Liu, W. Li, A. Weichselbaum, J. von Delft, and G. Su, Sim-
+thors only and do not necessarily reflect those of the European                              plex valence-bond crystal in the spin-1 kagome Heisenberg an-
+Union or the European Research Council Executive Agency.                                     tiferromagnet,Phys. Rev. B91, 060403(R) (2015).
+Neither the European Union nor the granting authority can be                           [18]H. J. Changlani and A. M. Läuchli, Trimerized ground state of
+held responsible for them.                                                                   the spin-1 Heisenberg antiferromagnet on the kagome lattice,
+   Data availability—The data that support the findings of                                   Phys. Rev. B91, 100407(R) (2015).
+                                                                                       [19]P. Corboz and F. Mila,  Tensor network study of the Shastry-
+this  article  are  openly  available  [71],  embargo  periods  may                          Sutherland  model  in  zero  magnetic  field,Phys.  Rev.  B87,
+apply.                                                                                       115144 (2013).
+                                                                                       [20]M. E.  Zayed,   C.  Rüegg,   J.  Larrea  J.,   A. M.  Läuchli,   C.
+                                                                                             Panagopoulos,  S. S.  Saxena,  M.  Ellerby,  D. F.  McMorrow,  T.
+                                                                                             Strässle, S. Klotz, G. Hamel, R. A. Sadykov, V. Pomjakushin,
+                                                                                             M.  Boehm,   M.  Jiménez-Ruiz,   A.  Schneidewind,   E.  Pom-
+   ∗  These authors contributed equally to this work.                                        jakushina,  M.  Stingaciu,  K.  Conder,  and  H. M.  Rønnow,  4-
+   †  yuchi.he@ugent.be                                                                      spin plaquette singlet state in the Shastry–Sutherland compound
+                                                                                             SrCu2(BO3)2,Nat. Phys.13, 962 (2017).
+                                                                                                                                                                                    6
+
+[21]Y. Cui, L. Liu, H. Lin, K.-H. Wu, W. Hong, X. Liu, C. Li, Z. Hu,                          [41]F.  Verstraete  and  J. I.  Cirac,  Renormalization  algorithms  for
+      N. Xi, S. Li, R. Yu, A. W. Sandvik, and W. Yu, Proximate de-                                  quantum-many  body  systems  in  two  and  higher  dimensions,
+      confined quantum critical point in SrCu2(BO3)2,Science380,                                    arXiv:cond-mat/0407066.
+      1179 (2023).                                                                            [42]P.  Corboz,   Variational  optimization  with  infinite  projected
+[22]G. Baskaran,  D. Sen,  and R. Shankar,  Spin-SKitaev model:                                     entangled-pair states,Phys. Rev. B94, 035133 (2016).
+      Classical ground states, order from disorder, and exact correla-                        [43]L. Vanderstraeten, J. Haegeman, P. Corboz, and F. Verstraete,
+      tion functions,Phys. Rev. B78, 115116 (2008).                                                 Gradient  methods  for  variational  optimization  of  projected
+[23]Z. Zhu, Z.-Y. Weng, and D. N. Sheng, Magnetic field induced                                     entangled-pair states,Phys. Rev. B94, 155123 (2016).
+      spin liquids inS=1 Kitaev honeycomb model,Phys. Rev. Res.                               [44]H.-J.  Liao,  J.-G.  Liu,  L.  Wang,  and  T.  Xiang,  Differentiable
+      2, 022047(R) (2020).                                                                          programming tensor networks,Phys. Rev. X9, 031041 (2019).
+[24]Y.-H.  Chen,  J.  Genzor,  Y. B.  Kim,  and  Y.-J.  Kao,  Excitation                      [45]J. Osorio Iregui, P. Corboz, and M. Troyer, Probing the stability
+      spectrum  of  spin-1  Kitaev  spin  liquids,Phys.  Rev.  B105,                                of the spin-liquid phases in the Kitaev-Heisenberg model using
+      L060403 (2022).                                                                               tensor network algorithms,Phys. Rev. B90, 195102 (2014).
+[25]H. Ma,Z                    2 spin liquids in the higher spin-sKitaev honeycomb            [46]H.-Y. Lee, R. Kaneko, T. Okubo, and N. Kawashima, Gapless
+      model:  An exact deconfinedZ                          2  gauge structure in a noninte-        Kitaev  spin  liquid  to  classical  string  gas  through  tensor  net-
+      grable model,Phys. Rev. Lett.130, 156701 (2023).                                              works,Phys. Rev. Lett.123, 087203 (2019).
+[26]S.  Chandra,  K.  Ramola,  and  D.  Dhar,  Classical  Heisenberg                          [47]I. V.  Lukin  and  A. G.  Sotnikov,  Variational  optimization  of
+      spins on a hexagonal lattice with Kitaev couplings,Phys. Rev.                                 tensor-network states with the honeycomb-lattice corner trans-
+      E82, 031113 (2010).                                                                           fer matrix,Phys. Rev. B107, 054424 (2023).
+[27]I. Rousochatzakis, Y. Sizyuk, and N. B. Perkins, Quantum spin                             [48]X.-Y. Zhang,  S. Liang,  H.-J. Liao,  W. Li,  and L. Wang,  Dif-
+      liquid  in  the  semiclassical  regime,Nat.  Commun.9,  1575                                  ferentiable programming tensor networks for Kitaev magnets,
+      (2018).                                                                                       Phys. Rev. B108, 085103 (2023).
+[28]A. Koga, H. Tomishige, and J. Nasu, Ground-state and thermo-                              [49]Q.  Yang  and  P.  Corboz,  Efficient  iPEPS  simulation  on  the
+      dynamic properties of an S=1 Kitaev model,J. Phys. Soc. Jpn.                                  honeycomb lattice via QR-based CTMRG,Phys. Rev. B113,
+      87, 063703 (2018).                                                                            085109 (2026).
+[29]T.  Minakawa,  J.  Nasu,  and  A.  Koga,  Quantum  and  classical                         [50]J. Haegeman, V. Zauner, N. Schuch, and F. Verstraete, Shadows
+      behavior of spin-SKitaev models in the anisotropic limit,Phys.                                of anyons and the entanglement structure of topological phases,
+      Rev. B99, 104408 (2019).                                                                      Nat. Commun.6, 8284 (2015).
+[30]T.  Minakawa,  J.  Nasu,  and  A.  Koga,  Magnetic  properties  of                        [51]N.  Schuch,  I.  Cirac,  and  D.  Pérez-García,  PEPS  as  ground
+      the S=1 Kitaev model with anisotropic interactions, in Pro-                                   states: Degeneracy and topology,Ann. Phys. (Amsterdam)325,
+      ceedings  of  the  International  Conference  on  Strongly  Corre-                            2153 (2010).
+      lated Electron Systems (SCES2019) (2020), p. 011086.                                    [52]A. Francuz, J. Dziarmaga, G. Vidal, and L. Cincio, Determining
+[31]X.-Y. Dong and D. N. Sheng, Spin-1 Kitaev-Heisenberg model                                      topological order from infinite projected entangled pair states,
+      on a honeycomb lattice,Phys. Rev. B102, 121102(R) (2020).                                     Phys. Rev. B101, 041108(R) (2020).
+[32]H.-Y. Lee, N. Kawashima, and Y. B. Kim, Tensor network wave                               [53]S. P. G. Crone and P. Corboz, Detecting aZ             2  topologically or-
+      function ofS=1 Kitaev spin liquids,Phys. Rev. Res.2, 033318                                   dered  phase  from  unbiased  infinite  projected  entangled-pair
+      (2020).                                                                                       state simulations,Phys. Rev. B101, 115143 (2020).
+[33]I. Khait, P. P. Stavropoulos, H.-Y. Kee, and Y. B. Kim, Charac-                           [54]I. Rousochatzakis, J. Reuther, R. Thomale, S. Rachel, and N. B.
+      terizing spin-one Kitaev quantum spin liquids,Phys. Rev. Res.                                 Perkins, Phase diagram and quantum order by disorder in the
+      3, 013160 (2021).                                                                             KitaevK   1−K    2  honeycomb magnet,Phys. Rev. X5,  041035
+[34]H.-K. Jin, W. M. H. Natori, F. Pollmann, and J. Knolle, Unveil-                                 (2015).
+      ing the S=3/2 Kitaev honeycomb spin liquids,Nat. Commun.                                [55]S. Elitzur, Impossibility of spontaneously breaking local sym-
+      13, 3813 (2022).                                                                              metries,Phys. Rev. D12, 3978 (1975).
+[35]W. M. H.  Natori,  H.-K.  Jin,  and  J.  Knolle,  Quantum  liquids                        [56]V. Zauner-Stauber,  L. Vanderstraeten,  M. T. Fishman,  F. Ver-
+      of theS=              32  Kitaev honeycomb and related Kugel-Khomskii                         straete, and J. Haegeman, Variational optimization algorithms
+      models,Phys. Rev. B108, 075111 (2023).                                                        for  uniform  matrix  product  states,Phys.  Rev.  B97,  045145
+[36]S. S. Jahromi,  M. Hörmann,  P. Adelhardt,  S. Fey,  H. Karam-                                  (2018).
+      nejad, R. Orús, and K. P. Schmidt, Kitaev honeycomb antifer-                            [57]L.  Vanderstraeten,  J.  Haegeman,  and  F.  Verstraete,  Tangent-
+      romagnet in a field:  quantum phase diagram for general spin,                                 space methods for uniform matrix product states,SciPost Phys.
+      Commun. Phys.7, 319 (2024).                                                                   Lect. Notes 7 (2019).
+[37]Q. Luo, J. Zhao, J. Li, and X. Wang, Chiral spin state and ne-                            [58]A. Nietner, B. Vanhecke, F. Verstraete, J. Eisert, and L. Vander-
+      matic ferromagnet in the spin-1 Kitaev-Γmodel,Phys. Rev. B                                    straeten,  Efficient  variational  contraction  of  two-dimensional
+      110, 035121 (2024).                                                                           tensor  networks  with  a  non-trivial  unit  cell,Quantum4,  328
+[38]C.  Xu,  J.  Feng,  H.  Xiang,  and  L.  Bellaiche,  Interplay  be-                             (2020).
+      tween Kitaev interaction and single ion anisotropy in ferromag-                         [59]S.  Nyckees,  A.  Rufino,  F.  Mila,  and  J.  Colbois,  Critical  line
+      netic CrI3 and CrGeTe3 monolayers,npj Comput. Mater.4, 57                                     of  the  triangular  Ising  antiferromagnet  in  a  field  from  aC   3-
+      (2018).                                                                                       symmetric corner transfer matrix algorithm,Phys. Rev. E108,
+[39]P. P.  Stavropoulos,  D.  Pereira,  and  H.-Y.  Kee,  Microscopic                               064132 (2023).
+      mechanism  for  a  higher-spin  Kitaev  model,Phys.  Rev.  Lett.                        [60]T. Nishino and K. Okunishi, Corner transfer matrix renormal-
+      123, 037203 (2019).                                                                           ization group method,J. Phys. Soc. Jpn.65, 891 (1996).
+[40]P. P. Stavropoulos, X. Liu, and H.-Y. Kee, Magnetic anisotropy                            [61]Y.   Zhang,   Q.   Yang,   and   P.   Corboz,   Accelerating   two-
+      in spin-3/2 with heavy ligand in honeycomb Mott insulators:                                   dimensional     tensor     network     contractions     using     QR-
+      Application toCrI     3,Phys. Rev. Res.3, 013216 (2021).                                      decompositions,Phys. Rev. B113, L201106 (2026).
+                                                                                                                                                                           7
+
+[62]See    Supplemental    Material    at http://link.aps.org/
+      supplemental/10.1103/7q31-xxsdfor   more   details   of
+      iPEPS  simulation  and  additional  exact  diagonalization  (ED)
+      and DMRG calculations.
+[63]S. Liang, B. Doucot, and P. W. Anderson, Some new variational
+      resonating-valence-bond-type  wave  functions  for  the  spin-½
+      antiferromagnetic Heisenberg model on a square lattice,Phys.
+      Rev. Lett.61, 365 (1988).
+[64]S. Yang, S.-J. Gu, C.-P. Sun, and H.-Q. Lin, Fidelity susceptibil-
+      ity and long-range correlation in the Kitaev honeycomb model,
+      Phys. Rev. A78, 012304 (2008).
+[65]F. Yang,  K. Plekhanov,  and K. Le Hur,  Valence bond fluctu-                        FIG. 5.  Linear transfer matrix map:  the optimal contraction order
+      ations  in  the  Kitaev  spin  model,Phys.  Rev.  Res.2,  013005                   isT    1 →T      2 →A→A    ′ →T      3 →B→B    ′,  and the correspond-
+      (2020).                                                                            ing computational costs areO(χ              3D4)→O(χ              2D5d)→O(χ                 2D5d)→
+[66]V.  Zauner,  D.  Draxler,  L.  Vanderstraeten,  M.  Degroote,  J.                    O(χ      3D4)→O(χ              2D5d)→O(χ                 2D5d).
+      Haegeman,  M. M. Rams,  V. Stojevic,  N. Schuch,  and F. Ver-
+      straete, Transfer matrices and excitations with matrix product
+      states,New J. Phys.17, 053002 (2015).                                              states with larger environment cells, as discussed in the main
+[67]M. M. Rams, P. Czarnik, and L. Cincio, Precise extrapolation of                      text.  Details of the VUMPS can be found in Ref. [48], and
+      the correlation function asymptotics in uniform tensor network
+      states with application to the Bose-Hubbard and XXZ models,                        our additional general performance improvements will be re-
+      Phys. Rev. X8, 041033 (2018).                                                      ported elsewhere. For gradient optimization, we implement a
+[68]M. Rispler, K. Duivenvoorden, and N. Schuch, Long-range or-                          precondition scheme [72].
+      der  and  symmetry  breaking  in  projected  entangled-pair  state                    We focus on the efficient contraction of native honeycomb
+      models,Phys. Rev. B92, 155133 (2015).                                              iPEPS using the VUMPS algorithm.  In contraction, the bra-
+[69]R. Liu, H. T. Lam, H. Ma, and L. Zou, Symmetries and anoma-                          ket network surrounding a lattice site is approximated by envi-
+      lies of Kitaev spin-S models:  Identifying symmetry-enforced                       ronment tensors (denoted asTin Fig.5). The primary compu-
+      exotic quantum matter,SciPost Phys.16, 100 (2024).
+[70]O. Bradley and Rajiv R. P. Singh, Instabilities of spin-1 Kitaev                     tational cost in VUMPS arises from applying the linear trans-
+      spin liquid phase in presence of single-ion anisotropies,Phys.                     fer matrix map.   The depicted contraction scheme scales as
+      Rev. B105, L060405 (2022).                                                         O(χ      3D4 +χ    2D5d);C      3v   CTMRG  exhibits  the  same  scaling
+[71]X.-Y. Zhang, Q. Yang, P. Corboz, J. Haegeman, and Y. He, Data                        when using a similar method.  A key advantage of contract-
+      for Topological and trivial valence-bond orders in higher-spin                     ing the honeycomb lattice natively is computational efficiency.
+      Kitaev models,Zenodo(2026).                                                        A common alternative is to merge two sites to form a square
+[72]X.-Y. Zhang, Q. Yang, P. Corboz, J. Haegeman, and W. Tang,
+      Accelerating two-dimensional tensor network optimization by                        lattice, but this is effectively a more costly contraction order.
+      preconditioning,Phys. Rev. B113, 125111 (2026).                                    The merged square iPEPS tensor (with four virtual bonds) has
+[73]W.-Y. Liu, S.-S. Gong, Y.-B. Li, D. Poilblanc, W.-Q. Chen, and                       a  higher  contraction cost  ofO(χ           3D4 +χ    2D6d2).   Assuming
+      Z.-C. Gu,  Gapless quantum spin liquid and global phase dia-                       the typical empirical relationχ=O(D                              2), both methods ulti-
+      gram of the spin-1/2J                     1−J    2 square antiferromagnetic Heisen-mately scale asO(D           10).  However, working directly with the
+      berg model,Sci. Bull.67, 1034 (2022).                                              honeycomb lattice reduces the prefactor, offering a practical
+                                                                                         speedup.
+                               END MATTER
+                                                                                             Appendix B: Inferring cat states from symmetry-restricted
+ Appendix A: VUMPS algorithms for native honeycomb lattice                                                                     iPEPS
+
+   To compute gradients and physical observables, we employ                                 In the main text, we demonstrate that signatures of symme-
+two  contraction  schemes  depending  on  the  iPEPS  unit  cell.                        try breaking can be inferred from symmetry-restricted iPEPS
+For  the  translationally  invariant  andC        3v  -symmetric  iPEPS,                 via  cat-state  behavior.   Here  we  provide  further  details  and
+we use the efficient QR-CTMRG method [49], while for en-                                 supporting data.
+larged unit cells we adopt the VUMPS algorithm.  Both ap-                                   Bond-bond correlation functions:In the thermodynamic
+proaches  offer  a  computational  advantage  over  the  original                        limit, a cat state associated with the expected tripled-unit-cell
+CTMRG  in  obtaining  fixed-point  environments.    Although                             symmetry-breaking pattern corresponds to a superposition of
+randomized singular value decomposition [47] can reduce the                              three degenerate states, yielding long-range order in specific
+cost of CTMRG to a similar level, QR-CTMRG and VUMPS                                     connected correlation functions.  For valence-bond order, the
+remain faster in practice.  Our QR-CTMRG implementation                                  relevant quantity is the bond-bond correlation function,
+is adapted to the honeycomb lattice and exploits itsC      3v   sym-
+metry for further speedup.  As QR-CTMRG is not yet gener-                                         CDz,D z(r  i,j  )=⟨S        zi S zi′S zjS zj′⟩−⟨S   zi S zi′⟩⟨S     zjS zj′⟩,         (B1)
+alized to enlarged unit cells, VUMPS is used in those cases,
+as well as for cross-validation and analysis ofC     3v  -symmetric                      wherei,i    ′ andj,j   ′ denote nearest-neighbor pairs andr        i,j   is the
+                                                                                         distance between sitesiandj.  Based on our optimizedC                                             3v
+                                                                                                                                                                        8
+
+iPEPS, correlations can be reliably inferred over finite ranges,
+which extend asDincreases.  Since long-range order is de-
+fined only  in the  infinite-distance limit,  its  emergence must
+be inferred from the trend with increasingD.   Both tripled-
+unit-cell dimer and plaquette orders in the bond-bond corre-
+lation function manifest as oscillations with period three, tak-
+ing values (2c,−c,−c), wherecis a constant.  In variational
+iPEPS, correlation functions are generally more challenging
+to compute accurately than ground-state energies, with preci-
+sion estimated from results at different bond dimensionsD.
+Figure6(a) presents our spin-1 results.  ForD=12, the en-
+ergy (nearest-neighbor correlation) error is about 10−4  .  The
+enlarged-unit-cell iPEPS yields a correlation length of roughly
+three lattice constants for the symmetry-broken state, suggest-
+ing that correlation data up to ten sites, accurate to about 10−3  ,
+can  reliably  indicate  the  ordering  tendency.   The  expected
+oscillation is clearly observed, although the plateau shows a
+slight decay, which we attribute to numerical artifacts.  Sim-
+ilar finite-accuracy effects have been reported in large-scale
+PEPS studies of other spin models [73].  We observe that the
+estimated exponent tends toward zero with increasingD.  By
+contrast, algebraic QSL is unlikely to have a very small expo-
+nent to remain stable [73].  (For spin-        12, the exponent is 4.)  If             FIG. 6.  (a) Bond-bond correlation function of symmetry-restricted
+interpreted as algebraic decay, the extracted exponent is sig-                         iPEPS forS=1.  The horizontal dashed line depicts the plateau be-
+nificantly smaller than 1, rendering the QSL scenario unlikely.                        havior expected for oscillatory long-range orders, and the other ref-
+   Transfer matrix spectrum:The long-range order in cor-                               erence dashed line depicts the form of 1/ralgebraic decay.   More
+relation  functions  is  formally  associated  with  the  exact  de-                   accurate  data  (largerD)  show  that  the  tripled-unit-cell  oscillation
+generacy of the dominant eigenvalues in the boundary MPS                               may converge to plateaus.   (b),(c) Finite correlation length scaling
+                                                                                       forS =              12  (b)  andS =1  (c),  whereδ=ln(|λ                                             1/λ3|)  withλ           i  be-
+transfer-matrix spectrum [68].  In practice, iPEPS optimized                           ing  theith  largest-magnitude  eigenvalue  of  transfer  matrices  and
+at finite bond dimensionDneed not exhibit exact degeneracy,                            ξ−1   =−ln(|λ                1/λ0|) is the inverse dominant correlation length.
+but  our  results show  a  clear  convergence  toward it  with  in-
+creasingD.  This behavior corresponds to the suppression of
+the apparent artificial decay in correlation functions.  A static                       D, indicating that, at fixedδ, the gap between the leading and
+connected two-point correlation function, including Eq. (B1),                          first excited transfer-matrix eigenvalues closes more rapidly
+can be expressed as                                                                    asDgrows.
+                          X                                                                Spontaneous  symmetry  breaking  by  environments:As  a
+                 f(r)=         fie−ϵ   ir,  ϵi =−ln(λ             i/λ0),            (B2)third approach, contracting the optimized symmetry-restricted
+                          i>0                                                          iPEPS with an unrestricted environment directly demonstrates
+whereλ             i are the eigenvalues of the transfer matrix determined             symmetry breaking.  Explicitly enlarging the unit cells of the
+by  the  MPS  bond  dimensionχfor  a  given  iPEPS  bond  di-                          environments to 2×6 in combination with replicated PEPS
+mensionD.  Accurate estimation of the spectrum requires a                              tensors from the single unit cell, the calculated bond energies
+simultaneous increase of bothχandD.  The approach of the                               become  nonuniform  due  to environmental  symmetry  break-
+inverse dominant correlation lengthξ    −1   =ln(|λ           1/λ0|)→0 sig-            ing, as shown in Fig.7. This is a direct consequence of strong
+nals that the connected correlation function ceases to decay                           oscillatory bond-bond correlations.  This method can directly
+exponentially.  As shown in Figs.6(b) and6(c), we perform                              reveal plaquette order and dimer order. When the degeneracy
+finite-correlation-length scaling following Refs. [49,67]. For                         of transfer matrix dominant eigenvalues is not exact, the order
+spin 1, the extrapolatedξ(χ→∞,δ→0) appears to converge                                 exists only for finiteχ.
+
+for fixedDyet remains relatively large even at moderateD.
+This behavior is consistent with Refs. [24,32], which achieve                           Appendix C: Determine topological order from boundary MPS
+comparable energy accuracy to ourD=5, 6 data.  We fur-
+ther find thatξtends to increase withD,  suggesting an ap-                                 As shown in the main text,  the action of string operators
+proach toward degeneracy consistent with cat-state behavior.                           relating topological sectors leads to a twofold degeneracy in
+To contrast this with a known algebraic QSL, we compare to                             the boundary MPS of the iPEPS. Our approach employs un-
+theS=            12 case: forS=            12, data withD≥6 collapse, whereas          structured site tensors and searches for distinct boundary MPS
+forS=1, no such collapse occurs up toD=12.  Moreover,                                  of the optimized iPEPS [52].  To explore different solutions,
+the slope decreases with increasingDfor both even and odd
+                                                                                                                                                                         9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG.  7.   Spontaneous  symmetry  breaking  of  environment  for  con-
+tracting  uniformC                   3v   iPEPS  tensor  once  the  uniform  restriction  of
+environment is lifted.
+
+
+we  use  random  initializations  in  the  approximate  boundary
+solver. Different boundary solutions produce energy densities
+that agree up to relative precision 10−9  . Different solutions are
+identified by computing the inner-product density between six
+consecutive MPS tensors, with overlaps within 10−6   consid-
+ered identical. Unlike most previous works that imposeZ                 2 vir-
+tual symmetry to realize topological degeneracy through vir-
+tual symmetry breaking, our method avoids such constraints.
+This is important because, in such symmetric constructions,
+even  trivial  phases  can  exhibit  artificial  fourfold  boundary
+degeneracy—interpreted as condensations that break allZ      2×Z    2
+symmetries of the iPEPS bra-ket structure [50]—which dou-
+bles the required bond dimensionDand increases the compu-
+tational cost.  The relationship between degeneracy and sym-
+metry breaking becomes subtle when condensation coincides
+with translational symmetry breaking under restricted trans-
+lational  invariance.   Following  Ref.  [24],  we  apply  projec-
+tors [32,46] to constructZ                                    2-iPEPS from ourC        3v   data.  Ran-
+dom  initialization  then  reveals  that  the  degeneracy  is  more
+than twofold, with overlaps around 0.4, indicating cat states
+of virtual symmetry.   This is consistent with the absence of
+topological order in theS=1 phase.
+  Supplemental Material for “Topological and Trivial Valence-Bond Orders in Higher-Spin Kitaev
+                                                                          Models”
+
+                        Xing-Yu Zhang,1,∗  Qi Yang,2,∗  Philippe Corboz,2 Jutho Haegeman,1 and Yuchi He1, 3,†
+                         1Department of Physics and Astronomy, Ghent University, Krijgslaan 281, 9000 Gent, Belgium
+                            2Institute for Theoretical Physics Amsterdam and Delta Institute for Theoretical Physics,
+                               University of Amsterdam, Science Park 904, 1098 XH Amsterdam, The Netherlands
+            3Rudolf Peierls Centre for Theoretical Physics, Clarendon Laboratory, Parks Road, Oxford OX1 3PU, United Kingdom
+
+
+
+   This Supplemental Material provides further details of the
+iPEPS simulations (SectionsS1toS4), the exact solution of
+an isolated plaquette (SectionS5), and additional exact diag-
+onalization  (ED)  and  density  matrix  renormalization  group
+(DMRG)  calculations  supporting  the  plaquette  order  of  the
+spin-1 model (SectionS6). Figures and equations labeled with
+the prefix “S” refer to this Supplemental Material;  all other
+figure numbers refer to the main text (including its End Mat-
+ter), and reference numbers refer to the reference list of the
+main text.
+
+
+
+
+   S1.    MORE DETAILS OF IPEPS AND CONTRACTION
+                                 ANSATZ
+
+   Our calculations and all of the referenced previous iPEPS                       FIG.  S1.   iPEPS  ansatz  with  large  unit  cell.   (a)  Bond  pattern  for
+                                                                                   spin-1, (b) bond pattern for spin- 32 and spin-2, (c) 2×6 unit cell with
+work [23,24,36] of higher-spin Kitaev models are based on                          a brick wall shape.  The dashed black lines indicate bonds omitted
+honeycomb iPEPS, where the tensor on each site has three vir-                      relative to the square-lattice embedding, and the dashed red box in-
+tual legs, with the dimension set to beD.  As the network is                       dicates the unit cell for the boundary MPS calculation.
+native to the lattice geometry, it brings no artifact for study-
+ing the lattice symmetry breaking of our interest.  To inves-                                               S2.    VUMPSχ-RAMP
+tigate  translational  symmetry  breaking  beyond  the  scope  of
+Refs. [23,24,36],  we extend the translational symmetry of
+iPEPS from the minimal two-site unit to enlarged cases.                               High-precision evaluation of iPEPS observables requires a
+   This process begins with the construction of a unit cell. The                   sufficiently large environment bond dimension; we have per-
+configuration presented in Fig.1of the main text has a unit                        formed the ramp for the data that we presented in the main
+cell with 6 sites.  For VUMPS contraction, it is better to il-                     text. In Fig.S2, we show an example of such a ramp.
+lustrate the assignment of the environment tensors in a further
+enlarged 2×6 unit cell (see Fig.S1).  We draw the network
+alternatively by embedding the honeycomb lattice in a square
+lattice.  The honeycomb iPEPS network remains unchanged
+because it is defined by the unchanged connection topology.
+The variational parameters are contained in the independent
+tensorsA, B, andC, optimized by gradient descent.  We set                          FIG. S2. We ramp the environment bond dimensionχin the VUMPS
+site tensors expected with the same bond energyx,y,zdis-                           algorithm  to  determine  the  energy  of  our  optimized  symmetry-
+tribution to be the same, a generalization of the single-tensor-                   breaking iPEPS. Here we show the data forD=12; theχis ramped
+for-two-sublattice restriction in Refs. [46,49].  We verify the                    up to 512. The convergence hints that we achieve sufficient precision
+validity by lifting the restriction.  However, we cannot fully                     up to 10−6   or even 10−7  .
+reduce the number of environment tensors in the same spirit,
+as a converging contraction could not be achieved with the re-
+strictions that we tried to impose. We resort to an environment
+composed of six boundary MPS tensors, surrounding the six                                                  S3.    EXTRAPOLATION
+tensors enclosed in the red dashed rectangle in Fig.S1(c), re-
+spectively.  The environments for the parts not enclosed are                          We perform a 1/D  α  extrapolation for both the symmetry-
+obtained from translation.                                                         breaking iPEPS (large unit cell) and the symmetry-restricted
+                                                                                                                                                                    11
+
+iPEPS results.  In Fig.3of the main text, we present the ex-                           S4.    ADDITIONAL IPEPS CORRELATION LENGTH DATA
+trapolated energy and bond ratio for the symmetry-breaking
+iPEPS. ForS=1, the full datasetD=6,8,10,12 is used in                                    In Figs.6(b) and6(c) of the main text, we present the iPEPS
+the extrapolation, whereas forS=            32 andS=2, only the data                  data for the correlation length of the spin- 1
+points withD=8,10,12 are included.                                                    We observe that the data of the spin- 1               2 and spin-1 models.
+                                                                                                                                       2  model show a collapse
+   This choice is guided by the principle that a reliable extrap-                     for differentD, whereas this feature is absent for the spin-1
+olation should be based on a well-converged sequence inD.                             model.  In Fig.S4we show that the feature is also absent for
+First, the data for consecutive bond dimensions should vary                           the spin- 32 and spin-2 models.
+smoothly rather than exhibit abrupt changes.  As an illustra-
+tion, we examine the correlation spectrum (Fig.4of the main
+text) for the spin- 32  model.  The results forD=8,10,12 con-
+sistently show the longest correlation length in the fermionic
+sector, whereas atD=6 the fermionic sector instead exhibits
+the shortest correlation length.   This qualitative discrepancy
+indicates that theD=6 data point is not yet in the same con-
+vergence regime and is therefore excluded from the extrapo-
+lation.
+   Second,  fitting  with  a  leading-order  ansatz  (∼1/D    α)  be-                 FIG. S4.  Additional data of finite correlation length scaling for (a)
+comes less reliable when small-Ddata are included, as sub-                            spin- 3             Dis the bond dimension of PEPS, while the
+                                                                                             2  and (b) spin-2.
+leading corrections become non-negligible in that regime.  In                         scaling  parameter  isδ=ln(|λ                  1/λ3|)  withλ           i  being  theith  largest-
+our calculations, we observe that theS=            32 andS=2 models                   magnitude eigenvalue of transfer matrices and the inverse dominant
+require larger bond dimensions to achieve a level of energy                           correlation length is given byξ  −1   =−ln(|λ                1/λ0|).
+convergence comparable to theS=1 case. This further moti-
+vates the exclusion of smaller-Ddata points from the extrapo-
+lation for these higher-spin systems.
+   We  now  compare  the  extrapolated  energy  for  the  spin-1                               S5.    SOLUTIONS OF ISOLATED PLAQUETTE
+model obtained by both our symmetry-breaking iPEPS (large                                In this section, we discuss the solution of the Kitaev model
+unit cell) and symmetry-restricted iPEPS (Fig.S3).  The ex-                           on a single plaquette (six sites).  As we discuss in the main
+trapolated  results  [Fig.S3(a)]  improve  the  agreement  from                       text, when the ground-state solution is unique, the prototype
+1×10  −4   (at largestD) to 1×10     −5   (extrapolated value) and                    trivial gapped ground state with plaquette order can be directly
+find agreement within the error bars.                                                 constructed.  We find that the ground state of the spin-1 pla-
+
+                                                                                      quette is unique with energy≈−3.63.  The gap to the excited
+                                                                                      state is≈0.18. For spin-            12  and spin- 32, the ground state is, by
+                                                                                      contrast, fourfold degenerate.
+
+
+                                                                                         S6.    EVIDENCE FOR PLAQUETTE ORDER BASED ON
+                                                                                                          FINITE-SIZE CALCULATIONS
+
+                                                                                         In this section,  we focus on the spin-1 Kitaev model and
+                                                                                      present evidence for plaquette order based on high-precision
+                                                                                      finite-size data.
+                                                                                         Using  exact  diagonalization,  we  study  the  model  on  a
+                                                                                      24-site hexagonal cluster with periodic boundary conditions.
+                                                                                      This  geometry  preserves  the  full  spatial  symmetry  of  the
+                                                                                      model  and  is  compatible  with  plaquette  valence-bond-solid
+                                                                                      (VBS) order.  We verify that the ground-state energy is con-
+                                                                                      sistent  with  previous  results  reported  in  Ref.28.   To  probe
+                                                                                      possible VBS ordering, we compute the bond-bond correla-
+FIG.  S3.    (a)  Extrapolation  of  the  energy  with  1/D  α  scaling  for          tion function [15] and its corresponding structure factor.  In
+both our symmetry-breaking iPEPS (large unit cell) and symmetry-                      Fig.S5,  we  present  the  connected  bond-bond  correlations,
+restricted iPEPS results. (b) Heuristic choice forα=4.                                which  exhibit  pronounced  plaquette  correlations.   This  be-
+                                                                                      havior is similar to that observed in theJ       1–J   2–J   3 Heisenberg
+                                                                                      model on the honeycomb lattice [15].   In Fig.S6,  we show
+                                                                                                                                                                     12
+
+the structure factor of the averaged bond-bond correlations. A                         geometry-induced edge-pinning approach to probe plaquette
+clear peak appears at theKandK     ′ points, indicating that the                       order [14]. As illustrated in Fig.S7, the honeycomb lattice is
+24-site cluster has a strong susceptibility to the tripled-unit-                       arranged on a triangular flake. At the boundary, missing bonds
+cell valence-bond order.                                                               leave spins with two remaining bonds,  which can preferen-
+                                                                                       tially form stronger plaquette bonds.   This geometry,  there-
+                                                                                       fore, tends to pin a plaquette with six strong bonds near the
+                                                                                       edge.  Assuming plaquette order, the central plaquette is ex-
+                                                                                       pected  to  exhibit  alternating  strong  and  weak  bonds  in  this
+                                                                                       setup.
+                                                                                          We  estimate  the  plaquette  bond  ratio  using  the  bond  en-
+                                                                                       ergies  labeled  in  Fig.S7.    For  comparison,  we  also  ana-
+                                                                                       lyze  the  spin- 12  Kitaev  model  on  the  same  geometry.   For
+                                                                                       the  spin-1  case,  the  estimated  bond  ratio  is  approximately
+                                                                                       −0.303/−0.126≈2.4, which likely overestimates the true
+                                                                                       value due to finite-size and boundary effects. By contrast, the
+                                                                                       spin- 12  model yields nearly uniform bond energies, consistent
+                                                                                       with the absence of long-range valence-bond order. In princi-
+                                                                                       ple, a more accurate bond ratio could be obtained by extrapo-
+                                                                                       lating with increasing flake size. However, this is not feasible
+                                                                                       with DMRG, as the computational cost grows exponentially
+                                                                                       with the system width and higher spin values require signifi-
+                                                                                       cantly larger bond dimensions. As discussed in the main text,
+                                                                                       our iPEPS calculations provide a more reliable estimate of the
+FIG. S5.  Connected bond-bond correlation function for spin-1 Ki-                      bond ratio.
+
+taev model on 24-site hexagonal geometry.  The plotted values areE− DSγi jEDSγklE).
+4C   Di j,D kl =4(  DSγi ji   Sγi jj  Sγklk  Sγklli   Sγi jjk  Sγkll
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                       FIG. S7.  Bond energies for (a) spin- 12  and (b) spin-1 Kitaev models
+                                                                                       on a finite triangle flake.  The thickness of a bond is proportional to
+FIG. S6.   Structure factor of bond-bond correlation function.   The                   the absolute value of bond energy.  The values of two bonds are de-
+real-space bond-bond correlation function (Fig.S5) is Fourier trans-                   noted in the figures. The data are obtained from DMRG calculations.
+formed to momentum space with an extended momentum mesh.                               The bond dimension that we use is 4800 to ensure sufficient preci-
+                                                                                       sion.
+
+   Based   on   DMRG   calculations,   we   further   employ   a

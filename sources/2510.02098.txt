@@ -1,0 +1,941 @@
+-Quantum Effects or Theoretical Artifacts? A Computational Reanalysis of Hydrogen’s High-Pressure Phase Stability and
+Properties
+
+Stefano Racioppi*,1,2 Eva Zurek*2
+
+1Department of Materials Science and Metallurgy, University of Cambridge, Cambridge CB30FS, United Kingdom.
+2Department of Chemistry, State University of New York at Buffalo, Buffalo, New York 14260-3000, USA.
+
+ABSTRACT. Experimental and theoretical studies of the high-pressure phases of hydrogen are highly sensitive to
+methodological choices. We compare the cold phase diagram of hydrogen calculated between 400-700 GPa with meta-
+GGA functionals (R2SCAN and SCAN0) with the commonly employed GGA-PBE functional. Molecular phases are
+stabilized over the atomic phase to higher pressures with the meta-GGA, in closer agreement with diffusion Monte
+Carlo calculations. R2SCAN phonon spectra show that the dynamical instabilities and anharmonic signatures predicted
+at the GGA level vanish, indicating that such effects may partly arise from functional deficiencies rather than quantum
+nuclear  effects.  Bonding  analysis  reveals  that  PBE  artificially  weakens  intramolecular  H–H  bonds  and  enhances
+intermolecular interactions through charge delocalization, whereas meta-GGA preserves a more localized molecular
+character.
+
+Ninety years ago, Bernal suggested that hydrogen, the                         chemistry and band structure methods, computations
+lightest and most abundant element in the Universe,                           involving   hydrogen        are   plagued   by     the   artificial
+could   be   metallized   under   pressure.        Wigner   and               interaction of the single electron with itself        , due to the
+Huntington predicted metallization in the solid at 25                         reliance   on   non-exact   functionals   of   the   electron
+GPa [1], though dynamic compression at 140 GPa and                            density      [13].     The      main     limitations     include
+~3000 K [2]. Though toroidal diamond anvil cells [3],                         delocalization    and    static    correlation    errors,      [12]
+hydrogen metallization in a crystalline sample at low                         together with the incorrect asymptotic behavior of the
+temperature has not been unambiguously confirmed.                             exchange-correlation     potentials        [13],     which     are
+Electrical  conductivity  and  Raman  measurements  in                        amplified in the case of hydrogen         . Even in an isolated
+static    compression    experiments    have    provided                      H atom the binding (ionization) energy calculated by
+evidence for semi-metallic behavior at 350 GPa, with                          one  of  the  most  commonly  employed  Generalized
+a possible transition to a metallic state above 440 GPa                       Gradient      Approximation      (GGA)      functionals,
+and 100 K, [4] while infrared optical absorption has                          PBE, [14] can be off by as much as 50% compared to
+hinted  that  the  molecular  solid  metallizes         near  425             the  experimental  value  (13.6  eV).         This  error  stems
+GPa   and   80   K [5].       Further   measurements   and                    from    the  estimation  of  repulsive  electron-electron
+improved    theoretical    models           are    required      to           interactions within GGA, which are present despite the
+conclusively establish the metallization of hydrogen at                       atom being mono-electronic [15]. For many-electron
+high pressure (HP) and low temperature conditions.                            systems, like H2 molecules, only high-level quantum
+                                                                              mechanical calculations, [16–18] including Quantum
+The experimental characterization of hydrogen’s HP                            Monte  Carlo  (QMC) [19]            and  coupled-cluster, [20]
+atomistic  structure  is  extremely  challenging,  as  the                    can  achieve  a  truly  accurate  description.  However,
+lightest element possesses an exceptionally low X-ray                         these  exact  methods  incur  a  computational  cost  that
+scattering  cross  section  and  a  high  Debye-Waller                        scales  exponentially  with  the  system  size,  making
+factor.   A   recent   study   employing          nano-focused                them  virtually  inaccessible  for  studies         of  most  real
+synchrotron X-ray probes suggested a post-hcp model                           systems.     Nonetheless,     QMC     methods     were
+between  212-245  GPa  at  room  temperature.  This                           successfully used to train machine-learning potentials,
+structure consists of graphene-like layers where each                         which  notably  speeded  up  the  exploration  of  dense
+hexagon  is  made  of  three  H2        dimers  separated  by                 hydrogen’s phase diagram [21–23].
+layers  of  spherically  disordered  H2          molecules, [6]
+resembling features previously proposed for phase IV                          A    practical   strategy    to   improve   the   accuracy   of
+of    hydrogen [7–9].       Notably,    the    formation    of                computations  on  many-electron  systems,  including
+graphene-like  layered  motifs  in  dense  hydrogen  has                      potentially costly geometry optimizations of extended
+long been hypothesized [10,11].                                               structures,  is  the  development  and  benchmarking  of
+                                                                              semi-local  DFT  functionals,  which  go  beyond  the
+Theory  likewise  continues  to  be  challenged  by  the                      GGA   approximation,   but   keep   the   computational
+lightest   of   all   atoms.   Within   Density   Functional                  expense tractable [24,25]. Meta-GGA functionals [26]
+Theory (DFT), the workhorse of numerical quantum                              bring  a  substantial  improvement  by  employing  the
+kinetic energy density to provide a better description                        ground  state  at  374  GPa. Because  of  the  fixed-node
+of  the  correlation  energy,      and   by  approaching  the                 approximation [44] used by DMC, these calculations
+correct   gradient   expansions   in   the   exchange   and                   relied on the local density approximation (LDA)  of
+correlation energies for slowly varying densities (i.e.,                      the   orbital   energies   and   initial   geometry,   which
+metals). [27,28] As a consequence, meta-GGAs yield                            inevitably affects the final result of the Monte Carlo
+better band-gaps (severely underestimated by              GGAs)               simulation [45]. All calculated phases were predicted
+and   bonding   properties   (bond   lengths,   interaction                   to be metallic within PBE.
+strengths,  and  dissociation  curves);         [29,30]   and  in
+many cases, at almost GGA computational cost                 [31].            Moving to the meta-GGA level, R2SCAN predicts the
+In a parallel vein, f   unctionals accounting for v       an-der-             Cmca-4      phase   as  being  more  stable  than       Cmca-12
+Waals   interactions      have    been   shown   to      improve              above   428   GPa   and   up   to   675   GPa,   before
+calculations for warm dense hydrogen.            [32–34]                      transforming into the atomic        I41/amd phase (Figure 1).
+                                                                              At this level of theory, the       ground state     phases were
+Herein, we perform state-of-the-art calculations of the                       predicted  to  be  metallic.      However,  the     C2/c    phase,
+cold  (0  K)  HP  phase  diagram  of  hydrogen  between                       which is just a couple of meV/atom less stable than the
+400-700  GPa      optimized     at  three  levels  of  theory –               ground state (Figure S1), possessed a band gap of 0.41
+PBE, R2SCAN and SCAN0 – to highlight the impact                               eV at 400 GPa, which closes below 500 GPa. A recent
+of the exchange-correlation functional on the phases’                         series of DMC calculations, this time based on PBE
+relative    enthalpies,    without    zero-point          energy              geometries and orbital energies, instead of LDA [46],
+contributions,  at  0  K  (Figure  1).        We  focused  on                 similarly  predicted  a  transition  from  the          Cmca-12
+structures that have been studied as likely candidates                        phase in this pressure regime (447 GPa), but now to
+including    the  molecular Cmca-12 [35],          Cmca-4 [36]                the  atomic  I41/amd       phase,  and  not  to Cmca-4. Is  it
+and   C2/c   (phase-III) [35]     phases      (whose  dynamic                 possible to go beyond meta-GGA? In principle, hybrid
+stability was thought to be governed by anharmonic                            and   higher   level   functionals   would   be   ideal   for
+effects), [37,38] and on the atomic I41/amd [35] phase,                       studying    hydrogen    computationally,    since    the
+which   assumes       the   Cs-IV   structure   type. [39]      In            inclusion   of   Hartree-Fock   exact   exchange   has   a
+addition,   we   searched       for   previously   unreported                 significant  impact  on  the  electronic  energies  and
+phases   of   pure   hydrogen   at   500   GPa   using   the                  optimized geometries  [12]. Unfortunately, using such
+evolutionary  algorithm  XtalOpt            [40,41],   but   none             high levels of theory in periodic systems, including HP
+were found.                                                                   hydrogen, is hindered by the huge computational cost
+                                                                              required to calculate the exact exchange with plane-
+The GGA functional (PBE) finds the enthalpy of the                            wave  based  codes.        We    therefore    performed  single
+atomic   I41/amd     phase   to  fall below  the  enthalpy  of                point  calculations  of  the  electronic  energies  of  the
+Cmca-4 at ~507 GPa, comparable to results obtained                            C2/c, I41/amd, Cmca-4 and Cmca-12 phases from 400-
+previously  with  the  same  functional  (490  GPa)  but                      700   GPa   using   the   meta-hybrid-GGA   functional
+using  a  different  code       [42].  In  contrast,  previous                SCAN0 on the R2SCAN optimized geometries (Figure
+diffusion     quantum     Monte     Carlo     calculations                    1) [47].
+(DMC), [43]       predicted   that    I41/amd     becomes   the
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 1. Cold (0 K) phase diagrams of HP hydrogen, using the functionals: (1) PBE (GGA); (2) R2SCAN (meta-
+GGA); and (3) SCAN0 (meta-hybrid-GGA). The SCAN0 enthalpies were calculated on the R2SCAN geometries. At
+470 GPa (*), SCAN0 predicts hydrogen’s metallization, in agreement with experimental observations [4,5].
+
+
+
+
+
+All  forces  estimated  by  SCAN0  were  below  10-                            discrepancies,    by    investigating    the    functional          -
+13eV/Å,   suggesting   that   the   structures   would   not                   dependence of dynamic stability.
+change  much  upon  re-optimization.              However,  the
+SCAN0    internal    energies    differed    from    those                     Figures  2a    -d  compare  the  PBE         and    the  R2SCAN
+computed with R2SCAN. The most striking result is                              harmonic  phonon  spectra  for  the  four  phases  at  700
+that at 400 GPa the C2/c phase is now the ground state                         GPa.     For   the   atomic   phase   the        phonon      bands
+with a band gap of 1.75 eV, which closes at ~470 GPa                           calculated with the two functionals are similar, apart
+upon transition to Cmca-12 (Table S1). This insulator-                         from a slight hardening of the modes below 1500 cm-
+to-metal transition is now in good agreement with the                          1 along Γ → X and at N with the meta-GGA. Though
+infrared  data  obtained  at  80  K  by  Loubeyre  and                         the   I41/amd    phase    has   been   predicted  to  be  highly
+coworkers   (transition   observed   above   425   GPa),                       harmonic [38,50,52],         the   inclusion   of     anharmonic
+associated  with  a  structural  transition  from         C2/c    to           quantum  nuclear  effects  (QNE)  at  0  K         , within  PBE,
+Cmca-12 [5].  Experiments          concluded  that  hydrogen                   produced        softer      phonon     modes [53].           Those
+remains as C2/c up to ~450 GPa and 100 K, where the                            calculations were, however, performed near the PBE
+Raman signals disappear, suggesting the transition to                          phase transition’s pressure. The meta-GGA functional
+a  metallic  molecular  state [4]. Therefore,  the  hybrid                     calculates a slightly larger volume per atom in I41/amd
+meta-GGA  level  of  theory  gives  the  best  agreement                       compared  to  GGA,  especially  at  lower  pressures
+with  state  of  the  art  experimental  data.         At  higher              (Figure  S2),  but  the  effect  on  the  phonons  is  not  as
+pressures    Cmca-12  transforms into          Cmca-4  at  ~566                evident as for the molecular phases.
+GPa.   By   extrapolation   of   the   meta-hybrid   GGA
+enthalpies,  the  stabilization  of  the  atomic          I41/amd              We are not the first to notice that the PES of I41/amd
+phase  is  estimated  to  occur  above  850  GPa, beyond                       can be adequately calculated even by lower levels of
+any cold experiment performed thus far on hydrogen.                            theory.  Ref      [38]   compares      the  calculated  PES  of
+                                                                               I41/amd as a function of the c/a ratio between LDA,
+Within  this  first  section,  we  aimed  to  highlight  the                   GGA   and   QMC.   Surprisingly,   for   small   atomic
+sensitivity of the predicted phase diagram of hydrogen                         volumes (i.e., high-pressures) LDA and GGA predict
+to the DFT level of theory. These results suggest that                         energy profiles that almost match that of QMC. This
+similar   sensitivity   would   be   observed   for   other                    is likely due to the transition from covalent molecule
+quantum states of matter where hydrogen interactions                           (localized electron pair) to atomic metal (free electron
+are   important,   such   as   superionicity, [48]         or   the            gas-like), which can be fairly well described also by
+formation  of  superconducting  hydrogen  cages. [49]                          the LDA.
+Moreover,  we  observed  that  increasing  the  level  of
+theory in static (0 K) calculations pushes the range of                        The geometries and the phonon spectra of the Cmca
+thermodynamic stability of the atomic I41/amd phase                            and the C2/c molecular phases are the most affected
+progressively  towards  higher pressures,  favoring  the                       by  the  choice  of      functional.  Within  the  harmonic
+molecular phases.                                                              approximation,  PBE  (Figure  2b)            and   BLYP [37,38]
+                                                                               find Cmca-4 to be dynamically unstable at 700 GPa.
+In the second part of this work, we aim to quantify how                        At  the  BLYP  level  of  theory,  the  instability  arises
+different   DFT      approximations        impact   the   lattice              already  at  ~400  GPa [37],         while  R2SCAN         predicts
+dynamics     of       compressed        hydrogen.     Previous                 neither  dynamic  instabilities  nor  soft  phonon  modes
+calculations  at  the  BLYP  level  of  theory, [38,50]                        that could be signatures of anharmonicity (Figure 2b).
+where anharmonic effects were included to relax the                            As we will discuss later, this difference boils down to
+geometries   and   correct   the   enthalpies,   predicted                     the  ability  of  meta-GGA  to correctly          calculate  intra
+Cmca-12 as the ground state at 410 GPa, followed by                            and   intermolecular   hydrogen   interactions [54].   A
+a   transformation   to   the   atomic   phase            at   577             similar  hardening  of  the  phonons  is  evident  both  in
+GPa, [35,38]      without  passing  through  the          Cmca-4               Cmca-12 (dynamically stable within PBE) and in C2/c
+phase.    Similarly,   other   studies        using     the   PBE              (dynamically  unstable  within  PBE)  once  the  meta-
+functional      predicted      that       Cmca-4         becomes               GGA functional is used (Figure 2c-d).
+dynamically  unstable  at  450  GPa.         [37,51] However,
+the   unstable   phonons   could   be   renormalized   by
+anharmonic effects calculated with the stochastic self             -
+consistent harmonic approximation (SSCHA)                 [37,51].
+Our calculations give a different picture.          Specifically,
+the  meta-GGA  functional  R         2SCAN  does  not  yield
+imaginary phonon modes for          Cmca-4, even at 700 GPa
+(Figure 2). Below we        shed light on    the origin of these
+
+
+
+                                                                               Interestingly, R2SCAN calculates a volume expansion
+                                                                               for all the phases, resembling the expansion caused by
+                                                                               QNE       (Figure   S2) [37].       With   the   SSCHA   this
+                                                                               expansion results from the QNE-induced elongation of
+                                                                               the   H-H  bonds  from  0.793  Å  to  0.837  Å  at  414
+                                                                               GPa [37].     In  contrast,  within      R2SCAN       the  volume
+                                                                               expansion is due to an increase in the distance between
+                                                                               the molecules, due to a higher Pauli repulsion, while
+                                                                               the H-H distances shorten and strengthen (0.759 Å at
+                                                                               400 GPa). The crucial effect of explicitly introducing
+                                                                               the dependence on 2ρ in the functional becomes even
+                                                                               more    evident    in    quantum    molecular    dynamics
+                                                                               calculations  (Figure  S3).         NPT    simulations  on  the
+                                                                               Cmca-4 phase at 700 GPa and 300 K with the PBE
+                                                                               functional melts the solid, as shown by the g(r) profile,
+                                                                               or   radial   distribution   function   (Figure    S3),   in
+                                                                               agreement with the imaginary modes obtained by                   the
+                                                                               harmonic phonons (Figure 2b). On the other hand, the
+                                                                               g(r) obtained with the meta-GGA functional is typical
+                                                                               of  a  crystalline  system,  even  at  room  temperature
+                                                                               (Figure S3).
+
+                                                                               To quantify the differences between functionals, let’s
+                                                                               focus on the intramolecular interactions in molecular
+                                                                               hydrogen (Figure 3).        In the relaxed Cmca-4 phase at
+                                                                               700   GPa,   used       here   as   a   general   example,   the
+                                                                               intramolecular H-H distance equals 0.836 Å and 0.752
+                                                                               Å  for  PBE  and  R2SCAN,  respectively.             Extracting a
+                                                                               rigid  molecular  unit  of  H      2  from  the  unit  cell  (  and
+                                                                               placing it in a 10      Å3 box, without performing further
+                                                                               relaxations) and calculating the difference between its
+                                                                               lowest unoccupied molecular orbital (LUMO) and its
+                                                                               highest occupied molecular orbital (HOMO), PBE and
+                                                                               R2SCAN  predict  gaps  of  9.73  eV  and  10.98  eV,
+                                                                               respectively.   Scanning   the   energy   profile   of   the
+                                                                               extracted  H2      molecule  as  a  function  of  the  H          -H
+                                                                               distance shows that the meta        -GGA functional finds the
+                                                                               minimum of the isolated molecule very close to that               in
+                                                                               Cmca-4 at  700  GPa         (Figure  3).  In  other  words,  for
+                                                                               R2SCAN,   the        Cmca-4       phase   is    a   pure,   almost
+                                                                               unperturbed,       molecular   crystal.   In   fact,   by   re      -
+                                                                               optimizing the geometry of the isolated molecule, the
+                                                                               H-H bond shortens by only 0.01 Å, and the band gap
+                                                                               (HOMO       – LUMO difference) decreases by less than
+                                                                               0.1 eV (Figure 3).
+
+                                                                               In  contrast,  the  energy  profile  calculated  with  PBE
+Figure  2.    Phonon  band  structures  of  the  optimized                     reveals that the     H-H distance in the       extracted isolated
+atomic I41/amd, and molecular Cmca-4, Cmca-12 and                              molecule differs substantially from that in the crystal             ,
+C2/c phases of hydrogen, calculated at 700 GPa using                           suggesting that the molecular nature of H           2 is perturbed
+both  the  PBE  (orange  lines)  and  the  R2SCAN  (blue                       within the Cmca-4 phase. PBE weakens the H                -H bond
+lines) functionals.                                                            when the molecule is embedded in th              e crystal lattice,
+                                                                               resulting  in  an  elongation        of   almost  0.1  Å.  GGA
+                                                                               functionals   tend   to   over   delocalize   the   electron
+                                                                               density,  producing  more  metallic           periodic  systems,
+                                                                               and causing the famous         underestimation       of band (and
+
+
+
+HOMO – LUMO) gaps. PBE relaxation of the isolated                                curvature compared  to         R2SCAN,       and demonstrating
+molecule contracts the H-H distance to 0.750 Å, and                              that the GGA produces weaker H-H bonds. However,
+the  HOMO – LUMO  increases to  10.15  eV,  in-line                              PBE     counterbalances     the           weakening     of     the
+with the R2SCAN calculation.                                                     intramolecular interaction by delocalizing the charge
+                                                                                 density     among     the     adjacent     molecules     and
+                                                                                 strengthening the intermolecular interactions (Figure
+                                                                                 S4). This phenomenon also affects the density of states
+                                                                                 at the Fermi level (Figure S5), which in the case of
+                                                                                 PBE,  is  almost  30%  higher  than  in  R2SCAN.  This
+                                                                                 marked  difference  in  the  electronic  structure  and
+                                                                                 electron  density  calculated  by  the  GGA  and  meta-
+                                                                                 GGA functionals is not observed in the atomic I41/amd
+                                                                                 phase,   which   instead,   is   well   described   by   both
+                                                                                 functionals as a metallic atomic phase (Figure S4-S5).
+
+                                                                                 To   conclude   the   bonding   analysis,   we   used   the
+                                                                                 Periodic  Energy  Decomposition  Analysis  (Section
+                                                                                 S4) [40,55]     to   find  the   electrostatic  (ionic),  orbital
+                                                                                 (covalent)  and  Pauli  repulsion  contributions  (Figure
+                                                                                 S6) towards the intermolecular interaction between a
+                                                                                 hydrogen  molecule  and  its  surroundings  in             Cmca-4.
+                                                                                 Three  different  scenarios        were  considered     :  (1)  from
+                                                                                 the   PBE   energy   calculated   in   the   PBE   relaxed
+                                                                                 structure; (2) from the R        2SCAN energy calculated in
+                                                                                 the PBE relaxed structure; and (3) from the R               2SCAN
+                                                                                 energy  calculated  in  the  R      2SCAN  relaxed  structure.
+                                                                                 Since  the  unit  cell  and  the  atomic  positions  are  the
+                                                                                 same,  the  energy  diff       erence  between  (1)  and  (2)
+                                                                                 reveals  the  difference  between  the  two  functionals.
+                                                                                 R2SCAN  calculates  weaker  interactions  between  the
+                                                                                 reference     H2        molecule     and     the     crystal     line
+                                                                                 environment.  The  higher  Pauli  repulsion  in  (2)  and
+                                                                                 lower orbital interaction with the adjacent molecules,
+Figure  3. (Top)      Energy  profiles  of  isolated  H2 as  a                   are  the  terms  responsible  for  this  effect,  since  the
+function  of  the  intermolecular  distance,  calculated                         charge is less delocalized       and more concentrated in the
+with R2SCAN and PBE. Dashed lines correspond to                                  H2 intramolecular bond         with the meta-GGA functional
+the  intermolecular  distances  in Cmca-4            at  700  GPa.               (Figure  S6).  In  fact,  in  (3),  where  the  unit  cell  and
+The zero is defined by the energy of the unrelaxed H2                            atomic coordinates are optimized using the meta               -GGA
+molecule     extracted  from  the  crystal. (Bottom)            The              functional,  the  H    2 bond shortens,  while  the  unit  cell
+interatomic distances and HOMO – LUMO gaps of the                                volume  expands.  In  energy  terms,  this  is  translated
+unrelaxed (extracted from Cmca-4 at 700 GPa) and the                             into a drop of the Pauli repulsion between molecules,
+relaxed hydrogen molecule.                                                       but  also  a  decrease  of  the  intermolecular            strength.
+                                                                                 Therefore, the volume expansion in            Cmca-4 calculated
+The    effects    of    electron    density    delocalization                    by  R2SCAN  is  the  way  that  the  system  adapts  to
+calculated by PBE in Cmca-4 can be further quantified                            lowering the intermolecular Pauli repulsion.
+by   means   of   the   Quantum   Theory   of   Atoms   in
+Molecules (Section S3) [40]. In this context, the value                          In conclusion, we analyzed the effect of GGA, meta                   -
+of the electron density ρ(r) at the intramolecular bond                          GGA, and meta-hybrid-GGA functionals on the phase
+critical  point,   bcp,  becomes  a  useful  descriptor  to                      stability,  lattice  dynamics,  and  bonding  of  hydrogen
+benchmark  the  effect  of  the  functional  on  the  bond                       between  400  and  700  GPa.  Increasing  the  level  of
+strength,  while  the  value  of  the  Laplacian,           2ρ(r),              theory  progressively  stabilizes  the  molecular  phases
+quantifies  the  degree  of  localization  of  the  electron                     relative   to   the   atomic     I41/amd     phase,   yielding   a
+density at the bonding critical point. The values of ρ(            r)            metallization pressure that        is in close agreement with
+         2                                                                       current   experimental   observations [5].   We   further
+and      ρ(r)   calculated      with    PBE   are     quite   low,              show   that   the   phonon   instabilities   and   apparent
+signifying a more diffuse electron density and flatter                           anharmonic signatures predicted for molecular phases
+
+
+
+at    the    GGA    level    disappear    within    R2SCAN,                                  ACKNOWLEDGMENTS
+indicating  that  some  of  these  effects  may  originate                   Funding for this research was provided by the Center
+from    deficiencies    in    the    exchange-correlation                    for Matter at Atomic Pressures (CMAP), a National
+functional rather than from genuine quantum nuclear                          Science  Foundation  (NSF)  Physics  Frontier  Center,
+motion.     Although     anharmonic     effects     remain                   under Award PHY-2020249. Partial funding for this
+important in dense hydrogen, our results demonstrate                         research   is   provided   by   the   U.S.   Department   of
+that an accurate description of the underlying potential                     Energy,  Office  of  Science,  Fusion  Energy  Sciences
+energy surface is a prerequisite for reliably assessing                      funding   the   award   entitled      High   Energy   Density
+its  phase  stability,  lattice  dynamics,  and  bonding                     Quantum Matter, under Award No. DE-SC0020340.
+strength.                                                                    Calculations   were   performed   at   the   Center   for
+                                                                             Computational      Research      at      SUNY      Buffalo
+                                                                             (http://hdl.handle.net/10477/79221).
+
+
+
+References                                                                            Herschbach, Potential Energy Surface for
+[1]      E. Wigner and H. B. Huntington, On the                                       Bond Exchange among Three Hydrogen
+         possibility of a metallic modification of                                    Molecules, Faraday Discuss. Chem. Soc. 62,
+         hydrogen, J. Chem. Phys. 3, 764 (1935).                                      110 (1977).
+[2]      W. J. Nellis, S. T. Weir, and A. C. Mitchell,                       [11]     I. I. Naumov and R. J. Hemley, Aromaticity,
+         Metallization and electrical conductivity of                                 closed-shell effects, and metallization of
+         hydrogen in Jupiter, Science (80-. ). 273, 936                               hydrogen, Acc. Chem. Res.          47, 3551 (2014).
+         (1996).                                                             [12]     A. J. Cohen, P. Mori-Sánchez, and W. Yang,
+[3]      A. Dewaele, P. Loubeyre, F. Occelli, O.                                      Insights into Current Limitations of Density
+         Marie, and M. Mezouar, Toroidal diamond                                      Functional Theory, Science (80-. ). 321, 792
+         anvil cell for detailed measurements under                                   (2008).
+         extreme static pressures, Nat. Commun. 9,                           [13]     T. Schmidt, E. Kraisler, L. Kronik, and S.
+         2913 (2018).                                                                 Kümmel, One-electron self-interaction and
+[4]      M. I. Eremets, A. P. Drozdov, P. P. Kong,                                    the asymptotics of the Kohn-Sham potential:
+         and H. Wang, Semimetallic molecular                                          An impaired relation, Phys. Chem. Chem.
+         hydrogen at pressure above 350 GPa, Nat.                                     Phys. 16, 14357 (2014).
+         Phys. 15, 1246 (2019).                                              [14]     J. P. Perdew, K. Burke, and M. Ernzerhof,
+[5]      P. Loubeyre, F. Occelli, and P. Dumas,                                       Generalized Gradient Approximation Made
+         Synchrotron infrared spectroscopic evidence                                  Simple, Phys. Rev. Lett. 77, 3865 (1996).
+         of the probable transition to metal hydrogen,                       [15]     S. Racioppi, P. Lolur, P. Hyldgaard, and M.
+         Nature 577, 631 (2020).                                                      Rahm, A Density Functional Theory for the
+[6]      C. Ji, B. Li, J. Luo, Y. Zhao, Y. Liu, and K.                                Average Electron Energy, J. Chem. Theory
+         Glazyrin, Ultrahigh-pressure crystallographic                                Comput. 19, 799 (2023).
+         passage towards metallic hydrogen, Nature                           [16]     M. Motta et al., Towards the solution of the
+         641, 904 (2025).                                                             many-electron problem in real materials:
+[7]      C. J. Pickard, M. Martinez-Canales, and R. J.                                Equation of state of the hydrogen chain with
+         Needs, Density functional theory study of                                    state-of-the-art many-body methods, Phys.
+         phase IV of solid hydrogen, Phys. Rev. B -                                   Rev. X 7, 031059 (2017).
+         Condens. Matter Mater. Phys. 85, 214114                             [17]     G. Knizia and G. K. L. Chan, Density matrix
+         (2012).                                                                      embedding: A strong-coupling quantum
+[8]      H. Liu, L. Zhu, W. Cui, and Y. Ma, Room-                                     embedding theory, J. Chem. Theory Comput.
+         temperature structures of solid hydrogen at                                  9, 1428 (2013).
+         high pressures, J. Chem. Phys. 137, 074501                          [18]     J. Hachmann, W. Cardoen, and G. K. L.
+         (2012).                                                                      Chan, Multireference correlation in long
+[9]      C. S. Zha, Z. Liu, M. Ahart, R. Boehler, and                                 molecules with the quadratic scaling density
+         R. J. Hemley, High-pressure measurements                                     matrix renormalization group, J. Chem. Phys.
+         of hydrogen phase IV using synchrotron                                       125, 144101 (2006).
+         infrared spectroscopy, Phys. Rev. Lett. 110,                        [19]     M. Bonitz et al., First principles simulations
+         217402 (2013).                                                               of dense hydrogen, Phys. Plasmas 31, 110501
+[10]     D. A. Dixon, R. M. Stevens, and D. R.                                        (2024).
+
+
+
+
+[20]     K. Liao, X. Z. Li, A. Alavi, and A. Grüneis,                                reason at low computational cost with a
+         A comparative study using state-of-the-art                                  meta-GGA, Phys. Rev. Mater. 7, 093830
+         electronic structure theories on solid                                      (2023).
+         hydrogen phases under high pressures, Npj                          [31]     D. Mejía-Rodríguez and S. B. Trickey, Meta-
+         Comput. Mater. 5, 100 (2019).                                               GGA performance in solids at almost GGA
+[21]     H. Niu, Y. Yang, S. Jensen, M. Holzmann, C.                                 cost, Phys. Rev. B - Condens. Matter Mater.
+         Pierleoni, and D. M. Ceperley, Stable Solid                                 Phys. 102, 121109(R) (2020).
+         Molecular Hydrogen above 900 K from a                              [32]     S. Azadi and G. J. Ackland, The role of van
+         Machine-Learned Potential Trained with                                      der Waals and exchange interactions in high-
+         Diffusion Quantum Monte Carlo, Phys. Rev.                                   pressure solid hydrogen, Phys. Chem. Chem.
+         Lett. 130, 76102 (2023).                                                    Phys. 19, 21829 (2017).
+[22]     M. Istas, S. Jensen, Y. Yang, M. Holzmann,                         [33]     J. Vorberger, G. J. Smith, W. Z. Van
+         C. Pierleoni, and D. M. Ceperley, Liquid-                                   Benschoten, H. R. Petras, Z. Moldabekov, T.
+         liquid phase transition of hydrogen and its                                 Dornheim, and J. J. Shepherd, Van-der-
+         critical point: Analysis from ab initio                                     Waals exchange-correlation functionals and
+         simulation and a machine-learned potential,                                 their high pressure and warm dense matter
+         Phys. Rev. E 111, 45307 (2025).                                             applications, ArXiv 1 (n.d.).
+[23]     S. Goswami, S. Jensen, Y. Yang, M.                                 [34]     R. C. Clay, J. McMinis, J. M. McMahon, C.
+         Holzmann, C. Pierleoni, and D. M. Ceperley,                                 Pierleoni, D. M. Ceperley, and M. A.
+         High temperature melting of dense molecular                                 Morales, Benchmarking exchange-correlation
+         hydrogen from machine-learning interatomic                                  functionals for hydrogen at high pressures
+         potentials trained on quantum Monte Carlo, J.                               using quantum Monte Carlo, Phys. Rev. B -
+         Chem. Phys. 162, 054118 (2025).                                             Condens. Matter Mater. Phys. 89, 184106
+[24]     J. Sun, A. Ruzsinszky, and J. Perdew,                                       (2014).
+         Strongly Constrained and Appropriately                             [35]     C. J. Pickard and R. J. Needs, Structure of
+         Normed Semilocal Density Functional, Phys.                                  phase III of solid hydrogen, Nat. Phys. 3, 473
+         Rev. Lett. 115, 036402 (2015).                                              (2007).
+[25]     J. P. Perdew, A. Ruzsinszky, G. I. Csonka, L.                      [36]     B. Edwards, N. W. Ashcroft, and T. Lenosky,
+         A. Constantin, and J. Sun, Workhorse                                        Layering transitions and the structure of
+         semilocal density functional for condensed                                  dense hydrogen, Europhys. Lett. 34, 519
+         matter physics and quantum chemistry, Phys.                                 (1996).
+         Rev. Lett. 103, 026403 (2009).                                     [37]     M. Borinaga, P. Riego, A. Leonardo, M.
+[26]     J. Tao, J. P. Perdew, V. N. Staroverov, and G.                              Calandra, F. Mauri, A. Bergara, and I. Errea,
+         E. Scuseria, Climbing the density functional                                Anharmonic enhancement of
+         ladder: Nonempirical meta–generalized                                       superconductivity in metallic molecular
+         gradient approximation designed for                                         Cmca - 4 hydrogen at high pressure: A first-
+         molecules and solids, Phys. Rev. Lett. 91,                                  principles study, J. Phys. Condens. Matter 28,
+         146401 (2003).                                                              494001 (2016).
+[27]     V. N. Staroverov, G. E. Scuseria, J. Tao, and                      [38]     L. Monacelli, M. Casula, K. Nakano, S.
+         J. P. Perdew, Tests of a ladder of density                                  Sorella, and F. Mauri, Quantum phase
+         functionals for bulk solids and surfaces, Phys.                             diagram of high     -pressure hydrogen, Nat.
+         Rev. B - Condens. Matter Mater. Phys. 69, 1                                 Phys. 19, 845 (2023).
+         (2004).                                                            [39]     K. Nagao, H. Nagara, and S. Matsubara,
+[28]     J. P. Perdew, V. N. Staroverov, J. Tao, and G.                              Structures of hydrogen at megabar pressures,
+         E. Scuseria, Density functional with full                                   Phys. Rev. B - Condens. Matter Mater. Phys.
+         exact exchange, balanced nonlocality of                                     56, 2295 (1997).
+         correlation, and constraint satisfaction, Phys.                    [40]     See Supplemental Material at [URL will be
+         Rev. A - At. Mol. Opt. Phys. 78, 052513                                     inserted by publisher] for computational
+         (2008).                                                                     details, thermodynamic data, and further
+[29]     Z. H. Yang, H. Peng, J. Sun, and J. P.                                      information on the bonging analysis., (n.d.).
+         Perdew, More realistic band gaps from meta            -            [41]     S. Hajinazar and E. Zurek, XtalOpt Version
+         generalized gradient approximations: Only in                                13: Multi-Objective Evolutionary Search for
+         a generalized Kohn-Sham scheme, Phys.                                       Novel Functional Materials, Comput. Phys.
+         Rev. B 93, 205205 (2016).                                                   Commun. 304, 109306 (2024).
+[30]     T. Lebeda, T. Aschebrock, J. Sun, L. Leppert,                      [42]     J. M. McMahon and D. M. Ceperley,
+         and S. Kümmel, Right band gaps for the right                                Ground-state structures of atomic metallic
+
+
+
+         hydrogen, Phys. Rev. Lett. 106, 165302                                      Phys. Rev. B - Condens. Matter Mater. Phys.
+         (2011).                                                                     87, 184107 (2013).
+[43]     S. Azadi, B. Monserrat, W. M. C. Foulkes,                         [55]      M. Raupach and R. Tonner, A periodic
+         and R. J. Needs, Dissociation of High         -P                            energy decomposition analysis method for
+         ressure Solid Molecular Hydrogen: A                                         the investigation of chemical bonding in
+         Quantum Monte Carlo and Anharmonic                                          extended systems, J. Chem. Phys. 142,
+         Vibrational Study, Phys. Rev. Lett. 112,                                    194105 (2015).
+         165501 (2014).
+[44]     R. J. Needs, M. D. Towler, N. D. Drummond,
+         and P. López Ríos, Continuum variational
+         and diffusion quantum Monte Carlo
+         calculations, J. Phys. Condens. Matter 22,
+         023201 (2010).
+[45]     J. C. Grossman, Benchmark quantum Monte
+         Carlo calculations, J. Chem. Phys. 117, 1434
+         (2002).
+[46]     J. McMinis, R. C. Clay, D. Lee, and M. A.
+         Morales, Molecular to Atomic Phase
+         Transition in Hydrogen under High Pressure,
+         Phys. Rev. Lett. 114, 105305 (2015).
+[47]     K. Hui and J. Da Chai, SCAN-based hybrid
+         and double-hybrid density functionals from
+         models without fitted parameters, J. Chem.
+         Phys. 144, 044114 (2016).
+[48]     B. Cheng, M. Bethkenhagen, C. J. Pickard,
+         and S. Hamel, Phase behaviours of superionic
+         water at planetary conditions, Nat. Phys. 17,
+         1228 (2021).
+[49]     I. Errea et al., Quantum crystal structure in
+         the 250-kelvin superconducting lanthanum
+         hydride, Nature 578, 66 (2020).
+[50]     Ð. Dangić, L. Monacelli, R. Bianco, F.
+         Mauri, and I. Errea, Large impact of phonon
+         lineshapes on the superconductivity of solid
+         hydrogen, Commun. Phys. 7, 150 (2024).
+[51]     L. Monacelli, R. Bianco, M. Cherubini, M.
+         Calandra, I. Errea, and F. Mauri, The
+         stochastic self-consistent harmonic
+         approximation: Calculating vibrational
+         properties of materials with full quantum and
+         anharmonic effects, J. Phys. Condens. Matter
+         33, 363001 (2021).
+[52]     F. Belli, E. Zurek, and I. Errea, A chemical
+         bonding based descriptor for predicting the
+         impact of quantum nuclear and anharmonic
+         effects on hydrogen-based superconductors,
+         Npj Comput. Mater. 12, 100 (2026).
+[53]     M. Borinaga, I. Errea, M. Calandra, F. Mauri,
+         and A. Bergara, Anharmonic effects in
+         atomic hydrogen: Superconductivity and
+         lattice dynamical stability, Phys. Rev. B 93,
+         174308 (2016).
+[54]     M. A. Morales, J. M. McMahon, C. Pierleoni,
+         and D. M. Ceperley, Towards a predictive
+         first-principles description of solid molecular
+         hydrogen with density functional theory,
+
+
+
+                                                        Supplementary Material
+
+S1. Computational Details
+
+Crystal Structure Prediction
+The open-source evolutionary algorithm XtalOpt [1,2] version 13.0 was employed for crystal structure prediction
+(CSP). Two CSP searches were performed at 500 GPa. The initial generation consisted of 300 random symmetric
+structures that were created by the RandSpg algorithm. [3] The number of H atoms in the unit cell considered in
+each run was equal to 1, 2, 3, 4, 6, 8, 12, 16, 20, 24 and 32. Duplicate structures were identified and removed from
+the breeding pool using the XtalComp algorithm. [4] The total number of generated structures was equal to 1000
+per run. Each structure search followed a multi-step strategy, with three subsequent optimizations with increased
+level  of  accuracy,  followed  by  a  final  accurate  single  point  calculation.  For  the          CSP  searches,  calculations  were
+performed  using  Density  Functional  Theory  (DFT)  with  the  Vienna  Ab  Initio  Simulation  Package  (VASP),  version
+6.4.2. [5] The  meta-GGA  R2SCAN-L [6]           exchange-correlation  functional  was  employed.  The  projector  augmented
+wave (PAW) method [7] was used to treat the core states in combination with a plane-wave basis set with an energy
+cutoff  of  600  eV  for  the  geometry  optimizations.         The  non-spherical  contributions  related  to  the  gradient  of  the
+density   in   the   PAW   spheres   were   included.          The    k-point   meshes   were   generated   using   the   Γ-centered
+Monkhorst−Pack scheme, [8] and the number of divisions along each reciprocal lattice vector was selected so that
+the product of this number with the real lattice constant was greater than or equal to 60 Å. The accuracy of the
+energy convergence was set to increase from 10-5 eV, for which the norms of all the forces calculated during the
+relaxations were smaller than 10-3 eV/Å. A Gaussian smearing was used at each optimization step with a sigma of
+0.02 eV.
+
+Electronic Structure and Topology
+We  performed  periodic  DFT  calculations  using  VASP,  version  6.4.2.               [5] The  R2SCAN [9]      and  PBE [10]     exchange-
+correlation functionals were employed for the geometry optimizations and calculations of the electronic structure
+of the known structures of hydrogen.           Geometry optimizations of the candidate structures were performed between
+400 GPa and 700 GPa, using 100 GPa increments               . The projector augmented wave (PAW) method was used,                     [7] with
+a cutoff of 700 eV. The      k-point meshes were generated using the Γ              -centered Monkhorst−Pack scheme,              [8] and the
+number of divisions along each reciprocal lattice vector was selected so that the product of this number with the
+real lattice constant was greater than or equal to 60 Å. For the geometry optimizations, the accuracy of the energy
+convergence was set to 10-6 eV and the norms of all the forces were smaller than 10                    -3 (eV/Å). The Methfessel-Paxton
+smearing method was adopted in the geometry optimizations,                       [11] while the tetrahedron smearing method was
+used to calculate the electronic properties of the optimized geometries.                 [12] The non-spherical contributions related
+to the gradient of the density in the PAW one            -center terms were included. For the projected density of states, the
+Wigner-Seitz radius of H was recalculated for each phase and at each pressure point form the volume of the unit
+cells.  The  topological  analysis  of  the  electron  density,  based  on  the  Quantum  Theory  of  Atoms  in  Mole                    cules
+(QTAIM), [13] was performed using the Critic2 code. [14] Phonons in the harmonic approximation were determined
+with the Phonopy package [15] using supercells of 3x2x3 for                   Cmca-12, 4x3x3 for Cmca-4 and 4x4x2 for I41/amd,
+based on the conventional unit cells of the          optimized structures.       A finite displacement of 0.003 Å was used, and the
+accuracy of the energy convergence was set to 10             -8 eV. Single point energies were also calculated at the meta             -hybrid
+GGA  level  of  theory  with  the  SCAN0       [16]  functional  on  the  R   2SCAN  optimized  geometries  maintaining  the  same
+computational parameters of accuracy, cutoff, smearing (tetrahedron) and                      k-point mesh.
+
+Molecular Dynamics
+Molecular dynamics simulations were performed with VASP on the                     Cmca-4 phase using an isothermal-isobaric (NPT)
+ensemble  and  the  Langevin  thermostat [17,18] at T =  300  K  and  at P =  700  GPa.  Both  the  PBE  and  the  R2SCAN
+functionals were tested on 4x3x3 supercells (288 atoms). The duration of the simulation was set to 5 ps with 1 fs
+time steps. The projected augmented wave (PAW) method, [7] with a cutoff of 700 eV was used and the accuracy of
+the energy convergence was set to 10-5 eV. A Fermi smearing was employed.
+
+
+
+
+
+
+Energy Decomposition Analysis
+To  evaluate  the  energy  interaction  terms  within  periodic  energy  decomposition  analysis  (PEDA), [19] the  BAND
+package, version 2022.101, [20] was used on the Cmca-4 hydrogen phase optimized with the VASP using the PBE
+and  the  R2SCAN  functionals  at  700        GPa.  Scalar  relativistic  effects  were  included  using  the  Zero  Order  Regular
+Approximation (ZORA),  [21] along with a double-ζ polarized (DZP) basis set. [22] The integration quality was kept
+equal to ‘Very Good’ for all calculations.
+
+S2. Thermodynamics and Molecular Dynamics
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure S1. Enthalpy differences (ΔH = ΔE + PΔV) as a function of pressure for the high-pressure phases of hydrogen
+calculated with VASP using the meta-GGA exchange-correlation functional R2SCAN, between 400 GPa and 700 GPa.
+The transition pressures are marked at 428 and 675 GPa. Notice that the previously reported P62/c structure, [23]
+refers in reality to the P-62c space group, since P62/c does not exist as a space group. [24]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure S2. Atomic volumes per hydrogen atom as a function of pressure, calculated with VASP using the PBE and the
+R2SCAN functionals.
+
+
+
+
+
+
+
+
+
+
+
+
+Figure S3. Pair distribution function, g(r), calculated via NPT molecular dynamics simulation on Cmca-4 at T=300 K
+and P =  700  GPa  with  R2SCAN  (blue  line)  and  PBE  (orange  line).  The g(r)               profile  calculated  the  with  meta-GGA
+functional is that of a crystalline phase, while the one calculated with the GGA functional is that of a liquid phase.
+
+S3. Overview on the Quantum Theory of Atoms in Molecules (QTAIM).
+The QTAIM is the cornerstone method to study chemical bonding in real space, both from theoretical and experimental
+data. [25,26] QTAIM studies the local topological features of the electron density, ρ(r), mapping critical points and
+evaluating chemical bonding and properties based on ρ(r).
+
+The bond critical points (bcp), in particular, are special points in the electron density where ρ(r) = 0; and they are
+associated with the presence of bonding interactions between atoms.                    [26] The amount of electron density at the point
+ρ(r) gives an estimate of the strength of the interaction between two atoms.                  [27] The Laplacian of the electron density,
+2ρ(r), quantifies the degree of localization and curvature of the electron density at the bcp. Generally, large and
+negative values of 2ρ(r) correspond to covalent interactions, while                 2ρ(r) > 0 is found in hydrogen-bonds or van der
+Waals interactions. The bond ellipticity, ε, is related to the deviation of charge distribution from cylindrical symmetry
+(σ-type of interaction) at a bcp. Values of ε ~ 0 correspond to interactions having cylindrical symmetry.
+
+The total energy density at the bcp, named H, is the sum of G + V, the kinetic energy and the potential energy
+densities at the bcp. The more negative the H, the stronger the interaction. The kinetic energy density G is evaluated
+following the Abramov approximation.  [28,29] The potential energy density at the bcp is then calculated using the
+local form of the virial theorem, 2G + V = 1/42ρ(r), which will consequently be negative. The ratio |V|/G, is useful
+to characterize the type of interaction at the bcp.            [26,30] A ratio |V|/G < 1 corresponds to a closed-shell interaction
+region (ionic), while |V|/G > 2 corresponds to a shared                 -shell interaction region, such as covalent a bond. Values
+between 1 < |V|/G < 2 fall in the intermediate regions.               [26]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure S4. (Top) Crystal structures of Cmca-4 and I41/amd in their conventional unit cells, optimized with both the
+PBE and R2SCAN functionals at 700 GPa. The green spheres mark the topological bond critical points, which are
+enumerated in accordance to the table below. (Bottom) Topological descriptors calculated using the QTAIM. H-H
+distance [Å]; ρ(r): electron density at the bcp [e/bohr3]; 2ρ(r): Laplacian of the electron density at the bcp [e/bohr5];
+ε:  bond  ellipticity; -H:  total  energy  density  at  the  bcp  taken  with  the  negative  value  [hartree/bohr3];  |Vb|/Gb:
+potential/kinetic energy density ratio. [26]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure S5. (Left) Total density of states (DOS) calculated for I41/amd (top) and Cmca-4 (bottom) at 700 GPa with
+VASP using the PBE and the R2SCAN functionals. The values of the density of states per atom at the Fermi level (g(EF))
+are reported. The value of DOS at g(EF) calculated with PBE for the atomic phase is only 7% higher compared to the
+one calculated at the meta-GGA level of theory. On the other hand, for the molecular phase Cmca-4, the DOS at
+g(EF)  calculated  with  PBE      is  almost  30%  higher  than  with  R2SCAN.           (Right)  Projected  density  of  states  (pDOS)
+calculated for I41/amd (top) and Cmca-4 (bottom) at 700 GPa with VASP using the R2SCAN functional.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+S4. Periodic Energy Decomposition Analysis (PEDA)
+To better understand the character of the intermolecular interactions between a molecule of H2 in Cmca-4 with the
+rest of the crystal, we performed an energy decomposition analysis (EDA) using the Ziegler-Rauk variant, [31] which
+decomposes the total interaction energy (ΔEInt) between two prepared fragments into chemically meaningful terms.
+The term “prepared” means that the atoms in the moieties that are compared possess the same local coordinates
+as in the final product (Figure S6). Notice that all the interaction energies, ΔEInt, are positive, since they account only
+for the electronic energy associated with the reaction (they do not consider the PV contribution).
+
+In the EDA, the total interaction energy, ΔEInt, is decomposed into a Pauli repulsion energy, ΔEPauli, which is usually
+destabilizing; an electrostatic term, ΔEElec, which can quantify the ionic character of an interaction, and finally an
+orbital term, ΔEOrb, which accounts for the covalent character of the total interaction. Often, the Pauli repulsion
+energy and the electrostatic energy are coupled together in a term named the steric interactions, ΔESteric, which
+combines all these two components in a chemically intuitive term.
+
+The total interaction energy, ΔEInt, calculated by EDA should not be confused with the ΔE term in the calculation of
+the enthalpy of formation, ΔH. In the first case, the electronic energy of interaction is evaluated upon the reaction
+between two moieties possessing the same geometry as in the final product. In the second, ΔH is evaluated from
+the isolated reactants at their ground states, which and are comprised of the thermodynamic terms ΔE and PΔV.
+
+
+
+
+
+
+                                                                           Terms        PBE            R2SCANPBE             R2SCAN
+                                                                           ΔEPauli      59.931         60.136                46.435
+                                                                           ΔEelstat     -9.929         -9.732                -8.274
+                                                                           ΔEorb        -42.157        -42.541               -30.076
+                                                                           ΔEint        7.846          7.863                 8.085
+
+
+
+
+
+
+
+
+
+
+
+
+Figure S6. (Left) Scheme of the energy decomposition analysis. (Right) PEDA energy terms. PBE = PBE calculation on
+the PBE optimized structure at 700 GPa; R2SCANPBE = R2SCAN calculation on the PBE optimized structure at 700 GPa;
+R2SCAN = R2SCAN calculation on the R2SCAN optimized structure at 700 GPa.
+
+Table S1. Dependence of the calculated band gaps on the level of theory and pressure. Band gaps were predicted
+only for the C2/c phase. All the other phases were predicted to be metallic.
+                        Functional                 Phase                Pressure [GPa]               Band-gap [eV]
+                          R2SCAN                    C2/c                       400                        0.408
+                          SCAN0                     C2/c                       400                        1.747
+                          SCAN0                     C2/c                       500                        0.794a
+a A phase transition to the Cmca-12 phase, followed by metallization is predicted at 470 GPa, in agreement with the
+experimental observation (~425 GPa). [32]
+
+
+
+
+
+
+
+
+
+
+
+S5. Phonon Band Structures
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure S8. Phonon band structures of the optimized I41/amd, Cmca-4, Cmca-12 and C2/c phases, calculated  with
+the PBE functional at P = 700 GPa with VASP (finite displacement method) on the geometries optimized with the
+R2SCAN functional.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+References
+[1]      D. C. Lonie and E. Zurek, XtalOpt: An open-source evolutionary algorithm for crystal structure prediction,
+         Comput. Phys. Commun. 182, 372 (2011).
+[2]      S. Hajinazar and E. Zurek, XtalOpt Version 13: Multi-Objective Evolutionary Search for Novel Functional
+         Materials, Comput. Phys. Commun. 304, 109306 (2024).
+[3]      P. Avery and E. Zurek, RandSpg: An open-source program for generating atomistic crystal structures with
+         specific spacegroups, Comput. Phys. Commun. 213, 208 (2017).
+[4]      D. C. Lonie and E. Zurek, Identifying duplicate crystal structures: XtalComp, an open                    -source solution,
+         Comput. Phys. Commun. 183, 690 (2012).
+[5]      G. Kresse and J. Hafner, Ab initio molecular-dynamics simulation of the liquid-metalamorphous-
+         semiconductor transition in germanium, Phys. Rev. B 49, 14251 (1994).
+[6]      D. Mejía-Rodríguez and S. B. Trickey, Meta-GGA performance in solids at almost GGA cost, Phys. Rev. B -
+         Condens. Matter Mater. Phys. 102, 121109(R) (2020).
+[7]      P. E. Blöchl, Projector augmented-wave method, Phys. Rev. B - Condens. Matter Mater. Phys. 50, 17953
+         (1994).
+[8]      H. J. Monkhorst and J. D. Pack, Special points for Brillouin-zone integrations, Phys. Rev. B - Condens. Matter
+         Mater. Phys. 13, 5188 (1976).
+[9]      J. W. Furness, A. D. Kaplan, J. Ning, J. P. Perdew, and J. Sun, Accurate and Numerically Efficient r2SCAN
+         Meta-Generalized Gradient Approximation, J. Phys. Chem. Lett. 11, 8208 (2020).
+[10]     J. P. Perdew, K. Burke, and M. Ernzerhof, Generalized Gradient Approximation Made Simple, Phys. Rev.
+         Lett. 77, 3865 (1996).
+[11]     M. Methfessel and A. T. Paxton, High-precision sampling for Brillouin-zone integration in metals, Phys. Rev.
+         B 40, 3616 (1989).
+[12]     P. E. Blöchl, O. Jepsen, and O. K. Andersen, Improved tetrahedron method for the Brillouin-zone
+         integrations, Phys. Rev. B 49, 16223 (1994).
+[13]     R. F. W. Bader, Atoms in Molecules: A Quantum Theory, International Series of Monographs on Chemistry,
+         Vol. 22 (Oxford: Oxford Science Publications, 1990).
+[14]     A. Otero-De-La-Roza, E. R. Johnson, and V. Luaña, Critic2: A program for real-space analysis of quantum
+         chemical interactions in solids, Comput. Phys. Commun. 185, 1007 (2014).
+[15]     A. Togo, F. Oba, and I. Tanaka, First-principles calculations of the ferroelastic transition between rutile-type
+         and CaCl2-type SiO2 at high pressures, Phys. Rev. B - Condens. Matter Mater. Phys. 78, 134106 (2008).
+[16]     K. Hui and J. Da Chai, SCAN-based hybrid and double-hybrid density functionals from models without fitted
+         parameters, J. Chem. Phys. 144, 044114 (2016).
+[17]     W. G. Hoover, A. J. C. Ladd, and B. Moran, High-strain-rate plastic flow studied via nonequilibrium
+         molecular dynamics, Phys. Rev. Lett. 48, 1818 (1982).
+[18]     D. J. Evans, Computer “experiment” for nonlinear thermodynamics of Couette flow, J. Chem. Phys. 78,
+         3297 (1983).
+[19]     M. Raupach and R. Tonner, A periodic energy decomposition analysis method for the investigation of
+         chemical bonding in extended systems, J. Chem. Phys. 142, 194105 (2015).
+[20]     P. H. T. Philipsen et al., BAND 2022.101, SCM, Theoretical Chemistry, Vrije Universiteit, Amsterdam, The
+         Netherlands, http://www.scm.com, (2022).
+[21]     P. Philipsen, E. van Lenthe, J. Snijders, and E. Baerends, Relativistic calculations on the adsorption of CO on
+         the (111) surfaces of Ni, Pd, and Pt within the zeroth-order regular approximation, Phys. Rev. B - Condens.
+         Matter Mater. Phys. 56, 13556 (1997).
+[22]     E. S. Kadantsev, R. Klooster, P. L. De Boeij, and T. Ziegler, The formulation and implementation of analytic
+         energy gradients for periodic density functional calculations with STO/NAO Bloch basis set, Mol. Phys. 105,
+         2583 (2007).
+[23]     L. Monacelli, M. Casula, K. Nakano, S. Sorella, and F. Mauri, Quantum phase diagram of high-pressure
+         hydrogen, Nat. Phys. 19, 845 (2023).
+[24]     M. I. Aroyo, editor , International Tables for Crystallography Volume A: Space-Group Symmetry, Second
+         (2016).
+[25]     T. S. Koritsanszky and P. Coppens, Chemical Applications of X-ray Charge-Density Analysis, Chem. Rev. 101,
+
+
+
+
+          1583 (2001).
+[26]      C. Gatti, Chemical bonding in crystals: New directions, Zeitschrift Fur Krist. 220, 399 (2005).
+[27]      R. Della Pergola, A. Sironi, V. Colombo, L. Garlaschelli, S. Racioppi, A. Sironi, and P. Macchi, Periodical
+          trends in [Co6E(CO)16]- clusters: Structural, synthetic and energy changes produced by substitution of P
+          with As, J. Organomet. Chem. 849–850, 130 (2017).
+[28]      Y. A. Abramov, On the Possibility of Kinetic Energy Density Evaluation from the Experimental Electron                              -
+          Density Distribution, Acta Crystallogr. Sect. A Found. Crystallogr. 53, 264 (1997).
+[29]      E. Espinosa, I. Alkorta, I. Rozas, J. Elguero, and E. Molins, About the evaluation of the local kinetic, potential
+          and total energy densities in closed-shell interactions, Chem. Phys. Lett. 336, 457 (2001).
+[30]      E. Espinosa, I. Alkorta, J. Elguero, and E. Molins, From weak to strong interactions: A comprehensive
+          analysis of the topological and energetic properties of the electron density distribution involving X                          -H⋯F-Y
+          systems, J. Chem. Phys. 117, 5529 (2002).
+[31]      L. Zhao, M. von Hopffgarten, D. M. Andrada, and G. Frenking, Energy Decomposition Analysis, Wiley
+          Interdiscip. Rev. Comput. Mol. Sci. 8, e1345 (2018).
+[32]      P. Loubeyre, F. Occelli, and P. Dumas, Synchrotron infrared spectroscopic evidence of the probable
+          transition to metal hydrogen, Nature 577, 631 (2020).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

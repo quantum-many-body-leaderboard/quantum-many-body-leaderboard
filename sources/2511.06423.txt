@@ -1,0 +1,688 @@
+  Phase transitions in the spin-1/2 Heisenberg antiferromagnet on
+                                          the square lattice
+
+
+          Jie Qiao1*, Shu-Hao Zhang2, Jing-Bo Qin1, Xiao-Long Zhao1, Qiang Cheng1
+
+
+
+      1School of Science, Qingdao University of Technology, Qingdao, Shandong, China
+
+2School of Liberal Arts and Sciences, Qingdao Binhai University, Qingdao, Shandong, China
+
+
+
+      The nature of the intermediate ground-state phase in the spin-1/2 frustrated square lattice
+model has long been debated. We investigate the phase diagram of this model using cluster
+density matrix embedding theory. Two antiferromagnetic phases are directly identified from
+our analysis of the ground-state wave function: the Néel phase for   and the striped phase for  .
+Although our analysis of the ground state finds no direct evidence of an internal phase transition
+within the intermediate phase, an examination of the first excited state reveals a continuous
+quantum phase transition therein, with a critical point at   that separates the intermediate phase
+into a PVBS and a CVBS.
+Keywords: square-lattice, phase diagram, phase transition, ground state, first excited state
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* Corresponding author's email: qiaojie@qut.edu.cn
+                                                        1
+
+1. Introduction
+      The exploration of quantum phases and phase transitions in strongly correlated systems
+has long captivated the attention of physicists [1-4]. These studies not only provide valuable
+insights into the fundamental behavior of matter but also reveal the exotic phenomena exhibited
+by these systems [5-14]. The J₁-J₂ Heisenberg model on a square lattice is a prominent example.
+In the early days of high-temperature superconductivity research, the J₁-J₂ model on a square
+lattice was one of the most important frustrated magnetic models, attracting significant                     research
+interest  from  both  theoretical  and  experimental  perspectives.  Increasingly,  experiments  and
+theories indicate that real materials such as the vanadium layered oxides Li₂VO(Si,Ge)O₄                          [15-
+17], the double perovskite compounds Sr₂CuTe₁₋ₓWₓO₆                   [18, 19], and the polycrystalline sample
+BaCdVO(PO₄)₂          [20,   21],    can   be   adequately   described   by   frustrated   square   lattice
+antiferromagnets   with   nearest-neighbor   (J₁)   and   next-nearest-neighbor   (J₂)   exchanges.
+Frustrated  square  lattice  systems  can  be  described  by  the  two          -dimensional  J₁-J₂  Heisenberg
+model, a simple yet typical quantum spin model. The antiferromagnetic J₁                       -J₂ model has been
+studied in detail by various methods due to its extreme importance in condensed matter physics.
+      Over the past three decades, the nature of the zero            -temperature phase diagram of the spin-
+1/2 J₁-J₂ Heisenberg model on a square lattice has been a subject of controversy and remains a
+fundamental unsolved problem in quantum many                   -body theory. For the intermediate coupling
+region, it has long been believed that quantum fluctuations will destroy antiferromagnetic long                       -
+range order before the maximum frustration point of the classical model at                   J₂/J₁=0.5, potentially
+establishing  a  new  paramagnetic  phase.  The  na           ture  of  this  paramagnetic  phase  is  of  great
+interest. Various methods have been developed to study the intermediate paramagnetic phase
+[22-52],  and  different  candidate  ground  states  have  been  proposed,  including  the  columnar
+valence bond solid (CVBS) state [22, 24-26, 45], the plaquette valence bond solid (PVBS) state
+[11, 28-33, 39-41, 51, 52], and (gapped) gapless quantum spin liquid (QSL) states                        [11, 36, 38,
+42,  43,  46-50,  53-55].  However,  the  physical  nature  of  the  paramagnetic  phase  remains  a
+mystery.  These  insights  have  been  obtained  through  a  variety  of  methods,  including  exact
+diagonalization [24, 30, 56], series expansion [26, 34, 57], density matrix renormalization group
+(DMRG) [11, 36, 40], (infinite) projected entangled pair states ((i)PEPS)                     [44, 45, 54, 58, 59],
+neural networks [50], and quantum Monte Carlo (QMC) [47, 50, 53].
+      A substantial body of research has been dedicated to exploring the phase diagram of the
+J₁-J₂ Heisenberg model on a square lattice. This model has become a focal point in quantum
+magnetism research. A recent study employing the iPEPS algorithm simulated the global phase
+diagram  of  the  J₁-J₂  Heisenberg  model,  revealing  that  the  non-magnetic  region  spans
+
+                                                           2
+
+0.45≲J₂/J₁≤0.61. Within this range, it identified a gapless spin liquid phase for 0.45≲J₂/J₁≲0.56
+and a weak valence bond solid (VBS) phase for 0.56≲J₂/J₁≤0.61 [54]. Subsequently, a very
+recent study using the DMRG and fully augmented matrix product states methods analyzed
+level crossings in the excitation spectrum to pinpoint phase transition points. This study found
+a direct phase transition between the Néel antiferromagnetic and VBS phases at J₂/J₁=0.535(3),
+with no intermediate spin liquid phase present               [60]. Additionally, several other works have
+suggested the existence of a phase transition in the intermediate region[11, 50, 53]. However,
+despite the abundance of results and analyses, the nature of the non-magnetic region within the
+range 0.4≲J₂/J₁≲0.6 remains a subject of intense debate and active research. The intermediate-
+phase phase transition is a continuous phase transition, which is challenging to detect in the
+ground state but observable in the first excited state [11, 49, 61, 62].
+      In  this  paper,  we  employ  the  Cluster  Density  Matrix  Embedding  Theory  (CDMET)                       to
+calculate the ground state and first excited state of the spin-1/2 antiferromagnetic J₁-J₂ model.
+The ground-state results reveal that the transition from the Néel antiferromagnetic phase to the
+intermediate phase is continuous, while the transition from the intermediate phase to the stripe
+antiferromagnetic  phase  is  first-order.  By  probing  the  first  excited  state,  we  identify  a
+continuous phase transition point within the intermediate phase of the ground state at J₂=0.55.
+By calculating the correlation functions, we find a valence-bond-solid (VBS) phase transition
+in the first excited state of the impurity clusters. As shown in Figure                   1, we present a phase
+diagram for a J1-J2 square lattice model.
+
+
+
+
+
+
+
+
+
+
+
+Figure    1. The  phase  diagram  of  spin       -1/2  J1-J2  square-lattice  Heisenberg  antiferromagnetic
+model. The system exhibits a Néel antiferromagnetic order when J                      2<0.45 (continuous phase
+transition) and transitions to a collinear antiferromagnetic phase when J               2>0.65 (first-order phase
+transition).   A  continuous  phase  transition  exists  at  J       2=0.55  within  the  intermediate  region
+(0.45≤J2≤0.65), splitting this phase into two distinct VBS phases.
+2. The J₁-J₂ Model and CDMET Approach
+      The spin-1/2 J₁-J₂ antiferromagnetic Heisenberg model is a typical model for studying the
+
+                                                          3
+
+interplay between frustration effects and quantum phase transitions. It is generally established
+that the ground state of  this model hosts two distinct long-range ordered phases, which are
+separated by an intervening disordered quantum paramagnetic phase. The Hamiltonian of this
+model is given by the following expression
+
+                                                                                                                 (1)
+
+where Si is the spin-1/2 operator located at site i, and the summation is performed over nearest-
+neighbor  pairs  (            )  and  next-nearest-neighbor  pairs  (                  ), as  shown  in     Figure    2. This
+model includes nearest-neighbor (J1, the energy unit in this work) and next-nearest-neighbor
+(J2)  exchange  interactions,  demonstrating  the  subtle  interplay  between  competing  magnetic
+interactions.
+      CDMET has been proven a reliable method for treating strongly correlated systems                                    [12,
+63-70]. As shown in Figure 2, we divide a finite square lattice into numerous 2×2 spin clusters
+and arbitrarily select one cluster as the impurity cluster, with the remaining spin clusters treated
+as the bath state. This size and shape are chosen to maintain the equivalence of all si                           tes within
+the cluster. The 2×2 spin clusters match the C               4 rotational symmetry of the Néel state and the C2
+rotational symmetry of the collinear state.               Isaev et al. show that 2×2 spin clusters are suitable
+for the square J₁–J₂ lattice [33]. It is clear that considering a larger spin cluster could improve
+the results. However, the number of bath states exponentially increases with the size of the spin
+cluster. Our group's previous work indicate that, unlike other simulation methods which exhibit
+significant size effects, the bond energy of the impurity cluster is insensitive to the lattice size
+[12].  This  difference  implies  that  using  CDMET,  we  can  obtain  reasonable  results  in  the
+thermodynamics limit by calculating only a finite lattice system.
+      The wave function of the 2×2 spin cluster impurity model is expressed exactly by
+
+                                                                                                                 (2)
+
+where  the               is   16   block -product   states,   which   is   referred   to   as   the   bath   state.  The
+approximation of the bath state is consistent with the hierarchical mean                         -field theory with 2×2
+spin  cluster.  The              is   16   standard   basis   vectors   and   the            represents   the   expansion
+
+coefficients of the wave function. We use                                to minimize the length of the state. If the
+
+wave function is accurate, the norm is zero.               H,  φ, and E represent the system's Hamiltonian, the
+CDMET wave function, and the target energy, respectively.
+      Through  the  variational  method,  we  can  obtain  an  approximate  eigenstate                                  which
+
+                                                               4
+
+eigenvalue is closest to E. We use the following variational prescription:
+
+                                                                                                         (3)
+
+where            indicates the variation of the           by varying the real matrix            on site     and spin
+   . In our previous work, we employed this method to calculate the excited states of the J1-J2
+Heisenberg model at different energy levels and discovered the presence of an energy gap in
+the intermediate phase [68]. Therefore, based on this foundation, we can gradually approximate
+
+the first excited state using the least squares method in this study. We employ an 8×8 system
+with periodic boundary conditions, which has been demonstrated to closely approximate an
+infinite system. The computation cost is lower than that of other methods. We obtained a relative
+error between approximately 10⁻⁶ and 10⁻⁵ from our calculations on an 8×8 lattice system [67].
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 2. A lattice under periodic boundary conditions is divided into multiple 2×2 spin clusters,
+where one cluster (A) is regarded as an impurity cluster, and the remaining spin clusters are
+considered as the bath state.
+3. Results and Discussion
+      Given the effectiveness of the von Neumann entropy in detecting phase transitions, we
+employ it in this study to investigate the           phase transitions of the system. Discontinuities or
+singularities in entanglement entropy signal the onset of first-order quantum phase transitions,
+whereas  divergent  peaks  in  entropy  derivatives  characterize  continuous  quantum  phase
+transitions   [71-76].    We  calculate  the  single-site  and        four-site   von  Neumann  entanglement
+entropy  between  the  impurity  cluster  and  its  environment,  as  illustrated  in             Figure   2.  When
+partitioning the lattice spin system into subsystem A and its complement B, the von Neumann
+entanglement entropy for both subsystems can be readily obtained and is defined as
+
+                                                                                                         (4)
+
+
+
+                                                          5
+
+where                     is the reduced density matrix. The evolution of entanglement entropy for
+the ground state (see Figure 3) and first excited state (see Figure 5) is plotted against J₂. The
+data  series  are  labeled  as  follows:  SGS        and  SES    correspond  to      the  single-site  entanglement
+entropy of the ground state and the first excited state, represented by square symbols, while SGP
+and SEP correspond to the four-site entanglement entropy, represented by circular symbols.
+3.1. Directly Observable Phase Transitions in the Ground State
+      In this subsection, we discuss the phase transitions that are directly evident in the ground
+state.  These  are  the  two  antiferromagnetic  phases,  which  are  well  known. In                    Figure    3,  we
+calculate the ground-state energy of a single spin within the impurity cluster (Ei), entanglement
+entropy (SGS and SGP) and its first-order derivatives (S'GS and S'GP) as functions of J2. As shown
+
+in Figure 3(a), the energy Ei of the embedded single                  spin exhibits a discontinuity at          J₂=0.65.
+Simultaneously, both entanglement entropy curves in                   Figure 3(b) display discontinuities at the
+same critical value      J₂=0.65, indicating a first      -order phase transition at this point. Furthermore,
+the first derivative of the entanglement entropy, shown in                 Figure 3(c), captures a second         -order
+(continuous) phase transition, with all curves exhibiting peaks at                   J₂=0.45, confirming this as a
+second-order  phase  transition  point.          These  results  are  in  good  agreement  with  the  results
+obtained by other approximations             [32, 39, 54, 77, 78]     . Darradi et al. use     d the coupled cluster
+method for high orders of approximation and complementary exact diagonalization in its study
+[32], with results indicating that the quantum critical points for both the Néel and collinear
+
+orders  are                               and                            ,  respectively.  Yu  et  al.  appl     ied  the
+
+plaquette renormalization scheme of tensor network states                  and observed a continuous transition
+between  the  Néel  order  and  the  plaquettelike  order  near                                ,  the  collinear  order
+
+emerges at                     through a first   -order phase transition       [39].
+
+
+
+
+
+
+
+
+
+Figure 3. Panels (a), (b), and (c) show            , respectively, the ground-state energy            of a single s   pin
+within  the  impurity  cluster        (Ei),  entanglement  entropy  (S         GS  and  SGP),  and  its  first-order
+derivative (S'GS and S'GP) as functions of J2.
+
+      Furthermore, by calculating the spin expectation value components                        η=(Sx, Sz), we obtain
+the spin vector diagrams shown in Figure 4(a) for J₂=0.20 and Figure 4(b) for J₂=0.80. When
+                                                            6
+
+J₂<0.45, the spins on neighbor lattice sites are antiparallel, while those on diagonal sites are
+parallel, forming a staggered periodic arrangement characteristic of the Néel state, as illustrated
+in Figure 4(a). When J₂>0.65, the spins are aligned parallel along one crystallographic axis and
+antiparallel along the other, resulting in a collinear order periodic pattern, indicative of the stripe
+state, as shown in Figure 4(b).
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 4.     Vector  map  of  the  spin  expectation  value:  for  the  ground  state  at  (a)                          ,
+
+corresponding to the Néel state, and (b)                        , corresponding to the striped state.
+
+3.2. The Hidden Phase Transitions and the First Excited State
+      In  recent years, numerous results have indicated that the intermediate phase exhibits a
+phase transition point [11, 49, 50, 53, 54, 60]. Wang et al. use the DMRG method to identify
+excited-level  crossings  versus  the  coupling  ratio                       ,  identifying  a  phase  transition  at
+
+              [11].  Similarly,  Qian  et  al.  utilize  excited-level  crossing  analysis  to  pinpoint  the
+phase transition points J₂/J₁=0.535(3) [60]. Liu et al. use the finite projected entangled pair state
+(PEPS) algorithm to determine the three phase transition points of the ground state phase as
+J₂=0.45, J₂=0.56, and J₂=0.61 [54]. Although this phase transition is not directly observed in the
+ground state, the first excited state can serve as a probe for it.
+      We calculate the first excited state in order to determine the position of the intermediate
+phase transition point. We present the variation curves of entanglement entropy (Figure 5(a)),
+and its second derivative (Figure 5(b)) with respect to J2. In Figure 5(a), both the single-site
+entanglement entropy SES           and the four-site entanglement entropy SEP                exhibit discontinuities
+near J2=0.55. The second-order derivatives of these two entanglement entropies (S''ES and S''EP)
+exhibit pronounced peaks at J2=0.55 (see Figure 5(b)). We determine that a continuous phase
+transition occurs at this point. This finding is further corroborated by the recent work of Nomura
+et al., who explicitly demonstrate the existence of a continuous phase transition at J₂=0.54                        [49].
+
+
+
+
+
+                                                            7
+
+Figure 5. Panel (a) shows the entanglement entropy (SES and SEP) of the first excited state as a
+function of J₂. Panel (b) shows its second-order derivative (S''ES and S''EP) as a function of J₂.
+      Numerous research findings have demonstrated evidence of the existence of a VBS phase
+in the intermediate phase of this system, lattice translation symmetry is spontaneously broken
+[26, 30, 33, 39-41, 45, 60]. By computing the nearest-neighbor spin correlation functions in the
+first  excited  state,  we  attempt  to  analyze  the  nature  of  the  intermediate  phase. We  employ
+exactly  representable        impurity     clusters  to  demonstrate  this  result.          Figure    6  displays  the
+corresponding correlation function values within impurity clusters (A) and between neighbor
+clusters  for  the  first  excited  state.     The  spin-spin  correlation  function  for           neighbor     spins  is
+evaluated using
+
+                                                                                                             (5)
+
+where i and j denote neighboring spin pairs. In Figure 6, dashed lines represent intra-cluster
+correlations,  while  solid  lines  denote  inter-cluster  correlations.  Line  thickness  reflects  the
+correlation strength.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 6. The correlation functions of the first excited state of impurity clusters (A) for different
+values  of   J₂. (a)               ,  (b)              ,  (c)              ,  (d)              .  Red  and  blue  lines
+
+represent            and          , respectively.
+                                                            8
+
+      As shown in Figure 6, we present the correlation functions for different values of J₂. When
+J₂=0.46  (Figure     6(a))  and  J₂=0.54     (Figure    6(b)),  the  correlation  functions  between  nearest-
+neighbor sites within the clusters are equal and both negative, with values of ξ=-0.370 and ξ=-
+0.436,  respectively.  In  contrast,  the  correlation  functions  between  neighboring  sites  across
+clusters are also equal but relatively small in magnitude, with values of ξ=-0.071 and ξ=-0.037,
+respectively.    These results indicate that in the range of 0.45≤J₂≤0.55, each cluster acts as a
+strongly correlated unit, and the system exhibits a plaquette arrangement—a hallmark of the
+PVBS phase.
+      When J₂=0.60 (Figure 6(c)) and J₂=0.62 (Figure 6(d)), the correlation functions between
+nearest-neighbor sites within the clusters become unequal. The correlation functions along the
+Y-direction within the clusters turn positive (with values of ξ=0.181 and ξ=0.169, respectively),
+while  those  along  the  X-direction  remain  negative  (with  values  of  ξ=-0.449  and  ξ=-0.477,
+respectively). Significant changes also occur in the correlation functions between neighboring
+sites across clusters: although still negative, the values along the X-direction become relatively
+large in magnitude (with values of ξ=-0.106 and ξ=-0.104, respectively), while those along the
+Y-direction become relatively small (with values of ξ=-0.035 and ξ=-0.029, respectively). In
+this work, the X-direction consistently refers to the horizontal direction of the lattice, and the
+Y-direction  to  the  vertical  direction.  These  results  indicate  that  when  0.55<J₂                ≤ 0.65,  the
+correlation functions—both within and across clusters—exhibit distinct differences between
+the X and Y directions. This behavior is consistent with the CVBS phase, where valence bonds
+form a columnar periodic arrangement along specific crystallographic directions (either vertical
+or horizontal).
+      Although our results identify the intermediate phase as a VBS, other studies suggest it
+could be a Z₂ quantum spin liquid            [11, 36, 38, 42, 43, 46-50, 53-55] characterized by weak
+dimerization (i.e., VBS order). This implies that the true intermediate phase may either be a
+coexistence  state  of  spin  liquid  and  VBS  order,  or  that  these  two  states  are  energetically
+proximate.
+      According to Landau's phase transition theory, the occurrence of a phase transition in a
+system  corresponds  to  a  change  in  its  symmetry,  and  a  continuous  phase  transition  is  a
+transformation from a high-symmetry phase to a low-symmetry phase. The order parameters
+FX and FY reflect the degree of bond-energy dimerization and can illustrate the change in the
+lattice's translational symmetry. They definition are provided in References [79, 80] as:
+
+                                                                                        ,                (6)
+
+                                                           9
+
+where       and     are coordinates of a clusters in the lattice. As shown in Figure 7, FX (denoted
+by a square) and FY (denoted by a circle) represent the degree of dimerization along the lattice's
+X- and Y-directions, respectively.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 7. The variation of the order parameters FX and FY with J2 in the first excited state.
+      As shown in Figure 7, the values of order parameters FX and FY are nearly equal over the
+parameter range 0.45<J₂≤0.55, where their absolute difference |FX-FY| is negligible (less than
+0.001). This indicates that the lattice retains its translational symmetry, marking the formation
+of an isotropic plaquette structure in the system. However, over the range of 0.55<J₂<0.65, the
+order parameters FX and FY are markedly distinct, as their absolute difference |FX-FY| is almost
+greater than 0.01. This indicates that the system exhibits significant anisotropy between the X
+and  Y  directions,  implying  the  breaking  of  translational  symmetry  and  the  formation  of  a
+columnar arrangement. The findings regarding the symmetry change support the conclusion of
+a continuous phase transition at J₂=0.55.
+4. Conclusion
+      In this study, we employ the CDMET method to compute the ground state and first excited
+state of the spin-1/2 J₁–J₂ Heisenberg model. Based on the analysis of the ground                    -state results,
+we identify the phase transition points for two antiferromagnetic phases, namely, the Néel phase
+and the striped phase. The transitions are identified as continuous at                              and first-order
+
+at             . Within the intermediate region (0.45≤J₂≤0.65), by examining the entanglement
+entropy of the first excited state as a function of J₂, a continuous phase transition is identified
+at J₂=0.55. Analysis of the spin-spin correlation functions and order parameters indicates the
+emergence of two distinct valence-bond solid  (VBS) orders in this intermediate region: the
+plaquette VBS (PVBS) phase and the columnar VBS (CVBS) phase.
+
+
+                                                         10
+
+Acknowledgements
+      This work was supported by the National Natural Science Foundation of China (Grant
+Nos. 12005110; 12474046), and the Natural Science Foundation of Shandong Province (Grant
+Nos. ZR2022QA110; ZR2023MA005). The numerical calculations in this work have been
+done on the platform in the Supercomputing Center of Wuhan University. We acknowledge
+useful discussions with Quanlin Jie.
+
+Data Availability Statement
+The data that support the findings of this study are available from the corresponding author
+upon reasonable request.
+
+References
+[1] X.G.Wen, Quantum Field Theory of Many-Body Systems: From the Origin of Sound to an
+Origin of Light and Electrons, Oxford University Press, Oxford, 2007.
+[2] H. Fehske, R. Schneider, A. Weiße, Computational Many-Particle Physics, springer, Berlin,
+2008.
+[3] C. Lacroix, P. Mendels, F. Mila, Introduction to Frustrated Magnetism, Springer Berlin,
+2011.
+[4]  D.C.  Cabra,  A.  Honecker,  P.  Pujol,  Modern  Theories  of  Many-Particle  Systems  in
+Condensed Matter Physics, springer, Berlin, 2012.
+[5]   Z.   Fan,   Q.-L.   Jie,   Ordered   magnetic   phase   in   a   frustrated   spin-½   Heisenberg
+antiferromagnetic stacked square lattice, Phys. Rev. B, 89 (2014) 054418.
+[6] Y. Cui, L. Liu, H. Lin, K.-H. Wu, W. Hong, X. Liu, C. Li, Z. Hu, N. Xi, S. Li, R. Yu, A.W.
+Sandvik, W. Yu, Proximate deconfined quantum critical point in SrCu2(BO3)2, Science, 380
+(2023) 1179-1184.
+[7] A.W.W. Ludwig, D. Poilblanc, S. Trebst, M. Troyer, Two-dimensional quantum liquids
+from interacting non-Abelian anyons, New J. Phys., 13 (2011) 045014.
+[8]  M.  Brooks,  M.  Lemeshko,  D.  Lundholm,  E.  Yakaboylu,  Molecular  Impurities  as  a
+Realization of Anyons on the Two-Sphere, Phys. Rev. Lett., 126 (2021) 015301.
+[9] N. Hiroyoshi, M. Yuki, S. Shin-ichi, Long-Range Phase Order in Two Dimensions under
+Shear Flow, Phys. Rev. Lett., 126 (2021) 160604.
+[10] H. Cheolhee, I. Z., K. Yaakov, A. A., P. F., M. Yigal, M.A. K., S. Eran, Fractional Entropy
+of Multichannel Kondo Systems from Conductance-Charge Relations, Phys. Rev. Lett., 128
+(2022) 146803.
+[11] L. Wang, A.W. Sandvik, Critical Level Crossings and Gapless Spin Liquid in the Square-
+Lattice Spin-1/2 J1-J2 Heisenberg Antiferromagnet, Phys. Rev. Lett., 121 (2018) 107202.
+[12] Z. Fan, Q.-L. Jie, Cluster density matrix embedding theory for quantum spin systems, Phys.
+Rev. B, 91 (2015) 195118.
+[13] Y. Cui, R. Yu, W. Yu, Deconfined Quantum Critical Point: A Review of Progress, Chin.
+Phys. Lett. , 42 (2025) 047503.
+[14] R. Haghshenas, W.-W. Lan, S.-S. Gong, D.N. Sheng, Quantum phase diagram of spin-1
+J₁-J₂  Heisenberg  model  on  the  square  lattice:  An  infinite  projected  entangled-pair  state  and
+density matrix renormalization group study, Phys. Rev. B, 97 (2018) 184436.
+
+
+                                                       11
+
+[15]  R.  Melzi,  P.  Carretta,  A.  Lascialfari,  M.  Mambrini,  M.  Troyer,  P.  Millet,  F.  Mila,
+Li2VO(Si,Ge)O4,   a   Prototype   of   a   Two-Dimensional   Frustrated   Quantum   Heisenberg
+Antiferromagnet, Phys. Rev. Lett., 85 (2000) 1318.
+[16] P. Carretta, N.P.R. Melzi, a.a.P. Millet, Very-low-frequency excitations in frustrated two-
+dimensional S=1/2 Heisenberg antiferromagnets, Phys. Rev. Lett., 88 (2002) 047601.
+[17]  R.  Melzi,  S.  Aldrovandi,  F.  Tedoldi,  P.  Carretta,  P.  Millet,  F.  Mila,  Magnetic  and
+thermodynamic properties of Li2VOSiO4: A two-dimensional S=1/2 frustrated antiferromagnet
+on a square lattice, Phys. Rev. B, 64 (2001) 024409.
+[18] T. Koga, N. Kurita, M. Avdeev, S. Danilkin, T.J. Sato, H. Tanaka, Magnetic structure of
+the S=1/2 quasi-two-dimensional square-lattice Heisenberg antiferromagnet Sr2CuTeO6, Phys.
+Rev. B, 93 (2016) 054426.
+[19] M. Watanabe, N. Kurita, H. Tanaka, W. Ueno, K. Matsui, T. Goto,                        Valence-bond-glass
+state with a singlet gap in the spin-1/2 square-lattice random J1-J2 Heisenberg antiferromagnet
+Sr2CuTe1-xWxO6, Phys. Rev. B, 98 (2018) 054422.
+[20] S. Meyer, B. Mertens, H. Müller-Buschbaum, SrZn(VO)(PO4)2 and BaCd(VO)(PO4)2:
+Vanadylphosphates  Related  but  not  Isotypic  to  the  BaZn(VO)(PO4)2  Type,  Zeitschrift  für
+Naturforschung B, 52 (1997) 985-988.
+[21] R. Nath, A.A. Tsirlin, H. Rosner, C. Geibel, Magnetic properties of BaCdVO(PO4)2: A
+strongly frustrated spin-1/2 square lattice close to the quantum critical regime, Phys. Rev. B,
+78 (2008) 064422-064429.
+[22]   E.   Dagotto,   A.   Moreo,   Phase   Diagram   of   the   Frustrated   Spin-1/2   Heisenberg
+Antiferromagnet in Two Dimensions, Phys. Rev. Lett., 63 (1989) 2148.
+[23]  F.  Figueirido,  A.  Karlhede,  S.  Kivelson,  S.  Sondhi,  M.  Rocek,  D.S.  Rokhsar,  Exact
+diagonalization of finite frustrated spin-1/2 Heisenberg models, Phys. Rev. B, 41 (1990) 4619-
+4632.
+[24] D. Poilblanc, E. Gagliano, S. Bacci, E. Dagotto, Static and dynamical correlations in a
+spin-1/2 frustrated antiferromagnet, Phys. Rev. B, 43 (1991) 10970-10983.
+[25]  H.J.  Schulz,  T.A.L.  Ziman,  Finite-Size  Scaling  for  the  Two-Dimensional  Frustrated
+Quantum Heisenberg Antiferromagnet, Europhysics Letters 18 (1992) 355-360.
+[26] R.R.P. Singh, Dimer order with striped correlations in the J₁-J₂ Heisenberg model, Phys.
+Rev. B, 60 (1999) 7278.
+[27] T. Einarsson, H.J. Schulz, Direct calculation of the spin stiffness in the J₁                 -J₂ Heisenberg
+antiferromagnet, Phys. Rev. B, 51 (1995) 6151-6154.
+[28]  M.E.  Zhitomirsky,  Valence-bond  crystal  phase  of  a  frustrated  spin-1/2  square-lattice
+antiferromagnet, Phys. Rev. B, 54 (1996) 9007.
+[29] K.i. Takano, Y. Kito, Y. Ōno, K. Sano, Nonlinear σModel Method for the J₁-J₂ Heisenberg
+Model: Disordered Ground State with Plaquette Symmetry, Phys. Rev. Lett., 91 (2003) 197202.
+[30] M. Matthieu, L. Andreas, P. Didier, M. Frédéric, Plaquette valence-bond crystal in the
+frustrated Heisenberg quantum antiferromagnet on the square lattice, Phys. Rev. B, 74 (2006)
+144422.
+[31] M. Arlego, Plaquette order in the J1-J2-J3 model: Series expansion analysis, Phys. Rev. B,
+78 (2008) 224415.
+[32] R. Darradi, O. Derzhko, R. Zinke, J. Schulenburg, S.E. Krüger, J. Richter, Ground state
+phases  of  the  spin-1/2  J₁-J₂  Heisenberg  antiferromagnet  on  the  square  lattice:  A  high-order
+coupled cluster treatment, Phys. Rev. B, 78 (2008) 214415.
+[33] L. Isaev, G. Ortiz, J. Dukelsky, Hierarchical mean-field approach to the J₁-J₂ Heisenberg
+model on a square lattice, Phys. Rev. B, 79 (2009) 024409.
+[34] J. Sirker, Z. Weihong, O.P. Sushkov, J. Oitmaa, J₁-J₂ model: First-order phase transition
+versus deconfinement of spinons, Phys. Rev. B, 73 (2006) 184420.
+[35] J. Richter, J. Schulenburg, The spin-1/2 J₁-J₂ Heisenberg antiferromagnet on the square
+lattice: Exact diagonalization for N=40 spins, Eur. Phys. J. B 73 (2009) 117-124.
+                                                         12
+
+[36]  J.  Hong-Chen,  Y.  Hong,  B.  Leon,  Spin  liquid  ground  state  of  the  spin-1/2  square  J₁-
+J₂Heisenberg model, Phys. Rev. B, 86 (2012) 024424.
+[37] F. Mezzacapo, Ground-state phase diagram of the quantum J₁-J₂ model on the square lattice,
+Phys. Rev. B, 86 (2012) 045115.
+[38] L. Wang, D. Poilblanc, Z.-C. Gu, X.-G. Wen, F. Verstraete, Constructing a Gapless Spin-
+Liquid State for the Spin-1/2 J₁-J₂ Heisenberg Model on a Square Lattice, Phys. Rev. Lett., 111
+(2013) 037202.
+[39]  J.-F.  Yu,  Y.-J.  Kao,  Spin-1/2  J₁-J₂  Heisenberg  antiferromagnet  on  a  square  lattice:  A
+plaquette renormalized tensor network study, Phys. Rev. B, 85 (2012) 094407(094406).
+[40] S.-S. Gong, W. Zhu, D.N. Sheng, O.I. Motrunich, M.P.A. Fisher, Plaquette ordered phase
+and quantum phase diagram in the spin-1/2 J₁-J₂ square Heisenberg model, Phys. Rev. Lett.,
+113 (2014) 027201.
+[41]  R.L.  Doretto,  Plaquette  valence-bond  solid  in  the  square-lattice  J₁-J₂  antiferromagnet
+Heisenberg model: A bond operator approach, Phys. Rev. B, 89 (2014) 104415.
+[42] Y. Qi, Z.-C. Gu, Continuous phase transition from Néel state to Z2 spin-liquid state on a
+square lattice, Phys. Rev. B, 89 (2014) 235122.
+[43] R. Johannes, Z. Ronald, F.D.J. J., The spin-1/2 square-lattice J₁-J₂ model: the spin-gap
+issue, Eur. Phys. J. B 88 (2015) 2.
+[44] L. Wang, Z.-C. Gu, F. Verstraete, X.-G. Wen, Tensor-product state approach to spin-12
+square J₁-J₂ antiferromagnetic Heisenberg model: Evidence for deconfined quantum criticality,
+Phys. Rev. B, 94 (2016) 075143.
+[45] R. Haghshenas, D.N. Sheng, U(1)-symmetric infinite projected entangled-pair states study
+of the spin-1/2 square J1-J2 Heisenberg model, Phys. Rev. B, 97 (2018) 174408.
+[46] W.-Y. Liu, S. Dong, C. Wang, Y. Han, H. An, G.-C. Guo, L. He, Gapless spin liquid
+ground state of the spin-1/2 J₁-J₂  Heisenberg model on square lattices, Phys. Rev. B, 98 (2018)
+241109.
+[47] W.-J. Hu, F. Becca, A. Parola, S. Sorella, Direct evidence for a gapless Z2 spin liquid by
+frustrating Néel antiferromagnetism, Phys. Rev. B, 88 (2013) 060402.
+[48]  D.  Poilblanc,  M.  Mambrini,  Quantum  critical  phase  with  infinite  projected  entangled
+paired states, Phys. Rev. B, 96 (2017) 014414.
+[49]  Y.  Nomura,  M.  Imada,  Dirac-Type  Nodal  Spin  Liquid  Revealed  by  Refined  Quantum
+Many-Body  Solver  Using  Neural-Network  Wave  Function,  Correlation  Ratio,  and  Level
+Spectroscopy, Phys. Rev. X, 11 (2021) 031034.
+[50] S. Morita, R. Kaneko, M. Imada, Quantum Spin Liquid in Spin 1/2 J₁-J₂ Heisenberg Model
+on Square Lattice: Many-Variable Variational Monte Carlo Study Combined with Quantum-
+Number Projections, J. Phys. Soc. Jpn., 84 (2015) 024720.
+[51] Y.-H. Chan, H.-C. Jiang, Y.-C. Chen, Plaquette valence bond state in the spin-1/2 J1−J2 XY
+model on the square lattice, Phys. Rev. B, 107 (2023) 214402.
+[52] L. Capriotti, S. Sorella, Spontaneous Plaquette Dimerization in the J₁              -J₂ Heisenberg Model,
+Phys. Rev. Lett., 84 (1999) 3173.
+[53] F. Ferrari, F. Becca, Gapless spin liquid and valence              -bond solid in the J₁-J₂ Heisenberg
+model on the square lattice: Insights from singlet and triplet excitations, Phys. Rev. B, 102
+(2020) 014417.
+[54] W.-Y. Liu, S.-S. Gong, Y.-B. Li, D. Poilblanc, W.-Q. Chen, Z.-C. Gu, Gapless quantum
+spin liquid and global phase diagram of the spin-1/2 J1-J2 square antiferromagnetic Heisenberg
+model, Science Bulletin, 67 (2022) 1034-1041.
+[55] T. Li, F. Becca, W. Hu, S. Sorella, Gapped spin            -liquid phase in the J₁-J₂ Heisenberg model
+by a bosonic resonating valence-bond ansatz, Phys. Rev. B, 86 (2012) 075111.
+[56] D. Elbio, M. Adriana, Phase diagram of the frustrated spin             -1/2 Heisenberg antiferromagnet
+in 2 dimensions, Physical Review Letters, 63 (1989) 2148-2151.
+
+                                                        13
+
+[57] J. Oitmaa, Z. Weihong, Series expansion for the J₁-J₂ Heisenberg antiferromagnet on a
+square lattice, Phys. Rev. B, 54 (1996) 3022.
+[58]  J.  Hasik,  D.  Poilblanc,  F.  Becca,  Investigation  of  the  Néél  phase  of  the  frustrated
+Heisenberg  antiferromagnet  by  differentiable  symmetric  tensor  networks,  SciPost  Phys.,  10
+(2021) 012.
+[59] L. Vanderstraeten, L. Burgelman, B. Ponsioen, M.V. Damme, B. Vanhecke, P. Corboz, J.
+Haegeman, F. Verstraete, Variational methods for contracting projected entangled-pair states,
+Phys. Rev. B, 105 (2022) 195140.
+[60] X. Qian, M. Qin, Absence of spin liquid phase in the J₁-J₂ Heisenberg model on the square
+lattice, Phys. Rev. B, 109 (2024) L161103.
+[61] M.A. Caprio, P. Cejnar, F. Iachello, Excited state quantum phase transitions in many-body
+systems, Ann. Phys., 323 (2008) 1106-1135.
+[62] D. Rubeni, J. Links, P.S. Isaac, A. Foerster, Two-site Bose-Hubbard model with nonlinear
+tunneling: Classical and quantum analysis, Phys. Rev. A, 95 (2017).
+[63] G. Knizia, G.K.-L. Chan, Density matrix embedding: A simple alternative to dynamical
+mean-field theory, Phys. Rev. Lett., 109 (2012) 186404.
+[64] I.W. Bulik, G.E. Scuseria, J. Dukelsky, , Density matrix embedding from broken symmetry
+lattice mean fields, Phys. Rev. B, 89 (2014) 035140.
+[65] Q. Chen, G.H. Booth, S. Sharma, G. Knizia, G.K.-L. Chan, Intermediate and spin-liquid
+phase of the half-filled honeycomb Hubbard model, Phys. Rev. B, 89 (2014) 165134.
+[66] Y.-Z. Ren, N.-H. Tong, X.-C. Xie, Cluster mean-field theory study of J₁-J₂ Heisenberg
+model on a square lattice, J. Phys.: Condens. Matter, 26 (2014) 115601.
+[67] J. Qiao, Q.-L. Jie, Density matrix embedding theory of excited states for spin systems,
+Comput. Phys. Commun., 261 (2021) 107712.
+[68] J. Qiao, Q.-L. Jie, Detection of Quantum Phase Transition by Excited State, J. Phys. Soc.
+Jpn., 90 (2021) 094705.
+[69]  M.  Kawano,  C.  Hotta,  Comparative  study  of  the  density  matrix  embedding  theory  for
+Hubbard models, Phys. Rev. B, 102 (2020) 235111.
+[70] X. Plat, C. Hotta, Entanglement spectrum as a marker for phase transitions in the density
+embedding  theory  for  interacting  spinless  fermionic  models,  Phys.  Rev.  B,  102  (2020)
+140410(R).
+[71] J.-L. Song, S.-J. Gu, H.-Q. Lin, Quantum entanglement in the S=1∕2 spin ladder with ring
+exchange, Phys. Rev. B, 74 (2006) 155119.
+[72] P. Lou, J.Y. Lee, Block-block entanglement and quantum phase transition in the spin-1/2
+XX chain, Phys. Rev. B, 74 (2006) 134402.
+[73] S.-S. Deng, S.-J. Gu, H.-Q. Lin, Block-block entanglement and quantum phase transitions
+in the one-dimensional extended Hubbard model, Phys. Rev. B, 74 (2006) 045103.
+[74] G. Vidal, J.I. Latorre, E. Rico, A. Kitaev, Entanglement in quantum critical phenomena,
+Phys. Rev. Lett., 90 (2003) 227902.
+[75] O. Legeza, J. Solyom, Two-site entropy and quantum phase transitions in low-dimensional
+models, Phys. Rev. Lett., 96 (2006) 116401.
+[76] J. Ren, S. Zhu, Quantum phase transition in easy-axis antiferromagnetic Heisenberg spin-
+1 chain, Phys. Rev. A, 79 (2009) 034302.
+[77]  J.  Richter,  R.  Darradi,  J.  Schulenburg,  D.  Farnell,  H.  Rosner,  Frustrated  spin-1/2  J₁-J₂
+Heisenberg ferromagnet on the square lattice studied via exact diagonalization and coupled-
+cluster method, Phys. Rev. B, 81 (2010) 174429.
+[78] T. Senthil, A. Vishwanath, L. Balents, S. Sachdev, M.P.A. Fisher, Deconfined Quantum
+Critical Points, Science, 303 (2004) 1490.
+[79] T. Senthil, L. Balents, S. Sachdev, A. Vishwanath, M.P.A. Fisher,  Quantum criticality
+beyond the Landau-Ginzburg-Wilson paradigm, Physical Review B, 70 (2004).
+
+                                                        14
+
+[80] L. Isaev, G. Ortiz, J. Dukelsky, Hierarchical mean-field approach to theJ1−J2Heisenberg
+model on a square lattice, Physical Review B, 79 (2009) 024409.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        15

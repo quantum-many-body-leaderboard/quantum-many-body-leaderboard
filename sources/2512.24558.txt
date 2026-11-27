@@ -1,0 +1,1060 @@
+                                       Probabilistic Computers for Neural Quantum States
+
+    Shuvro Chowdhury,1 Jasper Pieterse,2 Navid Anjum Aadit,1 Shaila Niazi,1 Johan H. Mentink,2 and Kerem Y. Camsari1
+                                                 1Department  of  Electrical  and  Computer  Engineering,
+                                      University of California,  Santa Barbara,  Santa Barbara,  CA 93106,  USA
+                 2Radboud University, Institute for Molecules and Materials, Heyendaalseweg 135, Nijmegen, The Netherlands
+                                                                     (Dated: May 13, 2026)
+                    Neural quantum states efficiently represent many-body wavefunctions with neural networks, but the cost of
+                 Monte Carlo sampling limits their scaling to large system sizes.  Here we address this challenge by combining
+                 sparse Boltzmann machine architectures with probabilistic computing hardware. We implement a probabilistic
+                 computer  on  field-programmable  gate  arrays  (FPGAs)  and  use  it  as  a  fast  sampler  for  energy-based  neural
+                 quantum states. For the two-dimensional transverse-field Ising model at criticality, we obtain accurate ground-
+                 state  energies  for  lattices  up  to  80×80  (6400  spins)  using  a  custom  multi-FPGA  cluster.   Furthermore,  we
+                 introduce a dual-sampling algorithm to train deep Boltzmann machines, replacing intractable marginalization
+                 with conditional sampling over auxiliary layers.  This enables the training of sparse deep models and improves
+                 parameter efficiency relative to shallow networks.   We further implement this algorithm on a single FPGA,
+                 demonstrating the training of deep Boltzmann machines for systems as large as30×30(900 spins). Together,
+                 these  results  demonstrate  that  probabilistic  hardware  can  overcome  the  sampling  bottleneck  in  variational
+                 simulation  of  quantum  many-body  systems,  opening  a  path  to  larger  system  sizes  and  deeper  variational
+                 architectures.
+
+
+                             I. Introduction                                         magnitude remains challenging.  For variational Monte Carlo
+                                                                                     (VMC), a widely used and expressive approach [27], scaling
+   Many-body    quantum    simulation    drives    progress    in                    is  constrained  by  the  cost  of  Markov  Chain  Monte  Carlo
+condensed matter physics, quantum chemistry, and quantum                             (MCMC)  sampling  required  to  estimate  observables  and
+information,    yet   accurate   classical   simulation   remains                    stochastic parameter gradients.  This bottleneck persists even
+challenging  as  system  size  grows.   Established  approaches                      for relatively simple architectures such as RBMs and becomes
+such  as  quantum  Monte  Carlo  (QMC)  and  tensor-network                          more severe for deeper or more structured models.
+(TN)  methods  have  achieved  high  precision  in  important                            Probabilistic   hardware   provides   a   promising   route   to
+regimes,   but   each   faces   fundamental   limitations:     sign                  overcome  this  limitation.     The  joint  energy  of  an  RBM
+problems  for  generic  QMC  and  unfavorable  entanglement                          corresponds  to  an  Ising  Hamiltonian  on  a  bipartite  graph,
+scaling  for  tensor  networks  in  two  dimensions  and  near                       allowing nonlocal correlations to be mediated through local
+criticality [1–3].                                                                   pairwise  interactions  that  map  naturally  onto  probabilistic
+   Neural   Quantum   States   (NQS),   introduced   by   Carleo                     bits   (p-bits)   [28,  29].       P-bits   are   classical   stochastic
+and   Troyer   [4],   offer   a   different   approach   (Fig.1a,b).                 units  that  fluctuate  between  two  logic  states  and  can  be
+By  parameterizing  many-body  wavefunctions  with  neural                           implemented  with  massive  parallelism  and  low-precision
+networks,   NQS  can  represent  complex  correlations  in  a                        arithmetic  [30].      Recent  theoretical  work  predicts  large
+compact  and  systematically  improvable  form  [5, 6].    This                      sampling   speedups   for   NQS   when   using   probabilistic
+framework has enabled progress in two-dimensional quantum                            hardware [31], and experimental demonstrations have shown
+systems beyond the reach of exact diagonalization [7,8].                             orders-of-magnitude acceleration for frustrated Ising models
+   Since their inception,  NQS architectures have diversified.                       using hardware-accelerated convolutional RBMs [32].  Prior
+While early work relied on Restricted Boltzmann Machines                             p-bit  architectures  have  established  that  local  connectivity
+(RBMs), subsequent studies adopted convolutional networks                            enables sparse  Boltzmann machines  to map  efficiently onto
+to   exploit   translational   symmetry   [9],   recurrent   neural                  hardware while avoiding communication bottlenecks [33,34].
+networks   [10],    transformer-based   models   [11–13]   and                           Here, we implement a probabilistic computer (p-computer)
+more  recently  foundation  models  [14],  which  significantly                      using field-programmable gate arrays (FPGAs) to accelerate
+increased computational costs compared to RBMs.   Despite                            sampling  for  neural  quantum  states  (Fig.1c).   Rather  than
+this diversity, RBMs remain a canonical ansatz and continue                          emulating stochasticity in software, we map sparse Boltzmann
+to be used in studies of topological phases and fracton models                       machines  directly  onto  the  FPGA  fabric,  exploiting  spatial
+[15,16].                                                                             parallelism  and  low-precision  arithmetic.    Enforcing  local
+   Early   NQS   applications   demonstrated   simulations   of                      connectivity enables efficient on-chip realization and avoids
+systems with hundreds of spins, far beyond what is accessible                        the routing congestion inherent to dense networks.
+with  exact  diagonalization.   Scaling  to  larger  system  sizes                       This work makes two complementary contributions.  First,
+remains   an   active   area   of   research,   with   advances   in                 we map Further Restricted Boltzmann Machine (FRBM)−a
+software frameworks [17–20], algorithms [21–23], and high-                           sparse variant of RBM−onto probabilistic hardware.  Using
+performance  computing  [24–26],  now  reaching  systems  on                         hardware-parallel sampling on a custom multi-FPGA cluster,
+the order of10    3 spins.                                                           we scale to lattices as large as80×80spins (6400) and obtain
+   However,   increasing  system  size  by  another  order  of                       ground-state energies within chemical accuracy of variational
+                                                                                                                                                                             2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. 1.Probabilistic computers for accelerating variational simulations of quantum systems.(a) Conventional approaches such as path-integral quantum
+Monte Carlo (QMC) map quantum systems to classical statistical models in higher dimensions via the Suzuki-Trotter decomposition, but often suffer from sign
+problems or unfavorable scaling.  (b) Neural Quantum States (NQS) represent the many-body wavefunction with neural networks ans¨atze.  While many NQS
+architectures rely on dense or structured networks, sparse locally connected models are particularly well suited for mapping onto probabilistic hardware used in
+this work.  Ground states are obtained through variational optimization of the quantum energy, which requires repeated Monte Carlo sampling from the neural
+network model.  (c) Sampling is offloaded to a dedicated probabilistic processor built from p-bits.  A general-purpose processor updates variational parameters
+while a p-bit array provides high-throughput samples.  Throughput increases as implementations progress from CPU emulation to FPGA-based systems and,
+ultimately, to dedicated CMOS hardware.
+
+benchmarks  for  the  two-dimensional  transverse-field  Ising                            probabilistic network [4]:
+model at criticality.                                                                                                                        ∑
+   Second,   we   introduce   a   dual-sampling   algorithm   for                                        |Ψ θ(S)|      2 =P θ(S) =      1          e−E θ(S,h)                 (2)
+deep Boltzmann machines (DBMs) that replaces intractable                                                                                Zθ     h
+marginalization   over   auxiliary   variables   with   conditional
+sampling.     This  reformulation  enables  stable  training  of                          whereh ={h                   1,...,hM}withh    j ∈ {+1,−1}.    This
+sparse deep architectures under strict locality constraints and                           mapping  relies  on  the  Perron-Frobenius  theorem,   which
+improves  parameter  efficiency  relative  to  shallow  networks.                         guarantees  that  the  ground  state  of  stoquastic  Hamiltonians
+We implement and validate this dual-sampling approach on a                                like  the  TFIM  can  be  chosen  to  have  non-negative  real
+single FPGA, demonstrating DBM training for systems up to                                 amplitudes [38].   The quantum probability distribution|Ψ|                    2
+30×30spins (900).                                                                         then  coincides  with  the  classical  distribution  generated  by
+   Together,  these  advances  address  two  barriers  to  scaling                        p-bits.   As a result,  the p-computer’s stochastic fluctuations
+neural quantum states:  probabilistic hardware alleviates the                             directly  generate  samples  fromP    θ(S)  =|Ψ    θ(S)|      2  without
+sampling bottleneck, while dual sampling makes sparse deep                                computing amplitudes explicitly.  Extending this approach to
+Boltzmann machines trainable for variational Monte Carlo.                                 non-stoquastic systems with nontrivial sign structures would
+                                                                                          require complex parameters or phase networks [39–41].
+                                                                                              The  variational  ground-state  energy  of  a  neural  quantum
+                           II.Model and Ansatz                                            state (NQS)Ψ     θ(S)is evaluated as
+
+   We target the two-dimensional transverse-field Ising model                                            E= ⟨Ψ θ|H|Ψ   θ⟩
+(TFIM) on a square lattice with periodic boundary conditions,                                                      ⟨Ψ θ|Ψ θ⟩    =E S∼|Ψ   θ|2[E loc(S)]          (3)
+defined by the Hamiltonian [37]:                                                          where the local energy is defined as
+                    ˆH=−J   ∑                          ∑
+                                       ˆσ zi ˆσ zj−Γ x      ˆσ xi                    (1)                                            Ψθ(S ′)
+                                 ⟨i,j⟩                   i                                                    Eloc(S) =  ∑
+                                                                                                                               S′   Ψθ(S) ⟨S|H|S   ′⟩                (4)
+where⟨i,j⟩denotes unique nearest-neighbor bonds,Jis the                                   Training the neural quantum state corresponds to minimizing
+coupling strength, andΓ   x  is the transverse field.  We define                          this  variational  energyE(θ) with  respect  to  the  network
+the  many-body  basis  statesS ={s                  1,s2,...,sN}where                     parametersθ. Expectation values are obtained by Monte Carlo
+si ∈{+1,−1}and parameterize the squared wavefunction                                      sampling  of  configurationsSdrawn  from  the  probability
+amplitude|Ψ        θ(S)|      2  through the Boltzmann distribution of a                  distribution|Ψ    θ(S)|      2.   For  the  transverse-field  Ising  model,
+
+                                                                                          the  off-diagonal  term−Γ     x∑iσxi   couples  a  configuration
+                                                                                          S to   configurationsS                            (i)      that   differ   by   a   single   spin
+                                                                                                                                                                              3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. 2.Single-FPGA results for the 2D transverse-field Ising model.(a) Problem and hybrid setup: a 2D square lattice with periodic boundaries, simulated
+using a CPU-FPGA platform where the FPGA samples from a Further Restricted Boltzmann Machine (FRBM) with local connectivity (k= 2, corresponding
+to 13 neighbors).   (b) Training convergence for a35×35lattice (1225 spins) at the critical fieldΓ                  c/J=  3.044.   The energy per spin reaches chemical
+accuracy (blue shaded band:  relative error|∆E/E             ref|≤1.6×10        −3   ,E ref  is a variational Projected Entangled Pair States (PEPS) benchmark estimate at
+the thermodynamic limit (L→∞) from Ref. [35]) within≈100 iterations.  (c) Ground-state energy per spin versus transverse field, interpolating between
+the ferromagnetic limit (E/N→−2asΓ            x →0) and the field polarised limit (E/N→−Γ             x  asΓ   x →∞).  For validation, we also compare against
+Continuous-Time Path Integral Monte Carlo simulation (β= 64and10              5 Monte Carlo sweeps) using the code provided in [36].  FRBM results are obtained
+from an average over10   6 samples of a single run after the training is completed. Error bars represent standard error via blocking (50 bins) and are smaller than
+the symbol size.
+
+flip  at  sitei.     As  a  result,   evaluatingE                      loc(S) requires     reduces wiring complexity toO(N)for fixedk.  Throughout
+computing wavefunction ratios of the formΨ    θ(S  (i)  )/Ψ  θ(S)                          this  work  we  usek =  2,  corresponding  to  13  neighbors
+for  sampled  configurations.     These  ratios  also  appear  in                          per spin.   This sparsity maps directly onto the FPGA while
+estimators of physical observables such as⟨σ  xi⟩.  For shallow                            preserving analytical tractability for wavefunction amplitudes,
+architectures  such  as  RBMs,  these  wavefunction  ratios  can                           local energies, and gradients [4,44].
+be  evaluated  analytically.    However,  for  deep  Boltzmann                                To  maximize  p-bit  density  on  the  Alveo  U250,  we  use
+machines, the wavefunction amplitude involves an intractable                               10-bit  fixed-point  arithmetic  (1  sign,  6  integer,  3  fractional
+marginalization over hidden units, rendering direct evaluation                             bits)  for  weights  and  states,  reducing  logic  utilization  per
+of  such  ratios  prohibitively  expensive.    To  overcome  this                          neuron  and  enabling  greater  parallelism  than  floating-point
+bottleneck,   we  introduce  in  SectionVIa  dual  sampling                                implementations.  For uncorrelated stochasticity, we integrate
+strategy  that  estimates  wavefunction  ratios  via  conditional                          the  xoshiro  pseudo-random  number  generator  [45],  which
+sampling  over  hidden  variables  while  preserving  unbiased                             provides  sufficient  statistical  quality  to  avoid  sampling  bias
+estimators of the local energy.                                                            while  maintaining  a  compact  footprint  [46].   These  choices
+                                                                                           allow a large ensemble of p-bits on a single device without
+                                                                                           compromising   the   precision   needed   for   accurate   energy
+    III.Sparse Architecture and Hardware Implementation                                    estimation. On the host CPU, the evaluation of local energies,
+                                                                                           gradients, and stochastic reconfiguration updates is performed
+   The   physical   implementation   (Fig.2a)   uses   a   hybrid                          in single-precision floating point (FP32), providing sufficient
+probabilistic-classical  architecture  [34, 42]:  a  Xilinx  Alveo                         numerical accuracy while maintaining high throughput.
+U250  FPGA  serves  as  the  probabilistic  processor  while  a                               Parameter optimization uses the Stochastic Reconfiguration
+host CPU handles parameter optimization.  The U250 scales                                  (SR) algorithm [4,47].  The variational optimization loop is
+to  large  quantum  systems  through  the  sparse  architecture                            split  between  the  FPGA  and  the  host  CPU:  given  a  set  of
+described below.                                                                           parameters,  the  FPGA  generates  spin  configurations  which
+   Central   to   this   approach   is   the   Further   Restricted                        are  transferred  to  the  host  CPU  for  parameter  updates,  and
+Boltzmann   Machine   (FRBM)   [43]   with   strictly   local                              the  process  is  repeated  until  the  variational  energyE(θ)
+connectivity.      Standard   all-to-all   RBMs   requireO(N                  2)           in  Eq.  (3)  converges.   To  avoid  inverting  the  dense  Fisher
+connections,  creating  routing  congestion  on  hardware.   The                           Information Matrix,  we use an iterative Conjugate Gradient
+FRBM instead defines the network energyE  θ(S,h)as:                                        (CG)  solver  with  matrix-free  matrix-vector  products  [48],
+                                                                                           which scales efficiently with network size.  Because the CG
+    Eθ(S,h) =−  ∑             aisi−∑          bjhj− ∑           Wijsihj      (5)           steps involve simple local operations, future implementations
+                           i              j             ⟨i,j⟩   k                          could   integrate   parameter   optimization   directly   onto   the
+                                                                                           FPGA.
+whereh={h                   1,h2,...,hM}represents  the  hidden  spins,
+a,b,Ware  the  variational  parameters,  and⟨i,j⟩      k  restricts
+connections  to  nodes  within  Euclidean  distancek.     This
+                                                                                                                                                                     4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. 3.Multi-FPGA results for large-scale neural quantum states.(a) Six-FPGA probabilistic computer with boards connected via 3 Gbps FMC links and
+coordinated over Ethernet; each FPGA hosts up to 2200 p-bits. (b) Training convergence for a50×50lattice (2500 spins) at the critical fieldΓ                  c/J= 3.044.
+(c) Same for an80×80lattice (6400 spins), showing empirically that convergence within chemical accuracy (blue shaded region) is maintained as system size
+increases. PEPS benchmark estimate at the thermodynamic limit is taken from Ref. [35].
+
+
+                    IV.   Validation on single-FPGA                                   developed  a  cluster  of  six  interconnected  FPGA  boards
+                                                                                      (Supplementary  SectionB),  partitioning  the  FRBM  with
+   We  validated  the  method  on  a35×35lattice  (1225                               the  graph  partitioning  tool  METIS  to  minimize  the  number
+spins,  2450  p-bits).    As  shown  in  Fig.2b,  the  variational                    of  boundary  p-bits  communicated  between  devices.    Each
+energy  per  spin  converges  to  the  benchmark  ground-state                        FPGA  updates  its  local  p-bits  using  local  fields  and  the
+value   [35],    reaching   chemical   accuracy   (relative   error                   most recently received boundary states, which are exchanged
+|∆E/E     ref| ≤ 1.6×10    −3   )   within   approximately   100                      asynchronously  and  held  constant  between  communication
+optimization iterations.  Each iteration involves10    4  MCMC                        events.
+samples (see Supplementary SectionE).                                                    Each  FPGA  hosts  a  subgraph  containing  approximately
+   Profiling  the  training  loop  (Supplementary  SectionA)                          850−2200  p-bits  depending  on  the  system  size.    METIS
+shows  that  sampling  consumes  less  than  5%  of  total  wall-                     partitioning yields cut fractions of8.6%forL= 50and5.6%
+clock time on the FPGA, despite executing3×10                   6  Monte              forL=  80,  so that most interactions remain on-chip.   The
+Carlo  sweeps  per  iteration.    In  contrast,  a  CPU  baseline                     FPGAs are connected in a linear topology via3 GbpsFMC
+limited to10   4 sweeps per iteration already spends 20–30% of                        links.   Boundary  p-bits  are  exchanged  asynchronously  over
+runtime on sampling; matching the FPGA’s throughput would                             the FMC links while local p-bits update synchronously within
+be prohibitively slow.  This reduction in sampling time aligns                        each FPGA.
+with  theoretical  predictions  of  large  sampling  speedups  for                       Strict  global  synchronization  would  limit  the  local  p-bit
+stochastic Ising machines applied to NQS [31].                                        update  clock  to2.4  MHzforL=  50and1.2  MHzfor
+   Crucially,  the  sampling  time  per  sweep  remains  constant                     L=  80.    In  practice,  because  boundary  p-bits  constitute
+as system size increases, provided the FRBM fits within the                           a  small  fraction  of  the  lattice,  the  system  tolerates  delayed
+resources of the probabilistic chip [42,49].   With sampling                          boundary updates, allowing local p-bits to be overclocked to
+latency minimized, local energy computation and CG-based                              15 MHz. A host computer loads weights and reads out states
+gradient  accumulation  dominate  the  remaining  execution                           over Ethernet.
+time.   The  sparse  connectivity  of  our  architecture  opens  a                       Using  this  architecture,  we  simulate  the  2D  TFIM  at  the
+path to offloading local-energy calculations to hardware,  an                         critical  pointΓ    c/J=  3.044for50×50(2500  spins)  and
+optimization  we  leave  for  future  work.   To  further  validate                   80×80(6400 spins) lattices (Fig.3b,c).  These results show
+the solution,  we swept the transverse fieldΓ   x/Jacross the                         that p-bit-accelerated NQS reaches system sizes beyond those
+critical point [50].  Fig.2c shows the ground-state energy per                        reported  for  CPU-  and  GPU-based  implementations  while
+spin interpolating smoothly between the ferromagnetic limit                           maintaining accuracy within chemical precision of variational
+(lowΓ x) and the field-polarized limit (highΓ    x). These results                    benchmarks.
+indicate that sparse connectivity, together with low-precision                           The   convergence   behavior   remains   comparable   across
+sampling, provides sufficient accuracy for large lattices.                            system sizes:  for both lattices, the variational energy density
+                                                                                      converges   smoothly   to   chemical   accuracy   (blue   shaded
+                                                                                      region).   The accuracy on the80×80lattice confirms that
+        V.   Large-Scale Systems via Multi-FPGA Clusters                              the distributed architecture and asynchronous communication
+                                                                                      do not introduce artifacts that degrade the solution.
+   A single FPGA suffices for moderately sized lattices,  but
+larger  systems  require  distributing  the  computation.     We
+                                                                                                                                                                          5
+
+      VI.Deep Neural Quantum States via Dual Sampling                                    spins  from  conditional  sampling  of  auxiliary  layers,  while
+                                                                                         preserving   an   asymptotically   unbiased   estimator   of   the
+                                                                                         variational energy.
+     Algorithm 1:Dual Sampling Algorithm for Deep                                           Conceptually,     this    mirrors    contrastive-learning-style
+                                   NQS                                                   training   in   energy-based   models,   where   clamped   (data-
+                                                                                         conditioned)  correlations  are  estimated  by  sampling  hidden
+   Input:Hamiltonian parameters, Learning rateη, SamplesN                                svariables  conditioned  on  fixed  visible  data  [55, 56].   In  the
+            (outer),N            c (inner)                                               present  setting,  the  “data”  corresponds  to  a  fixed  visible
+   Output:Optimized parametersθ(weights and biases)                                      spin  configurationS,  and  auxiliary  variables  are  sampled
+ 1 foreach optimization stept= 1toN                     iter                             conditionally  for  each  such  configuration.    This  algorithm
+ 2       GenerateN                s visible configurationsvby sampling the
+          physical layer.                                                                exploits  the  sparse  structure  of  DBMs  and  aligns  naturally
+ 3       foreach visible configurationv                                                  with fast probabilistic samplers.
+ 4              Clamp visible units to fixed statev.                                        Within this framework, the wavefunction amplitude ratios
+ 5              RunN        c Gibbs steps for auxiliary layers(h,d).                     are expressed as conditional expectations over the auxiliary
+ 6              Accumulate conditional expectations for                                  variables given a fixed visible configuration:
+               wavefunction ratios and gradients.                                                         √
+ 7              Compute local energyE      loc(v)by combining                             Ψ(S     (i)  )      P(S     (i)  ) √
+               single-spin-flip ratios.                                                                                          E(h,d)∼P(h,d|S)       [e−∆E   i(S,h,d)  ]
+ 8       Compute natural gradients∇θusing Stochastic                                        Ψ(S)          =    P(S)         =
+          Reconfiguration (SR).                                                                                                                                         (7)
+
+ 9       Update parameters:θ←θ−η(t)∇θ.
+10returnOptimizedθandE                                  (N  iter)                        where∆E      i =E(S         (i) ,h,d)−E(S,h,d)is the change in the
+                                    G        .                                           classical energy of the DBM upon flipping a visible spin inS
+                                                                                         at sitei, and the expectation is estimated via samples drawn
+   While  the  shallow  FRBM  suffices  for  the  TFIM,  more                            from the conditional distributionP(h,d|S).
+complex phases with topological order or frustration require                                Conditioning  on  the  visible  configuration  substantially
+correlations  beyond  a  finite  local  horizon.     On  hardware                        reduces  variance  by  restricting  sampling  to  the  auxiliary
+with  strict  locality  constraints,   shallow  networks  face  a                        variables.     Reusing  each  of  theN  c  conditional  samples
+geometric  ceiling  that  width  alone  cannot  overcome.   Deep                         to    evaluate    all    single-spin-flip    ratios    further    reduces
+Boltzmann   Machines   (DBMs)   address   this   by   stacking                           computational  cost  by  avoiding  resampling  for  each  spin
+local   layers   to   expand   receptive   fields,   allowing   global                   flip.    This  construction  yields  an  asymptotically  unbiased
+correlations to emerge while preserving hardware-compatible                              estimator of the wavefunction ratio that converges to the exact
+sparsity.      Theory  supports  this:    deep  architectures  can                       value in the infinite-sample limit (Supplementary SectionD).
+efficiently encode volume-law entanglement and states from                               The  nonlinear  square-root  mapping  from  probabilities  to
+polynomial-depth  quantum  circuits  inaccessible  to  shallow                           amplitudes introduces a residual bias at finiteN    c. To mitigate
+RBMs  [51].   Constructive  proofs  further  show  that  DBMs                            this,   we   apply   a   second-order   Taylor   correction   to   the
+can exactly represent ground states where shallow networks                               spin-flip probability estimates, as detailed in Supplementary
+fail [52].  Extending the FRBM energy in Eq. (5), we define                              AlgorithmS1.
+a sparse DBM energy by coupling the hidden layerhto an                                      We validate the approach on a10×10lattice, using10                        3
+additional deep layerd:                                                                  inner-loop  samples  to  estimate  local  energy  and  parameter
+                                                                                         derivatives.  At this size, optimization results can be directly
+                                                                                         compared against reliable benchmarks.  As shown in Fig.4a,
+   Eθ(S,h,d) =−  ∑             aisi−∑         bjhj− ∑            W (vh)ij  sihj          the  variational  energy  converges  within  chemical  accuracy
+                            i              j             ⟨i,j⟩   k1                      (blue  shaded  region)  relative  to  a  recent  PEPS  benchmark
+                   −∑cldl− ∑                 hjW (hd)                                    [35]. For the system studied here, this empirical convergence
+                                                    jl  dl                      (6)      indicates that10       3 conditional samples in the inner-loop suffice
+                        l            ⟨j,l⟩  k2                                           to  maintain  the  correct  balance  between  diagonal  and  off-
+whereW           (hd)      connects local neighbors in layershandd.                      diagonal contributions to the local energy, keeping stochastic
+   This  depth  precludes  the  analytic  marginalization  that                          reconfiguration  updates  well-conditioned.     Supplementary
+makes  local  energy  and  gradient  calculations  tractable  in                         SectionGprovides  a  computational  complexity  analysis  of
+RBMs.    Evaluating  local  energy  and  gradients  in  DBMs                             the algorithm.
+requires nested sampling over auxiliary variables [53], which                               Beyond   convergence   and   accuracy,   Fig.4b   compares
+has   limited   the   adoption   of   DBMs   for   neural   quantum                      representational    efficiency    between    shallow    and    deep
+states [54].                                                                             architectures. We swept the number of variational parameters
+   We address this challenge by developing a dual sampling                               Np for both the single-layer sparse RBM (blue circles) and the
+algorithm (Algorithm1) that reformulates variational Monte                               sparse DBM (green squares).  While both architectures reach
+Carlo for deep neural quantum states in terms of conditional                             chemical accuracy, the sparse DBM achieves lower variational
+expectations.   This  strategy  decouples  sampling  of  physical                        energies with less than half the parameters (N p≈1300versus
+                                                                                         Np≈3100), consistent with theoretical results showing that
+                                                                                                                                                                                                6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. 4. Deep Boltzmann machine results for the 2D transverse-field Ising model.(a) Convergence of the sparse DBM using dual sampling on a10×10
+lattice (J= 1,Γ      c  = 3.044).  Supplementary SectionEprovides the hyperparameter choices.  The variational energy converges toward a variational PEPS
+benchmark from Ref. [35].  A transient non-monotonic deviation appears early in training due to the relatively aggressive learning-rate and SR regularization
+parameters used in this demonstration.  This effect is most visible in the small-system DBM case shown here, where stochastic fluctuations and sensitivity to
+initialization are larger; with more conservative optimization settings the trajectory becomes smoother. For the larger systems and shallow architectures shown
+elsewhere in the manuscript, the optimization trajectory is correspondingly smoother. (b) Final converged energy versus number of variational parametersN               p for
+the sparse DBM (green squares) and sparse RBM (blue circles). Parameter count is varied by adjusting the connectivity radiusk(see Supplementary SectionF).
+The most compact DBM (N p≈1300) achieves lower energies than RBMs with more than twice as many parameters.  (c) Final energy across 5 independent
+training runs with random initializations.  The DBM consistently converges to lower energies than the RBM. Error bars in (b) and (c) represent standard error
+via blocking (50 bins); the y-axis shows residual energy scaled by10    3 relative to the offset−3.2355.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. 5.Scalable training of Deep Boltzmann Machines (DBMs) on FPGA.(a) Training convergence for a30×30lattice at the critical pointΓ                                 c/J≈3.044.
+We train a sparse DBM with local connectivity radiusk= 2on both layers (13 connections per spin), resulting inN               p = 26,100variational parameters.  The
+variational energy (red line) converges to within chemical accuracy (blue shaded region) of a variational PEPS benchmark estimate at the thermodynamic limit
+(L→∞) from Ref. [35].  (b) Ground-state energy density across the transverse-field phase transition for a30×30lattice, comparing the sparse DBM (red
+circles) against CT-PIMC (green squares, same as in Fig.2).  The DBM captures the phase transition with high precision.  (c) Empirical algorithmic scaling of
+the dual-sampling estimator on a single NVIDIA V100 GPU. The average wall-clock time per optimization iteration (red circles, averaged over 500 iterations;
+error bars indicate 95% confidence intervals) is shown as a function of the linear lattice dimensionL.  To strictly isolate algorithmic scaling from hardware
+parallelization effects, we use a single sequential MCMC chain rather than parallel independent chains.  Under fixed sparsity and sampling budgets (N s,Nc),
+the iteration time scales approximately ast   iter∝L   2 (dashed quadratic fit), corresponding to linear dependence on the total number of spinsN=L               2.  This
+behavior is consistent with the simplified cost model for conventional processors in Supplementary Section G.
+
+
+depth  provides  more  efficient  representations  [51].     The                                    independent  training  runs  with  random  initializations.   The
+improvement  is  modest  here,  likely  because  the  TFIM  has                                     sparse   DBM   consistently   converges   to   lower   energies,
+relatively  simple  entanglement  structure;  deeper  gains  may                                    whereas  the  sparse  RBM  settles  into  higher-energy  local
+emerge for Hamiltonians with more complex correlations.                                             minima.    This  reproducibility  suggests  that  the  additional
+   Finally,   Fig.4c   shows   the   final   energy   across   five                                 layers   help   mediate   interactions   between   distant   lattice
+                                                                                                                                                                   7
+
+regions while preserving hardware-compatible sparsity. More                                                       VII.Conclusion
+generally,   the  dual-sampling  framework  is  not  restricted
+to   RBM   or   layered   DBM   architectures,   but   applies   to                     We  have  demonstrated  that  probabilistic  computers  built
+arbitrary   Boltzmann-machine   graphs,   including   networks                       from  p-bits  can  extend  neural  quantum  state  simulations
+with  unstructured,  interlayer,  and  hierarchical  connectivity.                   to  system  sizes  beyond  current  software  implementations.
+This generality enables systematic exploration of expressive                         Mapping  sparse  Boltzmann  machines  onto  a  multi-FPGA
+graph   topologies   for   neural   quantum   states   beyond   the                  cluster,  we  obtained  ground-state  energies  within  chemical
+constraints of analytically tractable models.                                        accuracy for the 2D transverse-field Ising model at criticality,
+   We now evaluate thealgorithmicscaling of dual sampling                            reaching 6400 spins.  We also introduced dual sampling, an
+under  fixed  sparsity  and  sampling  budgets,  independent  of                     algorithm  that  replaces  intractable  marginalization  in  deep
+specialized sampling hardware.  We use a conventional GPU                            Boltzmann  machines  with  conditional  sampling,  enabling
+to  make  sampling  costs  explicit  and  to  measure  how  the                      the  training  of  deep  architectures  with  improved  parameter
+dual-sampling  estimator  itself  scales  with  system  size  on                     efficiency relative to shallow networks. These results suggest
+conventional processors.                                                             that  spatial  locality  and  asynchronous  parallelism  are  the
+   This  choice  is  conservative.    Sparse,  locally  connected                    key  computational  resources  for  scalable  variational  Monte
+graphs  are  difficult  to  execute  efficiently  on  GPUs  due                      Carlo. The sparse connectivity that enables efficient hardware
+to  irregular  memory  access  and  limited  data  reuse,  unlike                    mapping also makes local energy evaluation embarrassingly
+the  dense  linear  algebra  workloads  for  which  GPUs  are                        parallel: each wavefunction ratio depends only on a bounded
+optimized  [57–59].      Stable  convergence  and  predictable                       neighborhood, opening a path to computingE                   loc entirely on-
+scaling under these conditions therefore, provide a stringent                        chip and eliminating the remaining data-transfer bottleneck.
+test of the dual-sampling estimator.                                                 Similarly, the dual-sampling algorithm is naturally suited to
+   Sparsity  is  also  a  design  choice  that  reduces  parameter                   hardware acceleration, since its inner loop consists entirely of
+count,    arithmetic   operations,    and   memory   traffic   per                   conditional Gibbs sampling over sparse graphs.
+iteration, and aligns naturally with the probabilistic hardware                         As   p-bit   architectures   mature   from   FPGA   prototypes
+architecture  [60, 61].    The  results  in  Fig.5quantify  this                     to  dedicated  CMOS  circuits,  these  optimizations  become
+scaling leveraging the FPGA implementation, which reduces                            increasingly attractive.   Application-specific hardware could
+the sampling latency for large systems.                                              integrate  sampling,   local  energy  evaluation,   and  gradient
+   To   demonstrate   the   scalability   of   the   dual   sampling                 accumulation  on  a  single  die,  reducing  both  latency  and
+algorithm, we trained a sparse DBM on a30×30lattice using                            energy consumption by orders of magnitude. Such a platform
+an Xilinx Alveo U250 accelerator card.  Weights and biases                           would  make  variational  Monte  Carlo  practical  for  quantum
+with fixed-point precision of 10 bits (1 sign bit, 4 integer bits,                   systems  far  larger  than  those  accessible  today,  positioning
+and 5 fraction bits) are used for this experiment.  As shown                         probabilistic  computing  as  a  scalable  route  to  classically
+in Fig.5a, the variational energy converges within chemical                          simulating quantum matter.
+accuracy of the benchmark ground-state energy at the critical
+point (Γ c/J≈3.044).  This stable convergence reflects the
+variance  reduction  achieved  by  conditioning  the  inner-loop                                                       Methods
+sampling on fixed visible configurations.
+   The accuracy of the trained DBM extends across the phase                                                    p-computing overview
+diagram.   Fig.5b  compares  the  DBM  ground-state  energy
+density  against  CT-PIMC  benchmarks,  showing  agreement                              p-computing  is  based  on  a  network  of  p-bits{σ     i},  each
+throughout both the ferromagnetic and field-polarized phases.                        fluctuating  between  two  logical  states  (σ i ∈ {−1,+1}).
+   Fig.5c  is  an  algorithmic  check  performed  on  a  single                      The  interactions  between  p-bits  govern  their  state  updates
+NVIDIA  V100  GPU  that  plots  the  average  wall-clock  time                       according to the following equations [30]:
+per  iteration  as  a  function  of  the  linear  lattice  dimension
+L,  revealing  a  quadratic  dependencet                        iter∝L   2  under  fixed                              Ii =∑Wijσj +b i                   (8)
+sparsity  and  sampling  budgets.   Since  the  total  number  of
+spins  scales  asN=L           2,   this  behavior  is  consistent  with                                                       j
+the   simplified   cost   analysis   presented   in   Supplementary                                     σi =sgn (tanh(βI i)−r     [−1,1]  )                   (9)
+SectionG.  Probabilistic  hardware  can  remove  the  explicit                       whereW,b, andβrepresent the interconnection matrix, bias
+system-size  dependence  from  sampling  under  the  on-chip                         vector,  and  inverse  temperature,  respectively. r [−1,1]        is  a
+mapping  assumption.    However,  the  overall  training  cost                       uniformly distributed random variable in the interval[−1,1].
+remains  linear  inN(quadratic  inL)  due  to  stochastic                            Together, equations (8) and (9) drive the network toward the
+reconfiguration  updates  performed  on  the  host  processor.                       Boltzmann distribution:
+Further reducing the iteration time would require accelerating
+these  optimization  routines  as  well,  for  example  through
+dedicated hardware support, which we leave for future work.                                                 p({σ   i}) =    1Z exp (−βE({σ     i}))         (10)
+
+                                                                                                    E({σ   i}) =−  ∑        Wijσiσj−∑biσi            (11)
+                                                                                                                       i<j                   i
+                                                                                                                                                                 8
+
+wherep({σ       i})is the probability andE({σ       i})is the energy of                                       Author Contributions
+the state{σ    i}, andZdenotes the partition function.
+                                                                                       SC,   JHM   and   KYC   conceived   the   study.      SC   and
+                               FPGA details                                         JP  performed  different  parts  of  the  simulations.      NAA
+                                                                                    provided support for the multi-FPGA implementations.   SN
+                                                                                    implemented the dual sampling algorithm on FPGA. SC and
+   We  mapped  the  physics-inspired,  massively  parallelp-                        JP wrote the initial draft of the manuscript with inputs from
+computer architecture of Ref. [33] onto a Xilinx Alveo U250                         JHM and KYC. All authors contributed to improving the draft
+accelerator card using graph coloring to maximize parallelism                       and participated in designing the experiments, analyzing the
+on the sparse instances. All arithmetic is fixed-point and uses                     results, and editing the manuscript.
+s{6}{3}precision (1 sign, 6 integer, 3 fractional bits). Custom
+RTLs were developed to implement the algorithm based on
+the  p-computing  architecture  and  synthesized,  placed  and                                                 Competing Interests
+routed  with  Xilinx  Vivado/Vitis  tool  chain.    Weights  and
+biases are converted to this fixed-point precision in MATLAB                           The authors declare no competing interests.
+before being sent to the FPGA.
+
+                                                                                                                    References
+                        DATA AVAILABILITY
+                                                                                     [1]Matthias   Troyer   and   Uwe-Jens   Wiese.        Computational
+   The data that support the findings of this study are available                         Complexity   and   Fundamental   Limitations   to   Fermionic
+from the corresponding author upon reasonable request.                                    Quantum Monte Carlo Simulations.Physical review letters, 94
+                                                                                          (17):170201, 2005.
+                                                                                     [2]Ulrich Schollw     ¨ock.  The density-matrix renormalization group
+                        CODE AVAILABILITY                                                 in the age of matrix product states.Annals of Physics, 326(1):
+                                                                                          96–192, 2011.
+   The  codes  that  support  the  findings  of  this  study  are                    [3]Rom     ´an  Or´us.    A  practical  introduction  to  tensor  networks:
+available  from  the  corresponding  author  upon  reasonable                             Matrix  product  states  and  projected  entangled  pair  states.
+                                                                                          Annals of Physics, 349:117–158, 2014.
+request.                                                                             [4]Giuseppe  Carleo  and  Matthias  Troyer.   Solving  the  quantum
+                                                                                          many-body problem with artificial neural networks.Science,
+                                                                                          355(6325):602–606, February 2017.
+                            Acknowledgments                                          [5]Nicolas Le Roux and Yoshua Bengio.  Representational power
+                                                                                          of  restricted  boltzmann  machines  and  deep  belief  networks.
+   SC, NAA and KYC acknowledge support from the Office of                                 Neural Computation, 20(6):1631–1649, 2008.
+Naval Research (ONR) Young Investigator Program grant, the                           [6]Markus Schmitt,  Marek M. Rams,  Jacek Dziarmaga,  Markus
+National Science Foundation (NSF) CAREER Award under                                      Heyl,  and  Wojciech  H.  Zurek.     Quantum  phase  transition
+grant number CCF 2106260, the Army Research Laboratory                                    dynamics in the two-dimensional transverse-field ising model.
+under grant number W911NF-24-1-0228, the Semiconductor                                    Science Advances, 8(37):eabl6850, 2022.
+                                                                                     [7]G. Fabiani, M. D. Bouman, and J. H. Mentink. Supermagnonic
+Research Corporation (SRC) grant, and the ONR-MURI grant                                  propagation in two-dimensional antiferromagnets.Phys. Rev.
+N000142312708.  Use was made of computational facilities                                  Lett., 127:097202, Aug 2021.
+purchased with funds from the National Science Foundation                            [8]Yusuke  Nomura  and  Masatoshi  Imada.     Dirac-type  nodal
+(CNS-1725797) and administered by the Center for Scientific                               spin  liquid  revealed  by  refined  quantum  many-body  solver
+Computing (CSC). The CSC is supported by the California                                   using neural-network wave function, correlation ratio, and level
+NanoSystems  Institute  and  the  Materials  Research  Science                            spectroscopy.Phys. Rev. X, 11:031034, Aug 2021.
+and  Engineering  Center  (MRSEC;  NSF  DMR  2308708)  at                            [9]Kenny  Choo,  Giuseppe  Carleo,  Nicolas  Regnault,  and  Titus
+UC Santa Barbara.  JP acknowledges support from Quantum                                   Neupert.  Symmetries and many-body excitations with neural-
+Delta  NL  and  ELLIS  unit  Nijmegen.    JHM  acknowledges                               network  quantum  states.Phys.  Rev.  Lett.,  121:167204,  Oct
+funding from the VIDI project no.  223.157 (CHASEMAG)                                     2018.
+                                                                                    [10]Mohamed  Hibat-Allah,  Martin  Ganahl,  Lauren  E.  Hayward,
+and  KIC  project  no.   22016  which  are  (partly)  financed  by                        Roger  G.  Melko,  and  Juan  Carrasquilla.    Recurrent  neural
+the Dutch Research Council (NWO), as well as support from                                 network wave functions.Phys. Rev. Res., 2:023358, Jun 2020.
+the  European  Union  Horizon  2020  and  innovation  program                       [11]Luciano Loris Viteritti, Riccardo Rende, and Federico Becca.
+under the European Research Council ERC Grant Agreement                                   Transformer variational wave functions for frustrated quantum
+No. 856538 (3D-MAGiC) and the Horizon Europe project no.                                  spin systems.Phys. Rev. Lett., 130:236401, Jun 2023.
+101070290 (NIMFEIA).                                                                [12]Yuan-Hang Zhang and Massimiliano Di Ventra.   Transformer
+                                                                                          quantum state: A multipurpose model for quantum many-body
+                                                                                          problems.Phys. Rev. B, 107:075147, Feb 2023.
+                                                                                    [13]Tianchen  Zhao,  Saibal  De,  Brian  Chen,  James  Stokes,  and
+                                                                                          Shravan  Veerapaneni.    Overcoming  barriers  to  scalability  in
+                                                                                                                                                                             9
+
+      variational  quantum  monte  carlo.      InProceedings  of  the                     [29]Pankaj Mehta, Marin Bukov, Ching-Hao Wang, Alexandre G.R.
+      International  Conference  for  High  Performance  Computing,                              Day, Clint Richardson, Charles K. Fisher, and David J. Schwab.
+      Networking,  Storage  and  Analysis,  SC  ’21,  New  York,  NY,                            A high-bias, low-variance introduction to machine learning for
+      USA, 2021. Association for Computing Machinery.                                            physicists.Physics  Reports,  810:1–124,  2019.   A  high-bias,
+[14]Riccardo  Rende,   Luciano  Loris  Viteritti,   Federico  Becca,                             low-variance introduction to Machine Learning for physicists.
+      Antonello Scardicchio, Alessandro Laio, and Giuseppe Carleo.                        [30]Kerem  Yunus  Camsari,  Rafatul  Faria,  Brian  M  Sutton,  and
+      Foundation neural-networks quantum states as a unified ansatz                              Supriyo Datta.  Stochastic p-bits for invertible logic.Physical
+      for  multiple  hamiltonians.Nature  Communications,  16(1):                                Review X, 7(3):031014, 2017.
+      7213, Aug 2025.                                                                     [31]Rutger J. L. F. Berns, Davi R. Rodrigues, Giovanni Finocchio,
+[15]Penghua Chen, Bowen Yan, and Shawn X. Cui.  Representing                                     and  Johan  H.  Mentink.     Predicting  sampling  advantage  of
+      arbitrary   ground   states   of   the   toric   code   by   a   restricted                stochastic ising machines for quantum simulations, 2025.
+      boltzmann machine.Phys. Rev. B, 111:045101, Jan 2025.                               [32]Pratik  Brahma,   Junghoon  Han,   Tamzid  Razzaque,   Saavan
+[16]Marc Machaczek,  Lode Pollet,  and Ke Liu.   Neural quantum                                  Patel,    and   Sayeef   Salahuddin.        Hardware   acceleration
+      state study of fracton models.SciPost Phys., 18:112, 2025.                                 of  frustrated  lattice  systems  using  convolutional  restricted
+[17]Giammarco  Fabiani  and  Johan  H.  Mentink.     Investigating                               boltzmann machine, 2025.
+      ultrafast quantum magnetism with machine learning.SciPost                           [33]Navid  Anjum  Aadit,   Andrea  Grimaldi,   Mario  Carpentieri,
+      Phys., 7:004, 2019.                                                                        Luke Theogarajan, John M Martinis, Giovanni Finocchio, and
+[18]Markus  Schmitt  and  Markus  Heyl.     Quantum  Many-Body                                   Kerem Y Camsari.  Massively parallel probabilistic computing
+      Dynamics in Two Dimensions with Artificial Neural Networks.                                with sparse Ising machines.Nature Electronics, 5(7):460–468,
+      Physical  Review  Letters,  125(10):100503,  September  2020.                              2022.
+      Publisher: American Physical Society.                                               [34]Shaila Niazi, Shuvro Chowdhury, Navid Anjum Aadit, Masoud
+[19]Filippo Vicentini,  Damian Hofmann,  Attila Szab       ´o,  Dian Wu,                         Mohseni,  Yao  Qin,  and  Kerem  Y.  Camsari.    Training  deep
+      Christopher  Roth,  Clemens  Giuliani,  Gabriel  Pescia,  Jannes                           Boltzmann  networks  with  sparse  Ising  machines.Nature
+      Nys,   Vladimir  Vargas-Calder´on,   Nikita  Astrakhantsev,  and                           Electronics,   pages  1–10,   June  2024.      Publisher:    Nature
+      Giuseppe  Carleo.   NetKet  3:  Machine  Learning  Toolbox  for                            Publishing Group.
+      Many-Body  Quantum  Systems.SciPost  Phys.  Codebases,                              [35]Gleb  Fedorovich,  Lukas  Devos,  Jutho  Haegeman,  Laurens
+      page 7, 2022.                                                                              Vanderstraeten,  Frank  Verstraete,  and  Atsushi  Ueda.   Finite-
+[20]Markus  Schmitt  and  Moritz  Reh.      jVMC:  Versatile  and                                size scaling on the torus with periodic projected entangled-pair
+      performant   variational   Monte   Carlo   leveraging   automated                          states.Phys. Rev. B, 111:165124, Apr 2025.
+      differentiation and GPU acceleration.SciPost Phys. Codebases,                       [36]Andrew  D.  King,  Jack  Raymond,  Trevor  Lanting,  Sergei  V.
+      page 2, 2022.                                                                              Isakov,   Masoud   Mohseni,   Gabriel   Poulin-Lamarre,   Sara
+[21]Ao Chen and Markus Heyl.  Empowering deep neural quantum                                     Ejtemaee,   William   Bernoudy,   Isil   Ozfidan,   Anatoly   Yu.
+      states  through  efficient  optimization.Nature  Physics,  20(9):                          Smirnov,  Mauricio  Reis,  Fabio  Altomare,  Michael  Babcock,
+      1476–1481, Sep 2024. ISSN 1745-2481.                                                       Catia  Baron,   Andrew  J.  Berkley,   Kelly  Boothby,   Paul  I.
+[22]M. Schuyler Moss, Roeland Wiersema, Mohamed Hibat-Allah,                                     Bunyk, Holly Christiani, Colin Enderud, Bram Evert, Richard
+      Juan Carrasquilla, and Roger G. Melko. Leveraging recurrence                               Harris,   Emile   Hoskinson,   Shuiyuan   Huang,   Kais   Jooya,
+      in neural network wavefunctions for large-scale simulations of                             Ali  Khodabandelou,  Nicolas  Ladizinsky,  Ryan  Li,  P.  Aaron
+      heisenberg antiferromagnets on the triangular lattice.Phys. Rev.                           Lott,   Allison  J.  R.  MacDonald,   Danica  Marsden,   Gaelen
+      B, 112:134449, Oct 2025.                                                                   Marsden, Teresa Medina, Reza Molavi, Richard Neufeld, Mana
+[23]M. Schuyler Moss, Roeland Wiersema, Mohamed Hibat-Allah,                                     Norouzpour,  Travis  Oh,  Igor  Pavlov,  Ilya  Perminov,  Thomas
+      Juan Carrasquilla, and Roger G. Melko. Leveraging recurrence                               Prescott,  Chris  Rich,  Yuki  Sato,  Benjamin  Sheldan,  George
+      in neural network wavefunctions for large-scale simulations of                             Sterling, Loren J. Swenson, Nicholas Tsai, Mark H. Volkmann,
+      heisenberg antiferromagnets on the square lattice.Phys. Rev. B,                            Jed  D.  Whittaker,  Warren  Wilkinson,  Jason  Yao,  Hartmut
+      112:134450, Oct 2025.                                                                      Neven,  Jeremy P. Hilton,  Eric Ladizinsky,  Mark W. Johnson,
+[24]Mingfan Li, Junshi Chen, Qian Xiao, Fei Wang, Qingcai Jiang,                                 and Mohammad H. Amin. Scaling advantage over path-integral
+      Xuncheng Zhao, Rongfen Lin, Hong An, Xiao Liang, and Lixin                                 monte carlo in quantum simulation of geometrically frustrated
+      He.    Bridging  the  gap  between  deep  learning  and  frustrated                        magnets.Nature Communications, 12(1):1113, 02 2021.
+      quantum  spin  system  for  extreme-scale  simulations  on  new                     [37]Subir  Sachdev.    Quantum  Phase  Transitions.     Cambridge
+      generation  of  sunway  supercomputer.  IEEE  Transactions  on                             University Press, 2 edition, 2011.
+      Parallel and Distributed Systems, 33(11):2846–2859, 2022.                           [38]W. Marshall.   Antiferromagnetism.Proceedings of the Royal
+[25]Xiao  Liang,   Mingfan  Li,   Qian  Xiao,   Junshi  Chen,   Chao                             Society of London. A. Mathematical and Physical Sciences, 232
+      Yang, Hong An, and Lixin He.  Deep learning representations                                (1188):48–68, 10 1955.
+      for quantum many-body systems on heterogeneous hardware.                            [39]Sergey  Bravyi,  David  P.  Divincenzo,  Roberto  Oliveira,  and
+      Machine Learning: Science and Technology, 4(1):015035, mar                                 Barbara  M.  Terhal.      The  complexity   of  stoquastic  local
+      2023.                                                                                      hamiltonian problems.Quantum Info. Comput., 8(5):361–385,
+[26]Hongtao Xu, Zibo Wu, Mingzhen Li, and Weile Jia. Large-scale                                 May 2008.
+      neural network quantum states for ab initio quantum chemistry                       [40]Attila  Szab       ´o  and  Claudio  Castelnovo.   Neural  network  wave
+      simulations on fugaku, 2025.                                                               functions and the sign problem.Phys. Rev. Res., 2:033075, Jul
+[27]Massimo Bortone, Yannic Rath, and George H. Booth.  Impact                                   2020.
+      of conditional modelling for a universal autoregressive quantum                     [41]Giacomo   Torlai,   Guglielmo   Mazzola,   Juan   Carrasquilla,
+      state.Quantum, 8:1245, Feb 2024.                                                           Matthias Troyer, Roger Melko, and Giuseppe Carleo.  Neural-
+[28]David   H.   Ackley,   Geoffrey   E.   Hinton,   and   Terrence   J.                         network  quantum  state  tomography.   Nature  Physics,  14(5):
+      Sejnowski.    A  learning  algorithm  for  boltzmann  machines.                            447–450, May 2018.
+      Cognitive Science, 9(1):147–169, 1985.
+                                                                                                                                                                     10
+
+[42]Shuvro  Chowdhury,  Navid  Anjum  Aadit,  Andrea  Grimaldi,                        [53]Ruslan Salakhutdinov and Geoffrey E. Hinton. Deep boltzmann
+      Eleonora  Raimondo,  Atharva  Raut,  P.  Aaron  Lott,  Johan  H.                       machines.        In   David   A.   Van   Dyk   and   Max   Welling,
+      Mentink, Marek M. Rams, Federico Ricci-Tersenghi, Massimo                              editors,Proceedings of the Twelfth International Conference on
+      Chiappini, Luke S. Theogarajan, Tathagata Srimani, Giovanni                            Artificial Intelligence and Statistics, AISTATS 2009, Clearwater
+      Finocchio,    Masoud   Mohseni,    and   Kerem   Y.   Camsari.                         Beach,  Florida,  USA, April 16-18,  2009,  volume 5 ofJMLR
+      Pushing   the   boundary   of   quantum   advantage   in   hard                        Proceedings, pages 448–455. JMLR.org, 2009.
+      combinatorial   optimization   with   probabilistic   computers.                 [54]Yusuke   Nomura,   Nobuyuki   Yoshioka,   and   Franco   Nori.
+      Nature Communications, 16(1):9193, Oct 2025.                                           Purifying  Deep  Boltzmann  Machines  for  Thermal  Quantum
+[43]Dong-Ling Deng,  Xiaopeng Li,  and S. Das Sarma.   Machine                               States.Physical Review Letters, 127(6):060601, August 2021.
+      learning topological states.Phys. Rev. B, 96:195145, Nov 2017.                         Publisher: American Physical Society.
+[44]Yusuke  Nomura,  Andrew  S.  Darmawan,  Youhei  Yamaji,  and                       [55]Geoffrey E. Hinton. Training products of experts by minimizing
+      Masatoshi Imada.  Restricted boltzmann machine learning for                            contrastive divergence.Neural Computation, 14(8):1771–1800,
+      solving strongly correlated quantum systems.Phys. Rev. B, 96:                          August 2002.
+      205152, Nov 2017.                                                                [56]Geoffrey  E.  Hinton,  Simon  Osindero,  and  Yee-Whye  Teh.
+[45]David  Blackman  and  Sebastiano  Vigna.     Scrambled  linear                           A   fast   learning   algorithm   for   deep   belief   nets.Neural
+      pseudorandom number generators.ACM Trans. Math. Softw.,                                Computation, 18(7):1527–1554, July 2006.
+      47(4), September 2021.                                                           [57]Nathan  Bell  and  Michael  Garland.      Implementing  sparse
+[46]Shuvro    Chowdhury,    Kerem    Y.    Camsari,    and    Supriyo                        matrix–vector       multiplication       on       throughput-oriented
+      Datta.   Accelerated  quantum  Monte  Carlo  with  probabilistic                       processors.Proceedings   of   the   Conference   on   High
+      computers.Communications  Physics,  6(1):1–9,  April  2023.                            Performance  Computing  Networking,  Storage  and  Analysis
+      Number: 1 Publisher: Nature Publishing Group.                                          (SC), 2009.
+[47]Sandro  Sorella.   Green  function  monte  carlo  with  stochastic                 [58]Samuel  Williams,  Andrew  Waterman,  and  David  Patterson.
+      reconfiguration.Phys. Rev. Lett., 80:4558–4561, May 1998.                              Optimization    of    sparse    matrix–vector    multiplication    on
+[48]Eric Neuscamman,  C. J. Umrigar,  and Garnet Kin-Lic Chan.                               emerging multicore platforms.Parallel Computing, 35(3):178–
+      Optimizing large parameter sets in variational quantum monte                           194, 2009.
+      carlo.Phys. Rev. B, 85:045103, Jan 2012.                                         [59]Yangzihao    Chen,     Nadathur    Satish,     Sungpack    Hong,
+[49]Srijan Nikhar,  Sidharth Kannan,  Navid Anjum Aadit,  Shuvro                             Oluwasegun  Oguntebi,  and  Kunle  Olukotun.   Gunrock:  Gpu
+      Chowdhury, and Kerem Y Camsari. All-to-all reconfigurability                           graph analytics.ACM Transactions on Parallel Computing, 4
+      with   sparse   and   higher-order   Ising   machines.Nature                           (1):1–49, 2018.
+      Communications, 15(1):8977, 2024.                                                [60]Mark  Horowitz.   1.1  computing’s  energy  problem  (and  what
+[50]Henk  W.  J.  Bl       ¨ote  and  Youjin  Deng.     Cluster  monte  carlo                we can do about it).IEEE International Solid-State Circuits
+      simulation  of  the  transverse  ising  model.Phys.  Rev.  E,  66:                     Conference (ISSCC), pages 10–14, 2014.
+      066110, Dec 2002.                                                                [61]Trevor Gale, Erich Elsen, and Sara Hooker. The state of sparsity
+[51]Xun  Gao  and  Lu-Ming  Duan.     Efficient  representation  of                          in  deep  neural  networks.   arXiv  preprint  arXiv:1902.09574,
+      quantum many-body states with deep neural networks.Nature                              2019.
+      Communications, 8(1):662, Sep 2017.                                              [62]George  Karypis  and  Vipin  Kumar.    A  fast  and  high  quality
+[52]Giuseppe  Carleo,   Yusuke  Nomura,   and  Masatoshi  Imada.                             multilevel  scheme  for  partitioning  irregular  graphs.SIAM
+      Constructing  exact  representations  of  quantum  many-body                           Journal on Scientific Computing, 20(1):359–392, 1998.
+      systems with deep neural networks.Nature Communications, 9
+      (1):5322, Dec 2018.
+                                                       Supplementary Information
+                    Probabilistic Computers for Neural Quantum States
+
+  Shuvro Chowdhury, Jasper Pieterse, Navid Anjum Aadit, Shaila Niazi, Johan H. Mentink, and Kerem Y. Camsari
+
+
+                                             A.Runtime Profiling and Bottleneck Analysis for 2D TFIM
+
+   To quantify the removal of the sampling bottleneck, we profiled the wall-clock execution time of the training loop across
+three hardware configurations for 2D TFIM withL= 35:  a standard CPU implementation (11th Gen Intel Core i7-11700 @
+2.50 GHz, 96 GB RAM: also used in the hybrid setup), a MATLAB-based high-performance GPU implementation (NVIDIA
+GeForce RTX 4060 Ti, 16 GB VRAM), and our hybrid CPU-FPGA setup.
+
+
+                                                 B.Implementation Details of the Multi-FPGA System
+
+   We provide an extended view of the cluster architecture in Fig.S2, specifically detailing the mapping of partitioned subgraphs
+to hardware and the protocols used for inter-FPGA data exchange.
+                                                                                                                                                                              11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. S1. Evolution of the computational bottleneck.For 2D TFIM of sizeL=  35, the fraction of total iteration time spent on Monte
+Carlo sampling is plotted against training iterations for three architectures.  TheAll-GPUsetup (red,3×10                                      6 samples) remains dominated
+by sampling costs (>50%), indicating a throughput bottleneck.  TheAll-CPUbaseline (blue) spends∼20−30%of its time on sampling
+despite processing300×fewer samples (10                                4, for a manageable end-to-end training). In contrast, theCPU-FPGA Hybrid(yellow) performs
+the massive3×10        6 sampling task in less than5%of the total loop time, effectively rendering the sampling step instantaneous relative to the
+classical gradient accumulation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. S2. Multi-FPGA cluster architecture for large-scale NQS.(a) A sparse Ising graph is partitioned into subgraphs using the METIS
+min-cut graph partitioner [62] and the subgraphs are mapped to neighboring FPGAs.  (b) Each FPGA stores its local weights and duplicates
+cross-partition couplings asshadow weights.  Only binary boundary p-bit states are exchanged over full-duplex FMC links (both directions)
+since the coupling matrix is symmetric. (c) Source-synchronous boundary interface: clock and data are forwarded together. Incoming boundary
+p-bits remain asynchronous to the destination FPGA clock domain and the forwarded clock is used only to align the received p-bit stream. (d)
+A 6-FPGA linear chain illustrating forward and reverse flow of boundary p-bit states over nearest-neighbor links.
+
+
+                                                              C.Detailed Dual Sampling Algorithm
+
+   Here, we provide a more elaborative version of the dual sampling algorithm.
+                                                                                                                                                                                                                 12
+
+                            Algorithm S1:Algorithm for Machine Learning Quantum Hamiltonians using deep NQS
+    Input:Number of qubits (N            Q), parameters of the quantum Hamiltonian (J,h,Γ), number of samples per iterations (N         s), number of
+                clamped samples (N c), number of iterations (N  iter), learning rate schedule (η), optimization parameters
+    Output:Optimized parameters: biases (b), couplings (W), ground energy estimate (E                           G)
+ 1 Define DBM adjacency matrix,A.
+ 2 Initialize biases:b            i←0.01N(0,1), ∀i∈{v,h,d}.
+ 3 Initialize weights:W               ij←0.01N(0,1)
+ 4 Initialize p-bit states randomly from{−1,+1}.
+ 5 foreach iterationt= 1toN                  iter
+ 6       foreach sample inN        s
+ 7              foreach spin in visible layerdo in parallel
+ 8                     Compute inputI          i =∑jWijσj +h   i.
+
+ 9                     Update:σ              i =sgn (tanh(βI  i)−r     [−1,1]  ).
+
+10             Clamp or fix the spins in the visible layer,v.
+11             Compute diagonal contributionH           v,v.
+12     E   loc(v)←H         v,v.
+13     O   vi←O    vi + 0.5v     i, ∀i∈v.
+14     O   hj (v)←0,O            dk(v)←0,O            Wij (v)←0.
+15             foreach sample inN          c
+16                   foreach spin in hidden layerdo in parallel
+17                          Compute inputI           i =∑jWijσj +h   i.
+
+18                          Update:σ               i =sgn (tanh(βI  i)−r     [−1,1]  ).
+
+19       O   hj (v)←O         hj (v) + 0.5h         j, ∀j∈h.
+20                   foreach spin in deep layerdo in parallel
+21                          Compute inputI           i =∑jWijσj +h   i.
+
+22                          Update:σ               i =sgn (tanh(βI  i)−r     [−1,1]  ).
+
+23       O   dk(v)←O         dk(v) + 0.5d         k, ∀k∈d.
+24                   Compute inputI           i, ∀i∈v.
+25       p    flip,i ←p      flip,i    + exp (−2I       ivi), ∀i∈v.
+26       p    flip            sq,i ←p      flipsq,i   + exp (−4I       ivi), ∀i∈v.
+27       O   Wij (v)←O         Wij (v) + 0.5σ         iσj,∀i,j∈{v,h,d}.
+
+28     O   hj (v)←O         hj (v)/N     c, ∀j∈h.
+29     O   dk(v)←O         dk(v)/N     c, ∀j∈d.
+30     O   Wij (v)←O         Wij (v)/N     c,∀i,j∈{v,h,d}.
+31     p    flip,i ←p      flip,i /Nc, ∀i∈v.
+32     p    flip       sq,i ←p      flipsq,i /Nc, ∀i∈v.
+33             Var    pop,i ←(p         flipsq,i −(p       flip,i   )2)/N  c ∀i∈v.
+34           ∆   i←Var      pop,i  /(8p         flip,i √pflip,i   ) ∀i∈v.
+35             foreach spin in visible layer
+36                   Getv          (i)    by flipping the spin.
+37       E   loc(v)←E           loc(v) +H       v,v(i)  (√pflip,i    + ∆i).
+
+
+38      Use SR for gradients∆b                     i and∆W         ij,∀i,j∈{v,h,d}.
+39      Update biases:b              i←b    i−η(t)∆b             i,∀i∈{v,h,d}.
+40      Update weights:W                ij←W    ij−η(t)∆W             ij,∀i,j∈{v,h,d}.
+
+41returnOptimizedb,WandE                                       (N  iter)G        .
+
+
+
+                                                D.   Exactness of the dual-sampling estimator in the infinite-sample limit
+
+Let us define a neural quantum state from a probabilistic DBM modelp     θ(v)over spin configurationsv∈{±1}                 N  by
+
+                           Ψθ(v) = √pθ(v),        wherep        θ(v) = ∑                               pθ(v,h,d),    andp      θ(v,h,d) =      1                                 )                         (S.1)
+                                                                                                 h,d                                                             Zθ e−E θ(v,h,d
+                                                                                                                                                                                   13
+
+so that|Ψ   θ(v)|      2 =p θ(v). Consider the transverse-field Ising Hamiltonian
+
+                                                                                                          N∑
+                                                                   H=−  ∑Jij ˆσ zi ˆσ zj−Γ x                   ˆσ xi
+                                                                              ⟨ij⟩                       i=1
+
+where the sum over⟨ij⟩includes only unique pairs connected by an edge in the underlying lattice.  In the following, we will
+assume that
+
+   (1)in outer sampling, we can draw independent and identically distributed (i.i.d.) visible configurations fromp      θ(v);
+   (2)in inner conditional sampling, for any fixed visible configurationv, we can sample the hidden/deep variables from their
+        exact conditionals using the DBM and obtain an unbiased estimator of the ratiop   θ(v  (i)  )/p θ(v)for every single-spin flip
+        v(i)    (the configuration obtained fromvby flipping spini);
+For any stateΨ   θ, the exact variational energy is defined as
+
+                                                                           E(θ)  =  ⟨Ψ θ|H|Ψ   θ⟩⟨Ψ θ|Ψ θ⟩
+
+The usual variational Monte Carlo identity is
+                                                                  ∑
+                                                     E(θ) =           v|Ψ θ(v)|      2Eloc(v)∑
+
+                                                                           v|Ψ θ(v)|      2       =E v∼|Ψ   θ|2[Eloc(v) ],                                                   (S.2)
+where thelocal energyis
+
+                                                                           Eloc(v) =     (HΨ  θ)(v)Ψθ(v)                                                                                    (S.3)
+
+For the TFIM Hamiltonian above, in theσ  z basis, we have
+
+                                                                                                         N∑   Ψθ(v  (i)  )
+                                                          Eloc(v) =−  ∑            Jijσziσzj−Γ x                Ψθ(v)                                                                (S.4)
+                                                                             ⟨ij⟩                       i=1
+
+Now, by construction of the NQS,
+                                                                                                        √
+                                              Ψθ(v) = √pθ(v)     =⇒           Ψθ(v  (i)  )                  pθ(v  (i)  )         ri(v)                                          (S.5)
+                                                                                        Ψθ(v)      =          pθ(v)      =√
+
+So  if,  for  a  fixed  visible  configurationv,  we  can  obtain  an  unbiased  estimate  of            pθ(v  (i)   )pθ(v)     ,  which  is  exactly  what  the  inner
+(hidden/deep) sampling does in AlgorithmS1, then applying the square root exactly recovers the amplitude ratio in Eq. (S.5). Let
+us denote the inner estimate (after averaging overN c conditional samples) byˆr   i(v). Under assumption (2) and lettingN       c→∞,
+we can show that
+                                                                                               √               √
+                                      limNc→∞ ˆr i(v) =  pθ(v  (i)  )                              ˆr i(v) =       pθ(v  (i)  )
+                                                            pθ(v)          =⇒   limNc→∞                              pθ(v)      = Ψθ(v  (i)  )Ψθ(v)  .                               (S.6)
+
+Plugging this into Eq. (S.4), we obtain aninner-levellocal-energy estimator
+
+                                                                                                 N∑  [            √          ]
+                                          limNc→∞ ˆEloc(v) =−  ∑          Jijσziσzj−Γ x                   limNC→∞    ˆr i(v)    =E    loc(v)                                    (S.7)
+                                                                     ⟨ij⟩                       i=1
+
+   To see why Eq. (S.7) holds, consider a visible configurationvand the configurationv                                                         (i)   obtained by flipping spinv   i. For fixed
+hidden and deep spins(h,d), the DBM defines a Boltzmann weight
+
+                                                                      pθ(v,h,d) =      1                )                                                                              (S.8)
+                                                                                          Zθ e−E θ(v,h,d
+                                                                                                                                                                        14
+
+and
+
+                                            ∆E  i(v,h,d) =E   θ(v  (i) ,h,d)−E   θ(v,h,d) = 2I   i(v,h,d)v  i                                             (S.9)
+
+so the ratio of joint probabilities is
+
+                                                      pθ(v  (i) ,h,d)                  )       =e −2I  i(v,h,d)v    i                                                       (S.10)
+                                                        pθ(v,h,d)      =e −∆E   i(v,h,d
+
+The marginal probability of a visible configuration is obtained by summing over hidden and deep variables:
+
+                                              pθ(v) = ∑         pθ(v,h,d),   p  θ(v  (i)  ) =∑             pθ(v  (i) ,h,d)                                            (S.11)
+                                                           h,d                                        h,d
+
+Using Eq. (S.10) in the second expression gives
+                                             pθ(v  (i)  ) =∑      pθ(v  (i) ,h,d) = ∑        pθ(v,h,d)e  −∆E   i(v,h,d)                                                   (S.12)
+
+                                                             h,d                        h,d
+
+Therefore,
+         pθ(v  (i)  )    ∑                              ∑                                 )
+                           ∑h,dpθ(v  (i) ,h,d)              h,dpθ(v,h,d)e  −∆E   i(v,h,d∑                                             )  ] =r i(v)          (S.13)
+           pθ(v)      =        h,dpθ(v,h,d)      =                   h,dpθ(v,h,d)               =E   (h,d)∼p(h,d|v)      [e−∆E   i(v,h,d
+
+which  establishes  Eq.  (S.7).r    i(v)is  the  conditional  expectation,  under  the  clamped  distributionp      θ(h,d|v),  of  the  joint
+Boltzmann ratio betweenv               (i)    andv. In our algorithm, this expectation is estimated by a Monte Carlo average overN     c clamped
+samples,
+
+                                                                                Nc∑
+                                                              ˆr i(v) =      1Nc    e−∆E   i(v,h  (k) ,d(k)   )                                                                 (S.14)
+                                                                               k=1
+
+and by the law of large numbersˆr       i(v)→r    i(v)asN    c→∞, so the estimator converges to the exact marginal ratio  pθ(v  (i)  )pθ(v)      .
+
+
+
+                                                E.Training Hyperparameters and Optimization Details
+
+   All Neural Quantum State (NQS) models presented in this work were trained using a custom MATLAB framework accelerated
+by CUDA-enabled GPUs. The optimization was performed using Stochastic Reconfiguration (SR) implemented via an iterative
+Conjugate Gradient (CG) solver to avoid explicitly constructing the dense Fisher Information Matrix (FIM).
+
+
+                                                                       1. Hyperparameters
+
+   The specific hyperparameters used for the training of the Sparse Deep Boltzmann Machine (DBM) and Sparse RBM results
+shown in Figs.4and5are summarized in TableS1.
+
+     •Dual Sampling Scheme:For the Sparse DBM, the gradient estimation involves two distinct sampling populations.  The
+        outer loopusesN       s = 10,000samples to estimate expectations over the visible layer|Ψ(v)|                               2. Theinner loop(conditional
+        sampling) usesN   c = 1,000clamped samples to estimate the gradients of the deep layers and the local energy ratios. For
+        a fixed visible configuration, the same set ofN  c conditional samples is reused to estimate all single-spin-flip ratios, such
+        that each ratio estimator is based onN  c samples (notN   c/N).
+     •Learning Rate Schedule:For the algorithmic benchmarks in Fig. 4, we employed a time-dependent learning rateη(t)
+        following acosine decay schedule, decreasing fromη                      max  = 0.1toη         min  = 10−5    over the course of training to ensure
+        stable convergence.   Conversely,  for the hardware demonstrations in Fig. 2 and Fig. 3,  a cosine decay schedule from
+        ηmax = 0.05toη           min = 0.01was employed.
+                                                                                                                                                                          15
+
+     •Regularization:To stabilize the inversion of the Fisher Information Matrix, we applied a diagonal shift regularization
+        (Tikhonov regularization)S→S+λI. The shift parameterλwas initialized atλ                                                                0 = 0.1and decayed adaptively during
+        training to a minimum ofλ    min = 10−4    using a decay factorb         0 = 0.9per iteration (λ   t =max(λ             min,λ0bt0).
+
+   The outer sampling budgetN    s and the inner conditional sampling budgetN    c control distinct sources of statistical error. The
+outer loop samples the full visible-spin distribution and determines the conditioning of the stochastic-reconfiguration update,
+while the inner loop estimates conditional expectations over auxiliary variables for a fixed visible configuration.  Because the
+conditional distributions are lower-variance and strongly constrained, accurate estimation of wavefunction ratios can be achieved
+with substantially fewer conditional samples.  In practice, we find thatN   c  = 103 is sufficient to stabilize training and achieve
+chemical accuracy for the systems studied here.  We do not claim that this choice is asymptotically optimal.  In general, the
+hyperparameters  listed  in  Table  S1  denote  fixed  sampling  budgets  used  throughout  this  work.   We  do  not  assume  or  claim
+that these quantities are independent of the system size.  Rather, they are chosen empirically to ensure stable optimization and
+accurate energy estimation for the system sizes studied here.  Determining how these sampling budgets must scale with system
+size to maintain a prescribed statistical accuracy would require a dedicated variance analysis and is beyond the scope of the
+present work.
+
+
+                                                                     2. Optimization Routine
+
+   The model parameters were updated using the Stochastic Reconfiguration (SR) method.  Instead of inverting the curvature
+matrixSdirectly (which scales asO(N                        3p )), we solved the linear systemS·δθ=gusing a Preconditioned Conjugate Gradient
+(PCG) solver.
+
+     •Matrix-Free  Implementation:The  solver  utilizes  implicit  matrix-vector  products  to  computeS·vwithout  ever
+        instantiating the fullSmatrix in memory.
+     •CG Tolerances:The linear solver was configured with a relative tolerance of10       −4    and a maximum of 500 iterations per
+        optimization step.
+
+
+                                                                         3. Final Evaluation
+
+   Following the training phase (1,000 iterations),  the optimized model parameters were frozen.   A final evaluation run was
+performed using a significantly larger sample size ofN    eval = 106 to obtain the high-precision energy estimates and error bars
+reported in the main text figures.
+
+
+                                                       TABLE S1. Summary of Training Hyperparameters
+                              Parameter                 Symbol   Value                                   Description
+                              Training DurationN                iter      1000                           Total optimization steps
+                              Visible SamplesN             s     10,000    Samples drawn from|Ψ(v)|                                 2 (Outer loop)
+                              Clamped SamplesN             c      1,000Conditional samples for Dual Sampling (Inner loop)
+                              Initial Learning Rateη        max       0.1                          Maximum learning rate
+                              Final Learning Rateη        min      10−5                              Minimum learning rate
+                              SR Diagonal Shift λ         0         0.1              Initial regularization for Fisher Matrix
+                              SRλdecay factor b                 0         0.9              Geometric decay rate for diagonal shift
+                              CG Tolerance ϵ               CG      10−4                     Relative tolerance for linear solver
+                              CG Max Iterationsk                 CG        500                      Max iterations for linear solver
+                              Evaluation SamplesN               eval      106              Samples used for final energy estimation
+
+
+
+
+                                              F.   Parameter Counting and Sparse Connectivity Definitions
+
+   To quantify the representational efficiency of Deep Boltzmann Machines (DBMs) against Restricted Boltzmann Machines
+(RBMs), we constrain the network connectivity based on a geometric locality principle.  Unlike standard “all-to-all” RBMs,
+which entailO(N                2)connections and are ill-suited for FPGA routing, we employ a spatially local connectivity mask.
+                                                                                                                                                                          16
+
+                                                                       1. Connectivity Metric
+
+   We define the connectivity between a neuroniin layerLat lattice coordinater                   i and a neuronjin layerL+ 1atr             j  using
+the Euclidean distance on the periodic lattice (we assign to each hidden and deep layer a 2D geometry isomorphic to the visible
+lattice, such that every neuron has a defined spatial coordinate):
+
+                                                                d(i,j) = minδ∈Z     2||r i−r j +L·δ||          2                                                                 (S.15)
+
+A synaptic connectionW        ij  is non-zero if and only ifd(i,j)≤k, wherekis the tunable connectivity radius.  We choose the
+Euclidean metric because it provides a simple and physically motivated notion of locality on the lattice, enabling sparse and
+distance-limited connectivity between neurons.
+
+
+                                                                    2. Parameter Enumeration
+
+   For the10×10lattice (N= 100spins) used in Figure 4:
+     •Sparse RBM:Consists of one visible layer (N      v  =  100) and one hidden layer (N   h  =  100).  The total parametersN           p
+        includeN      v +N h biases and the number of active weights defined bykN  v.
+     •Sparse DBM:Consists of one visible layer (N      v = 100), one hidden layer (N   h = 100), and one deep layer (N   d = 100).
+        The total parametersN        p includeN      v +N h +N d biases and two sets of weights, constrained by connectivity radiusk           1
+        (between visible-hidden) andk      2 (between hidden-deep).
+
+   TablesS2andS3details the exact parameter counts used for the sweep in Figure 4(b,c).
+
+
+TABLE S2. Detailed parameter breakdown for Sparse RBM architectures evaluated in Figure 4 (10×10Lattice). The connectivity radiusk
+determines the number of active synapses per neuron.
+                                                    Radius (k)  Neighbors per Neuron              Weights  TotalN      p
+                                                          1                            5             500          700
+                                                          2                           13            1300        1500
+                                                          3                           29            2900        3100
+
+Note:“Neighbors per Neuron” includes the self-connection (same coordinate in adjacent layer) plus spatial neighbors. TotalN             p accounts for biases (200 for
+RBM).
+
+
+
+
+TABLE S3.  Detailed parameter breakdown for Sparse DBM architectures evaluated in Figure 4 (10×10Lattice).  The connectivity radii
+(k  1,k2) determine the number of active synapses per neuron.
+                            Radius (k  1)  Neighbors per Neuron            Radius (k  2)  Neighbors per Neuron            Weights  TotalN      p
+                                  1                             5                 1                             5           1000        1300
+                                  2                            13                 1                             5           1800        2100
+                                  2                            13                 2                            13           2600        2900
+
+Note:“Neighbors per Neuron” includes the self-connection (same coordinate in adjacent layer) plus spatial neighbors. TotalN             p accounts for biases (300 for
+DBM).
+
+
+
+
+                                              G.Simplified Computational Cost Model for Dual Sampling
+
+   We provide a simplified cost model for the dual-sampling algorithm used to estimate local energies and parameter derivatives
+for DBM neural quantum states in variational Monte Carlo.  The goal of this section is to quantify how the wall-clock cost
+per iteration scales with model size at fixed sampling budgets and sparsity, and to demonstrate how probabilistic computing
+accelerates the sampling phase. We emphasize that the number of outer samplesN      s and inner conditional samplesN      c required
+to reach a prescribed statistical error can,  in general,  depend on the system size,  Hamiltonian properties,  sparsity and other
+                                                                                                                                                                  17
+
+parameters. Determining these dependencies requires a separate analysis and is outside the scope of this hardware-focused cost
+model.
+   In the following cost analysis, letN  v denote the number of visible spins,N    h the number of hidden units, andN   d the number
+of deep units, with total number of stochastic unitsN    u =N v +N h +N d. We assume a fixed sparse connectivity with bounded
+degreek=O(1). LetN            s be the number of outer Monte Carlo samples (visible configurations), andN   c the number of conditional
+samples drawn in the inner loop for each visible configuration.
+   For each outer sample, one Gibbs sweep over the visible layer costsO(N      vk).  For each ofN   c conditional samples, a Gibbs
+sweep over auxiliary units costsO((N       h +N d)k)and evaluating all single-spin-flip ratios reusing the same conditional sample
+costsO(N      vk)(exploiting the locality of the energy function). Thus, the sampling work per outer sample is
+
+                                                          O(N  vk+N  c [(N h +N d)k+N   vk]),                                                             (S.16)
+
+and the total sampling work per optimization step is
+
+                                                                        O(N  sNcNuk).                                                                              (S.17)
+
+For bounded degreek=O(1), the total work scales as the product of the sampling budget and the system size,O(N               sNcNu).
+Crucially, reusing each conditional sample to evaluate all single-spin-flip ratios avoids the quadraticO(N         sNcNvNu)work (or
+O(N  sNcN2u)whenN     v  =O(N    u)) that would arise if conditional samples were generated independently for each of theN   v
+ratios.
+   On probabilistic hardware (p-computers) implemented on FPGAs, stochastic units can be updated in parallel subject to a fixed
+update schedule (e.g., graph coloring).  LetCdenote the number of update phases, which depends on the local connectivity
+pattern but is independent ofN  u for bounded degree graphs. Assuming the full sparse Boltzmann network fits within hardware
+resources, the wall-clock time for one Gibbs sweep isO(C). Therefore, the samplinglatencyper optimization step scales as
+
+                                                                          O(N  sNcC).                                                                                 (S.18)
+
+   Comparing Eq. (S.18) to Eq. (S.17), probabilistic hardware removes the explicitN             u factor associated with sequential sampling
+updates on conventional processors. This is the key distinction between conventional processors and probabilistic hardware: for
+sparse models with bounded degree and fixed sampling budgets(N      s,Nc), the samplinglatencyon probabilistic hardware scales
+asO(N    sNcC), whereCdepends only on local connectivity and is independent ofN          u under the on-chip mapping assumption.
+Hardware  resources  (number  of  p-bits  and  synapses)  scale  approximately  linearly  withN   u,  but  the  sampling  rate  remains
+constant with system size.
+   Finally, parameter updates are computed using stochastic reconfiguration (SR) with a matrix-free conjugate gradient (CG)
+solver. LetN   p be the number of variational parameters andK      CG the number of CG iterations, which may in general vary with
+Nu. Each CG iteration requires sample-averaged matrix-vector products with costO(N     sNp), giving
+
+                                                                        O(K     CGNsNp)                                                                              (S.19)
+
+per optimization step. For bounded-degree sparse graphs,N      p scales linearly with system size, i.e.,N   p =O(N    u). If translational
+symmetry is enforced via parameter tying, the effectiveN p can be reduced further, but we treat the untied case here.

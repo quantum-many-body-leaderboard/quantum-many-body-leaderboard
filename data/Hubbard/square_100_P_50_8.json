@@ -422,6 +422,50 @@
         "confidence": "high",
         "note": "Blanket statement for all Table III (PBC) Fermi-Hubbard runs: samples = roughly 44800 MC samples per optimization step for gradients; the p=1 energies (all Table III values) are evaluated with 48000 MC samples. No parameter count is stated (tensor dimension [M,N,2,d/2,Q,d] with Q=5, d=4 is given but never multiplied out); no iteration count for the Hubbard runs. The only hardware/timing statement (2 minutes per step on 128 AMD EPYC 7742 CPU cores) is made for the 8×16 lattice run, not for these rows, so device/n_devices/wall_clock are left null. No GPU used or mentioned."
       }
+    },
+    {
+      "energy": -52.31,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 100,
+      "einf": 200,
+      "v_score": null,
+      "method": "Deep BF (multi-determinant neural network backflow)",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Neural Network Backflow with Low-Rank Multi-Determinant Updates, arXiv, arXiv:2609.26544",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2609.26544 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "−0.5231",
+        "note": "Sec. III.1 text: 10×10 'Deep BF result reaches −0.5231 per site' | Hubbard Eq. 1 (t, U) printed; periodic boundary conditions in both directions, U/t=8, half filling; energy per site in t.",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -52.45,
+      "sigma": 0.23,
+      "energy_variance": null,
+      "dof": 100,
+      "einf": 200,
+      "v_score": null,
+      "method": "PEPS simple update, loop cluster expansion with Wynn extrapolation, C_max=10, D_max=16",
+      "bound_type": "extrapolated",
+      "bound_type_reason": "zero-variance or bond-dimension extrapolation; not an upper bound (assigned during source reading)",
+      "reference": "Tensor network loop cluster expansions for quantum many-body problems, Physical review. B./Physical review. B, arXiv:2510.05647",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2510.05647 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-0.5245(23)",
+        "note": "Table 2, row 'Fermi-Hubbard 2D, U=8, 10x10 PBC', column E(dE) | per site, t=1, U=8, half filling, 10x10 PBC, all printed in Table 2 and Eq. 11; Table 2 caption says 'per site'",
+        "secondary_of": null
+      }
     }
   ],
   "coverage": [
@@ -462,18 +506,6 @@
       ],
       "found": 0,
       "note": "Only papers whose tables matched the instance by size were read; not a citation screen."
-    },
-    {
-      "checked_on": "2026-11-26",
-      "method": "citation screen of kbgap-existing: citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
-      "screened": [
-        "arXiv:2611.26604",
-        "arXiv:2611.16430",
-        "arXiv:2506.08329",
-        "arXiv:2602.02665"
-      ],
-      "found": 0,
-      "note": "4 citing works, 4 on arXiv, 4 fetched; 4 read in full, 0 excluded by a text filter (no energy to four decimals, or no QMBL model named)."
     }
   ]
 }

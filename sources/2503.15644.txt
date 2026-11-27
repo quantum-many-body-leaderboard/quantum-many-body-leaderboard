@@ -1,0 +1,1106 @@
+Deep quantum Monte Carlo approach for polaritonic chemistry
+Deep quantum Monte Carlo approach for polaritonic chemistry
+           Yifan Tang,1, 2, a) Gian Marcello Andolina,3 Alice Cuzzocrea,1 Matˇej Mezera,1 P. Bernát Szabó,1 Zeno
+           Schätzle,1 Frank Noé,4, 1, 5, 6 and Paolo A. Erdman1, b)
+           1)Department of Mathematics and Computer Science, Freie Universität Berlin, Arnimallee 6, 14195 Berlin, Germany
+           2)Dahlem Center for Complex Quantum Systems, Freie Universität Berlin, Arnimallee 14, 14195 Berlin, Germany
+           3)JEIP, USR 3573 CNRS, Collège de France, PSL Research University, 11 Place Marcelin Berthelot, F-75321 Paris, France
+           4)Microsoft Research AI4Science, Karl-Liebknecht Str. 32, Berlin 10178, Germany
+           5)Department of Physics, Freie Universität Berlin, Arnimallee 14, 14195 Berlin, Germany
+           6)Department of Chemistry, Rice University, 6100 Main St, Houston, Texas 77005, USA
+
+           (Dated: 21 March 2025)
+           Recent years have witnessed a surge of experimental and theoretical interest in controlling the properties of matter, such
+           as its chemical reactivity, by confining it in optical cavities, where the enhancement of the light-matter coupling strength
+           leads to the creation of hybrid light-matter states known as polaritons. However, ab initio calculations that account for
+           the quantum nature of both the electromagnetic field and matter are challenging and have only started to be developed
+           in recent years.  We introduce a deep learning variational quantum Monte Carlo method to solve the electronic and
+           photonic Schrödinger equation of molecules trapped in optical cavities.  We extend typical electronic neural network
+           wavefunction ansatzes to describe joint fermionic and bosonic systems, i.e.  electron-photon systems, in a quantum
+           Monte Carlo framework. We apply our method to hydrogen molecules in a cavity, computing both ground and excited
+           states.  We assess their energy, dipole moment, charge density shift due to the cavity, the state of the photonic field,
+           and the entanglement developed between the electrons and photons. When possible, we compare our results with more
+           conventional quantum chemistry methods proposed in the literature, finding good qualitative agreement, thus extending
+           the range of scientific problems that can be tackled using machine learning techniques.
+
+
+I.  Introduction                                                                  been developed, including QED Hartree-Fock35,36    , quantum-
+                                                                                  electrodynamical  density-functional  theory  (QEDFT)37–39     ,
+   Recently, there has been a growing interest in understand-                     QED coupled cluster theory (QED-CC)35,40,41       , and QED full
+ing the impact of strong light-matter coupling on the physi-                      configuration interactions (QED-FCI)35,42    . QEDFT, an exten-
+cal and chemical properties of matter1–6   .  For example, when                   sion of the density functional theory (DFT), can be applied
+a molecular system is placed in an optical cavity, the interac-                   to molecules on a large scale.  However, it suffers from lim-
+tion between the system and the quanta of the electromagnetic                     ited accuracy due to incomplete information on the exchange-
+field gives rise to hybrid light-matter states7–10   , known as po-               correlation functional in the electron-photon interaction.  The
+laritons, which may display profoundly different physical and                     coupled cluster (CC) and configuration interaction (CI) meth-
+chemical  properties11–20     .   Their  influence  on  the  molecular            ods can reach a satisfactory accuracy, but their computational
+properties of matter can be modulated by tuning the cavity pa-                    costs increase sharply with the system size.  Indeed, for elec-
+rameters. With the improvement of optical cavity engineering,                     tronic  systems,  the  cost  scales  asO(𝑁6)  for  CC  with  sin-
+devices can now reach the strong coupling regime, where the                       gle and double excitations (CCSD)43 andO(exp{𝑁}) for FCI
+rate of energy exchange between light and matter is large com-                    with 𝑁  orbitals44.  In these approaches, the electronic equa-
+pared to the photon leakage rate and non-radiative losses of                      tions are solved in the basis of Slater determinants, and their
+the emitter21–25     , even at room temperature26,27    . In this regime,         number  is  typically  large  because  of  the  difficulty  in  accu-
+the  appearance  of  polaritons  can  have  profound  effects  on                 rately describing the ground state of quantum many-body sys-
+molecular systems, such as modifying reaction rates28–30      and                 tems45.  In general, all methods present an inevitable tradeoff
+changing the chemical environment31.                                              between computational cost and accuracy.
+   From a theoretical perspective, understanding these effects                       In  the  past  decade,  machine  learning  has  proven  to  be  a
+requires  a  proper  description  of  the  strong  electron-photon                powerful tool in diverse fields, ranging from image and lan-
+coupling,  which could serve as a guide in designing polari-                      guage processing46,47    , to scientific applications such as com-
+tonic chemical experiments.  Polaritonic chemistry is deeply                      putational  physics and  chemistry48–50      .   One  approach is  to
+intertwined  with  quantum  effects,  as  some  phenomena  are                    use supervised learning which, utilizing huge amounts of data
+persistent even in the absence of illumination due to the in-                     and  state-of-the-art  algorithms,  takes  a  detour  from  solving
+teraction  with  quantum  vacuum  fluctuations.    Therefore,  a                  the Schrödinger equations directly and attempts to design a
+fully quantum treatment is necessary, including the descrip-                      model to predict chemical properties of molecules51–54     . While
+tion of electromagnetic fields using quantum electrodynam-                        this approach has a great advantage in terms of computational
+ics  (QED)32–34     .    Recently,  several  ab  initio  methods  have            cost,  its accuracy is largely dependent on the quality of the
+                                                                                  datasets, which could be expensive to produce, may have lim-
+                                                                                  ited accuracy, and typically requires domain knowledge and
+                                                                                  expertise to produce.
+a)yifta@zedat.fu-berlin.de                                                           Another   approach   is   given   by   deep-learning   quantum
+b)p.erdman@fu-berlin.de                                                           Monte  Carlo  (deep  QMC),  an  ab-initio  technique  that  does
+Deep quantum Monte Carlo approach for polaritonic chemistry                                                                                                     2
+
+not require prerequisite knowledge of the solutions. First pro-                   in Subsec.II A, given by the Pauli-Fierz Hamiltonian                     70,71    .  In
+posed by Carleo and Troyer and applied to spin-lattice sys-                       Subsec.II Bwe define the loss function for the machine learn-
+tems in Ref.55, deep QMC represents wavefunctions with deep                       ing task using the variational principle. In Subsec.II Cwe pro-
+neural networks (DNN) and trains them based on the varia-                         pose a neural network wavefunction extension that describes
+tional principle56.  The accuracy of the QMC method is fun-                       the electronic degrees of freedom in first quantization, and the
+damentally determined by the wavefunction ansatz, which is                        photonic degrees of freedom in second quantization, allowing
+usually efficiently represented by a DNN. Such DNNs encode                        us to describe correlations and entanglement between them.
+electronic properties of the system in its structure; the high ex-                The Monte Carlo method for evaluating arbitrary physical ob-
+pressiveness of the ansatz is then ensured by the large amount                    servables, including the system energy and its gradient, is pre-
+of tunable parameters. These parameters are optimized during                      sented in Subsec.II Dand a sampling algorithm dealing with
+the training process so that the corresponding wavefunction                       both discrete and continuous variables is introduced in Sub-
+represents a good approximation to the exact eigenstates of                       sec.II E. Finally, we summarize the method with a flowchart
+the Hamiltonian. Deep QMC has been applied to the study of                        of the whole procedure in Subsec.II F.
+the electronic structure of molecules57–60     .  It proves success-
+ful in the calculation of ground and excited state energies61–63     ,
+in studying periodic systems64, and in calculating interatomic
+forces65.                                                                         A.Electron-photon coupling model
+   In this work, we introduce a deep QMC approach to study
+the ground and excited states of molecules in a cavity.   We                         We  consider  a  molecular  system  with 𝑁e  electrons  and
+propose a novel approach to promote electronic deep neural                        𝑁nuc nuclei in an optical cavity.  For simplicity, we only con-
+network  wavefunction  ansatzes  to  electron-photon  ansatzes                    sider a single cavity mode corresponding to the one with the
+that can describe both the electronic and photonic degrees of                     strongest effect,  although a generalization of our method to
+freedom of the system and, thus, electron-photon correlations.                    the multi-mode case is conceptually straightforward.  We de-
+Our extension, which allows to describe joint fermionic and                       note the frequency of the mode as𝜔, the coupling strength as√︃
+bosonic systems, can be applied to many electronic wavefunc-                      𝜆 =      4𝜋
+tion ansatzes including PauliNet58 and its variants61,66    . Here,                        𝑉 , where𝑉 is the quantization volume of the electro-
+as an example, we use the PauliNet2 ansatz, introduced and                        magnetic field,  and the polarization vector as ε.  The Pauli-
+implemented in Ref.67.  Our method enjoys both the high ac-                       Fierz Hamiltonian of the light-matter interacting system is de-
+curacy of QMC methods and the fast speed achieved by paral-                       rived in the dipole gauge using a series of customary approx-
+lel computation with GPUs. We implement our method within                         imations35,36,42,72           ,  consisting  of  the  Born-Oppenheimer  ap-
+the DeepQMC package68 based on the JAX library69, includ-                         proximation, the dipole approximation71, and the PZW trans-
+ing our extension of PauliNet2 to describe molecules in cav-                      formation73, resulting in the following form:
+ities, the corresponding light-matter Hamiltonian, and a new                                                 √︂
+sampling method to account for both electronic and photonic                                                      𝜔
+degrees of freedom which are treated in first and second quan-                      𝐻PF=𝐻e+𝜔 ˆ𝑏† ˆ𝑏−             2𝜆(ε· d)( ˆ𝑏+ ˆ𝑏†)+ 12𝜆2(ε· d)2,  (1)
+tization respectively.
+   The  paper  is  organized  as  follows.   We  present  the  deep               with molecular dipole operator
+QMC method for electron-photon systems in Sec.II. Here we
+introduce the Hamiltonian describing the light-matter interac-                                                    𝑁e∑︁      𝑁nuc∑︁
+tion, we frame the calculation of the ground and excited states                                           d=−         r𝑖+        𝑍𝐼R𝐼                          (2)
+as a machine-learning problem, we introduce our wavefunc-
+tion  ansatz  extension  to  electronic  and  photonic  degrees  of                                               𝑖=1       𝐼=1
+freedom, and we show how to compute the loss function and
+physical observables in a quantum Monte Carlo framework.                          for electron positions{r𝑖}𝑁e𝑖=1 and nuclear positions{R𝐼}𝑁nuc𝐼=1 .
+In Sec.IIIwe apply our methods to small molecular systems,                        The first term𝐻e in Eq. (1) represents the standard electronic
+investigating both the ground and excited states of the system,                   Hamiltonian, given by
+and we discuss how various system observables are modified
+by the cavity.  Sec.IVsummarizes our results and provides                                                 𝑁e∑︁1         𝑁e∑︁𝑁nuc∑︁   𝑍𝐼
+an outlook for future research. All equations are expressed in                               𝐻e = −           2∇2𝑖−              |r𝑖− R𝐼|
+atomic units, i.e.,𝑒=𝑚e=ℏ=𝑐= 1/(4𝜋𝜖0)= 1.                                                                𝑖=1           𝑖=1  𝐼=1
+                                                                                                            𝑁e∑︁    1            𝑁nuc∑︁  𝑍𝐼𝑍𝐽
+                                                                                                      +12       |r𝑖− r𝑗|+ 12          |R𝐼− R𝐽|.          (3)
+II. Deep quantum Monte Carlo for electron-photon                                                           𝑖≠𝑗                   𝐼≠𝐽
+     systems
+                                                                                  The second term𝜔 ˆ𝑏† ˆ𝑏 represents the Hamiltonian of the cav-
+   In this section, we propose a deep QMC method to solve                         ity mode, where  ˆ𝑏 and  ˆ𝑏† are respectively the photonic anni-
+the Schrödinger equation of molecules confined in an optical                      hilation and creation operators. The following terms describe
+cavity. We first introduce the electron-photon coupling model                     the electron-photon interaction.
+Deep quantum Monte Carlo approach for polaritonic chemistry                                                                                                     3
+
+B.Variational method and the loss function                                        It is a complete basis since both{|r⟩} and{|𝑛⟩} are complete.
+                                                                                  Expanding the electron-photon wavefunction|𝜓⟩ in this basis
+   We    wish    to    solve    the    time-independent    electronic                                          ∞∑︁∫
+Schrödinger equation                                                                                   |𝜓⟩=            dr|r,𝑛⟩⟨r,𝑛|𝜓⟩,                     (8)
+                            𝐻PF|𝜓⟩=𝐸|𝜓⟩                                (4)                                    𝑛=0
+
+for the eigenenergies and corresponding eigenstates of 𝐻PF.                       we are interested in parameterizing the coefficients𝜓(r,𝑛) =
+Thanks to the variational principle,  the ground state energy                     ⟨r,𝑛|𝜓⟩ using deep neural networks.  In practice, we truncate
+𝐸0 can be obtained by solving the minimization problem                            the summation in Eq. (8) to  𝑛∈{0, 1,··· ,𝑁max}, where𝑁max
+                                             ⟨𝜓𝜃|𝐻PF|𝜓𝜃⟩                          is a cutoff value, since the coefficients for the lowest values of
+              𝐸0≤ min𝜃 𝐸[𝜓𝜃]= min𝜃              ⟨𝜓𝜃|𝜓𝜃⟩  ,              (5)       𝑛 are dominant when studying the ground state and low-lying
+                                                                                  excited states.  A DNN representation of the electron-photon
+where the trial wavefunction|𝜓𝜃⟩ (the ansatz) is parametrized                     wavefunction ansatz𝜓𝜃(r,𝑛) can be obtained from common
+by a set of parameters𝜃.  In the limit of an infinitely expres-                   DNN electronic wavefunction ansatzes adding an additional
+sive ansatz, the inequality in Eq. (5) becomes a strict equal-                    discrete variable𝑛 to the embedding representing the electrons
+ity.  To state this as a machine learning problem, we choose                      in the Graph Neural Network (GNN) describing the molecular
+the energy in Eq. (5) as the loss function L(𝜃).  To solve for                    system. In this paper, we implement this appending a one-hot
+excited states, penalty terms have been introduced to ensure                      encoding of𝑛 to the electronic embeddings of the PauliNet2
+that different eigenstates are orthogonal and have the desired                    ansatz67.
+spin value.  Introducing an ansatz for the ground state|𝜓(0)n           𝜃 ⟩o
+and for the lowest 𝑁s  excited states            |𝜓(1)𝜃 ⟩,··· ,|𝜓(𝑁s)𝜃 ⟩    ,     D.   Monte Carlo evaluation of physical observables and
+we consider the loss function62                                                         of the loss function
+                        𝑁s∑︁⟨𝜓(𝑘)
+           L(𝜃) =               𝜃 |𝐻PF+𝛽𝑆2|𝜓(𝑘)𝜃 ⟩                                   In this section, we introduce a Monte Carlo method to eval-
+                       𝑘=0         ⟨𝜓(𝑘)𝜃 |𝜓(𝑘)𝜃 ⟩                                uate physical observables, the loss functionL(𝜃) and its gra-
+                         ∑︁                                                       dient𝜕𝜃L(𝜃) that is necessary to perform the gradient-based
+                       +      𝛼𝑘,𝑙  |⟨𝜓(𝑘)𝜃 |𝜓(𝑙)𝜃 ⟩|2                            minimization of the loss function in Eq. (6).  We consider a
+                          𝑘<𝑙       ⟨𝜓(𝑘)𝜃 |𝜓(𝑘)𝜃 ⟩⟨𝜓(𝑙)𝜃 |𝜓(𝑙)𝜃 ⟩.          (6)  general physical observable represented by a Hermitian oper-
+The  first  sum  in  Eq.  (6)  represents  the  total  energy  of  the            atorO, which is real and diagonal in its representation under
+ground  and  excited  states,  including  an  additional  penalty                 the positional basis|r⟩, i.e.,
+term 𝛽𝑆2 used to enforce the desired spin value, where𝑆2 is                                       ⟨r,𝑛|O|r′,𝑚⟩=𝑂(r,𝑛,𝑚)𝛿(r− r′),               (9)
+the squared spin operator, and 𝛽 >  0 is a hyperparameter62.
+The second sum is a penalty term enforcing the orthogonality                      for some function𝑂(r,𝑛,𝑚)=𝑂(r,𝑚,𝑛). In general, we are
+between the states, where{𝛼𝑘,𝑙} is a set of hyperparameters                       interested in evaluating matrix elements of the observable:
+satisfying 𝛼𝑘,𝑙 > 𝐸𝑙−𝐸𝑘  for eigenenergies 𝐸𝑘  and 𝐸𝑙61,74    .
+By minimizing Eq. (6) we can find an approximation to the
+ground state and to the first 𝑁s  excited states within the de-                                  ⟨O⟩𝑘,𝑙 =   ⟨𝜓(𝑘)|O|𝜓(𝑙)⟩√︁⟨𝜓(𝑘)|𝜓(𝑘)⟩√︁⟨𝜓(𝑙)|𝜓(𝑙)⟩,                (10)
+sired spin sector.
+                                                                                  where|𝜓(𝑘)⟩ with𝑘∈{0, 1,··· ,𝑁s} is the wavefunction ap-
+C.Electron-photon wavefunction ansatz                                             proximating the 𝑘-th lowest state.  When 𝑘 = 𝑙, the quantity
+                                                                                  ⟨O⟩𝑘,𝑘 = ⟨𝜓(𝑘)|O|𝜓(𝑘)⟩⟨𝜓(𝑘)|𝜓(𝑘)⟩   is the normalized expectation value of
+   Here  we  propose  a  wavefunction  ansatz  to  describe  the                  O in|𝜓(𝑘)⟩. As shown in App.A, we can evaluate Eq. (10) by
+eigenstates of molecules in an optical cavity, which is a joint                   using
+fermionic  and  bosonic  system.   The  idea  is  to  extend  com-
+mon electronic ansatzes, that describe electrons in first quan-                             ⟨O⟩𝑘,𝑙 =  sgn  E𝑘 𝑂𝑙,𝑘(r,𝑛)
+tization,  with  a  second  quantization  description  of  the  pho-                                        √︃
+tonic  state.   The  Fock  state  basis  of  a  single-mode  field  is                                    ×   E𝑙 𝑂𝑘,𝑙(r,𝑛) E𝑘 𝑂𝑙,𝑘(r,𝑛),      (11)
+{|𝑛⟩|𝑛∈ N}, consisting of the eigenstates of the Hamiltonian
+𝜔 ˆ𝑏† ˆ𝑏 corresponding to a harmonic oscillator with frequency                    where
+𝜔75.  We have  ˆ𝑏†|𝑛⟩ =√𝑛+ 1|𝑛+ 1⟩, ˆ𝑏|𝑛⟩ =√𝑛|𝑛− 1⟩. We                                    E𝑘[·] =           E
+consider the basis for the electron-photon wavefunction as the                                         (r,𝑛)∼|𝜓(𝑘)
+tensor product of the electronic positional basis{|r⟩}, where                                                   𝜃 (r,𝑛)|2[·]
+r = (r1,··· , r𝑁e) ∈  R3𝑁e  denotes the positions of all elec-                                         𝑁max∑︁∫
+trons, and the Fock state basis{|𝑛⟩}:                                                              =             dr   |𝜓(𝑘)𝜃 (r,𝑛)|2                [·]    (12)
+                                                                                                        𝑛=0         𝑁max˝ ∫  dr′′|𝜓(𝑘)
+                           |r,𝑛⟩=|r⟩⊗|𝑛⟩.                               (7)                                         𝑚=0             𝜃 (r′′,𝑚)|2
+Deep quantum Monte Carlo approach for polaritonic chemistry                                                                                                     4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 1.  Flowchart of the variational QMC method.  The input parameters are colored red, the samples of electron positions r and photon
+number 𝑛  are  in  blue,  and  the  trainable  parameters  of  the  neural  network  are  in  green.   First,  an  initial  batch  of  samples  of r  and 𝑛  is
+generated using an educated guess based on the molecular input parameters.  The extended neural network produces the corresponding value
+of the wavefunction.  The sampling process uses the Metropolis-Hastings algorithm presented in Sec.II Eto generate more samples of   (r,𝑛)
+distributed according to the squared wavefunction. In the training process (orange region), we optimize the neural network parameter according
+to the loss functionL(𝜃) and its gradient∇𝜃L(𝜃).  In the evaluation process (purple region), we use Monte Carlo to estimate the physical
+observables and output the results.
+
+
+
+represents an expectation value over the continuous variable r                       ues E𝑘[·] with an average over finite samples of(r,𝑛) drawn
+and the discrete value𝑛 sampled from∼|𝜓(𝑘)(r,𝑛)|2, and                               from the probability distribution∼|𝜓(𝑘)(r,𝑛)|2.  Notice that
+                               𝑁max˝                                                 the state space contains both a continuous and a discrete vari-
+                                                                                     able, thus we propose a discrete-continuous version of the tra-
+              𝑂𝑙,𝑘(r,𝑛)=       𝑚=0𝑂(r,𝑛,𝑚)𝜓(𝑙)(r,𝑚)                                  ditional  Metropolis-Hastings  algorithm76,77    .   As  detailed  in
+                                         𝜓(𝑘)(r,𝑛)     .           (13)              App.B,  we  choose  a  proposal  function     𝑔((r′,𝑛′) | (r,𝑛))
+                                                                                     of  both  variables (r,𝑛)  that  either  updates  r  or 𝑛  with  a
+Notice  that  these  expressions  generalize  the  standard  ones                    50% probability each.  If the continuous variable is updated,
+used in QMC for electronic calculations. Indeed, the standard                        we propose its change using a continuous proposal function
+expectation  value  over  electronic  positions r  sampled  from                     𝑔𝑟(r′ |   r)  given  by  a  tunable  normal  distribution,  other-
+|𝜓(r)|258–60      are now replaced in Eq. (12) with an expectation                   wise we use a tunable discrete proposal function𝑔𝑛(𝑛′| 𝑛).
+over r and 𝑛  jointly sampled from|𝜓(r,𝑛)|2.   Furthermore,                          The width of these distributions is then adaptively updated to
+choosing the electronic Hamiltonian as observableO, we see                           achieve an optimal acceptance ratio78,79    . Mathematically, this
+that Eq. (13) generalizes the standard expression of the “local                      is equivalent to have the proposal function
+energy” used in QMC58–60      by introducing an additional sum
+over the photon number.                                                              𝑔((r′,𝑛′)|(r,𝑛))=  1
+   ChoosingO =𝐻PF,𝑆2 and I, we can compute respectively                                                         2𝛿𝑛,𝑛′𝑔𝑟(r′| r)+ 12𝛿(r− r′)𝑔𝑛(𝑛′|𝑛).(14)
+the energy of the states, the squared magnitude of the spin and                      Once  the  new  values  of(r′,𝑛′)  are  proposed,  we  use  the
+the overlap between different states, which allows us to com-                        standard Metropolis-Hastings algorithm to perform the update
+pute the loss function in Eq. (6).  The expression of the loss                       based on the acceptance ratio. The exact algorithm is detailed
+function, its gradient, and other relevant physical observables                      as Alg.1in App.B.
+are detailed in App.A.
+
+
+E.Discrete-continuous Metropolis-Hastings algorithm                                  F.   Overview of the method
+
+   To  efficiently  evaluate  the  loss  function  and  physical  ob-                   As an overview, the flowchart of our method is shown in
+servables using Monte Carlo, we replace the expectation val-                         Fig.1. The input parameters are denoted in red, including the
+Deep quantum Monte Carlo approach for polaritonic chemistry                                                                                                     5
+
+molecular setting, the cavity parameters, and an ansatz-related
+photon number cutoff. These parameters are used to calculate
+the Pauli-Fierz Hamiltonian and to generate an initial batch
+of samples of electronic positions and photon numbers.  The
+DNN is used to evaluate the wavefunction, and the discrete-
+continuous sampling algorithm generates new samples (col-
+ored  blue)  to  estimate  the  loss  function  and  its  gradient  by
+Monte Carlo evaluation.  During the training process (orange
+region), we use the Kronecker-factored approximate curvature
+(K-FAC) method80  to optimize the loss function and update
+the neural network parameter𝜃 (colored green) describing the
+ansatz.  After a sufficient number of training steps, we switch
+to the evaluation process (purple region) and use Monte Carlo
+evaluation to estimate and then output the relevant physical
+observables.
+
+
+III.Results
+
+   We now demonstrate the capabilities of our deep QMC ap-
+proach studying one and two hydrogen molecules trapped in
+an  optical  cavity.   In  both  cases,  we  validate  our  approach
+showing that our predicted energies are consistent with pre-
+vious calculations reported in the literature using a coupled-
+cluster method35,42     and provide intuitive explanations for the
+observed  features.   We  then  compute  additional  system  ob-
+servables highlighting the effect of the electron-photon cou-
+pling.                                                                               FIG.  2.    Physical  setting  and  ground  state  energies  of  a  two-
+   First we investigate how the cavity parameters influence the                      H2  system.   (a)  Two  hydrogen  molecules  are  aligned  parallel  to
+ground-state properties of a two-hydrogen system,  focusing                          each other and separated by distance𝑅.  The three spatial directions
+on energy, electron density, dipole fluctuations and the pho-                        are: 𝑥 along the molecular axis,𝑧 along the separation between two
+tonic state by computing its Wigner function.  We observe a                          molecules, and𝑦 the remaining direction. (b) Ground state energy of
+change of the energy depending on the polarization of the cav-                       two hydrogen molecules as a function of𝑅. Each color corresponds
+ity, a shift in the electron density and decrease of dipole fluctu-                  to  a  different  polarization  of  the  cavity,  as  reported  in  the  legend,
+ations compared to the case without a cavity, and a squeezing                        and  the  blue  curve  corresponds  to  the  case  without  a  cavity.   The
+effect  on  the  electric  field.   We  then  study  both  the  ground               solid curves are fitted using a cubic B-spline.  (c) Ground state en-
+and excited states properties of a hydrogen molecule and the                         ergy difference between different polarization directions, setting the
+corresponding photonic states.   As expected,  when the cav-                         energy of polarization ε𝑧 at𝑅 = 6.2 Å as an offset.  The energy gap
+ity frequency matches the energy gap between the ground and                          between the ε𝑥  and the ε𝑧  case is comparable with the results cal-
+the first excited state (in resonance), the effect of the cavity is                  culated by QED-FCI and QED-CCSD-142, and the sampling error is
+the strongest and leads to polaritons, i.e. hybrid photonic and                      smaller than the symbol size.  Each marked data point is the mini-
+electronic states that are a superposition of different photonic                     mum among five distinct independent runs and the hyperparameters
+                                                                                     are presented in App.F.
+and electronic states.  Finally, we compute the entanglement
+entropy between the electronic and photonic degrees of free-
+dom, finding that it is maximal in the resonant case.                                tion vector ε of the cavity being along the𝑥, 𝑦 or𝑧 axis, and
+
+                                                                                     the case without a cavity.   The direction of the polarization
+A.Ground state properties of two H    2 molecules in a                               vector depends on the physical implementation of the cavity.
+     cavity                                                                          For instance, in cavities known as split-ring resonators81, the
+                                                                                     direction of the polarization has a geometrical meaning, cor-
+   We analyze the molecular system depicted in Fig.2(a). Two                         responding to the axis where the electric field is confined by
+H2 molecules, each aligned along the𝑥-axis with a bond dis-                          the metallic mirrors.
+tance of 0.74 Å, are separated along the 𝑧 by a variable dis-
+tance 𝑅.  The origin is chosen as the geometric center of the                        1. Ground state energy
+system.  To allow comparison to the literature, we chose the
+same cavity parameters as Ref.42, i.e.  a cavity frequency of
+𝜔 =  12.7 eV, and coupling strength𝜆 =  0.1.  We then con-                              First,  we  validate  our  method  by  calculating  the  ground
+sider four scenarios, corresponding to the transverse polariza-                      state energy of the system and compare it to the results pre-
+Deep quantum Monte Carlo approach for polaritonic chemistry                                                                                                     6
+
+sented in Ref.42. In Fig.2(b), we plot the ground state energies
+of the two-H2  molecules as a function of 𝑅, and each curve
+corresponds to the four cases mentioned above (the blue curve
+with squares corresponding to the case without a cavity).  We
+perform a separate optimization for each value of𝑅 between
+2 Å and 6.2 Å with a 0.2 Å spacing.
+   As we can see from Fig.2(b), on this scale the ground state
+energy decreases as𝑅 increases in all four cases. In the pres-
+ence of the cavity, we observe an energy increase of more than
+200 meV. The increase is larger when the polarization is par-
+allel with the hydrogen bond (ε𝑥  case) than when it is in the
+direction of the separation of two molecules (ε𝑧 case). This is
+due to larger dipole fluctuations along the𝑥 direction, leading
+to a larger dipole self-energy term in Eq. (1).  In Fig.2(c) we
+take a closer look at the energy difference between different
+cavity polarizations. The energies in the ε𝑦 case (polarization
+along the𝑦-axis) are slightly lower than those of ε𝑧, while the
+energy in the ε𝑥 case is larger than in the ε𝑧 case by about 22
+meV within the shown range. This energy gap signals that the
+hydrogen molecules in a cavity tend to align themselves such
+that the cavity polarization is not along the𝑥 direction, i.e. the
+molecular bond direction.
+   To validate our method,  we compare the results with the
+calculations performed in Ref.42, which studies the same sys-
+tem using two different methods:  QED-CCSD-1 and QED-
+FCI. With both methods above, they also find that the ener-
+gies of ε𝑦  are lower than those in the ε𝑧  case.   The energy
+gap between ε𝑥 and ε𝑧 at𝑅= 6.0 Å is around 40 meV using
+QED-CCSD-1 and is around 34 meV using QED-FCI, which
+is expected to be more accurate than QED-CCSD-1.  These
+results are comparable to the value of the gap that we find (22
+meV), confirming the validity of our approach.  We also re-
+produce the energy minimum at𝑅≈ 3.5 Å in all three cases.
+It is worth mentioning that the height of the “dip” is about
+3 meV, which is 0.07 kcal/mol and is much smaller than the
+error  bar  of  the  results  from  some  cutting-edge  deep  QMC
+methods60,61    .                                                                   FIG. 3. Cavity effect on electron densities and dipole flucutations.
+                                                                                    The data points are calculated from the same states as in Fig.2.          (a)
+                                                                                    – (c) Electron density difference between the molecular system with
+2. Electron density of the ground state                                              𝑅= 4.0 Å in a cavity with different polarizations (𝜌ε𝑥e   ,𝜌ε𝑦e   and𝜌ε𝑧e  )
+                                                                                    and that in the absence of a cavity (𝜌0e), observed along three spatial
+   Our  approach  provides  us  with  the  full  electron-photon                    dimensions reported in the legend.  Colored dashed lines are the co-
+wavefunction, allowing us to calculate any system observable.                       ordinates of the two nuclei in the direction of the polarization.  The
+                                                                                    main effect of the cavity is to concentrate electrons around the nuclei
+To visualize how the optical cavity with different polarizations                    of each molecule.  (d) Fluctuations of electronic dipole moment (in
+affects the system, we analyze the electron density𝜌e(ﬁ𝑟), i.e.                     Debye units) in the ground state as a function of𝑅 for each polariza-
+the (normalized) probability of an electron being present at a                      tion case and in the absence of the cavity.  Fluctuations are lowered
+spatial pointﬁ𝑟 =(𝑥,𝑦,𝑧). We estimate this quantity according                       in the cavity compared to the case without a cavity.
+to the formula
+                                      "      𝑁e∑︁            #
+        𝜌e(ﬁ𝑟)= E(r,𝑛)∼|𝜓(r,𝑛)|2         1       𝛿(ﬁ𝑟− r𝑖)               (15)
+                                        𝑁e                                          setting𝑅= 4.0 Å. Each curve, instead, corresponds to the axis
+                                             𝑖=1                                    (reported in the legend) along which we observe the charge
+using Monte Carlo and then using Gaussian kernel density es-                        displacement; mathematically, this corresponds to integrating
+timation82 (see App.A 2for details). In Fig.3we compute the                         the electron density over the other two dimensions. For exam-
+charge displacement, i.e.  the difference between the electron                      ple,𝜌e(𝑥)= ∫ ∫ 𝜌e(ﬁ𝑟)d𝑦d𝑧.
+density 𝜌𝜖𝑖e(ﬁ𝑟) in a cavity with polarization𝜖𝑖, for𝑖 = 𝑥,𝑦,𝑧,                         The  main  effect  of  the  cavity  is  to  concentrate  the  elec-
+and the density𝜌0e(ﬁ𝑟) in the absence of the cavity. Each panel                     tronic  density  around  the  center  of  each  molecule.   Indeed,
+(a), (b), and (c) corresponds to a different cavity polarization                    in the ε𝑥  case, reported in Fig.3(a), we observe an increase
+Deep quantum Monte Carlo approach for polaritonic chemistry                                                                                                     7
+
+of  the  electron  density  between  the  nuclei  (peak  of  the  red
+curve in the origin), which are located at𝑥=±0.37 Å (dashed
+red lines).  Correspondingly, there is a charge depletion fur-
+ther away from the nuclei.  The concentration of the charge
+around the nuclei is also visible in the𝑦 and𝑧 directions (or-
+ange and green curves), albeit less pronounced. In the ε𝑦 case,
+reported in Fig.3(b), the charge displacement occurs almost
+exclusively along the 𝑦  axis, where the electronic density is
+concentrated in the origin, i.e. over the nuclei (dashed yellow
+line).  In the ε𝑧 case, reported in Fig.3(c), the electrons con-
+centrate around𝑧=±2 Å, corresponding to the nuclei position
+(green dashed lines), and are depleted from the surrounding                          FIG. 4.  Photonic system of the ground state.  (a) Wigner function
+areas. The gathering effect around the nuclear position is also                      of the photonic state𝜌ε𝑥ph , at with𝑅= 4.0 Å, as a function of𝑥 and𝑝
+visible along the 𝑦 axis, but it is less pronounced than in the                      which are, respectively, proportional to the transverse displacement
+ε𝑦 case.                                                                             field D⊥  and to the vector potential A.  It is almost identical to the
+   These   results   are   consistent   with   our   intuition   since               Wigner function of|0⟩.   (b) The difference between Wigner func-
+the  electron-photon  interaction  couples  the  photons  to  the                    tion of𝜌ε𝑥ph  and that of the Fock state|0⟩⟨0|.  The main effect of the
+molecule’s dipole along the polarizing direction, and thus the                       electron-photon coupling is to increase the fluctuations of D⊥ (pro-
+largest effect is expected to be indeed along this axis. To fur-                     portional to𝑥).
+ther understand this effect, in Fig.3(d) we plot the fluctuations
+of electronic dipole moment𝑑2 as a function of𝑅 in the three
+polarization  cases,  and  in  the  absence  of  the  cavity  (notice                state|0⟩.  For a quantum state with density matrix 𝜌, it is de-
+that the average dipole moment is zero due to the symmetry                           fined as
+of the system).  Interestingly, we notice that the fluctuations
+are lower in the cavity compared to the case without a cavity,                                                    ∫ +∞
+with the reduction being maximum in the ε𝑥  case.   Indeed,                                     𝑊(𝑥,𝑝)=  1
+fluctuations of the dipole create a fluctuation in the electric                                                𝜋   −∞ ⟨𝑥+𝑦|𝜌|𝑥−𝑦⟩𝑒−2𝑖𝑝𝑦d𝑦,       (17)
+field, which in turn requires energy to create.  Hence, to min-
+imize the overall energy for the ground state, the cavity tends                      where|𝑥⟩ (resp.|𝑝⟩) is the set of eigenstates of the operator ˆ𝑥
+to decrease the fluctuations of the molecules’ dipole.                               (resp.  ˆ𝑝), defined as
+
+
+3. Photonic state                                                                                               ˆ𝑥 =    1√
+   We now analyze the state of the photonic system. Fixing the                                                            2( ˆ𝑏+ ˆ𝑏†),                             (18)
+distance between two molecules at 𝑅 =  4.0 Å, we calculate                                                      ˆ𝑝 =  𝑖√2(− ˆ𝑏+ ˆ𝑏†).                          (19)
+the photonic reduced density matrix
+
+                           𝜌ε𝑥ph =  Trr(|𝜓⟩⟨𝜓|)                                      In  the  dipole  gauge,  the  operators  ˆ𝑥  and   ˆ𝑝  are  respectively
+                                    Tr(|𝜓⟩⟨𝜓|)                             (16)      proportional to the transverse displacement field D⊥  and the
+of the ground state in the cavity with polarization ε𝑥 using the                     vector potential A projected on the polarization vector ε72.
+expressions in App.A 3,           Trr(·) denoting the partial trace over                Fig.4(a) shows the Wigner function of the photonic state
+the electronic coordinates, and Tr(·)  the full trace.  The full                     𝜌ε𝑥ph .   Since the state 𝜌ε𝑥ph  is very close to the Fock state|0⟩
+numerical density matrix is reported in App.D. Analyzing the                         (corresponding to the no-cavity case), its Wigner function is
+diagonal part of the matrix expressed in the Fock basis,  we                         almost identical to a two-dimensional Gaussian distribution84.
+find that the probability of finding𝑛= 0 photons is very large                       To  visualize  what  is  the  effect  of  the  cavity  on  the  Wigner
+(> 0.99), and the following terms (representing the probabil-                        function,  we  then  calculate  the  difference  between 𝑊[𝜌ε𝑥ph]
+ity of finding 𝑛 >  0 photons) decrease rapidly (<  0.008 for                        and𝑊[|0⟩⟨0|]  and plot it in Fig.4(b).  We observe that the
+𝑛 =  1 and <  2× 10−4 for𝑛 =  2), justifying our assumption                          Wigner function is squeezed along 𝑝, leading to an increase
+of a maximum number of photons in the wavefunction ansatz.                           along 𝑥.   Since the transverse displacement field D⊥  is pro-
+The off-diagonal terms, which reach at most the value of 0.01,                       portional to𝑥, the electron-photon interaction has the effect of
+represent coherence among Fock states with different photon                          increasing the fluctuations of D⊥.  Indeed, the probability of
+numbers.  As a reference, in the absence of a cavity, the cav-                       D⊥ being zero decreases (blue region), and that of taking val-
+ity is in a pure state with 𝑛 =  0 photons,  therefore with no                       ues corresponding to|𝑥|∈[1, 1.5] increases (yellow regions).
+coherence between Fock states.                                                       We could find a qualitative explanation of this squeezing ef-
+   To get a better understanding of the density matrix of the                        fect using a toy model and a second-order perturbative expan-
+photonic state, we calculate the Wigner function83 of the pho-                       sion in the electron-photon coupling, see App.Cfor details.
+tonic state 𝜌ε𝑥ph  and compare it to that of the photonic ground
+Deep quantum Monte Carlo approach for polaritonic chemistry                                                                                                     8
+
+                                                                                    and photonic ground state|0⟩,
+
+                                                                                                             |𝜓(0)⟩≈|𝜓(0)e ⟩⊗|0⟩,                         (20)
+
+                                                                                    where coefficients of higher excitations are very small.
+                                                                                       Conversely, we observe a strong impact of the cavity on the
+                                                                                    first excited state.  To qualitatively understand this behavior,
+                                                                                    let us expand the first excited state in the cavity as a superpo-
+                                                                                    sition of states with either a single excitation in the electronic
+                                                                                    system|𝜓(1)e ⟩⊗|0⟩, or a single excitation in the photonic sys-
+                                                                                    tem|𝜓(0)e ⟩⊗|1⟩, i.e.
+
+                                                                                                 |𝜓(1)⟩≈𝑐0|𝜓(1)e ⟩⊗|0⟩+𝑐1|𝜓(0)e ⟩⊗|1⟩.          (21)
+
+                                                                                    Since the cavity is resonant with the first excitation at the equi-
+                                                                                    librium geometry 𝑅0 = 0.74 Å, inducing an excitation in the
+                                                                                    electronic or photonic system at 𝑅 = 𝑅0  provides the same
+                                                                                    energy,  so  we  expect|𝑐0|2 = |𝑐1|2 =  1/2.   Indeed,  as  we
+                                                                                    can see in Fig.5,  the average photon number at    𝑅  close to
+                                                                                    𝑅0  is⟨𝑛⟩ ≈  1/2.   As we move to smaller values of 𝑅,  the
+FIG. 5. Physical setting, energies, and average photon numbers of                   energy of|𝜓(0)e ⟩⊗|1⟩ becomes smaller than|𝜓(1)e ⟩⊗|0⟩, so
+a H2 system. (a) Two hydrogen atoms are aligned parallel to the cav-                |𝑐1| >|𝑐0|.  Therefore, the average photon number increases
+ity polarization and separated by distance𝑅. As in Ref.35, the cavity               towards 1, and the electronic state becomes closer to the elec-
+frequency is set to be in resonance with the first bright excitation at             tronic  ground  state |𝜓(0)e ⟩.   Conversely,  as 𝑅  increases,  the
+its equilibrium geometry, and the coupling strength is𝜆 = 0.05.  (b)                cost of exciting the electronic system is lower than that of cre-
+Ground state and excited state energies of a hydrogen molecule as a                 ating a photon, so⟨𝑛⟩ decreases towards zero, and the elec-
+function of the distance𝑅 between the nuclei with (dots) and without
+(lines) the cavity.  Only states with zero spin (singlets) are reported.            tronic state tends to the first electronic excited state |𝜓(1)e ⟩;
+Each dot’s color indicates the average photon number of that state.                 indeed, the dots associated with the first excited state overlap
+Each data point is obtained by using the hyperparameters in App.F.                  with the orange curve for large 𝑅.  The second excited state,
+A full optimization at all distances was repeated 6 times, and one of               instead, only has black dots, and it overlaps with the red curve,
+the two runs that did not present any outlier energies is reported in               so its state is approximately|𝜓(2)e ⟩⊗|0⟩.
+the figure.
+                                                                                       We  compare  Fig.5(b)  to  the  potential  energy  curves  of
+                                                                                    H2  in Ref.35, where the same system is studied using QED-
+                                                                                    CCSD-1.  We find that the energies of|𝜓(0)⟩  and|𝜓(1)⟩  are
+B.Ground and excited states of H    2                                               the same for both methods, confirming the validity of our ap-
+                                                                                    proach. However, the results for|𝜓(2)⟩ differ: while in Ref.35
+   We  now  study  the  properties  of  the  ground  and  excited                   it is a superposition of|𝜓(0)e ⟩⊗|1⟩ and|𝜓(1)e ⟩⊗|0⟩, we find
+states of an H2  molecule inside a cavity [see Fig5(a)].   As                       here that|𝜓(2)⟩ is approximately|𝜓(2)e ⟩⊗|0⟩.  This discrep-
+in Ref.35, we choose the polarization to be parallel to the di-                     ancy arises from the mismatch between the energy of|𝜓(2)e ⟩
+rection of two nuclei with strength𝜆= 0.05. The frequency is                        computed with QMC and CCSD. Specifically, in Ref.35, the
+set to be𝜔= 12.75 eV so that it is in resonance with the first                      energy gap between|𝜓(2)e ⟩  and|𝜓(1)e ⟩  is several eVs,  while
+bright excitation of H2 at the equilibrium geometry, where the                      it  is  much  smaller  in  our  description.   Consequently,  when
+two nuclei are separated by𝑅0= 0.74 Å85.                                            the cavity is introduced, the superposition state predicted by
+                                                                                    Ref.35  has a lower energy than the state|𝜓(2)e ⟩⊗|0⟩,  while
+                                                                                    this energy ordering is reversed in our case.  Our second ex-
+1. Excited state energies                                                           cited state thus corresponds to approximately|𝜓(2)e ⟩⊗|0⟩, and
+                                                                                    not to the superposition state found in Ref.35.
+   In  Fig.5(b),  we  plot  the  energy  of  the  first  three  singlet                To address the energy discrepancy of|𝜓(2)e ⟩  between our
+states as a function of the distance𝑅 between the two nuclei,                       work and Ref.35, we analyze the energy curves of H2 using the
+both with (dots) and without (lines) the cavity.  The average                       CASSCF method with varying basis-set sizes (see App.E).
+photon number⟨𝑛⟩ is shown as the color of each dot.  As we                          Using a small basis-set (cc-pVDZ, as used in Ref.35), we re-
+can see, the ground state energies are not affected by the cav-                     cover their description.  However, as we increase the size of
+ity, so the ground state of the system is approximately the ten-                    the basis-set (and so the accuracy), we converge to the QMC
+sor product of the electronic ground state|𝜓(0)e ⟩ (blue curve)                     results, confirming the validity of our approach.
+Deep quantum Monte Carlo approach for polaritonic chemistry                                                                                                     9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                    FIG. 7.  Entanglement between the electronic and photonic sub-
+                                                                                    systems. We calculate the von Neumann entropy of𝜌ph as a function
+FIG.  6.   Photonic  system  of  the  first  singlet  excited  state.   (a)         of 𝑅, associated with the first excited state|𝜓(1)⟩ [see Eq. (22)].  It
+Wigner function of|1⟩.   (b) Wigner function of the photonic state                  reaches the peak at 𝑅 close to the equilibrium geometry 𝑅0, where
+𝜌ph, reported in Eq. (D2), corresponding to the first excited state at              the electromagnetic field is in resonance with the first singlet excited
+𝑅= 0.75 Å. The state is close to a superposition of|0⟩ and|1⟩, with                 state of the molecule.
+comparable coefficients. The values in the area around its center are
+negative, which is a characteristic of𝑊[|1⟩⟨1|].
+
+                                                                                    Schrödinger equation of molecules strongly coupled to opti-
+2. Photonic state                                                                   cal cavities.  Our approach can compute both the ground and
+                                                                                    excited states of the light-matter system, allowing us to access
+                                                                                    any electronic or photonic property of the system. In particu-
+   As  discussed  in  the  previous  section,  the  first  singlet  ex-             lar, we propose an extension of deep electronic wavefunction
+cited state|𝜓(1)⟩ is a hybrid light-matter state that transitions                   ansatzes to describe also the quantum nature of the cavity pho-
+from a more “photonic” to a more “electronic” character as𝑅                         tons, introducing a Monte Carlo framework that deals with the
+increases.  We pick𝑅 = 0.75 Å, which is close to its equilib-                       electrons in first quantization, and with the photons in second
+rium geometry𝑅0= 0.74 Å without a cavity, and estimate the                          quantization.
+density matrix of the photonic state in this case (the numeri-                          We  then  showcase  and  validate  our  method  using  an  ex-
+cal density matrix is reported in App.D.) The fact that the first                   tension of the PauliNet2 ansatz67 to calculate the ground and
+two diagonal entries are≃ 1/2 confirms that indeed|𝑐0|≈|𝑐1|                         excited  states  of  small  molecular  systems.   First,  we  com-
+in Eq. (21), meaning the state is close to a superposition of the                   pute the ground state energies of two hydrogen molecules in
+|0⟩ and|1⟩ photonic states.  The corresponding Wigner func-                         a  cavity  with  different  polarization  directions.   Our  method
+tion is shown in Fig.6(b). As opposed to the Wigner function                        reproduces the results obtained from different quantum chem-
+of|0⟩, which is very similar to the Winger function reported                        istry  methods42,  with  energy  differences  within  1  kcal/mol.
+in Fig.4(a), the Wigner function of    𝜌ph in the central area is                   We then analyze the effect of the cavity computing the elec-
+negative in the center, which is a characteristic of the Wigner                     tronic density displacement caused by the cavity, and the pho-
+function of|1⟩ [Fig.6(a)].                                                          tonic density matrix and corresponding Wigner function.  We
+   Finally, in Fig.7we report the entanglement between the                          then study a single H2  molecule in a cavity computing both
+electronic and photonic subsystems,  as a function of 𝑅,  an-                       the  ground  and  excited  states,  and  we  compare  them  with
+alyzing the first singlet excited state|𝜓(1)⟩.  To quantify en-                     those found using coupled cluster methods35.  We find gen-
+tanglement, we calculate the entanglement entropy86, which                          uine light-matter hybrid excited states that are given by a su-
+corresponds to von Neumann entropy of the reduced density                           perposition of different electronic wavefunctions and different
+matrix of one of the two subsystems. It is positive only if the                     photon numbers. We compute the entanglement generated be-
+two subsystems are entangled.  Here, we choose to compute                           tween the electronic and photonic subsystems, finding that it
+the entropy of the photonic reduced density matrix, i.e.                            is maximum when the cavity frequency is resonant with the
+                      𝑆(𝜌ph)=− Tr  𝜌ph ln𝜌ph.                     (22)             first excitation energy.
+                                                                                        Our  method  paves  the  way  for  the  systematic  and  accu-
+As expected, the entanglement is maximum at the equilibrium                         rate ab initio study of the effect of optical cavities on small
+geometry, where the electromagnetic field is in resonance with                      molecular systems, extending the range of scientific problems
+the first singlet excited state|𝜓(1)⟩, and decreases as we move                     that  can  be  tackled  using  machine  learning  techniques.   It
+away from resonance.                                                                also  constitutes  an  example  of  a  neural  network  wavefunc-
+                                                                                    tion ansatz that can describe joint fermionic and bosonic sys-
+                                                                                    tems.   As a direction for future research,  our method could
+IV.   Conclusions                                                                   be extended to a transferable ansatz87,88    , i.e.  a single neural
+                                                                                    network  ansatz  that  predicts  the  wave-function  for  multiple
+                                                                                    nuclear positions.  This approach could increase the accuracy
+   We present an ab-initio approach, based on machine learn-                        of dissociation curves through a relative error cancellation be-
+ing  and  on  variational  quantum  Monte  Carlo,  to  solve  the                   tween different nuclear configurations.  Further strategies to
+Deep quantum Monte Carlo approach for polaritonic chemistry                                                                                                   10
+
+improve the accuracy of the method can be considered, such                       Author Contributions
+as the variance matching scheme89.
+   Since  our  approach  gives  us  access  to  the  full  electron-                Yifan  Tang:   Conceptualization  (supporting);  Data  cura-
+photon wavefunction, we envision using the method to study                       tion  (lead);  Formal  analysis  (equal);  Methodology  (equal);
+further chemical properties, such as photochemical reactions                     Investigation (lead); Software (lead); Validation (equal); Vi-
+under  the  influence  of  light-matter  interaction28–30     .   Larger         sualization (lead); Writing - Original draft preparation (lead);
+molecules could also be studied, and our approach could help                     Writing - review & editing (equal) Gian Marcello Andolina:
+identify systems where the effect of the cavity is most rele-                    Conceptualization (equal); Formal analysis (equal); Method-
+vant.                                                                            ology (equal); Validation (equal); Project administration (sup-
+   Finally,  by  substituting  photons  with  phonons,  a  similar               porting);  Supervision  (supporting);  Writing  -  Original  draft
+ansatz can be used to study the effect of electron-phonon cou-                   preparation  (supporting);  Writing  -  review  &  editing  (lead)
+pling90.                                                                         Funding acquisition;  Alice Cuzzocrea:  Data curation (sup-
+                                                                                 porting);   Formal  analysis  (equal);   Visualization  (support-
+                                                                                 ing);  Writing  -  review  &  editing  (supporting);  Funding  ac-
+                                                                                 quisition;  Matˇej Mezera:  Methodology (supporting);  Soft-
+                                                                                 ware  (supporting);  Writing  -  review  &  editing  (supporting)
+Acknowledgements                                                                 P. Bernát Szabó: Methodology (supporting); Software (sup-
+                                                                                 porting); Writing - review & editing (supporting) Zeno Schät-
+                                                                                 zle: Methodology (supporting); Software (supporting); Writ-
+   We  would  like  to  thank  Jan  Hermann,  Mike  Entwistle,                   ing - review & editing (supporting) Frank Noé: Conceptual-
+Marco  Polini,  Marco  Schirò,  Enrico  Ronca,  Angel  Rubio,                    ization (equal); Methodology (supporting); Funding acquisi-
+and  Filippo  Vicentini  for  helpful  discussions  and  sugges-                 tion;  Project administration (equal);  Resources;  Supervision
+tions.   Y.  T.  acknowledges  funding  from  the  European  Re-                 (equal);  Writing  -  review  &  editing  (supporting);  Paolo  A.
+search  Council  (ERC)  Consolidator  Grant  ScaleCell.     G.                   Erdman: Conceptualization (equal); Formal analysis (equal);
+M.  A.  acknowledges  funding  from  the  European  Union’s                      Investigation (supporting); Methodology (equal); Funding ac-
+Horizon 2020 research and innovation programme under the                         quisition; Project administration (equal); Supervision (equal);
+Marie Sklodowska-Curie (Grant Agreement No. 101146870 –                          Validation (equal); Writing - Original draft preparation (sup-
+COMPASS) and from the European Research Council (ERC)                            porting); Writing - review & editing (lead);
+under the European Union’s Horizon 2020 research and in-
+novation  programme  (Grant  agreement  No.    101002955  –
+CONQUER).  A.C.  acknowledges  support  from  the  Alexan-                       Data Availability Statement
+der von Humboldt Foundation. M. M. acknowledges funding
+from  the  European  Research  Council  (ERC)  under  the  Eu-                      The data that support the findings of this study are available
+ropean  Union’s  Horizon  2020  research  and  innovation  pro-                  from the corresponding author upon reasonable request.
+gram (Grant Agreement No.  772230).  P. B. S. and Z. S. ac-
+knowledge the Berlin Mathematics Research Center MATH+
+(Project No.  AA2-22 and AA2-8).  F. N. gratefully acknowl-                      Appendix A Monte Carlo evaluation of physical
+edges funding by the BMBF (Berlin Institute for the Foun-                                           observables, the loss function and its
+dations of Learning and Data—BIFOLD), the European Re-                                              gradient in electron-photon systems
+search Commission (ERC CoG 772230) and the Berlin Math-
+ematics  Center  MATH+(AA1-6,  AA2-8).    P.  A.  E.  grate-                        Here  we  show  how  to  evaluate  observables  using  Monte
+fully acknowledges funding by the Berlin Mathematics Center                      Carlo in the electron-photon case, and we present explicit ex-
+MATH+ (AA2-18).                                                                  pressions of the loss function, its gradient, and other relevant
+                                                                                 observables.  We start by proving Eq. (11) of the main text,
+                                                                                 which allows to evaluate the expectation value of a general
+                                                                                 physical observables represented by a Hermitian operatorO.
+Author Declarations                                                              We  assume  that  it  is  real  and  diagonal  in  its  representation
+                                                                                 under the positional basis|r⟩, i.e.,
+
+Conflict of Interest                                                                             ⟨r,𝑛|O|r′,𝑚⟩=𝑂(r,𝑛,𝑚)𝛿(r− r′),            (A1)
+
+                                                                                 with 𝑂(r,𝑛,𝑚) = O(r,𝑚,𝑛).    Furthermore,  we  assume
+   The authors have no conflicts to disclose.                                    𝜓(r,𝑛) only takes real values. Using Eq. (A1), we have
+                  Deep quantum Monte Carlo approach for polaritonic chemistry                                                                                                   11
+
+                                                       𝑁max∑︁ ∫                                                                   𝑁max∑︁ ∫
+                            ⟨𝜓(𝑘)|O|𝜓(𝑙)⟩ =                       drdr′⟨𝜓(𝑘)|r,𝑛⟩⟨r,𝑛|O|r′,𝑚⟩⟨r′,𝑚|𝜓(𝑙)⟩=                                     dr𝜓(𝑘)(r,𝑛)𝑂(r,𝑛,𝑚)𝜓(𝑙)(r,𝑚)
+                                                      𝑛,𝑚=0                                                                      𝑛,𝑚=0
+                                                                                                                          𝑁max˝
+                                                                       𝑁max∑︁∫
+                                                  = ⟨𝜓(𝑘)|𝜓(𝑘)⟩                   dr   |𝜓(𝑘)(r,𝑛)|2                       𝑚=0𝑂(r,𝑛,𝑚)𝜓(𝑙)(r,𝑚)
+                                                                        𝑛=0           𝑁max˝ ∫  dr′′|𝜓(𝑘)(r′′,𝑚)|2                   𝜓(𝑘)(r,𝑛)
+
+                                                                                      𝑚=0
+                                                                           𝑁max˝                       
+                                                  = ⟨𝜓(𝑘)|𝜓(𝑘)⟩E𝑘            𝑚=0𝑂(r,𝑛,𝑚)𝜓(𝑙)(r,𝑚)                 ,                                                                                      (A2)
+                                                                                       𝜓(𝑘)(r,𝑛)
+
+
+                  where E𝑘[·] is defined in Eq. (12) of the main text. Using that  ⟨𝜓(𝑘)|O|𝜓(𝑙)⟩=⟨𝜓(𝑙)|O|𝜓(𝑘)⟩ sinceO is real and Hermitian, we
+                  have that
+
+                                                                                ⟨O⟩2𝑘,𝑙 =⟨𝜓(𝑘)|O|𝜓(𝑙)⟩            ⟨𝜓(𝑙)|O|𝜓(𝑘)⟩
+                                                                                               ⟨𝜓(𝑘)|𝜓(𝑘)⟩          ⟨𝜓(𝑙)|𝜓(𝑙)⟩ .                                                               (A3)
+
+                  Plugging in Eq. (A2) yields
+                                                                          𝑁max˝                        𝑁max˝                     
+                                                         ⟨O⟩2𝑘,𝑙 = E𝑘       𝑚=0𝑂(r,𝑛,𝑚)𝜓(𝑙)(r,𝑚)                  E𝑙    𝑚=0𝑂(r,𝑛,𝑚)𝜓(𝑘)(r,𝑚)                  ,                                    (A4)
+                                                                                       𝜓(𝑘)(r,𝑛)                                   𝜓(𝑙)(r,𝑛)
+
+
+                  Taking the square root, it can be shown that
+                                                  𝑁max˝                        vuuuuuuuuut𝑁max˝               𝑁max˝                     
+                                            '››››                                        “ﬁﬁﬁﬁ
+                          ⟨O⟩𝑘,𝑙 = sgn        E𝑘    𝑚=0𝑂(r,𝑛,𝑚)𝜓(𝑙)(r,𝑚)                       E𝑘    𝑚=0𝑂(r,𝑛,𝑚)𝜓(𝑙)(r,𝑚)                  E𝑙    𝑚=0𝑂(r,𝑛,𝑚)𝜓(𝑘)(r,𝑚)                 .        (A5)
+                                                               𝜓(𝑘)(r,𝑛)                                        𝜓(𝑘)(r,𝑛)                                   𝜓(𝑙)(r,𝑛)
+                                            «                                            ‹
+
+                  Notice that the equivalent of Eq. (A5) was derived in Eq. (15) of Ref.         61  for purely electronic systems, thus with E𝑘[·]  only
+                  representing an average over the electronic degrees of freedom, and without the sums over𝑚. Given the formal analogy between
+                  the expressions, the calculation of the gradient of observables with respect to𝜃 leads to the equivalent of Eq. (16) of Ref.61, i.e.
+
+                                                                     '››››𝑁max˝                             𝑁max˝                       “ﬁﬁﬁﬁ             
+                                𝜕𝜃⟨O⟩𝑘,𝑙 =       1               E𝑘      𝑚=0𝑂(r,𝑛,𝑚)𝜓(𝑙)(r,𝑚)                          𝑚=0𝑂(r,𝑛,𝑚)𝜓(𝑙)(r,𝑚)                   𝜕𝜃 ln|𝜓(𝑘)(r,𝑛)|
+                                                   ⟨O⟩𝑘,𝑙                          𝜓(𝑘)(r,𝑛)   − E𝑘                              𝜓(𝑘)(r,𝑛)
+                                                                       «                                                                                    ‹
+                                                         𝑁max˝                        
+                                                   ×E𝑙     𝑚=0𝑂(r,𝑛,𝑚)𝜓(𝑘)(r,𝑚)                   +(𝑘⇐⇒𝑙)              ,                                                                                 (A6)
+                                                                      𝜓(𝑙)(r,𝑛)
+
+
+
+
+                  where(𝑘⇐⇒𝑙) represents an additional term corresponding                                      1  Loss function and its gradient
+                  to the expression in curly brackets with exchanged indices 𝑘
+                  and𝑙.
+                                                                                                                  Using Eqs. (A5) and (A6) we can evaluate any observable
+                                                                                                               O  and  its  gradient,  including  the  loss  function.   In  the  fol-
+                                                                                                               lowing,  we  provide  the  explicit  expression  of 𝑂(r,𝑛,𝑚)  to
+                                                                                                               evaluate the loss function and its gradient.
+
+)(
+Deep quantum Monte Carlo approach for polaritonic chemistry                                                                                                   12
+   Following  the  discussion  in  Subsec.II B,  the  Pauli-Fierz                                                   √︂𝜔
+Hamiltonian consists of four terms in the following form:                                  𝑉el-ph(r,𝑛,𝑚) = −           2𝜆(ε· d(r))
+                                                                                                                              √
+           𝐻PF = 𝐻e+𝑉ph+𝑉el-ph+𝑉dip                                                                               ×   𝛿𝑛+1,𝑚    𝑛+ 1+𝛿𝑛−1,𝑚√𝑛           ,(A15)
+                                       √︂𝜔
+                  = 𝐻e+𝜔 ˆ𝑏† ˆ𝑏−           2𝜆(ε· d)( ˆ𝑏+ ˆ𝑏†)
+                                                                                                   𝑉dip(r,𝑛,𝑚)=𝛿𝑛,𝑚 12𝜆2(ε· d(r))2,           (A16)
+                      +12𝜆2(ε· d)2,                                        (A7)                𝑁e˝       𝑁nuc˝
+                                                                                   d(r)=−
+                                                   𝑁e˝       𝑁nuc˝                             𝑖=1 r𝑖+   𝐼=1 𝑍𝐼R𝐼 representing the dipole moment.
+with  molecular  dipole  operator d = −                                               The  expression  for  the  squared  spin  operator 𝑆2(r,𝑛,𝑚),
+                                                  𝑖=1 r𝑖+    𝐼=1 𝑍𝐼R𝐼  for         appearing in the loss function, can be computed as in Ref.62,74    ,
+electron positions{r𝑖}𝑁e𝑖=1 and nuclei positions{R𝐼}𝑁nuc𝐼=1 .  The                 yielding
+first term𝐻e is the electronic Hamiltonian
+
+                       𝑁e∑︁          𝑁e∑︁𝑁nuc∑︁                                          𝑆2(r,𝑛,𝑚) = 𝛿𝑛,𝑚           −𝑁↑−𝑁↓         𝑁↑−𝑁↓+ 2+𝑁↓
+           𝐻e = −           1                      𝑍𝐼                                                                      4
+                       𝑖=1  2∇2𝑖−    𝑖=1  𝐼=1  |r𝑖− R𝐼|                 (A8)                                    𝑁↑∑︁          𝜓(˜r𝑖𝑗,𝑛)    !
+                                                                                                                       𝑁e∑︁
+                          𝑁e∑︁    1            𝑁nuc∑︁  𝑍𝐼𝑍𝐽                                                  −                               ,               (A17)
+                    +12       |r𝑖− r𝑗|+ 12          |R𝐼− R𝐽|,                                                   𝑖=1 𝑗=𝑁↑+1     𝜓(r,𝑛)
+                         𝑖≠𝑗                   𝐼≠𝐽
+                                                                                   where 𝑁↑  and 𝑁↓  are the number of spin-up and spin-down
+where∇2𝑖  is the Laplace operator w.r.t. r𝑖 and𝑍𝐼 is the nuclear                   electrons respectively, ˜r𝑖𝑗 is obtained by exchanging the elec-
+charge number of nucleus𝐼. The second term                                         tron positions r𝑖 and r𝑗 in r.
+                                                                                      The overlap between different states, appearing in the loss
+                               𝑉ph=𝜔 ˆ𝑏† ˆ𝑏                                (A9)    function,  can  be  computed  choosingO  as  the  identity,  i.e.
+is  the  energy  of  harmonic  oscillators  of  the  photonic  mode                O(r,𝑛,𝑚)=𝛿𝑛,𝑚.
+
+neglecting  the  zero-point  energy,  which  is  purely  photonic.
+The electron-photon coupling term                                                  2  Electron density of a state
+                               √︂𝜔
+                   𝑉el-ph=−        2𝜆(ε· d)( ˆ𝑏+ ˆ𝑏†)               (A10)             The electron density𝜌e(ﬁ𝑟) measures the probability of ob-
+                                                                                   serving an electron around the pointﬁ𝑟∈ R3.  It can be com-
+describes  the  coupling  between  the  electronic  and  photonic                  puted using Eq. (A5) with   𝑂(r,𝑛,𝑚)=𝜌e(ﬁ𝑟)[r,𝑛,𝑚], where
+degrees of freedom. The last term                                                                                             𝑁e∑︁
+                                                                                              𝜌e(ﬁ𝑟)[r,𝑛,𝑚]=𝛿𝑛,𝑚  1𝑁e             𝛿(ﬁ𝑟− r𝑖).              (A18)
+                           𝑉dip=  1                                                                                           𝑖=1
+                                    2𝜆2(ε· d)2                         (A11)       In Fig.3of the main text we plot the electron density along
+is the dipole self-energy. Ref.71 shows this term is indispens-                    one spatial direction for each curve, by integrating over two
+able because it ensures that the Hamiltonian is gauge and ori-                     other coordinates.  For example, the electron density along𝑥
+gin invariant and bounded from below.                                              axis is defined as 𝜌e(𝑥) = ∫ ∫ 𝜌e(ﬁ𝑟)d𝑦d𝑧.   In practice,  this
+   From Eq. (A7), we have that                                                     is computed generating Monte Carlo samples of electron po-
+                                                                                   sitions, and only considering one of the three coordinates of
+        𝐻PF(r,𝑛,𝑚) = 𝐻e(r,𝑛,𝑚)+𝑉ph(r,𝑛,𝑚)                                          each sample.  We then use kernel density estimation, replac-
+                              +𝑉el-ph(r,𝑛,𝑚)+𝑉dip(r,𝑛,𝑚),  (A12)                   ing the delta functions in Eq. (A18) with narrow Gaussian ker-
+                                                                                   nels82.
+where
+
+                                    𝑁e∑︁1         𝑁e∑︁𝑁nuc∑︁   𝑍𝐼                  3  Density matrix of the photonic state
+    𝐻e(r,𝑛,𝑚) = 𝛿𝑛,𝑚            −       2∇2𝑖−              |r𝑖− R𝐼|
+                                   𝑖=1           𝑖=1  𝐼=1            !                Given  a  state|𝜓(𝑘)⟩,  we  are  interested  in  computing  the
+                              𝑁e∑︁     1           𝑁nuc∑︁  𝑍𝐼𝑍𝐽                    reduced density matrix describing the photonic system.  This
+                        +12       |r𝑖− r𝑗|+12           |R𝐼− R𝐽|       ,           can be computed by taking the partial trace relative to the elec-
+                             𝑖≠𝑗                   𝐼≠𝐽                             tronic degrees of freedom, i.e.
+                                                                      (A13)                                               ∫  dr⟨r|𝜓(𝑘)⟩⟨𝜓(𝑘)|r⟩
+                                                                                      𝜌ph=  Trr(|𝜓(𝑘)⟩⟨𝜓(𝑘)|)Tr(|𝜓(𝑘)⟩⟨𝜓(𝑘)|) =˝∫  dr′|𝜓(𝑘)(r′,𝑚)|2.    (A19)
+                        𝑉ph(r,𝑛,𝑚)=𝛿𝑛,𝑚𝜔𝑛,                     (A14)                                                      𝑚
+Deep quantum Monte Carlo approach for polaritonic chemistry                                                                                                   13
+
+                                                                                  We are interested in expressing the photonic density matrix in
+                                                                                  the Fock basis, i.e. we want to compute the matrix elements
+
+
+                                 ∫  dr𝜓(𝑘)(r,𝑛1)𝜓(𝑘)(r,𝑛2)             ∫       ∑︁                                  ∑︁
+             ⟨𝑛1|𝜌ph|𝑛2⟩ =          ˝  ∫  dr′|𝜓(𝑘)(r′,𝑚)|2  =              dr       ˝  ∫  dr′|𝜓(𝑘)(r′,𝑚)|2×|𝜓(𝑘)(r,𝑛)|2𝛿𝑛,𝑛1𝛿𝑚,𝑛2𝜓(𝑘)(r,𝑚)
+
+                                                                                𝑛                                   𝑚                𝜓(𝑘)(r,𝑛)
+                                     𝑚"∑︁                             #             𝑚
+
+                             =  E𝑘         𝛿𝑛,𝑛1𝛿𝑚,𝑛2𝜓(𝑘)(r,𝑚)𝜓(𝑘)(r,𝑛) ,                                                                                                     (A20)
+                                       𝑚
+
+
+
+where  we  used  that 𝜓(𝑘)(r,𝑛)  is  real.     Comparing  with                    We first initialize a set of random walkers in the state space.
+Eq. (A5), we notice that Eq. (A20) can be seen as the Monte                       For  each  walker,  we  evaluate  the  wavefunction 𝜓(𝑘)(r,𝑛)
+Carlo expectation value of the operator𝑂(r,𝑛,𝑚)                                   in  the  current  state(r,𝑛).    Then  we  propose  a  new  sam-
+                                                                                  ple (r′,𝑛′)  according  to 𝑔((r′,𝑛′) | (r,𝑛))  and  evaluate
+                       𝑂(r,𝑛,𝑚)=𝛿𝑛,𝑛1𝛿𝑚,𝑛2                     (A21)              𝜓(𝑘)(r′,𝑛′). We then accept the new sample with probability
+                                                                                  𝐴((r′,𝑛′),(r,𝑛)).  In order to sample from the joint distribu-
+over the|𝜓(𝑘)(r,𝑛)⟩ state. Since|𝜓(𝑘)(r,𝑛)⟩ is real and Her-                      tion of continuous (r) and discrete (𝑛) variables, we introduce
+mitian,⟨𝑛1|𝜌ph|𝑛2⟩=⟨𝑛2|𝜌ph|𝑛1⟩. This can be used to obtain                        the following conditional probability:
+the real and Hermitian operator
+                              𝛿𝑛,𝑛1𝛿𝑚,𝑛2+𝛿𝑚,𝑛1𝛿𝑛,𝑛2                    (A22)     𝑔((r′,𝑛′)|(r,𝑛))=12𝛿𝑛,𝑛′𝑔𝑟(r′| r)+ 12𝛿(r− r′)𝑔𝑛(𝑛′|𝑛),
+         𝑂(r,𝑛,𝑚)=  12                                                                                                                                    (B3)
+                                                                                  where𝑔𝑟(r′| r) and𝑔𝑛(𝑛′| 𝑛) are respectively a continuous
+whose  expectation  value⟨O⟩𝑘,𝑘,  computed  with  Eq.  (A5),                      and discrete conditional distribution. In practice, this amounts
+yields the photonic density matrix element⟨𝑛1|𝜌ph|𝑛2⟩.                            to the following: with probability 50%, we fix𝑛 and propose
+                                                                                  a change to r according to𝑔𝑟(r′|  r); with probability 50%,
+                                                                                  we propose a change to𝑛 using𝑔𝑛(𝑛′|𝑛) with r fixed.
+Appendix B Sampling algorithm                                                        For  the  continuous  proposal  function 𝑔𝑟(r′ |  r),  we  use
+                                                                                  an adjustable normal distribution r′∼N(r,𝜏2) with tunable
+   In  order  to  compute  the  expectation  values E𝑘[·]  using                  parameter𝜏. The idea of using a tunable probability distribu-
+Monte Carlo, we need to draw samples of(r,𝑛) distributed ac-                      tion for the proposal is to adjust the acceptance rate of all the
+cording to the probability distribution𝑃(r,𝑛)∝|𝜓(𝑘)(r,𝑛)|2.                       walkers to be as close as possible to the rate of 0.5778,79    .  If
+This  can  be  done  using  a  generalization  of  the  Metropolis-               the acceptance rate of the samples where r is updated is larger
+Hastings  algorithm  to  discrete  and  continuous  samples76,77    .             than 0.57, we decrease it by increasing𝜏, the “exploring ra-
+In this algorithm,  we generate a reversible Markov chain in                      dius".  Thus the proposals r are less likely to be accepted and
+state space R3𝑁e×{0, 1,··· ,𝑁max},  which has a stationary                        the theoretical acceptance rate is lowered.  On the contrary, if
+distribution𝑃(r,𝑛)∝|𝜓(𝑘)(r,𝑛)|291. It consists of two parts:                      the acceptance rate is too small,  we decrease 𝜏  for the next
+proposal and acceptance-rejection. Given a sample(r,𝑛), we                        step.  Indeed, in the limit of zero sampling radius, the accep-
+propose a new sample(r′,𝑛′) in state space according to the                       tance ratio is 1. See Alg.1for details.
+conditional probability𝑔((r′,𝑛′)|(r,𝑛)), and accept it with                          For the discrete proposal function 𝑔𝑛(𝑛′ | 𝑛),  we sample
+probability𝐴((r′,𝑛′),(r,𝑛)). The overall transition probabil-                     from the probability distribution
+ity from state(r,𝑛) to(r′,𝑛′) is then                                                               𝑝|𝑛′−𝑛|
+ 𝑃((r′,𝑛′)|(r,𝑛))=𝑔((r′,𝑛′)|(r,𝑛))×𝐴((r′,𝑛′),(r,𝑛)).                                               1+ 2𝑝+ 2𝑝2,        if|𝑛′−𝑛|≤ 2,                    (B4)
+                                                                       (B1)                         0,                                  otherwise,
+The detailed balance condition for the Markov chain reads                         and  clip  the  value  of 𝑛′  into  the  range  of{0, 1,··· ,𝑁max}.
+𝑃((r′,𝑛′)|(r,𝑛))×𝑃(r,𝑛)=𝑃((r,𝑛)|(r′,𝑛′))×𝑃(r′,𝑛′),                                Here, 𝑝  is a tunable parameter.   Notice that,  because of the
+                                                                       (B2)       clipping,𝑔𝑛(𝑛′|𝑛) is no longer symmetric regarding to𝑛 and
+and it is satisfied when we set the acceptance probability to                     𝑛′, i.e.
+                               𝑃(r′,𝑛′)                                                    𝑔𝑛(1| 0)
+𝐴((r′,𝑛′),(r,𝑛))= min                                                                      𝑔𝑛(0| 1) = 𝑔𝑛(𝑁max− 1| 𝑁max)𝑔𝑛(𝑁max| 𝑁max− 1) =     11+𝑝,           (B5)
+                        |𝜓(𝑘)(r′,𝑛′)|2𝑃(r,𝑛) × 𝑔((r,𝑛)|(r′,𝑛′))𝑔((r′,𝑛′)|(r,𝑛)), 1 and
+               = min                                                      .                                     𝑔𝑛(𝑛|𝑛′)
+                          |𝜓(𝑘)(r,𝑛)|2 × 𝑔((r,𝑛)|(r′,𝑛′))𝑔((r′,𝑛′)|(r,𝑛)), 1                                    𝑔𝑛(𝑛′|𝑛) = 1                              (B6)
+Deep quantum Monte Carlo approach for polaritonic chemistry                                                                                                   14
+
+in all other cases.  Similar to the continuous case, if the ac-                                   Algorithm 1: Discrete-continuous
+ceptance rate of the samples where𝑛 is updated is larger than                                              Metropolis-Hastings
+0.57, we decrease it by increasing the variance𝜎 of the dis-                           Data: wavefunction𝜓(𝑘)  : R3𝑁e×{0, 1,··· ,𝑁max}→ R,
+crete distribution, which plays the role of the “exploring ra-                                 (r,𝑛)↦→𝜓(𝑘)(r,𝑛), number of sampling steps
+dius" in the discrete case.  On the contrary, if the acceptance                                𝑁steps∈ N+, number of walkers𝑁w
+rate is too small, we decrease𝜎 for the next step.  See Alg.1                          Result: samples{(r(𝑤)
+for details. In order to tune the variance𝜎, we update the pa-                                                 𝑡  ,𝑛(𝑤)𝑡 )|𝑡∈[𝑁steps],𝑤∈[𝑁w]}
+rameter 𝑝.  The relation between 𝑝  and 𝜎  can be computed                                       asymptotically with density∝|𝜓(𝑘)(r,𝑛)|2
+exactly ignoring the clipping of𝑛′, and it is given by                                 set𝑡← 0;
+                                                                                       set𝜏𝑟,0← 1;
+                                                                                       set𝜏𝑛,0←√2;
+                          𝜎2=   2(𝑝+ 4𝑝2)1+ 2𝑝+ 2𝑝2,                          (B7)     initialize r0,𝑛0;
+                                                                                       while𝑡 < 𝑁steps do
+allowing us to express𝑝 as a function of𝜎:                                                  flip a fair coin (head or tail)𝑁w times independently;
+                                                                                            for walker𝑤 with result head do
+                                         −𝜎4+ 6𝜎2+ 1                                             set𝑛(𝑤)𝑡+1 ←𝑛(𝑤)𝑡     ;
+                 𝑝(𝜎)= 𝜎2− 1+√8− 2𝜎2      .              (B8)                                    sample r′ according to normal distribution
+                                                                                                   N(r(𝑤)𝑡  ,𝜏2𝑟,𝑡) and propose r′;
+   The overall algorithm is shown in Alg.1.                                                      accept and set r(𝑤) 𝑡+1 ← r′ w.p.
+                                                                                                   min     |𝜓(𝑘)(r′,𝑛(𝑤)𝑡 )|2     , set r(𝑤)
+                                                                                                          |𝜓(𝑘)(r(𝑤)𝑡  ,𝑛(𝑤)𝑡 )|2, 1     𝑡+1 ← r(𝑤)𝑡
+Appendix C Squeezing of electromagnetic field                                                      otherwise;
+                                                                                            end
+   To derive the effective Hamiltonian for the photon field by                              calculate the acceptance rate𝛼𝑟  among all walkers with
+eliminating the electronic degrees of freedom, we begin with                                  result head;
+the Pauli-Fierz Hamiltonian in Eq. (1), expressed as                                        set𝜏𝑟,𝑡+1←𝜏𝑟,𝑡×  max{𝛼𝑟,0.05}√︃0.57         set
+                                                                                              𝑝←     𝜏2𝑛,𝑡−1+  −𝜏4𝑛,𝑡+6𝜏2𝑛,𝑡+1
+                      𝐻PF=  ˜𝐻e+𝜔 ˆ𝑏† ˆ𝑏+𝑉el-ph,                     (C1)                                    8−2𝜏2𝑛,𝑡             ;
+                                                                                            for walker𝑤 with result tail do
+where   ˜𝐻e = 𝐻e+𝑉dip  is  the  electronic  Hamiltonian  renor-                                  set r(𝑤)        𝑡     ;
+malized by the self-interaction, 𝜔 ˆ𝑏† ˆ𝑏  represents the photon                                 sample𝑛′ from{𝑛− 2,𝑛− 1,𝑛,𝑛+ 1,𝑛+ 2} w.p.𝑡+1 ← r(𝑤)
+Hamiltonian, and the electron-photon coupling term is given                                        n   𝑝2                                                         o
+by                                                                                                   1+2𝑝+2𝑝2,   𝑝1+2𝑝+2𝑝2,          11+2𝑝+2𝑝2,   𝑝1+2𝑝+2𝑝2,   𝑝21+2𝑝+2𝑝2
+                                                                                                   respectively;
+                               √︂𝜔                                                               set𝑛′← max{0, min{𝑁max,𝑛′}} and propose𝑛′;
+                   𝑉el-ph=−        2𝜆(𝜀· d)( ˆ𝑏+ ˆ𝑏†).                 (C2)                      accept and set𝑛(𝑤)  |𝜓(𝑘)(r(𝑤)𝑡+1 ←𝑛′ w.p.
+                                                                                                   min             𝑡+1,𝑛′)|2          𝑡 |𝑛′)       , set
+First  of  all,  we  expand   ˜𝐻e  in  terms  of  its  electronic  eigen-                                 |𝜓(𝑘)(r(𝑤)𝑡+1,𝑛(𝑤)𝑡 )|2× 𝑔𝑛(𝑛(𝑤)𝑔𝑛(𝑛′|𝑛(𝑤)𝑡 ), 1
+states| ˜𝜓(𝑀)e ⟩,  which  satisfy   ˜𝐻e| ˜𝜓(𝑀)e ⟩ =   ˜𝐸𝑀| ˜𝜓(𝑀)e ⟩,  with                         𝑛(𝑤)𝑡+1 ←𝑛(𝑤)𝑡      otherwise;
+𝑀 = 0, 1,.... Here,  ˜𝐸0 is the ground state energy. Assuming                               end
+𝑉el-ph  is a small perturbation,  we split the total Hamiltonian                            calculate the acceptance rate𝛼𝑛 among all walkers with
+into an unperturbed part, 𝐻0 =   ˜𝐻e+𝜔 ˆ𝑏† ˆ𝑏, and a perturba-                                result tail;
+tion,𝑉el-ph.  Using second-order perturbation theory, we trace                              set𝜏𝑛,𝑡+1←𝜏𝑛,𝑡×  max{𝛼𝑛,0.05}0.57        ;
+out the electronic degrees of freedom to obtain an effective                                update𝜓(𝑘) in the training process;
+Hamiltonian for the photon field.                                                      end
+   The   second-order   correction   to   the   effective   photonic
+Hamiltonian is thus:
+                 ∑︁    |⟨ ˜𝜓(0)e |𝑉| ˜𝜓(𝑀)e ⟩|2                                     photon operators as( ˆ𝑏+ ˆ𝑏†)2=  ˆ𝑏2+ ˆ𝑏†2+2 ˆ𝑏† ˆ𝑏+1 we can write
+      𝛿𝐻=−                   ˜𝐸𝑀−  ˜𝐸0   =−𝜒( ˆ𝑏+ ˆ𝑏†)2,        (C3)                the total effective photonic Hamiltonian𝐻eff =𝜔 ˆ𝑏† ˆ𝑏+𝛿𝐻 as
+                 𝑀≠0                                                                                                                ˆ𝑏2+ ˆ𝑏†2
+where                                                                                             𝐻eff=(𝜔− 2𝜒) ˆ𝑏† ˆ𝑏−𝜒                         −𝜒.         (C5)
+
+                             ∑︁    |ε·⟨ ˜𝜓(0)e |d| ˜𝜓(𝑀)e ⟩|2                       The ground state of the effective Hamiltonian 𝐻eff  is thus a
+                𝜒= 𝜔𝜆22                    ˜𝐸𝑀−  ˜𝐸0    .             (C4)          squeezed vacuum state.  To determine this state, the effective
+                             𝑀≠0
+                                                                                    Hamiltonian can be diagonalized through a Bogoliubov trans-
+This quantity is positive as it involves squared dipole matrix                      formation. In this approach, we define new bosonic operators
+elements and positive energy denominators. By expanding the                          ˆ𝑐 and  ˆ𝑐† as linear combinations of the original photon opera-
+Deep quantum Monte Carlo approach for polaritonic chemistry                                                                                                   15
+
+tors, such that the Hamiltonian takes a diagonal form, as:                               Therefore,  the  ground  state  of 𝐻eff  is  a  squeezed  vacuum
+                          ˆ𝑏=  ˆ𝑐 cosh𝑟+  ˆ𝑐† sinh𝑟,                       (C6)          state  characterized  by  the  squeezing  parameter 𝑟,  reflecting
+                                                                                         the  modifications  to  the  photon  field  due  to  the  interaction
+where 𝑟  is the squeezing parameter to be determined.  Sub-                              with the electronic degrees of freedom.
+stituting this transformation into the Hamiltonian, we elimi-                               In the squeezed vacuum state|0𝑐⟩, the variances of ˆ𝑥 and  ˆ𝑝
+nate the non-diagonal terms involving  ˆ𝑐2  and  ˆ𝑐†2,  choosing                         are given by:
+the squeezing parameter𝑟 such that:                                                                        Var[ ˆ𝑥]=⟨0𝑐| ˆ𝑥2|0𝑐⟩−⟨0𝑐| ˆ𝑥|0𝑐⟩2,             (C12)
+
+                          tanh(2𝑟)=−    2𝜒𝜔− 2𝜒.                        (C7)
+                                                                                                           Var[ ˆ𝑝]=⟨0𝑐| ˆ𝑝2|0𝑐⟩−⟨0𝑐| ˆ𝑝|0𝑐⟩2.            (C13)
+   In the perturbative regime,  where 𝜔 >  2𝜒,  this equation
+implies that𝑟 is a real and negative quantity. With this choice                             For the squeezed vacuum state, these variances become:
+of𝑟, the Hamiltonian simplifies to:
+                                                                                                            Var[ ˆ𝑥]= 𝑒−2𝑟
+                      𝐻eff=ℏ ˜𝜔       ˆ𝑐† ˆ𝑐+ 12  +𝐸′shift,                   (C8)                                          2 ,     Var[ ˆ𝑝]= 𝑒2𝑟2 .              (C14)
+
+where the new frequency  ˜𝜔 is given by:                                                 This indicates that the  ˆ𝑥-quadrature variance is increased by
+                                                                                         a factor of 𝑒−2𝑟  as 𝑟  is a negative number (as evident from
+                              ˜𝜔= √︁𝜔(𝜔− 4𝜒),                           (C9)             Eq. (C7)) while the        ˆ𝑝-quadrature variance is increased by𝑒2𝑟.
+                                                                                         This behavior aligns with the shape of the Wigner function
+and𝐸′shift includes all constant terms resulting from the trans-                         shown in Fig.4, where the squeezing effect manifests as an
+formation.  The ground state of the effective Hamiltonian is                             elliptical deformation, with one axis contracted and the other
+thus  the  vacuum  state|0𝑐⟩  of  the  ˆ𝑐  operators,  which  is  re-                    elongated,  corresponding  to  the  respective  quadrature  vari-
+lated to the original photonic ground state|0⟩ by the squeezing                          ances.
+transformation:
+
+                               |0𝑐⟩=𝑆(𝑟)|0⟩,                            (C10)            Appendix D Density matrix of the photonic
+                                                                                                             wavefunction
+where𝑆(𝑟) is the squeezing operator defined as:
+                                       1     ˆ𝑏2− ˆ𝑏†2                                      Here  we  present  explicitly  the  photonic  density  matrices
+                      𝑆(𝑟)= exp        2𝑟                   .                 (C11)      discussed in Sec.III A 3and Sec.III B 2.
+
+
+     •At 𝑅 = 4.0 Å, the photonic density matrix of the ground state of two H2 in the cavity with polarization ε𝑥  , denoted as
+        𝜌ε𝑥ph , is shown in Eq. (D1).  The diagonal terms for   𝑛 = 0 and 1 are bold to show the zero-photon coefficient is the most
+        dominant. The state is very close to the ground Fock state|0⟩.
+                                            𝑛           0              1             2            3           4            5
+                                            0     992.621 −0.079    11.078    0.761    0.137     0.090'››››››              “ﬁﬁﬁﬁﬁﬁ
+                                            1 −0.079      7.181      0.027     0.070    0.011 −0.004
+                                    𝜌ε𝑥ph =2      11.078      0.027      0.195     0.017    0.003     0.002                  × 10−3,                                   (D1)
+                                            3       0.761       0.070      0.017     0.002    0.000     0.000
+                                            4       0.137       0.011      0.003     0.000    0.000     0.000
+                                            5       0.090 −0.004     0.002     0.000    0.000     0.000«                   ‹
+
+     •The photonic density matrix of the first singlet excited state of H  2 in the cavity with polarization parallel to its main axis,
+        denoted as𝜌ph, is shown in Eq. (D2). The state is close to a superposition of the  |0⟩ and|1⟩ photonic states, with the first
+        two diagonal entries being≃  12 (boldfaced).
+
+                                            𝑛           0               1              2            3           4           5
+                                            0     445.762      1.949      26.585    0.621    0.174    0.306'››››››        “ﬁﬁﬁﬁﬁﬁ
+                                            1       1.949      552.526     2.279     1.081    0.290    0.343
+                                     𝜌ph=   2      26.585       2.279       1.704     0.043    0.012    0.021               × 10−3.                                    (D2)
+                                            3       0.621        1.081       0.043     0.006    0.001    0.003
+                                            4       0.174        0.290       0.012     0.001    0.000    0.001
+                                            5       0.306        0.343       0.021     0.003    0.001    0.002«           ‹
+Deep quantum Monte Carlo approach for polaritonic chemistry                                                                                                   16
+
+Appendix E CASSCF calculations for H   2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 8. Energies of H2 singlet states with various bond length. We use CASSCF with two electrons and different basis sets to calculate the
+first three lowest energies. (a): cc-pVDZ basis with 10 orbitals (FCI), (b): aug-cc-pVDZ basis with 18 orbitals (FCI), (c): aug-cc-pVTZ basis
+with 18 orbitals. The more accurate results match those obtained using our proposed deep QMC method.
+
+
+
+
+   In  this  section,  we  present  the  three  lowest  energy  sin-                                                 Hyperparameter                                    Value
+glet states of H2, calculated using the complete active space                                      Cavity frequency𝜔 for two H2 [cf. Eq. (1)]             12.7 eV
+self-consistent field (CASSCF) method92–94      with the PySCF                                        Cavity frequency𝜔 for H2 [cf. Eq. (1)]           12.750702 eV
+package95.  We investigate how increasing the size of the ba-                                      Coupling strength𝜆 for two H2 [cf. Eq. (1)]                0.1
+sis  set,  from  cc-pVDZ  to  aug-cc-pVDZ  and  aug-cc-PVTZ,                                          Coupling strength𝜆 for H2 [cf. Eq. (1)]                   0.05
+affects  the  energy  gap  between  the  first  and  second  excited                                     Maximum number of determinants                        16
+states.   Specifically,  for cc-pVDZ, we perform a CAS(10,2)                                                     Embedding dimension                                 128
+calculation [Fig.8(a)], selecting both electrons and all ten or-                                             Number of interaction layers                              3
+bitals as the active space, which is equivalent to Full Config-                                           Number of hidden layers in𝑤𝜃 67                          2
+uration Interaction (FCI). For the other basis sets,  we use a                                            Number of hidden layers inℎ𝜃 67                           2
+CAS(18,2) calculation [Fig.8(b) and (c)], where for aug-cc-                                               Number of hidden layers in𝜅𝜃 67                           2
+pVDZ, this also corresponds to FCI. We find that the results                                              Number of hidden layers in𝑔𝜃 67                           1
+for cc-pVDZ are in good agreement with reference35, while                                                 Number of hidden layers in𝜂𝜃 67                           1
+the more accurate calculations using aug-cc-pVDZ and aug-                                                    Photon number cutoff𝑁max                               5
+cc-pVTZ, which display a significantly smaller energy gap be-                                                      Number of walkers                                   2048
+tween the first (orange) and second (red) excited states,  are                                        Number of pretraining steps for two H2                   5000
+                                                                                                             Pretraining basis for two H2                     aug-cc-pVTZ
+consistent with our findings [see Fig.5].                                                      Number of orbitals in two H2 CASSCF pretraining           16
+                                                                                                        Number of training steps for two H2                   200000
+                                                                                                      Number of evaluation steps for two H2                  50000
+Appendix F Hyperparameters                                                                                 Number of training steps for H2                        60000
+                                                                                                         Number of evaluation steps for H2                      50000
+   Here  we  list  the  hyperparameters  used  in  generating  the                                             𝛼 for two H2 [cf. Eq. (6)]                               8.0
+data presented in Sec.IIIas Tab.I.                                                                                𝛼 for H2 [cf. Eq. (6)]                                  4.0
+                                                                                                      Number of decorrelation sampling steps                    30
+                                                                                                                 Target acceptance rate                                57%
+                                                                                                                         Optimizer                                      K-FAC80
+
+
+                                                                                                          TABLE I. Hyperparameters used in calculations.
+Deep quantum Monte Carlo approach for polaritonic chemistry                                                                                                   17
+
+
+ 1T. Byrnes, N. Y. Kim,  and Y. Yamamoto, “Exciton–polariton condensates,”                           26R.  Chikkaraddy,  B.  de  Nijs,  F.  Benz,  S.  J.  Barrow,  O.  A.  Scherman,
+  Nat. Phys. 10, 803–813 (2014).                                                                        E. Rosta, A. Demetriadou, P. Fox, O. Hess,  and J. J. Baumberg, “Single-
+ 2D. Hagenmüller, J. Schachenmayer, S. Schütz, C. Genes,  and G. Pupillo,                               molecule strong coupling at room temperature in plasmonic nanocavities,”
+  “Cavity-enhanced  transport  of  charge,”Phys.  Rev.  Lett.    119,  223601                           Nature 535, 127–130 (2016).
+  (2017).                                                                                            27C.  Bujalance,  L.  Caliò,  D.  N.  Dirin,  D.  O.  Tiede,  J.  F.  Galisteo-López,
+ 3X. Wang, E. Ronca,  and M. A. Sentef, “Cavity quantum electrodynamical                                J.  Feist,  F.  J.  García-Vidal,  M.  V.  Kovalenko,   and  H.  Míguez,  “Strong
+  chern insulator:  Towards light-induced quantized anomalous hall effect in                            light–matter coupling in lead halide perovskite quantum dot solids,”ACS
+ 4F. J. Garcia-Vidal, C. Ciuti,  and T. W. Ebbesen, “Manipulating matter bygraphene,”Phys. Rev. B   99, 235156 (2019).28A. Thomas, J. George, A. Shalabney, M. Dryzhakov, S. J. Varma, J. Moran,Nano 18, 4922–4931 (2024).
+
+
+ 5F. Schlawin, D. M. Kennes,  and M. A. Sentef, “Cavity quantum materials,”strong coupling to vacuum fields,”Science   373, eabd0336 (2021).T. Chervy,  X. Zhong,  E. Devaux,  C. Genet,  J. A. Hutchison,   and T. W.
+                                                                                                        Ebbesen, “Ground-state chemical reactivity under vibrational coupling to
+ 6J. Bloch,  A. Cavalleri,  V. Galitski,  M. Hafezi,   and A. Rubio, “StronglyAppl. Phys. Rev. 9, 011312 (2022).the vacuum electromagnetic field,”Angew. Chem. Int. Ed. Engl.   55, 11462–
+                                                                                                        6 (2016).
+  correlated electron–photon systems,”Nature   606, 41–48 (2022).                                    29J. Galego,  C. Climent,  F. J. Garcia-Vidal,   and J. Feist, “Cavity casimir-
+ 7A. Siegman, “Laser beams and resonators: Beyond the 1960s,”IEEE J. Sel.                               polder forces and their effects in ground-state chemical reactivity,”Phys.
+
+ 8F. Herrera and F. C. Spano, “Cavity-controlled chemistry in molecular en-Top. Quantum Electron. 6, 1389–1399 (2000).30A.  Thomas,   L.  Lethuillier-Karl,   K.  Nagarajan,   R.  M.  A.  Vergauwe,Rev. X 9, 021057 (2019).
+
+  sembles,”Phys. Rev. Lett.   116, 238301 (2016).                                                       J. George, T. Chervy, A. Shalabney, E. Devaux, C. Genet, J. Moran,   and
+ 9S. Haroche, “Nobel lecture: Controlling photons in a box and exploring the                            T. W. Ebbesen, “Tilting a ground-state reactivity landscape by vibrational
+  quantum to classical boundary,”Rev. Mod. Phys.   85, 1083–1102 (2013).                                strong coupling,”Science   363, 615–619 (2019).
+10D. De Bernardis, G. M. Andolina,  and I. Carusotto, “Light-matter interac-                         31M. Castagnola, T. S. Haugland, E. Ronca, H. Koch,  and C. Schäfer, “Col-
+  tions in the vacuum of ultrastrongly coupled systems,”Phys. Rev. A   110,                             lective strong coupling modifies aggregation and solvation,”J. Phys. Chem.
+11D. N. Basov, M. M. Fogler,  and F. J. G. de Abajo, “Polaritons in van der053713 (2024).            32E. Jaynes and F. Cummings, “Comparison of quantum and semiclassicalLett. 15, 1428–1434 (2024).
+
+
+12D. S. Wang, T. Neuman, J. Flick,  and P. Narang, “Light–matter interactionwaals materials,”Science   354, aag1992 (2016).radiation theories with application to the beam maser,”Proc. IEEE   51, 89–
+                                                                                                        109 (1963).
+  of a molecule in a dissipative cavity from first principles,”J. Chem. Phys.                        33F.  W.  Cummings,  “Stimulated  emission  of  radiation  in  a  single  mode,”
+  154, 104109 (2021).                                                                                   Phys. Rev. 140, A1051–A1056 (1965).
+13J. Fregoni, F. J. Garcia-Vidal,  and J. Feist, “Theoretical challenges in po-                      34M. K. Svendsen, K. S. Thygesen, A. Rubio,   and J. Flick, “Ab initio cal-
+  laritonic chemistry,”ACS Photonics   9, 1096–1107 (2022).                                             culations of quantum light–matter interactions in general electromagnetic
+14D. Sidler, M. Ruggenthaler, C. Schäfer, E. Ronca,  and A. Rubio, “A per-                              environments,”J. Chem. Theory Comput.   20, 926–936 (2024).
+  spective on ab initio modeling of polaritonic chemistry:  The role of non-                         35T. S. Haugland, E. Ronca, E. F. Kjønstad, A. Rubio,  and H. Koch, “Cou-
+  equilibrium effects and quantum collectivity,”J. Chem. Phys.   156, 230901                            pled cluster theory for molecular polaritons: Changing ground and excited
+15D. Sidler, M. Ruggenthaler,  and A. Rubio, “Numerically exact solution for(2022).                  36R. R. Riso,  T. S. Haugland,  E. Ronca,   and H. Koch, “Molecular orbitalstates,”Phys. Rev. X   10, 041043 (2020).
+
+  a real polaritonic system under vibrational strong coupling in thermody-                           37M.  Ruggenthaler,  J.  Flick,  C.  Pellegrini,  H.  Appel,  I.  V.  Tokatly,    andtheory in cavity qed environments,”Nat. Commun.   13, 1368 (2022).
+  namic equilibrium:  Loss of light–matter entanglement and enhanced fluc-
+16D. Sidler, C. Schäfer, M. Ruggenthaler,  and A. Rubio, “Polaritonic chem-tuations,”J. Chem. Theory Comput.   19, 8801–8814 (2023).A. Rubio, “Quantum-electrodynamical density-functional theory: Bridging
+                                                                                                        quantum optics and electronic-structure theory,”Phys. Rev. A   90, 012508
+  istry: Collective strong coupling implies strong local modification of chem-                       38J. Flick, M. Ruggenthaler, H. Appel,  and A. Rubio, “Atoms and molecules(2014).
+  ical  properties,”The  Journal  of  Physical  Chemistry  Letters   12,  508–516
+17M.  Ruggenthaler,  D.  Sidler,   and  A.  Rubio,  “Understanding  polaritonic(2021), pMID: 33373238.  in cavities, from weak to strong coupling in quantum-electrodynamics (qed)
+                                                                                                        chemistry,”Proc. Natl. Acad. Sci. U.S.A.   114, 3026–3034 (2017).
+  chemistry  from  ab  initio  quantum  electrodynamics,”Chem.  Rev.    123,                         39J. J. F. IV, J. F. McTague,  and A. E. D. III, “Ab initio methods for polariton
+  11191–11229 (2023).                                                                                   chemistry,”  (2023),arXiv:2307.04881.
+18T. W. Ebbesen, A. Rubio,   and G. D. Scholes, “Introduction:  Polaritonic                          40F. Pavoševi´c and J. Flick, “Polaritonic unitary coupled cluster for quantum
+19I. Sokolovskii,  R. H. Tichauer,  D. Morozov,  J. Feist,   and G. Groenhof,chemistry,”Chem. Rev.   123, 12037–12038 (2023).41M. Castagnola, M. T. Lexander, E. Ronca,  and H. Koch, “Strong couplingcomputations,”J. Phys. Chem. Lett.   12, 9100–9107 (2021).
+
+  “Multi-scale  molecular  dynamics  simulations  of  enhanced  energy  trans-                          electron-photon dynamics:  A real-time investigation of energy redistribu-
+  fer in organic molecules under strong coupling,”Nat. Commun.   14, 6613                               tion in molecular polaritons,”Phys. Rev. Res.   6, 033283 (2024).
+  (2023).                                                                                            42T. S. Haugland, C. Schäfer, E. Ronca, A. Rubio,  and H. Koch, “Intermolec-
+20M.  Sánchez-Barquilla,  A.  I.  Fernández-Domínguez,  J.  Feist,    and  F.  J.                       ular  interactions  in  optical  cavities:  An  ab  initio  QED  study,”J.  Chem.
+  García-Vidal, “A theoretical perspective on molecular polaritonics,”ACS                            43R. J. Bartlett and M. Musiał, “Coupled-cluster theory in quantum chem-Phys. 154, 094113 (2021).
+  Photonics 9, 1830–1841 (2022).
+21A. Frisk Kockum, A. Miranowicz, S. De Liberato, S. Savasta,  and F. Nori,                             istry,”Rev. Mod. Phys.   79, 291–352 (2007).
+  “Ultrastrong coupling between light and matter,”Nat. Rev. Phys.   1, 19–40                         44A. Szabo and N. S. Ostlund, Modern Quantum Chemistry: Introduction to
+
+22A.  Le  Boité,  “Theoretical  methods  for  ultrastrong  light–matter  interac-(2019).                Advanced Electronic Structure Theory (Dover Publications, Mineola, NY,
+                                                                                                        1996).
+  tions,”Adv. Quantum Technol.   3, 1900140 (2020).                                                  45I. Shavitt and R. J. Bartlett, Many-Body Methods in Chemistry and Physics:
+23M.  Lednev,  F.  J.  García-Vidal,   and  J.  Feist,  “Lindblad  master  equation                     MBPT and Coupled-Cluster Theory, Cambridge Molecular Science (Cam-
+  capable of describing hybrid quantum systems in the ultrastrong coupling                              bridge University Press, 2009).
+  regime,”Phys. Rev. Lett.   132, 106902 (2024).                                                     46Y. LeCun, B. Boser, J. S. Denker, R. E. Howard, W. Habbard, L. D. Jackel,
+24G.  Jarc,  S.  Y.  Mathengattil,  A.  Montanaro,  F.  Giusti,  E.  M.  Rigoni,                        and D. Henderson, “Handwritten digit recognition with a back-propagation
+  R. Sergo, F. Fassioli, S. Winnerl, S. Dal Zilio, D. Mihailovic, P. Prelovšek,                         network,” in Adv. Neural Inf. Process. Syst. 2 (Morgan Kaufmann Publish-
+  M. Eckstein,  and D. Fausti, “Cavity-mediated thermal control of metal-to-                            ers Inc., San Francisco, CA, USA, 1990) p. 396–404.
+  insulator transition in 1t-tas2,”Nature   622, 487–492 (2023).                                     47Y. LeCun, Y. Bengio,   and G. Hinton, “Deep learning,”Nature   521, 436–
+25F. Appugliese, J. Enkner, G. L. Paravicini-Bagliani, M. Beck, C. Reichl,                              444 (2015).
+  W. Wegscheider, G. Scalari, C. Ciuti,  and J. Faist, “Breakdown of topolog-                        48G. Carleo, I. Cirac, K. Cranmer, L. Daudet, M. Schuld, N. Tishby, L. Vogt-
+  ical protection by cavity vacuum fields in the integer quantum hall effect,”                          Maranto,  and L. Zdeborová, “Machine learning and the physical sciences,”
+  Science 375, 1030–1034 (2022).                                                                        Rev. Mod. Phys. 91, 045002 (2019).
+Deep quantum Monte Carlo approach for polaritonic chemistry                                                                                                   18
+
+
+49J. Carrasquilla and G. Torlai, “How to use neural networks to investigate                          74J.  Liu,  C.  Qin,  X.  He,     and  G.  Jiang,  “Calculate  electronic  excited
+  quantum many-body physics,”PRX Quantum   2, 040201 (2021).                                           states  using  neural  networks  with  effective  core  potential,”     (2023),
+50J. A. Keith, V. Vassilev-Galindo, B. Cheng, S. Chmiela, M. Gastegger, K.-                            arXiv:2312.15216.
+  R. Müller,   and A. Tkatchenko, “Combining machine learning and com-                               75V. Fock, “Konfigurationsraum und zweite quantelung,”Z. Phys.   75, 622–
+  putational chemistry for predictive insights into chemical systems,”Chem.                            647 (1932).
+  Rev. 121, 9816–9872 (2021).                                                                        76N. Metropolis,  A. W. Rosenbluth,  M. N. Rosenbluth,  A. H. Teller,   and
+51S. Chmiela, A. Tkatchenko, H. E. Sauceda, I. Poltavsky, K. T. Schütt,  and                           E. Teller, “Equation of State Calculations by Fast Computing Machines,”J.
+  K.-R. Müller, “Machine learning of accurate energy-conserving molecular                              Chem. Phys. 21, 1087–1092 (1953).
+  force fields,”Sci. Adv.   3, e1603015 (2017).                                                      77W. K. Hastings, “Monte Carlo sampling methods using Markov chains and
+52J. S. Smith, O. Isayev,  and A. E. Roitberg, “Ani-1: an extensible neural net-                       their applications,”Biometrika   57, 97–109 (1970).
+  work potential with dft accuracy at force field computational cost,”Chem.                          78A. Gelman, W. R. Gilks,  and G. O. Roberts, “Weak convergence and opti-
+53K. T. Schütt, H. E. Sauceda, P.-J. Kindermans, A. Tkatchenko,  and K.-R.Sci. 8, 3192–3203 (2017).    mal scaling of random walk Metropolis algorithms,”Ann. Appl. Probab.   7,
+                                                                                                       110 – 120 (1997).
+  Müller, “SchNet – A deep learning architecture for molecules and materi-                           79G. O. Roberts and J. S. Rosenthal, “Optimal scaling for various metropolis-
+  als,”J. Chem. Phys.   148, 241722 (2018).                                                            hastings algorithms,”Stat. Sci.   16, 351–367 (2001).
+54K. T. Schütt, M. Gastegger, A. Tkatchenko, K. R. Müller,  and R. J. Mau-                           80J. Martens and R. Grosse, “Optimizing neural networks with kronecker-
+  rer, “Unifying machine learning and quantum chemistry with a deep neural                             factored  approximate  curvature,”  in 32nd Int. Conf. Mach. Learn. ICML
+  network for molecular wavefunctions,”Nat. Commun.   10, 5024 (2019).                                 2015. - Volume 37, ICML’15 (JMLR.org, 2015) p. 2408–2417.
+55G. Carleo and M. Troyer, “Solving the quantum many-body problem with                               81C. Maissen, G. Scalari, F. Valmorra, M. Beck, J. Faist, S. Cibella, R. Leoni,
+  artificial neural networks,”Science   355, 602–606 (2017).                                           C. Reichl, C. Charpentier,   and W. Wegscheider, “Ultrastrong coupling in
+56J.  Hermann,  J.  Spencer,  K.  Choo,  A.  Mezzacapo,  W.  M.  C.  Foulkes,                          the  near  field  of  complementary  split-ring  resonators,”Phys.  Rev.  B   90,
+  D. Pfau, G. Carleo,  and F. Noé, “Ab initio quantum chemistry with neural-                           205309 (2014).
+  network wavefunctions,”Nat. Rev. Chem.   7, 692–709 (2023).                                        82D. W. Scott, Multivariate Density Estimation: Theory, Practice, and Visu-
+57J. Han, L. Zhang,  and W. E, “Solving many-electron schrödinger equation                             alization, 2nd Edition (John Wiley & Sons, 2015).
+  using deep neural networks,”J. Comput. Phys.   399, 108929 (2019).                                 83E. Wigner, “On the quantum correction for thermodynamic equilibrium,”
+58J. Hermann, Z. Schätzle,  and F. Noé, “Deep-neural-network solution of the                           Phys. Rev. 40, 749–759 (1932).
+  electronic schrödinger equation,”Nat. Chem.   12, 891–897 (2020).                                  84A. Serafini, Quantum Continuous Variables: A Primer of Theoretical Meth-
+59D. Pfau, J. S. Spencer, A. G. D. G. Matthews,  and W. M. C. Foulkes, “Ab                             ods (CRC Press, 2017).
+  initio solution of the many-electron schrödinger equation with deep neural                         85W.  Kolos  and  L.  Wolniewicz,  “Potential-Energy  Curves  for  the 𝑋1Σ+𝑔,
+  networks,”Phys. Rev. Res.   2, 033429 (2020).                                                        𝑏3Σ+𝑢, and𝐶1Π𝑢  States of the Hydrogen Molecule,”J. Chem. Phys.   43,
+60I. von Glehn, J. S. Spencer,   and D. Pfau, “A self-attention ansatz for ab-                         2429–2441 (1965).
+  initio quantum chemistry,”  (2023),arXiv:2211.13672.                                               86R. Horodecki, P. Horodecki, M. Horodecki,  and K. Horodecki, “Quantum
+61M. T. Entwistle, Z. Schätzle, P. A. Erdman, J. Hermann,  and F. Noé, “Elec-                          entanglement,”Rev. Mod. Phys.   81, 865–942 (2009).
+  tronic excited states in deep variational monte carlo,”Nat. Commun.   14,                          87M. Scherbela, L. Gerard,  and P. Grohs, “Towards a transferable fermionic
+  274 (2023).                                                                                          neural wavefunction for molecules,”Nat. Commun.   15, 120 (2024).
+62P.  B.  Szabó,  Z.  Schätzle,  M.  T.  Entwistle,    and  F.  Noé,  “An  improved                  88L. Gerard, M. Scherbela, H. Sutterud, M. Foulkes,  and P. Grohs, “Trans-
+  penalty-based  excited-state  variational  monte  carlo  approach  with  deep-                       ferable neural wavefunctions for solids,”  (2024),arXiv:2405.07599.
+63D. Pfau, S. Axelrod, H. Sutterud, I. von Glehn,  and J. S. Spencer, “Accuratelearning ansatzes,”J. Chem. Theory Comput.   20, 7922–7935 (2024).89P. J. Robinson, S. D. Pineda Flores,  and E. Neuscamman, “Excitation vari-
+  computation of quantum excited states with neural networks,”Science   385,                           ance matching with limited configuration interaction expansions in varia-
+  eadn0137 (2024).                                                                                   90T.  Ohgoe  and  M.  Imada,  “Variational  monte  carlo  method  for  electron-tional Monte Carlo,”J. Chem. Phys.   147, 164114 (2017).
+64G. Pescia, J. Han, A. Lovato, J. Lu,  and G. Carleo, “Neural-network quan-                           phonon coupled systems,”Phys. Rev. B   89, 195139 (2014).
+  tum states for periodic systems in continuous space,”Phys. Rev. Res.   4,                          91C.  P.  Robert  and  G.  Casella, Monte Carlo Statistical Methods  (Springer
+65Y. Qian, W. Fu, W. Ren,  and J. Chen, “Interatomic force from neural net-023138 (2022).              New York, 2004).
+                                                                                                     92P.  Siegbahn,  A.  Heiberg,  B.  Roos,   and  B.  Levy,  “A  comparison  of  the
+  work based variational quantum Monte Carlo,”J. Chem. Phys.   157, 164104                             super-ci and the newton-raphson scheme in the complete active space scf
+66Z. Schätzle, J. Hermann,  and F. Noé, “Convergence to the fixed-node limit(2022).                    method,”Phys. Scr.   21, 323 (1980).
+                                                                                                     93B.  O.  Roos,  P.  R.  Taylor,   and  P.  E.  Sigbahn,  “A  complete  active  space
+67Z. Schätzle, P. B. Szabó, M. Mezera, J. Hermann,  and F. Noé, “Deepqmc:in deep variational Monte Carlo,”J. Chem. Phys.   154, 124108 (2021).scf method (casscf) using a density matrix formulated super-ci approach,”
+  An open-source software suite for variational optimization of deep-learning                          Chem. Phys. 48, 157–173 (1980).
+                                                                                                     94P.  E.  M.  Siegbahn,  J.  Almlöf,  A.  Heiberg,   and  B.  O.  Roos,  “The  com-
+  molecular wave functions,”J. Chem. Phys.   159, 094108 (2023).                                       plete active space SCF (CASSCF) method in a Newton–Raphson formula-
+68J. Hermann, szbernat, Z. Schätzle, M. Mezera, A. Foster, K. Maziarz, H. E.
+  Sauceda,   and M. Brockschmidt,“deepqmc/deepqmc:  Deepqmc 1.2.0,”                                    tion with application to the HNO molecule,”J. Chem. Phys.   74, 2384–2396
+  (2024).                                                                                              (1981).
+69J. Bradbury, R. Frostig, P. Hawkins, M. J. Johnson, C. Leary, D. Maclaurin,                        95Q. Sun, X. Zhang, S. Banerjee, P. Bao, M. Barbry, N. S. Blunt, N. A. Bog-
+  G. Necula, A. Paszke, J. VanderPlas, S. Wanderman-Milne,  and Q. Zhang,                              danov,  G.  H.  Booth,  J.  Chen,  Z.-H.  Cui,  J.  J.  Eriksen,  Y.  Gao,  S.  Guo,
+  “JAX: composable transformations of Python+NumPy programs,”(2018).                                   J. Hermann,  M. R. Hermes,  K. Koh,  P. Koval,  S. Lehtola,  Z. Li,  J. Liu,
+70H. Spohn, Dynamics of Charged Particles and their Radiation Field (Cam-                              N.  Mardirossian,  J.  D.  McClain,  M.  Motta,  B.  Mussard,  H.  Q.  Pham,
+  bridge University Press, 2004).                                                                      A.  Pulkin,  W.  Purwanto,  P.  J.  Robinson,  E.  Ronca,  E.  R.  Sayfutyarova,
+71V. Rokaj, D. M. Welakuh, M. Ruggenthaler,  and A. Rubio, “Light–matter                               M. Scheurer, H. F. Schurkus, J. E. T. Smith, C. Sun, S.-N. Sun, S. Upad-
+  interaction  in  the  long-wavelength  limit:  no  ground-state  without  dipole                     hyay, L. K. Wagner, X. Wang, A. White, J. D. Whitfield, M. J. Williamson,
+  self-energy,”J. Phys. B: At. Mol. Opt. Phys.   51, 034005 (2018).                                    S. Wouters, J. Yang, J. M. Yu, T. Zhu, T. C. Berkelbach, S. Sharma, A. Y.
+72C. Schäfer, M. Ruggenthaler, V. Rokaj,   and A. Rubio, “Relevance of the                             Sokolov,  and G. K.-L. Chan, “Recent developments in the pyscf program
+  quadratic diamagnetic and self-polarization terms in cavity quantum elec-                            package,”J. Chem. Phys.   153, 024109 (2020).
+
+73R.  G.  Woolley,  “Power-zienau-woolley  representations  of  nonrelativistictrodynamics,”ACS Photonics   7, 975–990 (2020).
+
+  qed for atoms and molecules,”Phys. Rev. Res.   2, 013206 (2020).

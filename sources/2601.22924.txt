@@ -1,0 +1,680 @@
+Spiral Phase and Phase Diagram of theS=1/2 XXZ Model on the Shastry-Sutherland
+                                                                     Lattice
+
+                               Zhengpeng  Yuan,  Muwei  Wu,  Dao-Xin  Yao,∗  and  Han-Qing  Wu†
+                                               Institute  of  Neutron  Science  and  Technology,
+                           Guangdong  Provincial  Key  Laboratory  of  Magnetoelectric  Physics  and  Devices,
+                                  State  Key  Laboratory  of  Optoelectronic  Materials  and  Technologies,
+                                School of Physics, Sun Yat-sen University, Guangzhou, 510275, China.
+                                                             (Dated:  July 14, 2026)
+                   We investigate the ground-state phase diagram of theS=1/2 XXZ model on the two-dimensional
+                Shastry-Sutherland lattice using exact diagonalization (ED), density-matrix renormalization group
+                (DMRG), and cluster mean-field theory (CMFT) with DMRG as a solver.   In the isotropic case
+                (∆ = 1), CMFT results reveal an intermediate empty plaquette (EP) phase that has a lower energy
+                than the full plaquette (FP) phase. However, due to mean-field artifacts, CMFT alone is not suitable
+                for accurately determining phase boundaries. Therefore, we combined three methods to map out the
+                reliable phase diagram.  Our calculations show that the EP phase narrows as ∆ deviates from unity
+                and eventually vanishes. More importantly, we identify a spiral phase at small ∆, which has not been
+                reported in previous studies. This phase is clearly captured by DMRG simulations on long cylindrical
+                geometries.  The competition between the EP, spiral,  andxy-AFM phases near their boundaries
+                provides a plausible explanation for the emergent spin-liquid-like behavior in RE2Be2GeO2, while
+                shedding new light on the role of XXZ anisotropy in the Shastry-Sutherland XXZ model.
+
+
+                    I.    INTRODUCTION                                        there may also be a Quantum Spin Liquid (QSL) phase
+                                                                              between the plaquette and AFM phases [24–26,32,33].
+  Initially proposed as a theoretical model, the Shastry-                        A  recent  experimental  study  on  SrCu2(BO3)2  has
+Sutherland-lattice (SSL) Heisenberg model has emerged                         found  that  a  first-order  character  of  the  plaquette-to-
+as an important frustrated quantum spin system since its                      AFM phase transition weakens with increasing magnetic
+experimental realization in the compound SrCu2(BO3)2                          field,  approaching  the  DQCP  [14].   Furthermore,  most
+[1–15].  This model and its related material systems have                     experimental results suggest that the intermediate phase
+spurred decades of combined theoretical, numerical, and                       is  a  full  plaquette  (FP)  phase  [10, 12, 14],  unlike  the
+experimental research. A concerted effort has been aimed                      theoretical EP phase.  Interestingly, a more recent exper-
+at mapping its comprehensive phase diagram and under-                         iments have observed signals indicative of EP state under
+standing the nature of its ground state and excitations.                      magnetic field and pressure[37].  Some theoretical stud-
+The  Heisenberg  model  on  this  lattice  exhibits  a  quan-                 ies suggest that the full-plaquette state is a metastable
+tum phase transition tuned by the ratio of inter-dimer to                     state of the Heisenberg model on SSL and that the full-
+intra-dimer interaction, denoted asg=J/J        ′.  A smallg                  plaquette phase can be stabilized by modifying the model
+stabilizes the dimer phase,  while a largegleads to the                       [23, 27, 36, 38].   In  addition  to  SrCu                      2(BO3)2,  certain
+antiferromagnetic (AFM) phase.  At intermediate values                        rare-earth  materials  RE2Be2GeO7  (RE  =  Pr,  Nd,  Gd-
+ofg, the prevailing consensus holds that the system hosts                     Yb),  ErB4  can also be described by magnetic SSL and
+a plaquette phase[16–33].                                                     are candidates for realizing some nonmagnetic phases like
+  However,  the nature of the phase transition between                        QSL [39–43], spin-ice [44], “triplet” dimer phase [45].  In
+the  plaquette  phase  and  the  AFM  phase  exhibits  con-                   these  system,  due  to  the  strong  spin-orbital  effect,  ex-
+tradictory results when probed by different methods and                       change anisotropy is key to understanding these materials
+research teams.  Several numerical studies have revealed                      [30,45]. While previous studies have outlined parts of the
+a continuous phase transition between the empty plaque-                       ground-state phase diagram for the XXZ model on the
+tte (EP) phase and AFM phase [16–18,22,29].  Due to                           Shastry-Sutherland lattice[21,30], a comprehensive pic-
+the  fact  that  the  AFM  phase  breaks  SU(2)  symmetry                     ture has remained elusive.  By employing a combination
+while  the  EP  phase  breaks  some  lattice  symmetries,  it                 of  several  numerical  techniques,  our  work  resolves  the
+is proposed that there is a deconfined quantum critical                       complete phase diagram and, most significantly, uncov-
+point (DQCP) between them [22,29,34,35].  However,                            ers a new spiral phase near the regime of the XX model
+other investigations have revealed discontinuities in the                     limit (∆ = 0).  Our findings suggest that the interplay
+first  derivative  of  the  energy  and  hysteresis  in  the  or-             of the EP, spiral,  andxy-AFM orders near their phase
+der  parameter,  indicating  a  weak  first-order  transition                 boundaries may account for part of the spin-liquid-like
+[20,27,31,36].  In addition, some studies suggest that                        phenomenology in RE2Be2GeO2 compounds.
+                                                                                 In  this  paper,  we  investigate  theS=1/2  Shastry-
+                                                                              Sutherland  lattice  XXZ  model  using  several  numerical
+∗ yaodaox@mail.sysu.edu.cn                                                    methods,  including  exact  diagonalization  (ED),  cluster
+† wuhanq3@mail.sysu.edu.cn
+                                                                              mean  field  theory  (CMFT)  [46–54]  and  density  matrix
+                                                                                                                                                         2
+
+                                                                                               II.    MODEL AND METHODS
+
+                                                                                   In this paper, we employ a topologically equivalent lat-
+                                                                                tice resembling a square lattice, analogous to the Shastry-
+                                                                                Sutherland  lattice  [see  Fig.1(a)].   The  Hamiltonian  of
+                                                                                theS=1/2  XXZ  model  on  the  Shastry-Sutherland  lat-
+                                                                                tice is given by Equation1, where ∆ represents the XXZ
+                                                                                anisotropy.   ∆  =  1  and  ∆  =  0  corresponding  to  the
+                                                                                isotropic  case  and  the  planar  XX  model,  respectively.
+                                                                                Meanwhile, as ∆ approaches infinity, the system towards
+                                                                                the Ising limit.
+                                                                                           ˆH=J     X    Sxi Sxj  +S    y               
+                                                                                                                       i Syj + ∆S    zi Szj
+                                                                                                    ⟨i,j⟩
+                                                                                                 +J   ′ X      Sxi Sxj  +S    y                       (1)
+                                                                                                                             i Syj + ∆S    zi Szj
+                                                                                                       ⟨⟨i,j⟩⟩
+
+                                                                                whereJdenotes the nearest-neighbor exchange interac-
+                                                                                tion or inter-dimer interaction depicted by solid lines in
+                                                                                Fig.1(a), andJ              ′ denotes some next-nearest-neighbor di-
+                                                                                agonal  exchange  interaction  or  intra-dimer  interaction
+FIG. 1. (a) Shastry-Sutherland lattice and three clusters used                  shown  by  dashed  lines  in  the  same  figure,  forming  an
+in the numerical calculations. Blue and green boxes represent                   orthogonal pattern.  To study the ground-state proper-
+6×6 E- and F- type clusters, respectively, with stars of the                    ties of this frustrated model, we employ three numerical
+same colors indicating their centers.  The red box denotes the                  methods:   exact  diagonalization  (ED)  ,  density  matrix
+32-site cluster used in ED calculations.  (b) Phase diagram of                  renomalization  group  (DMRG)  and  cluster  mean  field
+the XXZ model on the Shastry-Sutherland lattice constructed                     theory (CMFT) with DMRG as a solver.
+from combined ED, CMFT, and DMRG results.   Solid and                              The  ED  method  is  chosen  to  determine  the  phase
+dashed lines correspond to first-order and (possible) continu-                  boundaries using energy-level crossings in a 32-site clus-
+ous phase transitions, respectively.  The red gradient area in
+the figure indicates a possible spin-liquid region that is not                  ter  with  periodic  boundary  conditions.     This  finite-
+excluded  by  our  current  results.   (c,d)  Schematic  of  empty              size  cluster  is  illustrated  by  the  red  box  in  Fig.1(a).
+plaquette (EP) and full plaquette (FP) states.  Here, orange-                   In  the  ED  calculations,  we  usedU(1)  symmetry  with
+shaded 2×2 plaquettes indicate plaquette-singlet patterns.                      magnetizationM                          z  =  0,±1,±2,···,  spin-flip  symmetry
+                                                                                with  eigenvalueZ=±1,  and  translation  symmetry
+                                                                                ˆT ⃗r|ψ(   ⃗k)⟩=e       −i   ⃗k˙⃗r|ψ(   ⃗k)⟩to  perform  the  diagonalization
+                                                                                of blocks.
+renormalization group (DMRG). In ED calculations, we                               In  the  CMFT  calculations,  we  set  a  self-consistent
+use energy level spectroscopy technique to estimate the                         Weiss  field  on  the  boundary  sites.    All  the  correla-
+phase transition points.  In CMFT, we directly measure                          tions within the clusters are fully considered, while inter-
+order parameters to get the ground-state phase diagram,                         cluster correlations are treated in a mean-field manner.
+and illustrate the characteristics of the plaquette phase                       Specifically, for the exchange interaction bonds between
+using bond energies of two types of cluster.  The clusters                      the clusters,  the boundary interactions are replaced by
+used in the CMFT are up to 64-sites. In addition, we use                        mean-field terms, namely⟨S               αi ⟩S  αj , as shown in Eq.2.
+DMRG  calculations  with  cylinder  geometries  to  obtain
+the phase diagram.  Compared with ED and CMFT, we                                                   Sxi Sxj  +S    yi Syj + ∆S    zi Szj
+find a new spiral phase in the small ∆ region.  Our study                                        →S     xi ⟨S  xj ⟩+S     y                            (2)
+made a key exploration into the ground-state phase dia-                                                            i ⟨S  yj ⟩+ ∆S     zi ⟨S  zj ⟩
+gram of XXZ model on Shastry-Sutherland lattice using                                            +⟨S     xi ⟩S  xj  +⟨S     yi ⟩S  yj + ∆⟨S     zi ⟩S  zj
+several  methods.   Our finding  is importance for  under-                      To retain the full space-group symmetry of the lattice, we
+standing the Shastry-Sutherland lattice magnetic mate-                          useL×Lclusters (whereL= 4,6,8) in the CMFT calcu-
+rials with XXZ anisotropy.                                                      lations.  To further characterize the plaquette phase, we
+
+   This paper is structured as follows.  SectionIIintro-                        also employed two types of clusters corresponding to the
+duces the model and methods, presents different lattice                         E-type (centered on an empty plaquette) and the F-type
+geometries, and outlines the DMRG settings.  SectionIII                         (centered on a full plaquette).  The illustrations of the E
+presents numerical simulation results for different meth-                       and F types are depicted by the blue and green boxes in
+ods,  characterizing  the  ground-state  phases  and  phase                     Figure 1(a), where the pentagram of the corresponding
+boundaries. And finally we give a summary in SectionIV.                         color indicates the central position of the lattice type.
+                                                                                                                                                                3
+
+   In the DMRG calculation, we employ the DMRG code
+from  the  ITensor  library  [55, 56].   For  the  DMRG  cal-
+culations not serving as the solver of CMFT, we mainly
+useL      y = 6 cylinders withL        x = 24, keeping up to 6000
+states and converging to a truncation error below 10−6  .
+When DMRG is used as the solver within CMFT, we in-
+crease the maximum number of kept states to 7000, with
+a truncation error tolerance of 1×10     −7    during sweeps
+and 1×10     −6    for the energy convergence.  Moreover, for
+cases  with  ∆≥1,U(1)  symmetry  is  imposed  with  an
+equal number of spin-up and spin-down states to accel-
+erate the computations.  To further improve convergence
+in  the  CMFT  iterations,  the  successive  over-relaxation
+(SOR) method is also applied.
+   To  characterize  the  dimer,  plaquette  and  N´eel  anti-
+ferromagnetic phases, we define the order parameters as
+follows:
+
+         mEd  =14(|⟨S     r1Sr1−a    1+b    1⟩ − ⟨S  r2Sr2−a    1−b    1⟩|
+               +|⟨S       r2Sr2+a    1+b    1⟩ − ⟨S  r3Sr3−a    1+b    1⟩|
+               +|⟨S       r3Sr3+a    1−b    1⟩ − ⟨S  r4Sr4+a    1+b    1⟩|
+               +|⟨S       r4Sr4−a    1−b    1⟩ − ⟨S  r1Sr1+a    1−b    1⟩|)
+         mFd  =(|⟨S        r2Sr4 >−< S       r1Sr3⟩|)                     (3)
+                      4X
+          mp =14         (|⟨S     riSri+a    1⟩ − ⟨S  riSri−a    1⟩|+
+                    i=1
+                  |⟨S   riSri+b    1⟩ − ⟨S  riSri−b    1⟩|)
+                      4X q
+          ms =14            ⟨S  zi ⟩2 +⟨S     xi ⟩2 +⟨S     yi ⟩2                   FIG. 2. (a-e) Exact diagonalization (ED) energy spectra for a
+                    i=1                                                             32-site system at ∆ = 1,0,0.5,1.5,2. The ED calculation uses
+                                                                                    symmetries including the total spinM         z  and spin-flip quan-
+whereirepresents the four lattice points at the center of                           tum numberZ.  Different colors represent the energy spectra
+the lattice (see Fig.1(c) and1(d)).m                           E/F                  from different symmetry sectors.  Dashed vertical lines high-
+                                                       d      denotes the           light the level crossing points indicating the quantum phase
+dimer  order  parameter  for  E-type  and  F-type  lattices,                        transitions.   The  phase  diagram  obtained  by  finite-size  ED
+respectively.                                                                       calculations is shown in (f).
+
+
+                III.    NUMERICAL RESULTS                                           exhibits a quasi-degenerate ground-state manifold of sin-
+                                                                                    glets in finite-size systems. In contrast, the antiferromag-
+                     A.    32-site ED spectra                                       netic phase at largegbreaks theSU(2) symmetry, lead-
+                                                                                    ing to an Anderson tower of states [64–66]:  the ground
+   We first restudy the isotropic case with ∆ = 1.  Us-                             state  is  a  singlet,  followed  by  a  triplet  as  the  first  ex-
+ing  exact  diagonalization  on  a  32-site  torus  (periodic                       cited state.   This difference suggests that a level cross-
+boundary condition), we tunegand apply the level spec-                              ing  of  the  first  excited  state  should  occur  between  the
+troscopy  technique  to  identify  quantum  phase  transi-                          two  phases.   Indeed,  in  the  ED  spectra,  a  crossing  ap-
+tions [25,26,57–63]. Our results, illustrated in Fig.2(a),                          pears nearg        c2  ≈0.787 between the first excited singlet
+reveal a ground state level crossing atg≈0.677.  This                               (S=  0)  and  the  lowest  triplet  (S=  1)  states,  which
+crossing  is  accompanied  by  a  discontinuity  in  the  first                     is  consistent  with  previous  studies  using  level  spectro-
+derivative of the energy with respect tog,  indicating a                            scopic technique [25,26].  The value is also in the range
+first-order phase transition.  The Dimer phase and Pla-                             0.77−0.828 reported by employing various other method-
+quette VBS phase have different singlet pattern ground                              ologies [22,27,29], suggesting the potential existence of a
+state.   So  it  is  natural  to  see  the  level  crossing.   This                 continuous phase transition.  Interestingly, nearg        c1 , four
+transition  point  estimated  by  32-site  ED  aligns  with                         nearly degenerate singlet states emerge.  This suggests a
+previous  literature  reporting  a  phase  transition  point                        competition  between  the  EP  and  FP  states,  with  each
+atg    c1   ≈0.675  for  dimer  phase  and  plaquette  phase                        phase contributing two quasi-degenerate states.
+[16, 19, 20, 22, 27].   Furthermore,  the  plaquette  phase                            For  the  anisotropic  XXZ  Shastry–Sutherland  model,
+                                                                                                                                                         4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 3.  (a) and (d) illustrate the bond energy and magnetic order strength on each site for the E-type and F-type 8×8 clusters
+atg= 0.72 andg= 0.66, respectively.  The evolution of dimer, plaquette, and AFM order parameters withgis presented for
+the E-type cluster in (b) and for the F-type cluster in (e).  Extrapolations of the order parameters are shown in (c) and (f):
+linear extrapolations of the plaquette order from the E-type cluster atg= 0.7 and 0.82 are displayed in (c), while second-order
+polynomial extrapolations of the AFM order obtained from both E-type and F-type clusters atg= 1 are shown in (f).
+
+
+we continue to employ energy level spectroscopy—as in                                       B.    CMFT study onL×Lclusters
+the  case  of  ∆  =  1—to  identify  phase  transitions,  mo-
+tivated  by  the  distinct  ground-state  wavefunctions  and
+low-energy  excitation  spectra  exhibited  by  the  dimer,                        Next, we turn to the CMFT results.  In the intermedi-
+EP,  and  antiferromagnetic  (AFM)  phases.   Their  tran-                      ategregime, for the E type cluster with an 8×8 size, the
+sitions are marked by clear crossings in the low-lying en-                      bond energy or nearest-neighbor spin correlation and the
+ergy spectrum, as shown in Fig.2(b–e).  Specifically, the                       magnetic order⟨S⟩atg= 0.76 are depicted in Fig.3(a).
+transition pointg  c1  from the dimer to the plaquette VBS                      A  strong  tetramer  pattern  centered  on  the  empty  pla-
+phase is identified via ground-state level crossings within                     quettes  is  evident,  whereas  the  magnetic  order  is  zero.
+the sameM         z = 0 sector.  Meanwhile, the transition from                 For a direct comparison with the dimer and AFM order
+the  plaquette  to  the  AFM  phaseg           c2   is  determined  by          parameters,  and  to  obtain  the  phase  diagram,  we  plot
+the first-excited-state level crossing,  using differentM  z                    the evolution of all order parameters obtained by 4×4
+sectors for ∆<1 and spin-inversion parity or eigenval-                          and 6×6 clusters as a function ofg, which is shown in
+ues for ∆>1.  The resulting phase diagram from 32-site                          the Fig.3(b).  As shown in the Fig.3(c) withg= 0.7,
+exact diagonalization is presented in Fig.2(f).  It seems                       EP  order  parameterm                   p  extrapolates  to  a  finite  value
+that the plaquette VBS can extend to ∆ = 0 case with a                          with increasing system size, suggesting that the EP phase
+very narrow region.  Combined with DMRG results, we                             can exist stably in the thermodynamic limit.  While at
+will show that it is actually a finite-size effect.                             g=  0.82,m           p  extrapolates  to  zero  ,  which  means  that
+                                                                                plaquette  order  vanishes  in  the  AFM  phase.   Starting
+                                                                                from the dimer phase and increasingg.  A jump in the
+                                                                                md order parameter indicates a first-order phase transi-
+                                                                                tion between the dimer and plaquette phases. The phase
+                                                                                transition  points  are  observed  atg    c1   ≈0.602  for  4×4
+                                                                                                                                                      5
+
+andg       c1  ≈0.6225  for  6×6,  which  quite  differ  from  ED
+and theg≈0.675 reported in other literature.  This dis-
+crepancy  arises  because  improper  mean-field  treatment
+⟨S  i⟩S  j  of strong dimer bond  12(|↑↓⟩ − |↓↑⟩) used in the
+CMFT calculation, making the dimer state less compet-
+itive  in  energy  and  shifting  the  phase  transition  point
+to smallerg.  The calculations for the current 4×4 and
+6×6  clusters  already  show  a  trend  of  increasing  phase
+transition positions.  When the cluster size is sufficiently
+large, this transition point can be accurately determined.
+However, due to current computational constraints and
+convergence limitations, we are not yet able to accurately
+compute larger systems near this phase transition within
+the CMFT framework.
+  Further  increasinggleads  the  system  continuously
+transition to the AFM phase.  Importantly,  them      s  or-
+der  parameter  shows  little  size  dependence.   For  both
+4×4  and  6×6  systems,  the  phase  transition  point  is
+nearly  fixed  atg    c2  ≈0.8,  which  is  consistent  with  the
+range [0.78,0.826] found in other literature. The evidence
+therefore  strongly  supports  the  reliability  of  the  phase               FIG. 4.  (a-c) The order parameter as a function of g for E-
+transition  pointg  c2   identified  by  the  CMFT  method.                   type structures when ∆ = 0,0.5,2 in sizes of 4×4 and 6×6.
+Furthermore, the points where magnetic order vanishes,                        (d) Phase diagram obtained by collecting the phase bound-
+as reported in Refs. [53] and [54] for other lattices, are                    aries calculated via CMFT for ∆ = 0,0.5,1,1.5,2 in size of
+also consistent with findings from other numerical tech-                      6×6.  Solid symbols and solid lines represent first-order phase
+niques.                                                                       transitions,  while  open  symbols  and  dashed  lines  represent
+  For the results obtained from 8×8 F-type cluster, at                        continuous phase transitions.
+g=  0.66,  the  bond  energy  and  magnetic  order⟨S⟩of
+the  ground  state  in  the  plaquette  phase  are  shown  in                 nearest-neighbor diagonal interaction.
+Fig.3(d).  Compared to the E type of the same size, this                         Similar to the isotropic case of ∆ = 1, we employ clus-
+configuration exhibits weak tetramer pattern at full pla-                     ter mean-field theory (CMFT) with 4×4 and 6×6 E-type
+quette  centers  with  intradimer  or  diagonal  interaction.                 clusters to obtain the phase diagram of the XXZ model.
+In Fig.3(e), we present the order parameters for the F
+type cluster with 6×6 size (the full-plaquette state can-                     The  dimer,  plaquette,  and  AFM  order  parameters  as
+not be effectively detected in 4×4 cluster).  In the order                    functions ofgfor different ∆ are shown in Fig.4(a–c).
+parameter diagram, the non-zero range ofm    p is relatively                  Quantum phase transitions are identified by jumps in the
+narrow.  This implies that the FP phase is only compet-                       dimer order parameter and the emergence of AFM order.
+itive against the dimer and AFM phases within a very                          The fullg–∆ phase diagram, marked by yellow squares in
+narrow  parameter  range.   A  further  comparison  of  the                   Fig.4(d), reveals that the intermediate plaquette phase
+energies in their coexistence region obtained by CMFT                         narrows with increasing anisotropy, consistent with the
+reveals that the FP phase has a higher energy than the                        ED results.  At ∆ = 0, CMFT based on the 6×6 clus-
+EP phase. Consequently, the EP phase is the only stable                       ter suggests the persistence of an intermediate plaquette
+ground state in the thermodynamic limit.  The interme-                        phase; however, this is likely a finite-cluster effect, which
+diate phase is the EP phase.  In contrast, the FP phase                       will be further examined using DMRG calculations later.
+competes with the EP phase only in a narrow region near                       For  ∆>1,  the  intermediate  plaquette  phase  vanishes
+the dimer–EP phase transition. This is further supported                      between ∆ = 1.5 and 2.
+by the four nearly degenerate states observed in the ED
+spectra in Fig.2(a).
+  For  the  antiferromagnetic  (AFM)  phase  region,  we                               C.    DMRG calculations with cylinders
+study the magnetic order atg= 1, the extrapolation re-
+sults ofm   s for both E and F types are shown in Fig.3(f).                      As discussed in the previous sections, the finite-cluster
+The extrapolation values ofm    s for the E and F types are                   mean-field treatment of strong intradimer correlations in
+approximately 0.224 and 0.220, respectively.  These val-                      CMFT calculations is hard to get very accurate transi-
+ues are quite close as expected because the results of two                    tion points between the dimer and plaquette phases using
+type clusters should be equivalent in the thermodynamic                       small clusters.  To improve the accuracy of phase bound-
+limit.   Compared  to  the  magnetic  order  of  the  square                  aries,  we  performed  DMRG  calculations  onL     x  =  24,
+lattice, the magnitude of the magnetic order is reduced                       Ly  = 4,6 cylinders with open boundary alongxdirec-
+due to frustration effects induced by intradimer or next-                     tion and periodic boundary alongydirection.  As shown
+                                                                                                                                                                      6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 5.  (a) Logarithm of the absolute second derivative of the ground-state energy as a function ofg.  The inset shows the
+corresponding first derivative.  (b) Spin structure factor at ∆ = 0 andg= 0.65, exhibiting two magnetic Bragg peaks near
+(π, π).  (c) Evolution of the magnetic Bragg peak positions withg.  While theL                       y = 4 cylinder exhibits finite-size effects, the
+Ly  =  6  andL        y  =  8  results  atg=  0.68,0.685,0.69,0.7  (open  squares)  are  very  close,  indicating  weak  finite-L                                                    y  effects  for
+Ly = 6.  The inset shows a negligible plaquette VBS order.  (d) Real-space spin-spin correlation functions along thexdirection
+for various values ofg.  (e) Schematic representation of spin-spin correlations:  between the reference site and all other sites,
+and the nearest-neighbor spin-spin correlations (or bond energies).  The thickness of each bond represents the strength of the
+nearest-neighbor antiferromagnetic spin correlation.  Circles of different colors indicate whether the spin correlation between a
+lattice site and the reference point (the largest light-blue circle) is positive or negative, while the size of each circle reflects the
+magnitude of the correlation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 6.  (a) First derivative of the ground-state energy with respect togfor several values of ∆.  (b–g) Position of the magnetic
+Bragg peak in the static spin structure factor as a function ofg; the insets show the corresponding plaquette order parameter
+for each ∆.  (h) Phase diagram obtained using DMRG on anL     y = 6 cylinder.  Solid triangles mark first-order phase transitions
+,  identified from discontinuities in the first derivatived(E       0/N)/dg.  Open circles are determined by a finite plaquette order
+threshold; the remaining open square correspond to the magnetic Bragg peak reaching the M point.
+                                                                                                                                                        7
+
+in Fig.6(a), the first derivative of the ground-state energy                   tions exhibit oscillatory, quasi-power-law decay with an
+per site with respect togat different XXZ anisotropy ∆                         incommensurate  period.   In  contrast,  forg=  0.70  and
+exhibits a clear jump, signalling a first-order transition.                    g=  0.72,  the  decay  reverts  to  a  typical  form  of  N´eel
+The phase boundary of Dimer-EP obatained fromL      y = 4                      antiferromagnetic  order  in  thexyplane,  suggesting  an
+cylinder changes little compared withL        y = 6, soL    y = 6              additional transition from the ICM phase to the commen-
+cylinder is large enough to get the accurate phase bound-                      suratexy-AFM phase.  The point at which the magnetic
+ary between Dimer and EP phases.  For ∆ = 1 case, the                          Bragg  peak  reaches  theM=  (π, π)  point  in  Fig.5(c)
+phase transition point isg   c1  ≈0.67 which is very close to                  can be used to define the transitiong                  c2  ≈0.69 between
+the point obtained by other groups with different meth-                        the ICM phase andxy-AFM phase.  Atg= 0.70, which
+ods.                                                                           is close to this transition, the real-space correlations de-
+   For the EP-AFM phase boundary, CMFT calculations                            cay exponentially (due to finite size), while atg= 0.72
+in  previous  subsection  have  yielded  reliable  results  at                 (farther into the ordered phase) they show clear quasi-
+∆ = 1.  However, this is not the case for small ∆<1.                           long-range  algebraic  decay.   In  summary,  based  on  the
+Through careful verification using DMRG, we find that                          energy derivatives and the evolution of magnetic Bragg
+a  new  incommensurate  magnetic  (ICM)  phase  emerges                        peaks,  we establish three distinct phases for ∆  =  0:  a
+in  the  small-∆  region.   The  presence  of  incommensu-                     dimer phase, an ICM phase, and axy-AFM phase.  The
+rate magnetic order makes it difficult for small-size ED                       absence of a peak in the second energy derivative atg    c2
+and small-cluster CMFT to accurately capture this or-                          [Fig.5(a)] is likely due to finite-size effects that may mask
+der,  leading  to  incorrect  phase  boundaries.   Therefore,                  the incommensurate ordering.
+DMRG  calculation  with  long  cylinders  is  better  to  re-
+solve the phase diagram in the ∆<1 regime. we adopted                             Next we turn to the regime 0<∆<1.  Compared to
+an open boundary condition along thex-direction with a                         the ∆ = 0 case, the EP phase now competes directly with
+sufficiently longL        x = 24 for our simulations.                          the ICM phase, as evidenced in Fig.6(b–d).  Character-
+   Let us first consider the planar XX model at ∆ = 0.                         izing the transition between these phases ideally requires
+The first and second derivatives of the ground-state en-                       extrapolating  their  respective  order  parameters  to  the
+ergy, shown in Fig.6(a) and Fig.5(a), indicate a first-                        thermodynamic  limit.   However,  such  an  extrapolation
+order phase transition from the dimer phase to another                         is  challenging  because  DMRG  calculations  are  hard  to
+phase  at  a  critical  couplingg  c1   ≈0.625.   Beyond  this                 achieve well-converged results for cylinders withL        y ≥8.
+point, no clear signature of a further phase transition is                     In lieu of a full extrapolation, we adopt a practical cri-
+observed within the intervalg∈[0.63,0.72].  A natural                          terion:  a  plaquette  order  parameterm                   p  ≥5.0×10          −3
+question arises:  what are the phases wheng > g          c1 ?  Are             is taken as the threshold indicating the establishment of
+there EP phase, AFM phase, or something else? To iden-                         long-range plaquette order in the thermodynamic limit.
+tify these possible phases, we calculate the spin structureP                   Similar techniques have also been used to determine the
+factorS(q) =                     1Nij eiq(r        j−r    i)⟨S  iSj⟩atg= 0.65, shownmagnetic phase boundaries in other DMRG calculations
+in Fig.5(b).  Two bright magnetic Bragg peaks appear                           on  frustrated  spin  models  [67–71].   For  the  subsequent
+near  theM=  (π, π)  point.   Asgincreases,  the  posi-                        transition from the EP phase to thexy-AFM phase, we
+tion of these peaks shifts toward theMpoint,  as indi-                         continue to use the evolution of the magnetic Bragg peak,
+cated  by  the  red  curve  in  Fig.5(c).   In  the  inset,  the               identifying  the  transition  at  the  point  where  the  peak
+blue curve shows that the plaquette order parameter re-                        reaches theMpoint.  For ∆ = 0.25,0.5,0.75 shown in
+mains nearly zero.  These observations indicate that, af-                      Fig.6(b-d), applying these two criteria, we map out the
+ter the first-order transition, the system enters an ICM                       0<∆<1 phase boundaries obtained by DMRG, which
+phase.   To  visualize  the  order  more  directly,  Fig.5(e)                  are indicated by the light blue lines in Fig.6(h).
+displays the bond energy and the real-space spin corre-
+lation  between  each  site  and  a  reference  spin  (marked
+by the largest circle) located at the center of the cylin-                        For  the  regime  ∆≥1,  we  similarly  employ  the  pla-
+der.   The  nearest-neighbor  correlations  (bond  energies)                   quette  order  parameter  threshold  and  the  evolution  of
+around the center are uniform and aligned, showing no                          the magnetic Bragg peak to estimate the phase transi-
+signature of a plaquette order.  Furthermore, the magni-                       tion points.  As shown in Fig.6(f) and6(g), These two
+tude of the spin correlations (indicated by circle size) does                  criteria yield consistent estimates that are nearly iden-
+not decay monotonically with distance from the reference                       tical.   These  points  are  included  in  the  ∆≥1  phase
+point, a clear hallmark of ICM order. For a more quanti-                       diagram in Fig.6(h).  For ∆ = 1 shown in Fig.6(e), the
+tative analysis of the real-space spin correlations, we ex-                    magnetic Bragg peaks converge to theMpoint around
+amine their decay along the cylindrical axis (x-direction)                     g≈0.72, which is somewhat smaller than the phase tran-
+which is shown in Fig.5(d).  To capture long-distance                          sition point previously reported using various numerical
+behavior  while  minimizing  boundary  effects,  the  refer-                   methods (ranging from 0.77 to 0.828).  This discrepancy
+ence point is chosen two sites away from the left edge.                        suggests  that  finite-L           y  effects  remain  non-negligible  in
+The decay of spin correlations alongxis then plotted for                       our  DMRG  calculations  near  ∆  =  1,  where  quantum
+several values ofg.  Forg= 0.63,0.65,0.67, the correla-                        fluctuation is stronger compared to the XX limit.
+                                                                                                                                                      8
+
+                                                                              playing clear coplanar spiral characteristics with nearly
+                                                                              equal magnitudes (indicated in the figure) across the cen-
+                                                                              tral region, while their orientations vary continuously in
+                                                                              a common plane.  This structure arises from frustrated
+                                                                              antiferromagnetic interactions,  where neighboring spins
+                                                                              form  obtuse  angles,  preserving  their  antiferromagnetic
+                                                                              nature.   These  results  confirm  the  presence  of  a  copla-
+                                                                              nar  incommensurate  spiral  phase.   As  ∆  increases,  the
+                                                                              spiral  phase  competes  with  the  EP  phase.   The  phase
+                                                                              transition line between EP phase and spiral phase is dif-
+                                                                              ficult to characterize precisely with the currently acces-
+                                                                              sible  cylinder  widths  (L  y ≤6).   Similarly,  determining
+                                                                              the exact ∆ at which the spiral phase vanishes faces the
+                                                                              same limitation.   Our numerical data indicate that the
+                                                                              spiral phase vanishes at ∆≈0.72.
+
+
+                                                                                 In the intermediate regime 0.75<∆<1.25,  partic-
+                                                                              ularly near ∆ = 1, the phase boundaries determined by
+                                                                              DMRG-based on the threshold of the finite plaquette or-
+                                                                              der or the magnetic Bragg peak reaching the M point-are
+                                                                              smaller than those from other methods, which may be at-
+                                                                              tributed to finite-L           y effects.  However, the CMFT results
+                                                                              for the disappearance of thexy-AFM andz-AFM order
+                                                                              parameters appear reliable,  as they remain nearly con-
+FIG. 7.  (a) Phase diagram obtained from ED, CMFT, and                        sistent between 4×4 and 6×6 clusters.  For ∆≥1.25,
+DMRG  calculations,  with  results  represented  by  green,  or-              CMFT  seems  to  overestimate  thez-AFM  order,  while
+ange,  and  blue  lines,  respectively.   (b)  The  magnetic  order           ED  and  DMRG  yield  very  similar  results,  providing  a
+strength on each site obtained by CMFT using 12×4 cluster                     more  accurate  estimate  for  the  transition  from  the  EP
+at ∆ = 0.0,g= 0.65.  The magnitude ofxandycomponents                          phase to thez-AFM phase. As for the dimer-to-EP tran-
+of the arrows represent the magnetic order strength⟨S                    x⟩andsition,  DMRG  gives  the  most  reliable  phase  boundary.
+⟨S  y⟩of different sites, respectively.  And⟨S             z⟩are almost zero  Integrating all computational results and the preceding
+for all sites.                                                                discussion, we obtain a more robust ground-state phase
+                                                                              diagram for the Shastry-Sutherland XXZ model, shown
+                                                                              in Fig.1(b).
+        D.    Comparison between three methods
+
+  In order to better compare the results, the phase dia-                         In the range of 0.75<∆<1.25, the region bounded
+grams from all three computational methods are placed                         on the left by the light-blue line (derived from DMRG via
+together  for  a  side-by-side  comparison  which  is  shown                  the shift of the magnetic Bragg peak to theMpoint) and
+in Fig.7(a).  Across all results obtained from the three                      on the right by the orange line (marking the disappear-
+methods, the intermediate EP phase shrinks as one moves                       ance of AFM order from CMFT) may host either a quan-
+away from the isotropic ∆ = 1 case. However, the precise                      tum spin liquid (QSL) phase [24–26, 32, 33] or exhibit
+point at which the EP phase disappears varies slightly be-                    disorder-like behavior due to proximity to a deconfined
+tween the methods.  For small ∆, both 32-site ED and                          quantum critical point (or line) [22,25,27,29,35,42].
+finiteL×L-cluster CMFT fail to capture the ICM phase                          We have added a red gradient-shaded area to illustrate
+and thus cannot correctly identify the phase transitions                      this possible phase region in Fig.1(b).  Fully confirming
+in this regime.  In contrast, DMRG on long cylinders re-                      its presence would require substantial further efforts and
+liably identifies the EP, ICM, andxy-AFM phases and                           faces considerable challenges, such as performing careful
+their transitions.  According to DMRG, at ∆ = 0, there                        finite-size extrapolations of order parameters on signifi-
+is a direct first-order transition from the dimer phase to                    cantly larger systems.  We therefore leave the investiga-
+the ICM phase, followed by a transition to thexy-AFM                          tion  of  a  possible  QSL  phase  and  its  phase  region  un-
+phase.  To further confirm the coplanar spiral nature of                      der  XXZ  anisotropy  for  future  study.   In  addition,  the
+this  ICM  phase,  we  return  to  CMFT  calculations.   In-                  spin-liquid-like behaviors in RE2Be2GeO2 [39–42] could
+formed by the DMRG results,  we employ an elongated                           be due to its effective interaction parameters occupying a
+rectangular cluster ofL   x  = 12,L     y  = 4 atg= 0.65 for                  crucial regime. This may be near the spiral phase bound-
+our calculations.  As shown in Fig.7(b), the spin (mag-                       ary, within a possible QSL phase, or close to the decon-
+netic) order at each site is represented as a vector, dis-                    fined quantum critical point or line.
+                                                                                                                                                       9
+
+         IV.    SUMMARY AND DISCUSSION                                         merical  methods,  we  have  established  a  comprehensive
+                                                                               and  reliable  phase  diagram.   Our  phase  diagram  sup-
+                                                                               ports  the  conjecture  that  the  spin-liquid-like  behaviors
+                                                                               observed in RE2Be2GeO2 originate from the competition
+  In  this  work,  we  have  determined  the  ground-state                     between the EP, spiral, andxy-AFM phases near their
+phase  diagram  of  theS=1/2  XXZ  model  on  Shastry-                         boundaries.   This  understanding  offers  crucial  insights
+Sutherland lattice using a combination of exact diagonal-                      into  XXZ  anisotropy  in  the  Shastry-Sutherland  model
+ization (ED), cluster mean-field theory (CMFT) and den-                        and  provides  a  valuable  framework  for  interpreting  ex-
+sity matrix renormalization group (DMRG). Our numeri-                          periments on related materials.
+cal results reveal five distinct phases across the parameter
+space of anisotropy (∆) and coupling ratio (g=J/J      ′):                                        ACKNOWLEDGMENTS
+a dimer phase, a plaquette VBS phase, az-AFM phase,
+axy-AFM phase and especially a spiral phase.  CMFT
+calculations  on  both  E-  and  F-type  clusters  reconfirm                      This    project    is    supported    by    NSFC-12474248,
+that  the  intermediate  plaquette  phase  is  characterized                   NKRDPC-2022YFA1402802,   NSFC-92165204,   NSFC-
+by tetramerization within empty plaquettes, it is an EP                        12494591, Guangdong Basic and Applied Basic Research
+phase.  However,  this method fails to accurately locate                       Foundation  (Grant  No.     2023B1515120013),   Guang-
+the dimer-to-EP phase transition due to its inadequate                         dong   Provincial   Key   Laboratory   of   Magnetoelectric
+mean-field  treatment  of  strong  dimer  bonds.   We  thus                    Physics  and  Devices  (No.   2022B1212010008),  Guang-
+employed DMRG to precisely determine this first-order                          dong Fundamental Research Center for Magnetoelectric
+phase  boundary.   In  contrast,  the  other  transitions  ap-                 Physics  (Grant  No.2024B0303390001)  and  Guangdong
+pear to be continuous.  In the small ∆ regime,  we find                        Provincial Quantum Science Strategic Initiative (Grant
+and characterize a new spiral phase. Combined three nu-                        No.GDZX2401010).
+
+
+
+
+ [1]B. Sriram Shastry and B. Sutherland, Exact ground state                         SrCu2(BO3)2,Phys. Rev. Lett.113, 067201 (2014).
+     of a quantum mechanical antiferromagnet,Physica B+C                        [9]S.  Haravifard,  D.  Graf,  A.  E.  Feiguin,  C.  D.  Batista,
+     108, 1069 (1981).                                                              J.  C.  Lang,  D.  M.  Silevitch,  G.  Srajer,  B.  D.  Gaulin,
+ [2]H. Kageyama, K. Yoshimura, R. Stern, N. V. Mushnikov,                           H. A. Dabkowska, and T. F. Rosenbaum, Crystallization
+     K. Onizuka, M. Kato, K. Kosuge, C. P. Slichter, T. Goto,                       of spin superlattices with pressure and field in the layered
+     and  Y.  Ueda,  Exact  Dimer  Ground  State  and  Quan-                        magnet SrCu2(BO3)2,Nature Communications7, 11956
+     tized  Magnetization  Plateaus  in  the  Two-Dimensional                       (2016).
+     Spin  System  SrCu2(BO3)2, Phys.  Rev.  Lett.82,  3168                    [10]M.  E.  Zayed,  C.  R¨uegg,  J.  Larrea  J.,  A.  M.  L¨auchli,
+     (1999).                                                                        C.  Panagopoulos,   S.  S.  Saxena,   M.  Ellerby,   D.  F.
+ [3]S.   Miyahara   and   K.   Ueda,   Exact   Dimer   Ground                       McMorrow,  T.  Str¨assle,  S.  Klotz,  G.  Hamel,  R.  A.
+     State of the Two Dimensional Heisenberg Spin System                            Sadykov, V. Pomjakushin, M. Boehm, M. Jim´enez–Ruiz,
+     SrCu2(BO3)2,Phys. Rev. Lett.82, 3701 (1999).                                   A.   Schneidewind,   E.   Pomjakushina,   M.   Stingaciu,
+ [4]S.  Miyahara  and  K.  Ueda,  Theory  of  the  orthogonal                       K.   Conder,   and   H.   M.   Rønnow,   4-spin   plaquette
+     dimer Heisenberg spin model for SrCu2(BO3)2,Journal                            singlet   state   in   the   Shastry–Sutherland   compound
+     of Physics:  Condensed Matter15, R327 (2003).                                  SrCu2(BO3)2,Nature Physics13, 962 (2017).
+ [5]T. Waki, K. Arai, M. Takigawa, Y. Saiga, Y. Uwatoko,                       [11]J.  Guo,  G.  Sun,  B.  Zhao,  L.  Wang,  W.  Hong,  V.  A.
+     H. Kageyama, and Y. Ueda, A Novel Ordered Phase in                             Sidorov, N. Ma, Q. Wu, S. Li, Z. Y. Meng, A. W. Sand-
+     SrCu2(BO3)2 under High Pressure,Journal of the Phys-                           vik, and L. Sun, Quantum Phases of SrCu2(BO3)2 from
+     ical Society of Japan76, 073710 (2007).                                        High-Pressure Thermodynamics,Phys. Rev. Lett.124,
+ [6]S.  Haravifard,   A.  Banerjee,   J.  C.  Lang,   G.  Srajer,                   206602 (2020).
+     D.  M.  Silevitch,  B.  D.  Gaulin,  H.  A.  Dabkowska,  and              [12]J.  L.  Jim´enez,  S.  P.  G.  Crone,  E.  Fogh,  M.  E.  Za-
+     T. F. Rosenbaum, Continuous and discontinuous quan-                            yed,  R.  Lortz,  E.  Pomjakushina,  K.  Conder,  A.  M.
+     tum phase transitions in a model two-dimensional mag-                          L¨auchli, L. Weber, S. Wessel, A. Honecker, B. Normand,
+     net,Proceedings  of  the  National  Academy  of  Sciences                      C.  R¨uegg,  P.  Corboz,  H.  M.  Rønnow,  and  F.  Mila,  A
+     109, 2286 (2012).                                                              quantum magnetic analogue to the critical point of wa-
+ [7]M.   Takigawa,   M.   Horvati´c,   T.   Waki,   S.   Kr¨amer,                   ter,Nature592, 370 (2021).
+     C. Berthier, F. L´evy-Bertrand, I. Sheikin, H. Kageyama,                  [13]Z.  Shi,   S.  Dissanayake,   P.  Corboz,   W.  Steinhardt,
+     Y. Ueda, and F. Mila, Incomplete Devil’s Staircase in the                      D.  Graf,  D.  M.  Silevitch,  H.  A.  Dabkowska,  T.  F.
+     Magnetization Curve of SrCu2(BO3)2,Phys. Rev. Lett.                            Rosenbaum,  F.  Mila,  and  S.  Haravifard,  Discovery  of
+     110, 067210 (2013).                                                            quantum  phases  in  the  Shastry-Sutherland  compound
+ [8]M. E. Zayed, C. R¨uegg, T. Str¨assle, U. Stuhr, B. Roessli,                     SrCu2(BO3)2 under extreme conditions of field and pres-
+     M. Ay, J. Mesot, P. Link, E. Pomjakushina, M. Stingaciu,                       sure,Nature Communications13, 2301 (2022).
+     K.  Conder,  and  H.  M.  Rønnow,  Correlated  Decay  of                  [14]Y.  Cui,  L.  Liu,  H.  Lin,  K.-H.  Wu,  W.  Hong,  X.  Liu,
+     Triplet Excitations in the Shastry-Sutherland Compound                         C. Li, Z. Hu, N. Xi, S. Li, R. Yu, A. W. Sandvik, and
+                                                                                                                                                            10
+
+     W. Yu, Proximate deconfined quantum critical point in                              tum criticality,arXiv2411, 00301 (2024).
+     SrCu2(BO3)2,Science380, adc9487 (2023).                                      [32]L.  L.  Viteritti,  R.  Rende,  A.  Parola,  S.  Goldt,  and
+[15]J.  Guo,  P.  Wang,  C.  Huang,  B.-B.  Chen,  W.  Hong,                            F. Becca, Transformer wave function for two dimensional
+     S. Cai, J. Zhao, J. Han, X. Chen, Y. Zhou, S. Li, Q. Wu,                           frustrated magnets:  Emergence of a spin-liquid phase in
+     Z.  Y.  Meng,  and  L.  Sun,  Deconfined  quantum  critical                        the Shastry-Sutherland model,Phys. Rev. B111, 134411
+     point lost in pressurized SrCu2(BO3)2,Communications                               (2025).
+     Physics8, 75 (2025).                                                         [33]P. Corboz, Y. Zhang, B. Ponsioen, and F. Mila, Quan-
+[16]A. Koga and N. Kawakami, Quantum Phase Transitions                                  tum spin liquid phase in the Shastry-Sutherland model
+     in the Shastry-Sutherland Model for SrCu2(BO3)2,Phys.                              revealed  by  high-precision  infinite  projected  entangled-
+     Rev. Lett.84, 4461 (2000).                                                         pair states,arXiv2502, 14091 (2025).
+[17]C.  H.  Chung,  J.  B.  Marston,  and  S.  Sachdev,  Quan-                    [34]T. Senthil, A. Vishwanath, L. Balents, S. Sachdev, and
+     tum phases of the Shastry-Sutherland antiferromagnet:                              M.  P.  A.  Fisher,  Deconfined  Quantum  Critical  Points,
+     Application to SrCu2(BO3)2, Phys. Rev. B64, 134407                                 Science303, 1490 (2004).
+     (2001).                                                                      [35]Y. Cui, R. Yu, and W. Yu, Deconfined Quantum Critical
+[18]A.  L¨auchli,  S.  Wessel,  and  M.  Sigrist,  Phase  diagram                       Point: A Review of Progress,Chinese Physics Letters42,
+     of  the  quadrumerized  Shastry-Sutherland  model,Phys.                            047503 (2025).
+     Rev. B66, 014401 (2002).                                                     [36]L.  Chen  and  Z.-X.  Liu,  Deconfined  Gapless  phases
+[19]J. Lou, T. Suzuki, K. Harada, and N. Kawashima, Study                               and criticalities in Shastry-Sutherland Antiferromagnet,
+     of the Shastry Sutherland Model Using Multi-scale En-                              arXiv2503, 20122 (2025).
+     tanglement  Renormalization  Ansatz, arXiv1212,  1999                        [37]Y.  Cui,   K.  Du,   Z.  Wu,   S.  Li,   P.  Yang,   Y.  Chen,
+     (2012).                                                                            X.  Xu,  H.  Chen,  C.  Li,  J.  Liu,  B.  Wang,  W.  Hong,
+[20]P.  Corboz  and  F.  Mila,  Tensor  network  study  of  the                         S.  Li,  Z.  Xie,  J.  Cheng,   R.  Yu,  and  W.  Yu,  Two
+     Shastry-Sutherland model in zero magnetic field,Phys.                              plaquette-singlet phases in the Shastry-Sutherland com-
+     Rev. B87, 115144 (2013).                                                           pound SrCu2(BO3)2,arXiv2411, 00302 (2024).
+[21]Z. Zhang and P. Sengupta, Generalized plaquette state                         [38]M. Moliner, I. Rousochatzakis, and F. Mila, Emergence
+     in the anisotropic Shastry-Sutherland model,Phys. Rev.                             of  one-dimensional  physics  from  the  distorted  Shastry-
+     B92, 094440 (2015).                                                                Sutherland lattice,Phys. Rev. B83, 140414 (2011).
+[22]J. Y. Lee, Y.-Z. You, S. Sachdev, and A. Vishwanath, Sig-                     [39]M.  Ashtar,  Y.  Bai,  L.  Xu,  Z.  Wan,  Z.  Wei,  Y.  Liu,
+     natures of a Deconfined Phase Transition on the Shastry-                           M.  A.  Marwat,  and  Z.  Tian,  Structure  and  Magnetic
+     Sutherland  Lattice:   Applications  to  Quantum  Critical                         Properties  of  Melilite-Type  Compounds  RE2Be2GeO7
+     SrCu2(BO3)2,Phys. Rev. X9, 041037 (2019).                                          (RE = Pr, Nd, Gd–Yb) with Rare-Earth Ions on Shas-
+[23]C. Boos, S. P. G. Crone, I. A. Niesen, P. Corboz, K. P.                             try–Sutherland  Lattice,Inorganic  Chemistry60,  3626
+     Schmidt, and F. Mila, Competition between intermediate                             (2021), pMID: 33635649.
+     plaquette phases in SrCu2(BO3)2 under pressure,Phys.                         [40]M. Pula, S. Sharma, J. Gautreau, S. K. P., A. Kanigel,
+     Rev. B100, 140413 (2019).                                                          M.  D.  Frontzek,  T.  N.  Dolling,  L.  Clark,  S.  Dunsiger,
+[24]A. Kele¸s and E. Zhao, Rise and fall of plaquette order                             A.  Ghara,  and  G.  M.  Luke,  Candidate  for  a  quantum
+     in  the  Shastry-Sutherland  magnet  revealed  by  pseud-                          spin liquid ground state in the Shastry-Sutherland lattice
+     ofermion  functional  renormalization  group,Phys.  Rev.                           material Yb2Be2GeO7,Phys. Rev. B110, 014412 (2024).
+     B105, L041115 (2022).                                                        [41]A.  Liu,  J.  Zhou,  L.  Wang,  Y.  Cao,  F.  Song,  Y.  Han,
+[25]J.  Yang,  A.  W.  Sandvik,  and  L.  Wang,  Quantum  crit-                         J.  Li,  W.  Tong,  Z.  Xia,  Z.  Ouyang,  J.  Zhao,  H.  Guo,
+     icality and spin liquid phase in the Shastry-Sutherland                            and Z. Tian, Large magnetocaloric effect in the Shastry-
+     model,Phys. Rev. B105, L060409 (2022).                                             Sutherland  lattice  compound  Yb2Be2GeO7  with  spin-
+[26]L. Wang, Y. Zhang, and A. W. Sandvik, Quantum Spin                                  disordered  ground  state,Phys.  Rev.  B110,  144445
+     Liquid Phase in the Shastry–Sutherland Model Detected                              (2024).
+     by an Improved Level Spectroscopic Method,Chin. Phys.                        [42]N. Li, A. Brassington, M. F. Shu, Y. Y. Wang, H. Liang,
+     Lett.39, 077502 (2022).                                                            Q. J. Li, X. Zhao, P. J. Baker, H. Kikuchi, T. Masuda,
+[27]N. Xi, H. Chen, Z. Y. Xie, and R. Yu, Plaquette valence                             G. Duan,  C. Liu,  H. Wang,  W. Xie,  R. Zhong,  J. Ma,
+     bond solid to antiferromagnet transition and deconfined                            R.  Yu,  H.  D.  Zhou,  and  X.  F.  Sun,  Spinons  in  a  new
+     quantum critical point of the Shastry-Sutherland model,                            Shastry-Sutherland  lattice  magnet  Pr2Ga2BeO7, arXiv
+     Phys. Rev. B107, L220408 (2023).                                                   2405, 13628 (2024).
+[28]J.  Wang,  H.  Li,  N.  Xi,  Y.  Gao,  Q.-B.  Yan,  W.  Li,                   [43]S.   Flury,   W.   J.   Simeth,   D.   R.   Yahne,   M.   Islam,
+     and   G.   Su,   Plaquette   Singlet   Transition,   Magnetic                      I.  Plokhikh,  D.  G.  Mazzone,  E.  D.  Bauer,  P.  F.  S.
+     Barocaloric Effect, and Spin Supersolidity in the Shastry-                         Rosa,   R.  Sibille,   O.  Zaharko,   D.  J.  Gawryluk,  and
+     Sutherland Model,Phys. Rev. Lett.131, 116702 (2023).                               M.  Janoschek,  Magnetic  phase  diagram  of  ErB4  as  ex-
+[29]W.-Y.  Liu,  X.-T.  Zhang,  Z.  Wang,  S.-S.  Gong,  W.-Q.                          plored by neutron scattering,Phys. Rev. B112, 224441
+     Chen, and Z.-C. Gu, Quantum Criticality with Emergent                              (2025).
+     Symmetry  in  the  Extended  Shastry-Sutherland  Model,                      [44]A.  Liu,  F.  Song,  Y.  Cao,  H.  Ge,  H.  Bu,  J.  Zhou,
+     Phys. Rev. Lett.133, 026502 (2024).                                                Y.  Qin,  Q.  Zeng,  J.  Li,  L.  Ling,  W.  Tong,  J.  Sheng,
+[30]G.  Duan,  R.  Yu,  and  C.  Liu,  Theory  of  magnetism                            M.  Yang,  L.  Wu,  H.  Guo,  and  Z.  Tian,  Distinct  mag-
+     for rare-earth magnets on the Shastry-Sutherland lattice                           netic ground states in Shastry-Sutherland lattice mate-
+     with non-Kramers ions,Phys. Rev. B110, 214410 (2024).                              rials:  Pr2Be2GeO7  versus  Nd2Be2GeO7, Phys.  Rev.  B
+[31]H. Chen,  G. Duan,  C. Liu,  Y. Cui,  W. Yu,  Z. Y. Xie,                            109, 184413 (2024).
+     and  R.  Yu,  Spin  excitations  of  the  Shastry-Sutherland                 [45]C.  Liu,  G.  Duan,  and  R.  Yu,  Theory  of  rare-earth
+     model – altermagnetism and proximate deconfined quan-                              Kramers magnets on a shastry-sutherland lattice:  dimer
+                                                                                                                                                            11
+
+     phases in the presence of strong spin-orbit coupling,npj                           121, 107202 (2018).
+     Quantum Materials  (2025).                                                   [59]Y. Nomura and M. Imada, Dirac-Type Nodal Spin Liquid
+[46]A. Du, Y. Y¨u, and H. Liu, Expanded Bethe–Peierls ap-                               Revealed by Refined Quantum Many-Body Solver Using
+     proximation for the Blume–Capel model,Physica A: Sta-                              Neural-Network Wave Function, Correlation Ratio, and
+     tistical Mechanics and its Applications320, 387 (2003).                            Level Spectroscopy,Phys. Rev. X11, 031034 (2021).
+[47]S. R. Hassan, L. de Medici, and A.-M. S. Tremblay, Su-                        [60]T. Tang, B. Moritz, and T. P. Devereaux, Spectra of a
+                                                          ′−Vmodel  of                  gapped quantum spin liquid with a strong chiral excita-
+     persolidity,  entropy,  and  frustration:t−t
+     hard-core bosons on the triangular lattice,Phys. Rev. B                            tion on the triangular lattice,Phys. Rev. B106, 064428
+     76, 144420 (2007).                                                                 (2022).
+[48]D. Yamamoto, Correlated cluster mean-field theory for                         [61]M.  Wu,  S.-S.  Gong,  D.-X.  Yao,  and  H.-Q.  Wu,  Phase
+     spin systems,Phys. Rev. B79, 144427 (2009).                                        diagram and magnetic excitations ofJ    1−−J    3 Heisenberg
+[49]D.  Yamamoto,  I.  Danshita,  and  C.  A.  R.  S´a  de  Melo,                       model on the square lattice,Phys. Rev. B106, 125129
+     Dipolar bosons in triangular optical lattices:  Quantum                            (2022).
+     phase transitions and anomalous hysteresis,Phys. Rev.                        [62]A.  Wietek,  S.  Capponi,  and  A.  M.  L¨auchli,  Quantum
+     A85, 021601 (2012).                                                                Electrodynamics in 2 + 1 Dimensions as the Organizing
+[50]D.  Yamamoto,  A.  Masaki,  and  I.  Danshita,  Quantum                             Principle of a Triangular Lattice Antiferromagnet,Phys.
+     phases  of  hardcore  bosons  with  long-range  interactions                       Rev. X14, 021010 (2024).
+     on a square lattice,Phys. Rev. B86, 054516 (2012).                           [63]Y. Zheng, M. Wu, D.-X. Yao, and H.-Q. Wu, Exact di-
+[51]D.-S. L¨uhmann, Cluster Gutzwiller method for bosonic                               agonalization study of the triangular Heisenberg model
+     lattice systems,Phys. Rev. A87, 043619 (2013).                                     with  four-spin  ring-exchange  interaction,Phys.  Rev.  B
+[52]D. Yamamoto, T. Ozaki, C. A. R. S´a de Melo, and I. Dan-                            111, 195145 (2025).
+     shita,  First-order  phase  transition  and  anomalous  hys-                 [64]P. W. Anderson, An Approximate Quantum Theory of
+     teresis of Bose gases in optical lattices,Phys. Rev. A88,                          the Antiferromagnetic Ground State,Phys. Rev.86, 694
+     033624 (2013).                                                                     (1952).
+[53]Y.-Z.  Ren,  N.-H.  Tong,  and  X.-C.  Xie,  Cluster  mean-                   [65]C. Lhuillier, Frustrated Quantum Magnets,arXiv0502,
+     field theory study of J1-J2 Heisenberg model on a square                           464 (2005).
+     lattice,Journal of Physics: Condensed Matter26, 115601                       [66]A. Wietek, M. Schuler, and A. M. L¨auchli, Studying Con-
+     (2014).                                                                            tinuous  Symmetry  Breaking  using  Energy  Level  Spec-
+[54]D. Yamamoto, G. Marmorini, and I. Danshita, Quantum                                 troscopy,arXiv1704, 08622 (2017).
+     Phase Diagram of the Triangular-LatticeXXZModel in                           [67]Z. Zhu and S. R. White, Spin liquid phase of theS=
+     a Magnetic Field,Phys. Rev. Lett.112, 127203 (2014).                               1
+                                                                                        2  J1 −J    2  Heisenberg  model  on  the  triangular  lattice,
+[55]M. Fishman, S. R. White, and E. M. Stoudenmire, The                                 Phys. Rev. B92, 041105 (2015).
+     ITensor  Software  Library  for  Tensor  Network  Calcula-                   [68]Z. Zhu, P. A. Maksimov, S. R. White, and A. L. Cherny-
+     tions,SciPost Phys. Codebases , 4 (2022).                                          shev,  Disorder-Induced  Mimicry  of  a  Spin  Liquid  in
+[56]M. Fishman, S. R. White, and E. M. Stoudenmire, Code-                               YbMgGaO4,Phys. Rev. Lett.119, 157201 (2017).
+     base release 0.3 for ITensor,SciPost Phys. Codebases , 4                     [69]Z. Zhu, P. A. Maksimov, S. R. White, and A. L. Cherny-
+     (2022).                                                                            shev, Topography of Spin Liquids on a Triangular Lat-
+[57]H. Suwa, A. Sen, and A. W. Sandvik, Level spectroscopy                              tice,Phys. Rev. Lett., 207203 (2018).120
+     in a two-dimensional quantum magnet: Linearly dispers-                       [70]P. A. Maksimov, Z. Zhu, S. R. White, and A. L. Cherny-
+     ing  spinons  at  the  deconfined  quantum  critical  point,                       shev,  Anisotropic-Exchange  Magnets  on  a  Triangular
+     Phys. Rev. B94, 144416 (2016).                                                     Lattice:  Spin Waves, Accidental Degeneracies, and Dual
+[58]L.  Wang  and  A.  W.  Sandvik,  Critical  Level  Crossings                         Spin Liquids,Phys. Rev. X9, 021017 (2019).
+     and Gapless Spin Liquid in the Square-Lattice Spin-1/2                       [71]C. A. Gallegos, S. Jiang, S. R. White, and A. L. Cherny-
+     J1 −J    2  Heisenberg  Antiferromagnet,Phys.  Rev.  Lett.                         shev, Phase Diagram of the Easy-Axis Triangular-Lattice
+                                                                                        J1−J    2 Model,Phys. Rev. Lett.134, 196702 (2025).

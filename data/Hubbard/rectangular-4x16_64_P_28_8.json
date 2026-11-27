@@ -2052,6 +2052,50 @@
           "pass": "passes/code/code-links-2026-11-26.json"
         }
       }
+    },
+    {
+      "energy": -48.6272,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 56,
+      "einf": 98,
+      "v_score": null,
+      "method": "Deep BF (embedding dimension 64)",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Neural Network Backflow with Low-Rank Multi-Determinant Updates, arXiv, arXiv:2609.26544",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2609.26544 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "−0.7598",
+        "note": "Sec. III.1 text: 4×16 'Deep BF model achieves an energy of −0.7598 per site' | Hubbard Eq. 1 printed; periodic in both directions, U/t=8, 1/8 doping (Nf=28 per spin on 64 sites assumes N_up=N_down); per site in t.",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -48.7808,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 56,
+      "einf": 98,
+      "v_score": null,
+      "method": "Deep BF with one Lanczos step",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Neural Network Backflow with Low-Rank Multi-Determinant Updates, arXiv, arXiv:2609.26544",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2609.26544 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "−0.7622",
+        "note": "Sec. III.1 text: 4×16 'Deep BF Lanczos finishes at −0.7622 per site' | Same as Deep BF 4x16 row: periodic, U/t=8, 1/8 doping, per site in t.",
+        "secondary_of": null
+      }
     }
   ],
   "coverage": [
@@ -2130,15 +2174,10 @@
     },
     {
       "checked_on": "2026-11-26",
-      "method": "citation screen of kbgap-existing: citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
-      "screened": [
-        "arXiv:2611.26604",
-        "arXiv:2611.16430",
-        "arXiv:2506.08329",
-        "arXiv:2602.02665"
-      ],
-      "found": 1,
-      "note": "4 citing works, 4 on arXiv, 4 fetched; 4 read in full, 0 excluded by a text filter (no energy to four decimals, or no QMBL model named). Energies from: arXiv:2611.26604."
+      "method": "citation screen of the seed papers of the Hubbard-square instances, restricted to citing works dated 2024 or later whose text names the model at least 3 times: citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
+      "screened_count": 26,
+      "found": 6,
+      "note": "53 citing works, 53 on arXiv, 53 fetched; 26 read in full, 27 excluded by a text filter (no energy to four decimals, or no QMBL model named). Energies from: arXiv:2507.10705, arXiv:2604.25775, arXiv:2610.30321, arXiv:2611.04333, arXiv:2611.26604, arXiv:2606.00924."
     }
   ]
 }

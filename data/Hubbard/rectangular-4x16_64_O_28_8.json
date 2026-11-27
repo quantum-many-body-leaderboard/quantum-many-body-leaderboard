@@ -1090,6 +1090,58 @@
           "source_entry": "RP2-heg3d-hubbard-tv-heisenberg#6 (qmbl-verify 2026-11-10b)"
         }
       }
+    },
+    {
+      "energy": -43.6544,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 56,
+      "einf": 98,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "tensor BF",
+      "method_detail": "1 Lanczos step",
+      "method_as_published": "Tensor-Backflow (E_p=1, one Lanczos step)",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Investigating the Fermi-Hubbard model by the tensor-backflow method, Physical review. B./Physical review. B, arXiv:2507.01856",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2507.01856 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; adversarial re-read: confirmed",
+        "reported_as": "-0.6821",
+        "note": "Table 1, row 4x16 OBC, n=0.875 U=8, column E_{p=1}. Table 3 relative errors vs fPEPS (1.3e-3 all-site, 3.6e-3 NN) suggest the 64-site OBC entries of Table 1 are all-site backflow, but the table does not say. | 4x16 OBC printed; n=0.875 -> Nf 28 per spin; t'=0 from caption; per-site not printed in words (held).",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -43.5008,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 56,
+      "einf": 98,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "tensor BF",
+      "method_detail": "",
+      "method_as_published": "Tensor-Backflow (E_p=0, no Lanczos step)",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Investigating the Fermi-Hubbard model by the tensor-backflow method, Physical review. B./Physical review. B, arXiv:2507.01856",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2507.01856 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; adversarial re-read: confirmed",
+        "reported_as": "-0.6797",
+        "note": "Table 1, row 4x16 OBC, column E_{p=0} | As for E_p=1 row (held).",
+        "secondary_of": null
+      }
     }
   ],
   "coverage": [
@@ -1130,18 +1182,6 @@
       ],
       "found": 0,
       "note": "Only papers whose tables matched the instance by size were read; not a citation screen."
-    },
-    {
-      "checked_on": "2026-11-26",
-      "method": "citation screen of kbgap-existing: citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
-      "screened": [
-        "arXiv:2611.26604",
-        "arXiv:2611.16430",
-        "arXiv:2506.08329",
-        "arXiv:2602.02665"
-      ],
-      "found": 0,
-      "note": "4 citing works, 4 on arXiv, 4 fetched; 4 read in full, 0 excluded by a text filter (no energy to four decimals, or no QMBL model named)."
     }
   ]
 }

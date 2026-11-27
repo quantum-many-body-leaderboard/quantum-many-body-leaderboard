@@ -564,6 +564,59 @@
         "note": "Supplemental Material p. 1, same sentence, the extended 3rd n.n. [0, 0] SL (the main text, page 4: 'the 3rd NN uniform RVB SL with optimized χ2 and χ′3s'); journal Supplemental Material prints the same sentence; sources/1105.0341.txt line 318; version read: Phys. Rev. B 84, 020407(R) publisher PDF (2026-11-16) and its Supplemental Material (2026-11-18), values identical to the arXiv text | H = J sum_<ij> S_i.S_j with spin-1/2 operators, nearest neighbours only; energies printed as E/J per site, the S.S convention per site (RULES.md 5). The spin Hamiltonian is periodic; the mixed periodic-antiperiodic boundary conditions are those of the fermionic mean-field state before projection. Plausibility: every value lies above the instance's best variational energy, -0.432519 per site (1-LS VMC, arXiv:1311.5038).",
         "secondary_of": null
       }
+    },
+    {
+      "energy": -753.084864,
+      "sigma": 0.003456,
+      "energy_variance": null,
+      "dof": 432,
+      "einf": 0,
+      "v_score": null,
+      "method": "ViT (transformer) nl=8, h=12, d=72, time-reversal symmetric, C6v A1 projected",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Gapless Nature of Spin Liquid in the $S=1/2$ Kagome Heisenberg Antiferromagnet with Neural-Network Quantum States, arXiv:2611.18840",
+      "peer_reviewed": false,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2611.18840 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; adversarial re-read: confirmed",
+        "reported_as": "−0.435813(2)",
+        "note": "Table 1, L=12 row | per site S.S, J=1, N=432, fully periodic torus | variance reported as 0.00411, not stored: convention not verified",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -740.600064,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 432,
+      "einf": 0,
+      "v_score": null,
+      "method": "fermionic RVB (Gutzwiller-projected) variational state, SR optimisation",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Strong relevance of zinc impurities in spin- 12 kagome quantum antiferromagnets: A variational study, Physical review. B./Physical review. B, arXiv:2309.04363",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2309.04363 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "≈−185.15 (total, J=1; E_pure)",
+        "note": "Sec. IV.1: 'the pure system (which is Epure≈−185.15)'. Value/432 = -0.42859, consistent with the quoted U(1) Dirac energy -0.4286 per site from Ran et al. Whether the pure value is own or taken from [13] is not fully explicit. | total in J, 12x12x3 torus = 432 sites; the doped system has 430 sites, so only E_pure maps to the instance",
+        "secondary_of": null
+      }
+    }
+  ],
+  "coverage": [
+    {
+      "checked_on": "2026-11-26",
+      "method": "citation screen of the seed papers of the Heisenberg-kagome instances, restricted to citing works dated 2024 or later whose text names the model at least 3 times: citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
+      "screened_count": 66,
+      "found": 2,
+      "note": "137 citing works, 137 on arXiv, 137 fetched; 66 read in full, 71 excluded by a text filter (no energy to four decimals, or no QMBL model named). Energies from: arXiv:2611.18840, arXiv:2309.04363."
     }
   ]
 }

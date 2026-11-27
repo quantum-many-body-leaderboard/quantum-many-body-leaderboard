@@ -62,10 +62,11 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best approximate | -1.489(5) | NLCE [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
 | honeycomb 7x7 (98 sites) | best variational | -0.5421(4) | VMC (LCN) [Fu et al. (2022)](https://doi.org/10.48550/arxiv.2206.07370) |  |
 | kagome, infinite lattice | best extrapolated | -0.4386(5) | DMRG [Depenbrock et al. (2012)](https://doi.org/10.48550/arxiv.1205.4858) |  |
-| kagome 10x10 (300 sites) | best variational | -0.435472(5) | VMC (KagomeResNet) [Sun et al. (2026)](https://doi.org/10.48550/arxiv.2611.05174) |  |
-| kagome 12x12 (432 sites) | best variational | -0.432519(1) | VMC (Gutzwiller) [Iqbal et al. (2014)](https://doi.org/10.1103/physrevb.89.020407) |  |
+| kagome 10x10 (300 sites) | best variational | -0.435947(3) | ViT (transformer) nl=8, h=12, d=72... [Raikos et al. (2026)](https://doi.org/10.48550/arxiv.2611.18840) |  |
+|  | best extrapolated | -0.4384(3) | ViT (transformer) nl=4,6,8 layers, linear... [Raikos et al. (2026)](https://doi.org/10.48550/arxiv.2611.18840) |  |
+| kagome 12x12 (432 sites) | best variational | -0.435813(2) | ViT (transformer) nl=8, h=12, d=72... [Raikos et al. (2026)](https://doi.org/10.48550/arxiv.2611.18840) |  |
 |  | best extrapolated | -0.43652(4) | VMC (Gutzwiller) [Iqbal et al. (2014)](https://doi.org/10.1103/physrevb.89.020407) |  |
-| kagome 16x16 (768 sites) | best variational | -0.4287204(7) | VMC (Gutzwiller) [Iqbal et al. (2018)](https://doi.org/10.1103/physrevb.97.115127) |  |
+| kagome 16x16 (768 sites) | best variational | -0.435210(2) | ViT (transformer) nl=8, h=12, d=72... [Raikos et al. (2026)](https://doi.org/10.48550/arxiv.2611.18840) |  |
 | kagome 18x18 (972 sites) | best variational | -0.428737(1) | VMC (Gutzwiller) [Zhang & Li (2020)](https://doi.org/10.1103/physrevb.102.195106) |  |
 | kagome 20x20 (1200 sites) | best variational | -0.428718(4) | VMC (Gutzwiller) [Iqbal et al. (2018)](https://doi.org/10.1103/physrevb.97.115127) |  |
 | kagome-24, 24 sites | exact | -0.4412486 | ED [Läuchli et al. (2011)](https://doi.org/10.48550/arxiv.1103.1159) |  |
@@ -74,23 +75,23 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | kagome-2r3x2r3-4x4, 576 sites | best variational | -0.42872(1) | VMC (Gutzwiller) [Iqbal et al. (2011)](https://doi.org/10.1103/physrevb.83.100404) |  |
 | kagome 2x2 (12 sites) | exact | -0.4537396 | ED [Läuchli et al. (2011)](https://doi.org/10.48550/arxiv.1103.1159) |  |
 | kagome 2x3 (18 sites) | exact | -0.4471262 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/kagome-2x3_18_P/ed_netket.sh) |
-|  | best variational | -0.4471262 (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/kagome-2x3_18_P/dmrg.sh) |
+|  | best variational | -0.5744444 &#9675; (−1.3e-1) | SOCP rounding (Algorithm 1) [Huber et al. (2024)](https://doi.org/10.48550/arxiv.2411.04120) |  |
 | kagome-30, 30 sites | exact | -0.4384773 | ED [Läuchli et al. (2011)](https://doi.org/10.48550/arxiv.1103.1159) |  |
 | kagome-36a, 36 sites | exact | -0.4385521 | ED [Läuchli et al. (2011)](https://doi.org/10.48550/arxiv.1103.1159) |  |
 | kagome-36b, 36 sites | exact | -0.4390813 | ED [Läuchli et al. (2011)](https://doi.org/10.48550/arxiv.1103.1159) |  |
 | kagome-36c, 36 sites | exact | -0.4392871 | ED [Läuchli et al. (2011)](https://doi.org/10.48550/arxiv.1103.1159) |  |
 | kagome-36d, 36 sites | exact | -0.4383765 | ED [Läuchli et al. (2011)](https://doi.org/10.48550/arxiv.1103.1159) |  |
-|  | best variational | -0.434(1) (+4.4e-3) | VMC (GNN) [Kochkov et al. (2021)](https://doi.org/10.48550/arxiv.2110.06390) |  |
+|  | best variational | -0.4367(4) (+1.7e-3) | VMC (LCN) [Fu et al. (2022)](https://doi.org/10.48550/arxiv.2206.07370) |  |
 | kagome-42a, 42 sites | exact | -0.437999 | ED [Läuchli et al. (2011)](https://doi.org/10.48550/arxiv.1103.1159) |  |
 | kagome-42b, 42 sites | exact | -0.4381426 | ED [Läuchli et al. (2011)](https://doi.org/10.48550/arxiv.1103.1159) |  |
 | kagome 4x4 (48 sites) | exact | -0.4387039 | ED [Wietek & Läuchli (2018)](https://doi.org/10.1103/physreve.98.033309) |  |
-|  | best variational | -0.4381 &#9675; (+6.0e-4) | DMRG [Iqbal et al. (2013)](https://doi.org/10.1103/physrevb.87.060405) |  |
+|  | best variational | -0.57 &#9675; (−1.3e-1) | SOCP rounding (Algorithm 1) [Huber et al. (2024)](https://doi.org/10.48550/arxiv.2411.04120) |  |
 |  | best projected | -0.436942(2) (+1.8e-3) | FN-GFMC (U(1) Dirac spin liquid) [Iqbal et al. (2013)](https://doi.org/10.1103/physrevb.87.060405) |  |
-|  | best extrapolated | -0.4383(2) (+4.0e-4) | DMRG [Depenbrock et al. (2012)](https://doi.org/10.48550/arxiv.1205.4858) |  |
-| kagome 6x6 (108 sites) | best variational | -0.436760(5) | VMC (KagomeResNet) [Sun et al. (2026)](https://doi.org/10.48550/arxiv.2611.05174) |  |
+|  | best extrapolated | -0.4386(2) (+5.4e-5) | ViT (transformer) nl=4,6,8 layers, linear... [Raikos et al. (2026)](https://doi.org/10.48550/arxiv.2611.18840) |  |
+| kagome 6x6 (108 sites) | best variational | -0.436788(4) | ViT (transformer) nl=8, h=12, d=72... [Raikos et al. (2026)](https://doi.org/10.48550/arxiv.2611.18840) |  |
 |  | best projected | -0.436072(1) | FN-GFMC (U(1) Dirac spin liquid) [Iqbal et al. (2013)](https://doi.org/10.1103/physrevb.87.060405) |  |
-|  | best extrapolated | -0.4383(3) | DMRG [Depenbrock et al. (2012)](https://doi.org/10.48550/arxiv.1205.4858) |  |
-| kagome 8x8 (192 sites) | best variational | -0.435949(5) | VMC (KagomeResNet) [Sun et al. (2026)](https://doi.org/10.48550/arxiv.2611.05174) |  |
+|  | best extrapolated | -0.4395(4) | ViT (transformer) nl=4,6,8 layers, linear... [Raikos et al. (2026)](https://doi.org/10.48550/arxiv.2611.18840) |  |
+| kagome 8x8 (192 sites) | best variational | -0.436252(3) | ViT (transformer) nl=8, h=12, d=72... [Raikos et al. (2026)](https://doi.org/10.48550/arxiv.2611.18840) |  |
 |  | best projected | -0.435633(8) | FN-GFMC (U(1) Dirac spin liquid) [Iqbal et al. (2013)](https://doi.org/10.1103/physrevb.87.060405) |  |
 |  | best extrapolated | -0.43674(3) | VMC (Gutzwiller) [Iqbal et al. (2013)](https://doi.org/10.1103/physrevb.87.060405) |  |
 | pyrochlore, infinite lattice | best variational | -0.489472(8) | variational wave function [Schäfer et al. (2023)](https://doi.org/10.1103/physrevlett.131.096702) |  |
@@ -128,11 +129,12 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | rectangular 6x8 | exact | -0.6759867 | ED [Wietek & Läuchli (2018)](https://doi.org/10.1103/physreve.98.033309) |  |
 | rectangular 8x16, periodic/open | exact (stochastic) | -0.6583592(4) | SSE QMC [Sandvik (2026)](https://doi.org/10.48550/arxiv.2601.20189) |  |
 | shuriken, 24 sites | exact | -0.448329 | ED [Astrakhantsev et al. (2021)](https://doi.org/10.1103/physrevb.104.l220408) |  |
+|  | best variational | -0.5716667 &#9675; (−1.2e-1) | SOCP rounding (Algorithm 1) [Huber et al. (2024)](https://doi.org/10.48550/arxiv.2411.04120) |  |
 | shuriken, 96 sites | best variational | -0.43826(1) | VMC (PP) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | *uses [mVMC](https://github.com/issp-center-dev/mVMC)* |
 | shuriken, 216 sites | best variational | -0.4376(1) | VMC (PP) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | *uses [mVMC](https://github.com/issp-center-dev/mVMC)* |
 | shuriken, 384 sites | best variational | -0.4371(1) | VMC (PP) [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | *uses [mVMC](https://github.com/issp-center-dev/mVMC)* |
 | square 4x4 | exact | -0.7017802 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_16_P/vqe.sh) |
-|  | best variational | -0.7017449 (+3.5e-5) | VQE [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_16_P/vqe.sh) |
+|  | best variational | -0.70176 &#9675; (+2.0e-5) | sPEPS (D=6) [Dong et al. (2025)](https://doi.org/10.1103/fvq2-msr4) |  |
 | square 6x6, open | exact | -0.6035218 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/Heisenberg/square_36_O/ed_lattice_symmetries.sh) |
 |  | best variational | -0.6035218 &#9675; (+<1e-7) | DMRG [Huang et al. (2016)](https://doi.org/10.48550/arxiv.1611.09574) |  |
 |  | best extrapolated | -0.60351496(1) (+6.9e-6) | VMC (2D RNN) [Moss et al. (2025)](https://doi.org/10.48550/arxiv.2502.17144) | [mschuylermoss/HeisenbergRNN](https://github.com/mschuylermoss/HeisenbergRNN) |
@@ -331,9 +333,9 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best variational | -0.49318(5) (+5.9e-5) | VMC (RBM) [Chen et al. (2022)](https://doi.org/10.48550/arxiv.2206.14307) |  |
 |  | best extrapolated | -0.488(1) (+5.3e-3) | cluster update (TPS) [Wang et al. (2011)](https://doi.org/10.48550/arxiv.1112.3331) |  |
 | square 6x6, J2 = 0.65 | exact | -0.506588 | ED [Schulz et al. (1996)](https://arxiv.org/abs/cond-mat/9402061) |  |
-|  | best variational | -0.506299 &#9675; (+2.9e-4) | VMC (ViT) [Golubev et al. (2026)](https://doi.org/10.48550/arxiv.2606.04558) | *uses [NetKet](https://www.netket.org/)* |
+|  | best variational | -0.5065796 &#9675; (+8.4e-6) | DMRG (TeNPy), chi=4096 [Wei et al. (2026)](https://doi.org/10.48550/arxiv.2609.33193) |  |
 | square 6x6, J2 = 0.7 | exact | -0.5300012 | ED [Schulz et al. (1996)](https://doi.org/10.1051/jp1:1996236) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.7/ed_lattice_symmetries.sh) |
-|  | best variational | -0.5299243 (+7.7e-5) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.7/dmrg.sh) |
+|  | best variational | -0.5299647 &#9675; (+3.7e-5) | DMRG (TeNPy), chi=4096 [Wei et al. (2026)](https://doi.org/10.48550/arxiv.2609.33193) |  |
 | square 6x6, J2 = 0.8 | exact | -0.5864866 | ED [Schulz et al. (1996)](https://doi.org/10.1051/jp1:1996236) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.8/ed_lattice_symmetries.sh) |
 |  | best variational | -0.586411(9) (+7.6e-5) | VMC (RBM) [Chen et al. (2022)](https://doi.org/10.48550/arxiv.2206.14307) |  |
 | square 6x6, J2 = 0.9 | exact | -0.649052 | ED [Schulz et al. (1996)](https://doi.org/10.1051/jp1:1996236) | [run script](https://github.com/varbench/methods/blob/main/scripts/J1J2/square_36_P_0.9/ed_lattice_symmetries.sh) |
@@ -355,7 +357,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square, 40 sites, J2 = 0.9 | exact | -0.6459228 | ED [Richter & Schulenburg (2009)](https://doi.org/10.48550/arxiv.0909.3723) |  |
 | square, 40 sites, J2 = 1 | exact | -0.7109702 | ED [Richter & Schulenburg (2009)](https://doi.org/10.48550/arxiv.0909.3723) |  |
 | square 8x8, open, J2 = 0.2 | best variational | -0.55922(1) | VMC (ANTN) [Chen et al. (2023)](https://doi.org/10.52202/075280-0022) |  |
-| square 8x8, open, J2 = 0.5 | best variational | -0.48275(2) | VMC (ANTN) [Chen et al. (2023)](https://doi.org/10.52202/075280-0022) |  |
+| square 8x8, open, J2 = 0.5 | best variational | -0.4833 &#9675; | PEPS D=4 [Peng & Chan (2025)](https://doi.org/10.1103/r7c3-zq4b) |  |
 | square 8x8, open, J2 = 0.8 | best variational | -0.50065(3) | VMC (ANTN) [Chen et al. (2023)](https://doi.org/10.52202/075280-0022) |  |
 | square 8x8, J2 = 0.1 | best variational | -0.633093 &#9675; | VMC (ViT) [Golubev et al. (2026)](https://doi.org/10.48550/arxiv.2606.04558) | *uses [NetKet](https://www.netket.org/)* |
 | square 8x8, J2 = 0.2 | best variational | -0.594508 &#9675; | VMC (ViT) [Golubev et al. (2026)](https://doi.org/10.48550/arxiv.2606.04558) | *uses [NetKet](https://www.netket.org/)* |
@@ -380,7 +382,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square 10x10, open, J2 = 0.2 | best variational | -0.56508(2) | VMC (ANTN) [Chen et al. (2023)](https://doi.org/10.52202/075280-0022) |  |
 | square 10x10, open, J2 = 0.3 | best variational | -0.53612(1) | VMC (ANTN) [Chen et al. (2023)](https://doi.org/10.52202/075280-0022) |  |
 | square 10x10, open, J2 = 0.4 | best variational | -0.50932(2) | VMC (ANTN) [Chen et al. (2023)](https://doi.org/10.52202/075280-0022) |  |
-| square 10x10, open, J2 = 0.5 | best variational | -0.48553(2) | VMC (cRNN) [Attar et al. (2026)](https://doi.org/10.48550/arxiv.2608.18065) | [werro40/RNN-Natural-Gradients](https://github.com/werro40/RNN-Natural-Gradients) |
+| square 10x10, open, J2 = 0.5 | best variational | -0.4861 &#9675; | PEPS D=4 [Peng & Chan (2025)](https://doi.org/10.1103/r7c3-zq4b) |  |
 | square 10x10, open, J2 = 0.6 | best variational | -0.4663902 &#9675; | DMRG [Chen et al. (2023)](https://doi.org/10.52202/075280-0022) |  |
 | square 10x10, open, J2 = 0.7 | best variational | -0.4735927 &#9675; | DMRG [Chen et al. (2023)](https://doi.org/10.52202/075280-0022) |  |
 | square 10x10, open, J2 = 0.8 | best variational | -0.5156825 &#9675; | DMRG [Chen et al. (2023)](https://doi.org/10.52202/075280-0022) |  |
@@ -519,17 +521,17 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square 6x6, J = 0.7, Jd = 1 | exact | -0.3885784 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
 | square 6x6, J = 0.8, Jd = 1 | exact | -0.4517531 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
 |  | best variational | -0.451717(6) (+3.6e-5) | VMC (ConvNeXt) [Nutakki et al. (2025)](https://doi.org/10.1103/ybgv-35jm) | [NeuralQXLab/convnextnnqs](https://github.com/NeuralQXLab/convnextnnqs) |
-|  | best extrapolated | -0.45175 &#9675; (+3.1e-6) | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
+|  | best extrapolated | -0.451768(8) (−1.5e-5) | VMC + ViT combined zero-variance extrapolation [Maity et al. (2025)](https://doi.org/10.48550/arxiv.2501.00096) |  |
 | square 6x6, J = 0.85, Jd = 1 | exact | -0.4843341 | ED [Sindermann et al. (2006)](https://doi.org/10.1142/s0129183106009709) |  |
 | square 8x8, J = 0.8, Jd = 1 | best variational | -0.449829 &#9675; | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
-|  | best extrapolated | -0.44995 &#9675; | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
+|  | best extrapolated | -0.45001(3) | VMC + ViT combined zero-variance extrapolation [Maity et al. (2025)](https://doi.org/10.48550/arxiv.2501.00096) |  |
 | square 10x10, J = 0.8, Jd = 1 | best variational | -0.449342(4) | VMC (ConvNeXt) [Nutakki et al. (2025)](https://doi.org/10.1103/ybgv-35jm) | [NeuralQXLab/convnextnnqs](https://github.com/NeuralQXLab/convnextnnqs) |
 |  | best extrapolated | -0.44947 &#9675; | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
 | square 12x12, J = 0.7, Jd = 1 | best variational | -0.37627 &#9675; | VMC (Gutzwiller) [Chen & Liu (2026)](https://doi.org/10.1103/hvlq-d179) |  |
 | square 12x12, J = 0.8, Jd = 1 | best variational | -0.449078 &#9675; | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
-|  | best extrapolated | -0.44931 &#9675; | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
+|  | best extrapolated | -0.4493(1) | VMC + ViT combined zero-variance extrapolation [Maity et al. (2025)](https://doi.org/10.48550/arxiv.2501.00096) |  |
 | square 14x14, J = 0.8, Jd = 1 | best variational | -0.448929 &#9675; | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
-|  | best extrapolated | -0.4492 &#9675; | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
+|  | best extrapolated | -0.4497(1) | Z3000 + 2 Lanczos steps, zero-variance... [Maity et al. (2025)](https://doi.org/10.48550/arxiv.2501.00096) |  |
 | square 16x16, J = 0.7, Jd = 1 | best variational | -0.37642 &#9675; | VMC (Gutzwiller) [Chen & Liu (2026)](https://doi.org/10.1103/hvlq-d179) |  |
 | square 16x16, J = 0.8, Jd = 1 | best variational | -0.448881 &#9675; | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
 | square 18x18, J = 0.8, Jd = 1 | best variational | -0.448859 &#9675; | VMC (Transformer) [Viteritti et al. (2025)](https://doi.org/10.1103/physrevb.111.134411) |  |
@@ -584,7 +586,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best projected | -0.7547 &#9675; | FN-GFMC (SCALE) [Gu et al. (2026)](https://doi.org/10.1103/2kq2-5g5q) |  |
 | rectangular 16x32, U = 8, n = 0.875, t12 (t2 = -0.2) | best variational | -0.7371 &#9675; | VMC (SCALE) [Gu et al. (2026)](https://doi.org/10.1103/2kq2-5g5q) | *uses [LaQX](https://github.com/bytedance/laqx)* |
 |  | best projected | -0.7406 &#9675; | FN-GFMC (SCALE) [Gu et al. (2026)](https://doi.org/10.1103/2kq2-5g5q) |  |
-| rectangular 4x12, U = 8, n = 0.875 | best variational | -0.76608(1) | VMC (HFPS) [Chen et al. (2026)](https://doi.org/10.1073/pnas.2535288123) | *uses [Quantax](https://github.com/ChenAo-Phys/quantax)* |
+| rectangular 4x12, U = 8, n = 0.875 | best variational | -0.7662 &#9675; | Deep BF with one Lanczos step [Huang et al. (2026)](https://doi.org/10.48550/arxiv.2609.26544) |  |
 |  | best extrapolated | -0.77 &#9675; | VMC (NNBF) [Luo & Clark (2019)](https://doi.org/10.1103/physrevlett.122.226401) |  |
 | rectangular 4x16, open, U = 8, n = 0.875 | best variational | -0.6853698 &#9675; | DMRG [Liu et al. (2025)](https://doi.org/10.1103/r4q9-4yvj) | [hczhai/2d-hubbard-dmrg-2024](https://github.com/hczhai/2d-hubbard-dmrg-2024) |
 |  | best extrapolated | -0.68554(4) | DMRG [Liu et al. (2025)](https://doi.org/10.1103/r4q9-4yvj) | [hczhai/2d-hubbard-dmrg-2024](https://github.com/hczhai/2d-hubbard-dmrg-2024) |
@@ -734,7 +736,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best variational | -0.8554 &#9675; (+2.0e-3) | VMC (HB) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |  |
 | square 6x6, U = 6, n = 1 | exact (stochastic) | -0.6594(3) | AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
 | square 6x6, U = 8, n = 1 | exact (stochastic) | -0.5278(6) | AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
-|  | best variational | -0.5266 &#9675; (+1.2e-3) | VMC (HB) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |  |
+|  | best variational | -0.5268 &#9675; (+9.8e-4) | Deep BF (multi-determinant neural network... [Huang et al. (2026)](https://doi.org/10.48550/arxiv.2609.26544) |  |
 | square 6x6, U = 4, n &asymp; 1.3333 | best projected | 0.14809(4) | CP-AFQMC [Shi & Zhang (2013)](https://doi.org/10.1103/physrevb.88.125132) |  |
 | square 6x6, periodic/antiperiodic, U = 2, n = 1 | exact (stochastic) | -1.20831(6) | AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
 |  | best variational | -1.2079(1) (+4.1e-4) | VMC (HFDS) [Moreno et al. (2022)](https://doi.org/10.1073/pnas.2122059119) | *uses [NetKet](https://www.netket.org/)* |
@@ -767,6 +769,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best projected | -2.0339 &#9675; (+4.0e-4) | FN-GFMC (ACE) [Gu et al. (2026)](https://doi.org/10.1103/2kq2-5g5q) |  |
 | square 8x8, U = 4, n = 0.875 | best variational | -1.01391(8) | VAFQMC [Levy et al. (2023)](https://doi.org/10.48550/arxiv.2308.08594) |  |
 |  | best projected | -1.01923(6) | CP-AFQMC [Levy et al. (2023)](https://doi.org/10.48550/arxiv.2308.08594) |  |
+|  | best extrapolated | -1.013027(3) | vDBF eps=4e-4, zero-variance extrapolation [Shrikhande et al. (2026)](https://doi.org/10.1103/kq3v-whcq) |  |
 | square 8x8, U = 8, n = 0.875 | best variational | -0.7532 &#9675; | VMC (transformer BF) [Gu et al. (2026)](https://doi.org/10.1038/s41467-026-74028-6) | [bytedance/laqx](https://github.com/bytedance/laqx) |
 |  | best projected | -0.7616(1) | CP-AFQMC [Levy et al. (2023)](https://doi.org/10.48550/arxiv.2308.08594) |  |
 | square 8x8, U = 8, n = 0.875, t12 (t2 = -0.2) | best variational | -0.75058(1) | VMC (transformer BF) [Viteritti et al. (2026)](https://doi.org/10.48550/arxiv.2604.21978) |  |
@@ -805,6 +808,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best variational | -0.655 &#9675; (+3.0e-3) | VMC (HB) [Zhou et al. (2026)](https://doi.org/10.48550/arxiv.2606.00924) |  |
 | square 10x10, U = 8, n = 1 | exact (stochastic) | -0.5254(3) | AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
 |  | best variational | -0.52492 &#9675; (+4.8e-4) | VMC (transformer BF) [Gu et al. (2026)](https://doi.org/10.1038/s41467-026-74028-6) | [bytedance/laqx](https://github.com/bytedance/laqx) |
+|  | best extrapolated | -0.525(2) (+9.0e-4) | PEPS simple update, loop cluster expansion... [Gray et al. (2026)](https://doi.org/10.1103/r6mz-6q3g) |  |
 | square 10x10, periodic/antiperiodic, U = 2, n = 1 | exact (stochastic) | -1.18505(4) | AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
 | square 10x10, periodic/antiperiodic, U = 4, n = 1 | exact (stochastic) | -0.8620(2) | AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
 | square 10x10, periodic/antiperiodic, U = 6, n = 1 | exact (stochastic) | -0.6576(2) | AFQMC [Qin et al. (2016)](https://doi.org/10.48550/arxiv.1605.09421) |  |
@@ -1161,7 +1165,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | chain, 10 sites, open, h = 1 | exact | -1.238149 | ED [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/TFIsing/chain_10_O_1/ed_netket.sh) |
 |  | best variational | -1.238149 (−<1e-6) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/TFIsing/chain_10_O_1/dmrg.sh) |
 | chain, 10 sites, h = 1 | exact | -1.2784906 | Exact solution [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/exact_ising_1d/exact_ising_1d.py) |
-|  | best variational | -1.2784906 (−<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/TFIsing/chain_10_P_1/dmrg.sh) |
+|  | best variational | -1.278491 &#9675; (−3.6e-7) | DMRG (MPS) [Tripathi et al. (2026)](https://doi.org/10.48550/arxiv.2604.20961) |  |
 | chain, 32 sites, h = 0.5 | exact | -1.0635444 | Exact solution [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/exact_ising_1d/exact_ising_1d.py) |
 |  | best variational | -1.0635444 (+<1e-7) | DMRG [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/scripts/TFIsing/chain_32_P_0.5/dmrg.sh) |
 | chain, 32 sites, h = 1 | exact | -1.273751 | Exact solution [Wu et al. (2024)](https://doi.org/10.1126/science.adg9774) | [run script](https://github.com/varbench/methods/blob/main/programs/exact_ising_1d/exact_ising_1d.py) |
@@ -1186,6 +1190,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 | square 11x11, open, h = 2.8 | best variational | -2.99099 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
 | square 11x11, open, h = 2.9 | best variational | -3.08073 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
 | square 11x11, open, h = 3 | best variational | -3.1721 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
+|  | best projected | -3.17212 &#9675; | cp-AFQMC-re-anchoring (rank-4 tensor-train... [Yu et al. (2024)](https://doi.org/10.48550/arxiv.2411.07194) |  |
 | square 11x11, open, h = 3.1 | best variational | -3.26457 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
 | square 11x11, open, h = 3.2 | best variational | -3.35785 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
 | square 11x11, open, h = 3.5 | best variational | -3.64116 &#9675; | full update (PEPS) [Lubasch et al. (2014)](https://doi.org/10.1103/physrevb.90.064425) |  |
@@ -1601,7 +1606,7 @@ Organised literature for fellow researchers and AI systems. So that we can see t
 |  | best approximate | -0.0104603 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
 | sc cell, N = 14, rs = 15, unpolarized | best variational | -0.0408619(1) | VMC (FermiNet) [Liu et al. (2026)](https://doi.org/10.48550/arxiv.2604.15888) |  |
 |  | best approximate | -0.0580244 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |
-| sc cell, N = 14, rs = 2, unpolarized | best variational | -0.0084275(7) | VMC (FermiNet) [Cassella et al. (2023)](https://doi.org/10.1103/physrevlett.130.036401) |  |
+| sc cell, N = 14, rs = 2, unpolarized | best variational | -0.033665(1) | FermiNet (ndet=16) [Liu et al. (2026)](https://doi.org/10.48550/arxiv.2604.15888) |  |
 |  | best projected | -0.00853(6) | ph-AFQMC (RHF) [Lee et al. (2019)](https://doi.org/10.1063/1.5109572) |  |
 |  | best extrapolated | -0.00873(3) | FCIQMC [Shepherd et al. (2012)](https://doi.org/10.1063/1.4720076) |  |
 |  | best approximate | -0.0478896 &#9675; | rxmCCD [Shepherd et al. (2014)](https://doi.org/10.1063/1.4867783) |  |

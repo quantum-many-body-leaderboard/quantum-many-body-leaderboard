@@ -3425,6 +3425,108 @@
           "source_entry": "RP2-hubbard-heisenberg-j1j2#35 (qmbl-verify 2026-11-11)"
         }
       }
+    },
+    {
+      "energy": -72.54,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 36,
+      "einf": 0,
+      "v_score": null,
+      "method": "sPEPS (D=8)",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Efficient Projected Entangled Pair States Methods for Periodic Quantum Systems, Physical Review Letters, arXiv:2407.15333",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2407.15333 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; adversarial re-read: confirmed",
+        "reported_as": "-0.50375",
+        "note": "Table 2, Energy(L=6), sPEPS | Eq. 9 s_i.s_j, J1=1, PBC LxL; per-site not printed",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -72.54144,
+      "sigma": 0.00576,
+      "energy_variance": null,
+      "dof": 36,
+      "einf": 0,
+      "v_score": null,
+      "method": "large-D power-law extrapolation of GFMC energies",
+      "bound_type": "extrapolated",
+      "bound_type_reason": "zero-variance or bond-dimension extrapolation; not an upper bound (assigned during source reading)",
+      "reference": "Green's function Monte Carlo combined with projected entangled pair state approach to the frustrated J 1 − J 2 Heisenberg model, Physical review. B./Physical review. B, arXiv:2406.12207",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2406.12207 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-0.50376(4)",
+        "note": "Appendix text: 'A direct power fitting of the data in Fig. 2 gives extrapolated values -0.50376(4) (J2=0.5) and -0.49506(55) (J2=0.55) in the large-D limit' | 6x6 torus; same Fig. 2/Table 1 data; per-site as above",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -72.4717168,
+      "sigma": null,
+      "energy_variance": null,
+      "dof": 36,
+      "einf": 0,
+      "v_score": null,
+      "method": "DMRG (TeNPy), chi=4096",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Apparent Compression, Real Stability: The Intrinsic Dimension of Learning a Quantum Wavefunction, arXiv, arXiv:2609.33193",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2609.33193 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-18.1179292 (EDMRG, total)",
+        "note": "Appendix C Table 3 row 0.50, column EDMRG | Total divided by 36.",
+        "secondary_of": null
+      }
+    },
+    {
+      "energy": -72.3168,
+      "sigma": 0.0288,
+      "energy_variance": null,
+      "dof": 36,
+      "einf": 0,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "LCN",
+      "method_detail": "",
+      "method_as_published": "LCN",
+      "family": "CNN / ResNet",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Lattice Convolutional Networks for Learning Ground States of Quantum Many-Body Systems, Society for Industrial and Applied Mathematics eBooks, arXiv:2206.07370",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-26",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-26",
+        "method": "source text of arXiv:2206.07370 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
+        "reported_as": "-0.5022(2)",
+        "note": "Table 1, Square 36, J2=0.5, column LCN (ours) | Periodic, 36 sites, J2=0.5 printed; exact reference -0.503810 in the row confirms.",
+        "secondary_of": null
+      },
+      "compute": {
+        "parameters": null,
+        "gpu_hours": null,
+        "device": null,
+        "n_devices": null,
+        "samples": 200000,
+        "wall_clock": null,
+        "reported_as": "\"...- -0.4384(5) -0.4399†∗ 108 0 -0.4302(1) -0.4314(7) -0.4276(3) -0.4386 ¶ testing, the energy is estimated from 200,000 conﬁgurations sampled from equilibrated Markov chains. Hyperparameters for optimization can be found in Appendix I. To est...\"",
+        "source": "arXiv:2206.07370, located by string match in the committed source text"
+      }
     }
   ],
   "coverage": [
@@ -3518,27 +3620,17 @@
     },
     {
       "checked_on": "2026-11-26",
-      "method": "citation screen of kbgap-existing: citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
-      "screened": [
-        "arXiv:2611.26604",
-        "arXiv:2611.16430",
-        "arXiv:2506.08329",
-        "arXiv:2602.02665"
-      ],
-      "found": 0,
-      "note": "4 citing works, 4 on arXiv, 4 fetched; 4 read in full, 0 excluded by a text filter (no energy to four decimals, or no QMBL model named)."
+      "method": "citation screen of the seed papers of the arXiv:2302.04919 benchmark instances, restricted to citing works dated 2024 or later whose text names the model at least 3 times: citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
+      "screened_count": 61,
+      "found": 1,
+      "note": "116 citing works, 116 on arXiv, 115 fetched; 61 read in full, 54 excluded by a text filter (no energy to four decimals, or no QMBL model named). Energies from: arXiv:2606.04558."
     },
     {
       "checked_on": "2026-11-26",
-      "method": "citation screen of kbgap-newinst: citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
-      "screened": [
-        "arXiv:2403.07795",
-        "arXiv:2608.18065",
-        "arXiv:2211.07749",
-        "arXiv:2110.06390"
-      ],
-      "found": 1,
-      "note": "5 citing works, 5 on arXiv, 5 fetched; 4 read in full, 1 excluded by a text filter (no energy to four decimals, or no QMBL model named). Energies from: arXiv:2110.06390."
+      "method": "citation screen of the seed papers of the J1J2-square instances, restricted to citing works dated 2024 or later whose text names the model at least 3 times: citing works from OpenAlex and Semantic Scholar (scripts/cited_by.mjs)",
+      "screened_count": 77,
+      "found": 10,
+      "note": "140 citing works, 140 on arXiv, 139 fetched; 77 read in full, 62 excluded by a text filter (no energy to four decimals, or no QMBL model named). Energies from: arXiv:2603.14425, arXiv:2502.01264, arXiv:2606.04558, arXiv:2405.18874, arXiv:2407.15333, arXiv:2510.02051, arXiv:2406.12207, arXiv:2609.33193, arXiv:2611.04333, arXiv:2206.07370."
     }
   ]
 }

@@ -1,0 +1,1221 @@
+              Alternating and Gaussian fermionic Isometric Tensor Network States
+
+                               Yantao  Wu,1,∗   Zhehao  Dai,2, 3  Sajant  Anand,2  Sheng-Hsuan  Lin,4
+                              Qi  Yang,1, 5  Lei  Wang,1  Frank  Pollmann,4  and  Michael  P.  Zaletel2, 6
+                             1Institute  of  Physics,  Chinese  Academy  of  Sciences,  Beijing  100190,  China
+                            2Department  of  Physics,  University  of  California,  Berkeley,  CA  94720,  USA
+                         3Department  of  Physics  and  Astronomy,  University  of  Pittsburgh,  PA  15213,  USA
+                                    4Department  of  Physics,  TFK,  Technische  Universit¨at  M¨unchen,
+                                            James-Franck-Straße  1,  85748  Garching,  Germany
+                                 5University  of  Chinese  Academy  of  Sciences,  Beijing  100049,  China
+                 6Material Science Division,  Lawrence Berkeley National Laboratory,  Berkeley,  CA 94720,  USA
+                                                             (Dated:  October 1, 2025)
+                   Isometric  tensor  networks  in  two  dimensions  enable  efficient  and  accurate  study  of  quantum
+                many-body states, yet the effect of the isometric restriction on the represented quantum states is
+                not  fully  understood.   We  address  this  question  in  two  main  contributions.   First,  we  introduce
+                an  improved  variant  of  isometric  tensor  network  states  (isoTNS)  in  two  dimensions,  where  the
+                isometric arrows on the columns of the network alternate between pointing upward and downward,
+                hence  the  namealternating  isometric  tensor  network  states.   Second,  we  introduce  a  numerical
+                tool –isometric Gaussian fermionic TNS(isoGfTNS) – that incorporates isometric constraints into
+                the  framework  of  Gaussian  fermionic  tensor  network  states.   We  demonstrate  in  numerous  ways
+                that alternating isoTNS represent many-body ground states of two-dimensional quantum systems
+                significantly better than the original isoTNS. First, we show that the entanglement in an isoTNS
+                is  mediated  along  the  isometric  arrows  and  that  alternating  isoTNS  mediate  entanglement  more
+                efficiently than conventional isoTNS. Second, alternating isoTNS correspond to a deeper, thus more
+                representative, sequential circuit construction of depthO(L               x·L y) compared to the original isoTNS of
+                depthO(L               x+L   y). Third, using the Gaussian framework and gradient-based energy minimization, we
+                provide numerical evidences of better bond-dimension scaling and variational energy of alternating
+                isoGfTNS for ground states of various free fermionic models, including the Fermi surface and the
+                band  insulator.   Finally,  benchmarking  on  the  transverse  field  Ising  model,  we  demonstrate  that
+                alternating isoTNS provides substantially improved performance and stability relative to the original
+                isoTNS for ground state search algorithm in interacting systems.
+
+
+                     I.    INTRODUCTION                                        an arrow, and each tensor, when viewed as a mapAfrom
+                                                                               the outgoing legs to the incoming legs, is required to be
+  Recently, two-dimensional (2D) tensor network states                         an isometric linear map,A        †A=I. In particular, all phys-
+(TNS)  [1–4]  have  become  a  valuable  tool  for  studying                   ical legs are incoming. This allows both the efficientexact
+strongly interacting quantum phases of matter [5–8]. De-                       contraction of the norm of the 2D TNS and evaluation
+spite the usefulness of 2D TNS, several outstanding re-                        of expectation values of local operators on the orthogo-
+search  challenges  remain  that  limit  their  applicability,                 nal hypersurface [13].  In 1D, every MPS can be exactly
+namely reducing the complexity of contracting the ten-                         brought into the isometric form with the same maximal
+sor  network  to  compute  physical  observables  and  im-                     bond dimension through gauge transformations. In other
+proving  the  convergence  speed  in  optimizing  the  vari-                   words, the manifolds of generic MPS of bond dimension
+ational  tensors.    For  one-dimensional  (1D)  TNS,  i.e.,                   χand MPS in isometric form of bond dimensionχare
+matrix product states (MPS), the isometric form is the                         the same.  In 2D, the isoTNS is a more restricted ansatz
+key to the stability and efficiency of ground state MPS                        than  general  TNS  with  the  same  bond  dimension,  and
+algorithms  such  as  the  density  matrix  renormalization                    the generic and isometric manifolds of dimensionχare
+group  (DMRG)  [9, 10]  and  time  evolution  MPS  algo-                       believed to be inequivalent. It is an open question on how
+rithms based on the time-evolving block-decimation [11]                        the representation power of TNS is affected by imposing
+or the time-dependent variational principle [12].  Thus,                       the isometric constraint.
+it is natural to consider the generalization of isometric                         Quantum computation provides a separate motivation
+form to 2D. The most straightforward version was pro-                          for studying the representability of isoTNS. Any 1D MPS
+posed in [13] shown in Fig.1a, known as isometric tensor                       of lengthLcan be prepared on a quantum computer by
+network states (isoTNS). Similar versions are also pro-                        a local sequential circuit of depthL[16].  This is not true
+posed in [14,15].                                                              for 2D TNS unless the network has an isometric form.
+  In an isoTNS, each bond in the 2D network is assigned                        Thus, it is prudent to understand the impact isometric
+                                                                               constraints can have on the resulting sequential circuits,
+                                                                               especially as the representability of sequential quantum
+                                                                               circuits  has  recently  attracted  significant  interests  [17–
+∗ yantaow@iphy.ac.cn
+                                                                               19].
+                                                                                                                                                     2
+
+  Moreover, there actually exists freedom in choosing the
+isometric direction of the tensors while maintaining the
+algorithmic  advantages  and  sequential-circuit  represen-
+tations.   For  examples,  see  Fig.1aand  Fig.1bwhere
+we show the networks of primary interest in this work.
+This network design choice has not been explored in pre-
+vious  isoTNS  works  [13, 20–23].   However,  this  turns
+outnotto  be  a  gauge  degree  of  freedom  and  can  sig-
+nificantly  affect  the  representability  of  the  TNS  ansatz
+and sequential circuit.  To understand the effect of dif-
+ferent isometric forms, we provide insight from two per-
+spectives – entanglement structure and the correspond-
+ing sequential quantum circuits – and support this with
+numerical evidence of representing ground states of both
+non-interacting fermionic and interacting spin systems.
+  In this paper,  we show that in an isoTNS, entangle-
+ment  is,  in  a  sense  made  precise  later,  mediatedalong
+the isometric arrows.  An isoTNS is capable of represent-
+ing almost any short-ranged correlated state, but it can
+be inefficient in capturing entanglementperpendicularto
+its isometric directions.  This severely limits the applica-
+tion of isoTNS to some of the most important physical
+systems like Fermi liquids.  Here, we propose a novel iso-
+metric  ansatz,  alternating  isoTNS  (alt-isoTNS),  shown                    FIG. 1:  A 5×5 uniform (a) and alternating (b) isoTNS
+in  Fig.1b,  which  greatly  improves  the  representability                  with open boundary condition.  The orthogonality
+of isoTNS while keeping all algorithmic advantages over                       center is the single, upper right tensor with all incoming
+general TNS. To differentiate from alt-isoTNS, hereafter,                     legs.  The orthogonality hypersurface is the set of red
+we call  the original isoTNS [13],  shown in Fig.1a,  the                     tensors.  Note for the alt-isoTNS that the isometry
+uniform isoTNS (uni-isoTNS).                                                  arrow direction of the columns alternates, while for
+  Another independent contribution of this paper is to                        uni-isoTNS all the column arrows point up.  (c) Contour
+introduce a tool to efficiently study the representability of                 plot of thek-space occupation number of the uni- (left)
+isoTNS — isometric Gaussian fermionic tensor network                          and alt-isoTNS (right) at bond dimensionχ= 16,
+states (isoGfTNS). IsoGfTNS is a variational ansatz re-                       representing the Fermi surface ground state of Eq.29.
+sulting from imposing isometric constraint on the Gaus-
+sian fermionic tensor network states (GfTNS). The gen-
+eral  problem  of  2D  TNS  representability  can  be  very
+difficult  to  study  due  to  high  computational  complex-                  isoGfTNS.  We  use  this  global  optimization  algorithm
+ity  in  optimizing  a  generic,  interacting  2D  TNS.  How-                 to  assess  the  representability  of  alt-isoTNS  versus  uni-
+ever, analysis can be performed by imposing the Gaus-                         isoTNS, free from the pitfalls of local optimization meth-
+sian constraint on the variational ansatz, which simpli-                      ods  used  for  interacting  quantum  systems.   Using  the
+fies  the  calculation,  and  by  choosing  free  fermion  sys-               isoGfTNS  algorithm,  we  show  that  alt-isoTNS  clearly
+tems  as  a  benchmark  problem,  where  the  exact  solu-                    captures  the  Fermi  surface  of  a  free-fermion  metal  on
+tion  exists  [24].   Since  the  key  quantity  restricting  the             square  lattice  significantly  better  than  uni-isoTNS.  As
+TNS representability is the entanglement , free fermions,                     seen in Fig.1c, the Fermi surface found by alt-isoTNS is
+which  can  be  highly  entangled  while  still  exactly  solv-               demonstrably sharper and more symmetric.
+able,  are  good  non-trivial  benchmark  problems  to  test                     Despite the focus of this work on developing new clas-
+TNS representability in a controlled setting.  In fact, sig-                  sical numerical methods,  we would like to highlight its
+nificant understanding of TNS representability has been                       origin  and  impact  on  quantum  information.    Due  to
+gained within the GfTNS formalism, with recent studies                        the equivalence of isoTNS and sequential quantum cir-
+focusing on chiral states [25,26],d-wave superconductiv-                      cuits  [18, 30],  the  two  main  contributions  of  the  pa-
+ity [27], and the Fermi surface [28]. Related discussion on                   per have the following implications on the study of se-
+frustration-free free fermions has also recently appeared                     quential quantum circuits: (i) Gaussian fermion isoTNS:
+[29].                                                                         The  newly  proposed  isoGfTNS  framework  provides  an
+  In  this  paper,  we  explain  how  the  isometric  prop-                   efficient tool to study the representability of sequential
+erty  can  be  enforced  as  a  additional  constraint  on  top               quantum circuits for many-body quantum systems, par-
+of  Gaussianity  within  the  GfTNS  formalism  and  pro-                     ticularly the effect of circuit geometry on the circuit rep-
+vide  a  gradient-based  numerical  algorithm  for  finding                   resentability.  (ii) Alt-isoTNS: The better representabil-
+the  ground  state  of  free  fermion  Hamiltonians  with                     ity of alt-isoTNS over uni-isoTNS indicates that the re-
+                                                                                                                                                    3
+
+sulting  sequential  quantum  circuit  layout  outperforms                             (a) uni-isoTNS                        (b) alt-isoTNS
+the  original  sequential  quantum  circuit.   Given  a  fixed
+number of gates, the new geometry improves the accu-
+racy of low-energy quantum state preparation, which is
+the  crucial  building  block  for  many  quantum  applica-
+tions,  such  as  the  determination  of  spectral  functions
+through  quenches  and  ground-state  energies  via  quan-
+tum phase estimation.  In fact, the correspondence to se-
+quential quantum circuits originally motivated this work.
+Through the lens of quantum circuits, we ask the ques-
+tion,  what  happens  if  we  construct  an  isoTNS  ansatz
+with different quantum circuit depth scaling? This, then,
+leads to our new ansatz, which significantly improves the                    FIG. 2:  Causal structure of uni- (a) and alt-isoTNS (b).
+representability of the isoTNS ansatz for strongly entan-                    For the single site tensor colored in black, its future
+gled many-body ground states, cf. Fig.1cand the stabil-                      (past) light cone is colored on orange (blue).  The
+ity of the classical ground-state algorithm, cf.  Fig.15.                    uncolored tensors belong to the space-like region outside
+  The ability of isoTNS to be efficiently optimized classi-                  the light cone.
+cally and prepared on quantum devices makes it a strong
+candidate for quantum tasks that require efficiently ob-
+tainable classical inputs. Quantum quenches are one such                     straints.   In  1D,  there  are  two  natural  choices  for  iso-
+example,  where  the  ground  state  is  first  obtained  clas-              metric  constraints,  often  referred  to  as  left-canonical
+sically,  and  then  prepared  on  a  quantum  computer  for                 form and right-canonical form.  A tensorA           p,l,r  is called
+subsequent  dynamics  –  a  task  quantum  computers  ex-                    left-canonical  if P                                      p, l, r
+cel.  In this context, the isoGfTNS is also useful beyond                    are  the  physical,   left,   and  right  index  of  the  ten-p,l Ap,l,rA∗p,l,r′   =δ   r,r′,  where
+free (Gaussian-fermionic) systems, particularly when the                     sor.   Correspondingly,  a  right  canonical  tensor  satisfies
+subsequent dynamics is interacting (non-Gaussian).                           P
+  This paper is organized as follows. In Sec.II, we intro-                   this  isometric  condition  graphically  in  terms  of  the  ar-p,r Ap,l,rA∗p,l′,r  =δ   l,l′.   It  is  convenient  to  represent
+duce the alt-isoTNS and explain how it mediates entan-                       rows.  The arrows indicate how legs of the tensors,  i.e.
+glement differently than uni-isoTNS. We then discuss the                     indices, should be grouped so that the resulting matrix
+difference between alt-isoTNS and uni-isoTNS in terms of                     is an isometry; in our convention, the matrixAwith all
+sequential quantum circuits and holographic state prepa-                     incoming and outgoing legs forming the row and column
+ration.   We  next  demonstrate  that  all  quantum  double                  indices,  respectively,  is isometric;A               †A=I.  Below,  we
+fixed points have exact alt-isoTNS representations.  The                     refer to the arrow direction as the isometric direction.
+section ends with the discussion on how the usual uni-                          In 1D, any matrix product state can be written in a
+isoTNS algorithms for interacting quantum systems can                        left-canonical  (or  right-canonical)  form  with  the  same
+be easily modified for the alt-isoTNS ansatz.  In Sec.III,                   bond  dimension.   In  2D,  there  is  a  non-trivial  freedom
+we  introduce  the  isoGfTNS  framework  and  the  neces-                    of choice in the isometric directions of the tensors that
+sary optimization algorithms.  This section is of indepen-                   has been unexplored up until now. Unlike in the 1D case,
+dent interest from alt-isoTNS, as   we can consider arbi-                    2D isoTNS form a strict subset of 2D TNS, and different
+trary, consistent isomeric conditions and explore the rep-                   choices  of  isometric  directions  give  different  subsets  of
+resentability of different isoTNS within this framework.                     general TNS. In a conventional uni-isoTNS, the isomet-
+In Sec.IV, we first study non-interacting models, includ-                    ric arrows of each isometry (the black tensors in Fig.1a)
+ing the 2D Fermi surface and gapped free fermion insu-                       all point towards the same direction, e.g., upper right in
+lators, providing numerical evidence of the superior rep-                    Fig.1a. In an alt-isoTNS, we keep the horizontal isomet-
+resentation of alt-isoGfTNS compared to uni-isoGfTNS.                        ric arrows pointing rightward but alternate the vertical
+We  next  perform  a  study  of  the  interacting  2D  trans-                isometric arrows between upward and downward pointing
+verse  field  Ising  model  where  alt-isoTNS  demonstrates                  on even and odd columns.  With open boundary condi-
+significantly better performance and algorithmic stabil-                     tion,  there  exists  an  orthogonality  hypersurface  (OHS)
+ity than uni-isoTNS in finding the ground state.  Finally,                   of tensors, which only has arrows point inward, depicted
+in Sec.V, we discuss future directions for isometric tensor                  in red in Fig.1.  The OHS is composed of a column and
+networks and conclude.                                                       a row in an uni-isoTNS, while it is only composed of a
+                                                                             column in an alt-isoTNS. The OHS can be treated as an
+                                                                             MPS embedded in the 2D network, and the orthogonality
+    II.    ALTERNATING ISOMETRIC TENSOR                                      center (OC) is the single tensor with all incoming legs. As
+                    NETWORK STATES                                           will be shown, alt-isoTNS retains all the algorithmic ef-
+                                                                             ficiencies that enable efficient classical manipulation and
+  Isometric  tensor  network  states  are  tensor  network                   optimization  of  uni-isoTNS  but  greatly  improves  wave
+states where each tensor satisfies certain isometric con-                    function representability.
+                                                                                                                                                                     4
+
+                   A first hint of the physical difference resulting from the                     (a) uni-isoTNS,|      ⟩state          (b) alt-isoTNS,|     ⟩state
+                isometric structure is in the causal light cones shown in
+                Fig.2.  Here we define thefuture light coneof a tensor as
+                the sites whose on-site expectation values of physical ob-
+                servables are affected by the change of the tensor (shown
+                in black).  The future light cone, highlighted in orange,
+                of a tensor includes all tensors that can be reached by
+                goingagainstthe flow of arrows on the legs.  Thepast
+                light cone, highlighted in blue, are the set of tensors that
+                can affect the on-site expectation values of physical ob-
+                servables of the current (black) tensor, reached by going
+                withthe flow of arrows.  A tensor isspace-likeseparated                           (c) uni-isoTNS,|      ⟩state          (d) alt-isoTNS,|     ⟩state
+                from the black tensor if it is neither in the causal past or
+                future of the black tensor.  In alt-isoTNS no tensors are
+                space-like separated from the black tensor, while in uni-
+                isoTNS  there  exist  two  regions  of  space-like  separation
+                from the black tensor.  This light cone structure follows
+                from  the  isometric  structure  and  have  a  direct  impact
+                on both the entanglement structure and the sequential
+                quantum circuit construction.
+
+
+
+                     A.    Mediating entanglement along diagonals                             FIG. 3:  Uni (a,c) and alt-isoTNS (b,d) representions of
+                                                                                              decoupled chains along the (1,1)-diagonals (a,b) and
+                   We  next  discuss  the  marked  differences  in  entangle-                 along the (1,-1)-diagonals (c,d).  Two chains, one in blue
+                ment structure between uni-isoTNS and alt-isoTNS, fo-                         and one in orange, are shown.  The physical indices are
+                cusing on the isometric structures shown in Fig.1aand                         suppressed for visual clarity.  Crucially, the uni-isoTNS
+                Fig.1b.  A uni-isoTNS prefers to entangle physical sites                      representation of|       ⟩requires a MERA structure, while
+                along the (1,1) diagonal, which aligns with its light cone.                   the alt-isoTNS representation mediates all entanglement
+                An  alt-isoTNS,  on  the  other  hand,  does  not  have  this                 locally.
+                anisotropy.   To  make  this  anisotropy  manifestly  clear,
+                consider a concrete, albeit manufactured, example state
+                | ⟩, which is anL      x ×L   y 2D state formed from the ten-                    A  drastic  difference  shows  up  when  we  consider  the
+                sor  product  ofL   x +L   y  decoupled  chains  along  (1,1)-                case of the|      ⟩state.  For an alt-isoTNS, we can again
+                diagonals,  and contrast it with the state|              ⟩,  the anal-        represent|      ⟩efficiently  by  embedding  the  MPS  repre-
+                ogous state formed by a tensor product ofL   x +L   y  de-                    sentation of each chain directly into the 2D state.   We
+                coupled  chains  along  (1,−1)  direction.   For  simplicity,                 show the MPS representation in isometric form for (1,-
+                we assume each decoupled chain is an 1D area-law state                        1)-chains, e.g., the blue and the orange MPS in Fig.3d.
+                and thus can be efficiently represented by an MPS with                        Similar to the construction for|           ⟩, we can only pass the
+                a finite bond dimensionχ.                                                     information downward at specific columns, and therefore
+                   Since both|      ⟩and|     ⟩are tensor products of 1D states,              we require a bond dimension =χ    2, independent of sys-
+                we can utilize the MPS representation of the 1D states                        tem sizeL.  However, the physical sites along a coupled
+                to construct the 2D isoTNS representation.  For an uni-                       (1,−1)  diagonal  chain  are  space-like  separated  in  uni-
+                isoTNS,  we  can  represent|          ⟩efficiently  by  embedding             isoTNS. Due to the lack of downward pointing isometry
+                the MPS representation of each chain directly into the 2D                     arrows,  the only way to encode non-trivial correlations
+                state. We show the MPS representation in isometric form                       between two sites is to encode the information in a tensor
+                for two (1,1)-chains, e.g., the blue and the orange MPS,                      in the common causal past.  This requirement is particu-
+                in Fig.3a. Such representations can be efficiently embed-                     larly bad for theexactrepresentation of decoupled chains
+                ded as part of a uni-isoTNS while remaining consistent                        on ansystem  with  open  boundary  condition.  For the 5-
+                with  isometric  (arrow)  direction.   A  different  construc-                site (blue) and 4-site (orange) chains shown in Fig.3c,
+                tion for|    ⟩is given for alt-isoTNS in Fig.3b. Due to the                   only the single tensor in the top right corner can mediate
+                isometric constraint on the columns, we can only pass the                     the entanglement between the two ends of the chains. For
+                information upward at specific columns. As a result, uni-                     anL×Lsystem with open boundary condition, we need
+                isoTNS is slightly more efficient than alt-isoTNS in me-                      at least a bond dimension 2L−1      at the top-right corner
+                diating the entanglement along the (1,1) direction:  uni-                     to exactly represent the|         ⟩state.
+                isoTNS requires bond dimensionχfor each bond while                               The requirement of the enormous bond dimension at
+                alt-isoTNS requires bond dimensionχ                    2  when two MPS        the corner for uni-isoTNS can be significantly alleviated
+                embeddings overlap.                                                           if we consider a periodic tensor network or allow minor
+
+
+
+
+
+
+
+⧸⧹⧸⧹⧸⧸⧸⧸⧹⧹⧹⧹⧹⧸⧹
+                                                                                                                                                                        5
+
+                errors in the representation.  To better compare the av-                            (a) right-canonical MPS                 (b) sequential circuit
+                erage  bond  dimension  of  approximate  uni-isoTNS  and
+                alt-isoTNS representations,  we consider the case where
+                each  decoupled  chain  in  the|          ⟩state  is  a  near-critical
+                state with a long correlation lengthξ; the nearby criti-
+                cal point is assumed to be described by a conformal field
+                theory with a central chargec.  According to Ref. [31],                        FIG. 4:  The sequential circuit representation of an
+                the  MPS  representing  this  state  has  a  bond  dimension                   isometric MPS.B         ′i is a unitary matrix obtained from
+                χ∼ξ       1/κ  ,  whereκis  a  function  of  the  central  charge.             adding orthogonal columns to the isometric matrixB            i.
+                Similar to Fig3d, each diagonal chain uses 2Lbonds on
+                aL×Lperiodic  alt-isoTNS;  The  product  of  all  bond
+                dimensions for a single chain isχ   2L  .  Stacking all chains,                   To recap the general principle behind mapping isomet-
+                thegeometric  averageof  the  2L               2  bond  dimensions  is         ric tensor networks to quantum circuits, consider an MPS
+                χalt =χ    2L×L/2L               2 =χ.  For uni-isoTNS, an efficient way       in  right-canonical  form  (left  pointing  isometry  arrows)
+                to represent the diagonal chain while respecting the iso-                      with  bond  dimensionχand  physical  Hilbert  space  di-
+                metric structure is to embed a MERA into the isoTNS.                           mensiond= 2, as shown in Fig.4. Starting from the left
+                As shown in Fig.3c,  the disentangling direction of the                        end, the first isometric tensor can be expanded into a uni-
+                MERA corresponds to the (1,1) direction of the isoTNS;                         tary acting on a physical qubit initialized to some fixed
+                they have consistent isometric arrows.  We estimate the                        state, typically|0⟩ ∈C                      2 and a bond qudit of dimension
+                bond  dimension  of  the  MERA  to  be  exp(c/6)  [32]  and                    χ, typically also initialized to|0⟩ ∈C             χ; the bond qudit
+                the depth of the MERA to beO(ln(ξ)).  At leveldof the                          can also be viewed as a register of log2(χ) qubits.  The
+                MERA, we haveL/2       d sites left, but the distance between                  isometry is expanded into a unitary by adding orthogo-
+                neighbors becomes 2d; therefore, the embedding uses 2L                         nal columns that dictate the action of the gate when the
+                bonds  at  each  level.   This  counting  leads  to  a  geomet-                physical qubit is in any state orthogonal to the desired
+                                                                      cξ))        ∼χ   η
+                ric average of bond dimensionsχ                      uni ∼e6 O(ln(    alt.     one,  e.g.|1⟩.   The  unitary  derived  from  the  tensor  on
+                Determining the exact value ofηis difficult due toO(1)                         the second site acts on a fresh physical qubit in|0⟩and
+                uncertainties  in  the  estimation.   Since  we  can  collapse                 the bond qubit from the first site, which carries correla-
+                each MERA into an MPS without changing the product                             tions from site to site.  In this way, a lengthLMPS can
+                of the bond dimensions,ηmust be greater or equal to                            be sequentially prepared by a depthLcircuit, nominally
+                1. In SecIII, we introduce Gaussian fermion isoTNS and                         usingLqubits [16].
+                apply it in Sec.IV Ato numerically test the argument                              This idea directly carries over to all isometric tensor
+                presented  here.   Our  numerical  results  suggestη  >1.                      networks and in particular to the 2D geometries depicted
+                Unlike the naive argument,ηis independent of system                            in Fig.1. A bond dimensionχuni-isoTNS corresponds to
+                size.                                                                          a depthO(L                x +L   y) state preparation circuit; for exam-
+                   In conclusion, alt-isoTNS behaves the same for decou-                       ple, the 3×3 uni-isoTNS shown in Fig.5(a) corresponds
+                pled chains in the (1,1) direction and decoupled chains in                     to a depth 5 circuit preparing the 9 qubit state.  At each
+                the (1,−1) direction.  We expect uni-isoTNS to have an                         time stept, the unitary gates corresponding to the ten-
+                advantage  over  alt-isoTNS  for  mediating  entanglement                      sors a Manhattan distancetfrom the OC (upper right)
+                in the (1,1) direction but a disadvantage for the (1,−1)                       can be applied in parallel. Once again, the light cone pic-
+                direction.  For an isotropic system,  there are entangled                      ture plays an important role here.  Gates with space-like
+                degrees  of  freedom  with  arbitrary  separations,  and  we                   separation can be applied simultaneously.  Additionally,
+                expect the dominant error to come from the worst direc-                        the notion of past and future causal cones indicates which
+                tion.  Since alt-isoTNS is more symmetric in mediating                         gates in the circuit can affect physical observables on sites
+                entanglement, we expect it to be an overall better ansatz.                     and thus affect the pattern of entanglement generated. A
+                In Sec.IV E, we show numerical evidence supporting this                        circuit diagram for the resulting sequential quantum cir-
+                argument for interacting, isotropic spin models.                               cuit is shown in Fig.5(c).
+                                                                                                  Alt-isoTNS corresponds to a drastically different cir-
+                                                                                               cuit, as due to the alternating isometry conditions in the
+                              B.    Sequential quantum circuits                                columns, typically only one unitary gate can be applied
+                                                                                               at each time step [40].  As an example, consider the 3×3
+                   Beyond their utility for numerical and analytical stud-                     alt-isoTNS in Fig.5(b) and the resulting sequential quan-
+                ies,  isometric  tensor  networks  have  a  direct  correspon-                 tum circuit in Fig.5(d).  One sequentially acts all of the
+                dence  to  sequential  quantum  circuits  and  provide  con-                   unitaries  in  the  orthogonality  column  (down  the  right-
+                crete  unitary  circuits  for  qubit-efficient  state  prepa-                  most column in Fig.5(b)) and then crosses over into the
+                ration  on  quantum  computers  [16, 30, 33–35].    This                       next column, sequentially applying gates against the di-
+                has  been  demonstrated  experimentally  in  1D  for  both                     rection of the isometry arrows (up the middle column in
+                MPS [36] and entanglement renormalization tensor net-                          Fig.5), and so on in a snake-like pattern for the remain-
+                works [37,38] and explored numerically in 2D [39].                             ing columns.  Thus,  alt-isoTNS corresponds to a depth
+
+
+
+
+
+
+
+⧹
+                                                                                                                                                        6
+
+                                                                               prepares aD-dimensional quantum state using a number
+                                                                               of  qubits  proportional  to  a  (D−1)-dimensional  cross-
+                                                                               section  of  the  state  [36, 41].   Roughly  speaking,  if  all
+                                                                               we  are  interested  in  is  measuring  physical  expectation
+                                                                               values  and  not  preparing  the  quantum  state  itself  for
+                                                                               further  manipulation,  we  can  recycle  qubits  produced
+                                                                               from  the  application  of  the  unitary  by  measuring  the
+                                                                               physical  qubit  and  reusing  it  for  the  next  unitary,  af-
+                                                                               ter reinitializing it to|0⟩.  This can drastically decrease
+                                                                               the required number of physical qubits to actually per-
+                                                                               form  quantum  simulation,  at  the  expense  of  requiring
+                                                                               mid-circuit measurement and reset.  In terms of sequen-
+                                                                               tial circuits of MPS, expectation values can be estimated
+                                                                               using 1 + log2(χ) qubits, 1 for the physical qudit and the
+                                                                               remaining to represent the bond qudit. For sequential cir-
+                                                                               cuits of uni-isoTNS and alt-isoTNS,O((L                            x +L   y) log2(χ)
+                                                                               qubits andO(min(L                     x, Ly)·log   2(χ)) qubits are needed, re-
+                                                                               spectively, for holographic simulation. While uni-isoTNS
+                                                                               requires more qubits,  the depth of the resulting circuit
+                                                                               is shorter, so the choice of better ansatz in practice will
+                                                                               depend on noise levels and qubit numbers on the partic-
+                                                                               ular device [37].  In particular, we expect uni-isoTNS to
+                                                                               be more noise resilient, as the smaller causal cones limit
+                                                                               the  negative  effects  errors  in  gates  can  have  on  future
+                                                                               expectation values.
+                                                                                  We  conclude  by  noting  that  prior  studies  have  been
+                                                                               restricted to much smaller system sizes [42–46], and that
+                                                                               sequential circuits in the literature have focused only on
+                                                                               uniform  structures  [30, 47].   In  addition,  recent  theo-
+                                                                               retical  works  address  different  but  complementary  as-
+                                                                               pects  [48, 49].   By  working  at  larger  scales,  introduc-
+                                                                               ing alternating sequential structures, and demonstrating
+FIG. 5:  (a) Uni- and (b) alt-isoTNS when viewed as                            practical optimization schemes (Sec.IV), our results ex-
+sequential quantum circuit to prepare a 9 qubit state.                         tend the understanding of sequential circuits and high-
+All bond dimensions areχ= 2, so each line represents a                         light  their  relevance  for  both  quantum  simulation  and
+qubit.  Different qubits are drawn in different colors.                        quantum algorithm design.
+The label of the tensors corresponds to the time-step
+when the gate can be applied.  Dotted lines indicate                                                C.    Topological phases
+input qubits in the state|0⟩.  Due to isometry
+conditions on each tensor, the vertical bond dimension
+in the left-most column isχ= 1.  (c) [(d)] Quantum                                We now demonstrate a simple proof that alt-isoTNS
+circuit diagrams for uni-[alt-]isoTNS, where isometric                         can  represent  a  large  class  of  topological  orders  in  2D.
+tensors have been expanded into unitary gates acting on                        It has been proven that all string-net states, which con-
+up to 3 qubits by adding orthogonal columns.  Gates act                        tain all non-chiral topological orders with gappable edges
+on the qubits that continue through the rectangle.                             in  two  dimensions  [50, 51],  can  be  exactly  represented
+Gates with the same number act on disjoint sets of                             as  finite  bond  dimension  uni-isoTNS  in  the  thermody-
+qubits and thus can be applied simultaneously.                                 namic  limit  [52].   This  construction,  however,  is  quite
+                                                                               complicated.   Here we present a much simpler construc-
+                                                                               tion for a large subset of string-net states, the quantum
+O(L     x ·L y) circuit. This corresponds to the lack of space-                double  states  of  finite  groupG[53],  for  both  the  uni-
+like  separation  in  alt-isoTNS,  so  each  tensor  lies  in  ei-             isoTNS and the alt-isoTNS, demonstrating the versatile
+ther the future or past causal cone of each other.  The                        representability of alt-isoTNS. Up to normalization, lo-
+quadratically  deeper  circuit  nature  of  alt-isoTNS  com-                   cal unitaries, and coarse-graining, the exact TNS tensor
+pared to uni-isoTNS could potentially lead to increased                        representing the ground state of the quantum double for
+representability, i.e., numerical performance when opti-                       groupGis found [54] to be
+mized classically, of the alternating ansatz.
+   The sequential quantum circuits discussed above can                                         Ap1p2p3p4lrdu       = Xglp1gup4g−1p2rg−1p3d,             (1)
+be combined with the holographic approach, where one                                                           g∈G
+                                                                                                                                                                                7
+
+                     wheregdenotes both the group element and its left reg-                           the original vertical arrows in Λi:i+1   :
+                     ular  matrix  representation  which  is  a  real  permutation
+                     matrix [55].  The tensor legs label group elements ofG,
+                     so the bond dimension is the order of the group,|G|. Due
+                     to coarse-graining,p                               1p2p3p4 are grouped into one phys-
+                     ical leg on each tensor.  If one contracts any two of the                                                        ≈                                       (5)
+                     virtual legs, e.g.landd, and the physical leg ofAwith
+                     that ofA   †, one gets
+
+
+                             X
+                                      Ap1p2p3p4lrdu      Ap1p2p3p4lr′du′                                      (2)
+                          ldp1p2p3p4
+                          =  X       Tr gh−1  (gh −1  )uu′(gh −1  )rr′ Tr g−1  h     (3)            The vertical arrow direction in Λi:i+1    can be efficiently
+                             h,g∈G                                                                    and  exactly  reversed  similar  to  changing  the  isometric
+                          ∝δ   uu′δrr′                                                             (4)form of an MPS. Thus, we can control the resulting iso-
+                                                                                                      metric  directions  inA    i  andM       i+1   by  choosing  the  cor-
+                                                                                                      responding opposite direction on Λi:i+1    as the input to
+                     where we have noted that becauseg          −1  his again a ma-                   the  splitting  algorithm.   Explicitly,  when  sweeping  be-
+                                                                                                      tween the columns using the Moses Move, we can impose
+                     trix in the left regular representation, it is traceless unless                  the alt-isoTNS (uni-isoTNS) structure by ensuring that
+                     g−1  his the identity.  This computation holds for any two                       Λi:i+1    has the same (opposite) vertical isometry direction
+                     virtual legs. The quantum double TNS is thus automati-                           as the previous isometric columns.
+                     cally both a uni-isoTNS and an alt-isoTNS. Note that the                            The   second   key   subroutine   in   the   isoTNS   algo-
+                     quantum double tensors actually satisfy far stronger iso-                        rithm  is  the  reverse  of  the  splitting  operator  described
+                     metric constraints than either those of uni- or alt-isoTNS,                      above, i.e., the merging of the orthogonality columnM             i+1
+                     as any grouping of two virtual legs and the physical legs                        and a right isometric columnB             i+2   into a new orthogo-
+                     lead to a valid isometry.                                                        nality two-column Λi+1:i+2      :
+
+
+
+
+
+                                                                                                                                        =                                     (6)
+
+                          D.    Algorithmic modification for alternating
+                                    isometric tensor network states
+
+
+                        The alt-isoTNS ansatz introduced above can be imple-
+                     mented easily using the standard isoTNS toolbox [13,20–
+                     22]  with  minor  modification.   Crucially,  the  computa-                      Here,  for  algorithmic  efficiency  reasons,  it  is  advanta-
+                     tional complexity remains the same for the time evolu-                           geous if the vertical arrows onM     i+1  andB       i+2  have the
+                     tion algorithm [13,21],O(χ                   7) and ground state search          same direction so that the resulting Λi+1:i+2        has a def-
+                     algorithms [20],O(χ              10).                                            inite  isometric  form.   IfM   i+1   andB       i+2   have  opposite
+                                                                                                      vertical arrow directions, the direction onM     i+1   can be
+                        There are two key subroutines in isoTNS algorithms.                           reversed to agree withB        i+2  before merging.
+                     One  is  the  splitting  of  the  orthogonality  two-column                         Thus,  regardless  of  the  desired  pattern  of  the  direc-
+                     Λi:i+1   , analogous to the two-site wavefunction in an MPS,                     tion of the vertical isometry arrows, it can be achieved
+                     into a left isometry columnA             i and an orthogonality col-             by reversing of the isometric form on the orthogonality
+                     umnM        i+1 , analogous to an isometric tensor and normal-                   columns or two-columns when needed. This has a compu-
+                     ized tensor in an MPS; this is shown diagramatically in                          tational complexityO(η        3χ2), compared to theO(η            3χ4)
+                     Eq. (5).  Λ    i:i+1    carries the physical legs of columnsiand                 of  splitting  algorithm,  whereηis  the  vertical  bond  di-
+                     i+ 1,  with  the  physical  legs  on  columnimerged  with                        mension on the orthogonality column andχis the bond
+                     Λi:i+1   ’s left virtual legs and those on columni+ 1 with                       dimension  elsewhere.   The  cost  of  imposing  a  particu-
+                     the right virtual legs. In theMoses Movealgorithm used                           lar isometry structure is subleading, and thus alt-isoTNS
+                     to perform this splitting [13], the resulting vertical iso-                      is, at leading order, no more computationally expensive
+                     metric arrows inA    i andM       i+1  are always reversed from                  than uni-isoTNS.
+
+
+
+
+
+
+
+
+
+
+Λi+1:i+2Λi:i+1Mi+1AiMi+1Bi+2
+                                                                                                                                                            8
+   These subroutines are used in both ground state and                           whereγ           µ(k)  =             1√P              µ=  1  or
+                                                                                                           LxLy      x e−ik·x      γµ(x)  with
+time evolution algorithms.  In particular, they are used                         2.  We will adopt anti-periodic boundary condition along
+for computing local observables in an isoTNS. Any oper-                          thexdirection, and periodic boundary condition along
+ator supported on columniandi+ 1 can be measured                                 theydirection to avoid parity-invariantk-points in the
+by applying MPS methods to Λi:i+1    after Λi:i+1    has been                    study  of  GfTNS,  following  previous  work  [28].   Thus,
+made into the OHS via the Moses Move algorithm.
+   In  Sec. IV Ewe  investigate  the  performance  of  uni-                      k=  (k    x, ky)  withk        x  =   2π(n     x+ 1Lx       andk       y  =   2πn  y2 )Ly  ,  for
+and alt-isoTNS in representing the ground state of the                           ni = 1,2,···, L        i withL        i being the number of sites along
+2D transverse field Ising model.                                                 directioni=xory.
+
+
+    III.    ISOMETRIC GAUSSIAN FERMIONIC                                              B.    Gaussian fermionic tensor network states
+              TENSOR NETWORK STATES
+                                                                                    We first review the construction of a genericfermionic
+   A separate result of this paper is the introduction of                        TNS before specializing to Gaussian states. To construct
+a  Gaussian  version  of  isoTNS,  alternating,  uniform,  or                    a fermion TNS [24], one first preparesn                     v Majorana Bell
+otherwise.   We  will  show  how  to  incorporate  the  iso-                     pairs over each bond of the lattice, which make up the
+metric constraint into the Gaussian fermionic tensor net-                        virtual state:
+work states (GfTNS) framework, resulting in the isomet-                                                                 nvY 1
+ric  GfTNS  (isoGfTNS).  As  an  application,  this  will  be                                   ρvirtual =   Y              2(1 +iγ    jb1γjb2)          (10)
+used to assess the representability of alt-isoTNS versus                                                     b∈bonds   j=1
+uni-isoTNS. It is common to optimize translationally in-
+variant  GfTNS  with  variational  global  approach  using                       whereγ           jb1  andγ       jb2  are  respectively  thej-th  Majorana
+gradient descent to study the representation power of the                        modes on the two sites connected by bondb.  Then, at
+ansatz.  In the isoGfTNS framework, the uniform and al-                          each sitex, which hostsn                  p Majorana fermion modes (rep-
+ternating  constraints  can  be  implemented  by  choosing                       resenting  the  physical  degrees  of  freedom.n                p  =  2  for
+the corresponding fixed isometric form in the tensor ini-                        the case of one complex fermion per site.), one prepares
+tialization. In the next section using these techniques, we                      a  stateρ         ψ  in  the  tensor  product  of  the  virtual  Hilbert
+consider  various  non-interacting  (free-)  fermion  models                     space and the physical Hilbert space onx.  Due to the
+and compare the performance of uniform and alternat-                             assumed translation invariance,ρ              ψ is the same for allx.
+ing isoGfTNS in representing their ground states.  This                          A fermion TNS supported in the physical Hilbert space,
+allows us to investigate the effect of isometric constraints                     with  bond  dimensionχ=                √2nv  [56],  is  formed  as  the
+on representability with a different angle from interacting                      partial overlap betweenρ       virtual and Qx ρψ:
+isoTNS.                                                                                                                           Y
+                                                                                                  ρTNS = Trvirtual(ρ  virtual          ρψ),            (11)
+                                                                                                                                    x
+               A.    Fermionic Gaussian states
+                                                                                 whereρ            virtual is always Gaussian.
+   Let  us  consider  free  fermion  system  on  a  2D  square                      The TNS is a GfTNS whenρ          ψ  is also Gaussian [24,
+lattice of sizeL       x ×L   y, where each site hosts a complex                 25,27], i.e., one whose physical properties is entirely de-
+fermion modec. The information of a fermionic Gaussian                           termined, via Wick’s theorem, by a covariance matrix of
+stateρis entirely encapsulated in its covariance matrix:                         the form of Eq.7.   From now on,  we assumeρ                      ψ  to be
+                                                                                 Gaussian and denote its covariance matrix as
+                      Γµν                                                                                               A     B
+                        x,x       ′ ≡  i2 Tr(ρ[γ       µx, γνx′])                     (7)                   Γψ =                                        (12)
+                                                                                                                      −B    T   D
+whereγ           µx is the (real) Majorana fermion mode on sitex:                withAbeingn                   p ×n   p,Bbeingn            p ×4n     v, andDbeing
+
+               γ1x =c   †x +c   x,     γ2x =−i(c        †x −c   x)             (8)4n  v ×4n     v.  Treating Γ as a matrix with indicesµand
+                                                                                 ν, the covariance matrix of the GfTNS can be obtained
+In the following discussion, we consider free fermion mod-                       as [24,25,27]
+els with translational invariance without unit cells.  The                               ΓTNS(k) =A+B(D+ Γ                        virtual(k))    −1  BT          (13)
+generalization  to  unit  cells  is  straightforward,  but  the
+notation is onerous.  We discuss unit cells in Appendix                          where Γvirtual(k) is the momentum-space covariance ma-
+VII A. After a Fourier transform, the covariance matrix                          trix ofρ    virtual and is equal to
+in the momentum space is:
+                                                                                                                       0        Γ1(k)
+     Γµν(k)≡      i2 Tr   ρ[γ    µk, γν†k  ]=  i2 Tr ρ[γ    µk, γν−k  ]      (9)               Γvirtual(k) =      −Γ    1(k)    †      0 ,              (14)
+                                                                                                                                                               9
+
+                                                                                   andBis of sizen                 p×(n     l+n   d+n   r+n   u). TheA,B,Dfollow
+                                                                                   the grouping separating incoming and outgoing indices,
+                                                                                   whereAis of sizen                      in ×n    in,Bis of sizen           in ×n    out with
+                                                                                   incoming  dimensionn                    in  =n   p +n   l +n   d  and  outgoing
+                                                                                   dimensionn                    out =n   u +n   r.  TheDis sub-block ofDthat
+FIG. 6:  Left:  The isometric tensor that makes up the                             vanishes due to isometric constraint.
+TNS. Right:  The contraction of the incoming arrows of                                To construct an uniform isoGfTNS as in Fig.1a, one
+ψand     ψleaves an identity matrix on each outgoing                               simply uses a covariance matrix whose sub-block corre-
+index.  In equation, this is P                      ψpl¯rd¯u        =δ   r¯r   δu¯u   .sponding to the right and up virtual legs are zero.  To
+                                        pld ψplrdu                                 construct an alternating isoGfTNS, one uses a unit-cell
+                                                                                   of two tensors (see AppendixVII A), with different outgo-
+where Γ1(k) =−(e          −ik   xI2n  v ⊕e   −ik   yI2n  v) withI         2n  v beinging isometric arrows as in Fig.1b, and the corresponding
+the 2n  v ×2n     v identity matrix.  In writing Γvirtual(k), we                   sub-block of the covariance matrices ofψvanishing:  for
+have ordered the virtual modes in the order ofl, d, r, u                           one site in the unit-cell, the sub-block of the right and
+legs shown in Fig.6.                                                               up virtual legs is zero; for the other site, the sub-block of
+                                                                                   the right and down virtual legs is zero.
+
+           C.    Isometric constraints on GfTNS                                                      1.    Variational parametrization
+
+   As  proved  in  [22],  the  isometric  structure  and  the                         In the following, we show how to parametrize Γψ  for
+fermionic structure is compatible in a TNS, in the sense                           isoGfTNS. Note that there are two other constraints on
+that  if  the  fermionic  TNS  is  made  of  isometric  ten-                       Γψ  in addition to the isometric constraints.  The first is
+sors, the norm of the many-body fermion wavefunction                               that ΓψΓTψ =Idue to thatρ             ψ is a pure state. The second
+can still be computed efficiently despite of the fermionic                         is that Γψ is real antisymmetric [57].  The antisymmetry
+structure.   For  our  purpose,  we  will  simply  consider  a                     requirement simply means thatAis real antisymmetric.
+local  tensor  that  is  isometric  as  in  Fig.6;  this  is  the                  The purity requirement is equivalent to
+same  isometric  constraint  obeyed  by  the  black  tensors
+in Fig.1a.  In the context of GfTNS, on each leg ofψ                                   I.B   TB=I
+lives a number of Majorana fermion modes.  Fig.6sim-
+ply means that the reduced density matrix of the modes                                II.A   TA=I− BB         T
+on the right and the up legs is proportional to the iden-
+tity, and thus that the covariance matrix entries vanish;                            III.AB= 0
+i
+2 Tr(ρ   ψ[γ µ, γν])∝     i2 Tr([γ     µ, γν]) = 0 for allγ     µ  andγ       ν       Condition I means thatBis an isometric matrix.  To
+on the right and up legs.                                                          unpack condition II, using the antisymmetry ofA, let us
+   The reverse statement is also true:  ifρ   ψ  is Gaussian,
+and the block of the covariance matrix according to cer-                           write (assumingn                    in is even)
+tain tensor legs is zero, then the tensor must be isometric                                                          0  s  i
+with those legs having outgoing isometric arrows.  This                                                    nin/2M
+follows  from  the  Wick’s  theorem:  all  higher-order  cor-                                     A=R              −s   i   0  RT ,     si ≥0          (16)
+relators among the outgoing legs inψare equal to the                                                        i=1
+Pfaffian of the corresponding submatrix of the covariance                          whereRis orthogonal.  Then condition II becomes
+matrix of the outgoing legs, which is identically zero. The                                              s2i   0
+full set of correlators determines the reduced density ma-
+trix entirely, which is the identity matrix, implying isom-                         ATA=R     M           0 s  2i  RT  =I− BB     T  =I−Proj       B  (17)
+etry.                                                                                              i=1
+   We  order  the  Majorana  fermions  in  the  order  of  the                     which is an orthogonal projection matrix whose rank is
+legs ofψ: p, l, d, r, u, and usen                p, nl, nd, nr, nu to denote       nin −rank(B)  =n                     in −n    out.   It follows thats        i  =  1 for
+the number of Majorana modes on each leg. According to                             i≤rank(A)/2, ands                             i = 0 fori >rank(A)/2, and that
+the discussion above, the covariance matrix of an isomet-                          the column space ofRspans the orthogonal subspace to
+ric tensor will have a zero block if we regroup the blocks                         the  column  space  ofB.   Condition  III  follows  directly
+according to incoming and outgoing arrows.  The covari-                            from II.
+ance matrix of an isometricρ                 ψ would have the additional              Thus,  to  parametrize  Γψ,  we  consider  an  orthogonal
+block structure:    A     B        A    B             A    B                       matrixQof sizen                        in ×n    in and take the firstn        out columns
+     Γψ =                    =                 =                 .     (15)        to beBand the othern               in −n    out columns to beR:
+               −B    T   D        −BT  D            −BT   0
+                                                                                                                               nin/2M  0   1
+TheA, B, Dfollow the grouping separating physical and                                         Q= [B |R],    A=R                        −1  0     RT       (18)
+virtual fermions as in Eq. (12), whereAis of sizen                           p ×n   p                                           i=1
+                                                                                                                                                     10
+
+  In  the  end,  we  note  that  if  there  is  an  even  number              χ2/2. The gauge freedom are the (χ, χ) unitary matrices,
+of  sites  in  the  lattice  andQis  the  same  on  all  sites,               which has effective complex dimensionχ                    2/2.  Thus,
+one can always chooseQto be a special orthogonal ma-                              dimC isometric MPS = (d−1)χ            2 = dimC MPS     (22)
+trix, i.e., det(Q) = 1, for all tensors in the TNS. Suppose
+a link in the lattice connects sitesaandb.  The GfTNS                         which makes sense because every MPS can be brought
+state does not change if one swaps the order of two modes                     into canonical form without increasing the bond dimen-
+on both sites.  This permutes the columns and the rows                        sion.
+of Γa and Γb accordingly, which results in a permutation                         For 2D general TNS and isoTNS, similarly, the dimen-
+only on the columns ofQ, flipping the determinant ofQ.                        sions are respectively
+The only invariant in such operations is the parity of the
+sum of the determinants of all theQs.   Following this,                                             dimC TNS =dχ    4 −2χ      2                   (23)
+the determinant of theQon every site can be converted
+to 1, if one has an even number of sites in the system.  In
+the following, we will always use an even number of sites                                     dimC isoTNS =          d−   12   χ4 −χ    2            (24)
+and use only special orthogonalQs.
+                                                                              They clearly differ, but the difference is quite mild.  To
+                                                                              acheive the same variational dimension, whenχis large,
+            2.    Gradient-based energy minimization                          the bond dimension would scale as
+                                                                                                        d     1/4
+  To find the ground state within the isometric GfTNS                                χisoTNS =                     χTNS  ≈d=2  1.07χ        TNS        (25)
+manifold, one directly works withQand does Rieman-                                                   d−    12
+nian minimization of the total energy.  Given the system                         For  Gaussian  TNS  with  2  physical  Majorana  modes
+Hamiltonian                                                                   andnvirtual modes on each leg, the variational mani-
+                           X                                                  folds for general GfTNS and isoGfTNS are respectively
+               H=   X           γµ†  (k)h(k)             µνγν(k),           (19)SO(4n+ 2) and SO(2n+ 2), giving
+                       k    µν
+the  expectation  value  ofHin  a  Gaussian  state  Γ       TNS                          dimR Gaussian TNS = (4n+ 2)(4n+ 1)
+is [28]                                                                                                                          2                  (26)
+
+          ⟨H⟩=     X    iTr[h(k)Γ            TNS(k)] + Tr(h(k))      (20)            dimR Gaussian isoTNS = (2n+ 2)(2n+ 1)
+                     k                                                                                                           2                   (27)
+where ΓTNS  is a function ofQvia Eq.13, 15, and18.                            Asympototically for largen, if Gaussian TNS and Gaus-
+In the following we will use isoGfTNS to study the rep-                       sian isoTNS are to have the same variational dimension,
+resentability of isoTNS. See Sec.VII Dfor details of the                      then
+numerical optimization.
+                                                                                            nisoTNS = 2n  TNS →χ     isoTNS =χ    2TNS          (28)
+
+           D.    Gaussian constraints on isoTNS                               which is a much worse scaling than Eq.25. One thus ex-
+                                                                              pects that the Gaussian constraint restricts isoTNS more
+  Here  we  comment  that  Gaussian  constraints  restrict                    than regular TNS.
+isoTNS more than general TNS. This can be seen from
+a counting argument on the dimension of the TNS and                                           IV.    NUMERICAL RESULTS
+isoTNS variational manifold.  The dimension of the vari-
+ational  manifold  of  all  TNS  of  certain  bond  dimension                    Using the framework and algorithms of non-interacting
+χis given by the dimension of the manifold of the TNS                         isoGfTNS and interacting isoTNS, we compare the per-
+tensors minus the dimension of the manifold of the gauge                      formance  of  the  uniform  and  alternating  ansatzes  on
+freedom on the virtual bond of the TNS. For example,                          various paradigmatic systems, including (i) the stacked
+for  a  translationally  invariant  MPS  of  bond  dimension                  chains  example  from  Sec.II A,  (ii)  the  Fermi  surface,
+d×χ×χ, withdbeing the dimension of the local Hilbert                          (iii) the band insulator, (iv) thep  x +ip   y  mean-field su-
+space, the MPS tensors form adχ  2-dimensional complex                        perconductor,  and (v) the transverse field Ising model.
+manifold.  The gauge freedom on the virtual bonds are                         In  each  case,  we  find  that  alt-iso(Gf)TNS  outperforms
+theχ×χinvertible matrices, which, as a manifold, has                          uni-iso(Gf)TNS, providing evidence that alt-isoTNS has
+complex dimensionχ                    2.  Thus,                               more  representative  power  than  uni-isoTNS.  Addition-
+                     dimC MPS = (d−1)χ            2                   (21)    ally for the free fermionic systems, we compare to GfTNS,
+                                                                              which  has  no  isometric  constraint,  to  demonstrate  the
+For  isometric  MPS,  the  tensors  form  a  (dχ, χ)-Stiefel                  loss in representability from imposing the isometric con-
+manifold, which has effective complex dimensiondχ                    2 −      straints necessary for quantum circuit equivalence.
+                                                                                                                                                   11
+
+                                                                              state has a Fermi surface.  Systems with a Fermi surface
+                                                                              are among the most challenging to represent as a tensor
+                                                                              network state, because they are very strongly entangled;
+                                                                              the entanglement entropy of a subregion with a boundary
+                                                                              of sizeAscales asAlog(A) [58,59], exceeding the con-
+                                                                              ventional area-law for ground states.  We use this system
+                                                                              as a benchmark to see the difference in the ability of uni-
+                                                                              isoTNS and  alt-isoTNS  to  represent  strongly-entangled
+                                                                              systems.
+                                                                                We  follow  the  setup  in  [28]  which  studied  the  repre-
+                                                                              sentability of generic, non-isometric TNS for Fermi sur-
+                                                                              face  using  GfTNS.  As  in  [28],  we  also  study  a  system
+                                                                              with  an  anti-periodic  boundary  inxcondition  and  pe-
+FIG. 7:  Error in ground state energy for a 36×36 free                        riodic boundary inydirection, which results in an open
+fermion system with hopping along (1,1) or (1,-1)                             shell structure for the Fermi surface. We work directly in
+diagonals, using GfTNS. While isoTNS shows strong                             the momentum space.  The isoTNS with this boundary
+dependence on the entanglement structure of the state,                        condition does not have an OHS, but we expect that the
+alt-isoTNS is insensitive to this.                                            representability for large 2D systems is mainly limited by
+                                                                              the isometries in the bulk.  The calculation is performed
+                                                                              for bond dimensionsχ=                √2n, n= 4,5, ..,8,for both uni-
+                      A.    Stacked Chains                                    isoTNS and alt-isoTNS, of size 96×96,  with isometric
+                                                                              arrows drawn in Fig.1(ab) (excluding the OHS, i.e., red
+  To  test  our  argument  of  the  entanglement  structure                   tensors);  as  before,nis  the  number  of  pairs  of  Majo-
+in Sec.II A, we consider a collection of 1D free fermion                      rana Bell pairs used to represent each bond, which cor-
+states hopping only along the (1,1)-diagonals or the (1,-                     responds to n/2complex fermion Bell pairs.  As shown in
+1)-diagonals on a 2D square lattice.  Using the isoGfTNS                      Fig.1(c) and Fig.8, the alt-isoTNS captures the Fermi
+technique, the ground state is computed as both an uni-                       surface profoundly better than the uni-isoTNS. In partic-
+isoTNS and an alt-isoTNS. The energy result is presented                      ular, for uni-isoTNS, there is an apparent directionality
+in Fig.7. We also plotted the generic GfTNS result with-                      in the sharpness of the Fermi surface [60].   The entan-
+out any isometric constraints. We see when the entangle-                      glement perpendicular to the direction of the isometric
+ment is only along the (1,1)-diagonals, the uni-isoTNS is                     arrows  is  represented  much  worse,  as  explained  by  the
+actually as accurate as the unconstrained TNS and better                      decoupled chain argument in Sec.II A. The inset of Fig.
+than the alt-isoTNS. But when the entanglement is along                       8shows the norm of the energy gradient as a function of
+the  (1,-1)  direction,  uni-isoTNS  performs  poorly  while                  the bond dimension, which is a measure of how well con-
+alt-isoTNS better approximates the exact results.  Also,                      verged our gradient descent optimized isoGfTNS results
+the performance of alt-isoTNS is the same for both (1,1)                      are.  The combination of initializing the gradient descent
+and (1,-1) chains, indicating that the ansatz is insenstive                   with 30 to 40 initial Gaussian states, the global nature
+to the directionality of entanglement.  This strongly sup-                    of  the  gradient  updates,  and  the  small  gradient  norms
+ports our arguments laid out in Sec.II A.                                     together are an indication that we likely have found the
+  In practice for generic Hamiltonians, the states one en-                    true global minima.
+counters will have entanglement along all directions, and
+thus we expect the alt-isoTNS to be a better ansatz than                                   C.    Gapped free fermion systems
+the uni-isoTNS. We demonstrate this below for paradig-
+matic  examples  of  non-interacting  and  interacting  sys-
+tems.                                                                           We  present  additional  evidence  for  the  better  repre-
+                                                                              sentability of alt-isoTNS for less entangled, gapped free
+                                                                              fermion systems.  We study a topologically trivial band
+                       B.    Fermi Surface                                    insulator with a finite band gap with the Hamiltonian
+
+  Consider  a  two-dimensional  square  lattice  of  free                                   HInsulator =−   X      c†icj + X     µic†ici           (30)
+fermions with Hamiltonian:                                                                                    ⟨i,j⟩           i
+
+                          H=−     X      c†icj                         (29)   withµ        i = 1 on the even sublattice, and−1 on the odd
+                                    ⟨i,j⟩                                     sublattice.   The  ground  state  and  two-point  correlator
+                                                                              on a 96×96 lattice, with periodic boundary condition
+wherec         †i  andc       j  are  fermion  creation  and  annihilation    alongxand  anti-periodic  boundary  condition  alongy,
+operators,  and⟨i, j⟩denotes a pair of nearest neighbor                       are computed with GfTNS, and the results are shown in
+sites.   This  is  a  system  of  free  fermions  whose  ground               Fig.9.   As  seen,  alt-isoTNS  also  better  approximates
+                                                                                                                                                     12
+
+                                                                               in the state, far better than uni-isoTNS does.
+
+
+                                                                                        D.p     x +ip   y mean-field superconductor
+
+                                                                                  The mean-fieldp                   x +ip   y  superconductor (PipSC) has
+                                                                               the following chiral Hamiltonian:
+
+                                                                                HPipSC =−   X        c†icj + 2X      c†ici + X(D  ijcicj +h.c.),
+                                                                                                ⟨i,j⟩             i          ⟨i,j⟩
+                                                                                                                                                   (31)
+                                                                               withD        ij  = 1 on the horizontal bonds and √−1 on the
+                                                                               vertical  bonds.   If  placed  on  a  space  manifold  with  no
+FIG. 8:  Error in ground state energy for a 96×96                              boundary, it has a finite energy gap and thus exponen-
+Fermi surface on a square lattice, see Eq.29.  Inset:                          tially decaying correlators.  PipSC, however, is topolog-
+norm of the energy gradient as a function of bond                              ically non-trivial, i.e., not in the same phase as a prod-
+dimension, indicating that our isoGfTNS numerics are                           uct state.  It has been shown that 2D GfTNS cannot be
+well converged.                                                                gapped, topologically non-trivial,andhave a local parent
+                                                                               Hamiltonian at the same time [25,26].  Here, we inves-
+                                                                               tigate the performance of GfTNS in approximating the
+                                                                               ground state of this chiral Hamiltonian. The ground state
+                                                                               on a 96×96 lattice is computed with GfTNS, and the
+                                                                               results are shown in Fig.10.  As we see, there is a clear
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                               FIG. 10:  Correlator⟨γ                      1(x,0)    γ2(0,0)   ⟩along thex-axis, as a
+                                                                               function of thex-distance on a 96×96 free fermion
+                                                                               px +ip   y mean-field superconductor.  Bond dimension is
+                                                                               16.  The∼10         −15    error of the exact correlator is due to
+                                                                               the floating-point error of the double-precesion we
+                                                                               adopted in our numerical calculation.
+
+FIG. 9:  Result of the GfTNS calculation for a 96×96                           length scale for all three kinds of GfTNS beyond which
+free fermion insulator.  (a) Error in ground state energy                      the correlator stops decaying expoentially.  This resem-
+density.  Inset:  norm of the energy gradient as a                             bles the behavior of recent numerical studies of 2D TNS
+function of bond dimension.  (b) Correlator⟨γ                      1(x,0)    γ2(0,0)   ⟩gapped chiral states using variational infinite projected
+along thex-axis, as a function of thex-distance.  The                          entangled pair states (PEPS), where the correlators de-
+bond dimension is 16.                                                          cay exponentially for short distances and then eventually
+                                                                               algebraically [61,62].
+                                                                                  To access the “chiralness” of the TNS, one can com-
+both  properties  of  the  insulator  than  uni-isoTNS  does                   pute  the  real-space  Chern  number  (RSCN)  [63]  of  the
+with the same bond dimension.  Although both alt- and                          optimized GfTNS. To compute RSCN, one partitions the
+uni-isoTNS have a larger energy density error than the                         spatial region of a pure state into four regionsA, B, C, D
+unconstrained TNS, we see in Fig.9(b) that alt-isoTNS                          such thatA, B, Cform a triple joint andDcomplements
+accurately captures long-distance two-point correlations                       ABC; see the configuration in Fig.11. The RSCN in the
+                                                                                                                                                  13
+
+Majorana basis is defined as
+
+  ν=    11612πi[Tr(PP         APPBPPC)−Tr(PP        CPPBPPA)]
+                                                                  (32)
+whereP           ij  =⟨γ     jγi⟩is  the  Majorana  correlator  matrix.
+PA, PB, PC  are  the  spatial  projectors  onto  the  corre-
+sponding regions, i.e., diagonal matrices withi-th diag-
+onal elements equal to 1 if site-iis in the region, to 0 if
+not.  Kitaev proved that if the correlators decays expo-
+nentially, then as the size of all subregions goes to infin-
+ity,νapproaches an integer, and is proportional to the
+Hall conductance of the system [63]. As seen, the various
+
+
+
+
+
+                                                                             FIG. 12:  DMRG2 results for critical 2D transverse field
+                                                                             Ising model (g= 3.04438) on a 12×12 square lattice
+                                                                             with open boundary condition.  The accuracy of
+                                                                             alt-isoTNS increases with bond dimension faster than
+                                                                             that of uni-isoTNS. For the ground truth energies, we
+                                                                             use 1D DMRG on aχ= 2048 MPS, which agrees within
+                                                                             statistical error to quantum Monte Carlo results.
+                                                                             PEPS simple update results at the same bond
+                                                                             dimensions are provided for comparison.
+
+FIG. 11:  Left:  The real-space Chern number computed
+as a function of the subregion size.  Right:  Partition of
+the subregions.  The GfTNS has bond dimension 16,                            each column sequentially, sweeping left to right and vice-
+and is on a 96×96 lattice.                                                   versa.   Within  each  column,  we  find  the  ground  state
+types of GfTNS approximate well the exact Chern num-                         of the effective Hamiltonian of that column using tradi-
+ber of PipSC, which equals 1, but the error to the exact                     tional 1D DMRG. At a high level, DMRG2 is analogous
+value saturates to a finite non-zero, albeit small, value.                   to  the  standard  DMRG  sweeping  algorithm  if  we  view
+While the advantge of alt-isoTNS is less pronounced in                       each column as a site, now with each site being updated
+                                                                             itself with DMRG. As we do the left-right sweep, we use
+Fig.10, we see that alt-isoTNS captures the chiralness                       MM to shift the orthogonality column to the column we
+of the state significantly better in Fig.11.                                 are optimizing.  The isometric form provides stability to
+  It  is,  however,  unlikely  that  the  numerical  optimiza-               the DMRG2 algorithm as in the 1D case.  The algorithm
+tion  of  a  GfTNS  can  find  a  true  gapless  topologically               is  essentially  the  same  for  alt-isoTNS  and  uni-isoTNS,
+non-trivial  state,  because  such  states  are  always  non-                with the small change of MM mentioned in Sec.II D.
+injective  [25],  which  have  measure  0  in  the  variational                 As  a  concrete  example,  we  study  the  2D  transverse
+manifold.  Thus, the length scale in both the correlator                     field Ising (TFI) model at criticality on a square lattice
+and the RSCN is a result of the tension between good                         with open boundary conditions,
+quantitative approximation of the chiral ground state and
+the general inability of the GfTNS to represent a gapped                                        H=−     X     ZiZj +g   XXi                 (33)
+chiral state.  The tensor network representation of chiral                                               ⟨ij⟩              i
+states deserves further study.
+                                                                             whereg= 3.04438. We chose the system size to be 12×12
+                                                                             so that 1D snake DMRG withχ= 2048 gives accurate
+  E.    DMRG2 study of 2D critical transverse field                          ground state energy, within statistical error of 10−5   with
+                           Ising model                                       quantum Monte Carlo with 3×10      9 cluster updates.  For
+                                                                             the 2D isoTNS, we set the bond dimension to beχevery-
+  To  compare  the  representing  power  of  uni-isoTNS                      where except on the orthogonality column (row), where
+and alt-isoTNS for interacting spin systems, we use the                      we use a larger bond dimensionχ                    2.  As shown in Fig.12,
+DMRG2  algorithm [20] to find the ground states using                        forχ= 2,3,4,5, the energy density converges as a power-
+these two ansatzes.  The DMRG2 algorithm is essentially                      law of the bond dimension.  Interestingly, the power for
+a  nested  loop  over  two  levels  of  DMRG.  We  optimize                  alt-isoTNS is considerably larger than the power for uni-
+                                                                                                                                                 14
+
+isoTNS. Moreover, for uni-isoTNS, as we change the hori-                    tion advantage over uni-isoTNS. Finally, from a quantum
+zontal isometric arrows from leftward to rightward during                   circuit perspective, we showed that alt-isoTNS can be se-
+the sweep, we need to change the vertical isometric ar-                     quentially generated as a quantum circuit with a depth of
+rows from upward to downward.  Otherwise, uni-isoTNS                        O(L     2) compared toO(L) of the uni-isoTNS. The advan-
+DMRG2 does not converge.  See Sec.VII Cfor details of                       tage of alt-isoTNS over uni-isoTNS implies that given the
+isometric directions during the DMRG sweep.  This re-                       same number of local gates, different circuit depths and
+sult suggests that alt-isoTNS does have an algorithmic                      different order of applying the gates significantly changes
+advantage in finding the ground state of local isotropic                    the result of state-preparation on a quantum computer.
+Hamiltonians.    While at this system size we do not see                       Alt-isoTNS, or more generally the non-uniform varia-
+an advantange over 1D DMRG, we expect one to develop                        tion of isometric constraints on a TNS, opens up many
+asL    y → ∞.  Using imaginary time TEBD2 to optimize                       interesting research directions.  On the theoretical side,
+ground  states  of  the  critical  TFI,  an  infinite  strip  uni-          a  key  question  is  whether  there  are  phases  of  matter
+isoTNS finds a lower energy (when compared to QMC)                          that can be efficiently represented by alt-isoTNS but not
+than infinite 1D DMRG whenL          y = 20 [21].                           by  uni-isoTNS,  or  vice  versa.   While  uni-isoTNS  were
+  To place the accuracy of the isoTNS results in context,                   recently  shown  to  be  able  to  represent  critical  states
+we also present the PEPS simple update (SU) [64] results                    with algebraic correlations,  arising from classical parti-
+for comparison [65].  As seen in Fig.12, at bond dimen-                     tion functions viewed as quantum states [17], the repre-
+sion 5, alt-isoTNS is comparable to PEPS SU, although                       sentability of chiral states is more subtle.  For example,
+slightly worse.  We expect the more costly PEPS full up-                    in a related paper to appear, some of us show that uni-
+date [66] to give more accurate results than SU. However,                   isoGfTNS  cannot  representgaplesschiral  free  fermion
+unconstrained PEPS still lack the ability to be efficiently                 systems,  even  though  general  GfTNS  can  [25, 26].   In
+prepared on a quantum computer, which remains a key                         this context, an important relevant question is whether
+advantage of the isoTNS ansatz.                                             gapless chiral states admit alt-isoGfTNS representations.
+                                                                               On the practical side, due to the improved performance
+                                                                            and  negligible  computational  overhead,  one  should  use
+                      V.    DISCUSSION                                      alt-isoTNS  in  the  place  of  uni-isoTNS  for  many-body
+                                                                            simulations.   A  generalization  that  could  improve  fur-
+  In  this  work,   we  first  introduced  the  alternating                 ther the representability is to allow the vertical isomet-
+isoTNS ansatz. Secondly, we extended the GfTNS frame-                       ric  arrows  to  alternate  even  more  freely,  i.e.,  not  just
+work, a standard tool for efficiently investigating tensor                  alternate  between  each  column.   In  such  a  “free  form”
+network representability, to include isometric constraints,                 isoTNS,  the  optimization  algorithm  may  automatically
+resulting in the isoGfTNS ansatz.  Using a pedagogical                      determine which pattern of vertical isometric arrow di-
+example of stacked chains, we argued that entanglement                      rections are the best for the particular system being sim-
+in isoTNS is mediated along the isometric arrows,  and                      ulated.  For example, when sweeping across the columns
+thus,  unlike the uni-isoTNS, the alt-isoTNS admit effi-                    left  to  right  (and  vice  versa),  one  can  choose  the  col-
+cient  paths  to  mediate  entanglement  both  parallel  and                umn arrow direction based on the Moses Move error for
+orthogonal to the isometric constraints in the network.                     the two-column splitting, i.e. always choose the direction
+As generic states are expected to have entanglement in                      giving the smaller error.  Another promising direction is
+all  directions,  we  expect  alt-isoTNS  to  perform  better               the optimization of isoTNS with variational Monte Carlo
+than  uni-isoTNS,  as  we  demonstrated  in  a  number  of                  (VMC). Due to its low computational complexity in bond
+both  non-interacting  and  interacting  examples.   Using                  dimension,  variational  Monte  Carlo  for  tensor  network
+the  introduced  isoGfTNS  framework,  we  demonstrated                     states has recently become the state of the art in simu-
+that  alt-isoGfTNS  outperform  uni-isoGfTNS  in  repre-                    lating a TNS ground state in two dimension [67].  A key
+senting  the  ground  states  of  paradigmatic  free-fermion                step in VMC algorithms is the sampling of basis states ac-
+systems, namely (1) decoupled stacks of chains, (2) the                     cording to their Born probabilities.  All uni-isoTNS, alt-
+Fermi  surface,  (3)  the  gapped  band  insulator,  and  (4)               isoTNS, and “free form” isoTNS can be more efficiently
+thep      x +ip   y  mean-field  superconductor.   We  expect  a            sampled than generic TNS [68,69], therefore it is natu-
+similar advantage in the representation power for inter-                    ral to extend VMC to isoTNS where again alt-isoTNS is
+acting  alt-isoTNS  over  fermionic  uni-isoTNS  based  on                  expected to provide an improvement to uni-isoTNS.
+the argument that the limiting factor for isoTNS is not                        The  variety  of  isometric  constraints  on  TNS  can  go
+interaction but entanglement [28].  Turning to the trans-                   beyond uniform, alternating, and free forms.  Going one
+verse  field  Ising  model,  an  interacting  spin  model,  we              step further, one may consider networks composed of ten-
+showed that the energy density error of alt-isoTNS con-                     sors that are isometric upon several different groupings
+verges with a larger power law than that of uni-isoTNS.                     of legs.  One example is given in the recently proposed
+This  indicates  that,  despite  the  two  ansatz  having  the              dual-isometric projected entangled pair states [70], which
+same leading order computational cost and retaining the                     allow for efficient calculation of a broader class of observ-
+same benefits of optimization in an orthonormal basis as                    ables than previously possible with conventional isoTNS.
+compared to generic TNS, alt-isoTNS has an representa-                      The isoGfTNS approach we have introduced here offers
+                                                                                                                                                                 15
+
+               two distinct advantages:                                                                   VI.    ACKNOWLEDGEMENT
+
+                   1.In general, each of the TNS with different isomet-                        Y.W.  is  supported  by  a  start-up  grant  from  IOP-
+                       ric constraints requires a specific optimization al-                 CAS.  L.W.  and  Q.  Y.  are  supported  by  the  National
+                       gorithm utilizing the isometric condition.  For ex-                  Natural Science Foundation of China under Grants No.
+                       ample,  the algorithm for dual-isometric projected                   T2225018,  No.     92270107,  and  No.     12188101,  No.
+                       entangled  pair  states  [70]  is  distinct  to  that  for           T2121001,   and  the  Strategic  Priority  Research  Pro-
+                       uni-isoTNS.  However,  this  is  not  the  case  in  the             gram  of  Chinese  Academy  of  Sciences  under  Grants
+                       framework  of  GfTNS.  One  does  not  need  to  de-                 No.    XDB0500000  and  No.    XDB30000000.    ZD,  SA
+                       velop  different  optimization  algorithms  for  differ-             and  MZ  were  supported  by  the  U.S.  Department  of
+                       ent  isometric  constraints.   GfTNS  with  arbitrary                Energy,  Office  of  Science,  Basic  Energy  Sciences,  un-
+                       isometric constraints can all be parameterized by                    der Early Career Award No.  DE-SC0022716.  S.L. and
+                       simply  demanding  that  sub-blocks  of  the  correla-               F.P. were supported by the DFG TRR80.  F.P acknowl-
+                       tion matrix corresponding to outgoing legs are zero,                 edge support from the Deutsche Forschungsgemeinschaft
+                       as  discussed  in  Sec.III C,  and  optimized  accord-               (DFG, German Research Foundation) under Germany’s
+                       ingly.  This enables high throughput evaluation of                   Excellence  Strategy–EXC–2111–390814868,  TRR  360  –
+                       many different isometric constraints.                                492547816 and DFG Research Unit FOR 5522 (project-
+                                                                                            id  499180199),  the  European  Research  Council  (ERC)
+                                                                                            under the European Union’s Horizon 2020 research and
+                   2.In general, algorithms for TNS with different iso-                     innovation programme (grant agreement No. 771537), as
+                       metric  constraints,   such  as  those  discussed  in                well as the Munich Quantum Valley, which is supported
+                       Sec.II Dand gradient descent algorithms for dual-                    by the Bavarian state government with funds from the
+                       isometric  projected  entangled  pair  states,  have  a              Hightech Agenda Bayern Plus.  Y.W. is grateful for dis-
+                       complexity  polynomial  in  bond  dimension.    Our                  cussion with Hong-Hao Tu.  The authors are grateful for
+                       isoGfTNS algorithms have a huge advantage in that                    an anonymous referee for providing the PEPS simple up-
+                       complexity  scaling  is  polylogarithmic  in  bond  di-              date  data  for  comparison  with  the  isoTNS  interacting
+                       mension.                                                             results. The data that support the findings of this article
+                                                                                            are openly available [71]; embargo periods may apply.
+
+               Together,  this  establishes  isoGfTNS  as  a  tool  of  inde-
+               pendent interest in studying the representability of TNS                                            VII.    APPENDIX
+               ansatzes with various isometric constraints.
+                  Although in this work we focused on 2D systems on                                           A.    GfTNS with unit cell
+               square  lattices,  a  further  interesting  future  direction  is
+               to investigate the effect of isometric constraints on TNS                       When there are unit cells in the system, letγ     µr  denote
+               representation in higher dimension or different lattice ge-                  a Majorana fermion mode whererdenotes the unit-cell
+               ometry.  The complexity of GfTNS and isoGfTNS scales                         position,  andµcollectively  denotes  all  other  intra-cell
+               much more favorably, only polynomially with dimension,                       degrees of freedom such as the position within a unit-cell
+               making such a study possible.                                                and  the  first  or  the  second  part  of  a  complex  fermion
+                  Finally, due to the strong connection between isoTNS                      mode.  On each sitex, one still assigns a local Gaussian
+               and  unitary  circuits  and  the  ability  to  efficiently  opti-            linear map with covariant matrixA(x), and take
+               mize isoTNS on classical computers,  the study of vari-
+               ous isometric networks will shed light on quantum state                                       A≡A(r) =              M        A(x)              (34)
+               preparation on near-term quantum computers.  In addi-                                                         x:in unit cellr
+               tion, the alt-isoTNS ansatz finds potential applications in
+               machine learning, particularly for scenarios where mod-                      where translational invariance demandsA(r) be the same
+               els are trained classically but inference is performed on                    for allr.  LetBandDbe similarly defined.  Then the
+               quantum  devices.   Algorithms  for  manipulating  classi-                   physical covariance matrix of the TNS is still given by
+               cal  isoTNS  can  be  interpreted  as  approximation  algo-                  Eq.13.
+               rithms  for  quantum  circuit  compilation.   For  example,
+               one can imagine the approximation algorithm using MMs
+               to transform an alt-isoTNS to an uni-isoTNS corresponds                                        B.    Larger MERA for|            ⟩
+               to a quantum circuit compilation of approximately trans-
+               forming anO(L          2) depth circuit intoO(L) depth.  Look-                  As  discussed  in  SectionII A,  we  can  understand  the
+               ing forward, further exploration of isoTNS may provide                       representational difference between alt- and uni-isoTNS
+               valuable insights into scalable quantum state preparation                    by considering stacks of diagonal chains. For the negative
+               and the development of quantum-assisted machine learn-                       diagonal state|      ⟩, uni-isoTNS most efficiently represents
+               ing applications.                                                            this state as a MERA. In Fig.13, we demonstrate this
+
+
+
+
+
+
+
+
+⧹⧹
+                                                                                                                                                       16
+
+for a single chain of lengthL= 16. For this larger system                      not converge.  This is most likely because the time direc-
+size thanL= 5 shown in Fig.3c, we see the alternating                          tion, along which entanglement is mediated, constantly
+layers of unitaries and isometries. If we were to stack the                    changes during the↑to↑sweep, while other choices do
+MERA for all possible (1,−1) diagonal chains, we would                         not suffer from this problem.  The stable oscillation pat-
+see that the tensor in the top-right corner, the OC, would                     terns indicate that the position of the orthogonality col-
+require virtual bond dimensions ofχ   L−1    , whereχis the                    umn also affects the representing power of the isoTNS.
+bond dimension of each MERA.                                                   Finally, note that the energy is often minimized when the
+                                                                               OHS in in the middle of the system (near sweep indices
+                                                                               n+   1/4andn+               3/4for integernas the OHS will be in the
+  C.    Isometric directions during a DMRG2 sweep                              middle of the 2D system), as this minimizes the average
+                                                                               distance  most  tensors  are  from  the  OHS.  Finally,  note
+   In  this  appendix,  we  discuss  different  choices  of  iso-              that the energy is often minimized when the OHS in in
+metric directions during a DMRG2 sweep and how they                            the middle of the system (near sweep indicesn+                 1/4and
+change the result.  As illustrated in Fig.14, as we move                       n+    3/4for integernas the OHS will be in the middle of
+the orthogonality column and optimize the tensors along                        the 2D system), as this minimizes the average distance
+the column, the horizontal arrows are required to point                        most tensors are from the OHS.
+into  the  orthogonality  column,  but  we  can  choose  the
+direction  of  the  vertical  arrows.   For  uni-isoTNS  with
+isometry arrows originally pointing up and to the left, we                                 D.    Optimization details for GfTNS
+can either keep the vertical arrows up during the sweep,
+namely an↑to↑sweep (Fig.14(a)), or reverse the ver-                               We also comment how the GfTNS numerical optimiza-
+tical arrows as we sweep, an↑to↓sweep (Fig.14(b)).                             tion is done in practice.  The optimization is non-convex.
+Similarly, for alt-isoTNS, we can choose between the↑↓to                       To overcome this, one can seed the simulation with dif-
+↑↓sweep (Fig.14(c)) and the↑↓to↓↑sweep (Fig.14(d)).                            ferent initial states.  In our case, 30 to 40 different ran-
+   Since we have shown that the isometric direction af-                        dom initial states were each independently optimized for
+fects the representing power, it is interesting to test how                    10000 iterations, and then the one with the lowest energy
+they change the result of DMRG2 .  In Fig.15we show                            was picked to be further optimized for 100000 iterations.
+the DMRG2  result for the 4 different choices of isomet-                       Every 10000 iterations, we also add some randomness to
+ric directions.  Here, we plot the energy as a function of                     the state to escape local minima.  Then after that, if gra-
+the sweep index.  In each sweep,  the orthogonality col-                       dient is still large, we use Newton’s method to do a final
+umn is moved from left to the right and back again, so                         descent. After these steps, the energy gradients of the op-
+a non-integer value is when the OHS is away from the                           timized states can often go below 10−9  . The optimization
+left edge of the system.  The↑to↓sweep for uni-isoTNS                          is done on a GPU, and the computation is parallelized
+and the two types of alt-isoTNS sweeps converge to sta-                        over the differentkpoints of the translationally invariant
+ble oscillations, but the↑to↑sweep for uni-isoTNS does                         systems.
+
+
+
+
+
+ [1]F. Verstraete and J. I. Cirac,Renormalization algorithms                         Phys.93, 045003 (2021).
+     for quantum-many  body systems  in two and  higher di-                      [7]M. C. Ba˜nuls, Tensor network algorithms:  A route map,
+     mensions(2004).                                                                 Annual  Review  of  Condensed  Matter  Physics14,  173
+ [2]H.  Niggemann,  A.  Kl¨umper,  and  J.  Zittartz,  Quantum                       (2023).
+     phase  transition  in  spin-3/2  systems  on  the  hexagonal                [8]J.   Naumann,   E.   L.   Weerda,   M.   Rizzi,   J.   Eisert,
+     lattice—optimum ground state approach, Zeitschrift f¨ur                         and  P.  Schmoll,  An  introduction  to  infinite  projected
+     Physik B Condensed Matter, 103 (1997).104                                       entangled-pair   state   methods   for   variational   ground
+ [3]T. Nishino and K. Okunishi, A density matrix algorithm                           state simulations using automatic differentiation (2023),
+     for 3d classical models, Journal of the Physical Society                        arXiv:2308.12358.
+     of Japan67, 3066 (1998).                                                    [9]S.  R.  White,  Density  matrix  formulation  for  quantum
+ [4]G.  Sierra,  The  density  matrix  renormalization  group,                       renormalization groups,Phys. Rev. Lett.69, 2863 (1992).
+     quantum  groups  and  conformal  field  theory,  inPro-                   [10]U.   Schollw¨ock,   The   density-matrix   renormalization
+     ceedings of the Workshop on the Exact Renormalization                           group,Rev. Mod. Phys.77, 259 (2005).
+     Group(World Scientific, 1998).                                            [11]G. Vidal, Efficient classical simulation of slightly entan-
+ [5]S.-J. Ran, E. Tirrito, C. Peng, X. Chen, L. Tagliacozzo,                         gled quantum computations,Phys. Rev. Lett.91, 147902
+     G. Su, and M. Lewenstein,Tensor network contractions:                           (2003).
+     methods and applications to quantum many-body systems                     [12]J. Haegeman, C. Lubich, I. Oseledets, B. Vandereycken,
+     (Springer Nature, 2020).                                                        and F. Verstraete, Unifying time evolution and optimiza-
+ [6]J.  I.  Cirac,  D.  P´erez-Garc´ıa,  N.  Schuch,  and  F.  Ver-                  tion with matrix product states,Phys. Rev. B94, 165116
+     straete,  Matrix  product  states  and  projected  entangled                    (2016).
+     pair states:  Concepts, symmetries, theorems,Rev. Mod.
+                                                                                                                                                                17
+
+[13]M. P. Zaletel and F. Pollmann, Isometric tensor network                               sistency  conditions  for  an  ads  multiscale  entanglement
+     states in two dimensions,Phys. Rev. Lett.124, 037201                                 renormalization ansatz correspondence,Phys. Rev. D91,
+     (2020).                                                                              125036 (2015).
+[14]R. Haghshenas, M. J. O’Rourke, and G. K.-L. Chan, Con-                          [33]C.  Sch¨on,  K.  Hammerer,  M.  M.  Wolf,  J.  I.  Cirac,  and
+     version of projected entangled pair states into a canonical                          E. Solano, Sequential generation of matrix-product states
+     form,Phys. Rev. B100, 054404 (2019).                                                 in cavity qed, Physical Review A75, 032311 (2007).
+[15]K.   Hyatt   and   E.   M.   Stoudenmire,   Dmrg   approach                     [34]M.-C.  Banuls,  D.  P´erez-Garc´ıa,  M.  M.  Wolf,  F.  Ver-
+     to  optimizing  two-dimensional  tensor  networks  (2020),                           straete, and J. I. Cirac, Sequentially generated states for
+     arXiv:1908.08833 [cond-mat.str-el].                                                  the study of two-dimensional systems, Physical Review
+[16]C.  Sch¨on,  E.  Solano,  F.  Verstraete,  J.  I.  Cirac,  and                        A77, 052306 (2008).
+     M.  M.  Wolf,  Sequential  generation  of  entangled  multi-                   [35]Z.-Y. Wei, D. Malz, A. Gonz´alez-Tudela, and J. I. Cirac,
+     qubit states, Physical review letters95, 110503 (2005).                              Generation of photonic matrix product states with ryd-
+[17]Y.-J.  Liu,  K.  Shtengel,  and  F.  Pollmann,  Topological                           berg atomic arrays,Phys. Rev. Res.3, 023021 (2021).
+     quantum  phase  transitions  in  2d  isometric  tensor  net-                   [36]M. Foss-Feig, D. Hayes, J. M. Dreiling, C. Figgatt, J. P.
+     works, arXiv preprint arXiv:2312.05079  (2023).                                      Gaebler,  S.  A.  Moses,  J.  M.  Pino,  and  A.  C.  Potter,
+[18]X. Chen, A. Dua, M. Hermele, D. T. Stephen, N. Tan-                                   Holographic  quantum  algorithms  for  simulating  corre-
+     tivasadakarn,  R.  Vanhove,  and  J.-Y.  Zhao,  Sequential                           lated spin systems,Phys. Rev. Res.3, 033002 (2021).
+     quantum circuits as maps between gapped phases, Phys-                          [37]S.  Anand,  J.  Hauschild,  Y.  Zhang,  A.  C.  Potter,  and
+     ical Review B109, 075116 (2024).                                                     M.  P.  Zaletel,  Holographic  quantum  simulation  of  en-
+[19]X.  Chen,  M.  Hermele,  and  D.  T.  Stephen,  Sequential                            tanglement  renormalization  circuits,PRX  Quantum4,
+     adiabatic  generation  of  chiral  topological  states,  arXiv                       030334 (2023).
+     preprint arXiv:2402.03433  (2024).                                             [38]R.  Haghshenas,  E.  Chertkov,  M.  DeCross,  T.  M.  Gat-
+[20]S.-H. Lin, M. P. Zaletel, and F. Pollmann, Efficient simu-                            terman,  J.  A.  Gerber,  K.  Gilmore,  D.  Gresh,  N.  He-
+     lation of dynamics in two-dimensional quantum spin sys-                              witt,  C.  V.  Horst,  M.  Matheny,  T.  Mengle,  B.  Neyen-
+     tems with isometric tensor networks,Phys. Rev. B106,                                 huis,   D.   Hayes,   and   M.   Foss-Feig,Probing   critical
+     245102 (2022).                                                                       states of matter on a digital quantum computer(2023),
+[21]Y.  Wu,  S.  Anand,  S.-H.  Lin,  F.  Pollmann,  and  M.  P.                          arXiv:2305.01650 [quant-ph].
+     Zaletel,  Two-dimensional  isometric  tensor  networks  on                     [39]L.   Slattery   and   B.   K.   Clark,Quantum   circuits
+     an infinite strip,Phys. Rev. B107, 245118 (2023).                                    for  two-dimensional  isometric  tensor  networks(2021),
+[22]Z. Dai,  Y. Wu,  T. Wang, and M. P. Zaletel, Fermionic                                arXiv:2108.02792 [quant-ph].
+     isometric tensor network states in two dimensions (2024),                      [40]Due to the isometry conditions on each tensor, with phys-
+     arXiv:2211.00043 [cond-mat.str-el].                                                  ical dimensiond= 2 one cannot have a non-trivial uni-
+[23]W.  Kadow,  F.  Pollmann,  and  M.  Knap,  Isometric  ten-                            form  bond  dimensionχ  >1  for  all  virtual  legs  at  the
+     sor network representations of two-dimensional thermal                               boundary. As shown in Fig.5(a) and Fig.5(b), the verti-
+     states,Phys. Rev. B107, 205106 (2023).                                               cal bond dimensions of the leftmost column (i.e. furthest
+[24]C. V. Kraus, N. Schuch, F. Verstraete, and J. I. Cirac,                               from the OC) are trivial. Thus, tensors in the final col-
+     Fermionic projected entangled pair states,Phys. Rev. A                               umn,  when viewed as a gates of the resulting quantum
+     81, 052338 (2010).                                                                   circuit, quantum circuit, can be applied in parallel with
+[25]T. B. Wahl, H.-H. Tu, N. Schuch, and J. I. Cirac, Pro-                                other  gates.  This  is  a  boundary  effect.  For  alt-isoTNS,
+     jected entangled-pair states can describe chiral topologi-                           only one unitary gate can be applied at each time step
+     cal states,Phys. Rev. Lett.111, 236805 (2013).                                       inside  the  bulk.  Therefore,  the  depth  of  an  alt-isoTNS
+[26]J.  Dubail  and  N.  Read,  Tensor  network  trial  states  for                       circuit isO(L        x ·L y).
+     chiral  topological  phases  in  two  dimensions  and  a  no-                  [41]I.  H.  Kim,Holographic  quantum  simulation(2017),
+     go theorem in any dimension,Phys. Rev. B92, 205307                                   arXiv:1702.02093 [quant-ph].
+     (2015).                                                                        [42]Y.  Du,  T.  Huang,  S.  You,  M.-H.  Hsieh,  and  D.  Tao,
+[27]Q.   Yang,   X.-Y.   Zhang,   H.-J.   Liao,   H.-H.   Tu,   and                       Quantum circuit architecture search for variational quan-
+     L.  Wang,  Projectedd-wave  superconducting  state:   A                              tum algorithms, npj Quantum Information8, 62 (2022).
+     fermionic  projected  entangled  pair  state  study, Phys.                     [43]Y.  Du,  Z.  Tu,  X.  Yuan,  and  D.  Tao,  Efficient  measure
+     Rev. B107, 125128 (2023).                                                            for  the  expressivity  of  variational  quantum  algorithms,
+[28]Q. Mortier, N. Schuch, F. Verstraete, and J. Haegeman,                                Physical Review Letters128, 080506 (2022).
+     Tensor  networks  can  resolve  fermi  surfaces,Phys.  Rev.                    [44]L. Funcke, T. Hartung, K. Jansen, S. K¨uhn, and P. Stor-
+     Lett.129, 206401 (2022).                                                             nati,  Dimensional  expressivity  analysis  of  parametric
+[29]R.   Masaoka,   S.   Ono,   H.   C.   Po,   and   H.   Watan-                         quantum circuits, Quantum5, 422 (2021).
+     abe,Frustration-free  free  fermions  and  beyond(2025),                       [45]Y. Wu,  J. Yao,  P. Zhang, and H. Zhai, Expressivity of
+     arXiv:2503.12879 [cond-mat.str-el].                                                  quantum neural networks, Physical Review Research3,
+[30]Z.-Y. Wei, D. Malz, and J. I. Cirac, Sequential generation                            L032049 (2021).
+     of projected entangled-pair states,Phys. Rev. Lett.128,                        [46]T.  Haug,  K.  Bharti,  and  M.  Kim,  Capacity  and  quan-
+     010607 (2022).                                                                       tum  geometry  of  parametrized  quantum  circuits,  PRX
+[31]F.  Pollmann,  S.  Mukerjee,  A.  M.  Turner,  and  J.  E.                            Quantum2, 040309 (2021).
+     Moore,  Theory  of  finite-entanglement  scaling  at  one-                     [47]X. Chen, A. Dua, M. Hermele, D. T. Stephen, N. Tan-
+     dimensional  quantum  critical  points,Phys.  Rev.  Lett.                            tivasadakarn,  R.  Vanhove,  and  J.-Y.  Zhao,  Sequential
+     102, 255701 (2009).                                                                  quantum circuits as maps between gapped phases, Phys-
+[32]N.  Bao,  C.  Cao,  S.  M.  Carroll,  A.  Chatwin-Davies,                             ical Review B109, 075116 (2024).
+     N. Hunter-Jones,  J. Pollack, and G. N. Remmen, Con-
+                                                                                                                                                                  18
+
+[48]Q.  Miao  and  T.  Barthel,  Isometric  tensor  network  op-                     [59]B. Swingle, Entanglement entropy and the fermi surface,
+     timization  for  extensive  hamiltonians  is  free  of  barren                        Phys. Rev. Lett.105, 050502 (2010).
+     plateaus, Physical Review A109, L050402 (2024).                                 [60]From basic solid state physics,  the directionality in the
+[49]T. Barthel and Q. Miao, Absence of barren plateaus and                                 k-space translates into the same directionality in the real
+     scaling of gradients in the energy optimization of isomet-                            space.
+     ric tensor network states, Communications in Mathemat-                          [61]J. Hasik, M. Van Damme, D. Poilblanc, and L. Vander-
+     ical Physics406, 86 (2025).                                                           straeten,  Simulating  chiral  spin  liquids  with  projected
+[50]M. A. Levin and X.-G. Wen, String-net condensation:  A                                 entangled-pair  states,Phys.  Rev.  Lett.129,  177201
+     physical mechanism for topological phases,Phys. Rev. B                                (2022).
+     71, 045110 (2005).                                                              [62]E.  L.  Weerda  and  M.  Rizzi,  Fractional  quantum  hall
+[51]I.  H.  Kim  and  D.  Ranard,  Classifying  2d  topological                            states  with  variational  projected  entangled-pair  states:
+     phases:   mapping  ground  states  to  string-nets  (2024),                           a study of the bosonic harper-hofstadter model (2023),
+     arXiv:2405.17379 [quant-ph].                                                          arXiv:2309.12811 [cond-mat.str-el].
+[52]T. Soejima, K. Siva, N. Bultinck, S. Chatterjee, F. Poll-                        [63]A.  Kitaev,  Anyons  in  an  exactly  solved  model  and  be-
+     mann, and M. P. Zaletel, Isometric tensor network repre-                              yond,Annals of Physics321, 2 (2006), january Special
+     sentation of string-net liquids,Phys. Rev. B101, 085117                               Issue.
+     (2020).                                                                         [64]H.  C.  Jiang,  Z.  Y.  Weng,  and  T.  Xiang,  Accurate  de-
+[53]A.   Kitaev,   Fault-tolerant   quantum   computation   by                             termination  of  tensor  network  state  of  quantum  lattice
+     anyons,Annals of Physics, 2 (2003)303.                                                models in two dimensions,Phys. Rev. Lett.101, 090603
+[54]N. Schuch, I. Cirac, and D. P´erez-Garc´ıa, Peps as ground                             (2008).
+     states:  Degeneracy and topology,Annals of Physics325,                          [65]The PEPS SU data are provided by an anonymous ref-
+     2153 (2010).                                                                          eree, for whom we are grateful.
+[55]The left regular matrix representation of a groupGis de-                         [66]M. Lubasch, J. I. Cirac, and M.-C. Ba˜nuls, Algorithms
+     fined as follows. Consider the vector space spanned by all                            for finite projected entangled pair states,Phys. Rev. B
+     group elements:V= span{g|g∈G}, where allgs are de-                                    90, 064425 (2014).
+     fined to be linearly independent. The matrix representa-                        [67]W.-Y. Liu, Y.-Z. Huang, S.-S. Gong, and Z.-C. Gu, Accu-
+     tionϕ(g) ofginVis a permutation matrix whose action                                   rate simulation for finite projected entangled pair states
+     is defined on the basis ofVasϕ(g)|g              ′⟩=|gg     ′⟩∀g  ′ ∈G.               in two dimensions,Phys. Rev. B103, 235155 (2021).
+     This is clearly a,  possibly reducible,  matrix representa-                     [68]T.  Vieijra,  J.  Haegeman,  F.  Verstraete,  and  L.  Van-
+     tion ofG, becauseϕ(g)ϕ(g                       ′) =ϕ(gg      ′). Allϕ(g) are trace-   derstraeten,  Direct  sampling  of  projected  entangled-
+     less expect wheng=e.                                                                  pair   states,   Physical   Review   B104,  10.1103/phys-
+[56]Whenn                 v is even, a GfTNS can be constructed as a con-                  revb.104.235141(2021).
+     ventional TNS with bond dimension 2nv/2  . Whenn           v  is                [69]S. Anand, S. Thanvantri, Y. Wu, and M. P. Zaletel, Per-
+     odd, this is no longer possible, yet the odd-n      v GfTNS is                        fect sampling of isometric tensor networks and applica-
+     still well-defined. Thus, one should takeχ=    √2nv  as a                             tions to finite temperature thermodynamics (to appear).
+     continuation from evenn    v to oddn     v.                                     [70]X.-H.   Yu,   J.   I.   Cirac,   P.   Kos,   and   G.   Styliaris,
+[57]S. Bravyi, Lagrangian representation for fermionic linear                              Dual-isometric  projected  entangled  pair  states,  Physi-
+     optics,Quantum Inf. Comput.5, 216 (2005).                                             cal Review Letters133,10.1103/physrevlett.133.190401
+[58]D. Gioev and I. Klich, Entanglement entropy of fermions                                (2024).
+     in any dimension and the widom conjecture,Phys. Rev.                            [71]Y.   Wu,   Z.   Dai,   S.   Anand,   S.-H.   Lin,   Q.   Yang,
+     Lett.96, 100503 (2006).                                                               L. Wang, F. Pollmann, and M. Zaletel, github data repos-
+                                                                                           itory,  https://github.com/yantaow/open_data/tree/
+                                                                                           main/wu2025alternating(2025).
+                                                                                                                                                    19
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 13:  MERA representing a single (1,−1) diagonal chain, embdeded on a 16×16 square lattice.
+                                                                                                                                               20
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 14:  isometric directions as we move the orthogonality column from the left to the middle during a DMRG2
+sweep (a) uni-isoTNS,↑to↑sweep (b) uni-isoTNS,↑to↓sweep (c) alt-isoTNS,↑↓to↑↓sweep (d) alt-isoTNS,↑↓
+to↓↑sweep
+                                                                                                                                               21
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIG. 15:  Energy density during DMRG2 sweeps of the
+critical TFI model on a 12×12 square lattice.  Five full
+sweeps are shown in the figure.  In each full sweep, the
+orthogonality column is moved from the left to the right
+and back to the left.  Different colors indicate different
+vertical isometric directions during the sweep.  The
+bond dimension of isoTNS is 4, and the bond dimension
+along the orthogonality column is 16.
