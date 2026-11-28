@@ -527,6 +527,10 @@ function hamiltonian(inst) {
       return { formula: `H = ${hop} + &omega; ${sum("i")} b<sup>&dagger;</sup><sub>i</sub>b<sub>i</sub> + g ${sum("i")} n<sub>i</sub>(b<sup>&dagger;</sup><sub>i</sub> + b<sub>i</sub>)${p.U != null ? ` + U ${sum("i")} n<sub>i&uarr;</sub>n<sub>i&darr;</sub>` : ""}`,
         note: `${inst.model === "Holstein" ? "Holstein" : "Hubbard-Holstein"} model: ${p.spinless ? `${ne} spinless fermion${ne === 1 ? "" : "s"}` : `N<sub>&uarr;</sub> = ${p.N_up}, N<sub>&darr;</sub> = ${p.N_dn}`} on ${inst.n_sites} sites, one dispersionless phonon mode per site. t = 1${p.U != null ? `, U = ${p.U}` : ""}, &omega; = ${+(+p.w).toPrecision(6)}, g = ${+(+p.g).toPrecision(6)}. The coupling is to n<sub>i</sub> and the phonon term has no zero-point energy; a source written with n<sub>i</sub> &minus; &rho; or &omega;(b<sup>&dagger;</sup>b + &frac12;) is shifted by a constant (shown on its row). A dimensionless &lambda; is converted to g with the source's own definition. Exact diagonalization with a phonon cutoff is variational.${inst.cluster ? ` Cluster: ${esc(inst.cluster)}.` : ""}` };
     }
+    case "BoseHubbard":
+      // RULES.md 2.1 (2026-11-11): t = 1, on-site (U/2) n(n - 1), fixed boson number.
+      return { formula: `H = &minus;t ${sum(nn)} (b<sup>&dagger;</sup><sub>i</sub>b<sub>j</sub> + h.c.) + (U/2) ${sum("i")} n<sub>i</sub>(n<sub>i</sub> &minus; 1)`,
+        note: `Bose-Hubbard model: ${p.N_b} bosons on ${inst.n_sites} sites (n = ${+(p.N_b / inst.n_sites).toPrecision(6)}), t = 1, U = ${p.U}. Sources that call the hopping J are in units of J = t; a source written with U n(n &minus; 1) and no &frac12; has U = 2 &times; its coupling. A cutoff on the occupation per site is a subspace: exact diagonalization in it is variational.${inst.cluster ? ` Cluster: ${esc(inst.cluster)}.` : ""}` };
     default:
       return { formula: null,
         note: `An impurity model from VarBench (<code>${esc(inst.lattice)}</code>). VarBench defines its Hamiltonian, so it is not restated here. It has no meaningful per-site energy.` };
@@ -1086,6 +1090,7 @@ const MODEL_WORDS = {
   tJ: "t-j tj t-t'-j doped-mott holes",
   Holstein: "holstein electron-phonon polaron bipolaron cdw",
   HubbardHolstein: "hubbard-holstein holstein-hubbard electron-phonon polaron bipolaron cdw",
+  BoseHubbard: "bose-hubbard bosons bosonic superfluid mott",
   TFIsing: "tfim tfi",
   Impurity: "anderson dmft bath",
   HEG3D: "jellium electron-gas heg continuum 3d",
@@ -1174,6 +1179,10 @@ function searchIndex(inst, name) {
     const ne = p.N ?? p.N_up + p.N_dn;
     add(`w=${p.w} ω=${p.w} omega=${p.w} g=${p.g} ${p.spinless ? "spinless" : "spinful"} electrons=${ne} ${ne === 1 ? "polaron" : ne === 2 ? "bipolaron" : ""}`);
     if (ne === n && !p.spinless) add("half-filling half-filled");
+  }
+  if (inst.model === "BoseHubbard") {
+    add(`bosons=${p.N_b} n=${+(p.N_b / n).toPrecision(6)} u/j=${p.U}`);
+    if (p.N_b === n) add("unit-filling unit-density");
   }
   if (inst.model === "tJ") {
     const holes = n - p.N_up - p.N_dn;
@@ -1559,8 +1568,8 @@ function instancePage(inst) {
     `${el.padEnd(3)}${r.map(x => x.toFixed(6).padStart(13)).join("")}`).join("\n")}</pre></details>`;
   // Holstein and Hubbard-Holstein (2026-11-16): symbols keep their case (an uppercased ω is Ω), the
   // spin flag reads as spinless or spin-1/2, and the electron count is not confused with the site count.
-  const hol = /Holstein$/.test(inst.model);
-  const HOL_DT = { t: "t", w: "ω", g: "g", U: "U", N_up: "N↑", N_dn: "N↓" };
+  const hol = /Holstein$/.test(inst.model) || inst.model === "BoseHubbard"; // Bose-Hubbard: t and U keep their case too
+  const HOL_DT = { t: "t", w: "ω", g: "g", U: "U", N_up: "N↑", N_dn: "N↓", N_b: "N<sub>b</sub>" };
   const params = Object.entries(inst.params ?? {})
     .map(([k, v]) => hol && k === "spinless"
       ? `<div><dt>spin</dt><dd>${v ? "spinless" : "spin-1/2"}</dd></div>`
@@ -1645,7 +1654,7 @@ ${verified ? `<section><h2>How these numbers were read</h2>
 const MODEL_PHRASE = {
   Heisenberg: "the spin-1/2 Heisenberg antiferromagnet", J1J2: "the J1-J2 Heisenberg model", Kitaev: "the Kitaev (K-J-&Gamma;) model",
   ShastrySutherland: "the Shastry-Sutherland model", Hubbard: "the Hubbard model", tV: "the spinless t-V model", tJ: "the t-J model",
-  Holstein: "the Holstein model", HubbardHolstein: "the Hubbard-Holstein model",
+  Holstein: "the Holstein model", HubbardHolstein: "the Hubbard-Holstein model", BoseHubbard: "the Bose-Hubbard model",
   TFIsing: "the transverse-field Ising model", Impurity: "the impurity model", HEG3D: "the 3D homogeneous electron gas",
   HEG2D: "the 2D homogeneous electron gas", Hchain: "the hydrogen chain", Hsheet: "the hydrogen sheet",
 };

@@ -180,6 +180,8 @@ export function perSiteDivisor(inst) {
   if (inst.model === "Hubbard" || inst.model === "tV" || inst.model === "tJ") return inst.n_sites;
   // Holstein and Hubbard-Holstein (RULES.md 5, 2026-11-16): totals in units of t, per site E/N.
   if (inst.model === "Holstein" || inst.model === "HubbardHolstein") return inst.n_sites;
+  // Bose-Hubbard (RULES.md 5, 2026-11-11): totals in units of t, per site E/N.
+  if (inst.model === "BoseHubbard") return inst.n_sites;
   return null; // Impurity: no meaningful per-site energy
 }
 
@@ -202,6 +204,8 @@ export function expectedDof(inst) {
   // Holstein and Hubbard-Holstein: the electron count (RULES.md 5); phonons are not counted.
   if (inst.model === "Holstein" || inst.model === "HubbardHolstein")
     return inst.params?.N ?? (inst.params?.N_up != null && inst.params?.N_dn != null ? inst.params.N_up + inst.params.N_dn : null);
+  // Bose-Hubbard: the boson count N_b (RULES.md 5).
+  if (inst.model === "BoseHubbard") return inst.params?.N_b ?? null;
   if (inst.params?.Nf != null) return 2 * inst.params.Nf;
   return null;
 }

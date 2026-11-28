@@ -31,8 +31,10 @@ const tjFill = inst => inst.model === "tJ" && inst.params?.N_up != null ? (inst.
 // half-filled series is one ladder.
 const holParticles = inst => /Holstein$/.test(inst.model) ? inst.params.N ?? inst.params.N_up + inst.params.N_dn : null;
 const holFill = inst => holParticles(inst) != null && holParticles(inst) / inst.n_sites >= 0.4 ? holParticles(inst) / inst.n_sites : null;
+// Bose-Hubbard (2026-11-11): the boson density N_b / N, so a unit-filling series is one ladder.
+const bhFill = inst => inst.model === "BoseHubbard" ? inst.params.N_b / inst.n_sites : null;
 const fillingOf = inst => zetaOf(inst) != null ? zetaOf(inst) : tjFill(inst) != null ? Number(tjFill(inst).toFixed(4))
-  : holFill(inst) != null ? Number(holFill(inst).toFixed(4)) : inst.params?.Nf == null ? null
+  : holFill(inst) != null ? Number(holFill(inst).toFixed(4)) : bhFill(inst) != null ? Number(bhFill(inst).toFixed(4)) : inst.params?.Nf == null ? null
   : Number(((inst.model === "Hubbard" ? 2 : 1) * inst.params.Nf / inst.n_sites).toFixed(4));
 const latticeOf = inst => (inst.model === "Impurity" ? inst.lattice.split("-").slice(0, 2).join("-") : inst.lattice.replace(/-.*$/, ""));
 const sidesOf = inst => inst.lattice.match(/^rectangular-(\d+)x(\d+)$/)?.slice(1).map(Number) ?? null;
@@ -43,6 +45,8 @@ const variantsOf = inst => inst.instance_id.split("/")[1].split("_").slice(2)
     !(inst.model === "tJ" && /^(J|tp|tpp|h)-?[\d.]+$/.test(s)) &&
     // Holstein: the particles (f2, e4) and U, ω, g are in params, labelled from there.
     !(/Holstein$/.test(inst.model) && /^([fe]\d+|U-?[\d.]+|w[\d.]+|g-?[\d.]+)$/.test(s)) &&
+    // Bose-Hubbard: the boson count (b64) and U are in params.
+    !(inst.model === "BoseHubbard" && /^(b\d+|U-?[\d.]+)$/.test(s)) &&
     // Track 3: the bond length (R1.8) and the basis token (sto6g) are in params, labelled from there.
     !(/^H(chain|sheet)$/.test(inst.model) && (/^R[\d.]+$/.test(s) || s === inst.instance_id.split("_").pop())));
 const gcd = (a, b) => (b ? gcd(b, a % b) : a);

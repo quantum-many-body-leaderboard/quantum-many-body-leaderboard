@@ -1064,7 +1064,17 @@
         "method": "source text of arXiv:2608.18065 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; adversarial re-read: uncertain",
         "reported_as": "-0.48553(2)",
         "note": "Table II row 2D J1-J2, column E_Adam/N; Fig. 3b: J2 = 0.5 | H with J1/4 and J2/4 sigma.sigma (S.S); E/N; size and boundary of the row NOT printed (a 6x6 J1-J2 is used only in Fig. 5b); mapping to 10x10 OBC is a guess",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-27",
+          "scope": "value",
+          "method": "arXiv:2608.18065v1 PDF (only version; no journal reference on the arXiv abstract page, 2026-11-27), pypdf plain and layout modes, Table II p. 22 and Table I p. 22; code github.com/werro40/RNN-Natural-Gradients (README.md, TFIM-1D.py, J1J2-2D.py, Configs/*.yaml, fetched 2026-11-27)",
+          "location": "Table II row '2D J1 − J2', column E_Adam/N",
+          "reported_as": "−0.48553(2)",
+          "conversion": "-0.48553 x 400 = -194.212; 2e-5 x 400 = 0.008",
+          "note": "Sec. IV.C: H = (J1/4) sum_<ij> σ_i·σ_j + (J2/4) sum_<<ij>> σ_i·σ_j, Pauli operators, J1 = 1, J2 = 0.5 (= S·S form); Table II column E/N per spin; stored = 4N x E/N = 400 x E/N. C3 (lattice size/boundary) is not printed next to the row; settled by three independent lines: (1) the row's own reference value E_ref/N = -0.48654 [81] (Liu et al., PRB 98, 241109(R)) is the 10 x 10 open-lattice D = 8 PEPS energy: arXiv:2502.19576 (2D J1-J2 'with open boundary conditions on a L × L lattice', Fig. 10(c) '10 × 10, e_min = −0.48654', 'E_min are taken from Ref. [98]' = the same Liu et al. paper); (2) the code README: 'All models use open boundary conditions', J1J2-2D.py docstring '(J1 = 1.0, J2 = 0.5, open boundary conditions)'; (3) the companion 2D Heisenberg row of the same table (d_h = 200, Ns = 200 like the J1-J2 run, Table I) uses Configs/config_h2d.yaml 'N: 10 #number of sites N x N' and E_ref -0.628656, the 10 x 10 OBC value. The repo's config_j1j2.yaml (N: 6, dh: 10) is the 6 x 6 Fig. 5(b) Fisher-error study, not the Table II run. The previous 'mapping is a guess' note can be replaced by this evidence. Final energy evaluated at the end of training with fresh exact autoregressive samples (J1J2-2D.py lines 293-315), error = standard error. Variational; above the D = 8 PEPS -0.48654, not a record (PEPS D = 4 -0.4861 holds it). Complex 2D cRNN with Marshall sign prior (Eq. 40), d_h = 200, Ns = 200, Adam 2e5 iterations (Table I).",
+          "source_entry": "RP3-j1j2-hubbard-tfising#27 (qmbl-verify 2026-11-27)"
+        }
       },
       "compute": {
         "parameters": null,
@@ -1110,7 +1120,17 @@
         "method": "source text of arXiv:2608.18065 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; adversarial re-read: uncertain",
         "reported_as": "-0.48514(4)",
         "note": "Table II row 2D J1-J2, column E_minSR/N | as above; size/boundary not printed; value lies below the catalogue best -0.485075 of J1J2/square_100_O_0.5 if the mapping is right",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-27",
+          "scope": "value",
+          "method": "arXiv:2608.18065v1 PDF (only version; no journal reference on the arXiv abstract page, 2026-11-27), pypdf plain and layout modes, Table II p. 22 and Table I p. 22; code github.com/werro40/RNN-Natural-Gradients (README.md, TFIM-1D.py, J1J2-2D.py, Configs/*.yaml, fetched 2026-11-27)",
+          "location": "Table II row '2D J1 − J2', column E_minSR/N",
+          "reported_as": "-0.48514(4)",
+          "conversion": "-0.48514 x 400 = -194.056; 4e-5 x 400 = 0.016",
+          "note": "Sec. IV.C: H = (J1/4) sum_<ij> σ_i·σ_j + (J2/4) sum_<<ij>> σ_i·σ_j, Pauli operators, J1 = 1, J2 = 0.5 (= S·S form); Table II column E/N per spin; stored = 4N x E/N = 400 x E/N. C3 (lattice size/boundary) is not printed next to the row; settled by three independent lines: (1) the row's own reference value E_ref/N = -0.48654 [81] (Liu et al., PRB 98, 241109(R)) is the 10 x 10 open-lattice D = 8 PEPS energy: arXiv:2502.19576 (2D J1-J2 'with open boundary conditions on a L × L lattice', Fig. 10(c) '10 × 10, e_min = −0.48654', 'E_min are taken from Ref. [98]' = the same Liu et al. paper); (2) the code README: 'All models use open boundary conditions', J1J2-2D.py docstring '(J1 = 1.0, J2 = 0.5, open boundary conditions)'; (3) the companion 2D Heisenberg row of the same table (d_h = 200, Ns = 200 like the J1-J2 run, Table I) uses Configs/config_h2d.yaml 'N: 10 #number of sites N x N' and E_ref -0.628656, the 10 x 10 OBC value. The repo's config_j1j2.yaml (N: 6, dh: 10) is the 6 x 6 Fig. 5(b) Fisher-error study, not the Table II run. The previous 'mapping is a guess' note can be replaced by this evidence. Final energy evaluated at the end of training with fresh exact autoregressive samples (J1J2-2D.py lines 293-315), error = standard error. Variational; above the D = 8 PEPS -0.48654, not a record (PEPS D = 4 -0.4861 holds it). minSR 1e5 iterations, constant lambda = 1e-1, trust-region learning rate (Table I, Sec. IV.C).",
+          "source_entry": "RP3-j1j2-hubbard-tfising#28 (qmbl-verify 2026-11-27)"
+        }
       },
       "compute": {
         "parameters": null,

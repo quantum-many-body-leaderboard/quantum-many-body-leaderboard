@@ -1645,10 +1645,10 @@
     {
       "energy": -194.51776,
       "sigma": 0.003584,
-      "energy_variance": null,
+      "energy_variance": 3.8144,
       "dof": 224,
       "einf": 392,
-      "v_score": null,
+      "v_score": 0.002483773090220056,
       "method": "VMC",
       "ansatz": "NN-GPEPS",
       "method_detail": "N_v = 3; projected: point group (simplified), spin parity",
@@ -1664,8 +1664,18 @@
         "checked_on": "2026-11-26",
         "method": "source text of arXiv:2611.26604 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.759835(14)",
-        "note": "Tab. I; Tab. B1; Tab. D2 | H printed, t=1, U/t=8, 1/8 doping (112,112), periodic 16x16 | variance reported as 0.0149, not stored: convention not verified",
-        "secondary_of": null
+        "note": "Tab. I; Tab. B1; Tab. D2 | H printed, t=1, U/t=8, 1/8 doping (112,112), periodic 16x16; variance: the printed σ²/N column is Var(H)/N (released code, code/nngtn/measure.py line 221; qmbl-verify 2026-11-27)",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-27",
+          "scope": "value",
+          "method": "arXiv:2611.26604v1 (no journal version as of 2026-11-27); data release github.com/Chi-RZ/neural_gpeps",
+          "location": "Table I row 'NN-GPEPS, Nv = 3'; Table G2 'Fixed-parameter FP32 measurement'",
+          "reported_as": "E/N −0.759835(14), σ²/N 0.0149(7) (per site)",
+          "conversion": "energy -0.759835 x 256 = -194.51776 (= stored -194.51776); sigma 0.000014 x 256 = 0.003584 (= stored 0.003584); Var(H) = (σ²/N) x N = 0.0149 x 256 = 3.8144",
+          "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the variance (σ²/N printed; Var(H) stored), set on the pass by scripts/kbgap_variance_2026_11_28.mjs.",
+          "source_entry": "RP3-j1j2-hubbard-tfising#16 (qmbl-verify 2026-11-27)"
+        }
       },
       "compute": {
         "parameters": 2396485,
@@ -1691,10 +1701,10 @@
     {
       "energy": -194.58944,
       "sigma": 0.002816,
-      "energy_variance": null,
+      "energy_variance": 3.29472,
       "dof": 224,
       "einf": 392,
-      "v_score": null,
+      "v_score": 0.002144855553895849,
       "method": "VMC",
       "ansatz": "NN-GPEPS",
       "method_detail": "N_v = 4; projected: point group (simplified), spin parity",
@@ -1710,8 +1720,18 @@
         "checked_on": "2026-11-26",
         "method": "source text of arXiv:2611.26604 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.760115(11)",
-        "note": "Tab. I; Tab. B1; Tab. D2 | H printed, t=1, U/t=8, 1/8 doping (112,112), periodic 16x16 | variance reported as 0.01287, not stored: convention not verified",
-        "secondary_of": null
+        "note": "Tab. I; Tab. B1; Tab. D2 | H printed, t=1, U/t=8, 1/8 doping (112,112), periodic 16x16; variance: the printed σ²/N column is Var(H)/N (released code, code/nngtn/measure.py line 221; qmbl-verify 2026-11-27)",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-27",
+          "scope": "value",
+          "method": "arXiv:2611.26604v1 (no journal version as of 2026-11-27); data release github.com/Chi-RZ/neural_gpeps",
+          "location": "Table I row 'NN-GPEPS, Nv = 4'; Table G2 'Fixed-parameter FP32 measurement'",
+          "reported_as": "E/N −0.760115(11), σ²/N 0.01287(24) (per site)",
+          "conversion": "energy -0.760115 x 256 = -194.58944 (= stored -194.58944); sigma 0.000011 x 256 = 0.002816 (= stored 0.002816); Var(H) = (σ²/N) x N = 0.01287 x 256 = 3.29472",
+          "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the variance (σ²/N printed; Var(H) stored), set on the pass by scripts/kbgap_variance_2026_11_28.mjs.",
+          "source_entry": "RP3-j1j2-hubbard-tfising#17 (qmbl-verify 2026-11-27)"
+        }
       },
       "compute": {
         "parameters": 10144053,
@@ -1757,7 +1777,17 @@
         "method": "source text of arXiv:2611.26604 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; adversarial re-read: confirmed",
         "reported_as": "−0.7622(7)",
         "note": "Tab. I; App. F Eq. F2 | H printed, t=1, U/t=8, 1/8 doping (112,112), periodic 16x16",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-27",
+          "scope": "value",
+          "method": "arXiv:2611.26604v1 PDF (only version; no journal reference on the arXiv abstract page, 2026-11-27), pypdf layout mode; cross-checked against the authors' data release github.com/Chi-RZ/neural_gpeps (data/measurements/*/results.json, *.toml) and code/nngtn/system.py, measure.py",
+          "location": "Table I row 'NN-GPEPS (extrapolated)'; main text p. 3 'E0/N = −0.7622(7)'; App. F, Table F1",
+          "reported_as": "−0.7622(7) per site, units of t",
+          "conversion": "-0.7622 x 256 = -195.1232; 0.0007 x 256 = 0.1792",
+          "note": "Authors' own joint zero-variance extrapolation of the projected Nv = 3 and 4 training trajectories (linear E/N = eps0 + a σ²/N, orthogonal-distance regression, App. F); bound_type extrapolated is right. C7: the bar is not a 1-sigma standard error: 'Its uncertainty covers the two-standard-error interval of every fit' (App. F); Table F1 window means -0.762087 to -0.762295. Periodic torus, U = 8, t' = 0, (112, 112) electrons (Table D1). Record row (extrapolated class): checked hardest; value, bar, lattice, filling, couplings and class all agree.",
+          "source_entry": "RP3-j1j2-hubbard-tfising#23 (qmbl-verify 2026-11-27)"
+        }
       },
       "compute": {
         "parameters": null,
@@ -1803,7 +1833,17 @@
         "method": "source text of arXiv:2611.16430 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; adversarial re-read: confirmed",
         "reported_as": "−0.7604(32)",
         "note": "Tab. I; marked not variational | Eq.1 H, t=1, U/t=8, delta=1/8, periodic 16x16",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-27",
+          "scope": "value",
+          "method": "arXiv:2611.16430v1 PDF, pypdf layout mode (Table I lines 405-422 of sources/2611.16430v1.layout.txt); no journal version exists",
+          "location": "Table I, row 16x16, t'=0, 'MR-nVAFQMC (this work)(K=4,|G|=8, tau->inf extrap., not variational)'",
+          "reported_as": "−0.7604(32) per site, t",
+          "conversion": "-0.7604*256 = -194.6624; 0.0032*256 = 0.8192",
+          "note": "own number; also in text Sec. II C ('extrapolating E(tau)/N in tau^-3 on 16x16 (-0.7604(32))'); sigma, boundary, filling/couplings, bound_type, peer_reviewed and reference agree; no duplicate on the instance (data file read 2026-11-27)",
+          "source_entry": "RP4-hubbard-j1j2-tfising#4 (qmbl-verify 2026-11-27)"
+        }
       }
     },
     {
@@ -1829,7 +1869,17 @@
         "method": "source text of arXiv:2611.16430 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.7589(19)",
         "note": "Tab. I | Eq.1 H, t=1, U/t=8, delta=1/8, periodic 16x16",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-27",
+          "scope": "value",
+          "method": "arXiv:2611.16430v1 PDF, pypdf layout mode (Table I lines 405-422 of sources/2611.16430v1.layout.txt); no journal version exists",
+          "location": "Table I, row 16x16, t'=0, 'MR-nVAFQMC (this work)(K=4, tau=1.40, |G|=128)'",
+          "reported_as": "−0.7589(19) per site, t",
+          "conversion": "-0.7589*256 = -194.2784; 0.0019*256 = 0.4864",
+          "note": "own number; caption's own example '-0.7589(19) denotes -0.7589 +- 0.0019'; sigma, boundary, filling/couplings, bound_type, peer_reviewed and reference agree; no duplicate on the instance (data file read 2026-11-27)",
+          "source_entry": "RP4-hubbard-j1j2-tfising#5 (qmbl-verify 2026-11-27)"
+        }
       }
     }
   ],

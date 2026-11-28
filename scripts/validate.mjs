@@ -395,6 +395,19 @@ for (const m of ["Holstein", "HubbardHolstein"]) {
 }
 console.log(`Holstein and Hubbard-Holstein instances checked: ${checkedH}`);
 
+// Bose-Hubbard (RULES.md 2.1, 2026-11-11): the id against the params.
+let checkedB = 0;
+if (fs.existsSync(path.join("data", "BoseHubbard"))) for (const f of fs.readdirSync(path.join("data", "BoseHubbard"))) {
+  const inst = JSON.parse(fs.readFileSync(path.join("data", "BoseHubbard", f), "utf8")), p = inst.params, id = inst.instance_id;
+  checkedB++;
+  const k = id.match(/^BoseHubbard\/(.+)_(\d+)_([A-Z]+)_b(\d+)_U([-\d.e]+)$/);
+  if (!k) { issues.push(`BHID ${id}: id does not parse (RULES.md 2.1)`); continue; }
+  const [, lat, n, b, nb, U] = k;
+  if (inst.lattice !== lat || inst.n_sites !== +n || inst.boundary !== b) issues.push(`BHID ${id}: lattice, n_sites, boundary ${inst.lattice} ${inst.n_sites} ${inst.boundary}`);
+  if (p.t !== 1 || p.N_b !== +nb || fmtP(p.U) !== U) issues.push(`BHID ${id}: params ${JSON.stringify(p)}`);
+}
+console.log(`Bose-Hubbard instances checked: ${checkedB}`);
+
 console.log(`rows=${rows}  dof_checked=${checkedD}  einf_checked=${checkedE}  vscore_checked=${checkedV}  tfising_exact_checked=${checkedT}`);
 console.log(`compute_blocks=${checkedC}  coverage_entries=${checkedCov}  spectrum_entries=${checkedS}`);
 console.log(`automatic below-exact flags (RULES.md 6.2; listed, not issues): ${belowExact.length}${belowExact.length ? "\n  " + belowExact.join("\n  ") : ""}`);

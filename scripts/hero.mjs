@@ -53,6 +53,9 @@ const FORMULA = {
   // σ is implied for spin-1/2); this also keeps the formula inside a 400 px phone column.
   Holstein: [I("H"), O("="), O("−"), I("t"), SUM(nn), hc(ss(I("c"), I("i"), O("†")), sb(I("c"), I("j"))), O("+"), I("ω"), SUM(I("i")), ss(I("b"), I("i"), O("†")), sb(I("b"), I("i")),
     O("+"), I("g"), SUM(I("i")), sb(I("n"), I("i")), R(O("("), ss(I("b"), I("i"), O("†")), O("+"), sb(I("b"), I("i")), O(")"))],
+  // Bose-Hubbard (RULES.md 2.1, 2026-11-11): t = 1, on-site (U/2) n(n - 1).
+  BoseHubbard: [I("H"), O("="), O("−"), I("t"), SUM(nn), hc(ss(I("b"), I("i"), O("†")), sb(I("b"), I("j"))), O("+"), FR(I("U"), N(2)), SUM(I("i")), sb(I("n"), I("i")),
+    R(O("("), sb(I("n"), I("i")), O("−"), N(1), O(")"))],
   Hchain: molecular, Hsheet: molecular, Atom: molecular, Molecule: molecular, HEG2D: jellium, HEG3D: jellium,
 };
 export const formula = (model, block = false) => FORMULA[model] ? `<math${block ? ' display="block"' : ""}>${FORMULA[model].join("")}</math>` : "";
@@ -67,6 +70,7 @@ const ABOUT = {
   tJ: "A doped Mott insulator: hopping without double occupancy, plus exchange J.",
   Holstein: "Electrons coupled to one dispersionless phonon of frequency ω per site, with coupling g.",
   HubbardHolstein: "The Holstein model with on-site repulsion U.",
+  BoseHubbard: "Bosons hopping on a lattice with on-site repulsion U.",
   TFIsing: "Ising spins in a transverse field h.",
   Impurity: "Anderson impurity models from DMFT calculations.",
   HEG3D: "The homogeneous electron gas in three dimensions.",
@@ -107,6 +111,8 @@ const G = {
   tJ: () => sqLines() + neel((x, y) => x === 30 && y === 30),
   // A chain whose sites each hang on a spring: one phonon mode per site.
   Holstein: () => L(6, 22, 54, 22) + [12, 24, 36, 48].map(x => D(x, 22, 2.4) + `<path class="g-l" fill="none" d="M${x} 25 l-3 3 l6 3 l-6 3 l6 3 l-3 3"/>` + D(x, 42, 1.4)).join(""),
+  // Two bosons on the centre site: a site holds any number of them.
+  BoseHubbard: () => sqLines() + sqDots().replace(D(30, 30), "") + D(26.5, 30, 2.4) + D(33.5, 30, 2.4),
   Impurity: () => [...Array(8).keys()].map(k => { const a = k * Math.PI / 4, x = +(30 + 20 * Math.cos(a)).toFixed(2), y = +(30 + 20 * Math.sin(a)).toFixed(2); return L(30, 30, x, y, "g-dash") + D(x, y, 2.2); }).join("") + `<circle class="g-h" cx="30" cy="30" r="5.5"/>` + A(30, 30, 0, 3.5),
   Hchain: () => L(6, 30, 54, 30, "g-dash") + [10, 22, 34, 46].map(x => `<circle class="g-h" cx="${x}" cy="30" r="4"/>` + D(x, 30, 1.2)).join("") + `<path class="g-l" d="M10 42 V46 M22 42 V46 M10 44 H22"/><text class="g-t" x="13" y="54">R</text>`,
   // An atom: the nucleus inside three orbits. A molecule: three nuclei and their bonds.

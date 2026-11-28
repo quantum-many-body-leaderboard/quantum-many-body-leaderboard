@@ -1224,11 +1224,13 @@ Object.assign(NAMES, {
   "MR-nVAFQMC (K= 4, τ= 1.31, |G|= 8)": ["MR-nVAFQMC", "K = 4, τ = 1.31, |G| = 8", AF],
   "MR-nVAFQMC (K= 8, τ= 1.45, |G|= 8)": ["MR-nVAFQMC", "K = 8, τ = 1.45, |G| = 8", AF],
   "MR-nVAFQMC (K = 4, τ = 1.26, |G| = 8)": ["MR-nVAFQMC", "K = 4, τ = 1.26, |G| = 8", AF],
+  // Sec. II D: the fixed-depth series, 16 x 16 parameters tiled onto 32 x 32 without re-optimization.
+  "MR-nVAFQMC (τ = 1.15, |G| = 8, 16x16 parameters transferred)": ["MR-nVAFQMC", "τ = 1.15, |G| = 8; parameters optimized on 16 x 16, not re-optimized", AF],
   "MR-nVAFQMC (K= 4, |G|= 8, τ→∞ extrap.)": ["MR-nVAFQMC", "K = 4, |G| = 8; extrapolated: 1/τ³ → 0", AF],
   "MR-nVAFQMC, τ^-3 → 0 extrapolation (K = 4, |G| = 8)": ["MR-nVAFQMC", "K = 4, |G| = 8; extrapolated: 1/τ³ → 0", AF],
   "nVAFQMC (K= 1, |G|= 8, τ→∞ extrap.)": ["nVAFQMC", "|G| = 8; extrapolated: 1/τ³ → 0", AF],
   "nVAFQMC (K= 1, |G|= 64, τ→∞ extrap.)": ["nVAFQMC", "|G| = 64; extrapolated: 1/τ³ → 0", AF],
-  // arXiv:2506.08329 Supplemental Tables 2-5: SU simple update, GO gradient optimization.
+  // arXiv:2506.08329 Supplemental Tables 2-5 (Appendix E, Tables II-V of PRB 113, 085134): SU simple update, GO gradient optimization.
   ...Object.fromEntries([4, 6, 8].flatMap(D => [
     [`fMPS-SU, D = ${D}`, ["fMPS", "simple update", { ...TN, bond_dimension: D }]],
     [`fMPS-GO, D = ${D}`, ["fMPS", "gradient optimization", { ...TN, bond_dimension: D }]],
@@ -1257,9 +1259,15 @@ Object.assign(NAMES, {
   "DSL, 1 Lanczos step": ["VMC", `${DIRAC}, ${LANCZOS(1)}`],
   "DSL, 2 Lanczos steps": ["VMC", `${DIRAC}, ${LANCZOS(2)}`],
   "DSL, zero-variance extrapolation": ["VMC", `${DIRAC}; extrapolated: variance → 0 (p = 0, 1, 2)`],
+  // L = 20: Table III prints no 2-LS energy; Sec. IV.A fits p = 0, 1 with A and B from the smaller clusters.
+  "DSL, zero-variance extrapolation (p = 0, 1)": ["VMC", `${DIRAC}; extrapolated: variance → 0 (p = 0, 1, quadratic fit with A and B from the smaller clusters)`],
   "DMRG, truncation-error extrapolation": ["DMRG", "at most 8000 SU(2) states; extrapolated: truncation error → 0"],
   "aCNN (C4v)": ["aCNN", "symmetric: C4v"],
 });
+// Pass sweep-rows-2026-11-27-bosehubbard: arXiv:2404.07869 Tables 1 and 2, the neural backflow-Jastrow
+// state of the Bose-Hubbard model; D is the depth of its ResNet backflow, D = 0 the bare Jastrow factor.
+for (const D of [0, 2, 4, 6, 8])
+  NAMES[`NBFJ, D = ${D}`] = ["NBFJ", D === 0 ? "bare two-body Jastrow (backflow depth 0)" : `ResNet backflow of depth ${D}`, BF];
 
 export const PATTERNS = [
   // arXiv:1911.05163 (Stair, Huang & Evangelista), H6 and H8 in STO-6G: quantum Krylov runs by Krylov dimension N (re-read 2026-11-26).

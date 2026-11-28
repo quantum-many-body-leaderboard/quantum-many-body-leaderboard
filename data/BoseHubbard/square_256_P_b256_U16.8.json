@@ -1,0 +1,162 @@
+{
+  "model": "BoseHubbard",
+  "lattice": "square",
+  "n_sites": 256,
+  "boundary": "P",
+  "params": {
+    "t": 1,
+    "U": 16.8,
+    "N_b": 256
+  },
+  "instance_id": "BoseHubbard/square_256_P_b256_U16.8",
+  "rows": [
+    {
+      "energy": -114.176,
+      "sigma": 0.256,
+      "energy_variance": null,
+      "dof": 256,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "NBFJ",
+      "method_detail": "bare two-body Jastrow (backflow depth 0)",
+      "method_as_published": "NBFJ, D = 0",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Denis & Carleo, Accurate neural quantum states for interacting lattice bosons, Quantum 9, 1772 (2025), doi:10.22331/q-2025-06-17-1772, arXiv:2404.07869",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-27",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-27",
+        "method": "source text of arXiv:2404.07869 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading (2026-11-27)",
+        "reported_as": "-0.446(1)",
+        "note": "Table 2, 16x16, depth 0; sources/2404.07869.txt line 1017; boundary periodic: stated for 16 x 16 and 20 x 20 (text, Sec. 4.1); for every size implied by the cited code, cqsl/lattice-bosons v1.0.0 vmc.py 'g = nk.graph.Hypercube(N, n_dim=n_dim)' (NetKet default pbc=True; RULES.md 8, 2026-11-26); version read: the version accepted in Quantum (sources/2404.07869.txt, 'Accepted in Quantum 2025-06-04'), which Quantum publishes as Quantum 9, 1772 (2025) | Eq. (1): H = -J sum_<i,j> (a†_i a_j + a†_j a_i) + (U/2) sum_i a†_i a†_i a_i a_i, which is the instance's Hamiltonian with t = J (a†a†aa = n(n-1)); 'L x L two-dimensional square lattices at fixed number of particles N and unit density n = N/L^2 = 1'; tables print E_θ/JL^2, the energy per site in units of J, so no conversion.",
+        "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://doi.org/10.5281/zenodo.15632176",
+        "commit": "528a17e",
+        "script": "vmc.py",
+        "read_from": {
+          "quote": "All simulations were carried out with NetKet 3 [99]; the code used for this article can be found at Ref. [106]. ... [106] Zakari Denis. cqsl/lattice-bosons: v1.0.0, June 2025. URL https://doi.org/10.5281/zenodo.15632176.",
+          "location": "Quantum 9, 1772 (2025), arXiv:2404.07869 (sources/2404.07869.txt lines 504-506 and 847-849), Acknowledgements; reference [106]",
+          "checked_on": "2026-11-27",
+          "pass": "passes/code/code-links-2026-11-27.json"
+        }
+      }
+    },
+    {
+      "energy": -137.6,
+      "sigma": 0.0512,
+      "energy_variance": null,
+      "dof": 256,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "NBFJ",
+      "method_detail": "ResNet backflow of depth 2",
+      "method_as_published": "NBFJ, D = 2",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Denis & Carleo, Accurate neural quantum states for interacting lattice bosons, Quantum 9, 1772 (2025), doi:10.22331/q-2025-06-17-1772, arXiv:2404.07869",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-27",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-27",
+        "method": "source text of arXiv:2404.07869 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading (2026-11-27)",
+        "reported_as": "-0.5375(2)",
+        "note": "Table 2, 16x16, depth 2; sources/2404.07869.txt line 1018; boundary periodic: stated for 16 x 16 and 20 x 20 (text, Sec. 4.1); for every size implied by the cited code, cqsl/lattice-bosons v1.0.0 vmc.py 'g = nk.graph.Hypercube(N, n_dim=n_dim)' (NetKet default pbc=True; RULES.md 8, 2026-11-26); version read: the version accepted in Quantum (sources/2404.07869.txt, 'Accepted in Quantum 2025-06-04'), which Quantum publishes as Quantum 9, 1772 (2025) | Eq. (1): H = -J sum_<i,j> (a†_i a_j + a†_j a_i) + (U/2) sum_i a†_i a†_i a_i a_i, which is the instance's Hamiltonian with t = J (a†a†aa = n(n-1)); 'L x L two-dimensional square lattices at fixed number of particles N and unit density n = N/L^2 = 1'; tables print E_θ/JL^2, the energy per site in units of J, so no conversion.",
+        "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://doi.org/10.5281/zenodo.15632176",
+        "commit": "528a17e",
+        "script": "vmc.py",
+        "read_from": {
+          "quote": "All simulations were carried out with NetKet 3 [99]; the code used for this article can be found at Ref. [106]. ... [106] Zakari Denis. cqsl/lattice-bosons: v1.0.0, June 2025. URL https://doi.org/10.5281/zenodo.15632176.",
+          "location": "Quantum 9, 1772 (2025), arXiv:2404.07869 (sources/2404.07869.txt lines 504-506 and 847-849), Acknowledgements; reference [106]",
+          "checked_on": "2026-11-27",
+          "pass": "passes/code/code-links-2026-11-27.json"
+        }
+      }
+    },
+    {
+      "energy": -138.5216,
+      "sigma": 0.0256,
+      "energy_variance": null,
+      "dof": 256,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "NBFJ",
+      "method_detail": "ResNet backflow of depth 4",
+      "method_as_published": "NBFJ, D = 4",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Denis & Carleo, Accurate neural quantum states for interacting lattice bosons, Quantum 9, 1772 (2025), doi:10.22331/q-2025-06-17-1772, arXiv:2404.07869",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-27",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-27",
+        "method": "source text of arXiv:2404.07869 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading (2026-11-27)",
+        "reported_as": "-0.5411(1)",
+        "note": "Table 2, 16x16, depth 4; sources/2404.07869.txt line 1019; boundary periodic: stated for 16 x 16 and 20 x 20 (text, Sec. 4.1); for every size implied by the cited code, cqsl/lattice-bosons v1.0.0 vmc.py 'g = nk.graph.Hypercube(N, n_dim=n_dim)' (NetKet default pbc=True; RULES.md 8, 2026-11-26); version read: the version accepted in Quantum (sources/2404.07869.txt, 'Accepted in Quantum 2025-06-04'), which Quantum publishes as Quantum 9, 1772 (2025) | Eq. (1): H = -J sum_<i,j> (a†_i a_j + a†_j a_i) + (U/2) sum_i a†_i a†_i a_i a_i, which is the instance's Hamiltonian with t = J (a†a†aa = n(n-1)); 'L x L two-dimensional square lattices at fixed number of particles N and unit density n = N/L^2 = 1'; tables print E_θ/JL^2, the energy per site in units of J, so no conversion.",
+        "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://doi.org/10.5281/zenodo.15632176",
+        "commit": "528a17e",
+        "script": "vmc.py",
+        "read_from": {
+          "quote": "All simulations were carried out with NetKet 3 [99]; the code used for this article can be found at Ref. [106]. ... [106] Zakari Denis. cqsl/lattice-bosons: v1.0.0, June 2025. URL https://doi.org/10.5281/zenodo.15632176.",
+          "location": "Quantum 9, 1772 (2025), arXiv:2404.07869 (sources/2404.07869.txt lines 504-506 and 847-849), Acknowledgements; reference [106]",
+          "checked_on": "2026-11-27",
+          "pass": "passes/code/code-links-2026-11-27.json"
+        }
+      }
+    },
+    {
+      "energy": -138.72896,
+      "sigma": 0.01792,
+      "energy_variance": null,
+      "dof": 256,
+      "einf": null,
+      "v_score": null,
+      "method": "VMC",
+      "ansatz": "NBFJ",
+      "method_detail": "ResNet backflow of depth 6",
+      "method_as_published": "NBFJ, D = 6",
+      "family": "backflow / Pfaffian",
+      "bound_type": "variational",
+      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "reference": "Denis & Carleo, Accurate neural quantum states for interacting lattice bosons, Quantum 9, 1772 (2025), doi:10.22331/q-2025-06-17-1772, arXiv:2404.07869",
+      "peer_reviewed": true,
+      "source": "sweep-allresults-2026-11-27",
+      "provenance": "primary",
+      "verified": {
+        "checked_on": "2026-11-27",
+        "method": "source text of arXiv:2404.07869 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading (2026-11-27)",
+        "reported_as": "-0.54191(7)",
+        "note": "Table 2, 16x16, depth 6; sources/2404.07869.txt line 1020; boundary periodic: stated for 16 x 16 and 20 x 20 (text, Sec. 4.1); for every size implied by the cited code, cqsl/lattice-bosons v1.0.0 vmc.py 'g = nk.graph.Hypercube(N, n_dim=n_dim)' (NetKet default pbc=True; RULES.md 8, 2026-11-26); version read: the version accepted in Quantum (sources/2404.07869.txt, 'Accepted in Quantum 2025-06-04'), which Quantum publishes as Quantum 9, 1772 (2025) | Eq. (1): H = -J sum_<i,j> (a†_i a_j + a†_j a_i) + (U/2) sum_i a†_i a†_i a_i a_i, which is the instance's Hamiltonian with t = J (a†a†aa = n(n-1)); 'L x L two-dimensional square lattices at fixed number of particles N and unit density n = N/L^2 = 1'; tables print E_θ/JL^2, the energy per site in units of J, so no conversion.",
+        "secondary_of": null
+      },
+      "artifacts": {
+        "code": "https://doi.org/10.5281/zenodo.15632176",
+        "commit": "528a17e",
+        "script": "vmc.py",
+        "read_from": {
+          "quote": "All simulations were carried out with NetKet 3 [99]; the code used for this article can be found at Ref. [106]. ... [106] Zakari Denis. cqsl/lattice-bosons: v1.0.0, June 2025. URL https://doi.org/10.5281/zenodo.15632176.",
+          "location": "Quantum 9, 1772 (2025), arXiv:2404.07869 (sources/2404.07869.txt lines 504-506 and 847-849), Acknowledgements; reference [106]",
+          "checked_on": "2026-11-27",
+          "pass": "passes/code/code-links-2026-11-27.json"
+        }
+      }
+    }
+  ]
+}

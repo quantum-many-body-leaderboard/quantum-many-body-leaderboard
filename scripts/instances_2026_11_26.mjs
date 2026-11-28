@@ -2,8 +2,8 @@
 // 2026-11-26 Ketboard/tachys gap pass found on instances QMBL did not have, the instances they
 // create, and the rest of the J2 = 1/8 triangular table of Iqbal et al. 2016 (SWEEP.md, 2026-11-26).
 //
-// - arXiv:2506.08329 (Du, Chen & Chan, Phys. Rev. B 113, 085134), Supplemental Table 2: the open
-//   24-site Hubbard chain at U = 8, N_up = N_dn = 10, Hubbard/chain_24_O_10_8.
+// - arXiv:2506.08329 (Du, Chen & Chan, Phys. Rev. B 113, 085134), Supplemental Table 2 (Appendix E,
+//   Table II of the journal version): the open 24-site Hubbard chain at U = 8, N_up = N_dn = 10, Hubbard/chain_24_O_10_8.
 // - arXiv:2403.07795 (Rende, Goldt, Becca & Viteritti, Phys. Rev. Research 6, 043280), Table I:
 //   the periodic 100-site J1-J2 chain at J2 = 0.1, 0.2, 0.3, 0.4, 0.6, J1J2/chain_100_P_<J2>.
 // - arXiv:2608.18065 (Attar, Aboussalah & Hibat-Allah), Table 2: the open 200-site transverse-field
@@ -16,7 +16,8 @@
 //   Kochkov et al., arXiv:2110.06390, Table IV (36 sites). J1J2/triangular_<N>_P_0.125 for
 //   N = 36, 64, 100, 196, 400; the 144-site instance exists.
 // - arXiv:2611.16430 (Shang & Yang), Table I: the periodic 32 x 32 torus at t'/t = -0.2, U = 8,
-//   δ = 1/8, Hubbard/square_1024_P_448_8_t12_-0.2 (an existing instance; its create header is
+//   δ = 1/8, Hubbard/square_1024_P_448_8_t12_-0.2, and the transferred-parameter value of its
+//   Sec. II D (an existing instance; its create header is
 //   here because this file is applied before the pass file that first fills it).
 // The open 4 x 4 and 6 x 6 rows of arXiv:2506.08329 go on existing instances (see below).
 //
@@ -45,12 +46,12 @@ const REF = {
   "2611.16430": { pr: false, ref: "Shang & Yang, Multi-reference variational states resolve stripe selection and local d-wave pairing in the Hubbard model, arXiv:2611.16430" },
 };
 const VERSION = {
-  "2506.08329": "version read: arXiv v3 (HTML, sources/2506.08329.html); journal version Phys. Rev. B 113, 085134 (2026) not read in this pass",
-  "2403.07795": "version read: arXiv v3 text (sources/2403.07795.txt); journal version Phys. Rev. Research 6, 043280 (2024) not read in this pass",
+  "2506.08329": "version read: arXiv v3 (HTML, sources/2506.08329.html); journal version read 2026-11-28 (publisher PDF, ETH network): Phys. Rev. B 113, 085134 (2026) prints the same digits and error bars, its Supplemental Tables 2-5 moved into Appendix E as Tables II-V",
+  "2403.07795": "version read: arXiv v3 text (sources/2403.07795.txt); journal version Phys. Rev. Research 6, 043280 (2024) read 2026-11-27: same digits",
   "2608.18065": "version read: arXiv v1 (HTML, sources/2608.18065.html); no journal version (arXiv metadata, 2026-11-26)",
-  "2308.09664": "version read: arXiv v2 text (sources/2308.09664.txt); journal version Phys. Rev. B 109, 245120 (2024) not read in this pass",
-  "1601.06018": "version read: arXiv v4 text (sources/1601.06018.txt); journal version Phys. Rev. B 93, 144411 (2016) not read in this pass",
-  "2211.07749": "version read: arXiv v2 text (sources/2211.07749.txt); journal version Phys. Rev. B 108, 054410 (2023) not read in this pass",
+  "2308.09664": "version read: arXiv v2 text (sources/2308.09664.txt); journal version read 2026-11-28 (publisher PDF, ETH network): Phys. Rev. B 109, 245120 (2024), Table II, same digits",
+  "1601.06018": "version read: arXiv v4 text (sources/1601.06018.txt); journal version Phys. Rev. B 93, 144411 (2016) read 2026-11-27: Tables III and IV, same digits",
+  "2211.07749": "version read: arXiv v2 text (sources/2211.07749.txt); journal version read 2026-11-28 (publisher PDF, ETH network): Phys. Rev. B 108, 054410 (2023), Table III, same digits (arXiv v1 printed -0.5153(8))",
   "2110.06390": "version read: arXiv v1 text (sources/2110.06390.txt); no journal version (arXiv metadata, 2026-11-26)",
   "2611.16430": "version read: arXiv v1 text (sources/2611.16430.txt); no journal version (arXiv metadata, 2026-11-26)",
 };
@@ -75,7 +76,12 @@ I.hub32t = { id: "Hubbard/square_1024_P_448_8_t12_-0.2", model: "Hubbard", latti
 // --- conventions per source ---------------------------------------------------------------
 const IMPLIED = "per site implied, not stated (RULES.md 8, 2026-11-26): the table prints no normalisation, and only the per-site reading fits the printed numbers";
 const CONV = {
-  "2506.08329": "Eq. (3): H = -t sum_<i,j>,σ (c†_iσ c_jσ + h.c.) + U sum_i n_i↑ n_i↓, 't = 1 and U = 8 throughout', open boundary conditions; Table 2 caption: 'Energy per site ... L = 24 one-dimensional chain at hole doping n_h = 1/6 (N_e = 20, N_↑ = N_↓ = 10)'.",
+  ...Object.fromEntries([
+    ["", "Supplemental Table 2 (journal Table II) caption: 'Energy per site ... L = 24 one-dimensional chain at hole doping n_h = 1/6 (N_e = 20, N_↑ = N_↓ = 10)'"],
+    [":4x4h", "Supplemental Table 3 (journal Table III) caption: 'Energy per site of pure fPEPS and NN-fPEPS for the Fermi-Hubbard model on a 4 x 4 square lattice at half filling (N_e = 16, N_↑ = N_↓ = 8)'"],
+    [":4x4d", "Supplemental Table 4 (journal Table IV) caption: 'Energy per site of pure fPEPS and NN-fPEPS for the Fermi-Hubbard model on a 4 x 4 square lattice at 1/8 hole doping (N_e = 14, N_↑ = N_↓ = 7)'"],
+    [":6x6", "Supplemental Table 5 (journal Table V) caption: 'Energy per site of pure fPEPS and NN-fPEPS for the Fermi-Hubbard model on a 6 x 6 square lattice at 1/9 hole doping (N_e = 32, N_↑ = N_↓ = 16)'"],
+  ].map(([k, cap]) => [`2506.08329${k}`, `Eq. (3): H = -t sum_<i,j>,σ (c†_iσ c_jσ + h.c.) + U sum_i n_i↑ n_i↓, 't = 1 and U = 8 throughout', open boundary conditions; ${cap}.`])),
   "2403.07795": `Eq. (4): H = J1 sum_<i,j> S_i.S_j + J2 sum_<<i,j>> S_i.S_j, spin-1/2 operators; Table I caption: 'Variational ground-state energies for the J1-J2 Heisenberg chain with system size N = 100 ... periodic boundary conditions'. ${IMPLIED}: a total for N = 100 would be about -42 and a Pauli-form value about -1.7, so the printed -0.38 to -0.43 are S.S energies per site.`,
   "2608.18065": "Eq. (37): H = -J sum_{i=1}^{N-1} σ^z_i σ^z_{i+1} - h sum_i σ^x_i with Pauli matrices, open boundaries, J = 1 = h; N = 200 spins (Fig. 2 text); Table 2 columns E_Adam/N, E_minSR/N, E_ref/N.",
   "2308.09664": `Eq. (15): H = -sum_<i,j> σ^z_i σ^z_j - λ sum_i σ^x_i with Pauli matrices, λ = 3.05, periodic L x L lattices; Table II caption: 'Ground state energies of the two-dimensional transverse field Ising model with L = 8 and 16'. ${IMPLIED}: totals would be about -207 (L = 8) and -829 (L = 16), so the printed -3.24 are energies per site.`,
@@ -92,30 +98,32 @@ const HUB = "html:Table 2: </span>Energy per site of pure fMPS";
 for (const [method, cells] of [["fMPS-SU", ["-0.490(2)", "-0.531(7)", "-0.532(8)"]], ["fMPS-GO", ["-0.5037(8)", "-0.5348(0)", "-0.5470(4)"]],
   ["NN-fMPS-GO", ["-0.56143\\pm 6\\times 10^{-5}", "-0.56212\\pm 4\\times 10^{-5}", "-0.56244\\pm 3\\times 10^{-5}"]]])
   cells.forEach((c, k) => R.push(["hub24", "2506.08329", HUB, c, `${method}, D = ${[4, 6, 8][k]}`, "variational", true,
-    `Supplemental Table 2 (S-5.1), row '${method}', column D = ${[4, 6, 8][k]}`,
+    `Supplemental Table 2 (S-5.1; journal Appendix E, Table II), row '${method}', column D = ${[4, 6, 8][k]}`,
     { note: c === "-0.5348(0)" ? "printed with the error bar '(0)': below the last printed digit; stored without sigma" : null }]));
 R.push(["hub24", "2506.08329", HUB, "-0.56309964", "DMRG, fMPS bond dimension 1000", "variational", false,
-  "Supplemental Table 2 caption: 'The DMRG reference energy per site is -0.56309964, obtained using pyBlock2 with fMPS bond dimension 1000 and truncated weight dw = 1.6e-10'", {}]);
-// The open 4 x 4 and 6 x 6 lattices of Supplemental Tables 3-5 (existing instances). Only the
+  "Supplemental Table 2 (journal Table II) caption: 'The DMRG reference energy per site is -0.56309964, obtained using pyBlock2 with fMPS bond dimension 1000 and truncated weight dw = 1.6e-10'", {}]);
+// The open 4 x 4 and 6 x 6 lattices of Supplemental Tables 3-5 (journal Tables III-V; existing instances). Only the
 // paper's own rows: the fPEPS-SU, fPEPS-GO and DMRG cells are quoted from its Ref. [19]. The
 // error bars are printed as '± a × 10^-b', which the workflow's row converter does not parse,
 // so these rows are read here (2026-11-26).
-for (const [key, T, Ds, cells, nn] of [
-  ["hub4h", "Table 3: </span>Energy per site of pure fPEPS", [4, 6, 8], ["-0.42535\\pm 4\\times 10^{-5}", "-0.42541\\pm 3\\times 10^{-5}", "-0.42551\\pm 2\\times 10^{-5}"],
+for (const [key, conv, T, Ds, cells, nn] of [
+  ["hub4h", ":4x4h", "Table 3: </span>Energy per site of pure fPEPS", [4, 6, 8], ["-0.42535\\pm 4\\times 10^{-5}", "-0.42541\\pm 3\\times 10^{-5}", "-0.42551\\pm 2\\times 10^{-5}"],
     [["-0.3290", "NN"], ["-0.4157", "NN-SD (MLP)"], ["-0.4247", "NN-SD (ViT)"]]],
-  ["hub4d", "Table 4: </span>Energy per site of pure fPEPS", [4, 6, 8, 10], ["-0.6247\\pm 2\\times 10^{-4}", "-0.6301\\pm 2\\times 10^{-4}", "-0.63215\\pm 7\\times 10^{-5}", "-0.63231\\pm 5\\times 10^{-5}"],
+  ["hub4d", ":4x4d", "Table 4: </span>Energy per site of pure fPEPS", [4, 6, 8, 10], ["-0.6247\\pm 2\\times 10^{-4}", "-0.6301\\pm 2\\times 10^{-4}", "-0.63215\\pm 7\\times 10^{-5}", "-0.63231\\pm 5\\times 10^{-5}"],
     [["-0.5391", "NN"], ["-0.6125", "NN-SD (MLP)"], ["-0.6288", "NN-SD (CNN)"]]],
-  ["hub6", "Table 5: </span>Energy per site of pure fPEPS", [4, 6, 8], ["-0.6370\\pm 2\\times 10^{-4}", "-0.6503\\pm 1\\times 10^{-4}", "-0.6535\\pm 1\\times 10^{-4}"], []]]) {
-  const tab = T.slice(0, 7);
-  cells.forEach((c, k) => R.push([key, "2506.08329", `html:${T}`, c, `NN-fPEPS-GO, D = ${Ds[k]}`, "variational", true, `Supplemental ${tab}, row 'NN-fPEPS-GO', column D = ${Ds[k]}`, {}]));
-  for (const [c, m] of nn) R.push([key, "2506.08329", `html:${T}`, c, m, "variational", true, `Supplemental ${tab} caption, the ${m === "NN" ? "pure NN model" : `${m} baseline`}`, {}]);
+  ["hub6", ":6x6", "Table 5: </span>Energy per site of pure fPEPS", [4, 6, 8], ["-0.6370\\pm 2\\times 10^{-4}", "-0.6503\\pm 1\\times 10^{-4}", "-0.6535\\pm 1\\times 10^{-4}"], []]]) {
+  const tab = `${T.slice(0, 7)} (journal Table ${["III", "IV", "V"][+T[6] - 3]})`;
+  cells.forEach((c, k) => R.push([key, "2506.08329", `html:${T}`, c, `NN-fPEPS-GO, D = ${Ds[k]}`, "variational", true, `Supplemental ${tab}, row 'NN-fPEPS-GO', column D = ${Ds[k]}`, { conv }]));
+  for (const [c, m] of nn) R.push([key, "2506.08329", `html:${T}`, c, m, "variational", true, `Supplemental ${tab} caption, the ${m === "NN" ? "pure NN model" : `${m} baseline`}`, { conv }]);
 }
 
 const RENDE = [[299, 0.1, "-0.425417395", "-0.4254174", "-0.425218"], [300, 0.2, "-0.408572967", "-0.4085728", "-0.408453"],
   [301, 0.3, "-0.393126745", "-0.3931204", "-0.393059"], [302, 0.4, "-0.380387370", "-0.3803726", "-0.380370"], [303, 0.6, "-0.380804138", "-0.3807913", "-0.379902"]];
+// At J2/J1 = 0.1 the ViT value equals the DMRG value of the same table to its printed digits; it is
+// a second method of the same paper, so the loader's same-paper test must not drop it (2026-11-27).
 for (const [line, J2, dmrg, vit, ft] of RENDE) {
   R.push([`j1j2c_${J2}`, "2403.07795", line, dmrg, "DMRG (bond dimension up to 10^3)", "variational", false, `Table I, row J2/J1 = ${J2}, column DMRG`, {}]);
-  R.push([`j1j2c_${J2}`, "2403.07795", line, vit, "ViT, trained from scratch", "variational", true, `Table I, row J2/J1 = ${J2}, column ViT`, { note: "the caption says the Monte Carlo error affects the last printed digit; no error bar printed" }]);
+  R.push([`j1j2c_${J2}`, "2403.07795", line, vit, "ViT, trained from scratch", "variational", true, `Table I, row J2/J1 = ${J2}, column ViT`, { note: "the caption says the Monte Carlo error affects the last printed digit; no error bar printed", same_value_distinct_method: true }]);
   R.push([`j1j2c_${J2}`, "2403.07795", line, ft, "ViT, pretrained at J2/J1 = 0.4 and fine-tuned", "variational", true, `Table I, row J2/J1 = ${J2}, column Fine-tuning`, { note: "the caption says the Monte Carlo error affects the last printed digit; no error bar printed" }]);
 }
 
@@ -134,7 +142,8 @@ const IQ = [[589, 6, "−0.501788(1)", "−0.510344(2)", "−0.512503(3)", "−0
   [593, 14, "−0.501866(1)", "−0.508049(3)", "−0.510245(7)", "−0.51203(14)"], [594, 20, "−0.501915(1)", "−0.507056(3)", null, "−0.51214(15)"]];
 for (const [line, L, p0, p1, p2, gs] of IQ) {
   [[p0, 0], [p1, 1], [p2, 2]].forEach(([c, p]) => c && R.push([`tri${L}`, "1601.06018", line, c, `DSL, ${p} Lanczos step${p === 1 ? "" : "s"}`, "variational", true, `Table III, row ${L}, column ${p}-LS of the ground state`, {}]));
-  R.push([`tri${L}`, "1601.06018", line, gs, "DSL, zero-variance extrapolation", "extrapolated", true, `Table III, row ${L}, column 'Ground state' (zero-variance estimate from the 0, 1 and 2 Lanczos-step energies${L === 20 ? "; two points only, Fig. 8 caption" : ""})`, {}]);
+  // L = 20: no 2-LS energy; Sec. IV.A fits p = 0, 1 with A and B from the smaller clusters (qmbl-verify 2026-11-27).
+  R.push([`tri${L}`, "1601.06018", line, gs, L === 20 ? "DSL, zero-variance extrapolation (p = 0, 1)" : "DSL, zero-variance extrapolation", "extrapolated", true, `Table III, row ${L}, column 'Ground state' (zero-variance estimate from the ${L === 20 ? "0 and 1 Lanczos-step energies only, with A and B from a size scaling of the smaller clusters (Fig. 8 caption, Sec. IV.A)" : "0, 1 and 2 Lanczos-step energies"})`, {}]);
 }
 // Table IV repeats the VMC estimates of Table III; it adds DMRG (truncation-error extrapolated) and ED.
 R.push(["tri6", "1601.06018", 638, "−0.51557(5)", "DMRG, truncation-error extrapolation", "extrapolated", false, "Table IV, row DMRG*, column 6x6 torus (extrapolation in truncation error, at most 8000 SU(2) states)", {}]);
@@ -147,6 +156,9 @@ R.push(["tri6", "2110.06390", 1187, "-0.5131(8)", "GNN-2", "variational", true, 
 R.push(["tri6", "2110.06390", 1187, "-0.5007(5)", "ResNet", "variational", true, "Table IV, row Triangular, J2 = 0.125, N = 36, column ResNet", {}]);
 
 R.push(["hub32t", "2611.16430", 422, "−0.7476(37)", "MR-nVAFQMC (K = 4, τ = 1.26, |G| = 8)", "variational", true, "Table I, row 32x32, t'/t = -0.2, MR-nVAFQMC (this work), the strictly variational state", {}]);
+// Sec. II D: the fixed-depth series at τ = 1.15, 16 x 16 parameters tiled onto 32 x 32 with no
+// re-optimization; a finite-τ state, so variational like the Table I τ = 1.26 row (qmbl-verify 2026-11-27).
+R.push(["hub32t", "2611.16430", 432, "−0.736(6)", "MR-nVAFQMC (τ = 1.15, |G| = 8, 16x16 parameters transferred)", "variational", true, "Sec. II D, 'on 32 x 32 at t'/t = -0.2, the τ = 1.15 evaluation gives E/N = -0.736(6)'; parameters 'optimized on 16 x 16 without independent variational re-optimization on the larger tori (steps = 0 on 32 x 32)', |G| = 8 (same paragraph)", { verified_by: "found by the second reading of qmbl-verify (2026-11-27)" }]);
 R.push(["hub32t", "2611.16430", 421, "−0.7494(35)", "MR-nVAFQMC, τ^-3 → 0 extrapolation (K = 4, |G| = 8)", "extrapolated", true, "Table I, row 32x32, t'/t = -0.2, MR-nVAFQMC (this work), 'τ → ∞ extrap., not variational'", {}]);
 
 // --- conversion --------------------------------------------------------------------------
@@ -189,8 +201,9 @@ for (const [key, a, at0, printed, method, bound, sampled, where, extra] of R) {
     arxiv: a, peer_reviewed: REF[a].pr, origin: "own", bound_type: bound, method,
     reference: REF[a].ref,
     evidence: [`${where}; ${loc}`, extra.note, VERSION[a]].filter(Boolean).join("; "),
-    convention_check: CONV[a], reported_as: reported, confidence: "high",
-    verified_by: "single reading (2026-11-26)", variance_as_reported: null, defect: null, sampled,
+    convention_check: CONV[a + (extra.conv ?? "")], reported_as: reported, confidence: "high",
+    verified_by: extra.verified_by ?? "single reading (2026-11-26)", variance_as_reported: null, defect: null, sampled,
+    ...(extra.same_value_distinct_method ? { same_value_distinct_method: true } : {}),
     ...(def.existing ? {} : { create: { model: def.model, lattice: def.lattice, n_sites: def.n_sites, boundary: def.boundary, params: def.params, ...(def.cluster ? { cluster: def.cluster } : {}) } }),
   });
 }

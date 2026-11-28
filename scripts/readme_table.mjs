@@ -77,6 +77,7 @@ export const MODELS = [
   ["tJ", "t-J"],
   ["Holstein", "Holstein"],
   ["HubbardHolstein", "Hubbard-Holstein"],
+  ["BoseHubbard", "Bose-Hubbard"],
   ["TFIsing", "Transverse-field Ising"],
   ["Impurity", "Impurity"],
   ["HEG3D", "Electron gas, 3D"],
@@ -198,6 +199,11 @@ export function instanceLabel(inst) {
     parts.push(`&omega; = ${+(+p.w).toPrecision(6)}`, `g = ${+(+p.g).toPrecision(6)}`); // as in the id (√2 prints as 1.41421)
     const ne = p.N ?? p.N_up + p.N_dn;
     parts.push(`${ne} ${p.spinless ? "spinless fermion" : "electron"}${ne === 1 ? "" : "s"}`);
+    return parts.join(", ");
+  }
+  // Bose-Hubbard (RULES.md 2.1, 2026-11-11): t = 1; U and the boson count.
+  if (inst.model === "BoseHubbard") {
+    parts.push(`U = ${p.U}`, `${p.N_b} boson${p.N_b === 1 ? "" : "s"}`);
     return parts.join(", ");
   }
   // Kitaev: K, J, Gamma; Shastry-Sutherland: J (inter-dimer) and Jd (dimer); J3 on honeycomb J1-J2.

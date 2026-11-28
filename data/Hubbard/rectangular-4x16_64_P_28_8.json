@@ -1579,7 +1579,17 @@
         "method": "source text of arXiv:2507.02644 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.7673",
         "note": "main text, Scalability section: 'zero-variance extrapolation on a 16 × 4 pure Hubbard model ... The extrapolated ground state energies are —0.7673'; dl/gu-natcommun.txt line 150 (the printed dash is an em dash); not variational | Energy per site in units of t. PBC per the Supplementary Table 5 caption ('Raw data for the energies of Hubbard model under PBC'); U = 8 and hole doping 1/8 per the main text (Fig. 4 caption: 'U = 8 and hole doping δ = 1/8 under PBC'; the t' = -0.2 study: 'Lx × 8 with Lx ranging from 8 to 32, with t' = -0.2 and δ = 1/8'). H has -t' sum_<<ij>>, so t2 = t'. The 16 x 4 and 16 x 16 values at t' = 0 equal the arXiv text's -0.76298 and -0.75630 to the printed digits. No error bar printed. Version read: journal Supplementary Information (41467_2026_74028_MOESM1_ESM.pdf); the arXiv text has no raw-data table.",
-        "secondary_of": null
+        "secondary_of": null,
+        "journal_read": {
+          "checked_on": "2026-11-27",
+          "scope": "value",
+          "method": "Nat. Commun. 17, 7838 (2026) article HTML (nature.com, fetched 2026-11-27, tags stripped with node) and Supplementary Information 41467_2026_74028_MOESM1_ESM.pdf (pypdf plain mode); arXiv:2507.02644v2 PDF (pypdf) read for comparison",
+          "location": "Journal main text, section 'Accuracies and scalability' (under PBC); SI Supplementary Note 4 and Supplementary Fig. 36(A) caption",
+          "reported_as": "'The extrapolated ground state energies are—0.7673 and –0.7491, respectively' (16 × 4 pure Hubbard and 32 × 8 t' = -0.2); SI Fig. 36 caption: 'linear fit ... yields an extrapolated energy of −0.7673 at zero variance'",
+          "conversion": "-0.7673 x 64 = -49.1072",
+          "note": "The printed em dash is a minus (SI prints −0.7673). 16 × 4, t' = 0 (SI: 'the 16×4 pure Hubbard model (t′ = 0)'), U = 8, hole doping 1/8 (28 + 28), PBC (the paragraph sits in 'Accuracies and scalability' whose Fig. 6 is 'Scalability and accuracy benchmarks under PBC'). No error bar printed in main text or SI; sigma null is right. bound_type extrapolated is right. Version difference: arXiv v2 (2025-07-10) does not contain the zero-variance sentence or value; it is in the journal version only, which the row cites. Not a duplicate: Chi, Chen & Chan's NN-GPEPS (extrapolated) row on this instance prints the same −0.7673(5) from their own extrapolation (Table F1 fits -0.767265 to -0.767326) and do not quote Gu's value.",
+          "source_entry": "RP3-j1j2-hubbard-tfising#29 (qmbl-verify 2026-11-27)"
+        }
       },
       "artifacts": {
         "code": "https://github.com/bytedance/laqx",
@@ -1918,10 +1928,10 @@
     {
       "energy": -49.016512,
       "sigma": 0.001664,
-      "energy_variance": null,
+      "energy_variance": 0.8512,
       "dof": 56,
       "einf": 98,
-      "v_score": null,
+      "v_score": 0.00220540021387462,
       "method": "VMC",
       "ansatz": "NN-GPEPS",
       "method_detail": "N_v = 3; projected: point group (simplified), spin parity",
@@ -1937,8 +1947,18 @@
         "checked_on": "2026-11-26",
         "method": "source text of arXiv:2611.26604 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.765883(26)",
-        "note": "Tab. G1; parameters Tab. B1; samples 64x8192 Tab. D2 | H printed, t=1, U/t=8, 1/8 doping (28,28), periodic 16x4 | variance reported as 0.0133, not stored: convention not verified",
-        "secondary_of": null
+        "note": "Tab. G1; parameters Tab. B1; samples 64x8192 Tab. D2 | H printed, t=1, U/t=8, 1/8 doping (28,28), periodic 16x4; variance: the printed σ²/N column is Var(H)/N (released code, code/nngtn/measure.py line 221; qmbl-verify 2026-11-27)",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-27",
+          "scope": "value",
+          "method": "arXiv:2611.26604v1 (no journal version as of 2026-11-27); data release github.com/Chi-RZ/neural_gpeps",
+          "location": "Table G1 row 'NN-GPEPS, Nv = 3'; main text p. 3",
+          "reported_as": "E/N −0.765883(26), σ²/N 0.0133(7) (per site)",
+          "conversion": "energy -0.765883 x 64 = -49.016512 (= stored -49.016512); sigma 0.000026 x 64 = 0.001664 (= stored 0.001664); Var(H) = (σ²/N) x N = 0.0133 x 64 = 0.8512",
+          "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the variance (σ²/N printed; Var(H) stored), set on the pass by scripts/kbgap_variance_2026_11_28.mjs.",
+          "source_entry": "RP3-j1j2-hubbard-tfising#14 (qmbl-verify 2026-11-27)"
+        }
       },
       "compute": {
         "parameters": 2396485,
@@ -1964,10 +1984,10 @@
     {
       "energy": -49.033728,
       "sigma": 0.001024,
-      "energy_variance": null,
+      "energy_variance": 0.7008,
       "dof": 56,
       "einf": 98,
-      "v_score": null,
+      "v_score": 0.0018152990592528405,
       "method": "VMC",
       "ansatz": "NN-GPEPS",
       "method_detail": "N_v = 4; projected: point group (simplified), spin parity",
@@ -1983,8 +2003,18 @@
         "checked_on": "2026-11-26",
         "method": "source text of arXiv:2611.26604 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.766152(16)",
-        "note": "Tab. G1; Tab. B1; Tab. D2 | H printed, t=1, U/t=8, 1/8 doping (28,28), periodic 16x4 | variance reported as 0.01095, not stored: convention not verified",
-        "secondary_of": null
+        "note": "Tab. G1; Tab. B1; Tab. D2 | H printed, t=1, U/t=8, 1/8 doping (28,28), periodic 16x4; variance: the printed σ²/N column is Var(H)/N (released code, code/nngtn/measure.py line 221; qmbl-verify 2026-11-27)",
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-27",
+          "scope": "value",
+          "method": "arXiv:2611.26604v1 (no journal version as of 2026-11-27); data release github.com/Chi-RZ/neural_gpeps",
+          "location": "Table G1 row 'NN-GPEPS, Nv = 4'; main text p. 3",
+          "reported_as": "E/N −0.766152(16), σ²/N 0.01095(42) (per site)",
+          "conversion": "energy -0.766152 x 64 = -49.033728 (= stored -49.033728); sigma 0.000016 x 64 = 0.001024 (= stored 0.001024); Var(H) = (σ²/N) x N = 0.01095 x 64 = 0.7008",
+          "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the variance (σ²/N printed; Var(H) stored), set on the pass by scripts/kbgap_variance_2026_11_28.mjs.",
+          "source_entry": "RP3-j1j2-hubbard-tfising#15 (qmbl-verify 2026-11-27)"
+        }
       },
       "compute": {
         "parameters": 10144053,
@@ -2030,7 +2060,17 @@
         "method": "source text of arXiv:2611.26604 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.7673(5)",
         "note": "Tab. G1; App. F Eq. F2 joint zero-variance extrapolation | H printed, t=1, U/t=8, 1/8 doping (28,28), periodic 16x4",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-27",
+          "scope": "value",
+          "method": "arXiv:2611.26604v1 PDF (only version; no journal reference on the arXiv abstract page, 2026-11-27), pypdf layout mode; cross-checked against the authors' data release github.com/Chi-RZ/neural_gpeps (data/measurements/*/results.json, *.toml) and code/nngtn/system.py, measure.py",
+          "location": "Table G1 row 'NN-GPEPS (extrapolated)'; App. F Eq. (F2) '16×4: E0/N = −0.7673(5)'; Table F1",
+          "reported_as": "−0.7673(5) per site, units of t",
+          "conversion": "-0.7673 x 64 = -49.1072; 0.0005 x 64 = 0.032",
+          "note": "Authors' own joint zero-variance extrapolation of the projected Nv = 3 and 4 training trajectories (linear E/N = eps0 + a σ²/N, orthogonal-distance regression, App. F); bound_type extrapolated is right. C7: the bar is not a 1-sigma standard error: 'Its uncertainty covers the two-standard-error interval of every fit' (App. F); Table F1 window means -0.767265 to -0.767326. Periodic torus, U = 8, t' = 0, (28, 28) electrons (Table D1). The same printed value −0.7673 is Gu et al.'s independent zero-variance extrapolation (Nat. Commun. 17, 7838, row 21 on this instance); Chi et al. do not quote it (their Table G1 cites Gu only for the variational −0.76298), so the two rows are independent, not a duplicate.",
+          "source_entry": "RP3-j1j2-hubbard-tfising#22 (qmbl-verify 2026-11-27)"
+        }
       },
       "compute": {
         "parameters": null,

@@ -31,7 +31,7 @@ const MODEL = [
   ["kagome", /kagome/i], ["pyrochlore", /pyrochlore/i], ["triangular", /triangular/i],
   ["shuriken", /shuriken/i], ["Shastry", /shastry[- ]sutherland/i],
   ["J1J2", /J\s*_?\{?1\}?\s*-\s*J\s*_?\{?2\}?|J\s*2\s*\/\s*J\s*1|\bJ2\b/i],
-  ["Holstein", /holstein/i], ["Hubbard", /hubbard/i], ["TFIsing", /transverse[- ]field ising|\bTFIM\b/i],
+  ["Holstein", /holstein/i], ["BoseHubbard", /bose[- ]hubbard/i], ["Hubbard", /hubbard/i], ["TFIsing", /transverse[- ]field ising|\bTFIM\b/i],
   ["tV", /spinless fermion|\bt-V\b/i], ["tJ", /\bt\s*-\s*J\b|\bt-t['′]-J\b/], ["Heisenberg", /heisenberg/i],
 ];
 

@@ -47022,4 +47022,1532 @@ export const VERIFICATIONS = [
     "source_entry": "SP1-holstein#31 (qmbl-verify 2026-11-18)",
     "journal": true
   },
+  // qmbl-verify 2026-11-27 (rulings 2026-11-28): the 97 rows of the 2026-11-26 Ketboard/tachys gap pass,
+  // a second reading by four reader groups with a skeptic each. 72 verified as stored; 25 with a
+  // corrected note, variance or method string, fixed in the pass's generator or override (named in each
+  // note); no energy changed. journal: true where the published version was read (69).
+  {
+    "match": {
+      "instance": "Hubbard/chain_24_O_10_8",
+      "method": "fMPS-SU, D = 4",
+      "energy": -11.76
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 2 (S-5.1; PDF Table II; journal Appendix E, Table II), row 'fMPS-SU', column D = 4 (column header is a diagonal 'D / Model' box, PDF text)",
+    "reported_as": "-0.490(2) per site, units of t",
+    "conversion": "-0.490(2) x 24 = -11.76; sigma 0.002 x 24 = 0.048",
+    "note": "Cluster and sector from the caption: 'L = 24 one-dimensional chain at hole doping n_h = 1/6 (N_e = 20, N_↑ = N_↓ = 10)'; OBC (main text, Eq. (3) paragraph); H identical to the VarBench Hubbard form (no constant shift); U = 8, t = 1; per-site energy x N. Number identical in arXiv v1, v2 and v3. VMC energy of the optimized state (S-2.1: sample mean of E_loc); variational. Error-bar meaning not defined in the text (C7). No duplicate on the instance: data/Hubbard/chain_24_O_10_8.json carries no other row with this number (the Ref. [19] cells were not loaded from this paper).",
+    "source_entry": "RP1-arxiv-2506-08329#0 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/chain_24_O_10_8",
+      "method": "fMPS-SU, D = 6",
+      "energy": -12.744
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 2 (S-5.1; PDF Table II; journal Appendix E, Table II), row 'fMPS-SU', column D = 6 (column header is a diagonal 'D / Model' box, PDF text)",
+    "reported_as": "-0.531(7) per site, units of t",
+    "conversion": "-0.531(7) x 24 = -12.744; sigma 0.007 x 24 = 0.168",
+    "note": "Cluster and sector from the caption: 'L = 24 one-dimensional chain at hole doping n_h = 1/6 (N_e = 20, N_↑ = N_↓ = 10)'; OBC (main text, Eq. (3) paragraph); H identical to the VarBench Hubbard form (no constant shift); U = 8, t = 1; per-site energy x N. Number identical in arXiv v1, v2 and v3. VMC energy of the optimized state (S-2.1: sample mean of E_loc); variational. Error-bar meaning not defined in the text (C7). No duplicate on the instance: data/Hubbard/chain_24_O_10_8.json carries no other row with this number (the Ref. [19] cells were not loaded from this paper).",
+    "source_entry": "RP1-arxiv-2506-08329#1 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/chain_24_O_10_8",
+      "method": "fMPS-SU, D = 8",
+      "energy": -12.768
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 2 (S-5.1; PDF Table II; journal Appendix E, Table II), row 'fMPS-SU', column D = 8 (column header is a diagonal 'D / Model' box, PDF text)",
+    "reported_as": "-0.532(8) per site, units of t",
+    "conversion": "-0.532(8) x 24 = -12.768; sigma 0.008 x 24 = 0.192",
+    "note": "Cluster and sector from the caption: 'L = 24 one-dimensional chain at hole doping n_h = 1/6 (N_e = 20, N_↑ = N_↓ = 10)'; OBC (main text, Eq. (3) paragraph); H identical to the VarBench Hubbard form (no constant shift); U = 8, t = 1; per-site energy x N. Number identical in arXiv v1, v2 and v3. VMC energy of the optimized state (S-2.1: sample mean of E_loc); variational. Error-bar meaning not defined in the text (C7). No duplicate on the instance: data/Hubbard/chain_24_O_10_8.json carries no other row with this number (the Ref. [19] cells were not loaded from this paper).",
+    "source_entry": "RP1-arxiv-2506-08329#2 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/chain_24_O_10_8",
+      "method": "fMPS-GO, D = 4",
+      "energy": -12.0888
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 2 (S-5.1; PDF Table II; journal Appendix E, Table II), row 'fMPS-GO', column D = 4 (column header is a diagonal 'D / Model' box, PDF text)",
+    "reported_as": "-0.5037(8) per site, units of t",
+    "conversion": "-0.5037(8) x 24 = -12.0888; sigma 0.0008 x 24 = 0.0192",
+    "note": "Cluster and sector from the caption: 'L = 24 one-dimensional chain at hole doping n_h = 1/6 (N_e = 20, N_↑ = N_↓ = 10)'; OBC (main text, Eq. (3) paragraph); H identical to the VarBench Hubbard form (no constant shift); U = 8, t = 1; per-site energy x N. Number identical in arXiv v1, v2 and v3. VMC energy of the optimized state (S-2.1: sample mean of E_loc); variational. Error-bar meaning not defined in the text (C7). No duplicate on the instance: data/Hubbard/chain_24_O_10_8.json carries no other row with this number (the Ref. [19] cells were not loaded from this paper).",
+    "source_entry": "RP1-arxiv-2506-08329#3 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/chain_24_O_10_8",
+      "method": "fMPS-GO, D = 6",
+      "energy": -12.8352
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 2 (S-5.1; PDF Table II; journal Appendix E, Table II), row 'fMPS-GO', column D = 6 (column header is a diagonal 'D / Model' box, PDF text)",
+    "reported_as": "-0.5348(0) per site, units of t",
+    "conversion": "-0.5348(0) x 24 = -12.8352",
+    "note": "Cluster and sector from the caption: 'L = 24 one-dimensional chain at hole doping n_h = 1/6 (N_e = 20, N_↑ = N_↓ = 10)'; OBC (main text, Eq. (3) paragraph); H identical to the VarBench Hubbard form (no constant shift); U = 8, t = 1; per-site energy x N. Number identical in arXiv v1, v2 and v3. Printed '(0)': below half a unit of the last digit; sigma null per the 2026-11-11 ruling. VMC energy of the optimized state (S-2.1: sample mean of E_loc); variational. Error-bar meaning not defined in the text (C7). No duplicate on the instance: data/Hubbard/chain_24_O_10_8.json carries no other row with this number (the Ref. [19] cells were not loaded from this paper).",
+    "source_entry": "RP1-arxiv-2506-08329#4 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/chain_24_O_10_8",
+      "method": "fMPS-GO, D = 8",
+      "energy": -13.128
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 2 (S-5.1; PDF Table II; journal Appendix E, Table II), row 'fMPS-GO', column D = 8 (column header is a diagonal 'D / Model' box, PDF text)",
+    "reported_as": "-0.5470(4) per site, units of t",
+    "conversion": "-0.5470(4) x 24 = -13.128; sigma 0.0004 x 24 = 0.0096",
+    "note": "Cluster and sector from the caption: 'L = 24 one-dimensional chain at hole doping n_h = 1/6 (N_e = 20, N_↑ = N_↓ = 10)'; OBC (main text, Eq. (3) paragraph); H identical to the VarBench Hubbard form (no constant shift); U = 8, t = 1; per-site energy x N. Number identical in arXiv v1, v2 and v3. VMC energy of the optimized state (S-2.1: sample mean of E_loc); variational. Error-bar meaning not defined in the text (C7). No duplicate on the instance: data/Hubbard/chain_24_O_10_8.json carries no other row with this number (the Ref. [19] cells were not loaded from this paper).",
+    "source_entry": "RP1-arxiv-2506-08329#5 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/chain_24_O_10_8",
+      "method": "NN-fMPS-GO, D = 4",
+      "energy": -13.47432
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 2 (S-5.1; PDF Table II; journal Appendix E, Table II), row 'NN-fMPS-GO', column D = 4 (column header is a diagonal 'D / Model' box, PDF text)",
+    "reported_as": "-0.56143 ± 6 × 10^-5 per site, units of t",
+    "conversion": "-0.56143 x 24 = -13.47432; sigma 6e-05 x 24 = 0.00144",
+    "note": "Cluster and sector from the caption: 'L = 24 one-dimensional chain at hole doping n_h = 1/6 (N_e = 20, N_↑ = N_↓ = 10)'; OBC (main text, Eq. (3) paragraph); H identical to the VarBench Hubbard form (no constant shift); U = 8, t = 1; per-site energy x N. Number identical in arXiv v1, v2 and v3. VMC energy of the optimized state (S-2.1: sample mean of E_loc); variational. Error-bar meaning not defined in the text (C7). No duplicate on the instance: data/Hubbard/chain_24_O_10_8.json carries no other row with this number (the Ref. [19] cells were not loaded from this paper).",
+    "source_entry": "RP1-arxiv-2506-08329#6 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/chain_24_O_10_8",
+      "method": "NN-fMPS-GO, D = 6",
+      "energy": -13.49088
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 2 (S-5.1; PDF Table II; journal Appendix E, Table II), row 'NN-fMPS-GO', column D = 6 (column header is a diagonal 'D / Model' box, PDF text)",
+    "reported_as": "-0.56212 ± 4 × 10^-5 per site, units of t",
+    "conversion": "-0.56212 x 24 = -13.49088; sigma 4e-05 x 24 = 0.00096",
+    "note": "Cluster and sector from the caption: 'L = 24 one-dimensional chain at hole doping n_h = 1/6 (N_e = 20, N_↑ = N_↓ = 10)'; OBC (main text, Eq. (3) paragraph); H identical to the VarBench Hubbard form (no constant shift); U = 8, t = 1; per-site energy x N. Number identical in arXiv v1, v2 and v3. VMC energy of the optimized state (S-2.1: sample mean of E_loc); variational. Error-bar meaning not defined in the text (C7). No duplicate on the instance: data/Hubbard/chain_24_O_10_8.json carries no other row with this number (the Ref. [19] cells were not loaded from this paper).",
+    "source_entry": "RP1-arxiv-2506-08329#7 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/chain_24_O_10_8",
+      "method": "NN-fMPS-GO, D = 8",
+      "energy": -13.49856
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 2 (S-5.1; PDF Table II; journal Appendix E, Table II), row 'NN-fMPS-GO', column D = 8 (column header is a diagonal 'D / Model' box, PDF text)",
+    "reported_as": "-0.56244 ± 3 × 10^-5 per site, units of t",
+    "conversion": "-0.56244 x 24 = -13.49856; sigma 3e-05 x 24 = 0.00072",
+    "note": "Cluster and sector from the caption: 'L = 24 one-dimensional chain at hole doping n_h = 1/6 (N_e = 20, N_↑ = N_↓ = 10)'; OBC (main text, Eq. (3) paragraph); H identical to the VarBench Hubbard form (no constant shift); U = 8, t = 1; per-site energy x N. Number identical in arXiv v1, v2 and v3. VMC energy of the optimized state (S-2.1: sample mean of E_loc); variational. Error-bar meaning not defined in the text (C7). No duplicate on the instance: data/Hubbard/chain_24_O_10_8.json carries no other row with this number (the Ref. [19] cells were not loaded from this paper).",
+    "source_entry": "RP1-arxiv-2506-08329#8 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/chain_24_O_10_8",
+      "method": "DMRG, fMPS bond dimension 1000",
+      "energy": -13.51439136
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 2 (S-5.1; PDF Table II; journal Appendix E, Table II) caption: 'The DMRG reference energy per site is -0.56309964, obtained using pyBlock2 [72] with fMPS bond dimension 1000 and truncated weight dw = 1.6 × 10^-10'",
+    "reported_as": "-0.56309964 per site, units of t",
+    "conversion": "-0.56309964 x 24 = -13.51439136",
+    "note": "Cluster and sector from the caption: 'L = 24 one-dimensional chain at hole doping n_h = 1/6 (N_e = 20, N_↑ = N_↓ = 10)'; OBC (main text, Eq. (3) paragraph); H identical to the VarBench Hubbard form (no constant shift); U = 8, t = 1; per-site energy x N. Number identical in arXiv v1, v2 and v3. Own computation (pyBlock2 = block2 code, Ref. [72]); DMRG at stated bond dimension m = 1000 (Fig. 3 caption 'fMPS of bond dimension m = 1000'), no extrapolation stated: variational. No error bar printed; sigma null correct. Lower than every VMC energy in the table (NN-fMPS-GO D = 8: -0.56244). Instance Hubbard/chain_24_O_10_8 (created by scripts/instances_2026_11_26.mjs line 60: chain, 24 sites, O, Nf = 10, U = 8; dof 20, einf 8*10*10/24 = 33.33) agrees with the source. No duplicate on the instance: data/Hubbard/chain_24_O_10_8.json carries no other row with this number (the Ref. [19] cells were not loaded from this paper).",
+    "source_entry": "RP1-arxiv-2506-08329#9 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_O_7_8",
+      "method": "NN-fPEPS-GO, D = 4",
+      "energy": -9.9952
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 4 (S-5.2; PDF Table IV; journal Appendix E, Table IV), row 'NN-fPEPS-GO', column D = 4 (column header is a diagonal 'D / Model' box, PDF text)",
+    "reported_as": "-0.6247 ± 2 × 10^-4 per site, units of t",
+    "conversion": "-0.6247 x 16 = -9.9952; sigma 0.0002 x 16 = 0.0032",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the convention note, which cited the 24-site chain caption, fixed in scripts/instances_2026_11_26.mjs (one caption per table).",
+    "source_entry": "RP1-arxiv-2506-08329#10 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_O_7_8",
+      "method": "NN-fPEPS-GO, D = 6",
+      "energy": -10.0816
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 4 (S-5.2; PDF Table IV; journal Appendix E, Table IV), row 'NN-fPEPS-GO', column D = 6 (column header is a diagonal 'D / Model' box, PDF text)",
+    "reported_as": "-0.6301 ± 2 × 10^-4 per site, units of t",
+    "conversion": "-0.6301 x 16 = -10.0816; sigma 0.0002 x 16 = 0.0032",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the convention note, which cited the 24-site chain caption, fixed in scripts/instances_2026_11_26.mjs (one caption per table).",
+    "source_entry": "RP1-arxiv-2506-08329#11 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_O_7_8",
+      "method": "NN-fPEPS-GO, D = 8",
+      "energy": -10.1144
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 4 (S-5.2; PDF Table IV; journal Appendix E, Table IV), row 'NN-fPEPS-GO', column D = 8 (column header is a diagonal 'D / Model' box, PDF text)",
+    "reported_as": "-0.63215 ± 7 × 10^-5 per site, units of t",
+    "conversion": "-0.63215 x 16 = -10.1144; sigma 7e-05 x 16 = 0.00112",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the convention note, which cited the 24-site chain caption, fixed in scripts/instances_2026_11_26.mjs (one caption per table).",
+    "source_entry": "RP1-arxiv-2506-08329#12 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_O_7_8",
+      "method": "NN-fPEPS-GO, D = 10",
+      "energy": -10.11696
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 4 (S-5.2; PDF Table IV; journal Appendix E, Table IV), row 'NN-fPEPS-GO', column D = 10 (column header is a diagonal 'D / Model' box, PDF text)",
+    "reported_as": "-0.63231 ± 5 × 10^-5 per site, units of t",
+    "conversion": "-0.63231 x 16 = -10.11696; sigma 5e-05 x 16 = 0.0008",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the convention note, which cited the 24-site chain caption, fixed in scripts/instances_2026_11_26.mjs (one caption per table).",
+    "source_entry": "RP1-arxiv-2506-08329#13 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_O_7_8",
+      "method": "NN",
+      "energy": -8.6256
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 4 (S-5.2; PDF Table IV; journal Appendix E, Table IV) caption: 'The pure NN model yields E_NN = ..., while the NN backflow baseline calculation gives E_NN-SD (MLP) = ... and E_NN-SD (ViT|CNN) = ...'",
+    "reported_as": "-0.5391 per site, units of t",
+    "conversion": "-0.5391 x 16 = -8.6256",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the convention note, which cited the 24-site chain caption, fixed in scripts/instances_2026_11_26.mjs (one caption per table).",
+    "source_entry": "RP1-arxiv-2506-08329#14 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_O_7_8",
+      "method": "NN-SD (MLP)",
+      "energy": -9.8
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 4 (S-5.2; PDF Table IV; journal Appendix E, Table IV) caption: 'The pure NN model yields E_NN = ..., while the NN backflow baseline calculation gives E_NN-SD (MLP) = ... and E_NN-SD (ViT|CNN) = ...'",
+    "reported_as": "-0.6125 per site, units of t",
+    "conversion": "-0.6125 x 16 = -9.8",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the convention note, which cited the 24-site chain caption, fixed in scripts/instances_2026_11_26.mjs (one caption per table).",
+    "source_entry": "RP1-arxiv-2506-08329#15 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_O_7_8",
+      "method": "NN-SD (CNN)",
+      "energy": -10.0608
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 4 (S-5.2; PDF Table IV; journal Appendix E, Table IV) caption: 'The pure NN model yields E_NN = ..., while the NN backflow baseline calculation gives E_NN-SD (MLP) = ... and E_NN-SD (ViT|CNN) = ...'",
+    "reported_as": "-0.6288 per site, units of t",
+    "conversion": "-0.6288 x 16 = -10.0608",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the convention note, which cited the 24-site chain caption, fixed in scripts/instances_2026_11_26.mjs (one caption per table).",
+    "source_entry": "RP1-arxiv-2506-08329#16 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_O_8_8",
+      "method": "NN-fPEPS-GO, D = 4",
+      "energy": -6.8056
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 3 (S-5.2; PDF Table III; journal Appendix E, Table III), row 'NN-fPEPS-GO', column D = 4 (column header is a diagonal 'D / Model' box, PDF text)",
+    "reported_as": "-0.42535 ± 4 × 10^-5 per site, units of t",
+    "conversion": "-0.42535 x 16 = -6.8056; sigma 4e-05 x 16 = 0.00064",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the convention note, which cited the 24-site chain caption, fixed in scripts/instances_2026_11_26.mjs (one caption per table).",
+    "source_entry": "RP1-arxiv-2506-08329#17 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_O_8_8",
+      "method": "NN-fPEPS-GO, D = 6",
+      "energy": -6.80656
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 3 (S-5.2; PDF Table III; journal Appendix E, Table III), row 'NN-fPEPS-GO', column D = 6 (column header is a diagonal 'D / Model' box, PDF text)",
+    "reported_as": "-0.42541 ± 3 × 10^-5 per site, units of t",
+    "conversion": "-0.42541 x 16 = -6.80656; sigma 3e-05 x 16 = 0.00048",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the convention note, which cited the 24-site chain caption, fixed in scripts/instances_2026_11_26.mjs (one caption per table).",
+    "source_entry": "RP1-arxiv-2506-08329#18 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_O_8_8",
+      "method": "NN-fPEPS-GO, D = 8",
+      "energy": -6.80816
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 3 (S-5.2; PDF Table III; journal Appendix E, Table III), row 'NN-fPEPS-GO', column D = 8 (column header is a diagonal 'D / Model' box, PDF text)",
+    "reported_as": "-0.42551 ± 2 × 10^-5 per site, units of t",
+    "conversion": "-0.42551 x 16 = -6.80816; sigma 2e-05 x 16 = 0.00032",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the convention note, which cited the 24-site chain caption, fixed in scripts/instances_2026_11_26.mjs (one caption per table).",
+    "source_entry": "RP1-arxiv-2506-08329#19 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_O_8_8",
+      "method": "NN",
+      "energy": -5.264
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 3 (S-5.2; PDF Table III; journal Appendix E, Table III) caption: 'The pure NN model yields E_NN = ..., while the NN backflow baseline calculation gives E_NN-SD (MLP) = ... and E_NN-SD (ViT|CNN) = ...'",
+    "reported_as": "-0.3290 per site, units of t",
+    "conversion": "-0.3290 x 16 = -5.264",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the convention note, which cited the 24-site chain caption, fixed in scripts/instances_2026_11_26.mjs (one caption per table).",
+    "source_entry": "RP1-arxiv-2506-08329#20 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_O_8_8",
+      "method": "NN-SD (MLP)",
+      "energy": -6.6512
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 3 (S-5.2; PDF Table III; journal Appendix E, Table III) caption: 'The pure NN model yields E_NN = ..., while the NN backflow baseline calculation gives E_NN-SD (MLP) = ... and E_NN-SD (ViT|CNN) = ...'",
+    "reported_as": "-0.4157 per site, units of t",
+    "conversion": "-0.4157 x 16 = -6.6512",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the convention note, which cited the 24-site chain caption, fixed in scripts/instances_2026_11_26.mjs (one caption per table).",
+    "source_entry": "RP1-arxiv-2506-08329#21 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_16_O_8_8",
+      "method": "NN-SD (ViT)",
+      "energy": -6.7952
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 3 (S-5.2; PDF Table III; journal Appendix E, Table III) caption: 'The pure NN model yields E_NN = ..., while the NN backflow baseline calculation gives E_NN-SD (MLP) = ... and E_NN-SD (ViT|CNN) = ...'",
+    "reported_as": "-0.4247 per site, units of t",
+    "conversion": "-0.4247 x 16 = -6.7952",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the convention note, which cited the 24-site chain caption, fixed in scripts/instances_2026_11_26.mjs (one caption per table).",
+    "source_entry": "RP1-arxiv-2506-08329#22 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_36_O_16_8",
+      "method": "NN-fPEPS-GO, D = 4",
+      "energy": -22.932
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 5 (S-5.2; PDF Table V; journal Appendix E, Table V), row 'NN-fPEPS-GO', column D = 4 (column header is a diagonal 'D / Model' box, PDF text)",
+    "reported_as": "-0.6370 ± 2 × 10^-4 per site, units of t",
+    "conversion": "-0.6370 x 36 = -22.932; sigma 0.0002 x 36 = 0.0072",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the convention note, which cited the 24-site chain caption, fixed in scripts/instances_2026_11_26.mjs (one caption per table).",
+    "source_entry": "RP1-arxiv-2506-08329#23 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_36_O_16_8",
+      "method": "NN-fPEPS-GO, D = 6",
+      "energy": -23.4108
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 5 (S-5.2; PDF Table V; journal Appendix E, Table V), row 'NN-fPEPS-GO', column D = 6 (column header is a diagonal 'D / Model' box, PDF text)",
+    "reported_as": "-0.6503 ± 1 × 10^-4 per site, units of t",
+    "conversion": "-0.6503 x 36 = -23.4108; sigma 0.0001 x 36 = 0.0036",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the convention note, which cited the 24-site chain caption, fixed in scripts/instances_2026_11_26.mjs (one caption per table).",
+    "source_entry": "RP1-arxiv-2506-08329#24 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_36_O_16_8",
+      "method": "NN-fPEPS-GO, D = 8",
+      "energy": -23.526
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2506.08329v3 (29 Oct 2025): HTML (repo sources/2506.08329.html, parsed with node) and PDF (pypdf plain + layout); v1 and v2 PDFs compared; journal version Phys. Rev. B 113, 085134 (2026) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Supplemental Table 5 (S-5.2; PDF Table V; journal Appendix E, Table V), row 'NN-fPEPS-GO', column D = 8 (column header is a diagonal 'D / Model' box, PDF text)",
+    "reported_as": "-0.6535 ± 1 × 10^-4 per site, units of t",
+    "conversion": "-0.6535 x 36 = -23.526; sigma 0.0001 x 36 = 0.0036",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the convention note, which cited the 24-site chain caption, fixed in scripts/instances_2026_11_26.mjs (one caption per table).",
+    "source_entry": "RP1-arxiv-2506-08329#25 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_100_P_0.125",
+      "method": "DSL, 0 Lanczos steps",
+      "energy": -200.662
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 10, column 0-LS (DSL, S = 0)",
+    "reported_as": "−0.501655(1) per site, units of J1, S.S form",
+    "conversion": "-0.501655 x 4 x 100 = -200.662; sigma 1e-6 x 400 = 0.0004",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type variational agrees; p-step Lanczos on the S = 0 Gutzwiller-projected DSL (fermionic BC [A,P], a wave-function choice), sampled by VMC. Duplicate check: no other row on J1J2/triangular_100_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#0 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_100_P_0.125",
+      "method": "DSL, 1 Lanczos step",
+      "energy": -203.4896
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 10, column 1-LS (DSL, S = 0)",
+    "reported_as": "−0.508724(2) per site, units of J1, S.S form",
+    "conversion": "-0.508724 x 4 x 100 = -203.4896; sigma 2e-6 x 400 = 0.0008",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type variational agrees; p-step Lanczos on the S = 0 Gutzwiller-projected DSL (fermionic BC [A,P], a wave-function choice), sampled by VMC. Duplicate check: no other row on J1J2/triangular_100_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#1 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_100_P_0.125",
+      "method": "DSL, 2 Lanczos steps",
+      "energy": -204.2884
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 10, column 2-LS (DSL, S = 0)",
+    "reported_as": "−0.510721(5) per site, units of J1, S.S form",
+    "conversion": "-0.510721 x 4 x 100 = -204.2884; sigma 5e-6 x 400 = 0.002",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type variational agrees; p-step Lanczos on the S = 0 Gutzwiller-projected DSL (fermionic BC [A,P], a wave-function choice), sampled by VMC. Duplicate check: no other row on J1J2/triangular_100_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#2 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_100_P_0.125",
+      "method": "DSL, zero-variance extrapolation",
+      "energy": -204.78
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 10, column 'Ground state' (bold, zero-variance extrapolation)",
+    "reported_as": "−0.51195(8) per site, units of J1, S.S form",
+    "conversion": "-0.51195 x 4 x 100 = -204.78; sigma 8e-5 x 400 = 0.032",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type extrapolated agrees; quadratic fit E = Eex + A σ² + B (σ²)² through p = 0, 1, 2 (Sec. IV.A). Duplicate check: no other row on J1J2/triangular_100_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#3 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_144_P_0.125",
+      "method": "DSL, 0 Lanczos steps",
+      "energy": -289.052928
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 12, column 0-LS (DSL, S = 0)",
+    "reported_as": "−0.501828(1) per site, units of J1, S.S form",
+    "conversion": "-0.501828 x 4 x 144 = -289.052928; sigma 1e-6 x 576 = 0.000576",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type variational agrees; p-step Lanczos on the S = 0 Gutzwiller-projected DSL (fermionic BC [A,P], a wave-function choice), sampled by VMC. Duplicate check: the instance's other Iqbal row (method 'DSL', -294.081408, sweep-pdf-2026-09-14) is the 2-LS cell -0.510558(5), a different number; no duplicate",
+    "source_entry": "RP2-arxiv-1601-06018#4 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_144_P_0.125",
+      "method": "DSL, 1 Lanczos step",
+      "energy": -292.860288
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 12, column 1-LS (DSL, S = 0)",
+    "reported_as": "−0.508438(3) per site, units of J1, S.S form",
+    "conversion": "-0.508438 x 4 x 144 = -292.860288; sigma 3e-6 x 576 = 0.001728",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type variational agrees; p-step Lanczos on the S = 0 Gutzwiller-projected DSL (fermionic BC [A,P], a wave-function choice), sampled by VMC. Duplicate check: the instance's other Iqbal row (method 'DSL', -294.081408, sweep-pdf-2026-09-14) is the 2-LS cell -0.510558(5), a different number; no duplicate",
+    "source_entry": "RP2-arxiv-1601-06018#5 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_144_P_0.125",
+      "method": "DSL, zero-variance extrapolation",
+      "energy": -294.98688
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 12, column 'Ground state' (bold, zero-variance extrapolation)",
+    "reported_as": "−0.51213(10) per site, units of J1, S.S form",
+    "conversion": "-0.51213 x 4 x 144 = -294.98688; sigma 10e-5 x 576 = 0.0576",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type extrapolated agrees; quadratic fit E = Eex + A σ² + B (σ²)² through p = 0, 1, 2 (Sec. IV.A). Duplicate check: the instance's other Iqbal row (method 'DSL', -294.081408, sweep-pdf-2026-09-14) is the 2-LS cell -0.510558(5), a different number; no duplicate",
+    "source_entry": "RP2-arxiv-1601-06018#6 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_196_P_0.125",
+      "method": "DSL, 0 Lanczos steps",
+      "energy": -393.462944
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 14, column 0-LS (DSL, S = 0)",
+    "reported_as": "−0.501866(1) per site, units of J1, S.S form",
+    "conversion": "-0.501866 x 4 x 196 = -393.462944; sigma 1e-6 x 784 = 0.000784",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type variational agrees; p-step Lanczos on the S = 0 Gutzwiller-projected DSL (fermionic BC [A,P], a wave-function choice), sampled by VMC. Duplicate check: no other row on J1J2/triangular_196_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#7 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_196_P_0.125",
+      "method": "DSL, 1 Lanczos step",
+      "energy": -398.310416
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 14, column 1-LS (DSL, S = 0)",
+    "reported_as": "−0.508049(3) per site, units of J1, S.S form",
+    "conversion": "-0.508049 x 4 x 196 = -398.310416; sigma 3e-6 x 784 = 0.002352",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type variational agrees; p-step Lanczos on the S = 0 Gutzwiller-projected DSL (fermionic BC [A,P], a wave-function choice), sampled by VMC. Duplicate check: no other row on J1J2/triangular_196_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#8 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_196_P_0.125",
+      "method": "DSL, 2 Lanczos steps",
+      "energy": -400.03208
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 14, column 2-LS (DSL, S = 0)",
+    "reported_as": "−0.510245(7) per site, units of J1, S.S form",
+    "conversion": "-0.510245 x 4 x 196 = -400.03208; sigma 7e-6 x 784 = 0.005488",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type variational agrees; p-step Lanczos on the S = 0 Gutzwiller-projected DSL (fermionic BC [A,P], a wave-function choice), sampled by VMC. Duplicate check: no other row on J1J2/triangular_196_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#9 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_196_P_0.125",
+      "method": "DSL, zero-variance extrapolation",
+      "energy": -401.43152
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 14, column 'Ground state' (bold, zero-variance extrapolation)",
+    "reported_as": "−0.51203(14) per site, units of J1, S.S form",
+    "conversion": "-0.51203 x 4 x 196 = -401.43152; sigma 14e-5 x 784 = 0.10976",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type extrapolated agrees; quadratic fit E = Eex + A σ² + B (σ²)² through p = 0, 1, 2 (Sec. IV.A). Duplicate check: no other row on J1J2/triangular_196_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#10 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_36_P_0.125",
+      "method": "DSL, 0 Lanczos steps",
+      "energy": -72.257472
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 6, column 0-LS (DSL, S = 0)",
+    "reported_as": "−0.501788(1) per site, units of J1, S.S form",
+    "conversion": "-0.501788 x 4 x 36 = -72.257472; sigma 1e-6 x 144 = 0.000144",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type variational agrees; p-step Lanczos on the S = 0 Gutzwiller-projected DSL (fermionic BC [A,P], a wave-function choice), sampled by VMC. Duplicate check: no other row on J1J2/triangular_36_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#11 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_36_P_0.125",
+      "method": "DSL, 1 Lanczos step",
+      "energy": -73.489536
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 6, column 1-LS (DSL, S = 0)",
+    "reported_as": "−0.510344(2) per site, units of J1, S.S form",
+    "conversion": "-0.510344 x 4 x 36 = -73.489536; sigma 2e-6 x 144 = 0.000288",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type variational agrees; p-step Lanczos on the S = 0 Gutzwiller-projected DSL (fermionic BC [A,P], a wave-function choice), sampled by VMC. Duplicate check: no other row on J1J2/triangular_36_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#12 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_36_P_0.125",
+      "method": "DSL, 2 Lanczos steps",
+      "energy": -73.800432
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 6, column 2-LS (DSL, S = 0)",
+    "reported_as": "−0.512503(3) per site, units of J1, S.S form",
+    "conversion": "-0.512503 x 4 x 36 = -73.800432; sigma 3e-6 x 144 = 0.000432",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type variational agrees; p-step Lanczos on the S = 0 Gutzwiller-projected DSL (fermionic BC [A,P], a wave-function choice), sampled by VMC. Duplicate check: no other row on J1J2/triangular_36_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#13 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_36_P_0.125",
+      "method": "DSL, zero-variance extrapolation",
+      "energy": -74.22912
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 6, column 'Ground state' (bold, zero-variance extrapolation)",
+    "reported_as": "−0.51548(8) per site, units of J1, S.S form",
+    "conversion": "-0.51548 x 4 x 36 = -74.22912; sigma 8e-5 x 144 = 0.01152",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type extrapolated agrees; quadratic fit E = Eex + A σ² + B (σ²)² through p = 0, 1, 2 (Sec. IV.A). Duplicate check: no other row on J1J2/triangular_36_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#14 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_36_P_0.125",
+      "method": "DMRG, truncation-error extrapolation",
+      "energy": -74.24208
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table IV (journal p. 144411-10), row DMRG∗, column 6×6 torus",
+    "reported_as": "−0.51557(5) per site, units of J1, S.S form",
+    "conversion": "-0.51557 x 4 x 36 = -74.24208; sigma 5e-5 x 144 = 0.0072",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type extrapolated agrees; Table IV caption: 'the DMRG estimates by an extrapolation in truncation error [keeping at most 8000 SU(2) states]'; asterisk = present study. Duplicate check: no other row on J1J2/triangular_36_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#15 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_36_P_0.125",
+      "method": "ED",
+      "energy": -74.241216
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table IV (journal p. 144411-10), row ED∗, column 6×6 torus",
+    "reported_as": "−0.515564 per site, units of J1, S.S form",
+    "conversion": "-0.515564 x 4 x 36 = -74.241216; no error bar printed (ED)",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type exact agrees; asterisk = present study (own ED, Sec. II.A: 'exact diagonalizations on a small 6×6 cluster'; ground state a total-symmetric singlet for J2/J1 ⩽ 0.15). The DMRG* value −0.51557(5) on this cluster lies 6e-6 below this exact value, inside its 5e-5 bar: consistent, not a defect. Duplicate check: no other row on J1J2/triangular_36_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#16 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_400_P_0.125",
+      "method": "DSL, 0 Lanczos steps",
+      "energy": -803.064
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 20, column 0-LS (DSL, S = 0)",
+    "reported_as": "−0.501915(1) per site, units of J1, S.S form",
+    "conversion": "-0.501915 x 4 x 400 = -803.064; sigma 1e-6 x 1600 = 0.0016",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type variational agrees; p-step Lanczos on the S = 0 Gutzwiller-projected DSL (fermionic BC [A,P], a wave-function choice), sampled by VMC. Duplicate check: no other row on J1J2/triangular_400_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#17 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_400_P_0.125",
+      "method": "DSL, 1 Lanczos step",
+      "energy": -811.2896
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 20, column 1-LS (DSL, S = 0)",
+    "reported_as": "−0.507056(3) per site, units of J1, S.S form",
+    "conversion": "-0.507056 x 4 x 400 = -811.2896; sigma 3e-6 x 1600 = 0.0048",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type variational agrees; p-step Lanczos on the S = 0 Gutzwiller-projected DSL (fermionic BC [A,P], a wave-function choice), sampled by VMC. Duplicate check: no other row on J1J2/triangular_400_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#18 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_400_P_0.125",
+      "method": "DSL, zero-variance extrapolation (p = 0, 1)",
+      "energy": -819.424
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III row Size 20; Fig. 8 caption; Sec. IV.A (journal p. 144411-9/10)",
+    "reported_as": "Table III row 20: '20 −0.501915(1) −0.507056(3) [2-LS blank] ... −0.51214(15)'; Fig. 8 caption: 'while only two points have been used for the L = 20 cluster'; Sec. IV.A: 'for the L = 20 cluster only the first Lanczos step has been considered ... For the largest cluster, i.e., L = 20, we also considered a quadratic fit: we first obtained an estimate of the A and B coefficients by a size scaling of the smaller clusters and then verified that indeed, these values give an excellent fit ... of the points for L = 20 cluster.'",
+    "conversion": "none (energy -0.51214 x 1600 = -819.424 and sigma 0.00015 x 1600 = 0.24 verified)",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the method string and its detail (p = 0, 1 only at L = 20), fixed in scripts/instances_2026_11_26.mjs and scripts/method_names.mjs.",
+    "source_entry": "RP2-arxiv-1601-06018#19 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_64_P_0.125",
+      "method": "DSL, 0 Lanczos steps",
+      "energy": -128.61696
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 8, column 0-LS (DSL, S = 0)",
+    "reported_as": "−0.502410(1) per site, units of J1, S.S form",
+    "conversion": "-0.502410 x 4 x 64 = -128.61696; sigma 1e-6 x 256 = 0.000256",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type variational agrees; p-step Lanczos on the S = 0 Gutzwiller-projected DSL (fermionic BC [A,P], a wave-function choice), sampled by VMC. Duplicate check: no other row on J1J2/triangular_64_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#20 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_64_P_0.125",
+      "method": "DSL, 1 Lanczos step",
+      "energy": -130.57792
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 8, column 1-LS (DSL, S = 0)",
+    "reported_as": "−0.510070(1) per site, units of J1, S.S form",
+    "conversion": "-0.510070 x 4 x 64 = -130.57792; sigma 1e-6 x 256 = 0.000256",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type variational agrees; p-step Lanczos on the S = 0 Gutzwiller-projected DSL (fermionic BC [A,P], a wave-function choice), sampled by VMC. Duplicate check: no other row on J1J2/triangular_64_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#21 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_64_P_0.125",
+      "method": "DSL, 2 Lanczos steps",
+      "energy": -131.0592
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 8, column 2-LS (DSL, S = 0)",
+    "reported_as": "−0.511950(4) per site, units of J1, S.S form",
+    "conversion": "-0.511950 x 4 x 64 = -131.0592; sigma 4e-6 x 256 = 0.001024",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type variational agrees; p-step Lanczos on the S = 0 Gutzwiller-projected DSL (fermionic BC [A,P], a wave-function choice), sampled by VMC. Duplicate check: no other row on J1J2/triangular_64_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#22 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_64_P_0.125",
+      "method": "DSL, zero-variance extrapolation",
+      "energy": -131.36384
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table III (journal p. 144411-10), row Size 8, column 'Ground state' (bold, zero-variance extrapolation)",
+    "reported_as": "−0.51314(4) per site, units of J1, S.S form",
+    "conversion": "-0.51314 x 4 x 64 = -131.36384; sigma 4e-5 x 256 = 0.01024",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type extrapolated agrees; quadratic fit E = Eex + A σ² + B (σ²)² through p = 0, 1, 2 (Sec. IV.A). Duplicate check: no other row on J1J2/triangular_64_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#23 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_64_P_0.125",
+      "method": "DMRG, truncation-error extrapolation",
+      "energy": -131.4048
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. B 93, 144411 (2016), publisher PDF (sources/journal/prb93-144411.pdf in the verify-run cache, sha256 3c0f8916...; received 9 Feb 2016, published 11 Apr 2016), pypdf layout and plain mode page by page (page 8, a figure page, exceeds the pypdf token limit; Tables III and IV are on page 10); compared with arXiv:1601.06018v4 (repo/sources/1601.06018.txt, dated April 12, 2016; abs page lists v1-v4, v4 of 11 Apr 2016)",
+    "location": "Table IV (journal p. 144411-10), row DMRG∗, column 8×8 torus",
+    "reported_as": "−0.5133(5) per site, units of J1, S.S form",
+    "conversion": "-0.5133 x 4 x 64 = -131.4048; sigma 5e-4 x 256 = 0.128",
+    "note": "Journal and arXiv v4 print the same digits. H = J1 sum_<ij> S_i.S_j + J2 sum_<<ij>> S_i.S_j (Eq. 1, spin-1/2, no constant), J2/J1 = 1/8, L x L torus with periodic boundaries in the spin Hamiltonian (Sec. IV.A); VarBench Pauli total = 4 N x (E/N). bound_type extrapolated agrees; Table IV caption: 'the DMRG estimates by an extrapolation in truncation error [keeping at most 8000 SU(2) states]'; asterisk = present study. Duplicate check: no other row on J1J2/triangular_64_P_0.125 carries this number (data file read 2026-11-27)",
+    "source_entry": "RP2-arxiv-1601-06018#24 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/chain_100_P_0.1",
+      "method": "DMRG (bond dimension up to 10^3)",
+      "energy": -170.166958
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. Research 6, 043280 (2024) publisher PDF (journals.aps.org, fetched 2026-11-27), pypdf layout mode, Table I p. 043280-4; cross-read arXiv:2403.07795v3 and v1 PDFs (layout mode): Table I identical in all three",
+    "location": "Table I, row J2/J1 = 0.10, column DMRG",
+    "reported_as": "−0.425417395 (per site, S.S units, J1 = 1)",
+    "conversion": "-0.425417395 x 400 = -170.166958",
+    "note": "Eq. (4) H = J1 sum S_i.S_j + J2 sum S_i.S_j, spin-1/2 operators, no constant; Table I caption: N = 100, DMRG bond dimension up to chi = 10^3, periodic boundary conditions; per-site S.S energies (the only reading consistent with the numbers; Majumdar-Ghosh scale -0.375); stored = 4N x E/N. DMRG is the authors' own (ITensor, Acknowledgments: 'The DMRG calculations have been performed within the ITensor library [53]'); energy of a finite-chi MPS, variational; record row: lattice, PBC, J2, normalisation, bound_type all agree; no error bar (none applies). ViT values sit at or above it within their last digit, so the DMRG is converged to ~1e-7 per site.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#0 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/chain_100_P_0.1",
+      "method": "ViT, pretrained at J2/J1 = 0.4 and fine-tuned",
+      "energy": -170.0872
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. Research 6, 043280 (2024) publisher PDF (journals.aps.org, fetched 2026-11-27), pypdf layout mode, Table I p. 043280-4; cross-read arXiv:2403.07795v3 and v1 PDFs (layout mode): Table I identical in all three",
+    "location": "Table I, row J2/J1 = 0.10, column Fine-tuning",
+    "reported_as": "−0.425218 (per site)",
+    "conversion": "-0.425218 x 400 = -170.0872",
+    "note": "Eq. (4) H = J1 sum S_i.S_j + J2 sum S_i.S_j, spin-1/2 operators, no constant; Table I caption: N = 100, DMRG bond dimension up to chi = 10^3, periodic boundary conditions; per-site S.S energies (the only reading consistent with the numbers; Majumdar-Ghosh scale -0.375); stored = 4N x E/N. Fine-tuning = ViT pretrained at J2/J1 = 0.4, only the output layer re-optimised (text p. 4); at J2 = 0.4 it is the output-layer optimisation at the pretraining point. Same Monte Carlo caveat as the ViT column; sigma null.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#1 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/chain_100_P_0.2",
+      "method": "DMRG (bond dimension up to 10^3)",
+      "energy": -163.4291868
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. Research 6, 043280 (2024) publisher PDF (journals.aps.org, fetched 2026-11-27), pypdf layout mode, Table I p. 043280-4; cross-read arXiv:2403.07795v3 and v1 PDFs (layout mode): Table I identical in all three",
+    "location": "Table I, row J2/J1 = 0.20, column DMRG",
+    "reported_as": "−0.408572967 (per site, S.S units, J1 = 1)",
+    "conversion": "-0.408572967 x 400 = -163.4291868",
+    "note": "Eq. (4) H = J1 sum S_i.S_j + J2 sum S_i.S_j, spin-1/2 operators, no constant; Table I caption: N = 100, DMRG bond dimension up to chi = 10^3, periodic boundary conditions; per-site S.S energies (the only reading consistent with the numbers; Majumdar-Ghosh scale -0.375); stored = 4N x E/N. DMRG is the authors' own (ITensor, Acknowledgments: 'The DMRG calculations have been performed within the ITensor library [53]'); energy of a finite-chi MPS, variational; record row: lattice, PBC, J2, normalisation, bound_type all agree; no error bar (none applies). ViT values sit at or above it within their last digit, so the DMRG is converged to ~1e-7 per site.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#2 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/chain_100_P_0.2",
+      "method": "ViT, trained from scratch",
+      "energy": -163.42912
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. Research 6, 043280 (2024) publisher PDF (journals.aps.org, fetched 2026-11-27), pypdf layout mode, Table I p. 043280-4; cross-read arXiv:2403.07795v3 and v1 PDFs (layout mode): Table I identical in all three",
+    "location": "Table I, row J2/J1 = 0.20, column ViT",
+    "reported_as": "−0.4085728 (per site)",
+    "conversion": "-0.4085728 x 400 = -163.42912",
+    "note": "Eq. (4) H = J1 sum S_i.S_j + J2 sum S_i.S_j, spin-1/2 operators, no constant; Table I caption: N = 100, DMRG bond dimension up to chi = 10^3, periodic boundary conditions; per-site S.S energies (the only reading consistent with the numbers; Majumdar-Ghosh scale -0.375); stored = 4N x E/N. Caption: 'the Monte Carlo error attributed to finite sampling effects affects the last digit of the reported results' (no numeric bar printed; sigma stays null; the caption bounds it at about 1e-7 per site = 4e-5 total).",
+    "source_entry": "RP3-j1j2-hubbard-tfising#3 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/chain_100_P_0.2",
+      "method": "ViT, pretrained at J2/J1 = 0.4 and fine-tuned",
+      "energy": -163.3812
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. Research 6, 043280 (2024) publisher PDF (journals.aps.org, fetched 2026-11-27), pypdf layout mode, Table I p. 043280-4; cross-read arXiv:2403.07795v3 and v1 PDFs (layout mode): Table I identical in all three",
+    "location": "Table I, row J2/J1 = 0.20, column Fine-tuning",
+    "reported_as": "−0.408453 (per site)",
+    "conversion": "-0.408453 x 400 = -163.3812",
+    "note": "Eq. (4) H = J1 sum S_i.S_j + J2 sum S_i.S_j, spin-1/2 operators, no constant; Table I caption: N = 100, DMRG bond dimension up to chi = 10^3, periodic boundary conditions; per-site S.S energies (the only reading consistent with the numbers; Majumdar-Ghosh scale -0.375); stored = 4N x E/N. Fine-tuning = ViT pretrained at J2/J1 = 0.4, only the output layer re-optimised (text p. 4); at J2 = 0.4 it is the output-layer optimisation at the pretraining point. Same Monte Carlo caveat as the ViT column; sigma null.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#4 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/chain_100_P_0.3",
+      "method": "DMRG (bond dimension up to 10^3)",
+      "energy": -157.250698
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. Research 6, 043280 (2024) publisher PDF (journals.aps.org, fetched 2026-11-27), pypdf layout mode, Table I p. 043280-4; cross-read arXiv:2403.07795v3 and v1 PDFs (layout mode): Table I identical in all three",
+    "location": "Table I, row J2/J1 = 0.30, column DMRG",
+    "reported_as": "−0.393126745 (per site, S.S units, J1 = 1)",
+    "conversion": "-0.393126745 x 400 = -157.250698",
+    "note": "Eq. (4) H = J1 sum S_i.S_j + J2 sum S_i.S_j, spin-1/2 operators, no constant; Table I caption: N = 100, DMRG bond dimension up to chi = 10^3, periodic boundary conditions; per-site S.S energies (the only reading consistent with the numbers; Majumdar-Ghosh scale -0.375); stored = 4N x E/N. DMRG is the authors' own (ITensor, Acknowledgments: 'The DMRG calculations have been performed within the ITensor library [53]'); energy of a finite-chi MPS, variational; record row: lattice, PBC, J2, normalisation, bound_type all agree; no error bar (none applies). ViT values sit at or above it within their last digit, so the DMRG is converged to ~1e-7 per site.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#5 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/chain_100_P_0.3",
+      "method": "ViT, trained from scratch",
+      "energy": -157.24816
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. Research 6, 043280 (2024) publisher PDF (journals.aps.org, fetched 2026-11-27), pypdf layout mode, Table I p. 043280-4; cross-read arXiv:2403.07795v3 and v1 PDFs (layout mode): Table I identical in all three",
+    "location": "Table I, row J2/J1 = 0.30, column ViT",
+    "reported_as": "−0.3931204 (per site)",
+    "conversion": "-0.3931204 x 400 = -157.24816",
+    "note": "Eq. (4) H = J1 sum S_i.S_j + J2 sum S_i.S_j, spin-1/2 operators, no constant; Table I caption: N = 100, DMRG bond dimension up to chi = 10^3, periodic boundary conditions; per-site S.S energies (the only reading consistent with the numbers; Majumdar-Ghosh scale -0.375); stored = 4N x E/N. Caption: 'the Monte Carlo error attributed to finite sampling effects affects the last digit of the reported results' (no numeric bar printed; sigma stays null; the caption bounds it at about 1e-7 per site = 4e-5 total).",
+    "source_entry": "RP3-j1j2-hubbard-tfising#6 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/chain_100_P_0.3",
+      "method": "ViT, pretrained at J2/J1 = 0.4 and fine-tuned",
+      "energy": -157.2236
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. Research 6, 043280 (2024) publisher PDF (journals.aps.org, fetched 2026-11-27), pypdf layout mode, Table I p. 043280-4; cross-read arXiv:2403.07795v3 and v1 PDFs (layout mode): Table I identical in all three",
+    "location": "Table I, row J2/J1 = 0.30, column Fine-tuning",
+    "reported_as": "−0.393059 (per site)",
+    "conversion": "-0.393059 x 400 = -157.2236",
+    "note": "Eq. (4) H = J1 sum S_i.S_j + J2 sum S_i.S_j, spin-1/2 operators, no constant; Table I caption: N = 100, DMRG bond dimension up to chi = 10^3, periodic boundary conditions; per-site S.S energies (the only reading consistent with the numbers; Majumdar-Ghosh scale -0.375); stored = 4N x E/N. Fine-tuning = ViT pretrained at J2/J1 = 0.4, only the output layer re-optimised (text p. 4); at J2 = 0.4 it is the output-layer optimisation at the pretraining point. Same Monte Carlo caveat as the ViT column; sigma null.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#7 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/chain_100_P_0.4",
+      "method": "DMRG (bond dimension up to 10^3)",
+      "energy": -152.154948
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. Research 6, 043280 (2024) publisher PDF (journals.aps.org, fetched 2026-11-27), pypdf layout mode, Table I p. 043280-4; cross-read arXiv:2403.07795v3 and v1 PDFs (layout mode): Table I identical in all three",
+    "location": "Table I, row J2/J1 = 0.40, column DMRG",
+    "reported_as": "−0.380387370 (per site, S.S units, J1 = 1)",
+    "conversion": "-0.380387370 x 400 = -152.154948",
+    "note": "Eq. (4) H = J1 sum S_i.S_j + J2 sum S_i.S_j, spin-1/2 operators, no constant; Table I caption: N = 100, DMRG bond dimension up to chi = 10^3, periodic boundary conditions; per-site S.S energies (the only reading consistent with the numbers; Majumdar-Ghosh scale -0.375); stored = 4N x E/N. DMRG is the authors' own (ITensor, Acknowledgments: 'The DMRG calculations have been performed within the ITensor library [53]'); energy of a finite-chi MPS, variational; record row: lattice, PBC, J2, normalisation, bound_type all agree; no error bar (none applies). ViT values sit at or above it within their last digit, so the DMRG is converged to ~1e-7 per site.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#8 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/chain_100_P_0.4",
+      "method": "ViT, trained from scratch",
+      "energy": -152.14904
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. Research 6, 043280 (2024) publisher PDF (journals.aps.org, fetched 2026-11-27), pypdf layout mode, Table I p. 043280-4; cross-read arXiv:2403.07795v3 and v1 PDFs (layout mode): Table I identical in all three",
+    "location": "Table I, row J2/J1 = 0.40, column ViT",
+    "reported_as": "−0.3803726 (per site)",
+    "conversion": "-0.3803726 x 400 = -152.14904",
+    "note": "Eq. (4) H = J1 sum S_i.S_j + J2 sum S_i.S_j, spin-1/2 operators, no constant; Table I caption: N = 100, DMRG bond dimension up to chi = 10^3, periodic boundary conditions; per-site S.S energies (the only reading consistent with the numbers; Majumdar-Ghosh scale -0.375); stored = 4N x E/N. Caption: 'the Monte Carlo error attributed to finite sampling effects affects the last digit of the reported results' (no numeric bar printed; sigma stays null; the caption bounds it at about 1e-7 per site = 4e-5 total).",
+    "source_entry": "RP3-j1j2-hubbard-tfising#9 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/chain_100_P_0.4",
+      "method": "ViT, pretrained at J2/J1 = 0.4 and fine-tuned",
+      "energy": -152.148
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. Research 6, 043280 (2024) publisher PDF (journals.aps.org, fetched 2026-11-27), pypdf layout mode, Table I p. 043280-4; cross-read arXiv:2403.07795v3 and v1 PDFs (layout mode): Table I identical in all three",
+    "location": "Table I, row J2/J1 = 0.40, column Fine-tuning",
+    "reported_as": "−0.380370 (per site)",
+    "conversion": "-0.380370 x 400 = -152.148",
+    "note": "Eq. (4) H = J1 sum S_i.S_j + J2 sum S_i.S_j, spin-1/2 operators, no constant; Table I caption: N = 100, DMRG bond dimension up to chi = 10^3, periodic boundary conditions; per-site S.S energies (the only reading consistent with the numbers; Majumdar-Ghosh scale -0.375); stored = 4N x E/N. Fine-tuning = ViT pretrained at J2/J1 = 0.4, only the output layer re-optimised (text p. 4); at J2 = 0.4 it is the output-layer optimisation at the pretraining point. Same Monte Carlo caveat as the ViT column; sigma null.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#10 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/chain_100_P_0.6",
+      "method": "DMRG (bond dimension up to 10^3)",
+      "energy": -152.3216552
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. Research 6, 043280 (2024) publisher PDF (journals.aps.org, fetched 2026-11-27), pypdf layout mode, Table I p. 043280-4; cross-read arXiv:2403.07795v3 and v1 PDFs (layout mode): Table I identical in all three",
+    "location": "Table I, row J2/J1 = 0.60, column DMRG",
+    "reported_as": "−0.380804138 (per site, S.S units, J1 = 1)",
+    "conversion": "-0.380804138 x 400 = -152.3216552",
+    "note": "Eq. (4) H = J1 sum S_i.S_j + J2 sum S_i.S_j, spin-1/2 operators, no constant; Table I caption: N = 100, DMRG bond dimension up to chi = 10^3, periodic boundary conditions; per-site S.S energies (the only reading consistent with the numbers; Majumdar-Ghosh scale -0.375); stored = 4N x E/N. DMRG is the authors' own (ITensor, Acknowledgments: 'The DMRG calculations have been performed within the ITensor library [53]'); energy of a finite-chi MPS, variational; record row: lattice, PBC, J2, normalisation, bound_type all agree; no error bar (none applies). ViT values sit at or above it within their last digit, so the DMRG is converged to ~1e-7 per site.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#11 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/chain_100_P_0.6",
+      "method": "ViT, trained from scratch",
+      "energy": -152.31652
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. Research 6, 043280 (2024) publisher PDF (journals.aps.org, fetched 2026-11-27), pypdf layout mode, Table I p. 043280-4; cross-read arXiv:2403.07795v3 and v1 PDFs (layout mode): Table I identical in all three",
+    "location": "Table I, row J2/J1 = 0.60, column ViT",
+    "reported_as": "−0.3807913 (per site)",
+    "conversion": "-0.3807913 x 400 = -152.31652",
+    "note": "Eq. (4) H = J1 sum S_i.S_j + J2 sum S_i.S_j, spin-1/2 operators, no constant; Table I caption: N = 100, DMRG bond dimension up to chi = 10^3, periodic boundary conditions; per-site S.S energies (the only reading consistent with the numbers; Majumdar-Ghosh scale -0.375); stored = 4N x E/N. Caption: 'the Monte Carlo error attributed to finite sampling effects affects the last digit of the reported results' (no numeric bar printed; sigma stays null; the caption bounds it at about 1e-7 per site = 4e-5 total).",
+    "source_entry": "RP3-j1j2-hubbard-tfising#12 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/chain_100_P_0.6",
+      "method": "ViT, pretrained at J2/J1 = 0.4 and fine-tuned",
+      "energy": -151.9608
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Phys. Rev. Research 6, 043280 (2024) publisher PDF (journals.aps.org, fetched 2026-11-27), pypdf layout mode, Table I p. 043280-4; cross-read arXiv:2403.07795v3 and v1 PDFs (layout mode): Table I identical in all three",
+    "location": "Table I, row J2/J1 = 0.60, column Fine-tuning",
+    "reported_as": "−0.379902 (per site)",
+    "conversion": "-0.379902 x 400 = -151.9608",
+    "note": "Eq. (4) H = J1 sum S_i.S_j + J2 sum S_i.S_j, spin-1/2 operators, no constant; Table I caption: N = 100, DMRG bond dimension up to chi = 10^3, periodic boundary conditions; per-site S.S energies (the only reading consistent with the numbers; Majumdar-Ghosh scale -0.375); stored = 4N x E/N. Fine-tuning = ViT pretrained at J2/J1 = 0.4, only the output layer re-optimised (text p. 4); at J2 = 0.4 it is the output-layer optimisation at the pretraining point. Same Monte Carlo caveat as the ViT column; sigma null.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#13 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "NN-GPEPS, Nv = 3 (projected)",
+      "energy": -49.016512
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2611.26604v1 (no journal version as of 2026-11-27); data release github.com/Chi-RZ/neural_gpeps",
+    "location": "Table G1 row 'NN-GPEPS, Nv = 3'; main text p. 3",
+    "reported_as": "E/N −0.765883(26), σ²/N 0.0133(7) (per site)",
+    "conversion": "energy -0.765883 x 64 = -49.016512 (= stored -49.016512); sigma 0.000026 x 64 = 0.001664 (= stored 0.001664); Var(H) = (σ²/N) x N = 0.0133 x 64 = 0.8512",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the variance (σ²/N printed; Var(H) stored), set on the pass by scripts/kbgap_variance_2026_11_28.mjs.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#14 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "NN-GPEPS, Nv = 4 (projected)",
+      "energy": -49.033728
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2611.26604v1 (no journal version as of 2026-11-27); data release github.com/Chi-RZ/neural_gpeps",
+    "location": "Table G1 row 'NN-GPEPS, Nv = 4'; main text p. 3",
+    "reported_as": "E/N −0.766152(16), σ²/N 0.01095(42) (per site)",
+    "conversion": "energy -0.766152 x 64 = -49.033728 (= stored -49.033728); sigma 0.000016 x 64 = 0.001024 (= stored 0.001024); Var(H) = (σ²/N) x N = 0.01095 x 64 = 0.7008",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the variance (σ²/N printed; Var(H) stored), set on the pass by scripts/kbgap_variance_2026_11_28.mjs.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#15 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "NN-GPEPS, Nv = 3 (projected)",
+      "energy": -194.51776
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2611.26604v1 (no journal version as of 2026-11-27); data release github.com/Chi-RZ/neural_gpeps",
+    "location": "Table I row 'NN-GPEPS, Nv = 3'; Table G2 'Fixed-parameter FP32 measurement'",
+    "reported_as": "E/N −0.759835(14), σ²/N 0.0149(7) (per site)",
+    "conversion": "energy -0.759835 x 256 = -194.51776 (= stored -194.51776); sigma 0.000014 x 256 = 0.003584 (= stored 0.003584); Var(H) = (σ²/N) x N = 0.0149 x 256 = 3.8144",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the variance (σ²/N printed; Var(H) stored), set on the pass by scripts/kbgap_variance_2026_11_28.mjs.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#16 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "NN-GPEPS, Nv = 4 (projected)",
+      "energy": -194.58944
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2611.26604v1 (no journal version as of 2026-11-27); data release github.com/Chi-RZ/neural_gpeps",
+    "location": "Table I row 'NN-GPEPS, Nv = 4'; Table G2 'Fixed-parameter FP32 measurement'",
+    "reported_as": "E/N −0.760115(11), σ²/N 0.01287(24) (per site)",
+    "conversion": "energy -0.760115 x 256 = -194.58944 (= stored -194.58944); sigma 0.000011 x 256 = 0.002816 (= stored 0.002816); Var(H) = (σ²/N) x N = 0.01287 x 256 = 3.29472",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the variance (σ²/N printed; Var(H) stored), set on the pass by scripts/kbgap_variance_2026_11_28.mjs.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#17 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_1024_P_448_8",
+      "method": "NN-GPEPS, Nv = 3",
+      "energy": -775.629824
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2611.26604v1 (no journal version as of 2026-11-27); data release github.com/Chi-RZ/neural_gpeps",
+    "location": "Table II row 'NN-GPEPS Nv = 3'; Table E1 'FP32 sampling and evaluation'",
+    "reported_as": "E/N −0.757451(21), σ²/N 0.02407(51) (per site)",
+    "conversion": "energy -0.757451 x 1024 = -775.629824 (= stored -775.629824); sigma 0.000021 x 1024 = 0.021504 (= stored 0.021504); Var(H) = (σ²/N) x N = 0.02407 x 1024 = 24.64768",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the variance (σ²/N printed; Var(H) stored), set on the pass by scripts/kbgap_variance_2026_11_28.mjs.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#18 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_1024_P_448_8",
+      "method": "NN-GPEPS, Nv = 4",
+      "energy": -776.211456
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2611.26604v1 (no journal version as of 2026-11-27); data release github.com/Chi-RZ/neural_gpeps",
+    "location": "Table II row 'NN-GPEPS Nv = 4'; Table E1 'FP32 sampling and evaluation'",
+    "reported_as": "E/N −0.758019(22), σ²/N 0.02013(42) (per site)",
+    "conversion": "energy -0.758019 x 1024 = -776.211456 (= stored -776.211456); sigma 0.000022 x 1024 = 0.022528 (= stored 0.022528); Var(H) = (σ²/N) x N = 0.02013 x 1024 = 20.61312",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the variance (σ²/N printed; Var(H) stored), set on the pass by scripts/kbgap_variance_2026_11_28.mjs.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#19 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_1024_P_448_8",
+      "method": "NN-GPEPS, Nv = 3 (P)",
+      "energy": -776.615936
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2611.26604v1 (no journal version as of 2026-11-27); data release github.com/Chi-RZ/neural_gpeps",
+    "location": "Table II row 'NN-GPEPS Nv = 3 (P)'; main text p. 4",
+    "reported_as": "E/N −0.758414(27), σ²/N 0.01647(64) (per site)",
+    "conversion": "energy -0.758414 x 1024 = -776.615936 (= stored -776.615936); sigma 0.000027 x 1024 = 0.027648 (= stored 0.027648); Var(H) = (σ²/N) x N = 0.01647 x 1024 = 16.86528",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the variance (σ²/N printed; Var(H) stored), set on the pass by scripts/kbgap_variance_2026_11_28.mjs.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#20 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_1024_P_448_8",
+      "method": "NN-GPEPS, Nv = 4 (P)",
+      "energy": -776.936448
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2611.26604v1 (no journal version as of 2026-11-27); data release github.com/Chi-RZ/neural_gpeps",
+    "location": "Table II row 'NN-GPEPS Nv = 4 (P)'; main text p. 4",
+    "reported_as": "E/N −0.758727(33), σ²/N 0.01606(82) (per site)",
+    "conversion": "energy -0.758727 x 1024 = -776.936448 (= stored -776.936448); sigma 0.000033 x 1024 = 0.033792 (= stored 0.033792); Var(H) = (σ²/N) x N = 0.01606 x 1024 = 16.44544",
+    "note": "Energy, error bar, cluster, filling, couplings and bound type agree with the source. Corrected on the same pass (ruled 2026-11-28): the variance (σ²/N printed; Var(H) stored), set on the pass by scripts/kbgap_variance_2026_11_28.mjs.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#21 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "NN-GPEPS (extrapolated)",
+      "energy": -49.1072
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2611.26604v1 PDF (only version; no journal reference on the arXiv abstract page, 2026-11-27), pypdf layout mode; cross-checked against the authors' data release github.com/Chi-RZ/neural_gpeps (data/measurements/*/results.json, *.toml) and code/nngtn/system.py, measure.py",
+    "location": "Table G1 row 'NN-GPEPS (extrapolated)'; App. F Eq. (F2) '16×4: E0/N = −0.7673(5)'; Table F1",
+    "reported_as": "−0.7673(5) per site, units of t",
+    "conversion": "-0.7673 x 64 = -49.1072; 0.0005 x 64 = 0.032",
+    "note": "Authors' own joint zero-variance extrapolation of the projected Nv = 3 and 4 training trajectories (linear E/N = eps0 + a σ²/N, orthogonal-distance regression, App. F); bound_type extrapolated is right. C7: the bar is not a 1-sigma standard error: 'Its uncertainty covers the two-standard-error interval of every fit' (App. F); Table F1 window means -0.767265 to -0.767326. Periodic torus, U = 8, t' = 0, (28, 28) electrons (Table D1). The same printed value −0.7673 is Gu et al.'s independent zero-variance extrapolation (Nat. Commun. 17, 7838, row 21 on this instance); Chi et al. do not quote it (their Table G1 cites Gu only for the variational −0.76298), so the two rows are independent, not a duplicate.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#22 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "NN-GPEPS (extrapolated)",
+      "energy": -195.1232
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2611.26604v1 PDF (only version; no journal reference on the arXiv abstract page, 2026-11-27), pypdf layout mode; cross-checked against the authors' data release github.com/Chi-RZ/neural_gpeps (data/measurements/*/results.json, *.toml) and code/nngtn/system.py, measure.py",
+    "location": "Table I row 'NN-GPEPS (extrapolated)'; main text p. 3 'E0/N = −0.7622(7)'; App. F, Table F1",
+    "reported_as": "−0.7622(7) per site, units of t",
+    "conversion": "-0.7622 x 256 = -195.1232; 0.0007 x 256 = 0.1792",
+    "note": "Authors' own joint zero-variance extrapolation of the projected Nv = 3 and 4 training trajectories (linear E/N = eps0 + a σ²/N, orthogonal-distance regression, App. F); bound_type extrapolated is right. C7: the bar is not a 1-sigma standard error: 'Its uncertainty covers the two-standard-error interval of every fit' (App. F); Table F1 window means -0.762087 to -0.762295. Periodic torus, U = 8, t' = 0, (112, 112) electrons (Table D1). Record row (extrapolated class): checked hardest; value, bar, lattice, filling, couplings and class all agree.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#23 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/chain_200_O_1",
+      "method": "pRNN (GRU), Adam",
+      "energy": -254.2416
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2608.18065v1 PDF (only version; no journal reference on the arXiv abstract page, 2026-11-27), pypdf plain and layout modes, Table II p. 22 and Table I p. 22; code github.com/werro40/RNN-Natural-Gradients (README.md, TFIM-1D.py, J1J2-2D.py, Configs/*.yaml, fetched 2026-11-27)",
+    "location": "Table II row '1D TFIM', column E_Adam/N",
+    "reported_as": "-1.271208(7)",
+    "conversion": "-1.271208 x 200 = -254.2416; 7e-6 x 200 = 0.0014",
+    "note": "Eq. (37) H = -J sum_{i=1}^{N-1} σz_i σz_{i+1} - h sum_i σx_i, Pauli matrices, OBC, J = 1 = h; Fig. 2 caption: 'TFIM Hamiltonian with open boundary conditions with 200 spins at the critical point h = J = 1'; identical to the QMBL TFIsing form (units.mjs line 169); E/N with E/N = energy / N; Table II caption 'Final energies ... evaluated at the end of training' (code TFIM-1D.py evaluates the final state with numsamples_final fresh exact autoregressive samples; error = sqrt(Var(e_loc))/sqrt(Ns), a standard error). pRNN GRU d_h = 32, Ns = 100 (Table I). Variational, 0.0436 above exact.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#24 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/chain_200_O_1",
+      "method": "pRNN (GRU), minSR",
+      "energy": -254.28508
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2608.18065v1 PDF (only version; no journal reference on the arXiv abstract page, 2026-11-27), pypdf plain and layout modes, Table II p. 22 and Table I p. 22; code github.com/werro40/RNN-Natural-Gradients (README.md, TFIM-1D.py, J1J2-2D.py, Configs/*.yaml, fetched 2026-11-27)",
+    "location": "Table II row '1D TFIM', column E_minSR/N",
+    "reported_as": "-1.2714254(3)",
+    "conversion": "-1.2714254 x 200 = -254.28508; 3e-7 x 200 = 6e-5",
+    "note": "Eq. (37) H = -J sum_{i=1}^{N-1} σz_i σz_{i+1} - h sum_i σx_i, Pauli matrices, OBC, J = 1 = h; Fig. 2 caption: 'TFIM Hamiltonian with open boundary conditions with 200 spins at the critical point h = J = 1'; identical to the QMBL TFIsing form (units.mjs line 169); E/N with E/N = energy / N; Table II caption 'Final energies ... evaluated at the end of training' (code TFIM-1D.py evaluates the final state with numsamples_final fresh exact autoregressive samples; error = sqrt(Var(e_loc))/sqrt(Ns), a standard error). Record row: sits 1.0e-4 (1.7 sigma) above the exact free-fermion energy -254.2851815869 (closed form below), so it does not violate the bound; lattice, OBC, h, normalisation, class agree.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#25 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/chain_200_O_1",
+      "method": "free-fermion solution",
+      "energy": -254.28518159
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2608.18065v1 PDF (only version; no journal reference on the arXiv abstract page, 2026-11-27), pypdf plain and layout modes, Table II p. 22 and Table I p. 22; code github.com/werro40/RNN-Natural-Gradients (README.md, TFIM-1D.py, J1J2-2D.py, Configs/*.yaml, fetched 2026-11-27)",
+    "location": "Table II row '1D TFIM', column E_ref/N, citation [61] (Pfeuty 1970)",
+    "reported_as": "-1.27142590795 [61]",
+    "conversion": "-1.27142590795 x 200 = -254.28518159; independent closed form for the critical open chain, E0 = 1 - 1/sin(pi/(2(2N+1))) (checked at N = 1: -1, N = 2: -sqrt5), N = 200: -254.2851815868726, i.e. -1.271425907934 per site, agrees with the printed value to 1e-12",
+    "note": "Eq. (37) H = -J sum_{i=1}^{N-1} σz_i σz_{i+1} - h sum_i σx_i, Pauli matrices, OBC, J = 1 = h; Fig. 2 caption: 'TFIM Hamiltonian with open boundary conditions with 200 spins at the critical point h = J = 1'; identical to the QMBL TFIsing form (units.mjs line 169); E/N with E/N = energy / N; Table II caption 'Final energies ... evaluated at the end of training' (code TFIM-1D.py evaluates the final state with numsamples_final fresh exact autoregressive samples; error = sqrt(Var(e_loc))/sqrt(Ns), a standard error). The paper evaluates the Pfeuty free-fermion solution at N = 200 itself (primary for this number); bound_type exact is right; no sigma applies.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#26 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "2D cRNN (d_h=200) with Adam",
+      "energy": -194.212
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2608.18065v1 PDF (only version; no journal reference on the arXiv abstract page, 2026-11-27), pypdf plain and layout modes, Table II p. 22 and Table I p. 22; code github.com/werro40/RNN-Natural-Gradients (README.md, TFIM-1D.py, J1J2-2D.py, Configs/*.yaml, fetched 2026-11-27)",
+    "location": "Table II row '2D J1 − J2', column E_Adam/N",
+    "reported_as": "−0.48553(2)",
+    "conversion": "-0.48553 x 400 = -194.212; 2e-5 x 400 = 0.008",
+    "note": "Sec. IV.C: H = (J1/4) sum_<ij> σ_i·σ_j + (J2/4) sum_<<ij>> σ_i·σ_j, Pauli operators, J1 = 1, J2 = 0.5 (= S·S form); Table II column E/N per spin; stored = 4N x E/N = 400 x E/N. C3 (lattice size/boundary) is not printed next to the row; settled by three independent lines: (1) the row's own reference value E_ref/N = -0.48654 [81] (Liu et al., PRB 98, 241109(R)) is the 10 x 10 open-lattice D = 8 PEPS energy: arXiv:2502.19576 (2D J1-J2 'with open boundary conditions on a L × L lattice', Fig. 10(c) '10 × 10, e_min = −0.48654', 'E_min are taken from Ref. [98]' = the same Liu et al. paper); (2) the code README: 'All models use open boundary conditions', J1J2-2D.py docstring '(J1 = 1.0, J2 = 0.5, open boundary conditions)'; (3) the companion 2D Heisenberg row of the same table (d_h = 200, Ns = 200 like the J1-J2 run, Table I) uses Configs/config_h2d.yaml 'N: 10 #number of sites N x N' and E_ref -0.628656, the 10 x 10 OBC value. The repo's config_j1j2.yaml (N: 6, dh: 10) is the 6 x 6 Fig. 5(b) Fisher-error study, not the Table II run. The previous 'mapping is a guess' note can be replaced by this evidence. Final energy evaluated at the end of training with fresh exact autoregressive samples (J1J2-2D.py lines 293-315), error = standard error. Variational; above the D = 8 PEPS -0.48654, not a record (PEPS D = 4 -0.4861 holds it). Complex 2D cRNN with Marshall sign prior (Eq. 40), d_h = 200, Ns = 200, Adam 2e5 iterations (Table I).",
+    "source_entry": "RP3-j1j2-hubbard-tfising#27 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "2D cRNN (d_h=200) with minSR",
+      "energy": -194.056
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2608.18065v1 PDF (only version; no journal reference on the arXiv abstract page, 2026-11-27), pypdf plain and layout modes, Table II p. 22 and Table I p. 22; code github.com/werro40/RNN-Natural-Gradients (README.md, TFIM-1D.py, J1J2-2D.py, Configs/*.yaml, fetched 2026-11-27)",
+    "location": "Table II row '2D J1 − J2', column E_minSR/N",
+    "reported_as": "-0.48514(4)",
+    "conversion": "-0.48514 x 400 = -194.056; 4e-5 x 400 = 0.016",
+    "note": "Sec. IV.C: H = (J1/4) sum_<ij> σ_i·σ_j + (J2/4) sum_<<ij>> σ_i·σ_j, Pauli operators, J1 = 1, J2 = 0.5 (= S·S form); Table II column E/N per spin; stored = 4N x E/N = 400 x E/N. C3 (lattice size/boundary) is not printed next to the row; settled by three independent lines: (1) the row's own reference value E_ref/N = -0.48654 [81] (Liu et al., PRB 98, 241109(R)) is the 10 x 10 open-lattice D = 8 PEPS energy: arXiv:2502.19576 (2D J1-J2 'with open boundary conditions on a L × L lattice', Fig. 10(c) '10 × 10, e_min = −0.48654', 'E_min are taken from Ref. [98]' = the same Liu et al. paper); (2) the code README: 'All models use open boundary conditions', J1J2-2D.py docstring '(J1 = 1.0, J2 = 0.5, open boundary conditions)'; (3) the companion 2D Heisenberg row of the same table (d_h = 200, Ns = 200 like the J1-J2 run, Table I) uses Configs/config_h2d.yaml 'N: 10 #number of sites N x N' and E_ref -0.628656, the 10 x 10 OBC value. The repo's config_j1j2.yaml (N: 6, dh: 10) is the 6 x 6 Fig. 5(b) Fisher-error study, not the Table II run. The previous 'mapping is a guess' note can be replaced by this evidence. Final energy evaluated at the end of training with fresh exact autoregressive samples (J1J2-2D.py lines 293-315), error = standard error. Variational; above the D = 8 PEPS -0.48654, not a record (PEPS D = 4 -0.4861 holds it). minSR 1e5 iterations, constant lambda = 1e-1, trust-region learning rate (Table I, Sec. IV.C).",
+    "source_entry": "RP3-j1j2-hubbard-tfising#28 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "Transformer backflow + MARCH optimizer, zero-variance extrapolation",
+      "energy": -49.1072
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "Nat. Commun. 17, 7838 (2026) article HTML (nature.com, fetched 2026-11-27, tags stripped with node) and Supplementary Information 41467_2026_74028_MOESM1_ESM.pdf (pypdf plain mode); arXiv:2507.02644v2 PDF (pypdf) read for comparison",
+    "location": "Journal main text, section 'Accuracies and scalability' (under PBC); SI Supplementary Note 4 and Supplementary Fig. 36(A) caption",
+    "reported_as": "'The extrapolated ground state energies are—0.7673 and –0.7491, respectively' (16 × 4 pure Hubbard and 32 × 8 t' = -0.2); SI Fig. 36 caption: 'linear fit ... yields an extrapolated energy of −0.7673 at zero variance'",
+    "conversion": "-0.7673 x 64 = -49.1072",
+    "note": "The printed em dash is a minus (SI prints −0.7673). 16 × 4, t' = 0 (SI: 'the 16×4 pure Hubbard model (t′ = 0)'), U = 8, hole doping 1/8 (28 + 28), PBC (the paragraph sits in 'Accuracies and scalability' whose Fig. 6 is 'Scalability and accuracy benchmarks under PBC'). No error bar printed in main text or SI; sigma null is right. bound_type extrapolated is right. Version difference: arXiv v2 (2025-07-10) does not contain the zero-variance sentence or value; it is in the journal version only, which the row cites. Not a duplicate: Chi, Chen & Chan's NN-GPEPS (extrapolated) row on this instance prints the same −0.7673(5) from their own extrapolation (Table F1 fits -0.767265 to -0.767326) and do not quote Gu's value.",
+    "source_entry": "RP3-j1j2-hubbard-tfising#29 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_1024_P_448_8",
+      "method": "nVAFQMC (K= 1, |G|= 8, τ→∞ extrap.)",
+      "energy": -776.2944
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2611.16430v1 PDF, pypdf layout mode (Table I lines 405-422 of sources/2611.16430v1.layout.txt); no journal version exists",
+    "location": "Table I, row 32x32, t'=0, 'nVAFQMC (this work)(K=1,|G|=8, tau->inf extrap., not variational)'",
+    "reported_as": "−0.7581(17) per site, t",
+    "conversion": "-0.7581*1024 = -776.2944; 0.0017*1024 = 1.7408",
+    "note": "own number; periodic 32x32, delta=1/8 (448+448), U=8, t'=0; extrapolated per caption and Fig. 4A caption (K=1 on 32x32); sigma, boundary, filling/couplings, bound_type, peer_reviewed and reference agree; no duplicate on the instance (data file read 2026-11-27)",
+    "source_entry": "RP4-hubbard-j1j2-tfising#0 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_1024_P_448_8",
+      "method": "MR-nVAFQMC (K= 4, τ= 1.31, |G|= 8)",
+      "energy": -775.8848
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2611.16430v1 PDF, pypdf layout mode (Table I lines 405-422 of sources/2611.16430v1.layout.txt); no journal version exists",
+    "location": "Table I, row 32x32, t'=0, 'MR-nVAFQMC (this work)(K=4, tau=1.31, |G|=8)'",
+    "reported_as": "−0.7577(26) per site, t",
+    "conversion": "-0.7577*1024 = -775.8848; 0.0026*1024 = 2.6624",
+    "note": "own number; strictly variational checkpoint (Sec. II C); config agrees; sigma, boundary, filling/couplings, bound_type, peer_reviewed and reference agree; no duplicate on the instance (data file read 2026-11-27)",
+    "source_entry": "RP4-hubbard-j1j2-tfising#1 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_1024_P_448_8_t12_-0.2",
+      "method": "MR-nVAFQMC (K = 4, τ = 1.26, |G| = 8)",
+      "energy": -765.5424
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2611.16430v1 PDF, pypdf layout mode (Table I lines 405-422 of sources/2611.16430v1.layout.txt); no journal version exists",
+    "location": "Table I, row 32x32, t'/t=-0.2, 'MR-nVAFQMC (this work)(K=4, tau=1.26, |G|=8)'",
+    "reported_as": "−0.7476(37) per site, t",
+    "conversion": "-0.7476*1024 = -765.5424; 0.0037*1024 = 3.7888",
+    "note": "own number; t2 = t' = -0.2 in the -t' sum convention = DATA.md t12; variational checkpoint; sigma, boundary, filling/couplings, bound_type, peer_reviewed and reference agree; no duplicate on the instance (data file read 2026-11-27)",
+    "source_entry": "RP4-hubbard-j1j2-tfising#2 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_1024_P_448_8_t12_-0.2",
+      "method": "MR-nVAFQMC, τ^-3 → 0 extrapolation (K = 4, |G| = 8)",
+      "energy": -767.3856
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2611.16430v1 PDF, pypdf layout mode (Table I lines 405-422 of sources/2611.16430v1.layout.txt); no journal version exists",
+    "location": "Table I, row 32x32, t'/t=-0.2, 'MR-nVAFQMC (this work)(K=4,|G|=8, tau->inf extrap., not variational)'",
+    "reported_as": "−0.7494(35) per site, t",
+    "conversion": "-0.7494*1024 = -767.3856; 0.0035*1024 = 3.584",
+    "note": "RECORD row (extrapolated): own number, tau^-3 -> 0 extrapolation, 'not variational', so bound_type extrapolated is right; instance created 2026-11-26 (Nf 448, U 8, t1 1, t2 -0.2, P) matches Eq. (1) and Sec. I sector; sigma, boundary, filling/couplings, bound_type, peer_reviewed and reference agree; no duplicate on the instance (data file read 2026-11-27)",
+    "source_entry": "RP4-hubbard-j1j2-tfising#3 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "MR-nVAFQMC (K= 4, |G|= 8, τ→∞ extrap.)",
+      "energy": -194.6624
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2611.16430v1 PDF, pypdf layout mode (Table I lines 405-422 of sources/2611.16430v1.layout.txt); no journal version exists",
+    "location": "Table I, row 16x16, t'=0, 'MR-nVAFQMC (this work)(K=4,|G|=8, tau->inf extrap., not variational)'",
+    "reported_as": "−0.7604(32) per site, t",
+    "conversion": "-0.7604*256 = -194.6624; 0.0032*256 = 0.8192",
+    "note": "own number; also in text Sec. II C ('extrapolating E(tau)/N in tau^-3 on 16x16 (-0.7604(32))'); sigma, boundary, filling/couplings, bound_type, peer_reviewed and reference agree; no duplicate on the instance (data file read 2026-11-27)",
+    "source_entry": "RP4-hubbard-j1j2-tfising#4 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8",
+      "method": "MR-nVAFQMC (K= 4, τ= 1.40, |G|= 128)",
+      "energy": -194.2784
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2611.16430v1 PDF, pypdf layout mode (Table I lines 405-422 of sources/2611.16430v1.layout.txt); no journal version exists",
+    "location": "Table I, row 16x16, t'=0, 'MR-nVAFQMC (this work)(K=4, tau=1.40, |G|=128)'",
+    "reported_as": "−0.7589(19) per site, t",
+    "conversion": "-0.7589*256 = -194.2784; 0.0019*256 = 0.4864",
+    "note": "own number; caption's own example '-0.7589(19) denotes -0.7589 +- 0.0019'; sigma, boundary, filling/couplings, bound_type, peer_reviewed and reference agree; no duplicate on the instance (data file read 2026-11-27)",
+    "source_entry": "RP4-hubbard-j1j2-tfising#5 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8_t12_-0.2",
+      "method": "nVAFQMC (K= 1, |G|= 64, τ→∞ extrap.)",
+      "energy": -191.5392
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2611.16430v1 PDF, pypdf layout mode (Table I lines 405-422 of sources/2611.16430v1.layout.txt); no journal version exists",
+    "location": "Table I, row 16x16, t'/t=-0.2, 'nVAFQMC (this work)(K=1,|G|=64, tau->inf extrap., not variational)'",
+    "reported_as": "−0.7482(19) per site, t",
+    "conversion": "-0.7482*256 = -191.5392; 0.0019*256 = 0.4864",
+    "note": "RECORD row (extrapolated): own number, 'not variational' extrapolation, K=1 per Fig. 4B caption ('K = 1 on 16x16'); 112+112 on 256 sites, U=8, t2=-0.2, periodic; sigma, boundary, filling/couplings, bound_type, peer_reviewed and reference agree; no duplicate on the instance (data file read 2026-11-27)",
+    "source_entry": "RP4-hubbard-j1j2-tfising#6 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_256_P_112_8_t12_-0.2",
+      "method": "MR-nVAFQMC (K= 8, τ= 1.45, |G|= 8)",
+      "energy": -191.1296
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2611.16430v1 PDF, pypdf layout mode (Table I lines 405-422 of sources/2611.16430v1.layout.txt); no journal version exists",
+    "location": "Table I, row 16x16, t'/t=-0.2, 'MR-nVAFQMC (this work)(K=8, tau=1.45, |G|=8)'",
+    "reported_as": "−0.7466(38) per site, t",
+    "conversion": "-0.7466*256 = -191.1296; 0.0038*256 = 0.9728",
+    "note": "own number; variational checkpoint (K=8, tau=1.45 also in Sec. II C text); sigma, boundary, filling/couplings, bound_type, peer_reviewed and reference agree; no duplicate on the instance (data file read 2026-11-27)",
+    "source_entry": "RP4-hubbard-j1j2-tfising#7 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_36_P_0.125",
+      "method": "GNN",
+      "energy": -73.728
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF, pypdf layout mode (sources/2110.06390v1.layout.txt line 1187); only version, no journal version",
+    "location": "Table IV, row Triangular J2=0.125, column GNN, N=36",
+    "reported_as": "-0.512(2) per spin, S.S units",
+    "conversion": "-0.512*144 = -73.728; 0.002*144 = 0.288",
+    "note": "column order GNN(36,108), GNN-2(36,108), ResNet(36,108) checked against header; cluster b1=(6,0), b2=(3,3sqrt3) (App. Table I) = 6x6 torus; own number; sigma, boundary, filling/couplings, bound_type, peer_reviewed and reference agree; no duplicate on the instance (data file read 2026-11-27)",
+    "source_entry": "RP4-hubbard-j1j2-tfising#8 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_36_P_0.125",
+      "method": "GNN-2",
+      "energy": -73.8864
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF, pypdf layout mode (sources/2110.06390v1.layout.txt line 1187); only version, no journal version",
+    "location": "Table IV, row Triangular J2=0.125, column GNN-2, N=36",
+    "reported_as": "-0.5131(8) per spin, S.S units",
+    "conversion": "-0.5131*144 = -73.8864; 0.0008*144 = 0.1152",
+    "note": "own number; same value quoted by Roth et al. Table III as 'Graph NN [64]' (no row from that quote on the instance); sigma, boundary, filling/couplings, bound_type, peer_reviewed and reference agree; no duplicate on the instance (data file read 2026-11-27)",
+    "source_entry": "RP4-hubbard-j1j2-tfising#9 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_36_P_0.125",
+      "method": "ResNet",
+      "energy": -72.1008
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 PDF, pypdf layout mode (sources/2110.06390v1.layout.txt line 1187); only version, no journal version",
+    "location": "Table IV, row Triangular J2=0.125, column ResNet, N=36",
+    "reported_as": "-0.5007(5) per spin, S.S units",
+    "conversion": "-0.5007*144 = -72.1008; 0.0005*144 = 0.072",
+    "note": "own baseline number; sigma, boundary, filling/couplings, bound_type, peer_reviewed and reference agree; no duplicate on the instance (data file read 2026-11-27)",
+    "source_entry": "RP4-hubbard-j1j2-tfising#10 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_400_P_0.5",
+      "method": "ViT with Spatial Attention, no symmetry",
+      "energy": -794.2
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2602.02665v1 PDF, pypdf layout mode (sources/2602.02665v1.layout.txt lines 406-412); only version, no journal version found",
+    "location": "Sec. IV text and Fig. 5 caption, 'no symmetry [-0.496375(1)]'",
+    "reported_as": "−0.496375(1) per site, S.S units",
+    "conversion": "-0.496375*1600 = -794.2; 0.000001*1600 = 0.0016",
+    "note": "20x20 periodic, J2/J1=0.5, b=4 (Sec. V B); distinct from the instance's C4v row -0.496732(1) and the -0.49684(1) extrapolation of the same paper; sigma, boundary, filling/couplings, bound_type, peer_reviewed and reference agree; no duplicate on the instance (data file read 2026-11-27)",
+    "source_entry": "RP4-hubbard-j1j2-tfising#11 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_400_P_0.5",
+      "method": "ViT with Spatial Attention, translational symmetry",
+      "energy": -794.7168
+    },
+    "checked_on": "2026-11-27",
+    "scope": "value",
+    "method": "arXiv:2602.02665v1 PDF, pypdf layout mode (sources/2602.02665v1.layout.txt lines 406-412); only version, no journal version found",
+    "location": "Sec. IV text and Fig. 5 caption, 'translational symmetry [-0.496698(1)]'",
+    "reported_as": "−0.496698(1) per site, S.S units",
+    "conversion": "-0.496698*1600 = -794.7168; 0.000001*1600 = 0.0016",
+    "note": "translation projection; distinct from the C4v row; config agrees; sigma, boundary, filling/couplings, bound_type, peer_reviewed and reference agree; no duplicate on the instance (data file read 2026-11-27)",
+    "source_entry": "RP4-hubbard-j1j2-tfising#12 (qmbl-verify 2026-11-27)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_256_P_3.05",
+      "method": "aCNN (C4v)",
+      "energy": -829.329408
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2308.09664v2 and v1 PDFs, pypdf layout mode (v2 line 283), plus arXiv HTML table; v2 is dated 2024-06-19, after publication; journal version Phys. Rev. B 109, 245120 (2024) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Table II, row aCNN(C4v), column L = 16",
+    "reported_as": "-3.239568(2) (per site, Pauli; see C2)",
+    "conversion": "-3.239568*256 = -829.329408; 0.000002*256 = 0.000512",
+    "note": "RECORD row (variational): own number, identical in v1 and v2; Eq. (15) equals the TFIsing form with h = 3.05, periodic; positive sign structure exact for TFIM; bound variational; instance (square, 256, P, h 3.05) matches; sigma, boundary, filling/couplings, bound_type, peer_reviewed and reference agree; no duplicate on the instance (data file read 2026-11-27)",
+    "source_entry": "RP4-hubbard-j1j2-tfising#13 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_64_P_3.05",
+      "method": "aCNN (C4v)",
+      "energy": -207.465088
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2308.09664v2 and v1 PDFs, pypdf layout mode (v2 line 283), plus arXiv HTML table; v2 is dated 2024-06-19, after publication; journal version Phys. Rev. B 109, 245120 (2024) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Table II, row aCNN(C4v), column L = 8",
+    "reported_as": "-3.241642(2) (per site, Pauli; see C2)",
+    "conversion": "-3.241642*64 = -207.465088; 0.000002*64 = 0.000128",
+    "note": "RECORD row (variational): own number, identical in v1 and v2; 8 x 8 periodic, lambda = 3.05; sits 8e-6 per site above the quoted FAMPS extrapolation -3.24165, as a bound should; sigma, boundary, filling/couplings, bound_type, peer_reviewed and reference agree; no duplicate on the instance (data file read 2026-11-27)",
+    "source_entry": "RP4-hubbard-j1j2-tfising#14 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
+  {
+    "match": {
+      "instance": "J1J2/triangular_36_P_0.125",
+      "method": "GCNN",
+      "energy": -74.215584
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2211.07749v2 PDF, pypdf layout mode (line 373), v1 also read; journal version Phys. Rev. B 108, 054410 (2023) read 2026-11-28: publisher PDF (journals.aps.org, institutional access), pypdf layout mode, the value and its error bar printed with the same digits",
+    "location": "Table III, row J2/J1 = 1/8, N = 36, column GCNN",
+    "reported_as": "−0.515386(9) per spin, units of J1",
+    "conversion": "-0.515386*144 = -74.215584; 0.000009*144 = 0.001296",
+    "note": "own number; Eq. (9) S.S; v1 printed -0.5153(8) in the same cell (v2 is the later, post-review text, dated 2023-05-24); stored follows v2; plain GCNN, no Lanczos step at N=36; sigma, boundary, filling/couplings, bound_type, peer_reviewed and reference agree; no duplicate on the instance (data file read 2026-11-27)",
+    "source_entry": "RP4-hubbard-j1j2-tfising#15 (qmbl-verify 2026-11-27)",
+    "journal": true
+  },
 ];
