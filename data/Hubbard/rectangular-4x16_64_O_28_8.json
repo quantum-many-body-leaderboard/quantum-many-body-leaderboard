@@ -1105,7 +1105,7 @@
       "family": "backflow / Pfaffian",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Investigating the Fermi-Hubbard model by the tensor-backflow method, Physical review. B./Physical review. B, arXiv:2507.01856",
+      "reference": "X. Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
       "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
@@ -1115,7 +1115,21 @@
         "reported_as": "-0.6821",
         "note": "Table 1, row 4x16 OBC, n=0.875 U=8, column E_{p=1}. Table 3 relative errors vs fPEPS (1.3e-3 all-site, 3.6e-3 NN) suggest the 64-site OBC entries of Table 1 are all-site backflow, but the table does not say. | 4x16 OBC printed; n=0.875 -> Nf 28 per spin; t'=0 from caption; per-site not printed in words (held).",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "X. Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+          "reported_as": "-0.6821 (per site, units of t)",
+          "location": "Table I (journal; Table 1 in arXiv v4), row n=0.875, U=8, 4 x 16, OBC, column E_{p=1}",
+          "version_read": "Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, publisher PDF fetched 2026-11-28 and extracted with pypdf (layout and plain; page 4 with a raised token budget); cross-checked against arXiv:2507.01856v4 HTML",
+          "conversion": "-0.6821 x 64 = -43.6544 (value confirmed in the journal and in arXiv v4; identical)",
+          "checked_on": "2026-11-28",
+          "reason": "The batch wrote the OpenAlex venue string; the 33 other rows from this paper cite \"Phys. Rev. B 113, 155121 (2026)\". Everything else checks: Eq. (9) is the standard Hubbard H with t=1, t'=0 for Table I (\"All cases are for t'=0\"); per site, since the relative errors printed against fPEPS D=20 GO (-0.6993, -0.6830) reproduce (1.6e-3, 1.3e-3); n=0.875 on 64 sites = 56 electrons, Nf = 28 per spin (N_up = N_dn not printed); OBC printed. The open question of the first reading is settled by the text: \"For the 8x8 and 4x16 lattices under OBC, the wave-function corresponds to all-site backflow\" (journal p. 4, arXiv v4 Sec. III.2), so method_detail could add \"all-site backflow\". No error bar printed (MC samples O(4.5e4)). bound_type variational agrees (p=1 is one Lanczos step on the variational state).",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#39 (qmbl-verify 2026-11-28)",
+          "from": "Investigating the Fermi-Hubbard model by the tensor-backflow method, Physical review. B./Physical review. B, arXiv:2507.01856"
+        }
+      ]
     },
     {
       "energy": -43.5008,
@@ -1131,7 +1145,7 @@
       "family": "backflow / Pfaffian",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Investigating the Fermi-Hubbard model by the tensor-backflow method, Physical review. B./Physical review. B, arXiv:2507.01856",
+      "reference": "X. Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
       "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
@@ -1141,7 +1155,21 @@
         "reported_as": "-0.6797",
         "note": "Table 1, row 4x16 OBC, column E_{p=0} | As for E_p=1 row (held).",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "reference",
+          "to": "X. Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+          "reported_as": "-0.6797 (per site, units of t)",
+          "location": "Table I (journal; Table 1 in arXiv v4), row n=0.875, U=8, 4 x 16, OBC, column E_{p=0}",
+          "version_read": "Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, publisher PDF fetched 2026-11-28 and extracted with pypdf (layout and plain; page 4 with a raised token budget); cross-checked against arXiv:2507.01856v4 HTML",
+          "conversion": "-0.6797 x 64 = -43.5008 (value confirmed in the journal and in arXiv v4; identical)",
+          "checked_on": "2026-11-28",
+          "reason": "The batch wrote the OpenAlex venue string; the 33 other rows from this paper cite \"Phys. Rev. B 113, 155121 (2026)\". Everything else checks: Eq. (9) is the standard Hubbard H with t=1, t'=0 for Table I (\"All cases are for t'=0\"); per site, since the relative errors printed against fPEPS D=20 GO (-0.6993, -0.6830) reproduce (1.6e-3, 1.3e-3); n=0.875 on 64 sites = 56 electrons, Nf = 28 per spin (N_up = N_dn not printed); OBC printed. The open question of the first reading is settled by the text: \"For the 8x8 and 4x16 lattices under OBC, the wave-function corresponds to all-site backflow\" (journal p. 4, arXiv v4 Sec. III.2), so method_detail could add \"all-site backflow\". No error bar printed (MC samples O(4.5e4)). bound_type variational agrees (p=1 is one Lanczos step on the variational state).",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#40 (qmbl-verify 2026-11-28)",
+          "from": "Investigating the Fermi-Hubbard model by the tensor-backflow method, Physical review. B./Physical review. B, arXiv:2507.01856"
+        }
+      ]
     }
   ],
   "coverage": [

@@ -50,7 +50,7 @@
       }
     },
     {
-      "energy": -54.88000128,
+      "energy": -13.72,
       "sigma": null,
       "energy_variance": null,
       "dof": 24,
@@ -60,7 +60,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Second order cone relaxations for quantum Max Cut, arXiv, arXiv:2411.04120",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -69,7 +69,33 @@
         "reported_as": "−13.72",
         "note": "Table 1, Rounded Objective, row 'shuriken 24' | Pauli total; /(4*24)",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "energy",
+          "to": -13.72,
+          "reported_as": "-13.72 (Rounded Objective, scaled Hamiltonian sum (XX+YY+ZZ))",
+          "location": "Table 1, row 'shuriken 24', column Rounded Objective",
+          "version_read": "arXiv:2411.04120v1 HTML (no journal version)",
+          "conversion": "Pauli total as printed (VarBench column -43.0396 = stored exact); stored = -13.72; eps = -13.72/96 = -0.142916666667 (pass wrote -0.57166668 = -13.72/24)",
+          "checked_on": "2026-11-28",
+          "reason": "Factor-4 error; stored value is 11.8 below the exact -43.040 (impossible) and holds the record. Corrected it is no record.",
+          "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#4 (qmbl-verify 2026-11-28)",
+          "from": -54.88000128
+        },
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "arXiv:2411.04120v1, no journal_ref",
+          "location": "arXiv API and OpenAlex, 2026-11-28",
+          "version_read": "arXiv:2411.04120v1",
+          "conversion": null,
+          "checked_on": "2026-11-28",
+          "reason": "preprint only",
+          "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#5 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     }
   ],
   "coverage": [

@@ -547,7 +547,7 @@
       }
     },
     {
-      "energy": -41.35999968,
+      "energy": -10.34,
       "sigma": null,
       "energy_variance": null,
       "dof": 18,
@@ -557,7 +557,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Second order cone relaxations for quantum Max Cut, arXiv, arXiv:2411.04120",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -566,7 +566,33 @@
         "reported_as": "−10.34",
         "note": "Table 1, Rounded Objective, row 'kagome 18' | Pauli total; /(4*18); dimensions not printed",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "energy",
+          "to": -10.34,
+          "reported_as": "-10.34 (Rounded Objective, scaled Hamiltonian sum (XX+YY+ZZ))",
+          "location": "Table 1, row 'kagome 18', column Rounded Objective",
+          "version_read": "arXiv:2411.04120v1 HTML (no journal version)",
+          "conversion": "Table 1 is already in the Pauli total (its VarBench column prints -32.1931 = the stored exact total); stored = -10.34. Loader eps should be -10.34/(4*18) = -0.143611111111; the pass wrote -0.57444444 = -10.34/18, which multiplies by 4 again",
+          "checked_on": "2026-11-28",
+          "reason": "Factor-4 error: the row is stored 4x too low and sits 9.2 below the exact energy -32.193, which is impossible for an upper bound; it currently holds the record. Corrected, it is far above exact (-10.34 vs -32.19) and is no record.",
+          "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#0 (qmbl-verify 2026-11-28)",
+          "from": -41.35999968
+        },
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "arXiv:2411.04120v1, no journal_ref",
+          "location": "arXiv API and OpenAlex, 2026-11-28",
+          "version_read": "arXiv:2411.04120v1",
+          "conversion": null,
+          "checked_on": "2026-11-28",
+          "reason": "Only an arXiv preprint and an OSTI report exist; the row's own reference string says 'arXiv'.",
+          "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#1 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     }
   ],
   "coverage": [

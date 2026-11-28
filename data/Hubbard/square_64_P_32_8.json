@@ -561,7 +561,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Neural Network Backflow with Low-Rank Multi-Determinant Updates, arXiv, arXiv:2609.26544",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -570,7 +570,21 @@
         "reported_as": "−0.5245",
         "note": "Sec. III.1 text: 8×8 'Deep BF yields an energy of −0.5245 per site' | Hubbard Eq. 1 (t, U) printed; periodic boundary conditions in both directions, U/t=8, half filling; energy per site in t.",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "-0.5245 per site",
+          "location": "Sec. III.1: \"For the intermediate 8x8 geometry, Deep BF yields an energy of -0.5245 per site\"",
+          "version_read": "arXiv:2609.26544v1 (only version; no journal version found via arXiv jref or Crossref title search on 2026-11-28), arXiv HTML parsed locally with node (tag strip, MathML alttext)",
+          "conversion": "-0.5245 x 64 = -33.568 (value confirmed; only peer_reviewed changes)",
+          "checked_on": "2026-11-28",
+          "reason": "arXiv:2609.26544 has one version (v1, 22 Sep 2026), no journal reference on arXiv and no published version found by Crossref title search (2026-11-28); OpenAlex lists it as a preprint. RULES.md 8.1: peer_reviewed follows the venue that printed the number. Value, lattice, PBC in both directions (Sec. III: \"periodic boundary conditions applied on both spatial directions\"), U/t=8, filling half filling (Nf = N/2 per spin), Hamiltonian Eq. (1) = standard VarBench form (no shift), bound_type all agree; no numerical error bar printed (\"error bars are smaller than the markers\"). The same per-site value -0.5245 is printed by arXiv:2606.00924 for HB K = 2 (a different method and paper): not a duplicate.",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#11 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     }
   ],
   "coverage": [

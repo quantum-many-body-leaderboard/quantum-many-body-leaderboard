@@ -1091,7 +1091,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Apparent Compression, Real Stability: The Intrinsic Dimension of Learning a Quantum Wavefunction, arXiv, arXiv:2609.33193",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -1100,7 +1100,21 @@
         "reported_as": "-19.0604506 (EDMRG, total)",
         "note": "Appendix C Table 3 row 0.40, column EDMRG; text: DMRG energies are variational upper bounds, TeNPy, chi=4096, torus | Total energy printed, divided by N=36 here; same torus and convention as the exact column.",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "arXiv:2609.33193v1, no journal_ref",
+          "location": "arXiv API (export.arxiv.org) and OpenAlex search, 2026-11-28",
+          "version_read": "arXiv:2609.33193v1",
+          "conversion": null,
+          "checked_on": "2026-11-28",
+          "reason": "arXiv preprint only; the reference string itself says arXiv. Value otherwise confirmed: Table 3 row 0.40, E_DMRG -19.0604506 (total, S.S units) x 4 = -76.2418024 = stored; relative gap to the paper's exact energy 5.4e-4 as printed; 6x6 torus, chi=4096, \"The DMRG energies are variational upper bounds\" (Appendix C); no other row on the instance carries this number.",
+          "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#6 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     }
   ],
   "coverage": [

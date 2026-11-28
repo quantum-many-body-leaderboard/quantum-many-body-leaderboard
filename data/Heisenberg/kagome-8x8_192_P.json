@@ -847,10 +847,10 @@
     {
       "energy": -335.041536,
       "sigma": 0.002304,
-      "energy_variance": null,
+      "energy_variance": 12.41088,
       "dof": 192,
       "einf": 0,
-      "v_score": null,
+      "v_score": 0.021227874095088445,
       "method": "ViT (transformer) nl=8, h=12, d=72, time-reversal symmetric, C6v A1 projected",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
@@ -864,7 +864,21 @@
         "reported_as": "−0.436252(3)",
         "note": "Table 1, L=8 row | per site S.S, J=1, N=192, fully periodic torus | variance reported as 0.00404, not stored: convention not verified",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "energy_variance",
+          "to": 12.41088,
+          "reported_as": "L=8: energy per site -0.436252(3), variance per site 0.00404(2), V_even 0.0212(1)",
+          "location": "End Matter, Table 1, row L=8",
+          "version_read": "arXiv:2611.18840v1 (only version, 13 Nov 2026; no journal version), arXiv HTML parsed locally with node",
+          "conversion": "Variance per site is Var(H)/N in S.S units: V = v/e^2 = 0.00404/-0.436252^2 = 0.02123 reproduces the printed V-score 0.0212(1) (Var(H/N) would give N times that). Stored Pauli total: 16 x N x v = 16 x 192 x 0.00404 = 12.41088. Energy -0.436252 x 768 = -335.041536 and sigma 3e-6 x 768 = 0.002304 agree with the stored values.",
+          "checked_on": "2026-11-28",
+          "reason": "The variance is printed and its convention is fixed by the printed V-score; the row stores null (\"convention not verified\"). With it the row gets a V-score. Energy, sigma, torus (fully periodic L x L, N = 3L^2), H = J sum S.S with J = 1 (Eq. 1), sector (Gamma, Sz=0, P=+1, then C6v A1; L=16 without the point-group stage), bound_type variational all agree.",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#17 (qmbl-verify 2026-11-28)",
+          "from": null
+        }
+      ]
     },
     {
       "energy": -329.305344,

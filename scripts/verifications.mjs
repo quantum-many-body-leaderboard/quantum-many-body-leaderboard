@@ -48550,4 +48550,395 @@ export const VERIFICATIONS = [
     "source_entry": "RP4-hubbard-j1j2-tfising#15 (qmbl-verify 2026-11-27)",
     "journal": true
   },
+  // qmbl-verify 2026-11-28: the rows of the 2026-11-26 citation screen.
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-4x4_48_P",
+      "method": "ViT (transformer) nl=4,6,8 layers, linear zero-variance extrapolation",
+      "energy": -84.2208
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2611.18840v1 (only version, 13 Nov 2026; no journal version), arXiv HTML parsed locally with node",
+    "location": "End Matter, \"Variance Extrapolations\": \"For L=4 we obtain -0.43865(16), consistent with the exact value -0.438704\"",
+    "reported_as": "-0.43865(16) per site",
+    "conversion": "-0.43865 x 192 = -84.2208; sigma 0.00016 x 192 = 0.03072",
+    "note": "Linear zero-variance fit of transformers with nl=4, 6, 8 before the point-group projection (End Matter, Variance Extrapolations; Fig. 7); bar = std of the intercept over Gaussian replicas (Fig. 7 caption). extrapolated, not a bound: bound_type agrees. Fully periodic torus N = 3L^2, S.S units, J = 1.",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#18 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-6x6_108_P",
+      "method": "ViT (transformer) nl=4,6,8 layers, linear zero-variance extrapolation",
+      "energy": -189.85104
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2611.18840v1 (only version, 13 Nov 2026; no journal version), arXiv HTML parsed locally with node",
+    "location": "End Matter, \"Variance Extrapolations\": \"For L=6 the extrapolation gives -0.43947(43)\"",
+    "reported_as": "-0.43947(43) per site",
+    "conversion": "-0.43947 x 432 = -189.85104; sigma 0.00043 x 432 = 0.18576",
+    "note": "Linear zero-variance fit of transformers with nl=4, 6, 8 before the point-group projection (End Matter, Variance Extrapolations; Fig. 7); bar = std of the intercept over Gaussian replicas (Fig. 7 caption). extrapolated, not a bound: bound_type agrees. Fully periodic torus N = 3L^2, S.S units, J = 1. Record (best extrapolated): it sits 2.7 combined sigma below the SU(2) DMRG torus extrapolation -0.4383(3) the paper quotes; the paper reports it as is.",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#19 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-10x10_300_P",
+      "method": "ViT (transformer) nl=4,6,8 layers, linear zero-variance extrapolation",
+      "energy": -526.044
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2611.18840v1 (only version, 13 Nov 2026; no journal version), arXiv HTML parsed locally with node",
+    "location": "End Matter, \"Variance Extrapolations\": \"The extrapolated energies for L=10 and 14 are -0.43837(29), and -0.43903(44), respectively.\"",
+    "reported_as": "-0.43837(29) per site",
+    "conversion": "-0.43837 x 1200 = -526.044; sigma 0.00029 x 1200 = 0.348",
+    "note": "Linear zero-variance fit of transformers with nl=4, 6, 8 before the point-group projection (End Matter, Variance Extrapolations; Fig. 7); bar = std of the intercept over Gaussian replicas (Fig. 7 caption). extrapolated, not a bound: bound_type agrees. Fully periodic torus N = 3L^2, S.S units, J = 1. Record (best extrapolated on this instance; only extrapolated row).",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#20 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_O_0.5",
+      "method": "PEPS D=4",
+      "energy": -194.44
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2502.19576v2 HTML parsed with node; Phys. Rev. Research 7, 043351 (2025) publisher PDF, pypdf plain text",
+    "location": "Fig. 11(c) caption (journal and arXiv), 10x10 D = 4 PEPS",
+    "reported_as": "emin = -0.486 10 (per site, S.S units, J1 = 1)",
+    "conversion": "-0.48610 * 4 * 100 = -194.44",
+    "note": "OBC L x L, J2 = 0.5, S.S Hamiltonian Eq. (38); journal equals arXiv. Sampled VMC energy (SR/RGN), 'converged result with the largest sample size'; no sigma printed anywhere read (caption, text, appendix; repo r-peng/quimb_vmc default branch has no data), so the row should carry sampled: true and no sigma (RULES 6 lets it rank). No duplicate on the instance. Record holds: next variational row is 2D cRNN -194.212(8).",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#13 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_O_0.5",
+      "method": "PEPS D=4",
+      "energy": -123.7248
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2502.19576v2 HTML parsed with node; Phys. Rev. Research 7, 043351 (2025) publisher PDF, pypdf plain text",
+    "location": "Fig. 11(a) caption (journal and arXiv), 8x8 D = 4 PEPS",
+    "reported_as": "emin = -0.483 30 (per site, S.S units, J1 = 1)",
+    "conversion": "-0.48330 * 4 * 64 = -123.7248",
+    "note": "OBC, J2 = 0.5; journal equals arXiv. Sampled VMC energy, no sigma printed; sampled: true. No duplicate on the instance. Record holds against Elementwise (8 S) -123.58528(448).",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#14 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_100_P",
+      "method": "periodic PEPS (PTMRG), D=3, Z2-symmetric",
+      "energy": -266.68
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2411.12731v2 HTML parsed with node; Phys. Rev. B 111, 165124 (2025) publisher PDF, pypdf layout mode",
+    "location": "Table 2 (journal Table II), AF Heisenberg model, L = 10, D = 3 column",
+    "reported_as": "-0.6667 (energy density, S.S units)",
+    "conversion": "-0.6667 * 4 * 100 = -266.6800",
+    "note": "L x L torus, S operators (Eq. 17, Delta = 1), Z2-symmetric uniform PEPS; journal equals arXiv; above the QMC column of the same table and above the QMBL exact/QMC row, consistent with a bound. Energy from a finite-chi PTMRG contraction, deterministic, no sigma. No duplicate on the instance (only the sibling D row of the same paper).",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#21 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_100_P",
+      "method": "periodic PEPS (PTMRG), D=4, Z2-symmetric",
+      "energy": -267.52
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2411.12731v2 HTML parsed with node; Phys. Rev. B 111, 165124 (2025) publisher PDF, pypdf layout mode",
+    "location": "Table 2 (journal Table II), AF Heisenberg model, L = 10, D = 4 column",
+    "reported_as": "-0.6688 (energy density, S.S units)",
+    "conversion": "-0.6688 * 4 * 100 = -267.5200",
+    "note": "L x L torus, S operators (Eq. 17, Delta = 1), Z2-symmetric uniform PEPS; journal equals arXiv; above the QMC column of the same table and above the QMBL exact/QMC row, consistent with a bound. Energy from a finite-chi PTMRG contraction, deterministic, no sigma. No duplicate on the instance (only the sibling D row of the same paper).",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#22 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_16_P",
+      "method": "periodic PEPS (PTMRG), D=3, Z2-symmetric",
+      "energy": -44.7552
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2411.12731v2 HTML parsed with node; Phys. Rev. B 111, 165124 (2025) publisher PDF, pypdf layout mode",
+    "location": "Table 2 (journal Table II), AF Heisenberg model, L = 4, D = 3 column",
+    "reported_as": "-0.6993 (energy density, S.S units)",
+    "conversion": "-0.6993 * 4 * 16 = -44.7552",
+    "note": "L x L torus, S operators (Eq. 17, Delta = 1), Z2-symmetric uniform PEPS; journal equals arXiv; above the QMC column of the same table and above the QMBL exact/QMC row, consistent with a bound. Energy from a finite-chi PTMRG contraction, deterministic, no sigma. No duplicate on the instance (only the sibling D row of the same paper).",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#23 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_16_P",
+      "method": "periodic PEPS (PTMRG), D=4, Z2-symmetric",
+      "energy": -44.832
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2411.12731v2 HTML parsed with node; Phys. Rev. B 111, 165124 (2025) publisher PDF, pypdf layout mode",
+    "location": "Table 2 (journal Table II), AF Heisenberg model, L = 4, D = 4 column",
+    "reported_as": "-0.7005 (energy density, S.S units)",
+    "conversion": "-0.7005 * 4 * 16 = -44.8320",
+    "note": "L x L torus, S operators (Eq. 17, Delta = 1), Z2-symmetric uniform PEPS; journal equals arXiv; above the QMC column of the same table and above the QMBL exact/QMC row, consistent with a bound. Energy from a finite-chi PTMRG contraction, deterministic, no sigma. No duplicate on the instance (only the sibling D row of the same paper).",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#24 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_36_P",
+      "method": "periodic PEPS (PTMRG), D=3, Z2-symmetric",
+      "energy": -96.8976
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2411.12731v2 HTML parsed with node; Phys. Rev. B 111, 165124 (2025) publisher PDF, pypdf layout mode",
+    "location": "Table 2 (journal Table II), AF Heisenberg model, L = 6, D = 3 column",
+    "reported_as": "-0.6729 (energy density, S.S units)",
+    "conversion": "-0.6729 * 4 * 36 = -96.8976",
+    "note": "L x L torus, S operators (Eq. 17, Delta = 1), Z2-symmetric uniform PEPS; journal equals arXiv; above the QMC column of the same table and above the QMBL exact/QMC row, consistent with a bound. Energy from a finite-chi PTMRG contraction, deterministic, no sigma. No duplicate on the instance (only the sibling D row of the same paper).",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#25 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_36_P",
+      "method": "periodic PEPS (PTMRG), D=4, Z2-symmetric",
+      "energy": -97.5888
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2411.12731v2 HTML parsed with node; Phys. Rev. B 111, 165124 (2025) publisher PDF, pypdf layout mode",
+    "location": "Table 2 (journal Table II), AF Heisenberg model, L = 6, D = 4 column",
+    "reported_as": "-0.6777 (energy density, S.S units)",
+    "conversion": "-0.6777 * 4 * 36 = -97.5888",
+    "note": "L x L torus, S operators (Eq. 17, Delta = 1), Z2-symmetric uniform PEPS; journal equals arXiv; above the QMC column of the same table and above the QMBL exact/QMC row, consistent with a bound. Energy from a finite-chi PTMRG contraction, deterministic, no sigma. No duplicate on the instance (only the sibling D row of the same paper).",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#26 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_64_P",
+      "method": "periodic PEPS (PTMRG), D=3, Z2-symmetric",
+      "energy": -170.9824
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2411.12731v2 HTML parsed with node; Phys. Rev. B 111, 165124 (2025) publisher PDF, pypdf layout mode",
+    "location": "Table 2 (journal Table II), AF Heisenberg model, L = 8, D = 3 column",
+    "reported_as": "-0.6679 (energy density, S.S units)",
+    "conversion": "-0.6679 * 4 * 64 = -170.9824",
+    "note": "L x L torus, S operators (Eq. 17, Delta = 1), Z2-symmetric uniform PEPS; journal equals arXiv; above the QMC column of the same table and above the QMBL exact/QMC row, consistent with a bound. Energy from a finite-chi PTMRG contraction, deterministic, no sigma. No duplicate on the instance (only the sibling D row of the same paper).",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#27 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_64_P",
+      "method": "periodic PEPS (PTMRG), D=4, Z2-symmetric",
+      "energy": -171.776
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2411.12731v2 HTML parsed with node; Phys. Rev. B 111, 165124 (2025) publisher PDF, pypdf layout mode",
+    "location": "Table 2 (journal Table II), AF Heisenberg model, L = 8, D = 4 column",
+    "reported_as": "-0.6710 (energy density, S.S units)",
+    "conversion": "-0.6710 * 4 * 64 = -171.7760",
+    "note": "L x L torus, S operators (Eq. 17, Delta = 1), Z2-symmetric uniform PEPS; journal equals arXiv; above the QMC column of the same table and above the QMBL exact/QMC row, consistent with a bound. Energy from a finite-chi PTMRG contraction, deterministic, no sigma. No duplicate on the instance (only the sibling D row of the same paper).",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#28 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/pyrochlore-2x2x2_32_P",
+      "method": "generalized RVB ansatz, unrestricted optimisation, finite-depth BFGS, L=2",
+      "energy": -65.5104
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2509.13746v3 HTML parsed with node; Phys. Rev. B 113, 075158 (2026) publisher PDF, pypdf plain",
+    "location": "journal Sec. IV A (arXiv Sec. III.1), L = 2 cluster",
+    "reported_as": "E0 ~ -0.5118J/site",
+    "conversion": "-0.5118 * 4 * 32 = -65.5104",
+    "note": "Periodic L = 2 pyrochlore (32 sites), H = J sum s.s, J = 1; journal equals arXiv. Sampled VMC, no sigma printed (value given with '~'); above the exact -66.158 (prior finding) and the mVMC -0.5162. No duplicate on the instance.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#29 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/pyrochlore-4x4x4_256_P",
+      "method": "NN-RVB ansatz with 2x2x2 periodicity, L=4",
+      "energy": -494.08
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2509.13746v3 HTML parsed with node; Phys. Rev. B 113, 075158 (2026) publisher PDF, pypdf plain",
+    "location": "journal Sec. IV C (arXiv Sec. III.3), NN-RVB on L = 4",
+    "reported_as": "-0.4825J/site",
+    "conversion": "-0.4825 * 4 * 256 = -494.08",
+    "note": "Same Hamiltonian and periodic L = 4 cluster (256 sites); journal equals arXiv; a separate ansatz from the generalized RVB, so no duplicate. Sampled VMC, no sigma printed.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#31 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "Residual-CNN NQS with NIR sampler (proposal network d_embd=16, 4 transformer layers)",
+      "energy": -198.76
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2507.20510v2 HTML parsed with node; Mach. Learn.: Sci. Technol. 7 (2026) 015020 publisher PDF, pypdf layout",
+    "location": "Table 1, row d_embd = 16, n_layer = 4, n_param = 14 370",
+    "reported_as": "-0.4969 (E/N, final variational energy per site)",
+    "conversion": "-0.4969 * 4 * 100 = -198.76",
+    "note": "10x10, PBC, J2 = J1/2, S operators (Eq. 14); journal equals arXiv. Sampled VMC (NIR sampler), no sigma printed. No duplicate on the instance.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#32 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "Residual-CNN NQS with NIR sampler (proposal network d_embd=32, 2 transformer layers)",
+      "energy": -198.64
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2507.20510v2 HTML parsed with node; Mach. Learn.: Sci. Technol. 7 (2026) 015020 publisher PDF, pypdf layout",
+    "location": "Table 1, row d_embd = 32, n_layer = 2, n_param = 30 210",
+    "reported_as": "-0.4966",
+    "conversion": "-0.4966 * 400 = -198.64",
+    "note": "as the d_embd = 16 row; journal equals arXiv; no duplicate (TQS -198.624 and PITQS -198.636 on the instance are other papers).",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#33 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "Residual-CNN NQS with NIR sampler (proposal network d_embd=32, 3 transformer layers)",
+      "energy": -198.72
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2507.20510v2 HTML parsed with node; Mach. Learn.: Sci. Technol. 7 (2026) 015020 publisher PDF, pypdf layout",
+    "location": "Table 1, row d_embd = 32, n_layer = 3, n_param = 42 786",
+    "reported_as": "-0.4968",
+    "conversion": "-0.4968 * 400 = -198.72",
+    "note": "as the d_embd = 16 row; journal equals arXiv; the equal value -198.72(16) on the instance is the RBM + 1-step Lanczos row of arXiv:2206.14307, an unrelated paper, so not a duplicate.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#34 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_100_P",
+      "method": "GNN",
+      "energy": -268.32
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 HTML parsed with node",
+    "location": "Appendix A.8.2 table (Table IV), Square, J2 = 0, N = 100, GNN column",
+    "reported_as": "-0.6708(0) (<E>/N)",
+    "conversion": "-0.6708 * 4 * 100 = -268.32",
+    "note": "Periodic 10x10 (Table 1 vectors (10,0),(0,10)), S operators; MCMC 2e5 samples. The printed bar '(0)' means the stochastic error rounds to zero in the 4th decimal (< 5e-5 per site, < 0.02 total); sigma stays null since no nonzero value is printed. Same-paper sibling ResNet -0.6705(2) is stored separately. The equal LCN row -268.32 (arXiv:2206.07370, -0.6708(1)) prints its own error bar and is that paper's own result, so not a duplicate. Source oddity (not affecting this row): the GNN-2 cell for J2 = 0, N = 100 prints -0.5023(5), the J2 = 0.5 N = 36 GNN-2 value.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#38 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.5",
+      "method": "GNN",
+      "energy": -72.3168
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2110.06390v1 HTML parsed with node (the primary; the row was first read in the quoting paper arXiv:2308.09664)",
+    "location": "Appendix A.8.2 table (Table IV), Square, J2 = 0.5, N = 36, GNN column",
+    "reported_as": "-0.5022(4) (<E>/N)",
+    "conversion": "-0.5022 * 144 = -72.3168; sigma 0.0004 * 144 = 0.0576",
+    "note": "Confirmed in the primary: the row's verified block can name arXiv:2110.06390 instead of secondary_of arXiv:2308.09664. Periodic 6x6, J2 = 0.5, S operators, MCMC 2e5 samples, (4) is the stochastic error on the last digit. The equal LCN row -72.3168 (arXiv:2206.07370, -0.5022(2)) is that paper's own result with its own bar, not a duplicate.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#39 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x12_48_P_21_8",
+      "method": "BW1 (backflow tensor representation, p=1 one Lanczos step)",
+      "energy": -36.5184
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2308.11823v6 HTML parsed with node; Phys. Rev. B 109, 245107 (2024) publisher PDF, pypdf layout",
+    "location": "Table 3 (journal Table III), n = 0.875, 4 x 12, BW1 column",
+    "reported_as": "-0.7608 (per site)",
+    "conversion": "-0.7608 * 48 = -36.5184",
+    "note": "PBC, U = 8 (journal caption), t = 1, 21 up + 21 down; U n_up n_dn without shift; p = 1 Lanczos VMC with 48000 samples, no sigma printed; journal equals arXiv. No duplicate on the instance.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#40 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x12_48_P_21_8",
+      "method": "BW2 (backflow tensor representation, p=1 one Lanczos step)",
+      "energy": -36.6528
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2308.11823v6 HTML parsed with node; Phys. Rev. B 109, 245107 (2024) publisher PDF, pypdf layout",
+    "location": "Table 3 (journal Table III), n = 0.875, 4 x 12, BW2 column",
+    "reported_as": "-0.7636 (per site)",
+    "conversion": "-0.7636 * 48 = -36.6528",
+    "note": "as BW1; journal equals arXiv. No duplicate on the instance.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#41 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.5",
+      "method": "large-D power-law extrapolation of GFMC energies",
+      "energy": -72.54144
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2406.12207v1 HTML parsed with node; Phys. Rev. B 109, 235133 (2024) publisher PDF, pypdf plain",
+    "location": "Reference note [66] (cited from the Fig. 2 caption), J2 = 0.5",
+    "reported_as": "-0.50376(4) (per site)",
+    "conversion": "-0.50376 * 144 = -72.54144; sigma 0.00004 * 144 = 0.00576",
+    "note": "6x6 torus; extrapolated (power fit in D of fixed-node GFMC energies), bound_type extrapolated is right; journal equals arXiv; sits above the exact -0.5038097. The equal value -72.54144 of the RBM + 1-step Lanczos row (arXiv:2206.14307) is a different paper and class, not a duplicate.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#42 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.55",
+      "method": "large-D power-law extrapolation of GFMC energies",
+      "energy": -71.28864
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2406.12207v1 HTML parsed with node; Phys. Rev. B 109, 235133 (2024) publisher PDF, pypdf plain",
+    "location": "Reference note [66], J2 = 0.55",
+    "reported_as": "-0.49506(55) (per site)",
+    "conversion": "-0.49506 * 144 = -71.28864; sigma 0.00055 * 144 = 0.0792",
+    "note": "6x6 torus, extrapolated; journal equals arXiv; above the exact -0.495178. No duplicate.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#43 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_36_P",
+      "method": "CNN amplitude+phase NQS, O-tilde method (SR), Eq.(22)",
+      "energy": -97.7472
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2510.02051v1 HTML parsed with node; Phys. Rev. B 112, 165122 (2025) publisher PDF, pypdf plain",
+    "location": "Sec. V Discussion (journal p. 165122-4)",
+    "reported_as": "At J2/J1 = 0, our work yields -0.6788 (per site)",
+    "conversion": "-0.6788 * 4 * 36 = -97.7472",
+    "note": "6x6 PBC, s.s Hamiltonian Eq. (24), J2 = 0 equals the plain Heisenberg instance; own result; no sigma printed; journal equals arXiv; peer_reviewed true correct. The equal LCN row -97.7472 on the instance (arXiv:2206.07370, printed -0.6788(1) with its own bar) is that paper's own result, so not a duplicate; the same paper's J2 = 0.5 value -0.5004 is carried on J1J2/square_36_P_0.5 (index 19).",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#50 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_100_P_50_8",
+      "method": "PEPS simple update, loop cluster expansion with Wynn extrapolation, C_max=10, D_max=16",
+      "energy": -52.45
+    },
+    "checked_on": "2026-11-28",
+    "scope": "value",
+    "method": "arXiv:2510.05647v3 HTML parsed with node; Phys. Rev. B 113, 235135 (2026) publisher PDF, pypdf layout",
+    "location": "Table 2 (journal Table II), row 'Fermi-Hubbard 2D, U = 8, 10x10 PBC', column E(delta E)",
+    "reported_as": "-0.5245(23) (per site)",
+    "conversion": "-0.5245 * 100 = -52.45; delta E 0.0023 * 100 = 0.23",
+    "note": "Eq. (11) Hubbard without shift, t = 1, U = 8, half filling, PBC; bound_type extrapolated is right (Wynn extrapolation of the cluster expansion). The stored sigma is the paper's empirical delta E (mean last change of the epsilon_0,2,4 sequences, Sec. III), not a statistical 1-sigma; method_detail or a sigma note should say so. Whether the PEPS fixes N = 50+50 or only the average filling is not stated. Journal equals arXiv. No duplicate on the instance.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#51 (qmbl-verify 2026-11-28)"
+  },
 ];

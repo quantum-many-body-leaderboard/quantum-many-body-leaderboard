@@ -591,7 +591,22 @@
         "reported_as": "-0.67127",
         "note": "Table 1, L=8, oPEPS | Eq. 9 s_i.s_j, J1=1, PBC LxL; per-site not printed",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "sampled",
+          "to": true,
+          "reported_as": "-0.67127 (per site, S.S units, no error bar); SM: 'In the final sampling for observable measurements, we use N = 480,000 samples, with the QMC error in the energy estimated to be less than ~10^-5.'",
+          "location": "Table I (arXiv Table 1), row L = 8, column oPEPS; SM Sec. II.A Eq. (S8) and Sec. II.C",
+          "version_read": "arXiv:2407.15333v1 (only arXiv version, HTML parsed with node) and Phys. Rev. Lett. 135, 026501 (2025) publisher PDF plus Supplemental Material tns-pbc-supp.pdf (pypdf plain mode); Tables I and II identical in both",
+          "conversion": "-0.67127 x 4 x 64 = -171.84512",
+          "checked_on": "2026-11-28",
+          "reason": "The oPEPS energy is a Monte Carlo average over spin configurations weighted by |W(s)|^2 (SM Eq. S8, 'can be calculated via a Monte Carlo (MC) sampling of spin configuration s'), measured with 480,000 samples (SM II.C); RULES.md 6 names exactly this case ('A finite PEPS whose energy is a Monte Carlo average over spin configurations ... [is] sampled'). The blanket 'less than ~10^-5' is one statement for the whole paper, not a printed bar for this row, so sigma stays null (table-wide error is not sigma). Value check passed: -0.67127 x 4 x 64 = -171.84512, stored -171.84512; 8x8 periodic, J2 = 0, D = 6, momentum k = 0, S.S units (QMC column equals Sandvik's per-site values), own computation; bound_type variational stands (energy of an explicit PEPS state, sampled).",
+          "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#34 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ],
+      "sampled": true
     },
     {
       "energy": -172.3776,
@@ -613,7 +628,22 @@
         "reported_as": "-0.67335",
         "note": "Table 1, L=8, sPEPS | Eq. 9 s_i.s_j, J1=1, PBC LxL; per-site not printed",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "sampled",
+          "to": true,
+          "reported_as": "-0.67335 (per site, S.S units, no error bar); SM: 'In the final sampling for observable measurements, we use N = 480,000 samples, with the QMC error in the energy estimated to be less than ~10^-5.'",
+          "location": "Table I (arXiv Table 1), row L = 8, column sPEPS; SM Sec. II.A Eq. (S8) and Sec. II.C",
+          "version_read": "arXiv:2407.15333v1 (only arXiv version, HTML parsed with node) and Phys. Rev. Lett. 135, 026501 (2025) publisher PDF plus Supplemental Material tns-pbc-supp.pdf (pypdf plain mode); Tables I and II identical in both",
+          "conversion": "-0.67335 x 4 x 64 = -172.3776",
+          "checked_on": "2026-11-28",
+          "reason": "The sPEPS energy is a Monte Carlo average over spin configurations weighted by |W(s)|^2 (SM Eq. S8, 'can be calculated via a Monte Carlo (MC) sampling of spin configuration s'), measured with 480,000 samples (SM II.C); RULES.md 6 names exactly this case ('A finite PEPS whose energy is a Monte Carlo average over spin configurations ... [is] sampled'). The blanket 'less than ~10^-5' is one statement for the whole paper, not a printed bar for this row, so sigma stays null (table-wide error is not sigma). Value check passed: -0.67335 x 4 x 64 = -172.3776, stored -172.3776; 8x8 periodic, J2 = 0, D = 6, momentum k = 0, S.S units (QMC column equals Sandvik's per-site values), own computation; bound_type variational stands (energy of an explicit PEPS state, sampled).",
+          "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#35 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ],
+      "sampled": true
     },
     {
       "energy": -170.9824,
@@ -634,7 +664,17 @@
         "method": "source text of arXiv:2411.12731 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.6679",
         "note": "Table 2, AF Heisenberg model, L=8, D=3 column | 8x8 torus, S.S, energy density; QMC L=8 -0.6735 matches exact 64_P.",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-28",
+          "scope": "value",
+          "method": "arXiv:2411.12731v2 HTML parsed with node; Phys. Rev. B 111, 165124 (2025) publisher PDF, pypdf layout mode",
+          "location": "Table 2 (journal Table II), AF Heisenberg model, L = 8, D = 3 column",
+          "reported_as": "-0.6679 (energy density, S.S units)",
+          "conversion": "-0.6679 * 4 * 64 = -170.9824",
+          "note": "L x L torus, S operators (Eq. 17, Delta = 1), Z2-symmetric uniform PEPS; journal equals arXiv; above the QMC column of the same table and above the QMBL exact/QMC row, consistent with a bound. Energy from a finite-chi PTMRG contraction, deterministic, no sigma. No duplicate on the instance (only the sibling D row of the same paper).",
+          "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#27 (qmbl-verify 2026-11-28)"
+        }
       }
     },
     {
@@ -656,7 +696,17 @@
         "method": "source text of arXiv:2411.12731 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.6710",
         "note": "Table 2, AF Heisenberg model, L=8, D=4 column | 8x8 torus, S.S, energy density.",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-28",
+          "scope": "value",
+          "method": "arXiv:2411.12731v2 HTML parsed with node; Phys. Rev. B 111, 165124 (2025) publisher PDF, pypdf layout mode",
+          "location": "Table 2 (journal Table II), AF Heisenberg model, L = 8, D = 4 column",
+          "reported_as": "-0.6710 (energy density, S.S units)",
+          "conversion": "-0.6710 * 4 * 64 = -171.7760",
+          "note": "L x L torus, S operators (Eq. 17, Delta = 1), Z2-symmetric uniform PEPS; journal equals arXiv; above the QMC column of the same table and above the QMBL exact/QMC row, consistent with a bound. Energy from a finite-chi PTMRG contraction, deterministic, no sigma. No duplicate on the instance (only the sibling D row of the same paper).",
+          "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#28 (qmbl-verify 2026-11-28)"
+        }
       }
     },
     {

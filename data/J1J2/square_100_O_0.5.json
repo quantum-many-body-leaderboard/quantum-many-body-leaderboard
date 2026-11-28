@@ -1172,7 +1172,17 @@
         "method": "source text of arXiv:2502.19576 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.48610",
         "note": "Fig. 11(c) caption: 10x10, e_min=-0.48610 | Sec III.4: open boundary conditions on LxL, J1=1, J2=0.5, S.S, e=E/(Lx*Ly)",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-28",
+          "scope": "value",
+          "method": "arXiv:2502.19576v2 HTML parsed with node; Phys. Rev. Research 7, 043351 (2025) publisher PDF, pypdf plain text",
+          "location": "Fig. 11(c) caption (journal and arXiv), 10x10 D = 4 PEPS",
+          "reported_as": "emin = -0.486 10 (per site, S.S units, J1 = 1)",
+          "conversion": "-0.48610 * 4 * 100 = -194.44",
+          "note": "OBC L x L, J2 = 0.5, S.S Hamiltonian Eq. (38); journal equals arXiv. Sampled VMC energy (SR/RGN), 'converged result with the largest sample size'; no sigma printed anywhere read (caption, text, appendix; repo r-peng/quimb_vmc default branch has no data), so the row should carry sampled: true and no sigma (RULES 6 lets it rank). No duplicate on the instance. Record holds: next variational row is 2D cRNN -194.212(8).",
+          "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#13 (qmbl-verify 2026-11-28)"
+        }
       }
     }
   ],

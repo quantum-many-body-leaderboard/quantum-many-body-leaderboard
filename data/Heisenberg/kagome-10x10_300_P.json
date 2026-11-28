@@ -82,10 +82,10 @@
     {
       "energy": -523.1364,
       "sigma": 0.0036,
-      "energy_variance": null,
+      "energy_variance": 19.2,
       "dof": 300,
       "einf": 0,
-      "v_score": null,
+      "v_score": 0.021047116480167376,
       "method": "ViT (transformer) nl=8, h=12, d=72, time-reversal symmetric, C6v A1 projected",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
@@ -99,7 +99,21 @@
         "reported_as": "−0.435947(3)",
         "note": "Table 1, L=10 row | per site S.S, J=1, N=300, fully periodic torus | variance reported as 0.004, not stored: convention not verified",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "energy_variance",
+          "to": 19.2,
+          "reported_as": "L=10: energy per site -0.435947(3), variance per site 0.00400(2), V_even 0.0211(1)",
+          "location": "End Matter, Table 1, row L=10",
+          "version_read": "arXiv:2611.18840v1 (only version, 13 Nov 2026; no journal version), arXiv HTML parsed locally with node",
+          "conversion": "Variance per site is Var(H)/N in S.S units: V = v/e^2 = 0.004/-0.435947^2 = 0.02105 reproduces the printed V-score 0.0211(1) (Var(H/N) would give N times that). Stored Pauli total: 16 x N x v = 16 x 300 x 0.004 = 19.2. Energy -0.435947 x 1200 = -523.1364 and sigma 3e-6 x 1200 = 0.0036 agree with the stored values.",
+          "checked_on": "2026-11-28",
+          "reason": "The variance is printed and its convention is fixed by the printed V-score; the row stores null (\"convention not verified\"). With it the row gets a V-score. Energy, sigma, torus (fully periodic L x L, N = 3L^2), H = J sum S.S with J = 1 (Eq. 1), sector (Gamma, Sz=0, P=+1, then C6v A1; L=16 without the point-group stage), bound_type variational all agree.",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#12 (qmbl-verify 2026-11-28)",
+          "from": null
+        }
+      ]
     },
     {
       "energy": -526.044,
@@ -120,7 +134,17 @@
         "method": "source text of arXiv:2611.18840 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.43837(29)",
         "note": "End Matter: 'The extrapolated energies for L=10 and 14 are −0.43837(29), and −0.43903(44), respectively.' | per site S.S, J=1, N=300 torus; order L=10 then 14 as in sentence",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-28",
+          "scope": "value",
+          "method": "arXiv:2611.18840v1 (only version, 13 Nov 2026; no journal version), arXiv HTML parsed locally with node",
+          "location": "End Matter, \"Variance Extrapolations\": \"The extrapolated energies for L=10 and 14 are -0.43837(29), and -0.43903(44), respectively.\"",
+          "reported_as": "-0.43837(29) per site",
+          "conversion": "-0.43837 x 1200 = -526.044; sigma 0.00029 x 1200 = 0.348",
+          "note": "Linear zero-variance fit of transformers with nl=4, 6, 8 before the point-group projection (End Matter, Variance Extrapolations; Fig. 7); bar = std of the intercept over Gaussian replicas (Fig. 7 caption). extrapolated, not a bound: bound_type agrees. Fully periodic torus N = 3L^2, S.S units, J = 1. Record (best extrapolated on this instance; only extrapolated row).",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#20 (qmbl-verify 2026-11-28)"
+        }
       }
     },
     {

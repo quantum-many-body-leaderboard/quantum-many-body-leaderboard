@@ -1454,8 +1454,8 @@
       "einf": 0,
       "v_score": null,
       "method": "vDBF eps=8e-4, n_rots=50",
-      "bound_type": "variational",
-      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "bound_type": "approximate",
+      "bound_type_reason": "corrected: The vDBF 'Energy' is the reference-state expectation <0|H^(N)|0> of the Hamiltonian after N Pauli rotations with coefficient truncation after each one (Algorithm 1 line 19, 'clip'); after the first truncation it is not <psi|H|psi> for any state, so it is not an upper bound. The authors say so: 'note that while vDBF is variational in principle, coefficient truncation removes the strict-upper bound in practice' (journal Table I caption), and 'these guarantees do not transfer as a formal theorem to our deterministic, truncated implementation' (Sec. II.2). Appendix D adds that single Pauli-string rotations do not conserve particle number or Sz. RULES.md 4: a number built on a fixed approximation with an error of unknown sign is 'approximate'. Alternative for the ruling: hold it, as for the cluster-approximation PEPS of arXiv:2610.30321 (2026-11-11), which was neither a bound nor an extrapolation. Value check passed: -0.487724 per site printed identically in arXiv v3 and the journal; -0.487724 x 256 (4N, S.S per site to Pauli total) = -124.857344; stored -124.857344. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
       "reference": "Pauli Propagation Enables Fast Classical Simulation of Strongly Correlated Quantum Systems, PRX Quantum, arXiv:2511.21651",
       "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-26",
@@ -1466,7 +1466,34 @@
         "reported_as": "-0.487724",
         "note": "Table 2, vDBF Energy, eps=8e-4, 7278 iterations | 8x8 PBC, J2/J1=0.5, energy per site in J1 units; caption: vDBF not strictly an upper bound | variance reported as 0.0155, not stored: convention not verified",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "bound_type",
+          "to": "approximate",
+          "reported_as": "Energy: −0.487724 (per site)",
+          "location": "Table 2 (journal Table II), column eps = 8e-4; Table 1 (journal Table I) caption; Sec. II.3.2 and Appendix B Eqs. 26-29",
+          "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+          "conversion": "-0.487724 x 256 (4N, S.S per site to Pauli total) = -124.857344",
+          "checked_on": "2026-11-28",
+          "reason": "The vDBF 'Energy' is the reference-state expectation <0|H^(N)|0> of the Hamiltonian after N Pauli rotations with coefficient truncation after each one (Algorithm 1 line 19, 'clip'); after the first truncation it is not <psi|H|psi> for any state, so it is not an upper bound. The authors say so: 'note that while vDBF is variational in principle, coefficient truncation removes the strict-upper bound in practice' (journal Table I caption), and 'these guarantees do not transfer as a formal theorem to our deterministic, truncated implementation' (Sec. II.2). Appendix D adds that single Pauli-string rotations do not conserve particle number or Sz. RULES.md 4: a number built on a fixed approximation with an error of unknown sign is 'approximate'. Alternative for the ruling: hold it, as for the cluster-approximation PEPS of arXiv:2610.30321 (2026-11-11), which was neither a bound nor an extrapolation. Value check passed: -0.487724 per site printed identically in arXiv v3 and the journal; -0.487724 x 256 (4N, S.S per site to Pauli total) = -124.857344; stored -124.857344. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+          "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#12 (qmbl-verify 2026-11-28)",
+          "from": "variational"
+        },
+        {
+          "field": "sampled",
+          "to": false,
+          "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+          "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+          "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+          "conversion": "-0.487724 x 256 (4N, S.S per site to Pauli total) = -124.857344",
+          "checked_on": "2026-11-28",
+          "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy. RULES.md 6: sampled is read from the source per row. Value check passed: -0.487724 per site printed identically in arXiv v3 and the journal; -0.487724 x 256 (4N, S.S per site to Pauli total) = -124.857344; stored -124.857344. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+          "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#13 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ],
+      "sampled": false
     },
     {
       "energy": -126.533632,
@@ -1488,7 +1515,22 @@
         "reported_as": "-0.494272(1)",
         "note": "Table 2, Extrap E, eps=8e-4 | as above | variance reported as 0.0155, not stored: convention not verified",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "sampled",
+          "to": false,
+          "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+          "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+          "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+          "conversion": "-0.494272(1) x 256 (4N, S.S per site to Pauli total) = -126.533632; sigma 1e-6 x 256 = 0.000256",
+          "checked_on": "2026-11-28",
+          "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy or the fit; the bar in parentheses is half the difference between the linear and quadratic zero-variance intercepts (Table caption), a fit-model spread, kept as sigma like other extrapolation uncertainties. RULES.md 6: sampled is read from the source per row. Value check passed: -0.494272(1) per site printed identically in arXiv v3 and the journal; -0.494272(1) x 256 (4N, S.S per site to Pauli total) = -126.533632; sigma 1e-6 x 256 = 0.000256; stored -126.533632 / 0.000256. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+          "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#14 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ],
+      "sampled": false
     },
     {
       "energy": -124.9024,
@@ -1498,8 +1540,8 @@
       "einf": 0,
       "v_score": null,
       "method": "vDBF eps=4e-4, n_rots=50",
-      "bound_type": "variational",
-      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "bound_type": "approximate",
+      "bound_type_reason": "corrected: The vDBF 'Energy' is the reference-state expectation <0|H^(N)|0> of the Hamiltonian after N Pauli rotations with coefficient truncation after each one (Algorithm 1 line 19, 'clip'); after the first truncation it is not <psi|H|psi> for any state, so it is not an upper bound. The authors say so: 'note that while vDBF is variational in principle, coefficient truncation removes the strict-upper bound in practice' (journal Table I caption), and 'these guarantees do not transfer as a formal theorem to our deterministic, truncated implementation' (Sec. II.2). Appendix D adds that single Pauli-string rotations do not conserve particle number or Sz. RULES.md 4: a number built on a fixed approximation with an error of unknown sign is 'approximate'. Alternative for the ruling: hold it, as for the cluster-approximation PEPS of arXiv:2610.30321 (2026-11-11), which was neither a bound nor an extrapolation. Value check passed: -0.487900 per site printed identically in arXiv v3 and the journal; -0.487900 x 256 (4N, S.S per site to Pauli total) = -124.9024; stored -124.9024. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
       "reference": "Pauli Propagation Enables Fast Classical Simulation of Strongly Correlated Quantum Systems, PRX Quantum, arXiv:2511.21651",
       "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-26",
@@ -1510,7 +1552,34 @@
         "reported_as": "-0.487900",
         "note": "Table 2, vDBF Energy, eps=4e-4 | as above | variance reported as 0.0149, not stored: convention not verified",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "bound_type",
+          "to": "approximate",
+          "reported_as": "Energy: −0.487900 (per site)",
+          "location": "Table 2 (journal Table II), column eps = 4e-4; Table 1 (journal Table I) caption; Sec. II.3.2 and Appendix B Eqs. 26-29",
+          "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+          "conversion": "-0.487900 x 256 (4N, S.S per site to Pauli total) = -124.9024",
+          "checked_on": "2026-11-28",
+          "reason": "The vDBF 'Energy' is the reference-state expectation <0|H^(N)|0> of the Hamiltonian after N Pauli rotations with coefficient truncation after each one (Algorithm 1 line 19, 'clip'); after the first truncation it is not <psi|H|psi> for any state, so it is not an upper bound. The authors say so: 'note that while vDBF is variational in principle, coefficient truncation removes the strict-upper bound in practice' (journal Table I caption), and 'these guarantees do not transfer as a formal theorem to our deterministic, truncated implementation' (Sec. II.2). Appendix D adds that single Pauli-string rotations do not conserve particle number or Sz. RULES.md 4: a number built on a fixed approximation with an error of unknown sign is 'approximate'. Alternative for the ruling: hold it, as for the cluster-approximation PEPS of arXiv:2610.30321 (2026-11-11), which was neither a bound nor an extrapolation. Value check passed: -0.487900 per site printed identically in arXiv v3 and the journal; -0.487900 x 256 (4N, S.S per site to Pauli total) = -124.9024; stored -124.9024. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+          "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#15 (qmbl-verify 2026-11-28)",
+          "from": "variational"
+        },
+        {
+          "field": "sampled",
+          "to": false,
+          "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+          "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+          "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+          "conversion": "-0.487900 x 256 (4N, S.S per site to Pauli total) = -124.9024",
+          "checked_on": "2026-11-28",
+          "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy. RULES.md 6: sampled is read from the source per row. Value check passed: -0.487900 per site printed identically in arXiv v3 and the journal; -0.487900 x 256 (4N, S.S per site to Pauli total) = -124.9024; stored -124.9024. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+          "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#16 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ],
+      "sampled": false
     },
     {
       "energy": -126.439168,
@@ -1532,7 +1601,22 @@
         "reported_as": "-0.493903(2)",
         "note": "Table 2, Extrap E, eps=4e-4 | as above | variance reported as 0.0149, not stored: convention not verified",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "sampled",
+          "to": false,
+          "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+          "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+          "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+          "conversion": "-0.493903(2) x 256 (4N, S.S per site to Pauli total) = -126.439168; sigma 2e-6 x 256 = 0.000512",
+          "checked_on": "2026-11-28",
+          "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy or the fit; the bar in parentheses is half the difference between the linear and quadratic zero-variance intercepts (Table caption), a fit-model spread, kept as sigma like other extrapolation uncertainties. RULES.md 6: sampled is read from the source per row. Value check passed: -0.493903(2) per site printed identically in arXiv v3 and the journal; -0.493903(2) x 256 (4N, S.S per site to Pauli total) = -126.439168; sigma 2e-6 x 256 = 0.000512; stored -126.439168 / 0.000512. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+          "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#17 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ],
+      "sampled": false
     },
     {
       "energy": -124.867328,
@@ -1542,8 +1626,8 @@
       "einf": 0,
       "v_score": null,
       "method": "vDBF eps=2e-4, n_rots=50",
-      "bound_type": "variational",
-      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "bound_type": "approximate",
+      "bound_type_reason": "corrected: The vDBF 'Energy' is the reference-state expectation <0|H^(N)|0> of the Hamiltonian after N Pauli rotations with coefficient truncation after each one (Algorithm 1 line 19, 'clip'); after the first truncation it is not <psi|H|psi> for any state, so it is not an upper bound. The authors say so: 'note that while vDBF is variational in principle, coefficient truncation removes the strict-upper bound in practice' (journal Table I caption), and 'these guarantees do not transfer as a formal theorem to our deterministic, truncated implementation' (Sec. II.2). Appendix D adds that single Pauli-string rotations do not conserve particle number or Sz. RULES.md 4: a number built on a fixed approximation with an error of unknown sign is 'approximate'. Alternative for the ruling: hold it, as for the cluster-approximation PEPS of arXiv:2610.30321 (2026-11-11), which was neither a bound nor an extrapolation. Value check passed: -0.487763 per site printed identically in arXiv v3 and the journal; -0.487763 x 256 (4N, S.S per site to Pauli total) = -124.867328; stored -124.867328. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
       "reference": "Pauli Propagation Enables Fast Classical Simulation of Strongly Correlated Quantum Systems, PRX Quantum, arXiv:2511.21651",
       "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-26",
@@ -1554,7 +1638,34 @@
         "reported_as": "-0.487763",
         "note": "Table 2, vDBF Energy, eps=2e-4 | as above | variance reported as 0.0185, not stored: convention not verified",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "bound_type",
+          "to": "approximate",
+          "reported_as": "Energy: −0.487763 (per site)",
+          "location": "Table 2 (journal Table II), column eps = 2e-4; Table 1 (journal Table I) caption; Sec. II.3.2 and Appendix B Eqs. 26-29",
+          "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+          "conversion": "-0.487763 x 256 (4N, S.S per site to Pauli total) = -124.867328",
+          "checked_on": "2026-11-28",
+          "reason": "The vDBF 'Energy' is the reference-state expectation <0|H^(N)|0> of the Hamiltonian after N Pauli rotations with coefficient truncation after each one (Algorithm 1 line 19, 'clip'); after the first truncation it is not <psi|H|psi> for any state, so it is not an upper bound. The authors say so: 'note that while vDBF is variational in principle, coefficient truncation removes the strict-upper bound in practice' (journal Table I caption), and 'these guarantees do not transfer as a formal theorem to our deterministic, truncated implementation' (Sec. II.2). Appendix D adds that single Pauli-string rotations do not conserve particle number or Sz. RULES.md 4: a number built on a fixed approximation with an error of unknown sign is 'approximate'. Alternative for the ruling: hold it, as for the cluster-approximation PEPS of arXiv:2610.30321 (2026-11-11), which was neither a bound nor an extrapolation. Value check passed: -0.487763 per site printed identically in arXiv v3 and the journal; -0.487763 x 256 (4N, S.S per site to Pauli total) = -124.867328; stored -124.867328. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+          "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#18 (qmbl-verify 2026-11-28)",
+          "from": "variational"
+        },
+        {
+          "field": "sampled",
+          "to": false,
+          "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+          "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+          "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+          "conversion": "-0.487763 x 256 (4N, S.S per site to Pauli total) = -124.867328",
+          "checked_on": "2026-11-28",
+          "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy. RULES.md 6: sampled is read from the source per row. Value check passed: -0.487763 per site printed identically in arXiv v3 and the journal; -0.487763 x 256 (4N, S.S per site to Pauli total) = -124.867328; stored -124.867328. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+          "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#19 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ],
+      "sampled": false
     },
     {
       "energy": -126.961152,
@@ -1576,7 +1687,22 @@
         "reported_as": "-0.495942(7)",
         "note": "Table 2, Extrap E, eps=2e-4 | as above | variance reported as 0.0185, not stored: convention not verified",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "sampled",
+          "to": false,
+          "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+          "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+          "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+          "conversion": "-0.495942(7) x 256 (4N, S.S per site to Pauli total) = -126.961152; sigma 7e-6 x 256 = 0.001792",
+          "checked_on": "2026-11-28",
+          "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy or the fit; the bar in parentheses is half the difference between the linear and quadratic zero-variance intercepts (Table caption), a fit-model spread, kept as sigma like other extrapolation uncertainties. RULES.md 6: sampled is read from the source per row. Value check passed: -0.495942(7) per site printed identically in arXiv v3 and the journal; -0.495942(7) x 256 (4N, S.S per site to Pauli total) = -126.961152; sigma 7e-6 x 256 = 0.001792; stored -126.961152 / 0.001792. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+          "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#20 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ],
+      "sampled": false
     },
     {
       "energy": -124.843776,
@@ -1586,8 +1712,8 @@
       "einf": 0,
       "v_score": null,
       "method": "vDBF eps=1e-4, n_rots=50",
-      "bound_type": "variational",
-      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
+      "bound_type": "approximate",
+      "bound_type_reason": "corrected: The vDBF 'Energy' is the reference-state expectation <0|H^(N)|0> of the Hamiltonian after N Pauli rotations with coefficient truncation after each one (Algorithm 1 line 19, 'clip'); after the first truncation it is not <psi|H|psi> for any state, so it is not an upper bound. The authors say so: 'note that while vDBF is variational in principle, coefficient truncation removes the strict-upper bound in practice' (journal Table I caption), and 'these guarantees do not transfer as a formal theorem to our deterministic, truncated implementation' (Sec. II.2). Appendix D adds that single Pauli-string rotations do not conserve particle number or Sz. RULES.md 4: a number built on a fixed approximation with an error of unknown sign is 'approximate'. Alternative for the ruling: hold it, as for the cluster-approximation PEPS of arXiv:2610.30321 (2026-11-11), which was neither a bound nor an extrapolation. Value check passed: -0.487671 per site printed identically in arXiv v3 and the journal; -0.487671 x 256 (4N, S.S per site to Pauli total) = -124.843776; stored -124.843776. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
       "reference": "Pauli Propagation Enables Fast Classical Simulation of Strongly Correlated Quantum Systems, PRX Quantum, arXiv:2511.21651",
       "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-26",
@@ -1598,7 +1724,34 @@
         "reported_as": "-0.487671",
         "note": "Table 2, vDBF Energy, eps=1e-4, 798 iterations | as above | variance reported as 0.0218, not stored: convention not verified",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "bound_type",
+          "to": "approximate",
+          "reported_as": "Energy: −0.487671 (per site)",
+          "location": "Table 2 (journal Table II), column eps = 1e-4; Table 1 (journal Table I) caption; Sec. II.3.2 and Appendix B Eqs. 26-29",
+          "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+          "conversion": "-0.487671 x 256 (4N, S.S per site to Pauli total) = -124.843776",
+          "checked_on": "2026-11-28",
+          "reason": "The vDBF 'Energy' is the reference-state expectation <0|H^(N)|0> of the Hamiltonian after N Pauli rotations with coefficient truncation after each one (Algorithm 1 line 19, 'clip'); after the first truncation it is not <psi|H|psi> for any state, so it is not an upper bound. The authors say so: 'note that while vDBF is variational in principle, coefficient truncation removes the strict-upper bound in practice' (journal Table I caption), and 'these guarantees do not transfer as a formal theorem to our deterministic, truncated implementation' (Sec. II.2). Appendix D adds that single Pauli-string rotations do not conserve particle number or Sz. RULES.md 4: a number built on a fixed approximation with an error of unknown sign is 'approximate'. Alternative for the ruling: hold it, as for the cluster-approximation PEPS of arXiv:2610.30321 (2026-11-11), which was neither a bound nor an extrapolation. Value check passed: -0.487671 per site printed identically in arXiv v3 and the journal; -0.487671 x 256 (4N, S.S per site to Pauli total) = -124.843776; stored -124.843776. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+          "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#21 (qmbl-verify 2026-11-28)",
+          "from": "variational"
+        },
+        {
+          "field": "sampled",
+          "to": false,
+          "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+          "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+          "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+          "conversion": "-0.487671 x 256 (4N, S.S per site to Pauli total) = -124.843776",
+          "checked_on": "2026-11-28",
+          "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy. RULES.md 6: sampled is read from the source per row. Value check passed: -0.487671 per site printed identically in arXiv v3 and the journal; -0.487671 x 256 (4N, S.S per site to Pauli total) = -124.843776; stored -124.843776. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+          "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#22 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ],
+      "sampled": false
     },
     {
       "energy": -127.395328,
@@ -1620,7 +1773,22 @@
         "reported_as": "-0.497638(3)",
         "note": "Table 2, Extrap E, eps=1e-4; text: tightest calculation gives -0.4976 | as above | variance reported as 0.0218, not stored: convention not verified",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "sampled",
+          "to": false,
+          "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+          "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+          "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+          "conversion": "-0.497638(3) x 256 (4N, S.S per site to Pauli total) = -127.395328; sigma 3e-6 x 256 = 0.000768",
+          "checked_on": "2026-11-28",
+          "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy or the fit; the bar in parentheses is half the difference between the linear and quadratic zero-variance intercepts (Table caption), a fit-model spread, kept as sigma like other extrapolation uncertainties. RULES.md 6: sampled is read from the source per row. Value check passed: -0.497638(3) per site printed identically in arXiv v3 and the journal; -0.497638(3) x 256 (4N, S.S per site to Pauli total) = -127.395328; sigma 3e-6 x 256 = 0.000768; stored -127.395328 / 0.000768. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+          "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#23 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ],
+      "sampled": false
     },
     {
       "energy": -127.64592,
@@ -1633,7 +1801,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Stochastic Reconfiguration as Statistical Filtering for Overparameterized Neural Quantum States, arXiv, arXiv:2609.23334",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -1642,7 +1810,21 @@
         "reported_as": "-1.9944675",
         "note": "Fig. 5(b) table, Pair 1 SR column; C.4 'Endpoint evaluation' | 8x8 fully periodic (C.2: 128 bonds of each type), J2/J1=0.5 printed; Pauli units printed (C.2, C.4), divided by 4 for S.S per site; no per-value error bar printed (only the pair difference +3.69 +- 1.09 in 1e-5)",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "-1.9944675 (endpoint energy per site, Pauli units)",
+          "location": "Figure 5(b) table, pair 1, column SR; Appendix C.4",
+          "version_read": "arXiv:2609.23334v1 (only version, 20 Sep 2026; no journal version found), arXiv HTML parsed locally with node",
+          "conversion": "-1.9944675 x 64 = -127.64592 (Pauli total; S.S per site -0.498616875); value confirmed, only peer_reviewed changes",
+          "checked_on": "2026-11-28",
+          "reason": "arXiv:2609.23334 has one version (v1, 20 Sep 2026), no journal reference and no published version found (Crossref, 2026-11-28); OpenAlex lists a preprint. RULES.md 8.1. Instance checks: C.2 \"H = J1 sum sigma_i.sigma_j + J2 sum ..., J1=1, J2=0.5 ... Pauli vector\", \"fully periodic, with 128 bonds of each coupling type, and sampling is restricted to sum S^z = 0\"; C.4: ViT depth 8, d=72, 12 heads, identity symmetry only, endpoint from 8,388,608 fresh samples. No per-energy error bar is printed: the pair column +3.69 +- 1.09 (1e-5, Pauli per site) combines the two runs' Monte Carlo standard errors in quadrature, so each run's SE is below that value (about 7.5e-6 Pauli per site if equal; not printed, not proposed).",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#21 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     },
     {
       "energy": -127.64448,
@@ -1655,7 +1837,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Stochastic Reconfiguration as Statistical Filtering for Overparameterized Neural Quantum States, arXiv, arXiv:2609.23334",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -1664,7 +1846,21 @@
         "reported_as": "-1.9944450",
         "note": "Fig. 5(b) table, Pair 2 SR column | same as Pair 1",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "-1.9944450 (endpoint energy per site, Pauli units)",
+          "location": "Figure 5(b) table, pair 2, column SR; Appendix C.4",
+          "version_read": "arXiv:2609.23334v1 (only version, 20 Sep 2026; no journal version found), arXiv HTML parsed locally with node",
+          "conversion": "-1.9944450 x 64 = -127.64448 (Pauli total; S.S per site -0.498611250); value confirmed, only peer_reviewed changes",
+          "checked_on": "2026-11-28",
+          "reason": "arXiv:2609.23334 has one version (v1, 20 Sep 2026), no journal reference and no published version found (Crossref, 2026-11-28); OpenAlex lists a preprint. RULES.md 8.1. Instance checks: C.2 \"H = J1 sum sigma_i.sigma_j + J2 sum ..., J1=1, J2=0.5 ... Pauli vector\", \"fully periodic, with 128 bonds of each coupling type, and sampling is restricted to sum S^z = 0\"; C.4: ViT depth 8, d=72, 12 heads, identity symmetry only, endpoint from 8,388,608 fresh samples. No per-energy error bar is printed: the pair column -7.10 +- 1.07 (1e-5, Pauli per site) combines the two runs' Monte Carlo standard errors in quadrature, so each run's SE is below that value (about 7.5e-6 Pauli per site if equal; not printed, not proposed).",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#22 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     },
     {
       "energy": -127.6462912,
@@ -1677,7 +1873,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Stochastic Reconfiguration as Statistical Filtering for Overparameterized Neural Quantum States, arXiv, arXiv:2609.23334",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -1686,7 +1882,21 @@
         "reported_as": "-1.9944733",
         "note": "Fig. 5(b) table, Pair 3 SR column | same as Pair 1",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "-1.9944733 (endpoint energy per site, Pauli units)",
+          "location": "Figure 5(b) table, pair 3, column SR; Appendix C.4",
+          "version_read": "arXiv:2609.23334v1 (only version, 20 Sep 2026; no journal version found), arXiv HTML parsed locally with node",
+          "conversion": "-1.9944733 x 64 = -127.6462912 (Pauli total; S.S per site -0.498618325); value confirmed, only peer_reviewed changes",
+          "checked_on": "2026-11-28",
+          "reason": "arXiv:2609.23334 has one version (v1, 20 Sep 2026), no journal reference and no published version found (Crossref, 2026-11-28); OpenAlex lists a preprint. RULES.md 8.1. Instance checks: C.2 \"H = J1 sum sigma_i.sigma_j + J2 sum ..., J1=1, J2=0.5 ... Pauli vector\", \"fully periodic, with 128 bonds of each coupling type, and sampling is restricted to sum S^z = 0\"; C.4: ViT depth 8, d=72, 12 heads, identity symmetry only, endpoint from 8,388,608 fresh samples. No per-energy error bar is printed: the pair column +0.11 +- 1.11 (1e-5, Pauli per site) combines the two runs' Monte Carlo standard errors in quadrature, so each run's SE is below that value (about 7.5e-6 Pauli per site if equal; not printed, not proposed).",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#23 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     },
     {
       "energy": -127.6453952,
@@ -1699,7 +1909,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Stochastic Reconfiguration as Statistical Filtering for Overparameterized Neural Quantum States, arXiv, arXiv:2609.23334",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -1708,7 +1918,21 @@
         "reported_as": "-1.9944593",
         "note": "Fig. 5(b) table, Pair 4 SR column | same as Pair 1",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "-1.9944593 (endpoint energy per site, Pauli units)",
+          "location": "Figure 5(b) table, pair 4, column SR; Appendix C.4",
+          "version_read": "arXiv:2609.23334v1 (only version, 20 Sep 2026; no journal version found), arXiv HTML parsed locally with node",
+          "conversion": "-1.9944593 x 64 = -127.6453952 (Pauli total; S.S per site -0.498614825); value confirmed, only peer_reviewed changes",
+          "checked_on": "2026-11-28",
+          "reason": "arXiv:2609.23334 has one version (v1, 20 Sep 2026), no journal reference and no published version found (Crossref, 2026-11-28); OpenAlex lists a preprint. RULES.md 8.1. Instance checks: C.2 \"H = J1 sum sigma_i.sigma_j + J2 sum ..., J1=1, J2=0.5 ... Pauli vector\", \"fully periodic, with 128 bonds of each coupling type, and sampling is restricted to sum S^z = 0\"; C.4: ViT depth 8, d=72, 12 heads, identity symmetry only, endpoint from 8,388,608 fresh samples. No per-energy error bar is printed: the pair column -0.75 +- 1.04 (1e-5, Pauli per site) combines the two runs' Monte Carlo standard errors in quadrature, so each run's SE is below that value (about 7.5e-6 Pauli per site if equal; not printed, not proposed).",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#24 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     },
     {
       "energy": -127.6435648,
@@ -1721,7 +1945,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Stochastic Reconfiguration as Statistical Filtering for Overparameterized Neural Quantum States, arXiv, arXiv:2609.23334",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -1730,7 +1954,21 @@
         "reported_as": "-1.9944307",
         "note": "Fig. 5(b) table, Pair 1 MS-SR column | same as SR Pair 1",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "-1.9944307 (endpoint energy per site, Pauli units)",
+          "location": "Figure 5(b) table, pair 1, column MS-SR; Appendix C.4",
+          "version_read": "arXiv:2609.23334v1 (only version, 20 Sep 2026; no journal version found), arXiv HTML parsed locally with node",
+          "conversion": "-1.9944307 x 64 = -127.6435648 (Pauli total; S.S per site -0.498607675); value confirmed, only peer_reviewed changes",
+          "checked_on": "2026-11-28",
+          "reason": "arXiv:2609.23334 has one version (v1, 20 Sep 2026), no journal reference and no published version found (Crossref, 2026-11-28); OpenAlex lists a preprint. RULES.md 8.1. Instance checks: C.2 \"H = J1 sum sigma_i.sigma_j + J2 sum ..., J1=1, J2=0.5 ... Pauli vector\", \"fully periodic, with 128 bonds of each coupling type, and sampling is restricted to sum S^z = 0\"; C.4: ViT depth 8, d=72, 12 heads, identity symmetry only, endpoint from 8,388,608 fresh samples. No per-energy error bar is printed: the pair column +3.69 +- 1.09 (1e-5, Pauli per site) combines the two runs' Monte Carlo standard errors in quadrature, so each run's SE is below that value (about 7.5e-6 Pauli per site if equal; not printed, not proposed).",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#25 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     },
     {
       "energy": -127.649024,
@@ -1743,7 +1981,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Stochastic Reconfiguration as Statistical Filtering for Overparameterized Neural Quantum States, arXiv, arXiv:2609.23334",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -1752,7 +1990,21 @@
         "reported_as": "-1.9945160",
         "note": "Fig. 5(b) table, Pair 2 MS-SR column (bold = lower) | same as SR Pair 1",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "-1.9945160 (endpoint energy per site, Pauli units)",
+          "location": "Figure 5(b) table, pair 2, column MS-SR; Appendix C.4",
+          "version_read": "arXiv:2609.23334v1 (only version, 20 Sep 2026; no journal version found), arXiv HTML parsed locally with node",
+          "conversion": "-1.9945160 x 64 = -127.649024 (Pauli total; S.S per site -0.498629000); value confirmed, only peer_reviewed changes",
+          "checked_on": "2026-11-28",
+          "reason": "arXiv:2609.23334 has one version (v1, 20 Sep 2026), no journal reference and no published version found (Crossref, 2026-11-28); OpenAlex lists a preprint. RULES.md 8.1. Instance checks: C.2 \"H = J1 sum sigma_i.sigma_j + J2 sum ..., J1=1, J2=0.5 ... Pauli vector\", \"fully periodic, with 128 bonds of each coupling type, and sampling is restricted to sum S^z = 0\"; C.4: ViT depth 8, d=72, 12 heads, identity symmetry only, endpoint from 8,388,608 fresh samples. No per-energy error bar is printed: the pair column -7.10 +- 1.07 (1e-5, Pauli per site) combines the two runs' Monte Carlo standard errors in quadrature, so each run's SE is below that value (about 7.5e-6 Pauli per site if equal; not printed, not proposed).",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#26 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     },
     {
       "energy": -127.6462208,
@@ -1765,7 +2017,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Stochastic Reconfiguration as Statistical Filtering for Overparameterized Neural Quantum States, arXiv, arXiv:2609.23334",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -1774,7 +2026,21 @@
         "reported_as": "-1.9944722",
         "note": "Fig. 5(b) table, Pair 3 MS-SR column | same as SR Pair 1",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "-1.9944722 (endpoint energy per site, Pauli units)",
+          "location": "Figure 5(b) table, pair 3, column MS-SR; Appendix C.4",
+          "version_read": "arXiv:2609.23334v1 (only version, 20 Sep 2026; no journal version found), arXiv HTML parsed locally with node",
+          "conversion": "-1.9944722 x 64 = -127.6462208 (Pauli total; S.S per site -0.498618050); value confirmed, only peer_reviewed changes",
+          "checked_on": "2026-11-28",
+          "reason": "arXiv:2609.23334 has one version (v1, 20 Sep 2026), no journal reference and no published version found (Crossref, 2026-11-28); OpenAlex lists a preprint. RULES.md 8.1. Instance checks: C.2 \"H = J1 sum sigma_i.sigma_j + J2 sum ..., J1=1, J2=0.5 ... Pauli vector\", \"fully periodic, with 128 bonds of each coupling type, and sampling is restricted to sum S^z = 0\"; C.4: ViT depth 8, d=72, 12 heads, identity symmetry only, endpoint from 8,388,608 fresh samples. No per-energy error bar is printed: the pair column +0.11 +- 1.11 (1e-5, Pauli per site) combines the two runs' Monte Carlo standard errors in quadrature, so each run's SE is below that value (about 7.5e-6 Pauli per site if equal; not printed, not proposed).",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#27 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     },
     {
       "energy": -127.6458752,
@@ -1787,7 +2053,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Stochastic Reconfiguration as Statistical Filtering for Overparameterized Neural Quantum States, arXiv, arXiv:2609.23334",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -1796,7 +2062,21 @@
         "reported_as": "-1.9944668",
         "note": "Fig. 5(b) table, Pair 4 MS-SR column (bold = lower) | same as SR Pair 1",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "-1.9944668 (endpoint energy per site, Pauli units)",
+          "location": "Figure 5(b) table, pair 4, column MS-SR; Appendix C.4",
+          "version_read": "arXiv:2609.23334v1 (only version, 20 Sep 2026; no journal version found), arXiv HTML parsed locally with node",
+          "conversion": "-1.9944668 x 64 = -127.6458752 (Pauli total; S.S per site -0.498616700); value confirmed, only peer_reviewed changes",
+          "checked_on": "2026-11-28",
+          "reason": "arXiv:2609.23334 has one version (v1, 20 Sep 2026), no journal reference and no published version found (Crossref, 2026-11-28); OpenAlex lists a preprint. RULES.md 8.1. Instance checks: C.2 \"H = J1 sum sigma_i.sigma_j + J2 sum ..., J1=1, J2=0.5 ... Pauli vector\", \"fully periodic, with 128 bonds of each coupling type, and sampling is restricted to sum S^z = 0\"; C.4: ViT depth 8, d=72, 12 heads, identity symmetry only, endpoint from 8,388,608 fresh samples. No per-energy error bar is printed: the pair column -0.75 +- 1.04 (1e-5, Pauli per site) combines the two runs' Monte Carlo standard errors in quadrature, so each run's SE is below that value (about 7.5e-6 Pauli per site if equal; not printed, not proposed).",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#28 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     },
     {
       "energy": -127.6475776,
@@ -1809,7 +2089,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Stochastic Reconfiguration as Statistical Filtering for Overparameterized Neural Quantum States, arXiv, arXiv:2609.23334",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -1818,241 +2098,21 @@
         "reported_as": "-1.9944934",
         "note": "Fig. 5(b) table, Pair 5 MS-SR column (bold = lower) | same as SR Pair 1",
         "secondary_of": null
-      }
-    },
-    {
-      "energy": -127.64592,
-      "sigma": null,
-      "energy_variance": null,
-      "dof": 64,
-      "einf": 0,
-      "v_score": null,
-      "method": "ViT with SR",
-      "bound_type": "variational",
-      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "When Quantum Meets AI: Quantum Methods for Machine Learning and Machine Learning Methods for Quantum Systems, arXiv, arXiv:2609.25641",
-      "peer_reviewed": true,
-      "source": "sweep-allresults-2026-11-26",
-      "provenance": "primary",
-      "verified": {
-        "checked_on": "2026-11-26",
-        "method": "source text of arXiv:2609.25641 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
-        "reported_as": "-1.9944675",
-        "note": "Fig. 5.4(b) table (Endpoint energies per site), pair 1, SR | 8x8 periodic J1-J2 J2=0.5, Pauli per-site; /4 to S.S",
-        "secondary_of": null
       },
-      "artifacts": {
-        "code": "https://github.com/takh04/sr_filter",
-        "evidence": "Thesis chapter 5 intro: \"Code is available at https://github.com/takh04/sr_filter\""
-      }
-    },
-    {
-      "energy": -127.6435648,
-      "sigma": null,
-      "energy_variance": null,
-      "dof": 64,
-      "einf": 0,
-      "v_score": null,
-      "method": "ViT with MS-SR",
-      "bound_type": "variational",
-      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "When Quantum Meets AI: Quantum Methods for Machine Learning and Machine Learning Methods for Quantum Systems, arXiv, arXiv:2609.25641",
-      "peer_reviewed": true,
-      "source": "sweep-allresults-2026-11-26",
-      "provenance": "primary",
-      "verified": {
-        "checked_on": "2026-11-26",
-        "method": "source text of arXiv:2609.25641 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
-        "reported_as": "-1.9944307",
-        "note": "Fig. 5.4(b) table, pair 1, MS-SR | same",
-        "secondary_of": null
-      },
-      "artifacts": {
-        "code": "https://github.com/takh04/sr_filter",
-        "evidence": "Thesis chapter 5 intro: \"Code is available at https://github.com/takh04/sr_filter\""
-      }
-    },
-    {
-      "energy": -127.64448,
-      "sigma": null,
-      "energy_variance": null,
-      "dof": 64,
-      "einf": 0,
-      "v_score": null,
-      "method": "ViT with SR",
-      "bound_type": "variational",
-      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "When Quantum Meets AI: Quantum Methods for Machine Learning and Machine Learning Methods for Quantum Systems, arXiv, arXiv:2609.25641",
-      "peer_reviewed": true,
-      "source": "sweep-allresults-2026-11-26",
-      "provenance": "primary",
-      "verified": {
-        "checked_on": "2026-11-26",
-        "method": "source text of arXiv:2609.25641 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
-        "reported_as": "-1.9944450",
-        "note": "Fig. 5.4(b) table, pair 2, SR | same",
-        "secondary_of": null
-      },
-      "artifacts": {
-        "code": "https://github.com/takh04/sr_filter",
-        "evidence": "Thesis chapter 5 intro: \"Code is available at https://github.com/takh04/sr_filter\""
-      }
-    },
-    {
-      "energy": -127.649024,
-      "sigma": null,
-      "energy_variance": null,
-      "dof": 64,
-      "einf": 0,
-      "v_score": null,
-      "method": "ViT with MS-SR",
-      "bound_type": "variational",
-      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "When Quantum Meets AI: Quantum Methods for Machine Learning and Machine Learning Methods for Quantum Systems, arXiv, arXiv:2609.25641",
-      "peer_reviewed": true,
-      "source": "sweep-allresults-2026-11-26",
-      "provenance": "primary",
-      "verified": {
-        "checked_on": "2026-11-26",
-        "method": "source text of arXiv:2609.25641 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
-        "reported_as": "-1.9945160",
-        "note": "Fig. 5.4(b) table, pair 2, MS-SR | same",
-        "secondary_of": null
-      },
-      "artifacts": {
-        "code": "https://github.com/takh04/sr_filter",
-        "evidence": "Thesis chapter 5 intro: \"Code is available at https://github.com/takh04/sr_filter\""
-      }
-    },
-    {
-      "energy": -127.6462912,
-      "sigma": null,
-      "energy_variance": null,
-      "dof": 64,
-      "einf": 0,
-      "v_score": null,
-      "method": "ViT with SR",
-      "bound_type": "variational",
-      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "When Quantum Meets AI: Quantum Methods for Machine Learning and Machine Learning Methods for Quantum Systems, arXiv, arXiv:2609.25641",
-      "peer_reviewed": true,
-      "source": "sweep-allresults-2026-11-26",
-      "provenance": "primary",
-      "verified": {
-        "checked_on": "2026-11-26",
-        "method": "source text of arXiv:2609.25641 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
-        "reported_as": "-1.9944733",
-        "note": "Fig. 5.4(b) table, pair 3, SR | same",
-        "secondary_of": null
-      },
-      "artifacts": {
-        "code": "https://github.com/takh04/sr_filter",
-        "evidence": "Thesis chapter 5 intro: \"Code is available at https://github.com/takh04/sr_filter\""
-      }
-    },
-    {
-      "energy": -127.6462208,
-      "sigma": null,
-      "energy_variance": null,
-      "dof": 64,
-      "einf": 0,
-      "v_score": null,
-      "method": "ViT with MS-SR",
-      "bound_type": "variational",
-      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "When Quantum Meets AI: Quantum Methods for Machine Learning and Machine Learning Methods for Quantum Systems, arXiv, arXiv:2609.25641",
-      "peer_reviewed": true,
-      "source": "sweep-allresults-2026-11-26",
-      "provenance": "primary",
-      "verified": {
-        "checked_on": "2026-11-26",
-        "method": "source text of arXiv:2609.25641 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
-        "reported_as": "-1.9944722",
-        "note": "Fig. 5.4(b) table, pair 3, MS-SR | same",
-        "secondary_of": null
-      },
-      "artifacts": {
-        "code": "https://github.com/takh04/sr_filter",
-        "evidence": "Thesis chapter 5 intro: \"Code is available at https://github.com/takh04/sr_filter\""
-      }
-    },
-    {
-      "energy": -127.6453952,
-      "sigma": null,
-      "energy_variance": null,
-      "dof": 64,
-      "einf": 0,
-      "v_score": null,
-      "method": "ViT with SR",
-      "bound_type": "variational",
-      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "When Quantum Meets AI: Quantum Methods for Machine Learning and Machine Learning Methods for Quantum Systems, arXiv, arXiv:2609.25641",
-      "peer_reviewed": true,
-      "source": "sweep-allresults-2026-11-26",
-      "provenance": "primary",
-      "verified": {
-        "checked_on": "2026-11-26",
-        "method": "source text of arXiv:2609.25641 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
-        "reported_as": "-1.9944593",
-        "note": "Fig. 5.4(b) table, pair 4, SR | same",
-        "secondary_of": null
-      },
-      "artifacts": {
-        "code": "https://github.com/takh04/sr_filter",
-        "evidence": "Thesis chapter 5 intro: \"Code is available at https://github.com/takh04/sr_filter\""
-      }
-    },
-    {
-      "energy": -127.6458752,
-      "sigma": null,
-      "energy_variance": null,
-      "dof": 64,
-      "einf": 0,
-      "v_score": null,
-      "method": "ViT with MS-SR",
-      "bound_type": "variational",
-      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "When Quantum Meets AI: Quantum Methods for Machine Learning and Machine Learning Methods for Quantum Systems, arXiv, arXiv:2609.25641",
-      "peer_reviewed": true,
-      "source": "sweep-allresults-2026-11-26",
-      "provenance": "primary",
-      "verified": {
-        "checked_on": "2026-11-26",
-        "method": "source text of arXiv:2609.25641 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
-        "reported_as": "-1.9944668",
-        "note": "Fig. 5.4(b) table, pair 4, MS-SR | same",
-        "secondary_of": null
-      },
-      "artifacts": {
-        "code": "https://github.com/takh04/sr_filter",
-        "evidence": "Thesis chapter 5 intro: \"Code is available at https://github.com/takh04/sr_filter\""
-      }
-    },
-    {
-      "energy": -127.6475776,
-      "sigma": null,
-      "energy_variance": null,
-      "dof": 64,
-      "einf": 0,
-      "v_score": null,
-      "method": "ViT with MS-SR",
-      "bound_type": "variational",
-      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "When Quantum Meets AI: Quantum Methods for Machine Learning and Machine Learning Methods for Quantum Systems, arXiv, arXiv:2609.25641",
-      "peer_reviewed": true,
-      "source": "sweep-allresults-2026-11-26",
-      "provenance": "primary",
-      "verified": {
-        "checked_on": "2026-11-26",
-        "method": "source text of arXiv:2609.25641 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
-        "reported_as": "-1.9944934",
-        "note": "Fig. 5.4(b) table, pair 5, MS-SR | same",
-        "secondary_of": null
-      },
-      "artifacts": {
-        "code": "https://github.com/takh04/sr_filter",
-        "evidence": "Thesis chapter 5 intro: \"Code is available at https://github.com/takh04/sr_filter\""
-      }
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "-1.9944934 (endpoint energy per site, Pauli units)",
+          "location": "Figure 5(b) table, pair 5, column MS-SR; Appendix C.4",
+          "version_read": "arXiv:2609.23334v1 (only version, 20 Sep 2026; no journal version found), arXiv HTML parsed locally with node",
+          "conversion": "-1.9944934 x 64 = -127.6475776 (Pauli total; S.S per site -0.498623350); value confirmed, only peer_reviewed changes",
+          "checked_on": "2026-11-28",
+          "reason": "arXiv:2609.23334 has one version (v1, 20 Sep 2026), no journal reference and no published version found (Crossref, 2026-11-28); OpenAlex lists a preprint. RULES.md 8.1. Instance checks: C.2 \"H = J1 sum sigma_i.sigma_j + J2 sum ..., J1=1, J2=0.5 ... Pauli vector\", \"fully periodic, with 128 bonds of each coupling type, and sampling is restricted to sum S^z = 0\"; C.4: ViT depth 8, d=72, 12 heads, identity symmetry only, endpoint from 8,388,608 fresh samples. No per-energy error bar is printed: the pair column -4.83 +- 1.02 (1e-5, Pauli per site) combines the two runs' Monte Carlo standard errors in quadrature, so each run's SE is below that value (about 7.5e-6 Pauli per site if equal; not printed, not proposed).",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#29 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     }
   ],
   "coverage": [

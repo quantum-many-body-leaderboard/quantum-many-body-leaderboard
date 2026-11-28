@@ -104,10 +104,14 @@
       "dof": 128,
       "einf": null,
       "v_score": null,
-      "method": "MP-NQS",
+      "method": "VMC",
+      "ansatz": "MP-NQS",
+      "method_detail": "plane-wave orbitals",
+      "method_as_published": "MP-NQS (plane-wave orbitals)",
+      "family": "other NQS",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Message-passing neural quantum states for the homogeneous electron gas, Physical review. B./Physical review. B, arXiv:2305.07240",
+      "reference": "G. Pescia, J. Nys, J. Kim, A. Lovato & G. Carleo, Message-passing neural quantum states for the homogeneous electron gas, Phys. Rev. B 110, 035108 (2024), arXiv:2305.07240, doi:10.1103/PhysRevB.110.035108",
       "peer_reviewed": true,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
@@ -127,7 +131,33 @@
         "wall_clock": null,
         "reported_as": "\"...f parameters is indepen- differences per particle are smaller than forN = 14, sug- dent of system size (here∼ 19000) and, using Stochas- gesting size-consistency of our Ansatz, provided that the tic Reconfiguration (SR) [31], only O(103) op...\"",
         "source": "arXiv:2305.07240, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "method",
+          "to": "MP-NQS (plane-wave orbitals)",
+          "reported_as": "-0.007 020 3(1) (journal); -0.0070203(1)(1) (arXiv v3)",
+          "location": "Table III, N=128 unpolarized, rs=110, column MP-NQS",
+          "version_read": "Phys. Rev. B 110, 035108 (2024), doi:10.1103/PhysRevB.110.035108, publisher PDF fetched 2026-11-28, pypdf layout mode, page 9 Tables I-V; cross-checked against arXiv:2305.07240v3 HTML Appendix G",
+          "conversion": "-0.0070203 Ha x 128 = -0.8985984; sigma 1e-7 x 128 = 1.28e-5 (value and sigma confirmed)",
+          "checked_on": "2026-11-28",
+          "reason": "Two MP-NQS rows of the same table sit on this instance: the column \"MP-NQS\" is the plane-wave reference state (Fig. 2 caption: \"the MP-NQS energy with plane-wave orbitals E_MPNN\"; Sec. III: \"Plane-wave orbitals are a natural ... choice to model the liquid\"), the other row is \"MP-NQS (Gaussian orbitals on bcc sites)\". The sibling rows from this paper on other instances are named \"MP-NQS (plane-wave orbitals)\". Version note: arXiv v3 prints \"-0.0070203(1)(1)\", the journal \"-0.007 020 3(1)\"; the journal text should replace reported_as. Caption: \"Total energy per particle in Hartree\"; Eq. (15) in Hartree with Ewald sum and background constant; cubic cell with PBC; N = 64 + 64 at Gamma (no twist mentioned).",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#43 (qmbl-verify 2026-11-28)",
+          "from": "MP-NQS"
+        },
+        {
+          "field": "reference",
+          "to": "G. Pescia, J. Nys, J. Kim, A. Lovato & G. Carleo, Message-passing neural quantum states for the homogeneous electron gas, Phys. Rev. B 110, 035108 (2024), arXiv:2305.07240, doi:10.1103/PhysRevB.110.035108",
+          "reported_as": "-0.007 020 3(1)",
+          "location": "Table III, N=128, rs=110, column MP-NQS",
+          "version_read": "Phys. Rev. B 110, 035108 (2024), doi:10.1103/PhysRevB.110.035108, publisher PDF fetched 2026-11-28, pypdf layout mode, page 9 Tables I-V; cross-checked against arXiv:2305.07240v3 HTML Appendix G",
+          "conversion": "no change to the value",
+          "checked_on": "2026-11-28",
+          "reason": "The batch wrote the OpenAlex venue string; the 55 other rows from this paper carry the full citation with volume and DOI.",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#44 (qmbl-verify 2026-11-28)",
+          "from": "Message-passing neural quantum states for the homogeneous electron gas, Physical review. B./Physical review. B, arXiv:2305.07240"
+        }
+      ]
     }
   ],
   "coverage": [

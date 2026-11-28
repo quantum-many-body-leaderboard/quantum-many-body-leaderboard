@@ -670,10 +670,10 @@
     {
       "energy": -84.125952,
       "sigma": 0.000768,
-      "energy_variance": null,
+      "energy_variance": 1.06752,
       "dof": 48,
       "einf": 0,
-      "v_score": null,
+      "v_score": 0.007240311877045416,
       "method": "ViT (transformer) nl=8, h=12, d=72, time-reversal symmetric, C6v A1 projected",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
@@ -687,7 +687,21 @@
         "reported_as": "−0.438156(4)",
         "note": "Table 1 (End Matter), L=4 row, energy per site after C6v A1 projection | Table 1 is per site; H = J sum S.S (Eq. 1); L=4 exact -0.438704 quoted in text equals instance exact; torus L x L with N=3L^2 stated ('fully periodic L×L clusters with N=3L2 spins') | variance reported as 0.00139, not stored: convention not verified",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "energy_variance",
+          "to": 1.06752,
+          "reported_as": "L=4: energy per site -0.438156(4), variance per site 0.00139(1), V_even 0.00722(4)",
+          "location": "End Matter, Table 1, row L=4",
+          "version_read": "arXiv:2611.18840v1 (only version, 13 Nov 2026; no journal version), arXiv HTML parsed locally with node",
+          "conversion": "Variance per site is Var(H)/N in S.S units: V = v/e^2 = 0.00139/-0.438156^2 = 0.00724 reproduces the printed V-score 0.00722(4) (Var(H/N) would give N times that). Stored Pauli total: 16 x N x v = 16 x 48 x 0.00139 = 1.06752. Energy -0.438156 x 192 = -84.125952 and sigma 4e-6 x 192 = 0.000768 agree with the stored values.",
+          "checked_on": "2026-11-28",
+          "reason": "The variance is printed and its convention is fixed by the printed V-score; the row stores null (\"convention not verified\"). With it the row gets a V-score. Energy, sigma, torus (fully periodic L x L, N = 3L^2), H = J sum S.S with J = 1 (Eq. 1), sector (Gamma, Sz=0, P=+1, then C6v A1; L=16 without the point-group stage), bound_type variational all agree.",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#15 (qmbl-verify 2026-11-28)",
+          "from": null
+        }
+      ]
     },
     {
       "energy": -84.2208,
@@ -708,11 +722,21 @@
         "method": "source text of arXiv:2611.18840 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "−0.43865(16)",
         "note": "End Matter, Variance Extrapolations: 'For L=4 we obtain −0.43865(16), consistent with the exact value −0.438704' | per site S.S, J=1; compared in text with exact -0.438704 per site",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-28",
+          "scope": "value",
+          "method": "arXiv:2611.18840v1 (only version, 13 Nov 2026; no journal version), arXiv HTML parsed locally with node",
+          "location": "End Matter, \"Variance Extrapolations\": \"For L=4 we obtain -0.43865(16), consistent with the exact value -0.438704\"",
+          "reported_as": "-0.43865(16) per site",
+          "conversion": "-0.43865 x 192 = -84.2208; sigma 0.00016 x 192 = 0.03072",
+          "note": "Linear zero-variance fit of transformers with nl=4, 6, 8 before the point-group projection (End Matter, Variance Extrapolations; Fig. 7); bar = std of the intercept over Gaussian replicas (Fig. 7 caption). extrapolated, not a bound: bound_type agrees. Fully periodic torus N = 3L^2, S.S units, J = 1.",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#18 (qmbl-verify 2026-11-28)"
+        }
       }
     },
     {
-      "energy": -109.44,
+      "energy": -27.36,
       "sigma": null,
       "energy_variance": null,
       "dof": 48,
@@ -722,7 +746,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Second order cone relaxations for quantum Max Cut, arXiv, arXiv:2411.04120",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -731,7 +755,33 @@
         "reported_as": "−27.36",
         "note": "Table 1, Rounded Objective, row 'kagome 48' | Pauli total; /(4*48); dimensions not printed",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "energy",
+          "to": -27.36,
+          "reported_as": "-27.36 (Rounded Objective, scaled Hamiltonian sum (XX+YY+ZZ))",
+          "location": "Table 1, row 'kagome 48', column Rounded Objective",
+          "version_read": "arXiv:2411.04120v1 HTML (no journal version)",
+          "conversion": "Table 1 is the Pauli total (VarBench column -84.2311 = stored exact); stored = -27.36; eps = -27.36/192 = -0.1425 (pass wrote -0.57 = -27.36/48)",
+          "checked_on": "2026-11-28",
+          "reason": "Factor-4 error; stored value is 25 below the exact -84.231 (impossible) and holds the record. Corrected it is no record.",
+          "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#2 (qmbl-verify 2026-11-28)",
+          "from": -109.44
+        },
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "arXiv:2411.04120v1, no journal_ref",
+          "location": "arXiv API and OpenAlex, 2026-11-28",
+          "version_read": "arXiv:2411.04120v1",
+          "conversion": null,
+          "checked_on": "2026-11-28",
+          "reason": "preprint only",
+          "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#3 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     },
     {
       "energy": -83.8272,

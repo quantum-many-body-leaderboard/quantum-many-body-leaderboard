@@ -285,15 +285,15 @@
     {
       "energy": -316.82,
       "sigma": null,
-      "energy_variance": null,
+      "energy_variance": 1.3048739,
       "dof": 100,
       "einf": 0,
-      "v_score": null,
+      "v_score": 0.0013000000386550773,
       "method": "RTT chi=2 (replica space + physical space, operators O_ZZ,HV and O_ZZ,DD')",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Replica Tensor Train, arXiv, arXiv:2604.22718",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -302,20 +302,46 @@
         "reported_as": "-3.1682",
         "note": "Table 1 row with O_ZZ,HV and O_ZZ,DD' included (HTML table), delta E/E 5.5e-4, Nvar/E^2 0.0013; h_x=3, L=10 | Eq.(53) Pauli ZZ - h X, E/N per site; boundary condition not printed (held).",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "arXiv:2604.22718v2, no journal_ref",
+          "location": "arXiv API (export.arxiv.org) and OpenAlex search, 2026-11-28",
+          "version_read": "arXiv:2604.22718v2",
+          "conversion": null,
+          "checked_on": "2026-11-28",
+          "reason": "arXiv preprint only; the reference string itself says arXiv.",
+          "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#44 (qmbl-verify 2026-11-28)",
+          "from": true
+        },
+        {
+          "field": "energy_variance",
+          "to": 1.3048739,
+          "reported_as": "E/N -3.1682, N var/E^2 0.0013",
+          "location": "Table 1, row 1 (O_ZZ,HV x, O_ZZ,DD' x, O_X blank)",
+          "version_read": "arXiv:2604.22718v2 HTML",
+          "conversion": "V = N Var(H)/E^2 (V-score, Fig. 6 caption 'delta E/E ~ 0.2 N var[H]/E^2', Ref. [46]); the ratio is the same whether var and E are both totals or both per site. Var(H)/E^2 = 0.0013/100 = 0.000013; Var(H) = 0.000013 * (-316.82)^2 = 1.3048739 (total, Pauli units). Loader: add \"var_rel\": 0.000013 (scripts/add_allresults_rows.mjs varTot = var_rel * energy^2).",
+          "checked_on": "2026-11-28",
+          "reason": "The source prints a variance (as a V-score) for this entry; the row stores none. Energy otherwise confirmed (= stored); OBC is printed ('We use open boundary conditions'), h_x = 3, L = 10.",
+          "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#46 (qmbl-verify 2026-11-28)",
+          "from": null
+        }
+      ]
     },
     {
       "energy": -316.3,
       "sigma": null,
-      "energy_variance": null,
+      "energy_variance": 5.0022845,
       "dof": 100,
       "einf": 0,
-      "v_score": null,
+      "v_score": 0.005,
       "method": "RTT chi=2 (operators O_ZZ,HV and O_X)",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Replica Tensor Train, arXiv, arXiv:2604.22718",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -324,231 +350,33 @@
         "reported_as": "-3.163",
         "note": "Table 1 row without O_ZZ,DD', delta E/E 2.0e-3; h_x=3, L=10 | Eq.(53) Pauli ZZ - h X, E/N per site; boundary condition not printed (held).",
         "secondary_of": null
-      }
-    },
-    {
-      "energy": -316.8717,
-      "sigma": null,
-      "energy_variance": null,
-      "dof": 100,
-      "einf": 0,
-      "v_score": null,
-      "method": "Euclidean 2DRNN, hidden 60",
-      "bound_type": "variational",
-      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Two-dimensional Hyperbolic RNN Neural Quantum State, arXiv.org, arXiv:2606.25600",
-      "peer_reviewed": true,
-      "source": "sweep-allresults-2026-11-26",
-      "provenance": "primary",
-      "verified": {
-        "checked_on": "2026-11-26",
-        "method": "source text of arXiv:2606.25600 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
-        "reported_as": "-316.8717 ± 0.0103",
-        "note": "Table 3, Averaged | Eq.17 Pauli H J=1, totals /N=100, open, Bx=3",
-        "secondary_of": null
       },
-      "compute": {
-        "parameters": 7622,
-        "gpu_hours": null,
-        "device": null,
-        "n_devices": null,
-        "samples": null,
-        "wall_clock": null,
-        "reported_as": "\"...of the 2DTFIM. 7 Ansatz Hidden dimension size Parameters Experiment Euclidean 2DRNN 50 5352 (N,N) = (8,8) 60 7622 (N,N) = (10,10)(N,N) = (12,12) Lorentz 2DRNN 50 5352 (N,N) = (8,8) 60 7622 (N,N) = (10,10)(N,N) = (12,12) Table 1: The two-di...\"",
-        "source": "arXiv:2606.25600, located by string match in the committed source text"
-      }
-    },
-    {
-      "energy": -316.8919,
-      "sigma": null,
-      "energy_variance": null,
-      "dof": 100,
-      "einf": 0,
-      "v_score": null,
-      "method": "Lorentz 2DRNN (L_max=2.0), hidden 60",
-      "bound_type": "variational",
-      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Two-dimensional Hyperbolic RNN Neural Quantum State, arXiv.org, arXiv:2606.25600",
-      "peer_reviewed": true,
-      "source": "sweep-allresults-2026-11-26",
-      "provenance": "primary",
-      "verified": {
-        "checked_on": "2026-11-26",
-        "method": "source text of arXiv:2606.25600 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
-        "reported_as": "-316.8919 ± 0.0099",
-        "note": "Table 3, Averaged | Eq.17 Pauli H J=1, totals /N=100, open, Bx=3",
-        "secondary_of": null
-      },
-      "compute": {
-        "parameters": 7622,
-        "gpu_hours": null,
-        "device": null,
-        "n_devices": null,
-        "samples": null,
-        "wall_clock": null,
-        "reported_as": "\"...of the 2DTFIM. 7 Ansatz Hidden dimension size Parameters Experiment Euclidean 2DRNN 50 5352 (N,N) = (8,8) 60 7622 (N,N) = (10,10)(N,N) = (12,12) Lorentz 2DRNN 50 5352 (N,N) = (8,8) 60 7622 (N,N) = (10,10)(N,N) = (12,12) Table 1: The two-di...\"",
-        "source": "arXiv:2606.25600, located by string match in the committed source text"
-      }
-    },
-    {
-      "energy": -308.6596,
-      "sigma": null,
-      "energy_variance": null,
-      "dof": 100,
-      "einf": 0,
-      "v_score": null,
-      "method": "Euclidean RNN (1D unrolled)",
-      "bound_type": "variational",
-      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Two-dimensional Hyperbolic RNN Neural Quantum State, arXiv.org, arXiv:2606.25600",
-      "peer_reviewed": true,
-      "source": "sweep-allresults-2026-11-26",
-      "provenance": "primary",
-      "verified": {
-        "checked_on": "2026-11-26",
-        "method": "source text of arXiv:2606.25600 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
-        "reported_as": "-308.6596 ± 0.0801",
-        "note": "Table 9, averaged over runs | Pauli totals /N=100, open, Bx=3",
-        "secondary_of": null
-      },
-      "compute": {
-        "parameters": 5252,
-        "gpu_hours": null,
-        "device": null,
-        "n_devices": null,
-        "samples": null,
-        "wall_clock": null,
-        "reported_as": "\"...ay characteristics. Ansatz Hidden dimension size Parameters Experiment Euclidean RNN 60 3902 (N,N) = (8,8) 70 5252 (N,N) = (10,10)(N,N) = (12,12) Euclidean GRU 60 11462 (N,N) = (8,8) 70 15472 (N,N) = (10,10)(N,N) = (12,12) Poincar´e RNN 60...\"",
-        "source": "arXiv:2606.25600, located by string match in the committed source text"
-      }
-    },
-    {
-      "energy": -311.4692,
-      "sigma": null,
-      "energy_variance": null,
-      "dof": 100,
-      "einf": 0,
-      "v_score": null,
-      "method": "Poincare RNN (1D unrolled)",
-      "bound_type": "variational",
-      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Two-dimensional Hyperbolic RNN Neural Quantum State, arXiv.org, arXiv:2606.25600",
-      "peer_reviewed": true,
-      "source": "sweep-allresults-2026-11-26",
-      "provenance": "primary",
-      "verified": {
-        "checked_on": "2026-11-26",
-        "method": "source text of arXiv:2606.25600 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
-        "reported_as": "-311.4692 ± 0.0705",
-        "note": "Table 9, averaged over runs | Pauli totals /N=100, open, Bx=3",
-        "secondary_of": null
-      },
-      "compute": {
-        "parameters": 5252,
-        "gpu_hours": null,
-        "device": null,
-        "n_devices": null,
-        "samples": null,
-        "wall_clock": null,
-        "reported_as": "\"...ay characteristics. Ansatz Hidden dimension size Parameters Experiment Euclidean RNN 60 3902 (N,N) = (8,8) 70 5252 (N,N) = (10,10)(N,N) = (12,12) Euclidean GRU 60 11462 (N,N) = (8,8) 70 15472 (N,N) = (10,10)(N,N) = (12,12) Poincar´e RNN 60...\"",
-        "source": "arXiv:2606.25600, located by string match in the committed source text"
-      }
-    },
-    {
-      "energy": -312.2401,
-      "sigma": null,
-      "energy_variance": null,
-      "dof": 100,
-      "einf": 0,
-      "v_score": null,
-      "method": "Lorentz RNN (1D unrolled)",
-      "bound_type": "variational",
-      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Two-dimensional Hyperbolic RNN Neural Quantum State, arXiv.org, arXiv:2606.25600",
-      "peer_reviewed": true,
-      "source": "sweep-allresults-2026-11-26",
-      "provenance": "primary",
-      "verified": {
-        "checked_on": "2026-11-26",
-        "method": "source text of arXiv:2606.25600 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
-        "reported_as": "-312.2401 ± 0.0637",
-        "note": "Table 9, averaged over runs | Pauli totals /N=100, open, Bx=3",
-        "secondary_of": null
-      },
-      "compute": {
-        "parameters": 5252,
-        "gpu_hours": null,
-        "device": null,
-        "n_devices": null,
-        "samples": null,
-        "wall_clock": null,
-        "reported_as": "\"...ay characteristics. Ansatz Hidden dimension size Parameters Experiment Euclidean RNN 60 3902 (N,N) = (8,8) 70 5252 (N,N) = (10,10)(N,N) = (12,12) Euclidean GRU 60 11462 (N,N) = (8,8) 70 15472 (N,N) = (10,10)(N,N) = (12,12) Poincar´e RNN 60...\"",
-        "source": "arXiv:2606.25600, located by string match in the committed source text"
-      }
-    },
-    {
-      "energy": -313.9553,
-      "sigma": null,
-      "energy_variance": null,
-      "dof": 100,
-      "einf": 0,
-      "v_score": null,
-      "method": "Euclidean GRU (1D unrolled)",
-      "bound_type": "variational",
-      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Two-dimensional Hyperbolic RNN Neural Quantum State, arXiv.org, arXiv:2606.25600",
-      "peer_reviewed": true,
-      "source": "sweep-allresults-2026-11-26",
-      "provenance": "primary",
-      "verified": {
-        "checked_on": "2026-11-26",
-        "method": "source text of arXiv:2606.25600 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
-        "reported_as": "-313.9553 ± 0.0617",
-        "note": "Table 9, averaged over runs | Pauli totals /N=100, open, Bx=3",
-        "secondary_of": null
-      },
-      "compute": {
-        "parameters": 15472,
-        "gpu_hours": null,
-        "device": null,
-        "n_devices": null,
-        "samples": null,
-        "wall_clock": null,
-        "reported_as": "\"...dean RNN 60 3902 (N,N) = (8,8) 70 5252 (N,N) = (10,10)(N,N) = (12,12) Euclidean GRU 60 11462 (N,N) = (8,8) 70 15472 (N,N) = (10,10)(N,N) = (12,12) Poincar´e RNN 60 3902 (N,N) = (8,8) 70 5252 (N,N) = (10,10)(N,N) = (12,12) Poincar´e GRU 60 1...\"",
-        "source": "arXiv:2606.25600, located by string match in the committed source text"
-      }
-    },
-    {
-      "energy": -314.9809,
-      "sigma": null,
-      "energy_variance": null,
-      "dof": 100,
-      "einf": 0,
-      "v_score": null,
-      "method": "Poincare GRU (1D unrolled)",
-      "bound_type": "variational",
-      "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
-      "reference": "Two-dimensional Hyperbolic RNN Neural Quantum State, arXiv.org, arXiv:2606.25600",
-      "peer_reviewed": true,
-      "source": "sweep-allresults-2026-11-26",
-      "provenance": "primary",
-      "verified": {
-        "checked_on": "2026-11-26",
-        "method": "source text of arXiv:2606.25600 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
-        "reported_as": "-314.9809 ± 0.0506",
-        "note": "Table 9, averaged over runs | Pauli totals /N=100, open, Bx=3",
-        "secondary_of": null
-      },
-      "compute": {
-        "parameters": 15472,
-        "gpu_hours": null,
-        "device": null,
-        "n_devices": null,
-        "samples": null,
-        "wall_clock": null,
-        "reported_as": "\"...dean RNN 60 3902 (N,N) = (8,8) 70 5252 (N,N) = (10,10)(N,N) = (12,12) Euclidean GRU 60 11462 (N,N) = (8,8) 70 15472 (N,N) = (10,10)(N,N) = (12,12) Poincar´e RNN 60 3902 (N,N) = (8,8) 70 5252 (N,N) = (10,10)(N,N) = (12,12) Poincar´e GRU 60 1...\"",
-        "source": "arXiv:2606.25600, located by string match in the committed source text"
-      }
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "arXiv:2604.22718v2, no journal_ref",
+          "location": "arXiv API (export.arxiv.org) and OpenAlex search, 2026-11-28",
+          "version_read": "arXiv:2604.22718v2",
+          "conversion": null,
+          "checked_on": "2026-11-28",
+          "reason": "arXiv preprint only; the reference string itself says arXiv.",
+          "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#45 (qmbl-verify 2026-11-28)",
+          "from": true
+        },
+        {
+          "field": "energy_variance",
+          "to": 5.0022845,
+          "reported_as": "E/N -3.163, N var/E^2 0.005",
+          "location": "Table 1, row 3 (O_ZZ,HV x, O_ZZ,DD' blank, O_X x)",
+          "version_read": "arXiv:2604.22718v2 HTML",
+          "conversion": "V = N Var(H)/E^2 (V-score, Fig. 6 caption 'delta E/E ~ 0.2 N var[H]/E^2', Ref. [46]); the ratio is the same whether var and E are both totals or both per site. Var(H)/E^2 = 0.005/100 = 0.00005; Var(H) = 0.00005 * (-316.3)^2 = 5.0022845 (total, Pauli units). Loader: add \"var_rel\": 0.00005 (scripts/add_allresults_rows.mjs varTot = var_rel * energy^2).",
+          "checked_on": "2026-11-28",
+          "reason": "The source prints a variance (as a V-score) for this entry; the row stores none. Energy otherwise confirmed (= stored); OBC is printed ('We use open boundary conditions'), h_x = 3, L = 10.",
+          "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#47 (qmbl-verify 2026-11-28)",
+          "from": null
+        }
+      ]
     }
   ],
   "coverage": [

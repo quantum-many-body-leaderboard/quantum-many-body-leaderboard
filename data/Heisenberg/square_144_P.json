@@ -214,7 +214,22 @@
         "reported_as": "-0.66812",
         "note": "Table 1, L=12, oPEPS | Eq. 9 s_i.s_j, J1=1, PBC LxL; per-site not printed",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "sampled",
+          "to": true,
+          "reported_as": "-0.66812 (per site, S.S units, no error bar); SM: 'In the final sampling for observable measurements, we use N = 480,000 samples, with the QMC error in the energy estimated to be less than ~10^-5.'",
+          "location": "Table I (arXiv Table 1), row L = 12, column oPEPS; SM Sec. II.A Eq. (S8) and Sec. II.C",
+          "version_read": "arXiv:2407.15333v1 (only arXiv version, HTML parsed with node) and Phys. Rev. Lett. 135, 026501 (2025) publisher PDF plus Supplemental Material tns-pbc-supp.pdf (pypdf plain mode); Tables I and II identical in both",
+          "conversion": "-0.66812 x 4 x 144 = -384.83712",
+          "checked_on": "2026-11-28",
+          "reason": "The oPEPS energy is a Monte Carlo average over spin configurations weighted by |W(s)|^2 (SM Eq. S8, 'can be calculated via a Monte Carlo (MC) sampling of spin configuration s'), measured with 480,000 samples (SM II.C); RULES.md 6 names exactly this case ('A finite PEPS whose energy is a Monte Carlo average over spin configurations ... [is] sampled'). The blanket 'less than ~10^-5' is one statement for the whole paper, not a printed bar for this row, so sigma stays null (table-wide error is not sigma). Value check passed: -0.66812 x 4 x 144 = -384.83712, stored -384.83712; 12x12 periodic, J2 = 0, D = 6, momentum k = 0, S.S units (QMC column equals Sandvik's per-site values), own computation; bound_type variational stands (energy of an explicit PEPS state, sampled).",
+          "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#26 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ],
+      "sampled": true
     },
     {
       "energy": -386.24256,
@@ -236,7 +251,22 @@
         "reported_as": "-0.67056",
         "note": "Table 1, L=12, sPEPS | Eq. 9 s_i.s_j, J1=1, PBC LxL; per-site not printed",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "sampled",
+          "to": true,
+          "reported_as": "-0.67056 (per site, S.S units, no error bar); SM: 'In the final sampling for observable measurements, we use N = 480,000 samples, with the QMC error in the energy estimated to be less than ~10^-5.'",
+          "location": "Table I (arXiv Table 1), row L = 12, column sPEPS; SM Sec. II.A Eq. (S8) and Sec. II.C",
+          "version_read": "arXiv:2407.15333v1 (only arXiv version, HTML parsed with node) and Phys. Rev. Lett. 135, 026501 (2025) publisher PDF plus Supplemental Material tns-pbc-supp.pdf (pypdf plain mode); Tables I and II identical in both",
+          "conversion": "-0.67056 x 4 x 144 = -386.24256",
+          "checked_on": "2026-11-28",
+          "reason": "The sPEPS energy is a Monte Carlo average over spin configurations weighted by |W(s)|^2 (SM Eq. S8, 'can be calculated via a Monte Carlo (MC) sampling of spin configuration s'), measured with 480,000 samples (SM II.C); RULES.md 6 names exactly this case ('A finite PEPS whose energy is a Monte Carlo average over spin configurations ... [is] sampled'). The blanket 'less than ~10^-5' is one statement for the whole paper, not a printed bar for this row, so sigma stays null (table-wide error is not sigma). Value check passed: -0.67056 x 4 x 144 = -386.24256, stored -386.24256; 12x12 periodic, J2 = 0, D = 6, momentum k = 0, S.S units (QMC column equals Sandvik's per-site values), own computation; bound_type variational stands (energy of an explicit PEPS state, sampled).",
+          "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#27 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ],
+      "sampled": true
     },
     {
       "energy": -386.27633667,

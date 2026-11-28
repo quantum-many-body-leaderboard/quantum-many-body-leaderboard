@@ -321,7 +321,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Neural Network Backflow with Low-Rank Multi-Determinant Updates, arXiv, arXiv:2609.26544",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -330,7 +330,21 @@
         "reported_as": "−0.7662",
         "note": "Sec. III.1 text: 4×12 'Deep BF Lanczos achieves an energy of −0.7662 per site' | Same as Deep BF 4x12 row: periodic, U/t=8, 1/8 doping, per site in t.",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "-0.7662 per site",
+          "location": "Sec. III.1, paragraph after Eq. (9): \"Deep BF Lanczos achieves an energy of -0.7662 per site, sitting slightly below HFPS\" (4x12)",
+          "version_read": "arXiv:2609.26544v1 (only version; no journal version found via arXiv jref or Crossref title search on 2026-11-28), arXiv HTML parsed locally with node (tag strip, MathML alttext)",
+          "conversion": "-0.7662 x 48 = -36.7776 (value confirmed; only peer_reviewed changes)",
+          "checked_on": "2026-11-28",
+          "reason": "arXiv:2609.26544 has one version (v1, 22 Sep 2026), no journal reference on arXiv and no published version found by Crossref title search (2026-11-28); OpenAlex lists it as a preprint. RULES.md 8.1: peer_reviewed follows the venue that printed the number. Value, lattice, PBC in both directions (Sec. III: \"periodic boundary conditions applied on both spatial directions\"), U/t=8, filling 1/8 doping (Nf = 7N/16 per spin, N_up = N_dn assumed: not printed), Hamiltonian Eq. (1) = standard VarBench form (no shift), bound_type all agree; no numerical error bar printed (\"error bars are smaller than the markers\").",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#0 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     },
     {
       "energy": -36.5184,
@@ -351,7 +365,17 @@
         "method": "source text of arXiv:2308.11823 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.7608",
         "note": "Table 3, n=0.875, 4x12, BW1 | as above (U=8 from Fig. 5 caption)",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-28",
+          "scope": "value",
+          "method": "arXiv:2308.11823v6 HTML parsed with node; Phys. Rev. B 109, 245107 (2024) publisher PDF, pypdf layout",
+          "location": "Table 3 (journal Table III), n = 0.875, 4 x 12, BW1 column",
+          "reported_as": "-0.7608 (per site)",
+          "conversion": "-0.7608 * 48 = -36.5184",
+          "note": "PBC, U = 8 (journal caption), t = 1, 21 up + 21 down; U n_up n_dn without shift; p = 1 Lanczos VMC with 48000 samples, no sigma printed; journal equals arXiv. No duplicate on the instance.",
+          "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#40 (qmbl-verify 2026-11-28)"
+        }
       },
       "compute": {
         "parameters": null,
@@ -383,7 +407,17 @@
         "method": "source text of arXiv:2308.11823 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.7636",
         "note": "Table 3, n=0.875, 4x12, BW2 | as above",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-28",
+          "scope": "value",
+          "method": "arXiv:2308.11823v6 HTML parsed with node; Phys. Rev. B 109, 245107 (2024) publisher PDF, pypdf layout",
+          "location": "Table 3 (journal Table III), n = 0.875, 4 x 12, BW2 column",
+          "reported_as": "-0.7636 (per site)",
+          "conversion": "-0.7636 * 48 = -36.6528",
+          "note": "as BW1; journal equals arXiv. No duplicate on the instance.",
+          "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#41 (qmbl-verify 2026-11-28)"
+        }
       },
       "compute": {
         "parameters": null,

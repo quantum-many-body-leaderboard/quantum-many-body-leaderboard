@@ -832,4 +832,347 @@ export const REMOVALS = [
     "ruled": "2026-11-11: held, the energy is not an expectation value of the stated state (qmbl-verify 2026-11-11)",
     "reason": "Table S4 of arXiv:2610.30321 prints fPEPS (D = 16) -0.7545(15) per site on 16 x 16, t' = 0. SM Sec. VI A-B: the energy is evaluated by a cluster approximation (open clusters of radius r, environment beyond in belief-propagation form) and fitted over chi = 192, 256, 384 with a convergence-in-r noise term (Eqs. S24-S25), so it is neither a strict upper bound nor one of the extrapolations RULES.md 4 names. Held until its bound type is settled; the extrapolated fPEPS row of the same table stays."
   },
+  // qmbl-verify 2026-11-28: the rows of the 2026-11-26 citation screen.
+  {
+    "match": {
+      "instance": "TFIsing/square_100_O_3",
+      "method": "Euclidean 2DRNN, hidden 60",
+      "energy": -316.8717
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_100_O_3",
+      "method": "Lorentz 2DRNN (L_max=2.0), hidden 60",
+      "energy": -316.8919
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_100_O_3",
+      "method": "Euclidean RNN (1D unrolled)",
+      "energy": -308.6596
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_100_O_3",
+      "method": "Poincare RNN (1D unrolled)",
+      "energy": -311.4692
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_100_O_3",
+      "method": "Lorentz RNN (1D unrolled)",
+      "energy": -312.2401
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_100_O_3",
+      "method": "Euclidean GRU (1D unrolled)",
+      "energy": -313.9553
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_100_O_3",
+      "method": "Poincare GRU (1D unrolled)",
+      "energy": -314.9809
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_2",
+      "method": "Euclidean 2DRNN, hidden 60",
+      "energy": -346.761800064
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_2",
+      "method": "Lorentz 2DRNN (L_max=2.0), hidden 60",
+      "energy": -346.3065
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_3",
+      "method": "Euclidean 2DRNN, hidden 60",
+      "energy": -456.8643
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_3",
+      "method": "Lorentz 2DRNN (L_max=2.0), hidden 60",
+      "energy": -456.912099936
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_3",
+      "method": "Euclidean RNN (1D unrolled)",
+      "energy": -444.760899984
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_3",
+      "method": "Poincare RNN (1D unrolled)",
+      "energy": -444.781599984
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_3",
+      "method": "Lorentz RNN (1D unrolled)",
+      "energy": -445.272900048
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_3",
+      "method": "Euclidean GRU (1D unrolled)",
+      "energy": -452.006199936
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_3",
+      "method": "Poincare GRU (1D unrolled)",
+      "energy": -453.820400064
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_3",
+      "method": "Lorentz GRU (1D unrolled)",
+      "energy": -452.900400048
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_4",
+      "method": "Euclidean 2DRNN, hidden 60",
+      "energy": -593.354000016
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_144_O_4",
+      "method": "Lorentz 2DRNN (L_max=2.0), hidden 60",
+      "energy": -593.321600016
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_64_O_3",
+      "method": "Euclidean 2DRNN, hidden 50",
+      "energy": -202.3914
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_64_O_3",
+      "method": "Lorentz 2DRNN (L_max=2.0), hidden 50",
+      "energy": -202.4538
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_64_O_3",
+      "method": "Euclidean RNN (1D unrolled)",
+      "energy": -197.847100032
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_64_O_3",
+      "method": "Poincare RNN (1D unrolled)",
+      "energy": -201.301899968
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_64_O_3",
+      "method": "Lorentz RNN (1D unrolled)",
+      "energy": -200.5496
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_64_O_3",
+      "method": "Euclidean GRU (1D unrolled)",
+      "energy": -200.946699968
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_64_O_3",
+      "method": "Poincare GRU (1D unrolled)",
+      "energy": -201.658500032
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_64_O_3",
+      "method": "Lorentz GRU (1D unrolled)",
+      "energy": -200.799100032
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "A mean over three independently trained states (seeds 111, 222, 333) in arXiv:2606.25600: the energy of no single state; the best seed, which the paper prints, is carried."
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "ViT with SR",
+      "energy": -127.64592
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "The same number from the same work: the thesis chapter reproduces arXiv:2609.23334 (Fig. 5(b)), whose row is carried."
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "ViT with MS-SR",
+      "energy": -127.6435648
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "The same number from the same work: the thesis chapter reproduces arXiv:2609.23334 (Fig. 5(b)), whose row is carried."
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "ViT with SR",
+      "energy": -127.64448
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "The same number from the same work: the thesis chapter reproduces arXiv:2609.23334 (Fig. 5(b)), whose row is carried."
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "ViT with MS-SR",
+      "energy": -127.649024
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "The same number from the same work: the thesis chapter reproduces arXiv:2609.23334 (Fig. 5(b)), whose row is carried."
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "ViT with SR",
+      "energy": -127.6462912
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "The same number from the same work: the thesis chapter reproduces arXiv:2609.23334 (Fig. 5(b)), whose row is carried."
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "ViT with MS-SR",
+      "energy": -127.6462208
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "The same number from the same work: the thesis chapter reproduces arXiv:2609.23334 (Fig. 5(b)), whose row is carried."
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "ViT with SR",
+      "energy": -127.6453952
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "The same number from the same work: the thesis chapter reproduces arXiv:2609.23334 (Fig. 5(b)), whose row is carried."
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "ViT with MS-SR",
+      "energy": -127.6458752
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "The same number from the same work: the thesis chapter reproduces arXiv:2609.23334 (Fig. 5(b)), whose row is carried."
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "ViT with MS-SR",
+      "energy": -127.6475776
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "The same number from the same work: the thesis chapter reproduces arXiv:2609.23334 (Fig. 5(b)), whose row is carried."
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "MP-NQS",
+      "energy": -0.469896
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "Added a second time by the 2026-11-26 pass with a spurious factor 4 (spin-model convention applied to an electron-gas row); the row read from the same paper on 2026-10-16 is carried."
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_14_P_7_7_2",
+      "method": "FermiNet (ndet=16)",
+      "energy": -0.471308000016
+    },
+    "ruled": "2026-11-28 (qmbl-verify 2026-11-28 of the 2026-11-26 citation-screen rows)",
+    "reason": "Added a second time by the 2026-11-26 pass with a spurious factor 4 (spin-model convention applied to an electron-gas row); the row read from the same paper on 2026-10-16 is carried."
+  },
 ];

@@ -82,10 +82,10 @@
     {
       "energy": -1336.96512,
       "sigma": 0.006144,
-      "energy_variance": null,
+      "energy_variance": 72.86784,
       "dof": 768,
       "einf": 0,
-      "v_score": null,
+      "v_score": 0.031308117987346853,
       "method": "ViT (transformer) nl=8, h=12, d=72, time-reversal symmetric, no point-group projection",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
@@ -99,7 +99,21 @@
         "reported_as": "−0.435210(2)",
         "note": "Table 1, row '16∗'; caption: for L=16 the second (C6v projection) stage is omitted for cost | per site S.S, J=1, N=768, fully periodic torus | variance reported as 0.00593, not stored: convention not verified",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "energy_variance",
+          "to": 72.86784,
+          "reported_as": "L=16: energy per site -0.435210(2), variance per site 0.00593(2), V_even 0.0313(1)",
+          "location": "End Matter, Table 1, row L=16 (16*, before point-group projection)",
+          "version_read": "arXiv:2611.18840v1 (only version, 13 Nov 2026; no journal version), arXiv HTML parsed locally with node",
+          "conversion": "Variance per site is Var(H)/N in S.S units: V = v/e^2 = 0.00593/-0.43521^2 = 0.03131 reproduces the printed V-score 0.0313(1) (Var(H/N) would give N times that). Stored Pauli total: 16 x N x v = 16 x 768 x 0.00593 = 72.86784. Energy -0.43521 x 3072 = -1336.96512 and sigma 2e-6 x 3072 = 0.006144 agree with the stored values.",
+          "checked_on": "2026-11-28",
+          "reason": "The variance is printed and its convention is fixed by the printed V-score; the row stores null (\"convention not verified\"). With it the row gets a V-score. Energy, sigma, torus (fully periodic L x L, N = 3L^2), H = J sum S.S with J = 1 (Eq. 1), sector (Gamma, Sz=0, P=+1, then C6v A1; L=16 without the point-group stage), bound_type variational all agree.",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#14 (qmbl-verify 2026-11-28)",
+          "from": null
+        }
+      ]
     }
   ],
   "coverage": [

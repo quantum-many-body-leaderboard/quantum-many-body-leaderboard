@@ -568,10 +568,10 @@
     {
       "energy": -753.084864,
       "sigma": 0.003456,
-      "energy_variance": null,
+      "energy_variance": 28.40832,
       "dof": 432,
       "einf": 0,
-      "v_score": null,
+      "v_score": 0.02163921292354667,
       "method": "ViT (transformer) nl=8, h=12, d=72, time-reversal symmetric, C6v A1 projected",
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
@@ -585,7 +585,21 @@
         "reported_as": "−0.435813(2)",
         "note": "Table 1, L=12 row | per site S.S, J=1, N=432, fully periodic torus | variance reported as 0.00411, not stored: convention not verified",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "energy_variance",
+          "to": 28.40832,
+          "reported_as": "L=12: energy per site -0.435813(2), variance per site 0.00411(2), V_even 0.0216(1)",
+          "location": "End Matter, Table 1, row L=12",
+          "version_read": "arXiv:2611.18840v1 (only version, 13 Nov 2026; no journal version), arXiv HTML parsed locally with node",
+          "conversion": "Variance per site is Var(H)/N in S.S units: V = v/e^2 = 0.00411/-0.435813^2 = 0.02164 reproduces the printed V-score 0.0216(1) (Var(H/N) would give N times that). Stored Pauli total: 16 x N x v = 16 x 432 x 0.00411 = 28.40832. Energy -0.435813 x 1728 = -753.084864 and sigma 2e-6 x 1728 = 0.003456 agree with the stored values.",
+          "checked_on": "2026-11-28",
+          "reason": "The variance is printed and its convention is fixed by the printed V-score; the row stores null (\"convention not verified\"). With it the row gets a V-score. Energy, sigma, torus (fully periodic L x L, N = 3L^2), H = J sum S.S with J = 1 (Eq. 1), sector (Gamma, Sz=0, P=+1, then C6v A1; L=16 without the point-group stage), bound_type variational all agree.",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#13 (qmbl-verify 2026-11-28)",
+          "from": null
+        }
+      ]
     },
     {
       "energy": -740.600064,

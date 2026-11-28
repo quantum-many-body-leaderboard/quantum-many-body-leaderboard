@@ -238,7 +238,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Disorder, Interactions, and the Fate of the Two-Dimensional Electron System: Wigner Crystal, Metal-Insulator Transition, and Amorphous Solid, arXiv, arXiv:2611.01899",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -247,7 +247,21 @@
         "reported_as": "-0.03184(1)",
         "note": "Table 3, rs = 30, case 'clean', family PW, column E (Ha*) | N = 16 fully spin-polarized in a rhombic periodic cell holding a 4x4 triangular lattice, area pi N rs^2 (Sec. 3.1.1, Appendix A.1), rs = 30 (Table 3), Ewald sums, Ha* per electron (Table 3). Madelung treatment not printed, so held; the value is within 0.5 percent of the Fermi Sets E_DMC for the same cell, which is consistent with it being included but cannot replace a printed convention.",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "-0.03184(1) (E, Ha*, per electron)",
+          "location": "Table 3, r_s = 30, case clean, family PW",
+          "version_read": "arXiv:2611.01899v1 (arXiv HTML parsed with node; the only version, posted 2026-11-01); arXiv API shows no journal_ref or DOI and Crossref has no record (title search 2026-11-28)",
+          "conversion": "-0.03184(1) Ha*/electron x 16 = -0.50944; sigma 1e-5 x 16 = 0.00016",
+          "checked_on": "2026-11-28",
+          "reason": "The paper is an arXiv preprint only (v1, 2026-11-01; arXiv API: no journal_ref, no DOI; Crossref title search finds nothing); the row's own reference names 'arXiv' as venue. An arXiv-only paper is peer_reviewed false (2026-10-24 finding). Value check passed: -0.03184(1) Ha*/electron x 16 = -0.50944; sigma 1e-5 x 16 = 0.00016, stored -0.50944 / 0.00016. Convention: rhombic 4x4-triangular cell, area pi N rs^2, N = 16 polarized, Gamma (13 closed-shell momenta + zero-momentum triplet), Ewald; the text says the q = 0 background constants are omitted, but the energies agree with the instance's Li et al. VMC rows (-0.0318951, -0.0319657 per electron, Madelung energy included) within 6e-5 Ha*/electron (PW 5.5e-5 above -0.0318951; PG 3.5e-5 below it and 3.6e-5 above -0.0319657), while dropping the Madelung constant would move them by about 0.01 Ha*/electron (order-of-magnitude estimate: half the 2D Madelung energy of a 16-electron cell at rs = 30), so the stored convention holds (the loader's 'held' remark is settled). Sigma: larger of chain-to-chain SE and reblocking plateau (App. A.1). bound_type variational (VMC), own computation.",
+          "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#51 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     },
     {
       "energy": -0.51088,
@@ -260,7 +274,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Disorder, Interactions, and the Fate of the Two-Dimensional Electron System: Wigner Crystal, Metal-Insulator Transition, and Amorphous Solid, arXiv, arXiv:2611.01899",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -269,7 +283,21 @@
         "reported_as": "-0.03193(1)",
         "note": "Table 3, rs = 30, case 'clean', family PG (marked as lowest-energy family), column E (Ha*) | Same as the PW row: N = 16 polarized, hexagonal cell, rs = 30, Ha* per electron; Madelung treatment not printed",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "-0.03193(1) (E, Ha*, per electron)",
+          "location": "Table 3, r_s = 30, case clean, family PG (marked * as lowest)",
+          "version_read": "arXiv:2611.01899v1 (arXiv HTML parsed with node; the only version, posted 2026-11-01); arXiv API shows no journal_ref or DOI and Crossref has no record (title search 2026-11-28)",
+          "conversion": "-0.03193(1) Ha*/electron x 16 = -0.51088; sigma 1e-5 x 16 = 0.00016",
+          "checked_on": "2026-11-28",
+          "reason": "The paper is an arXiv preprint only (v1, 2026-11-01; arXiv API: no journal_ref, no DOI; Crossref title search finds nothing); the row's own reference names 'arXiv' as venue. An arXiv-only paper is peer_reviewed false (2026-10-24 finding). Value check passed: -0.03193(1) Ha*/electron x 16 = -0.51088; sigma 1e-5 x 16 = 0.00016, stored -0.51088 / 0.00016. Convention: rhombic 4x4-triangular cell, area pi N rs^2, N = 16 polarized, Gamma (13 closed-shell momenta + zero-momentum triplet), Ewald; the text says the q = 0 background constants are omitted, but the energies agree with the instance's Li et al. VMC rows (-0.0318951, -0.0319657 per electron, Madelung energy included) within 6e-5 Ha*/electron (PW 5.5e-5 above -0.0318951; PG 3.5e-5 below it and 3.6e-5 above -0.0319657), while dropping the Madelung constant would move them by about 0.01 Ha*/electron (order-of-magnitude estimate: half the 2D Madelung energy of a 16-electron cell at rs = 30), so the stored convention holds (the loader's 'held' remark is settled). Sigma: larger of chain-to-chain SE and reblocking plateau (App. A.1). bound_type variational (VMC), own computation.",
+          "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#52 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     }
   ]
 }

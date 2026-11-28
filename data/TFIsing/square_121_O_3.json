@@ -179,7 +179,7 @@
     },
     {
       "energy": -383.82652,
-      "sigma": null,
+      "sigma": 0.00484,
       "energy_variance": null,
       "dof": 121,
       "einf": 0,
@@ -188,16 +188,54 @@
       "bound_type": "projected",
       "bound_type_reason": "projection (GFMC/fixed-node) on a trial state; not a strict variational bound (assigned during source reading)",
       "reference": "Re-anchoring Quantum Monte Carlo with Tensor-Train Sketching, arXiv, arXiv:2411.07194",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
         "checked_on": "2026-11-26",
         "method": "source text of arXiv:2411.07194 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; adversarial re-read: confirmed",
         "reported_as": "-3.17212±4×10-5",
-        "note": "Sec. 5.1: 'the energy estimated by our method is -3.17212±4×10-5' for the 11x11 lattice with open boundary at g=3 (Fig. 7) | 11x11 open and g=3 printed; Pauli H printed (Eq. 20); per-site normalisation NOT printed (value magnitude only), so confidence low. TFI is sign-free, so the value may be exact within error (exact (stochastic)); the paper does not say.",
+        "note": "Sec. 5.1: 'the energy estimated by our method is -3.17212±4×10-5' for the 11x11 lattice with open boundary at g=3 (Fig. 7) | 11x11 open and g=3 printed; Pauli H printed (Eq. 20), same form as the instance; per site: v1 and v2 print 'the energy density estimated by our method is -3.17212(4)', and the quoted reference -3.17210 (ref. [55], Lubasch et al.) is the per-site value carried on this instance. Sec. 5 states the TFI cp-AFQMC can be made sign-free; time step 0.01 and population size are not extrapolated (Sec. 5.1, App. D).",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "sigma",
+          "to": 0.00484,
+          "reported_as": "-3.17212\\pm 4\\times 10^{-5} (v2-v5); -3.17212(4) (v1), 'energy density'",
+          "location": "Sec. 5.1, 11x11 open, g = 3 (Fig. 7)",
+          "version_read": "arXiv:2411.07194v5 HTML; v1-v4 HTML compared, same value and bar",
+          "conversion": "4e-5 per site x 121 = 0.00484 (TFIsing stored as totals, E/N = energy/N)",
+          "checked_on": "2026-11-28",
+          "reason": "The source prints an energy error bar for this value in every version; the pass row stored sigma_per_site null. The bar is the statistical error of the AFQMC estimate (the text and Table 1 caption speak of 'statistical error'); how it was estimated (binning/blocking) is not described, which the row should state. Not a relative bar, so RULES (printed energy bars only) allows it.",
+          "source_entry": "RP6-j1j2-tfising#2 (qmbl-verify 2026-11-28)",
+          "from": null
+        },
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "arXiv:2411.07194 v1 2024-11-11 ... v5 2026-02-16, no journal-ref",
+          "location": "arXiv abs submission history; Crossref; OpenAlex W4404391991 (single location arXiv)",
+          "version_read": "arXiv:2411.07194v5",
+          "conversion": "none",
+          "checked_on": "2026-11-28",
+          "reason": "arXiv preprint, five versions, no journal-ref or DOI; Crossref title search and OpenAlex find no journal version (2026-11-28).",
+          "source_entry": "RP6-j1j2-tfising#3 (qmbl-verify 2026-11-28)",
+          "from": true
+        },
+        {
+          "field": "verified.note",
+          "to": "Sec. 5.1: 'the energy estimated by our method is -3.17212±4×10-5' for the 11x11 lattice with open boundary at g=3 (Fig. 7) | 11x11 open and g=3 printed; Pauli H printed (Eq. 20), same form as the instance; per site: v1 and v2 print 'the energy density estimated by our method is -3.17212(4)', and the quoted reference -3.17210 (ref. [55], Lubasch et al.) is the per-site value carried on this instance. Sec. 5 states the TFI cp-AFQMC can be made sign-free; time step 0.01 and population size are not extrapolated (Sec. 5.1, App. D).",
+          "reported_as": "-3.17212(4) 'energy density' (v1)",
+          "location": "v1/v2 Sec. 5.1; v5 Sec. 5",
+          "version_read": "arXiv:2411.07194v1-v5 HTML",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-28",
+          "reason": "Two statements in the stored note are false against the source: the per-site normalisation is printed in v1 and v2 ('energy density'), and the source does say that TFI cp-AFQMC can be made free of the sign problem. Wording only; the number is unchanged.",
+          "source_entry": "RP6-j1j2-tfising#5 (qmbl-verify 2026-11-28)",
+          "from": "Sec. 5.1: 'the energy estimated by our method is -3.17212±4×10-5' for the 11x11 lattice with open boundary at g=3 (Fig. 7) | 11x11 open and g=3 printed; Pauli H printed (Eq. 20); per-site normalisation NOT printed (value magnitude only), so confidence low. TFI is sign-free, so the value may be exact within error (exact (stochastic)); the paper does not say."
+        }
+      ]
     }
   ],
   "coverage": [

@@ -434,7 +434,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Neural Network Backflow with Low-Rank Multi-Determinant Updates, arXiv, arXiv:2609.26544",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -443,7 +443,21 @@
         "reported_as": "−0.5231",
         "note": "Sec. III.1 text: 10×10 'Deep BF result reaches −0.5231 per site' | Hubbard Eq. 1 (t, U) printed; periodic boundary conditions in both directions, U/t=8, half filling; energy per site in t.",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "-0.5231 per site",
+          "location": "Sec. III.1: \"On the largest 10x10 lattice, the Deep BF result reaches -0.5231 per site\"",
+          "version_read": "arXiv:2609.26544v1 (only version; no journal version found via arXiv jref or Crossref title search on 2026-11-28), arXiv HTML parsed locally with node (tag strip, MathML alttext)",
+          "conversion": "-0.5231 x 100 = -52.31 (value confirmed; only peer_reviewed changes)",
+          "checked_on": "2026-11-28",
+          "reason": "arXiv:2609.26544 has one version (v1, 22 Sep 2026), no journal reference on arXiv and no published version found by Crossref title search (2026-11-28); OpenAlex lists it as a preprint. RULES.md 8.1: peer_reviewed follows the venue that printed the number. Value, lattice, PBC in both directions (Sec. III: \"periodic boundary conditions applied on both spatial directions\"), U/t=8, filling half filling (Nf = N/2 per spin), Hamiltonian Eq. (1) = standard VarBench form (no shift), bound_type all agree; no numerical error bar printed (\"error bars are smaller than the markers\").",
+          "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#9 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     },
     {
       "energy": -52.45,
@@ -464,7 +478,17 @@
         "method": "source text of arXiv:2510.05647 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.5245(23)",
         "note": "Table 2, row 'Fermi-Hubbard 2D, U=8, 10x10 PBC', column E(dE) | per site, t=1, U=8, half filling, 10x10 PBC, all printed in Table 2 and Eq. 11; Table 2 caption says 'per site'",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-28",
+          "scope": "value",
+          "method": "arXiv:2510.05647v3 HTML parsed with node; Phys. Rev. B 113, 235135 (2026) publisher PDF, pypdf layout",
+          "location": "Table 2 (journal Table II), row 'Fermi-Hubbard 2D, U = 8, 10x10 PBC', column E(delta E)",
+          "reported_as": "-0.5245(23) (per site)",
+          "conversion": "-0.5245 * 100 = -52.45; delta E 0.0023 * 100 = 0.23",
+          "note": "Eq. (11) Hubbard without shift, t = 1, U = 8, half filling, PBC; bound_type extrapolated is right (Wynn extrapolation of the cluster expansion). The stored sigma is the paper's empirical delta E (mean last change of the epsilon_0,2,4 sequences, Sec. III), not a statistical 1-sigma; method_detail or a sigma note should say so. Whether the PEPS fixes N = 50+50 or only the average filling is not stated. Journal equals arXiv. No duplicate on the instance.",
+          "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#51 (qmbl-verify 2026-11-28)"
+        }
       }
     }
   ],

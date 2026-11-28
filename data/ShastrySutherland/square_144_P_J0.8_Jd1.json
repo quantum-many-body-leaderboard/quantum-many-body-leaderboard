@@ -165,7 +165,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Evidence for a $\\mathbb{Z}_{2}$ Dirac spin liquid in the generalized Shastry-Sutherland model, arXiv, arXiv:2501.00096",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -182,9 +182,35 @@
         "n_devices": null,
         "samples": null,
         "wall_clock": null,
-        "reported_as": "\"...pponi,4 Karlo Penc,5, 2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of E...\"",
+        "reported_as": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
         "source": "arXiv:2501.00096, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+          "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+          "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+          "conversion": "none",
+          "checked_on": "2026-11-28",
+          "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.4373669 x 4 x 144 = -251.9233344; sigma 5 in last digit x 576 = 0.000288); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+          "source_entry": "RP1-arxiv-2501-00096#8 (qmbl-verify 2026-11-28)",
+          "from": true
+        },
+        {
+          "field": "compute.reported_as",
+          "to": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
+          "reported_as": "By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]",
+          "location": "v3 Sec. V.3.1 Energetics, after Eq. (53), PDF p. 23",
+          "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+          "conversion": "none",
+          "checked_on": "2026-11-28",
+          "reason": "compute.parameters = 6 is consistent with the paper (six mean-field parameters of Eq. (49) for p = 0; plus two Lanczos parameters for p = 2), but compute.reported_as quotes the author/affiliation header, not the sentence that states the count: the string match located the wrong text. Replace the quote.",
+          "source_entry": "RP1-arxiv-2501-00096#9 (qmbl-verify 2026-11-28)",
+          "from": "\"...pponi,4 Karlo Penc,5, 2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of E...\""
+        }
+      ]
     },
     {
       "energy": -256.173696,
@@ -197,7 +223,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Evidence for a $\\mathbb{Z}_{2}$ Dirac spin liquid in the generalized Shastry-Sutherland model, arXiv, arXiv:2501.00096",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -206,7 +232,21 @@
         "reported_as": "-0.444746(1)",
         "note": "Table 9, L=12, 1-LS | paper convention; 144 sites",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+          "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+          "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+          "conversion": "none",
+          "checked_on": "2026-11-28",
+          "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.444746 x 4 x 144 = -256.173696; sigma 1 in last digit x 576 = 0.000576); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+          "source_entry": "RP1-arxiv-2501-00096#10 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     },
     {
       "energy": -257.632704,
@@ -219,7 +259,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Evidence for a $\\mathbb{Z}_{2}$ Dirac spin liquid in the generalized Shastry-Sutherland model, arXiv, arXiv:2501.00096",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -236,13 +276,39 @@
         "n_devices": null,
         "samples": null,
         "wall_clock": null,
-        "reported_as": "\"...2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of Excellence ctd.qmat, Ju...\"",
+        "reported_as": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
         "source": "arXiv:2501.00096, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+          "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+          "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+          "conversion": "none",
+          "checked_on": "2026-11-28",
+          "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.447279 x 4 x 144 = -257.632704; sigma 4 in last digit x 576 = 0.002304); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+          "source_entry": "RP1-arxiv-2501-00096#11 (qmbl-verify 2026-11-28)",
+          "from": true
+        },
+        {
+          "field": "compute.reported_as",
+          "to": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
+          "reported_as": "By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]",
+          "location": "v3 Sec. V.3.1 Energetics, after Eq. (53), PDF p. 23",
+          "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+          "conversion": "none",
+          "checked_on": "2026-11-28",
+          "reason": "compute.parameters = 8 is consistent with the paper (six mean-field parameters of Eq. (49) for p = 0; plus two Lanczos parameters for p = 2), but compute.reported_as quotes the author/affiliation header, not the sentence that states the count: the string match located the wrong text. Replace the quote.",
+          "source_entry": "RP1-arxiv-2501-00096#12 (qmbl-verify 2026-11-28)",
+          "from": "\"...2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of Excellence ctd.qmat, Ju...\""
+        }
+      ]
     },
     {
       "energy": -258.79104,
-      "sigma": 0.0576,
+      "sigma": 0.12096,
       "energy_variance": null,
       "dof": 144,
       "einf": 0,
@@ -251,7 +317,7 @@
       "bound_type": "extrapolated",
       "bound_type_reason": "zero-variance or bond-dimension extrapolation; not an upper bound (assigned during source reading)",
       "reference": "Evidence for a $\\mathbb{Z}_{2}$ Dirac spin liquid in the generalized Shastry-Sutherland model, arXiv, arXiv:2501.00096",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -268,9 +334,47 @@
         "n_devices": null,
         "samples": null,
         "wall_clock": null,
-        "reported_as": "\"...2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of Excellence ctd.qmat, Ju...\"",
+        "reported_as": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
         "source": "arXiv:2501.00096, located by string match in the committed source text"
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+          "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+          "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+          "conversion": "none",
+          "checked_on": "2026-11-28",
+          "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.44929 x 4 x 144 = -258.79104; sigma 21 in last digit x 576 = 0.12096); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type extrapolated agrees; origin own (VMC by the authors).",
+          "source_entry": "RP1-arxiv-2501-00096#13 (qmbl-verify 2026-11-28)",
+          "from": true
+        },
+        {
+          "field": "compute.reported_as",
+          "to": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
+          "reported_as": "By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]",
+          "location": "v3 Sec. V.3.1 Energetics, after Eq. (53), PDF p. 23",
+          "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+          "conversion": "none",
+          "checked_on": "2026-11-28",
+          "reason": "compute.parameters = 8 is consistent with the paper (six mean-field parameters of Eq. (49) for p = 0; plus two Lanczos parameters for p = 2), but compute.reported_as quotes the author/affiliation header, not the sentence that states the count: the string match located the wrong text. Replace the quote.",
+          "source_entry": "RP1-arxiv-2501-00096#14 (qmbl-verify 2026-11-28)",
+          "from": "\"...2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of Excellence ctd.qmat, Ju...\""
+        },
+        {
+          "field": "sigma",
+          "to": 0.12096,
+          "reported_as": "Table 9: -0.44929(21); Table 10: -0.44929(10)",
+          "location": "arXiv:2501.00096v3 Tables 9 and 10, L = 12 (same disagreement in v1 and v2)",
+          "version_read": "arXiv:2501.00096v3 HTML and PDF",
+          "conversion": "0.00021*576 = 0.12096",
+          "checked_on": "2026-11-28",
+          "reason": "The paper prints two error bars for the same L = 12 VMC-only zero-variance extrapolation. Until the authors settle it, the row carries the larger one, which cannot understate the uncertainty (ruled 2026-11-28).",
+          "source_entry": "RP1-arxiv-2501-00096 ambiguous (qmbl-verify 2026-11-28)",
+          "from": 0.0576
+        }
+      ]
     },
     {
       "energy": -258.81408,
@@ -283,7 +387,7 @@
       "bound_type": "extrapolated",
       "bound_type_reason": "zero-variance or bond-dimension extrapolation; not an upper bound (assigned during source reading)",
       "reference": "Evidence for a $\\mathbb{Z}_{2}$ Dirac spin liquid in the generalized Shastry-Sutherland model, arXiv, arXiv:2501.00096",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -292,7 +396,21 @@
         "reported_as": "-0.44933(11)",
         "note": "Table 10 VMC + ViT (bold), L=12 | paper convention; 144 sites",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+          "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+          "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+          "conversion": "none",
+          "checked_on": "2026-11-28",
+          "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.44933 x 4 x 144 = -258.81408; sigma 11 in last digit x 576 = 0.06336); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type extrapolated agrees; origin own (VMC by the authors).",
+          "source_entry": "RP1-arxiv-2501-00096#16 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     }
   ],
   "coverage": [

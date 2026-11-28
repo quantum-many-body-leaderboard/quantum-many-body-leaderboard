@@ -2135,7 +2135,17 @@
         "method": "source text of arXiv:2406.12207 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; single reading",
         "reported_as": "-0.49506(55)",
         "note": "Appendix text, same sentence as the J2=0.5 extrapolation | 6x6 torus; J2=0.55; per-site as above",
-        "secondary_of": null
+        "secondary_of": null,
+        "second_read": {
+          "checked_on": "2026-11-28",
+          "scope": "value",
+          "method": "arXiv:2406.12207v1 HTML parsed with node; Phys. Rev. B 109, 235133 (2024) publisher PDF, pypdf plain",
+          "location": "Reference note [66], J2 = 0.55",
+          "reported_as": "-0.49506(55) (per site)",
+          "conversion": "-0.49506 * 144 = -71.28864; sigma 0.00055 * 144 = 0.0792",
+          "note": "6x6 torus, extrapolated; journal equals arXiv; above the exact -0.495178. No duplicate.",
+          "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#43 (qmbl-verify 2026-11-28)"
+        }
       }
     },
     {
@@ -2149,7 +2159,7 @@
       "bound_type": "variational",
       "bound_type_reason": "variational ansatz at a stated size; energy is an upper bound (assigned during source reading)",
       "reference": "Apparent Compression, Real Stability: The Intrinsic Dimension of Learning a Quantum Wavefunction, arXiv, arXiv:2609.33193",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
@@ -2158,7 +2168,21 @@
         "reported_as": "-17.8000652 (EDMRG, total)",
         "note": "Appendix C Table 3 row 0.55, column EDMRG | Total divided by 36.",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "arXiv:2609.33193v1, no journal_ref",
+          "location": "arXiv API (export.arxiv.org) and OpenAlex search, 2026-11-28",
+          "version_read": "arXiv:2609.33193v1",
+          "conversion": null,
+          "checked_on": "2026-11-28",
+          "reason": "arXiv preprint only; the reference string itself says arXiv. Value otherwise confirmed: Table 3 row 0.55, E_DMRG -17.8000652 (total, S.S units) x 4 = -71.2002608 = stored; relative gap to the paper's exact energy 14.8e-4 as printed; 6x6 torus, chi=4096, \"The DMRG energies are variational upper bounds\" (Appendix C); no other row on the instance carries this number.",
+          "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#9 (qmbl-verify 2026-11-28)",
+          "from": true
+        }
+      ]
     },
     {
       "energy": -71.305488,

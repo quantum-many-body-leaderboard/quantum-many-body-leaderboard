@@ -222,16 +222,42 @@
       "bound_type": "exact",
       "bound_type_reason": "numerically exact reference as stated by the source (assigned during source reading)",
       "reference": "Extremely slow scaling of minimal Hamming distance in quantum sampling data, arXiv, arXiv:2606.04558",
-      "peer_reviewed": true,
+      "peer_reviewed": false,
       "source": "sweep-allresults-2026-11-26",
       "provenance": "primary",
       "verified": {
         "checked_on": "2026-11-26",
         "method": "source text of arXiv:2606.04558 read locally (arXiv HTML or pypdf layout text); value copied from the harvested cell and the text, no LLM transcription of numbers; adversarial re-read: confirmed",
         "reported_as": "-0.638095",
-        "note": "Tab.1 App.D J2 row 0.10, col 6x6, ED (this work) | S.S Hamiltonian printed (Eq.6); BC and per-site not printed, held",
+        "note": "Tab.1 App.D J2 row 0.10, col 6x6, ED (this work) | S.S Hamiltonian printed (Eq.6 in v2, Eq.4 in v1); periodic boundaries printed (Sec. III: 'on the square lattice with periodic boundary conditions and N=36,64 and 100 spins'); per site in S.S units, J1 = 1, fixed by the J2 = 0 cell -0.678872 (the printed 6x6 Heisenberg exact per site) and the J2 = 0.2 cell -0.599046 (Schulz et al.'s printed value)",
         "secondary_of": null
-      }
+      },
+      "corrections": [
+        {
+          "field": "peer_reviewed",
+          "to": false,
+          "reported_as": "arXiv:2606.04558 (v1 2026-06-03, v2 2026-09-15), no journal-ref",
+          "location": "arXiv abs page submission history; Crossref and OpenAlex (W7163506766: single location arXiv)",
+          "version_read": "arXiv:2606.04558v2",
+          "conversion": "none",
+          "checked_on": "2026-11-28",
+          "reason": "The source is an arXiv preprint with no journal version found (arXiv journal-ref empty, no DOI; Crossref title search and OpenAlex list only the arXiv record, 2026-11-28). The same paper's ViT row on this instance (sweep-allresults-2026-09-28) already carries peer_reviewed false. Value itself confirmed: v2 Appendix D Table 1 row 0.10, column '6x6, ED (this work)' prints -0.638095 (also v1); -0.638095 x 4 x 36 = -91.88568 = stored.",
+          "source_entry": "RP6-j1j2-tfising#0 (qmbl-verify 2026-11-28)",
+          "from": true
+        },
+        {
+          "field": "verified.note",
+          "to": "Tab.1 App.D J2 row 0.10, col 6x6, ED (this work) | S.S Hamiltonian printed (Eq.6 in v2, Eq.4 in v1); periodic boundaries printed (Sec. III: 'on the square lattice with periodic boundary conditions and N=36,64 and 100 spins'); per site in S.S units, J1 = 1, fixed by the J2 = 0 cell -0.678872 (the printed 6x6 Heisenberg exact per site) and the J2 = 0.2 cell -0.599046 (Schulz et al.'s printed value)",
+          "reported_as": "-0.638095",
+          "location": "v2 Sec. III (PBC sentence); Appendix D Table 1 rows 0.00, 0.10, 0.20",
+          "version_read": "arXiv:2606.04558v2 HTML; v1 PDF text",
+          "conversion": "none (text field)",
+          "checked_on": "2026-11-28",
+          "reason": "The stored note says the boundary is not printed; v2 Sec. III prints periodic boundary conditions for N = 36, 64, 100. The per-site convention is not stated in words but is fixed by two printed cells against printed exact energies. Wording only; the number is unchanged.",
+          "source_entry": "RP6-j1j2-tfising#1 (qmbl-verify 2026-11-28)",
+          "from": "Tab.1 App.D J2 row 0.10, col 6x6, ED (this work) | S.S Hamiltonian printed (Eq.6); BC and per-site not printed, held"
+        }
+      ]
     }
   ],
   "coverage": [

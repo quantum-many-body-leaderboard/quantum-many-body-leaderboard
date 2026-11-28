@@ -40093,4 +40093,2777 @@ export const CORRECTIONS = [
     "reason": "The stored text cites a QMBL computation as evidence (RULES.md 5, 8). Rewritten to cite the printed number, equation or source file instead. Wording only; no number changes.",
     "source_entry": "retro-qmbl-evidence-2026-11-26/recompute-digits-1 (keep-reword)"
   },
+  // qmbl-verify 2026-11-28: the rows of the 2026-11-26 citation screen (ruled 2026-11-28).
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_100_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 0 Lanczos steps",
+      "energy": -175.01384
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.4375346 x 4 x 100 = -175.01384; sigma 6 in last digit x 400 = 0.00024); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#0 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_100_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 0 Lanczos steps",
+      "energy": -175.01384
+    },
+    "field": "compute.reported_as",
+    "to": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
+    "reported_as": "By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]",
+    "location": "v3 Sec. V.3.1 Energetics, after Eq. (53), PDF p. 23",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "compute.parameters = 6 is consistent with the paper (six mean-field parameters of Eq. (49) for p = 0; plus two Lanczos parameters for p = 2), but compute.reported_as quotes the author/affiliation header, not the sentence that states the count: the string match located the wrong text. Replace the quote.",
+    "source_entry": "RP1-arxiv-2501-00096#1 (qmbl-verify 2026-11-28)",
+    "from": "\"...pponi,4 Karlo Penc,5, 2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of E...\""
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_100_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 1 Lanczos step",
+      "energy": -178.19552
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.4454888 x 4 x 100 = -178.19552; sigma 6 in last digit x 400 = 0.00024); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#2 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_100_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 2 Lanczos steps",
+      "energy": -179.1352
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.447838 x 4 x 100 = -179.1352; sigma 3 in last digit x 400 = 0.0012); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#3 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_100_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 2 Lanczos steps",
+      "energy": -179.1352
+    },
+    "field": "compute.reported_as",
+    "to": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
+    "reported_as": "By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]",
+    "location": "v3 Sec. V.3.1 Energetics, after Eq. (53), PDF p. 23",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "compute.parameters = 8 is consistent with the paper (six mean-field parameters of Eq. (49) for p = 0; plus two Lanczos parameters for p = 2), but compute.reported_as quotes the author/affiliation header, not the sentence that states the count: the string match located the wrong text. Replace the quote.",
+    "source_entry": "RP1-arxiv-2501-00096#4 (qmbl-verify 2026-11-28)",
+    "from": "\"...2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of Excellence ctd.qmat, Ju...\""
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_100_P_J0.8_Jd1",
+      "method": "Z3000 + 2 Lanczos steps, zero-variance extrapolation (VMC)",
+      "energy": -179.6184
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.449046 x 4 x 100 = -179.6184; sigma 33 in last digit x 400 = 0.0132); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type extrapolated agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#5 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_100_P_J0.8_Jd1",
+      "method": "Z3000 + 2 Lanczos steps, zero-variance extrapolation (VMC)",
+      "energy": -179.6184
+    },
+    "field": "compute.reported_as",
+    "to": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
+    "reported_as": "By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]",
+    "location": "v3 Sec. V.3.1 Energetics, after Eq. (53), PDF p. 23",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "compute.parameters = 8 is consistent with the paper (six mean-field parameters of Eq. (49) for p = 0; plus two Lanczos parameters for p = 2), but compute.reported_as quotes the author/affiliation header, not the sentence that states the count: the string match located the wrong text. Replace the quote.",
+    "source_entry": "RP1-arxiv-2501-00096#6 (qmbl-verify 2026-11-28)",
+    "from": "\"...2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of Excellence ctd.qmat, Ju...\""
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_100_P_J0.8_Jd1",
+      "method": "VMC + ViT combined zero-variance extrapolation",
+      "energy": -179.7816
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.449454 x 4 x 100 = -179.7816; sigma 41 in last digit x 400 = 0.0164); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type extrapolated agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#7 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 0 Lanczos steps",
+      "energy": -251.9233344
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.4373669 x 4 x 144 = -251.9233344; sigma 5 in last digit x 576 = 0.000288); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#8 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 0 Lanczos steps",
+      "energy": -251.9233344
+    },
+    "field": "compute.reported_as",
+    "to": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
+    "reported_as": "By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]",
+    "location": "v3 Sec. V.3.1 Energetics, after Eq. (53), PDF p. 23",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "compute.parameters = 6 is consistent with the paper (six mean-field parameters of Eq. (49) for p = 0; plus two Lanczos parameters for p = 2), but compute.reported_as quotes the author/affiliation header, not the sentence that states the count: the string match located the wrong text. Replace the quote.",
+    "source_entry": "RP1-arxiv-2501-00096#9 (qmbl-verify 2026-11-28)",
+    "from": "\"...pponi,4 Karlo Penc,5, 2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of E...\""
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 1 Lanczos step",
+      "energy": -256.173696
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.444746 x 4 x 144 = -256.173696; sigma 1 in last digit x 576 = 0.000576); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#10 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 2 Lanczos steps",
+      "energy": -257.632704
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.447279 x 4 x 144 = -257.632704; sigma 4 in last digit x 576 = 0.002304); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#11 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 2 Lanczos steps",
+      "energy": -257.632704
+    },
+    "field": "compute.reported_as",
+    "to": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
+    "reported_as": "By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]",
+    "location": "v3 Sec. V.3.1 Energetics, after Eq. (53), PDF p. 23",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "compute.parameters = 8 is consistent with the paper (six mean-field parameters of Eq. (49) for p = 0; plus two Lanczos parameters for p = 2), but compute.reported_as quotes the author/affiliation header, not the sentence that states the count: the string match located the wrong text. Replace the quote.",
+    "source_entry": "RP1-arxiv-2501-00096#12 (qmbl-verify 2026-11-28)",
+    "from": "\"...2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of Excellence ctd.qmat, Ju...\""
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.8_Jd1",
+      "method": "Z3000 + 2 Lanczos steps, zero-variance extrapolation (VMC)",
+      "energy": -258.79104
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.44929 x 4 x 144 = -258.79104; sigma 21 in last digit x 576 = 0.12096); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type extrapolated agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#13 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.8_Jd1",
+      "method": "Z3000 + 2 Lanczos steps, zero-variance extrapolation (VMC)",
+      "energy": -258.79104
+    },
+    "field": "compute.reported_as",
+    "to": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
+    "reported_as": "By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]",
+    "location": "v3 Sec. V.3.1 Energetics, after Eq. (53), PDF p. 23",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "compute.parameters = 8 is consistent with the paper (six mean-field parameters of Eq. (49) for p = 0; plus two Lanczos parameters for p = 2), but compute.reported_as quotes the author/affiliation header, not the sentence that states the count: the string match located the wrong text. Replace the quote.",
+    "source_entry": "RP1-arxiv-2501-00096#14 (qmbl-verify 2026-11-28)",
+    "from": "\"...2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of Excellence ctd.qmat, Ju...\""
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.8_Jd1",
+      "method": "VMC + ViT combined zero-variance extrapolation",
+      "energy": -258.81408
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.44933 x 4 x 144 = -258.81408; sigma 11 in last digit x 576 = 0.06336); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type extrapolated agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#16 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 0 Lanczos steps",
+      "energy": -342.829088
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.4372820 x 4 x 196 = -342.829088; sigma 6 in last digit x 784 = 0.0004704); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#17 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 0 Lanczos steps",
+      "energy": -342.829088
+    },
+    "field": "compute.reported_as",
+    "to": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
+    "reported_as": "By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]",
+    "location": "v3 Sec. V.3.1 Energetics, after Eq. (53), PDF p. 23",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "compute.parameters = 6 is consistent with the paper (six mean-field parameters of Eq. (49) for p = 0; plus two Lanczos parameters for p = 2), but compute.reported_as quotes the author/affiliation header, not the sentence that states the count: the string match located the wrong text. Replace the quote.",
+    "source_entry": "RP1-arxiv-2501-00096#18 (qmbl-verify 2026-11-28)",
+    "from": "\"...pponi,4 Karlo Penc,5, 2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of E...\""
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 1 Lanczos step",
+      "energy": -348.208896
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.444144 x 4 x 196 = -348.208896; sigma 1 in last digit x 784 = 0.000784); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#19 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 2 Lanczos steps",
+      "energy": -350.272384
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.446776 x 4 x 196 = -350.272384; sigma 4 in last digit x 784 = 0.003136); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#20 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 2 Lanczos steps",
+      "energy": -350.272384
+    },
+    "field": "compute.reported_as",
+    "to": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
+    "reported_as": "By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]",
+    "location": "v3 Sec. V.3.1 Energetics, after Eq. (53), PDF p. 23",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "compute.parameters = 8 is consistent with the paper (six mean-field parameters of Eq. (49) for p = 0; plus two Lanczos parameters for p = 2), but compute.reported_as quotes the author/affiliation header, not the sentence that states the count: the string match located the wrong text. Replace the quote.",
+    "source_entry": "RP1-arxiv-2501-00096#21 (qmbl-verify 2026-11-28)",
+    "from": "\"...2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of Excellence ctd.qmat, Ju...\""
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Z3000 + 2 Lanczos steps, zero-variance extrapolation (VMC)",
+      "energy": -352.58048
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.44972 x 4 x 196 = -352.58048; sigma 11 in last digit x 784 = 0.08624); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type extrapolated agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#22 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Z3000 + 2 Lanczos steps, zero-variance extrapolation (VMC)",
+      "energy": -352.58048
+    },
+    "field": "compute.reported_as",
+    "to": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
+    "reported_as": "By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]",
+    "location": "v3 Sec. V.3.1 Energetics, after Eq. (53), PDF p. 23",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "compute.parameters = 8 is consistent with the paper (six mean-field parameters of Eq. (49) for p = 0; plus two Lanczos parameters for p = 2), but compute.reported_as quotes the author/affiliation header, not the sentence that states the count: the string match located the wrong text. Replace the quote.",
+    "source_entry": "RP1-arxiv-2501-00096#23 (qmbl-verify 2026-11-28)",
+    "from": "\"...2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of Excellence ctd.qmat, Ju...\""
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "VMC + ViT combined zero-variance extrapolation",
+      "energy": -352.12576
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.44914 x 4 x 196 = -352.12576; sigma 14 in last digit x 784 = 0.10976); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type extrapolated agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#25 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Gutzwiller-projected Z2 Ansatz Z2000 VMC, no Lanczos step",
+      "energy": -294
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.37500 x 4 x 196 = -294; sigma 1 in last digit x 784 = 0.00784); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#26 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Gutzwiller-projected Z2 Ansatz Z2101 VMC, no Lanczos step",
+      "energy": -262.71056
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.33509 x 4 x 196 = -262.71056; sigma 5 in last digit x 784 = 0.0392); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#27 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Gutzwiller-projected Z2 Ansatz Z2011 VMC, no Lanczos step",
+      "energy": -340.5696
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.43440 x 4 x 196 = -340.5696; sigma 1 in last digit x 784 = 0.00784); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#28 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Gutzwiller-projected Z2 Ansatz Z2111 VMC, no Lanczos step",
+      "energy": -340.66368
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.43452 x 4 x 196 = -340.66368; sigma 5 in last digit x 784 = 0.0392); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#29 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Gutzwiller-projected Z2 Ansatz Z3100 VMC, no Lanczos step",
+      "energy": -308.39424
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.39336 x 4 x 196 = -308.39424; sigma 1 in last digit x 784 = 0.00784); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#30 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Gutzwiller-projected Z2 Ansatz Z3010 VMC, no Lanczos step",
+      "energy": -330.29136
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.42129 x 4 x 196 = -330.29136; sigma 1 in last digit x 784 = 0.00784); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#31 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Gutzwiller-projected Z2 Ansatz Z3110 VMC, no Lanczos step",
+      "energy": -308.4256
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.39340 x 4 x 196 = -308.4256; sigma 1 in last digit x 784 = 0.00784); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#32 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Gutzwiller-projected Z2 Ansatz Z3001 VMC, no Lanczos step",
+      "energy": -297.70832
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.37973 x 4 x 196 = -297.70832; sigma 1 in last digit x 784 = 0.00784); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#33 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Gutzwiller-projected Z2 Ansatz Z3101 VMC, no Lanczos step",
+      "energy": -341.26736
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.43529 x 4 x 196 = -341.26736; sigma 2 in last digit x 784 = 0.01568); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#34 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Gutzwiller-projected Z2 Ansatz Z3011 VMC, no Lanczos step",
+      "energy": -340.53824
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.43436 x 4 x 196 = -340.53824; sigma 1 in last digit x 784 = 0.00784); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#35 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Gutzwiller-projected Z2 Ansatz Z3111 VMC, no Lanczos step",
+      "energy": -267.25776
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.34089 x 4 x 196 = -267.25776; sigma 3 in last digit x 784 = 0.02352); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#36 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Gutzwiller-projected Z2 Ansatz Z5001 VMC, no Lanczos step",
+      "energy": -339.63664
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.43321 x 4 x 196 = -339.63664; sigma 1 in last digit x 784 = 0.00784); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#37 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Gutzwiller-projected Z2 Ansatz Z5101 VMC, no Lanczos step",
+      "energy": -320.43648
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.40872 x 4 x 196 = -320.43648; sigma 1 in last digit x 784 = 0.00784); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#38 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Gutzwiller-projected Z2 Ansatz Z5011 VMC, no Lanczos step",
+      "energy": -336.91616
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.42974 x 4 x 196 = -336.91616; sigma 1 in last digit x 784 = 0.00784); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#39 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Gutzwiller-projected Z2 Ansatz Z5111 VMC, no Lanczos step",
+      "energy": -340.98512
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.43493 x 4 x 196 = -340.98512; sigma 1 in last digit x 784 = 0.00784); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#40 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 0 Lanczos steps",
+      "energy": -63.289728
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.439512 x 4 x 36 = -63.289728; sigma 1 in last digit x 144 = 0.000144); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#41 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 0 Lanczos steps",
+      "energy": -63.289728
+    },
+    "field": "compute.reported_as",
+    "to": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
+    "reported_as": "By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]",
+    "location": "v3 Sec. V.3.1 Energetics, after Eq. (53), PDF p. 23",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "compute.parameters = 6 is consistent with the paper (six mean-field parameters of Eq. (49) for p = 0; plus two Lanczos parameters for p = 2), but compute.reported_as quotes the author/affiliation header, not the sentence that states the count: the string match located the wrong text. Replace the quote.",
+    "source_entry": "RP1-arxiv-2501-00096#42 (qmbl-verify 2026-11-28)",
+    "from": "\"...pponi,4 Karlo Penc,5, 2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of E...\""
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 1 Lanczos step",
+      "energy": -64.603152
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.448633 x 4 x 36 = -64.603152; sigma 1 in last digit x 144 = 0.000144); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#43 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 2 Lanczos steps",
+      "energy": -64.862208
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.450432 x 4 x 36 = -64.862208; sigma 1 in last digit x 144 = 0.000144); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#44 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 2 Lanczos steps",
+      "energy": -64.862208
+    },
+    "field": "compute.reported_as",
+    "to": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
+    "reported_as": "By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]",
+    "location": "v3 Sec. V.3.1 Energetics, after Eq. (53), PDF p. 23",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "compute.parameters = 8 is consistent with the paper (six mean-field parameters of Eq. (49) for p = 0; plus two Lanczos parameters for p = 2), but compute.reported_as quotes the author/affiliation header, not the sentence that states the count: the string match located the wrong text. Replace the quote.",
+    "source_entry": "RP1-arxiv-2501-00096#45 (qmbl-verify 2026-11-28)",
+    "from": "\"...2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of Excellence ctd.qmat, Ju...\""
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.8_Jd1",
+      "method": "Z3000 + 2 Lanczos steps, zero-variance extrapolation (VMC)",
+      "energy": -65.000304
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.451391 x 4 x 36 = -65.000304; sigma 7 in last digit x 144 = 0.001008); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type extrapolated agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#46 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.8_Jd1",
+      "method": "Z3000 + 2 Lanczos steps, zero-variance extrapolation (VMC)",
+      "energy": -65.000304
+    },
+    "field": "compute.reported_as",
+    "to": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
+    "reported_as": "By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]",
+    "location": "v3 Sec. V.3.1 Energetics, after Eq. (53), PDF p. 23",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "compute.parameters = 8 is consistent with the paper (six mean-field parameters of Eq. (49) for p = 0; plus two Lanczos parameters for p = 2), but compute.reported_as quotes the author/affiliation header, not the sentence that states the count: the string match located the wrong text. Replace the quote.",
+    "source_entry": "RP1-arxiv-2501-00096#47 (qmbl-verify 2026-11-28)",
+    "from": "\"...2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of Excellence ctd.qmat, Ju...\""
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_36_P_J0.8_Jd1",
+      "method": "VMC + ViT combined zero-variance extrapolation",
+      "energy": -65.054592
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.451768 x 4 x 36 = -65.054592; sigma 8 in last digit x 144 = 0.001152); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type extrapolated agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#48 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_64_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 0 Lanczos steps",
+      "energy": -112.11648
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.437955 x 4 x 64 = -112.11648; sigma 1 in last digit x 256 = 0.000256); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#49 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_64_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 0 Lanczos steps",
+      "energy": -112.11648
+    },
+    "field": "compute.reported_as",
+    "to": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
+    "reported_as": "By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]",
+    "location": "v3 Sec. V.3.1 Energetics, after Eq. (53), PDF p. 23",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "compute.parameters = 6 is consistent with the paper (six mean-field parameters of Eq. (49) for p = 0; plus two Lanczos parameters for p = 2), but compute.reported_as quotes the author/affiliation header, not the sentence that states the count: the string match located the wrong text. Replace the quote.",
+    "source_entry": "RP1-arxiv-2501-00096#50 (qmbl-verify 2026-11-28)",
+    "from": "\"...pponi,4 Karlo Penc,5, 2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of E...\""
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_64_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 1 Lanczos step",
+      "energy": -114.313472
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.446537 x 4 x 64 = -114.313472; sigma 1 in last digit x 256 = 0.000256); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#51 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_64_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 2 Lanczos steps",
+      "energy": -114.846464
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.448619 x 4 x 64 = -114.846464; sigma 1 in last digit x 256 = 0.000256); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type variational agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#52 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_64_P_J0.8_Jd1",
+      "method": "Z3000 Gutzwiller-projected state, 2 Lanczos steps",
+      "energy": -114.846464
+    },
+    "field": "compute.reported_as",
+    "to": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
+    "reported_as": "By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]",
+    "location": "v3 Sec. V.3.1 Energetics, after Eq. (53), PDF p. 23",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "compute.parameters = 8 is consistent with the paper (six mean-field parameters of Eq. (49) for p = 0; plus two Lanczos parameters for p = 2), but compute.reported_as quotes the author/affiliation header, not the sentence that states the count: the string match located the wrong text. Replace the quote.",
+    "source_entry": "RP1-arxiv-2501-00096#53 (qmbl-verify 2026-11-28)",
+    "from": "\"...2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of Excellence ctd.qmat, Ju...\""
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_64_P_J0.8_Jd1",
+      "method": "Z3000 + 2 Lanczos steps, zero-variance extrapolation (VMC)",
+      "energy": -115.13216
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.449735 x 4 x 64 = -115.13216; sigma 23 in last digit x 256 = 0.005888); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type extrapolated agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#54 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_64_P_J0.8_Jd1",
+      "method": "Z3000 + 2 Lanczos steps, zero-variance extrapolation (VMC)",
+      "energy": -115.13216
+    },
+    "field": "compute.reported_as",
+    "to": "\"By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]\" (v3 Sec. V.3.1, PDF p. 23)",
+    "reported_as": "By using the ground-state energy estimates on different cluster sizes ... we obtain this competitive value by optimizing only eight parameters [six from Eq. (49) and two from the Lánczos procedure in Eq. (52)]",
+    "location": "v3 Sec. V.3.1 Energetics, after Eq. (53), PDF p. 23",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "compute.parameters = 8 is consistent with the paper (six mean-field parameters of Eq. (49) for p = 0; plus two Lanczos parameters for p = 2), but compute.reported_as quotes the author/affiliation header, not the sentence that states the count: the string match located the wrong text. Replace the quote.",
+    "source_entry": "RP1-arxiv-2501-00096#55 (qmbl-verify 2026-11-28)",
+    "from": "\"...2 Janik Potten,1 Tobias M¨uller,1 Andreas Feuerpfeil,1 Ronny Thomale,1, 2 Jong Yeon Lee,6,∗ Rhine Samajdar,7, 8,† and Yasir Iqbal2,‡ 1Institut f¨ur Theoretische Physik und Astrophysik and W¨urzburg-Dresden Cluster of Excellence ctd.qmat, Ju...\""
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_64_P_J0.8_Jd1",
+      "method": "VMC + ViT combined zero-variance extrapolation",
+      "energy": -115.203328
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2501.00096 v1 (30 Dec 2024), v2 (16 Mar 2026), v3 (24 Sep 2026); abs page carries no journal-ref (comments: '59 pages, 39 figures, 17 tables')",
+    "location": "arXiv abs page; Crossref bibliographic and author queries; OpenAlex W4406052364 (type preprint, venue arXiv)",
+    "version_read": "arXiv:2501.00096v3 (24 Sep 2026): HTML (sources/2501.00096.html, parsed with node) and PDF (pypdf layout mode); cross-read v1 (30 Dec 2024) and v2 (16 Mar 2026) PDFs and the committed sources/2501.00096.txt (= v2). No journal version exists (arXiv: no journal-ref; Crossref and OpenAlex list only the preprint, checked 2026-11-28).",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The cited paper is an unrefereed preprint: no journal version found (the related SciPost Phys. 21, 111 (2026) by an overlapping author set is a different paper, ref. [41]). RULES.md 8.1: peer_reviewed follows the venue that printed the number. The row's own reference string already says 'arXiv'. Otherwise value and sigma recomputed from the v3 HTML cell (-0.450013 x 4 x 64 = -115.203328; sigma 27 in last digit x 256 = 0.006912); identical in v1/v2/v3 PDFs; Hamiltonian Eq. (1) = QMBL ShastrySutherland form (S operators, Js on square bonds, Jd on dimers, no constant), Js/Jd = 0.80 -> J0.8_Jd1; L x L torus with periodic spin BC (Sec. V.3) = instance cluster; bound_type extrapolated agrees; origin own (VMC by the authors).",
+    "source_entry": "RP1-arxiv-2501-00096#56 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_28_4",
+      "method": "vDBF eps=1e-3, n_rots=50",
+      "energy": -63.0048
+    },
+    "field": "bound_type",
+    "to": "approximate",
+    "reported_as": "Energy: −0.984450 (per site)",
+    "location": "Table 5 (journal Table V), column eps = 1e-3; Table 1 (journal Table I) caption; Sec. II.3.2 and Appendix B Eqs. 26-29",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-0.984450 x 64 (N = 64, Hubbard per site) = -63.0048",
+    "checked_on": "2026-11-28",
+    "reason": "The vDBF 'Energy' is the reference-state expectation <0|H^(N)|0> of the Hamiltonian after N Pauli rotations with coefficient truncation after each one (Algorithm 1 line 19, 'clip'); after the first truncation it is not <psi|H|psi> for any state, so it is not an upper bound. The authors say so: 'note that while vDBF is variational in principle, coefficient truncation removes the strict-upper bound in practice' (journal Table I caption), and 'these guarantees do not transfer as a formal theorem to our deterministic, truncated implementation' (Sec. II.2). Appendix D adds that single Pauli-string rotations do not conserve particle number or Sz. RULES.md 4: a number built on a fixed approximation with an error of unknown sign is 'approximate'. Alternative for the ruling: hold it, as for the cluster-approximation PEPS of arXiv:2610.30321 (2026-11-11), which was neither a bound nor an extrapolation. Value check passed: -0.984450 per site printed identically in arXiv v3 and the journal; -0.984450 x 64 (N = 64, Hubbard per site) = -63.0048; stored -63.0048. Instance agrees: 8x8 periodic, 56 electrons = 28 up + 28 down, U/t = 4; the printed energies are mu-free (they sit 0.09-0.63% from the mu-free VAFQMC -1.013910 in the same table).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#0 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_28_4",
+      "method": "vDBF eps=1e-3, n_rots=50",
+      "energy": -63.0048
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+    "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-0.984450 x 64 (N = 64, Hubbard per site) = -63.0048",
+    "checked_on": "2026-11-28",
+    "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy. RULES.md 6: sampled is read from the source per row. Value check passed: -0.984450 per site printed identically in arXiv v3 and the journal; -0.984450 x 64 (N = 64, Hubbard per site) = -63.0048; stored -63.0048. Instance agrees: 8x8 periodic, 56 electrons = 28 up + 28 down, U/t = 4; the printed energies are mu-free (they sit 0.09-0.63% from the mu-free VAFQMC -1.013910 in the same table).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#1 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_28_4",
+      "method": "vDBF eps=1e-3, zero-variance extrapolation",
+      "energy": -64.484928
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+    "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-1.007577(6) x 64 (N = 64, Hubbard per site) = -64.484928; sigma 6e-6 x 64 = 0.000384",
+    "checked_on": "2026-11-28",
+    "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy or the fit; the bar in parentheses is half the difference between the linear and quadratic zero-variance intercepts (Table caption), a fit-model spread, kept as sigma like other extrapolation uncertainties. RULES.md 6: sampled is read from the source per row. Value check passed: -1.007577(6) per site printed identically in arXiv v3 and the journal; -1.007577(6) x 64 (N = 64, Hubbard per site) = -64.484928; sigma 6e-6 x 64 = 0.000384; stored -64.484928 / 0.000384. Instance agrees: 8x8 periodic, 56 electrons = 28 up + 28 down, U/t = 4; the printed energies are mu-free (they sit 0.09-0.63% from the mu-free VAFQMC -1.013910 in the same table).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#2 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_28_4",
+      "method": "vDBF eps=8e-4, n_rots=50",
+      "energy": -63.001536
+    },
+    "field": "bound_type",
+    "to": "approximate",
+    "reported_as": "Energy: −0.984399 (per site)",
+    "location": "Table 5 (journal Table V), column eps = 8e-4; Table 1 (journal Table I) caption; Sec. II.3.2 and Appendix B Eqs. 26-29",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-0.984399 x 64 (N = 64, Hubbard per site) = -63.001536",
+    "checked_on": "2026-11-28",
+    "reason": "The vDBF 'Energy' is the reference-state expectation <0|H^(N)|0> of the Hamiltonian after N Pauli rotations with coefficient truncation after each one (Algorithm 1 line 19, 'clip'); after the first truncation it is not <psi|H|psi> for any state, so it is not an upper bound. The authors say so: 'note that while vDBF is variational in principle, coefficient truncation removes the strict-upper bound in practice' (journal Table I caption), and 'these guarantees do not transfer as a formal theorem to our deterministic, truncated implementation' (Sec. II.2). Appendix D adds that single Pauli-string rotations do not conserve particle number or Sz. RULES.md 4: a number built on a fixed approximation with an error of unknown sign is 'approximate'. Alternative for the ruling: hold it, as for the cluster-approximation PEPS of arXiv:2610.30321 (2026-11-11), which was neither a bound nor an extrapolation. Value check passed: -0.984399 per site printed identically in arXiv v3 and the journal; -0.984399 x 64 (N = 64, Hubbard per site) = -63.001536; stored -63.001536. Instance agrees: 8x8 periodic, 56 electrons = 28 up + 28 down, U/t = 4; the printed energies are mu-free (they sit 0.09-0.63% from the mu-free VAFQMC -1.013910 in the same table).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#3 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_28_4",
+      "method": "vDBF eps=8e-4, n_rots=50",
+      "energy": -63.001536
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+    "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-0.984399 x 64 (N = 64, Hubbard per site) = -63.001536",
+    "checked_on": "2026-11-28",
+    "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy. RULES.md 6: sampled is read from the source per row. Value check passed: -0.984399 per site printed identically in arXiv v3 and the journal; -0.984399 x 64 (N = 64, Hubbard per site) = -63.001536; stored -63.001536. Instance agrees: 8x8 periodic, 56 electrons = 28 up + 28 down, U/t = 4; the printed energies are mu-free (they sit 0.09-0.63% from the mu-free VAFQMC -1.013910 in the same table).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#4 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_28_4",
+      "method": "vDBF eps=8e-4, zero-variance extrapolation",
+      "energy": -64.737216
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+    "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-1.011519(2) x 64 (N = 64, Hubbard per site) = -64.737216; sigma 2e-6 x 64 = 0.000128",
+    "checked_on": "2026-11-28",
+    "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy or the fit; the bar in parentheses is half the difference between the linear and quadratic zero-variance intercepts (Table caption), a fit-model spread, kept as sigma like other extrapolation uncertainties. RULES.md 6: sampled is read from the source per row. Value check passed: -1.011519(2) per site printed identically in arXiv v3 and the journal; -1.011519(2) x 64 (N = 64, Hubbard per site) = -64.737216; sigma 2e-6 x 64 = 0.000128; stored -64.737216 / 0.000128. Instance agrees: 8x8 periodic, 56 electrons = 28 up + 28 down, U/t = 4; the printed energies are mu-free (they sit 0.09-0.63% from the mu-free VAFQMC -1.013910 in the same table).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#5 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_28_4",
+      "method": "vDBF eps=6e-4, n_rots=50",
+      "energy": -62.94432
+    },
+    "field": "bound_type",
+    "to": "approximate",
+    "reported_as": "Energy: −0.983505 (per site)",
+    "location": "Table 5 (journal Table V), column eps = 6e-4; Table 1 (journal Table I) caption; Sec. II.3.2 and Appendix B Eqs. 26-29",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-0.983505 x 64 (N = 64, Hubbard per site) = -62.94432",
+    "checked_on": "2026-11-28",
+    "reason": "The vDBF 'Energy' is the reference-state expectation <0|H^(N)|0> of the Hamiltonian after N Pauli rotations with coefficient truncation after each one (Algorithm 1 line 19, 'clip'); after the first truncation it is not <psi|H|psi> for any state, so it is not an upper bound. The authors say so: 'note that while vDBF is variational in principle, coefficient truncation removes the strict-upper bound in practice' (journal Table I caption), and 'these guarantees do not transfer as a formal theorem to our deterministic, truncated implementation' (Sec. II.2). Appendix D adds that single Pauli-string rotations do not conserve particle number or Sz. RULES.md 4: a number built on a fixed approximation with an error of unknown sign is 'approximate'. Alternative for the ruling: hold it, as for the cluster-approximation PEPS of arXiv:2610.30321 (2026-11-11), which was neither a bound nor an extrapolation. Value check passed: -0.983505 per site printed identically in arXiv v3 and the journal; -0.983505 x 64 (N = 64, Hubbard per site) = -62.94432; stored -62.94432. Instance agrees: 8x8 periodic, 56 electrons = 28 up + 28 down, U/t = 4; the printed energies are mu-free (they sit 0.09-0.63% from the mu-free VAFQMC -1.013910 in the same table).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#6 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_28_4",
+      "method": "vDBF eps=6e-4, n_rots=50",
+      "energy": -62.94432
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+    "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-0.983505 x 64 (N = 64, Hubbard per site) = -62.94432",
+    "checked_on": "2026-11-28",
+    "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy. RULES.md 6: sampled is read from the source per row. Value check passed: -0.983505 per site printed identically in arXiv v3 and the journal; -0.983505 x 64 (N = 64, Hubbard per site) = -62.94432; stored -62.94432. Instance agrees: 8x8 periodic, 56 electrons = 28 up + 28 down, U/t = 4; the printed energies are mu-free (they sit 0.09-0.63% from the mu-free VAFQMC -1.013910 in the same table).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#7 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_28_4",
+      "method": "vDBF eps=6e-4, zero-variance extrapolation",
+      "energy": -64.776832
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+    "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-1.012138(4) x 64 (N = 64, Hubbard per site) = -64.776832; sigma 4e-6 x 64 = 0.000256",
+    "checked_on": "2026-11-28",
+    "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy or the fit; the bar in parentheses is half the difference between the linear and quadratic zero-variance intercepts (Table caption), a fit-model spread, kept as sigma like other extrapolation uncertainties. RULES.md 6: sampled is read from the source per row. Value check passed: -1.012138(4) per site printed identically in arXiv v3 and the journal; -1.012138(4) x 64 (N = 64, Hubbard per site) = -64.776832; sigma 4e-6 x 64 = 0.000256; stored -64.776832 / 0.000256. Instance agrees: 8x8 periodic, 56 electrons = 28 up + 28 down, U/t = 4; the printed energies are mu-free (they sit 0.09-0.63% from the mu-free VAFQMC -1.013910 in the same table).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#8 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_28_4",
+      "method": "vDBF eps=4e-4, n_rots=50",
+      "energy": -62.881408
+    },
+    "field": "bound_type",
+    "to": "approximate",
+    "reported_as": "Energy: −0.982522 (per site)",
+    "location": "Table 5 (journal Table V), column eps = 4e-4; Table 1 (journal Table I) caption; Sec. II.3.2 and Appendix B Eqs. 26-29",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-0.982522 x 64 (N = 64, Hubbard per site) = -62.881408",
+    "checked_on": "2026-11-28",
+    "reason": "The vDBF 'Energy' is the reference-state expectation <0|H^(N)|0> of the Hamiltonian after N Pauli rotations with coefficient truncation after each one (Algorithm 1 line 19, 'clip'); after the first truncation it is not <psi|H|psi> for any state, so it is not an upper bound. The authors say so: 'note that while vDBF is variational in principle, coefficient truncation removes the strict-upper bound in practice' (journal Table I caption), and 'these guarantees do not transfer as a formal theorem to our deterministic, truncated implementation' (Sec. II.2). Appendix D adds that single Pauli-string rotations do not conserve particle number or Sz. RULES.md 4: a number built on a fixed approximation with an error of unknown sign is 'approximate'. Alternative for the ruling: hold it, as for the cluster-approximation PEPS of arXiv:2610.30321 (2026-11-11), which was neither a bound nor an extrapolation. Value check passed: -0.982522 per site printed identically in arXiv v3 and the journal; -0.982522 x 64 (N = 64, Hubbard per site) = -62.881408; stored -62.881408. Instance agrees: 8x8 periodic, 56 electrons = 28 up + 28 down, U/t = 4; the printed energies are mu-free (they sit 0.09-0.63% from the mu-free VAFQMC -1.013910 in the same table).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#9 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_28_4",
+      "method": "vDBF eps=4e-4, n_rots=50",
+      "energy": -62.881408
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+    "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-0.982522 x 64 (N = 64, Hubbard per site) = -62.881408",
+    "checked_on": "2026-11-28",
+    "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy. RULES.md 6: sampled is read from the source per row. Value check passed: -0.982522 per site printed identically in arXiv v3 and the journal; -0.982522 x 64 (N = 64, Hubbard per site) = -62.881408; stored -62.881408. Instance agrees: 8x8 periodic, 56 electrons = 28 up + 28 down, U/t = 4; the printed energies are mu-free (they sit 0.09-0.63% from the mu-free VAFQMC -1.013910 in the same table).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#10 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_28_4",
+      "method": "vDBF eps=4e-4, zero-variance extrapolation",
+      "energy": -64.833728
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+    "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-1.013027(3) x 64 (N = 64, Hubbard per site) = -64.833728; sigma 3e-6 x 64 = 0.000192",
+    "checked_on": "2026-11-28",
+    "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy or the fit; the bar in parentheses is half the difference between the linear and quadratic zero-variance intercepts (Table caption), a fit-model spread, kept as sigma like other extrapolation uncertainties. RULES.md 6: sampled is read from the source per row. Value check passed: -1.013027(3) per site printed identically in arXiv v3 and the journal; -1.013027(3) x 64 (N = 64, Hubbard per site) = -64.833728; sigma 3e-6 x 64 = 0.000192; stored -64.833728 / 0.000192. Instance agrees: 8x8 periodic, 56 electrons = 28 up + 28 down, U/t = 4; the printed energies are mu-free (they sit 0.09-0.63% from the mu-free VAFQMC -1.013910 in the same table).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#11 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "vDBF eps=8e-4, n_rots=50",
+      "energy": -124.857344
+    },
+    "field": "bound_type",
+    "to": "approximate",
+    "reported_as": "Energy: −0.487724 (per site)",
+    "location": "Table 2 (journal Table II), column eps = 8e-4; Table 1 (journal Table I) caption; Sec. II.3.2 and Appendix B Eqs. 26-29",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-0.487724 x 256 (4N, S.S per site to Pauli total) = -124.857344",
+    "checked_on": "2026-11-28",
+    "reason": "The vDBF 'Energy' is the reference-state expectation <0|H^(N)|0> of the Hamiltonian after N Pauli rotations with coefficient truncation after each one (Algorithm 1 line 19, 'clip'); after the first truncation it is not <psi|H|psi> for any state, so it is not an upper bound. The authors say so: 'note that while vDBF is variational in principle, coefficient truncation removes the strict-upper bound in practice' (journal Table I caption), and 'these guarantees do not transfer as a formal theorem to our deterministic, truncated implementation' (Sec. II.2). Appendix D adds that single Pauli-string rotations do not conserve particle number or Sz. RULES.md 4: a number built on a fixed approximation with an error of unknown sign is 'approximate'. Alternative for the ruling: hold it, as for the cluster-approximation PEPS of arXiv:2610.30321 (2026-11-11), which was neither a bound nor an extrapolation. Value check passed: -0.487724 per site printed identically in arXiv v3 and the journal; -0.487724 x 256 (4N, S.S per site to Pauli total) = -124.857344; stored -124.857344. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#12 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "vDBF eps=8e-4, n_rots=50",
+      "energy": -124.857344
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+    "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-0.487724 x 256 (4N, S.S per site to Pauli total) = -124.857344",
+    "checked_on": "2026-11-28",
+    "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy. RULES.md 6: sampled is read from the source per row. Value check passed: -0.487724 per site printed identically in arXiv v3 and the journal; -0.487724 x 256 (4N, S.S per site to Pauli total) = -124.857344; stored -124.857344. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#13 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "vDBF eps=8e-4, zero-variance extrapolation",
+      "energy": -126.533632
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+    "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-0.494272(1) x 256 (4N, S.S per site to Pauli total) = -126.533632; sigma 1e-6 x 256 = 0.000256",
+    "checked_on": "2026-11-28",
+    "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy or the fit; the bar in parentheses is half the difference between the linear and quadratic zero-variance intercepts (Table caption), a fit-model spread, kept as sigma like other extrapolation uncertainties. RULES.md 6: sampled is read from the source per row. Value check passed: -0.494272(1) per site printed identically in arXiv v3 and the journal; -0.494272(1) x 256 (4N, S.S per site to Pauli total) = -126.533632; sigma 1e-6 x 256 = 0.000256; stored -126.533632 / 0.000256. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#14 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "vDBF eps=4e-4, n_rots=50",
+      "energy": -124.9024
+    },
+    "field": "bound_type",
+    "to": "approximate",
+    "reported_as": "Energy: −0.487900 (per site)",
+    "location": "Table 2 (journal Table II), column eps = 4e-4; Table 1 (journal Table I) caption; Sec. II.3.2 and Appendix B Eqs. 26-29",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-0.487900 x 256 (4N, S.S per site to Pauli total) = -124.9024",
+    "checked_on": "2026-11-28",
+    "reason": "The vDBF 'Energy' is the reference-state expectation <0|H^(N)|0> of the Hamiltonian after N Pauli rotations with coefficient truncation after each one (Algorithm 1 line 19, 'clip'); after the first truncation it is not <psi|H|psi> for any state, so it is not an upper bound. The authors say so: 'note that while vDBF is variational in principle, coefficient truncation removes the strict-upper bound in practice' (journal Table I caption), and 'these guarantees do not transfer as a formal theorem to our deterministic, truncated implementation' (Sec. II.2). Appendix D adds that single Pauli-string rotations do not conserve particle number or Sz. RULES.md 4: a number built on a fixed approximation with an error of unknown sign is 'approximate'. Alternative for the ruling: hold it, as for the cluster-approximation PEPS of arXiv:2610.30321 (2026-11-11), which was neither a bound nor an extrapolation. Value check passed: -0.487900 per site printed identically in arXiv v3 and the journal; -0.487900 x 256 (4N, S.S per site to Pauli total) = -124.9024; stored -124.9024. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#15 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "vDBF eps=4e-4, n_rots=50",
+      "energy": -124.9024
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+    "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-0.487900 x 256 (4N, S.S per site to Pauli total) = -124.9024",
+    "checked_on": "2026-11-28",
+    "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy. RULES.md 6: sampled is read from the source per row. Value check passed: -0.487900 per site printed identically in arXiv v3 and the journal; -0.487900 x 256 (4N, S.S per site to Pauli total) = -124.9024; stored -124.9024. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#16 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "vDBF eps=4e-4, zero-variance extrapolation",
+      "energy": -126.439168
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+    "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-0.493903(2) x 256 (4N, S.S per site to Pauli total) = -126.439168; sigma 2e-6 x 256 = 0.000512",
+    "checked_on": "2026-11-28",
+    "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy or the fit; the bar in parentheses is half the difference between the linear and quadratic zero-variance intercepts (Table caption), a fit-model spread, kept as sigma like other extrapolation uncertainties. RULES.md 6: sampled is read from the source per row. Value check passed: -0.493903(2) per site printed identically in arXiv v3 and the journal; -0.493903(2) x 256 (4N, S.S per site to Pauli total) = -126.439168; sigma 2e-6 x 256 = 0.000512; stored -126.439168 / 0.000512. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#17 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "vDBF eps=2e-4, n_rots=50",
+      "energy": -124.867328
+    },
+    "field": "bound_type",
+    "to": "approximate",
+    "reported_as": "Energy: −0.487763 (per site)",
+    "location": "Table 2 (journal Table II), column eps = 2e-4; Table 1 (journal Table I) caption; Sec. II.3.2 and Appendix B Eqs. 26-29",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-0.487763 x 256 (4N, S.S per site to Pauli total) = -124.867328",
+    "checked_on": "2026-11-28",
+    "reason": "The vDBF 'Energy' is the reference-state expectation <0|H^(N)|0> of the Hamiltonian after N Pauli rotations with coefficient truncation after each one (Algorithm 1 line 19, 'clip'); after the first truncation it is not <psi|H|psi> for any state, so it is not an upper bound. The authors say so: 'note that while vDBF is variational in principle, coefficient truncation removes the strict-upper bound in practice' (journal Table I caption), and 'these guarantees do not transfer as a formal theorem to our deterministic, truncated implementation' (Sec. II.2). Appendix D adds that single Pauli-string rotations do not conserve particle number or Sz. RULES.md 4: a number built on a fixed approximation with an error of unknown sign is 'approximate'. Alternative for the ruling: hold it, as for the cluster-approximation PEPS of arXiv:2610.30321 (2026-11-11), which was neither a bound nor an extrapolation. Value check passed: -0.487763 per site printed identically in arXiv v3 and the journal; -0.487763 x 256 (4N, S.S per site to Pauli total) = -124.867328; stored -124.867328. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#18 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "vDBF eps=2e-4, n_rots=50",
+      "energy": -124.867328
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+    "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-0.487763 x 256 (4N, S.S per site to Pauli total) = -124.867328",
+    "checked_on": "2026-11-28",
+    "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy. RULES.md 6: sampled is read from the source per row. Value check passed: -0.487763 per site printed identically in arXiv v3 and the journal; -0.487763 x 256 (4N, S.S per site to Pauli total) = -124.867328; stored -124.867328. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#19 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "vDBF eps=2e-4, zero-variance extrapolation",
+      "energy": -126.961152
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+    "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-0.495942(7) x 256 (4N, S.S per site to Pauli total) = -126.961152; sigma 7e-6 x 256 = 0.001792",
+    "checked_on": "2026-11-28",
+    "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy or the fit; the bar in parentheses is half the difference between the linear and quadratic zero-variance intercepts (Table caption), a fit-model spread, kept as sigma like other extrapolation uncertainties. RULES.md 6: sampled is read from the source per row. Value check passed: -0.495942(7) per site printed identically in arXiv v3 and the journal; -0.495942(7) x 256 (4N, S.S per site to Pauli total) = -126.961152; sigma 7e-6 x 256 = 0.001792; stored -126.961152 / 0.001792. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#20 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "vDBF eps=1e-4, n_rots=50",
+      "energy": -124.843776
+    },
+    "field": "bound_type",
+    "to": "approximate",
+    "reported_as": "Energy: −0.487671 (per site)",
+    "location": "Table 2 (journal Table II), column eps = 1e-4; Table 1 (journal Table I) caption; Sec. II.3.2 and Appendix B Eqs. 26-29",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-0.487671 x 256 (4N, S.S per site to Pauli total) = -124.843776",
+    "checked_on": "2026-11-28",
+    "reason": "The vDBF 'Energy' is the reference-state expectation <0|H^(N)|0> of the Hamiltonian after N Pauli rotations with coefficient truncation after each one (Algorithm 1 line 19, 'clip'); after the first truncation it is not <psi|H|psi> for any state, so it is not an upper bound. The authors say so: 'note that while vDBF is variational in principle, coefficient truncation removes the strict-upper bound in practice' (journal Table I caption), and 'these guarantees do not transfer as a formal theorem to our deterministic, truncated implementation' (Sec. II.2). Appendix D adds that single Pauli-string rotations do not conserve particle number or Sz. RULES.md 4: a number built on a fixed approximation with an error of unknown sign is 'approximate'. Alternative for the ruling: hold it, as for the cluster-approximation PEPS of arXiv:2610.30321 (2026-11-11), which was neither a bound nor an extrapolation. Value check passed: -0.487671 per site printed identically in arXiv v3 and the journal; -0.487671 x 256 (4N, S.S per site to Pauli total) = -124.843776; stored -124.843776. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#21 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "vDBF eps=1e-4, n_rots=50",
+      "energy": -124.843776
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+    "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-0.487671 x 256 (4N, S.S per site to Pauli total) = -124.843776",
+    "checked_on": "2026-11-28",
+    "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy. RULES.md 6: sampled is read from the source per row. Value check passed: -0.487671 per site printed identically in arXiv v3 and the journal; -0.487671 x 256 (4N, S.S per site to Pauli total) = -124.843776; stored -124.843776. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#22 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "vDBF eps=1e-4, zero-variance extrapolation",
+      "energy": -127.395328
+    },
+    "field": "sampled",
+    "to": false,
+    "reported_as": "our deterministic vDBF approach allows for scalable classical simulation of much larger systems",
+    "location": "Sec. II.2 (arXiv v3; journal p. 4)",
+    "version_read": "arXiv:2511.21651v3 (arXiv HTML, parsed with node) and PRX Quantum 7, 043022 (2026) publisher PDF (pypdf, per-page plain and layout modes; pages 9, 18, 19 failed in plain mode, Table V read on its page in plain mode)",
+    "conversion": "-0.497638(3) x 256 (4N, S.S per site to Pauli total) = -127.395328; sigma 3e-6 x 256 = 0.000768",
+    "checked_on": "2026-11-28",
+    "reason": "vDBF is a deterministic Pauli-propagation calculation: no Monte Carlo sampling enters the energy or the fit; the bar in parentheses is half the difference between the linear and quadratic zero-variance intercepts (Table caption), a fit-model spread, kept as sigma like other extrapolation uncertainties. RULES.md 6: sampled is read from the source per row. Value check passed: -0.497638(3) per site printed identically in arXiv v3 and the journal; -0.497638(3) x 256 (4N, S.S per site to Pauli total) = -127.395328; sigma 3e-6 x 256 = 0.000768; stored -127.395328 / 0.000768. Instance agrees: 8x8 periodic, J2/J1 = 0.5, S.S units (Neel reference -0.25 J1/site).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#23 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_100_P",
+      "method": "oPEPS (D=6)",
+      "energy": -267.94
+    },
+    "field": "sampled",
+    "to": true,
+    "reported_as": "-0.66985 (per site, S.S units, no error bar); SM: 'In the final sampling for observable measurements, we use N = 480,000 samples, with the QMC error in the energy estimated to be less than ~10^-5.'",
+    "location": "Table I (arXiv Table 1), row L = 10, column oPEPS; SM Sec. II.A Eq. (S8) and Sec. II.C",
+    "version_read": "arXiv:2407.15333v1 (only arXiv version, HTML parsed with node) and Phys. Rev. Lett. 135, 026501 (2025) publisher PDF plus Supplemental Material tns-pbc-supp.pdf (pypdf plain mode); Tables I and II identical in both",
+    "conversion": "-0.66985 x 4 x 100 = -267.94",
+    "checked_on": "2026-11-28",
+    "reason": "The oPEPS energy is a Monte Carlo average over spin configurations weighted by |W(s)|^2 (SM Eq. S8, 'can be calculated via a Monte Carlo (MC) sampling of spin configuration s'), measured with 480,000 samples (SM II.C); RULES.md 6 names exactly this case ('A finite PEPS whose energy is a Monte Carlo average over spin configurations ... [is] sampled'). The blanket 'less than ~10^-5' is one statement for the whole paper, not a printed bar for this row, so sigma stays null (table-wide error is not sigma). Value check passed: -0.66985 x 4 x 100 = -267.94, stored -267.94; 10x10 periodic, J2 = 0, D = 6, momentum k = 0, S.S units (QMC column equals Sandvik's per-site values), own computation; bound_type variational stands (energy of an explicit PEPS state, sampled).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#24 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_100_P",
+      "method": "sPEPS (D=6)",
+      "energy": -268.572
+    },
+    "field": "sampled",
+    "to": true,
+    "reported_as": "-0.67143 (per site, S.S units, no error bar); SM: 'In the final sampling for observable measurements, we use N = 480,000 samples, with the QMC error in the energy estimated to be less than ~10^-5.'",
+    "location": "Table I (arXiv Table 1), row L = 10, column sPEPS; SM Sec. II.A Eq. (S8) and Sec. II.C",
+    "version_read": "arXiv:2407.15333v1 (only arXiv version, HTML parsed with node) and Phys. Rev. Lett. 135, 026501 (2025) publisher PDF plus Supplemental Material tns-pbc-supp.pdf (pypdf plain mode); Tables I and II identical in both",
+    "conversion": "-0.67143 x 4 x 100 = -268.572",
+    "checked_on": "2026-11-28",
+    "reason": "The sPEPS energy is a Monte Carlo average over spin configurations weighted by |W(s)|^2 (SM Eq. S8, 'can be calculated via a Monte Carlo (MC) sampling of spin configuration s'), measured with 480,000 samples (SM II.C); RULES.md 6 names exactly this case ('A finite PEPS whose energy is a Monte Carlo average over spin configurations ... [is] sampled'). The blanket 'less than ~10^-5' is one statement for the whole paper, not a printed bar for this row, so sigma stays null (table-wide error is not sigma). Value check passed: -0.67143 x 4 x 100 = -268.572, stored -268.572; 10x10 periodic, J2 = 0, D = 6, momentum k = 0, S.S units (QMC column equals Sandvik's per-site values), own computation; bound_type variational stands (energy of an explicit PEPS state, sampled).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#25 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_144_P",
+      "method": "oPEPS (D=6)",
+      "energy": -384.83712
+    },
+    "field": "sampled",
+    "to": true,
+    "reported_as": "-0.66812 (per site, S.S units, no error bar); SM: 'In the final sampling for observable measurements, we use N = 480,000 samples, with the QMC error in the energy estimated to be less than ~10^-5.'",
+    "location": "Table I (arXiv Table 1), row L = 12, column oPEPS; SM Sec. II.A Eq. (S8) and Sec. II.C",
+    "version_read": "arXiv:2407.15333v1 (only arXiv version, HTML parsed with node) and Phys. Rev. Lett. 135, 026501 (2025) publisher PDF plus Supplemental Material tns-pbc-supp.pdf (pypdf plain mode); Tables I and II identical in both",
+    "conversion": "-0.66812 x 4 x 144 = -384.83712",
+    "checked_on": "2026-11-28",
+    "reason": "The oPEPS energy is a Monte Carlo average over spin configurations weighted by |W(s)|^2 (SM Eq. S8, 'can be calculated via a Monte Carlo (MC) sampling of spin configuration s'), measured with 480,000 samples (SM II.C); RULES.md 6 names exactly this case ('A finite PEPS whose energy is a Monte Carlo average over spin configurations ... [is] sampled'). The blanket 'less than ~10^-5' is one statement for the whole paper, not a printed bar for this row, so sigma stays null (table-wide error is not sigma). Value check passed: -0.66812 x 4 x 144 = -384.83712, stored -384.83712; 12x12 periodic, J2 = 0, D = 6, momentum k = 0, S.S units (QMC column equals Sandvik's per-site values), own computation; bound_type variational stands (energy of an explicit PEPS state, sampled).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#26 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_144_P",
+      "method": "sPEPS (D=6)",
+      "energy": -386.24256
+    },
+    "field": "sampled",
+    "to": true,
+    "reported_as": "-0.67056 (per site, S.S units, no error bar); SM: 'In the final sampling for observable measurements, we use N = 480,000 samples, with the QMC error in the energy estimated to be less than ~10^-5.'",
+    "location": "Table I (arXiv Table 1), row L = 12, column sPEPS; SM Sec. II.A Eq. (S8) and Sec. II.C",
+    "version_read": "arXiv:2407.15333v1 (only arXiv version, HTML parsed with node) and Phys. Rev. Lett. 135, 026501 (2025) publisher PDF plus Supplemental Material tns-pbc-supp.pdf (pypdf plain mode); Tables I and II identical in both",
+    "conversion": "-0.67056 x 4 x 144 = -386.24256",
+    "checked_on": "2026-11-28",
+    "reason": "The sPEPS energy is a Monte Carlo average over spin configurations weighted by |W(s)|^2 (SM Eq. S8, 'can be calculated via a Monte Carlo (MC) sampling of spin configuration s'), measured with 480,000 samples (SM II.C); RULES.md 6 names exactly this case ('A finite PEPS whose energy is a Monte Carlo average over spin configurations ... [is] sampled'). The blanket 'less than ~10^-5' is one statement for the whole paper, not a printed bar for this row, so sigma stays null (table-wide error is not sigma). Value check passed: -0.67056 x 4 x 144 = -386.24256, stored -386.24256; 12x12 periodic, J2 = 0, D = 6, momentum k = 0, S.S units (QMC column equals Sandvik's per-site values), own computation; bound_type variational stands (energy of an explicit PEPS state, sampled).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#27 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_16_P",
+      "method": "oPEPS (D=6)",
+      "energy": -44.9088
+    },
+    "field": "sampled",
+    "to": true,
+    "reported_as": "-0.70170 (per site, S.S units, no error bar); SM: 'In the final sampling for observable measurements, we use N = 480,000 samples, with the QMC error in the energy estimated to be less than ~10^-5.'",
+    "location": "Table I (arXiv Table 1), row L = 4, column oPEPS; SM Sec. II.A Eq. (S8) and Sec. II.C",
+    "version_read": "arXiv:2407.15333v1 (only arXiv version, HTML parsed with node) and Phys. Rev. Lett. 135, 026501 (2025) publisher PDF plus Supplemental Material tns-pbc-supp.pdf (pypdf plain mode); Tables I and II identical in both",
+    "conversion": "-0.70170 x 4 x 16 = -44.9088",
+    "checked_on": "2026-11-28",
+    "reason": "The oPEPS energy is a Monte Carlo average over spin configurations weighted by |W(s)|^2 (SM Eq. S8, 'can be calculated via a Monte Carlo (MC) sampling of spin configuration s'), measured with 480,000 samples (SM II.C); RULES.md 6 names exactly this case ('A finite PEPS whose energy is a Monte Carlo average over spin configurations ... [is] sampled'). The blanket 'less than ~10^-5' is one statement for the whole paper, not a printed bar for this row, so sigma stays null (table-wide error is not sigma). Value check passed: -0.70170 x 4 x 16 = -44.9088, stored -44.9088; 4x4 periodic, J2 = 0, D = 6, momentum k = 0, S.S units (QMC column equals Sandvik's per-site values), own computation; bound_type variational stands (energy of an explicit PEPS state, sampled).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#28 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_16_P",
+      "method": "sPEPS (D=6)",
+      "energy": -44.91264
+    },
+    "field": "sampled",
+    "to": true,
+    "reported_as": "-0.70176 (per site, S.S units, no error bar); SM: 'In the final sampling for observable measurements, we use N = 480,000 samples, with the QMC error in the energy estimated to be less than ~10^-5.'",
+    "location": "Table I (arXiv Table 1), row L = 4, column sPEPS; SM Sec. II.A Eq. (S8) and Sec. II.C",
+    "version_read": "arXiv:2407.15333v1 (only arXiv version, HTML parsed with node) and Phys. Rev. Lett. 135, 026501 (2025) publisher PDF plus Supplemental Material tns-pbc-supp.pdf (pypdf plain mode); Tables I and II identical in both",
+    "conversion": "-0.70176 x 4 x 16 = -44.91264",
+    "checked_on": "2026-11-28",
+    "reason": "The sPEPS energy is a Monte Carlo average over spin configurations weighted by |W(s)|^2 (SM Eq. S8, 'can be calculated via a Monte Carlo (MC) sampling of spin configuration s'), measured with 480,000 samples (SM II.C); RULES.md 6 names exactly this case ('A finite PEPS whose energy is a Monte Carlo average over spin configurations ... [is] sampled'). The blanket 'less than ~10^-5' is one statement for the whole paper, not a printed bar for this row, so sigma stays null (table-wide error is not sigma). Value check passed: -0.70176 x 4 x 16 = -44.91264, stored -44.91264; 4x4 periodic, J2 = 0, D = 6, momentum k = 0, S.S units (QMC column equals Sandvik's per-site values), own computation; bound_type variational stands (energy of an explicit PEPS state, sampled). RECORD ROW: under RULES.md 6 a sampled row without sigma still ranks by its energy, so the record (-0.70176 vs the VQE -0.7017449 per site, 1.5e-5 lower, about 1.5x the paper's blanket sampling-error bound) is not changed by this correction.",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#29 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_196_P",
+      "method": "oPEPS (D=6)",
+      "energy": -522.76336
+    },
+    "field": "sampled",
+    "to": true,
+    "reported_as": "-0.66679 (per site, S.S units, no error bar); SM: 'In the final sampling for observable measurements, we use N = 480,000 samples, with the QMC error in the energy estimated to be less than ~10^-5.'",
+    "location": "Table I (arXiv Table 1), row L = 14, column oPEPS; SM Sec. II.A Eq. (S8) and Sec. II.C",
+    "version_read": "arXiv:2407.15333v1 (only arXiv version, HTML parsed with node) and Phys. Rev. Lett. 135, 026501 (2025) publisher PDF plus Supplemental Material tns-pbc-supp.pdf (pypdf plain mode); Tables I and II identical in both",
+    "conversion": "-0.66679 x 4 x 196 = -522.76336",
+    "checked_on": "2026-11-28",
+    "reason": "The oPEPS energy is a Monte Carlo average over spin configurations weighted by |W(s)|^2 (SM Eq. S8, 'can be calculated via a Monte Carlo (MC) sampling of spin configuration s'), measured with 480,000 samples (SM II.C); RULES.md 6 names exactly this case ('A finite PEPS whose energy is a Monte Carlo average over spin configurations ... [is] sampled'). The blanket 'less than ~10^-5' is one statement for the whole paper, not a printed bar for this row, so sigma stays null (table-wide error is not sigma). Value check passed: -0.66679 x 4 x 196 = -522.76336, stored -522.76336; 14x14 periodic, J2 = 0, D = 6, momentum k = 0, S.S units (QMC column equals Sandvik's per-site values), own computation; bound_type variational stands (energy of an explicit PEPS state, sampled).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#30 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_196_P",
+      "method": "sPEPS (D=6)",
+      "energy": -525.28
+    },
+    "field": "sampled",
+    "to": true,
+    "reported_as": "-0.67000 (per site, S.S units, no error bar); SM: 'In the final sampling for observable measurements, we use N = 480,000 samples, with the QMC error in the energy estimated to be less than ~10^-5.'",
+    "location": "Table I (arXiv Table 1), row L = 14, column sPEPS; SM Sec. II.A Eq. (S8) and Sec. II.C",
+    "version_read": "arXiv:2407.15333v1 (only arXiv version, HTML parsed with node) and Phys. Rev. Lett. 135, 026501 (2025) publisher PDF plus Supplemental Material tns-pbc-supp.pdf (pypdf plain mode); Tables I and II identical in both",
+    "conversion": "-0.67000 x 4 x 196 = -525.28",
+    "checked_on": "2026-11-28",
+    "reason": "The sPEPS energy is a Monte Carlo average over spin configurations weighted by |W(s)|^2 (SM Eq. S8, 'can be calculated via a Monte Carlo (MC) sampling of spin configuration s'), measured with 480,000 samples (SM II.C); RULES.md 6 names exactly this case ('A finite PEPS whose energy is a Monte Carlo average over spin configurations ... [is] sampled'). The blanket 'less than ~10^-5' is one statement for the whole paper, not a printed bar for this row, so sigma stays null (table-wide error is not sigma). Value check passed: -0.67000 x 4 x 196 = -525.28, stored -525.28; 14x14 periodic, J2 = 0, D = 6, momentum k = 0, S.S units (QMC column equals Sandvik's per-site values), own computation; bound_type variational stands (energy of an explicit PEPS state, sampled).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#31 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_36_P",
+      "method": "oPEPS (D=6)",
+      "energy": -97.70976
+    },
+    "field": "sampled",
+    "to": true,
+    "reported_as": "-0.67854 (per site, S.S units, no error bar); SM: 'In the final sampling for observable measurements, we use N = 480,000 samples, with the QMC error in the energy estimated to be less than ~10^-5.'",
+    "location": "Table I (arXiv Table 1), row L = 6, column oPEPS; SM Sec. II.A Eq. (S8) and Sec. II.C",
+    "version_read": "arXiv:2407.15333v1 (only arXiv version, HTML parsed with node) and Phys. Rev. Lett. 135, 026501 (2025) publisher PDF plus Supplemental Material tns-pbc-supp.pdf (pypdf plain mode); Tables I and II identical in both",
+    "conversion": "-0.67854 x 4 x 36 = -97.70976",
+    "checked_on": "2026-11-28",
+    "reason": "The oPEPS energy is a Monte Carlo average over spin configurations weighted by |W(s)|^2 (SM Eq. S8, 'can be calculated via a Monte Carlo (MC) sampling of spin configuration s'), measured with 480,000 samples (SM II.C); RULES.md 6 names exactly this case ('A finite PEPS whose energy is a Monte Carlo average over spin configurations ... [is] sampled'). The blanket 'less than ~10^-5' is one statement for the whole paper, not a printed bar for this row, so sigma stays null (table-wide error is not sigma). Value check passed: -0.67854 x 4 x 36 = -97.70976, stored -97.70976; 6x6 periodic, J2 = 0, D = 6, momentum k = 0, S.S units (QMC column equals Sandvik's per-site values), own computation; bound_type variational stands (energy of an explicit PEPS state, sampled).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#32 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_36_P",
+      "method": "sPEPS (D=6)",
+      "energy": -97.7544
+    },
+    "field": "sampled",
+    "to": true,
+    "reported_as": "-0.67885 (per site, S.S units, no error bar); SM: 'In the final sampling for observable measurements, we use N = 480,000 samples, with the QMC error in the energy estimated to be less than ~10^-5.'",
+    "location": "Table I (arXiv Table 1), row L = 6, column sPEPS; SM Sec. II.A Eq. (S8) and Sec. II.C",
+    "version_read": "arXiv:2407.15333v1 (only arXiv version, HTML parsed with node) and Phys. Rev. Lett. 135, 026501 (2025) publisher PDF plus Supplemental Material tns-pbc-supp.pdf (pypdf plain mode); Tables I and II identical in both",
+    "conversion": "-0.67885 x 4 x 36 = -97.7544",
+    "checked_on": "2026-11-28",
+    "reason": "The sPEPS energy is a Monte Carlo average over spin configurations weighted by |W(s)|^2 (SM Eq. S8, 'can be calculated via a Monte Carlo (MC) sampling of spin configuration s'), measured with 480,000 samples (SM II.C); RULES.md 6 names exactly this case ('A finite PEPS whose energy is a Monte Carlo average over spin configurations ... [is] sampled'). The blanket 'less than ~10^-5' is one statement for the whole paper, not a printed bar for this row, so sigma stays null (table-wide error is not sigma). Value check passed: -0.67885 x 4 x 36 = -97.7544, stored -97.7544; 6x6 periodic, J2 = 0, D = 6, momentum k = 0, S.S units (QMC column equals Sandvik's per-site values), own computation; bound_type variational stands (energy of an explicit PEPS state, sampled).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#33 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_64_P",
+      "method": "oPEPS (D=6)",
+      "energy": -171.84512
+    },
+    "field": "sampled",
+    "to": true,
+    "reported_as": "-0.67127 (per site, S.S units, no error bar); SM: 'In the final sampling for observable measurements, we use N = 480,000 samples, with the QMC error in the energy estimated to be less than ~10^-5.'",
+    "location": "Table I (arXiv Table 1), row L = 8, column oPEPS; SM Sec. II.A Eq. (S8) and Sec. II.C",
+    "version_read": "arXiv:2407.15333v1 (only arXiv version, HTML parsed with node) and Phys. Rev. Lett. 135, 026501 (2025) publisher PDF plus Supplemental Material tns-pbc-supp.pdf (pypdf plain mode); Tables I and II identical in both",
+    "conversion": "-0.67127 x 4 x 64 = -171.84512",
+    "checked_on": "2026-11-28",
+    "reason": "The oPEPS energy is a Monte Carlo average over spin configurations weighted by |W(s)|^2 (SM Eq. S8, 'can be calculated via a Monte Carlo (MC) sampling of spin configuration s'), measured with 480,000 samples (SM II.C); RULES.md 6 names exactly this case ('A finite PEPS whose energy is a Monte Carlo average over spin configurations ... [is] sampled'). The blanket 'less than ~10^-5' is one statement for the whole paper, not a printed bar for this row, so sigma stays null (table-wide error is not sigma). Value check passed: -0.67127 x 4 x 64 = -171.84512, stored -171.84512; 8x8 periodic, J2 = 0, D = 6, momentum k = 0, S.S units (QMC column equals Sandvik's per-site values), own computation; bound_type variational stands (energy of an explicit PEPS state, sampled).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#34 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_64_P",
+      "method": "sPEPS (D=6)",
+      "energy": -172.3776
+    },
+    "field": "sampled",
+    "to": true,
+    "reported_as": "-0.67335 (per site, S.S units, no error bar); SM: 'In the final sampling for observable measurements, we use N = 480,000 samples, with the QMC error in the energy estimated to be less than ~10^-5.'",
+    "location": "Table I (arXiv Table 1), row L = 8, column sPEPS; SM Sec. II.A Eq. (S8) and Sec. II.C",
+    "version_read": "arXiv:2407.15333v1 (only arXiv version, HTML parsed with node) and Phys. Rev. Lett. 135, 026501 (2025) publisher PDF plus Supplemental Material tns-pbc-supp.pdf (pypdf plain mode); Tables I and II identical in both",
+    "conversion": "-0.67335 x 4 x 64 = -172.3776",
+    "checked_on": "2026-11-28",
+    "reason": "The sPEPS energy is a Monte Carlo average over spin configurations weighted by |W(s)|^2 (SM Eq. S8, 'can be calculated via a Monte Carlo (MC) sampling of spin configuration s'), measured with 480,000 samples (SM II.C); RULES.md 6 names exactly this case ('A finite PEPS whose energy is a Monte Carlo average over spin configurations ... [is] sampled'). The blanket 'less than ~10^-5' is one statement for the whole paper, not a printed bar for this row, so sigma stays null (table-wide error is not sigma). Value check passed: -0.67335 x 4 x 64 = -172.3776, stored -172.3776; 8x8 periodic, J2 = 0, D = 6, momentum k = 0, S.S units (QMC column equals Sandvik's per-site values), own computation; bound_type variational stands (energy of an explicit PEPS state, sampled).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#35 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "sPEPS (D=8)",
+      "energy": -199.036
+    },
+    "field": "sampled",
+    "to": true,
+    "reported_as": "-0.49759 (per site, S.S units, no error bar); SM: 'In the final sampling for observable measurements, we use N = 480,000 samples, with the QMC error in the energy estimated to be less than ~10^-5.'",
+    "location": "Table II (arXiv Table 2), row sPEPS, column Energy (L = 10); SM Sec. II.A Eq. (S8) and Sec. II.C",
+    "version_read": "arXiv:2407.15333v1 (only arXiv version, HTML parsed with node) and Phys. Rev. Lett. 135, 026501 (2025) publisher PDF plus Supplemental Material tns-pbc-supp.pdf (pypdf plain mode); Tables I and II identical in both",
+    "conversion": "-0.49759 x 4 x 100 = -199.036",
+    "checked_on": "2026-11-28",
+    "reason": "The sPEPS energy is a Monte Carlo average over spin configurations weighted by |W(s)|^2 (SM Eq. S8, 'can be calculated via a Monte Carlo (MC) sampling of spin configuration s'), measured with 480,000 samples (SM II.C); RULES.md 6 names exactly this case ('A finite PEPS whose energy is a Monte Carlo average over spin configurations ... [is] sampled'). The blanket 'less than ~10^-5' is one statement for the whole paper, not a printed bar for this row, so sigma stays null (table-wide error is not sigma). Value check passed: -0.49759 x 4 x 100 = -199.036, stored -199.036; 10x10 periodic, J2 = 0.5 J1, D = 8, momentum k = 0, S.S units (QMC column equals Sandvik's per-site values), own computation; bound_type variational stands (energy of an explicit PEPS state, sampled).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#36 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.5",
+      "method": "sPEPS (D=8)",
+      "energy": -72.54
+    },
+    "field": "sampled",
+    "to": true,
+    "reported_as": "-0.50375 (per site, S.S units, no error bar); SM: 'In the final sampling for observable measurements, we use N = 480,000 samples, with the QMC error in the energy estimated to be less than ~10^-5.'",
+    "location": "Table II (arXiv Table 2), row sPEPS, column Energy (L = 6); SM Sec. II.A Eq. (S8) and Sec. II.C",
+    "version_read": "arXiv:2407.15333v1 (only arXiv version, HTML parsed with node) and Phys. Rev. Lett. 135, 026501 (2025) publisher PDF plus Supplemental Material tns-pbc-supp.pdf (pypdf plain mode); Tables I and II identical in both",
+    "conversion": "-0.50375 x 4 x 36 = -72.54",
+    "checked_on": "2026-11-28",
+    "reason": "The sPEPS energy is a Monte Carlo average over spin configurations weighted by |W(s)|^2 (SM Eq. S8, 'can be calculated via a Monte Carlo (MC) sampling of spin configuration s'), measured with 480,000 samples (SM II.C); RULES.md 6 names exactly this case ('A finite PEPS whose energy is a Monte Carlo average over spin configurations ... [is] sampled'). The blanket 'less than ~10^-5' is one statement for the whole paper, not a printed bar for this row, so sigma stays null (table-wide error is not sigma). Value check passed: -0.50375 x 4 x 36 = -72.54, stored -72.54; 6x6 periodic, J2 = 0.5 J1, D = 8, momentum k = 0, S.S units (QMC column equals Sandvik's per-site values), own computation; bound_type variational stands (energy of an explicit PEPS state, sampled).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#37 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-36d_36_P",
+      "method": "LCN",
+      "energy": -62.8848
+    },
+    "field": "reference",
+    "to": "Fu, Zhang, Zhang, Ling, Xu & Ji, Lattice Convolutional Networks for Learning Ground States of Quantum Many-Body Systems, Proc. 2024 SIAM Int. Conf. on Data Mining (SDM), pp. 490-498 (2024), arXiv:2206.07370",
+    "reported_as": "-0.4367(4) (per site, S.S units)",
+    "location": "Table 1, Kagome 36, J2 = 0, column LCN (ours) (same value in Table 3 'Regular Kernel' and Table 6 'Periodic padding')",
+    "version_read": "arXiv:2206.07370v1 (only arXiv version; HTML parsed with node, cross-checked against the project's pypdf text sources/2206.07370.txt). Journal version (SDM 2024, doi:10.1137/1.9781611978032.57) not reached: epubs.siam.org returned HTTP 403 to the PDF and the landing page; Unpaywall lists only the arXiv copy",
+    "conversion": "-0.4367(4) x 4 x 36 = -62.8848; sigma 4e-4 x 144 = 0.0576",
+    "checked_on": "2026-11-28",
+    "reason": "'Society for Industrial and Applied Mathematics eBooks' is OpenAlex's platform name, not the venue; the paper is in the Proceedings of the 2024 SIAM International Conference on Data Mining (SDM), pp. 490-498 (Crossref 10.1137/1.9781611978032.57, book-chapter), and the instance rows of the same paper loaded earlier (honeycomb-7x7_98_P, triangular_36_P) carry the proposed string, so the paper splits into two reference entries. peer_reviewed true stands (refereed proceedings). Value check passed: -0.4367(4) x 4 x 36 = -62.8848; sigma 4e-4 x 144 = 0.0576, stored -62.8848 / 0.0576. Cluster and units: periodic Kochkov et al. clusters, S.S per site (the paper's own exact references -0.678872, -0.503810, -0.5603734, -0.43837653 fix the units despite the Pauli definition in Eq. 6); bar = std of 100 bin means (Sec. 5), stored as printed; bound_type variational (VMC, 200,000 samples); own computation. RECORD ROW: lowest variational row on kagome-36d (next: Kochkov GNN-2 -0.4338(6)); 1.68e-3 per site above the exact -0.43837653; value, sigma, cluster and class verified.",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#38 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-36d_36_P",
+      "method": "GNN with sublattice encoding (reproduced)",
+      "energy": -62.568
+    },
+    "field": "reference",
+    "to": "Fu, Zhang, Zhang, Ling, Xu & Ji, Lattice Convolutional Networks for Learning Ground States of Quantum Many-Body Systems, Proc. 2024 SIAM Int. Conf. on Data Mining (SDM), pp. 490-498 (2024), arXiv:2206.07370",
+    "reported_as": "-0.4345(5) (per site, S.S units)",
+    "location": "Table 2, Kagome 36, J2 = 0.0, GNN with sublattice",
+    "version_read": "arXiv:2206.07370v1 (only arXiv version; HTML parsed with node, cross-checked against the project's pypdf text sources/2206.07370.txt). Journal version (SDM 2024, doi:10.1137/1.9781611978032.57) not reached: epubs.siam.org returned HTTP 403 to the PDF and the landing page; Unpaywall lists only the arXiv copy",
+    "conversion": "-0.4345(5) x 4 x 36 = -62.568; sigma 5e-4 x 144 = 0.072",
+    "checked_on": "2026-11-28",
+    "reason": "'Society for Industrial and Applied Mathematics eBooks' is OpenAlex's platform name, not the venue; the paper is in the Proceedings of the 2024 SIAM International Conference on Data Mining (SDM), pp. 490-498 (Crossref 10.1137/1.9781611978032.57, book-chapter), and the instance rows of the same paper loaded earlier (honeycomb-7x7_98_P, triangular_36_P) carry the proposed string, so the paper splits into two reference entries. peer_reviewed true stands (refereed proceedings). Value check passed: -0.4345(5) x 4 x 36 = -62.568; sigma 5e-4 x 144 = 0.072, stored -62.568 / 0.072. Cluster and units: periodic Kochkov et al. clusters, S.S per site (the paper's own exact references -0.678872, -0.503810, -0.5603734, -0.43837653 fix the units despite the Pauli definition in Eq. 6); bar = std of 100 bin means (Sec. 5), stored as printed; bound_type variational (VMC, 200,000 samples); own computation (the authors' own reimplementation of the GNN).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#39 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-36d_36_P",
+      "method": "LCN, special kernel",
+      "energy": -60.5808
+    },
+    "field": "reference",
+    "to": "Fu, Zhang, Zhang, Ling, Xu & Ji, Lattice Convolutional Networks for Learning Ground States of Quantum Many-Body Systems, Proc. 2024 SIAM Int. Conf. on Data Mining (SDM), pp. 490-498 (2024), arXiv:2206.07370",
+    "reported_as": "-0.4207(6) (per site, S.S units)",
+    "location": "Table 3, Kagome 36, J2 = 0, Special Kernel",
+    "version_read": "arXiv:2206.07370v1 (only arXiv version; HTML parsed with node, cross-checked against the project's pypdf text sources/2206.07370.txt). Journal version (SDM 2024, doi:10.1137/1.9781611978032.57) not reached: epubs.siam.org returned HTTP 403 to the PDF and the landing page; Unpaywall lists only the arXiv copy",
+    "conversion": "-0.4207(6) x 4 x 36 = -60.5808; sigma 6e-4 x 144 = 0.0864",
+    "checked_on": "2026-11-28",
+    "reason": "'Society for Industrial and Applied Mathematics eBooks' is OpenAlex's platform name, not the venue; the paper is in the Proceedings of the 2024 SIAM International Conference on Data Mining (SDM), pp. 490-498 (Crossref 10.1137/1.9781611978032.57, book-chapter), and the instance rows of the same paper loaded earlier (honeycomb-7x7_98_P, triangular_36_P) carry the proposed string, so the paper splits into two reference entries. peer_reviewed true stands (refereed proceedings). Value check passed: -0.4207(6) x 4 x 36 = -60.5808; sigma 6e-4 x 144 = 0.0864, stored -60.5808 / 0.0864. Cluster and units: periodic Kochkov et al. clusters, S.S per site (the paper's own exact references -0.678872, -0.503810, -0.5603734, -0.43837653 fix the units despite the Pauli definition in Eq. 6); bar = std of 100 bin means (Sec. 5), stored as printed; bound_type variational (VMC, 200,000 samples); own computation.",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#40 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-36d_36_P",
+      "method": "LCN, zero padding",
+      "energy": -62.7264
+    },
+    "field": "reference",
+    "to": "Fu, Zhang, Zhang, Ling, Xu & Ji, Lattice Convolutional Networks for Learning Ground States of Quantum Many-Body Systems, Proc. 2024 SIAM Int. Conf. on Data Mining (SDM), pp. 490-498 (2024), arXiv:2206.07370",
+    "reported_as": "-0.4356(5) (per site, S.S units)",
+    "location": "Table 6, Kagome 36, J2 = 0, Zero padding",
+    "version_read": "arXiv:2206.07370v1 (only arXiv version; HTML parsed with node, cross-checked against the project's pypdf text sources/2206.07370.txt). Journal version (SDM 2024, doi:10.1137/1.9781611978032.57) not reached: epubs.siam.org returned HTTP 403 to the PDF and the landing page; Unpaywall lists only the arXiv copy",
+    "conversion": "-0.4356(5) x 4 x 36 = -62.7264; sigma 5e-4 x 144 = 0.072",
+    "checked_on": "2026-11-28",
+    "reason": "'Society for Industrial and Applied Mathematics eBooks' is OpenAlex's platform name, not the venue; the paper is in the Proceedings of the 2024 SIAM International Conference on Data Mining (SDM), pp. 490-498 (Crossref 10.1137/1.9781611978032.57, book-chapter), and the instance rows of the same paper loaded earlier (honeycomb-7x7_98_P, triangular_36_P) carry the proposed string, so the paper splits into two reference entries. peer_reviewed true stands (refereed proceedings). Value check passed: -0.4356(5) x 4 x 36 = -62.7264; sigma 5e-4 x 144 = 0.072, stored -62.7264 / 0.072. Cluster and units: periodic Kochkov et al. clusters, S.S per site (the paper's own exact references -0.678872, -0.503810, -0.5603734, -0.43837653 fix the units despite the Pauli definition in Eq. 6); bar = std of 100 bin means (Sec. 5), stored as printed; bound_type variational (VMC, 200,000 samples); own computation.",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#41 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_100_P",
+      "method": "LCN",
+      "energy": -268.32
+    },
+    "field": "reference",
+    "to": "Fu, Zhang, Zhang, Ling, Xu & Ji, Lattice Convolutional Networks for Learning Ground States of Quantum Many-Body Systems, Proc. 2024 SIAM Int. Conf. on Data Mining (SDM), pp. 490-498 (2024), arXiv:2206.07370",
+    "reported_as": "-0.6708(1) (per site, S.S units)",
+    "location": "Table 1, Square 100, J2 = 0, column LCN (ours)",
+    "version_read": "arXiv:2206.07370v1 (only arXiv version; HTML parsed with node, cross-checked against the project's pypdf text sources/2206.07370.txt). Journal version (SDM 2024, doi:10.1137/1.9781611978032.57) not reached: epubs.siam.org returned HTTP 403 to the PDF and the landing page; Unpaywall lists only the arXiv copy",
+    "conversion": "-0.6708(1) x 4 x 100 = -268.32; sigma 1e-4 x 400 = 0.04",
+    "checked_on": "2026-11-28",
+    "reason": "'Society for Industrial and Applied Mathematics eBooks' is OpenAlex's platform name, not the venue; the paper is in the Proceedings of the 2024 SIAM International Conference on Data Mining (SDM), pp. 490-498 (Crossref 10.1137/1.9781611978032.57, book-chapter), and the instance rows of the same paper loaded earlier (honeycomb-7x7_98_P, triangular_36_P) carry the proposed string, so the paper splits into two reference entries. peer_reviewed true stands (refereed proceedings). Value check passed: -0.6708(1) x 4 x 100 = -268.32; sigma 1e-4 x 400 = 0.04, stored -268.32 / 0.04. Cluster and units: periodic Kochkov et al. clusters, S.S per site (the paper's own exact references -0.678872, -0.503810, -0.5603734, -0.43837653 fix the units despite the Pauli definition in Eq. 6); bar = std of 100 bin means (Sec. 5), stored as printed; bound_type variational (VMC, 200,000 samples); own computation. Duplicate check: the instance's Kochkov et al. row (-0.6708, sweep-allresults-2026-11-11) is the GNN number, which this paper quotes as -0.6708(0) in its GNN column; the LCN -0.6708(1) is the paper's own, distinct method: not a duplicate.",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#42 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_36_P",
+      "method": "LCN",
+      "energy": -97.7472
+    },
+    "field": "reference",
+    "to": "Fu, Zhang, Zhang, Ling, Xu & Ji, Lattice Convolutional Networks for Learning Ground States of Quantum Many-Body Systems, Proc. 2024 SIAM Int. Conf. on Data Mining (SDM), pp. 490-498 (2024), arXiv:2206.07370",
+    "reported_as": "-0.6788(1) (per site, S.S units)",
+    "location": "Table 1, Square 36, J2 = 0, column LCN (ours)",
+    "version_read": "arXiv:2206.07370v1 (only arXiv version; HTML parsed with node, cross-checked against the project's pypdf text sources/2206.07370.txt). Journal version (SDM 2024, doi:10.1137/1.9781611978032.57) not reached: epubs.siam.org returned HTTP 403 to the PDF and the landing page; Unpaywall lists only the arXiv copy",
+    "conversion": "-0.6788(1) x 4 x 36 = -97.7472; sigma 1e-4 x 144 = 0.0144",
+    "checked_on": "2026-11-28",
+    "reason": "'Society for Industrial and Applied Mathematics eBooks' is OpenAlex's platform name, not the venue; the paper is in the Proceedings of the 2024 SIAM International Conference on Data Mining (SDM), pp. 490-498 (Crossref 10.1137/1.9781611978032.57, book-chapter), and the instance rows of the same paper loaded earlier (honeycomb-7x7_98_P, triangular_36_P) carry the proposed string, so the paper splits into two reference entries. peer_reviewed true stands (refereed proceedings). Value check passed: -0.6788(1) x 4 x 36 = -97.7472; sigma 1e-4 x 144 = 0.0144, stored -97.7472 / 0.0144. Cluster and units: periodic Kochkov et al. clusters, S.S per site (the paper's own exact references -0.678872, -0.503810, -0.5603734, -0.43837653 fix the units despite the Pauli definition in Eq. 6); bar = std of 100 bin means (Sec. 5), stored as printed; bound_type variational (VMC, 200,000 samples); own computation. Duplicate check: the instance's Ou, Huang & Ozolins row -0.6788 (Phys. Rev. B 112, 165122 (2025), sweep-allresults-2026-09-15) is that paper's own result ('our work yields -0.6788'), equal only to 4 printed digits: not a duplicate.",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#43 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_36_P",
+      "method": "GNN with sublattice encoding (reproduced)",
+      "energy": -97.5744
+    },
+    "field": "reference",
+    "to": "Fu, Zhang, Zhang, Ling, Xu & Ji, Lattice Convolutional Networks for Learning Ground States of Quantum Many-Body Systems, Proc. 2024 SIAM Int. Conf. on Data Mining (SDM), pp. 490-498 (2024), arXiv:2206.07370",
+    "reported_as": "-0.6776(6) (per site, S.S units)",
+    "location": "Table 2, Square 36, J2 = 0.0, GNN with sublattice",
+    "version_read": "arXiv:2206.07370v1 (only arXiv version; HTML parsed with node, cross-checked against the project's pypdf text sources/2206.07370.txt). Journal version (SDM 2024, doi:10.1137/1.9781611978032.57) not reached: epubs.siam.org returned HTTP 403 to the PDF and the landing page; Unpaywall lists only the arXiv copy",
+    "conversion": "-0.6776(6) x 4 x 36 = -97.5744; sigma 6e-4 x 144 = 0.0864",
+    "checked_on": "2026-11-28",
+    "reason": "'Society for Industrial and Applied Mathematics eBooks' is OpenAlex's platform name, not the venue; the paper is in the Proceedings of the 2024 SIAM International Conference on Data Mining (SDM), pp. 490-498 (Crossref 10.1137/1.9781611978032.57, book-chapter), and the instance rows of the same paper loaded earlier (honeycomb-7x7_98_P, triangular_36_P) carry the proposed string, so the paper splits into two reference entries. peer_reviewed true stands (refereed proceedings). Value check passed: -0.6776(6) x 4 x 36 = -97.5744; sigma 6e-4 x 144 = 0.0864, stored -97.5744 / 0.0864. Cluster and units: periodic Kochkov et al. clusters, S.S per site (the paper's own exact references -0.678872, -0.503810, -0.5603734, -0.43837653 fix the units despite the Pauli definition in Eq. 6); bar = std of 100 bin means (Sec. 5), stored as printed; bound_type variational (VMC, 200,000 samples); own computation (the authors' own reimplementation of the GNN).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#44 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/square_36_P",
+      "method": "GNN without sublattice encoding (reproduced)",
+      "energy": -94.1184
+    },
+    "field": "reference",
+    "to": "Fu, Zhang, Zhang, Ling, Xu & Ji, Lattice Convolutional Networks for Learning Ground States of Quantum Many-Body Systems, Proc. 2024 SIAM Int. Conf. on Data Mining (SDM), pp. 490-498 (2024), arXiv:2206.07370",
+    "reported_as": "-0.6536(11) (per site, S.S units)",
+    "location": "Table 2, Square 36, J2 = 0.0, GNN without sublattice",
+    "version_read": "arXiv:2206.07370v1 (only arXiv version; HTML parsed with node, cross-checked against the project's pypdf text sources/2206.07370.txt). Journal version (SDM 2024, doi:10.1137/1.9781611978032.57) not reached: epubs.siam.org returned HTTP 403 to the PDF and the landing page; Unpaywall lists only the arXiv copy",
+    "conversion": "-0.6536(11) x 4 x 36 = -94.1184; sigma 11e-4 x 144 = 0.1584",
+    "checked_on": "2026-11-28",
+    "reason": "'Society for Industrial and Applied Mathematics eBooks' is OpenAlex's platform name, not the venue; the paper is in the Proceedings of the 2024 SIAM International Conference on Data Mining (SDM), pp. 490-498 (Crossref 10.1137/1.9781611978032.57, book-chapter), and the instance rows of the same paper loaded earlier (honeycomb-7x7_98_P, triangular_36_P) carry the proposed string, so the paper splits into two reference entries. peer_reviewed true stands (refereed proceedings). Value check passed: -0.6536(11) x 4 x 36 = -94.1184; sigma 11e-4 x 144 = 0.1584, stored -94.1184 / 0.1584. Cluster and units: periodic Kochkov et al. clusters, S.S per site (the paper's own exact references -0.678872, -0.503810, -0.5603734, -0.43837653 fix the units despite the Pauli definition in Eq. 6); bar = std of 100 bin means (Sec. 5), stored as printed; bound_type variational (VMC, 200,000 samples); own computation (the authors' own reimplementation of the GNN).",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#45 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/triangular_36_P",
+      "method": "GNN with sublattice encoding (reproduced)",
+      "energy": -80.2224
+    },
+    "field": "reference",
+    "to": "Fu, Zhang, Zhang, Ling, Xu & Ji, Lattice Convolutional Networks for Learning Ground States of Quantum Many-Body Systems, Proc. 2024 SIAM Int. Conf. on Data Mining (SDM), pp. 490-498 (2024), arXiv:2206.07370",
+    "reported_as": "-0.5571(5) (per site, S.S units)",
+    "location": "Table 2, Triangular 36, J2 = 0.0, GNN with sublattice",
+    "version_read": "arXiv:2206.07370v1 (only arXiv version; HTML parsed with node, cross-checked against the project's pypdf text sources/2206.07370.txt). Journal version (SDM 2024, doi:10.1137/1.9781611978032.57) not reached: epubs.siam.org returned HTTP 403 to the PDF and the landing page; Unpaywall lists only the arXiv copy",
+    "conversion": "-0.5571(5) x 4 x 36 = -80.2224; sigma 5e-4 x 144 = 0.072",
+    "checked_on": "2026-11-28",
+    "reason": "'Society for Industrial and Applied Mathematics eBooks' is OpenAlex's platform name, not the venue; the paper is in the Proceedings of the 2024 SIAM International Conference on Data Mining (SDM), pp. 490-498 (Crossref 10.1137/1.9781611978032.57, book-chapter), and the instance rows of the same paper loaded earlier (honeycomb-7x7_98_P, triangular_36_P) carry the proposed string, so the paper splits into two reference entries. peer_reviewed true stands (refereed proceedings). Value check passed: -0.5571(5) x 4 x 36 = -80.2224; sigma 5e-4 x 144 = 0.072, stored -80.2224 / 0.072. Cluster and units: periodic Kochkov et al. clusters, S.S per site (the paper's own exact references -0.678872, -0.503810, -0.5603734, -0.43837653 fix the units despite the Pauli definition in Eq. 6); bar = std of 100 bin means (Sec. 5), stored as printed; bound_type variational (VMC, 200,000 samples); own computation (the authors' own reimplementation of the GNN). Duplicate check: the instance already carries this paper's main LCN value -0.5601(4) (sweep-tables-2026-09-14, via arXiv:2505.20406); this row is a different number (ablation/reproduction), not a duplicate.",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#46 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/triangular_36_P",
+      "method": "LCN, special kernel",
+      "energy": -79.2144
+    },
+    "field": "reference",
+    "to": "Fu, Zhang, Zhang, Ling, Xu & Ji, Lattice Convolutional Networks for Learning Ground States of Quantum Many-Body Systems, Proc. 2024 SIAM Int. Conf. on Data Mining (SDM), pp. 490-498 (2024), arXiv:2206.07370",
+    "reported_as": "-0.5501(6) (per site, S.S units)",
+    "location": "Table 3, Triangular 36, J2 = 0, Special Kernel",
+    "version_read": "arXiv:2206.07370v1 (only arXiv version; HTML parsed with node, cross-checked against the project's pypdf text sources/2206.07370.txt). Journal version (SDM 2024, doi:10.1137/1.9781611978032.57) not reached: epubs.siam.org returned HTTP 403 to the PDF and the landing page; Unpaywall lists only the arXiv copy",
+    "conversion": "-0.5501(6) x 4 x 36 = -79.2144; sigma 6e-4 x 144 = 0.0864",
+    "checked_on": "2026-11-28",
+    "reason": "'Society for Industrial and Applied Mathematics eBooks' is OpenAlex's platform name, not the venue; the paper is in the Proceedings of the 2024 SIAM International Conference on Data Mining (SDM), pp. 490-498 (Crossref 10.1137/1.9781611978032.57, book-chapter), and the instance rows of the same paper loaded earlier (honeycomb-7x7_98_P, triangular_36_P) carry the proposed string, so the paper splits into two reference entries. peer_reviewed true stands (refereed proceedings). Value check passed: -0.5501(6) x 4 x 36 = -79.2144; sigma 6e-4 x 144 = 0.0864, stored -79.2144 / 0.0864. Cluster and units: periodic Kochkov et al. clusters, S.S per site (the paper's own exact references -0.678872, -0.503810, -0.5603734, -0.43837653 fix the units despite the Pauli definition in Eq. 6); bar = std of 100 bin means (Sec. 5), stored as printed; bound_type variational (VMC, 200,000 samples); own computation. Duplicate check: the instance already carries this paper's main LCN value -0.5601(4) (sweep-tables-2026-09-14, via arXiv:2505.20406); this row is a different number (ablation/reproduction), not a duplicate.",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#47 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/triangular_36_P",
+      "method": "LCN, zero padding",
+      "energy": -73.5696
+    },
+    "field": "reference",
+    "to": "Fu, Zhang, Zhang, Ling, Xu & Ji, Lattice Convolutional Networks for Learning Ground States of Quantum Many-Body Systems, Proc. 2024 SIAM Int. Conf. on Data Mining (SDM), pp. 490-498 (2024), arXiv:2206.07370",
+    "reported_as": "-0.5109(6) (per site, S.S units)",
+    "location": "Table 6, Triangular 36, J2 = 0, Zero padding",
+    "version_read": "arXiv:2206.07370v1 (only arXiv version; HTML parsed with node, cross-checked against the project's pypdf text sources/2206.07370.txt). Journal version (SDM 2024, doi:10.1137/1.9781611978032.57) not reached: epubs.siam.org returned HTTP 403 to the PDF and the landing page; Unpaywall lists only the arXiv copy",
+    "conversion": "-0.5109(6) x 4 x 36 = -73.5696; sigma 6e-4 x 144 = 0.0864",
+    "checked_on": "2026-11-28",
+    "reason": "'Society for Industrial and Applied Mathematics eBooks' is OpenAlex's platform name, not the venue; the paper is in the Proceedings of the 2024 SIAM International Conference on Data Mining (SDM), pp. 490-498 (Crossref 10.1137/1.9781611978032.57, book-chapter), and the instance rows of the same paper loaded earlier (honeycomb-7x7_98_P, triangular_36_P) carry the proposed string, so the paper splits into two reference entries. peer_reviewed true stands (refereed proceedings). Value check passed: -0.5109(6) x 4 x 36 = -73.5696; sigma 6e-4 x 144 = 0.0864, stored -73.5696 / 0.0864. Cluster and units: periodic Kochkov et al. clusters, S.S per site (the paper's own exact references -0.678872, -0.503810, -0.5603734, -0.43837653 fix the units despite the Pauli definition in Eq. 6); bar = std of 100 bin means (Sec. 5), stored as printed; bound_type variational (VMC, 200,000 samples); own computation. Duplicate check: the instance already carries this paper's main LCN value -0.5601(4) (sweep-tables-2026-09-14, via arXiv:2505.20406); this row is a different number (ablation/reproduction), not a duplicate.",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#48 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "LCN",
+      "energy": -198.28
+    },
+    "field": "reference",
+    "to": "Fu, Zhang, Zhang, Ling, Xu & Ji, Lattice Convolutional Networks for Learning Ground States of Quantum Many-Body Systems, Proc. 2024 SIAM Int. Conf. on Data Mining (SDM), pp. 490-498 (2024), arXiv:2206.07370",
+    "reported_as": "-0.4957(4) (per site, S.S units)",
+    "location": "Table 1, Square 100, J2 = 0.5, column LCN (ours)",
+    "version_read": "arXiv:2206.07370v1 (only arXiv version; HTML parsed with node, cross-checked against the project's pypdf text sources/2206.07370.txt). Journal version (SDM 2024, doi:10.1137/1.9781611978032.57) not reached: epubs.siam.org returned HTTP 403 to the PDF and the landing page; Unpaywall lists only the arXiv copy",
+    "conversion": "-0.4957(4) x 4 x 100 = -198.28; sigma 4e-4 x 400 = 0.16",
+    "checked_on": "2026-11-28",
+    "reason": "'Society for Industrial and Applied Mathematics eBooks' is OpenAlex's platform name, not the venue; the paper is in the Proceedings of the 2024 SIAM International Conference on Data Mining (SDM), pp. 490-498 (Crossref 10.1137/1.9781611978032.57, book-chapter), and the instance rows of the same paper loaded earlier (honeycomb-7x7_98_P, triangular_36_P) carry the proposed string, so the paper splits into two reference entries. peer_reviewed true stands (refereed proceedings). Value check passed: -0.4957(4) x 4 x 100 = -198.28; sigma 4e-4 x 400 = 0.16, stored -198.28 / 0.16. Cluster and units: periodic Kochkov et al. clusters, S.S per site (the paper's own exact references -0.678872, -0.503810, -0.5603734, -0.43837653 fix the units despite the Pauli definition in Eq. 6); bar = std of 100 bin means (Sec. 5), stored as printed; bound_type variational (VMC, 200,000 samples); own computation. Duplicate check: the instance's FN-GFMC row of Lin et al. (-198.28, sigma 0.08) is another paper and method with the same 4-digit value: not a duplicate.",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#49 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.5",
+      "method": "LCN",
+      "energy": -72.3168
+    },
+    "field": "reference",
+    "to": "Fu, Zhang, Zhang, Ling, Xu & Ji, Lattice Convolutional Networks for Learning Ground States of Quantum Many-Body Systems, Proc. 2024 SIAM Int. Conf. on Data Mining (SDM), pp. 490-498 (2024), arXiv:2206.07370",
+    "reported_as": "-0.5022(2) (per site, S.S units)",
+    "location": "Table 1, Square 36, J2 = 0.5, column LCN (ours)",
+    "version_read": "arXiv:2206.07370v1 (only arXiv version; HTML parsed with node, cross-checked against the project's pypdf text sources/2206.07370.txt). Journal version (SDM 2024, doi:10.1137/1.9781611978032.57) not reached: epubs.siam.org returned HTTP 403 to the PDF and the landing page; Unpaywall lists only the arXiv copy",
+    "conversion": "-0.5022(2) x 4 x 36 = -72.3168; sigma 2e-4 x 144 = 0.0288",
+    "checked_on": "2026-11-28",
+    "reason": "'Society for Industrial and Applied Mathematics eBooks' is OpenAlex's platform name, not the venue; the paper is in the Proceedings of the 2024 SIAM International Conference on Data Mining (SDM), pp. 490-498 (Crossref 10.1137/1.9781611978032.57, book-chapter), and the instance rows of the same paper loaded earlier (honeycomb-7x7_98_P, triangular_36_P) carry the proposed string, so the paper splits into two reference entries. peer_reviewed true stands (refereed proceedings). Value check passed: -0.5022(2) x 4 x 36 = -72.3168; sigma 2e-4 x 144 = 0.0288, stored -72.3168 / 0.0288. Cluster and units: periodic Kochkov et al. clusters, S.S per site (the paper's own exact references -0.678872, -0.503810, -0.5603734, -0.43837653 fix the units despite the Pauli definition in Eq. 6); bar = std of 100 bin means (Sec. 5), stored as printed; bound_type variational (VMC, 200,000 samples); own computation. Duplicate check: the instance's Kochkov et al. row -0.5022 (sigma (4)) is the GNN value this paper quotes as -0.5022(4); the LCN -0.5022(2) is the paper's own: not a duplicate.",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#50 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "HEG2D/triangular_16_P_16_0_30",
+      "method": "VMC, plane-wave determinant with Jastrow (PW)",
+      "energy": -0.50944
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-0.03184(1) (E, Ha*, per electron)",
+    "location": "Table 3, r_s = 30, case clean, family PW",
+    "version_read": "arXiv:2611.01899v1 (arXiv HTML parsed with node; the only version, posted 2026-11-01); arXiv API shows no journal_ref or DOI and Crossref has no record (title search 2026-11-28)",
+    "conversion": "-0.03184(1) Ha*/electron x 16 = -0.50944; sigma 1e-5 x 16 = 0.00016",
+    "checked_on": "2026-11-28",
+    "reason": "The paper is an arXiv preprint only (v1, 2026-11-01; arXiv API: no journal_ref, no DOI; Crossref title search finds nothing); the row's own reference names 'arXiv' as venue. An arXiv-only paper is peer_reviewed false (2026-10-24 finding). Value check passed: -0.03184(1) Ha*/electron x 16 = -0.50944; sigma 1e-5 x 16 = 0.00016, stored -0.50944 / 0.00016. Convention: rhombic 4x4-triangular cell, area pi N rs^2, N = 16 polarized, Gamma (13 closed-shell momenta + zero-momentum triplet), Ewald; the text says the q = 0 background constants are omitted, but the energies agree with the instance's Li et al. VMC rows (-0.0318951, -0.0319657 per electron, Madelung energy included) within 6e-5 Ha*/electron (PW 5.5e-5 above -0.0318951; PG 3.5e-5 below it and 3.6e-5 above -0.0319657), while dropping the Madelung constant would move them by about 0.01 Ha*/electron (order-of-magnitude estimate: half the 2D Madelung energy of a 16-electron cell at rs = 30), so the stored convention holds (the loader's 'held' remark is settled). Sigma: larger of chain-to-chain SE and reblocking plateau (App. A.1). bound_type variational (VMC), own computation.",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#51 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "HEG2D/triangular_16_P_16_0_30",
+      "method": "VMC, lattice-Gaussian orbital determinant with Jastrow (PG)",
+      "energy": -0.51088
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-0.03193(1) (E, Ha*, per electron)",
+    "location": "Table 3, r_s = 30, case clean, family PG (marked * as lowest)",
+    "version_read": "arXiv:2611.01899v1 (arXiv HTML parsed with node; the only version, posted 2026-11-01); arXiv API shows no journal_ref or DOI and Crossref has no record (title search 2026-11-28)",
+    "conversion": "-0.03193(1) Ha*/electron x 16 = -0.51088; sigma 1e-5 x 16 = 0.00016",
+    "checked_on": "2026-11-28",
+    "reason": "The paper is an arXiv preprint only (v1, 2026-11-01; arXiv API: no journal_ref, no DOI; Crossref title search finds nothing); the row's own reference names 'arXiv' as venue. An arXiv-only paper is peer_reviewed false (2026-10-24 finding). Value check passed: -0.03193(1) Ha*/electron x 16 = -0.51088; sigma 1e-5 x 16 = 0.00016, stored -0.51088 / 0.00016. Convention: rhombic 4x4-triangular cell, area pi N rs^2, N = 16 polarized, Gamma (13 closed-shell momenta + zero-momentum triplet), Ewald; the text says the q = 0 background constants are omitted, but the energies agree with the instance's Li et al. VMC rows (-0.0318951, -0.0319657 per electron, Madelung energy included) within 6e-5 Ha*/electron (PW 5.5e-5 above -0.0318951; PG 3.5e-5 below it and 3.6e-5 above -0.0319657), while dropping the Madelung constant would move them by about 0.01 Ha*/electron (order-of-magnitude estimate: half the 2D Madelung energy of a 16-electron cell at rs = 30), so the stored convention holds (the loader's 'held' remark is settled). Sigma: larger of chain-to-chain SE and reblocking plateau (App. A.1). bound_type variational (VMC), own computation.",
+    "source_entry": "RP3-hubbard-j1j2-heisenberg-heg2d#52 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x12_48_P_21_8",
+      "method": "Deep BF with one Lanczos step",
+      "energy": -36.7776
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-0.7662 per site",
+    "location": "Sec. III.1, paragraph after Eq. (9): \"Deep BF Lanczos achieves an energy of -0.7662 per site, sitting slightly below HFPS\" (4x12)",
+    "version_read": "arXiv:2609.26544v1 (only version; no journal version found via arXiv jref or Crossref title search on 2026-11-28), arXiv HTML parsed locally with node (tag strip, MathML alttext)",
+    "conversion": "-0.7662 x 48 = -36.7776 (value confirmed; only peer_reviewed changes)",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.26544 has one version (v1, 22 Sep 2026), no journal reference on arXiv and no published version found by Crossref title search (2026-11-28); OpenAlex lists it as a preprint. RULES.md 8.1: peer_reviewed follows the venue that printed the number. Value, lattice, PBC in both directions (Sec. III: \"periodic boundary conditions applied on both spatial directions\"), U/t=8, filling 1/8 doping (Nf = 7N/16 per spin, N_up = N_dn assumed: not printed), Hamiltonian Eq. (1) = standard VarBench form (no shift), bound_type all agree; no numerical error bar printed (\"error bars are smaller than the markers\").",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#0 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "Deep BF (embedding dimension 64)",
+      "energy": -48.6272
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-0.7598 per site",
+    "location": "Sec. III.1: \"On the largest 4x16 lattice, the Deep BF model achieves an energy of -0.7598 per site\" (embedding dimension 64 for the doped case, same paragraph)",
+    "version_read": "arXiv:2609.26544v1 (only version; no journal version found via arXiv jref or Crossref title search on 2026-11-28), arXiv HTML parsed locally with node (tag strip, MathML alttext)",
+    "conversion": "-0.7598 x 64 = -48.6272 (value confirmed; only peer_reviewed changes)",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.26544 has one version (v1, 22 Sep 2026), no journal reference on arXiv and no published version found by Crossref title search (2026-11-28); OpenAlex lists it as a preprint. RULES.md 8.1: peer_reviewed follows the venue that printed the number. Value, lattice, PBC in both directions (Sec. III: \"periodic boundary conditions applied on both spatial directions\"), U/t=8, filling 1/8 doping (Nf = 7N/16 per spin, N_up = N_dn assumed: not printed), Hamiltonian Eq. (1) = standard VarBench form (no shift), bound_type all agree; no numerical error bar printed (\"error bars are smaller than the markers\").",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#1 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_P_28_8",
+      "method": "Deep BF with one Lanczos step",
+      "energy": -48.7808
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-0.7622 per site",
+    "location": "Sec. III.1: \"Deep BF Lanczos finishes at -0.7622 per site\" (4x16)",
+    "version_read": "arXiv:2609.26544v1 (only version; no journal version found via arXiv jref or Crossref title search on 2026-11-28), arXiv HTML parsed locally with node (tag strip, MathML alttext)",
+    "conversion": "-0.7622 x 64 = -48.7808 (value confirmed; only peer_reviewed changes)",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.26544 has one version (v1, 22 Sep 2026), no journal reference on arXiv and no published version found by Crossref title search (2026-11-28); OpenAlex lists it as a preprint. RULES.md 8.1: peer_reviewed follows the venue that printed the number. Value, lattice, PBC in both directions (Sec. III: \"periodic boundary conditions applied on both spatial directions\"), U/t=8, filling 1/8 doping (Nf = 7N/16 per spin, N_up = N_dn assumed: not printed), Hamiltonian Eq. (1) = standard VarBench form (no shift), bound_type all agree; no numerical error bar printed (\"error bars are smaller than the markers\").",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#2 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x8_32_P_14_8",
+      "method": "Deep BF (embedding dimension 64)",
+      "energy": -24.5088
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-0.7659 per site",
+    "location": "Sec. III.1: \"On the 4x8 lattice, the Deep BF result reaches an energy of -0.7659 per site\"; \"a network embedding dimension of 64 was used\"",
+    "version_read": "arXiv:2609.26544v1 (only version; no journal version found via arXiv jref or Crossref title search on 2026-11-28), arXiv HTML parsed locally with node (tag strip, MathML alttext)",
+    "conversion": "-0.7659 x 32 = -24.5088 (value confirmed; only peer_reviewed changes)",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.26544 has one version (v1, 22 Sep 2026), no journal reference on arXiv and no published version found by Crossref title search (2026-11-28); OpenAlex lists it as a preprint. RULES.md 8.1: peer_reviewed follows the venue that printed the number. Value, lattice, PBC in both directions (Sec. III: \"periodic boundary conditions applied on both spatial directions\"), U/t=8, filling 1/8 doping (Nf = 7N/16 per spin, N_up = N_dn assumed: not printed), Hamiltonian Eq. (1) = standard VarBench form (no shift), bound_type all agree; no numerical error bar printed (\"error bars are smaller than the markers\").",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#3 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x8_32_P_14_8",
+      "method": "Deep BF with one Lanczos step",
+      "energy": -24.5472
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-0.7671 per site",
+    "location": "Sec. III.1: \"Deep BF Lanczos, the latter of which yields the lowest energy point estimate on this geometry at -0.7671 per site\" (4x8)",
+    "version_read": "arXiv:2609.26544v1 (only version; no journal version found via arXiv jref or Crossref title search on 2026-11-28), arXiv HTML parsed locally with node (tag strip, MathML alttext)",
+    "conversion": "-0.7671 x 32 = -24.5472 (value confirmed; only peer_reviewed changes)",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.26544 has one version (v1, 22 Sep 2026), no journal reference on arXiv and no published version found by Crossref title search (2026-11-28); OpenAlex lists it as a preprint. RULES.md 8.1: peer_reviewed follows the venue that printed the number. Value, lattice, PBC in both directions (Sec. III: \"periodic boundary conditions applied on both spatial directions\"), U/t=8, filling 1/8 doping (Nf = 7N/16 per spin, N_up = N_dn assumed: not printed), Hamiltonian Eq. (1) = standard VarBench form (no shift), bound_type all agree; no numerical error bar printed (\"error bars are smaller than the markers\").",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#4 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x8_32_P_14_8",
+      "method": "Deep BF, zero-variance linear extrapolation over Net 1-4",
+      "energy": -24.5792
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-0.7681 per site",
+    "location": "Fig. 6 caption \"yielding E_extrap=-0.7681\" and text \"we arrive at an estimated ground-state energy of -0.7681 per site\" (linear fit of Net 1-4 against variance per site, 4x8)",
+    "version_read": "arXiv:2609.26544v1 (only version; no journal version found via arXiv jref or Crossref title search on 2026-11-28), arXiv HTML parsed locally with node (tag strip, MathML alttext)",
+    "conversion": "-0.7681 x 32 = -24.5792 (value confirmed; only peer_reviewed changes)",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.26544 has one version (v1, 22 Sep 2026), no journal reference on arXiv and no published version found by Crossref title search (2026-11-28); OpenAlex lists it as a preprint. RULES.md 8.1: peer_reviewed follows the venue that printed the number. Value, lattice, PBC in both directions (Sec. III: \"periodic boundary conditions applied on both spatial directions\"), U/t=8, filling 1/8 doping (Nf = 7N/16 per spin, N_up = N_dn assumed: not printed), Hamiltonian Eq. (1) = standard VarBench form (no shift), bound_type all agree; no numerical error bar printed (\"error bars are smaller than the markers\").",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#5 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x8_32_P_14_8",
+      "method": "Net 1 (simple backflow, independent coefficients, d=32)",
+      "energy": -24.394
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-24.394 (total)",
+    "location": "Table 1 (\"The last column reports total energies\"), row Net 1 (Simple, Independent, d=32, 44,861 params), 4x8 at 1/8 doping, U/t=8 (Sec. III.1 text)",
+    "version_read": "arXiv:2609.26544v1 (only version; no journal version found via arXiv jref or Crossref title search on 2026-11-28), arXiv HTML parsed locally with node (tag strip, MathML alttext)",
+    "conversion": "stored as printed total -24.394 (value confirmed; only peer_reviewed changes)",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.26544 has one version (v1, 22 Sep 2026), no journal reference on arXiv and no published version found by Crossref title search (2026-11-28); OpenAlex lists it as a preprint. RULES.md 8.1: peer_reviewed follows the venue that printed the number. Value, lattice, PBC in both directions (Sec. III: \"periodic boundary conditions applied on both spatial directions\"), U/t=8, filling 1/8 doping (Nf = 7N/16 per spin, N_up = N_dn assumed: not printed), Hamiltonian Eq. (1) = standard VarBench form (no shift), bound_type all agree; no numerical error bar printed (\"error bars are smaller than the markers\").",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#6 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x8_32_P_14_8",
+      "method": "Net 2 (simple backflow, dependent coefficients, d=32)",
+      "energy": -24.419
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-24.419 (total)",
+    "location": "Table 1, row Net 2 (Simple, Dependent, d=32, 54,109 params)",
+    "version_read": "arXiv:2609.26544v1 (only version; no journal version found via arXiv jref or Crossref title search on 2026-11-28), arXiv HTML parsed locally with node (tag strip, MathML alttext)",
+    "conversion": "stored as printed total -24.419 (value confirmed; only peer_reviewed changes)",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.26544 has one version (v1, 22 Sep 2026), no journal reference on arXiv and no published version found by Crossref title search (2026-11-28); OpenAlex lists it as a preprint. RULES.md 8.1: peer_reviewed follows the venue that printed the number. Value, lattice, PBC in both directions (Sec. III: \"periodic boundary conditions applied on both spatial directions\"), U/t=8, filling 1/8 doping (Nf = 7N/16 per spin, N_up = N_dn assumed: not printed), Hamiltonian Eq. (1) = standard VarBench form (no shift), bound_type all agree; no numerical error bar printed (\"error bars are smaller than the markers\").",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#7 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x8_32_P_14_8",
+      "method": "Net 3 (deep backflow, dependent coefficients, d=32)",
+      "energy": -24.464
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-24.464 (total)",
+    "location": "Table 1, row Net 3 (Deep, Dependent, d=32, 61,317 params)",
+    "version_read": "arXiv:2609.26544v1 (only version; no journal version found via arXiv jref or Crossref title search on 2026-11-28), arXiv HTML parsed locally with node (tag strip, MathML alttext)",
+    "conversion": "stored as printed total -24.464 (value confirmed; only peer_reviewed changes)",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.26544 has one version (v1, 22 Sep 2026), no journal reference on arXiv and no published version found by Crossref title search (2026-11-28); OpenAlex lists it as a preprint. RULES.md 8.1: peer_reviewed follows the venue that printed the number. Value, lattice, PBC in both directions (Sec. III: \"periodic boundary conditions applied on both spatial directions\"), U/t=8, filling 1/8 doping (Nf = 7N/16 per spin, N_up = N_dn assumed: not printed), Hamiltonian Eq. (1) = standard VarBench form (no shift), bound_type all agree; no numerical error bar printed (\"error bars are smaller than the markers\").",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#8 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_100_P_50_8",
+      "method": "Deep BF (multi-determinant neural network backflow)",
+      "energy": -52.31
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-0.5231 per site",
+    "location": "Sec. III.1: \"On the largest 10x10 lattice, the Deep BF result reaches -0.5231 per site\"",
+    "version_read": "arXiv:2609.26544v1 (only version; no journal version found via arXiv jref or Crossref title search on 2026-11-28), arXiv HTML parsed locally with node (tag strip, MathML alttext)",
+    "conversion": "-0.5231 x 100 = -52.31 (value confirmed; only peer_reviewed changes)",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.26544 has one version (v1, 22 Sep 2026), no journal reference on arXiv and no published version found by Crossref title search (2026-11-28); OpenAlex lists it as a preprint. RULES.md 8.1: peer_reviewed follows the venue that printed the number. Value, lattice, PBC in both directions (Sec. III: \"periodic boundary conditions applied on both spatial directions\"), U/t=8, filling half filling (Nf = N/2 per spin), Hamiltonian Eq. (1) = standard VarBench form (no shift), bound_type all agree; no numerical error bar printed (\"error bars are smaller than the markers\").",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#9 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_36_P_18_8",
+      "method": "Deep BF (multi-determinant neural network backflow)",
+      "energy": -18.9648
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-0.5268 per site",
+    "location": "Sec. III.1: \"On the 6x6 lattice, the Deep BF model achieves a variational energy of -0.5268 per site, lying below the BW1 and BW2 point estimates\"",
+    "version_read": "arXiv:2609.26544v1 (only version; no journal version found via arXiv jref or Crossref title search on 2026-11-28), arXiv HTML parsed locally with node (tag strip, MathML alttext)",
+    "conversion": "-0.5268 x 36 = -18.9648 (value confirmed; only peer_reviewed changes)",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.26544 has one version (v1, 22 Sep 2026), no journal reference on arXiv and no published version found by Crossref title search (2026-11-28); OpenAlex lists it as a preprint. RULES.md 8.1: peer_reviewed follows the venue that printed the number. Value, lattice, PBC in both directions (Sec. III: \"periodic boundary conditions applied on both spatial directions\"), U/t=8, filling half filling (Nf = N/2 per spin), Hamiltonian Eq. (1) = standard VarBench form (no shift), bound_type all agree; no numerical error bar printed (\"error bars are smaller than the markers\").",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#10 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_P_32_8",
+      "method": "Deep BF (multi-determinant neural network backflow)",
+      "energy": -33.568
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-0.5245 per site",
+    "location": "Sec. III.1: \"For the intermediate 8x8 geometry, Deep BF yields an energy of -0.5245 per site\"",
+    "version_read": "arXiv:2609.26544v1 (only version; no journal version found via arXiv jref or Crossref title search on 2026-11-28), arXiv HTML parsed locally with node (tag strip, MathML alttext)",
+    "conversion": "-0.5245 x 64 = -33.568 (value confirmed; only peer_reviewed changes)",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.26544 has one version (v1, 22 Sep 2026), no journal reference on arXiv and no published version found by Crossref title search (2026-11-28); OpenAlex lists it as a preprint. RULES.md 8.1: peer_reviewed follows the venue that printed the number. Value, lattice, PBC in both directions (Sec. III: \"periodic boundary conditions applied on both spatial directions\"), U/t=8, filling half filling (Nf = N/2 per spin), Hamiltonian Eq. (1) = standard VarBench form (no shift), bound_type all agree; no numerical error bar printed (\"error bars are smaller than the markers\"). The same per-site value -0.5245 is printed by arXiv:2606.00924 for HB K = 2 (a different method and paper): not a duplicate.",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#11 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-10x10_300_P",
+      "method": "ViT (transformer) nl=8, h=12, d=72, time-reversal symmetric, C6v A1 projected",
+      "energy": -523.1364
+    },
+    "field": "energy_variance",
+    "to": 19.2,
+    "reported_as": "L=10: energy per site -0.435947(3), variance per site 0.00400(2), V_even 0.0211(1)",
+    "location": "End Matter, Table 1, row L=10",
+    "version_read": "arXiv:2611.18840v1 (only version, 13 Nov 2026; no journal version), arXiv HTML parsed locally with node",
+    "conversion": "Variance per site is Var(H)/N in S.S units: V = v/e^2 = 0.004/-0.435947^2 = 0.02105 reproduces the printed V-score 0.0211(1) (Var(H/N) would give N times that). Stored Pauli total: 16 x N x v = 16 x 300 x 0.004 = 19.2. Energy -0.435947 x 1200 = -523.1364 and sigma 3e-6 x 1200 = 0.0036 agree with the stored values.",
+    "checked_on": "2026-11-28",
+    "reason": "The variance is printed and its convention is fixed by the printed V-score; the row stores null (\"convention not verified\"). With it the row gets a V-score. Energy, sigma, torus (fully periodic L x L, N = 3L^2), H = J sum S.S with J = 1 (Eq. 1), sector (Gamma, Sz=0, P=+1, then C6v A1; L=16 without the point-group stage), bound_type variational all agree.",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#12 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-12x12_432_P",
+      "method": "ViT (transformer) nl=8, h=12, d=72, time-reversal symmetric, C6v A1 projected",
+      "energy": -753.084864
+    },
+    "field": "energy_variance",
+    "to": 28.40832,
+    "reported_as": "L=12: energy per site -0.435813(2), variance per site 0.00411(2), V_even 0.0216(1)",
+    "location": "End Matter, Table 1, row L=12",
+    "version_read": "arXiv:2611.18840v1 (only version, 13 Nov 2026; no journal version), arXiv HTML parsed locally with node",
+    "conversion": "Variance per site is Var(H)/N in S.S units: V = v/e^2 = 0.00411/-0.435813^2 = 0.02164 reproduces the printed V-score 0.0216(1) (Var(H/N) would give N times that). Stored Pauli total: 16 x N x v = 16 x 432 x 0.00411 = 28.40832. Energy -0.435813 x 1728 = -753.084864 and sigma 2e-6 x 1728 = 0.003456 agree with the stored values.",
+    "checked_on": "2026-11-28",
+    "reason": "The variance is printed and its convention is fixed by the printed V-score; the row stores null (\"convention not verified\"). With it the row gets a V-score. Energy, sigma, torus (fully periodic L x L, N = 3L^2), H = J sum S.S with J = 1 (Eq. 1), sector (Gamma, Sz=0, P=+1, then C6v A1; L=16 without the point-group stage), bound_type variational all agree.",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#13 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-16x16_768_P",
+      "method": "ViT (transformer) nl=8, h=12, d=72, time-reversal symmetric, no point-group projection",
+      "energy": -1336.96512
+    },
+    "field": "energy_variance",
+    "to": 72.86784,
+    "reported_as": "L=16: energy per site -0.435210(2), variance per site 0.00593(2), V_even 0.0313(1)",
+    "location": "End Matter, Table 1, row L=16 (16*, before point-group projection)",
+    "version_read": "arXiv:2611.18840v1 (only version, 13 Nov 2026; no journal version), arXiv HTML parsed locally with node",
+    "conversion": "Variance per site is Var(H)/N in S.S units: V = v/e^2 = 0.00593/-0.43521^2 = 0.03131 reproduces the printed V-score 0.0313(1) (Var(H/N) would give N times that). Stored Pauli total: 16 x N x v = 16 x 768 x 0.00593 = 72.86784. Energy -0.43521 x 3072 = -1336.96512 and sigma 2e-6 x 3072 = 0.006144 agree with the stored values.",
+    "checked_on": "2026-11-28",
+    "reason": "The variance is printed and its convention is fixed by the printed V-score; the row stores null (\"convention not verified\"). With it the row gets a V-score. Energy, sigma, torus (fully periodic L x L, N = 3L^2), H = J sum S.S with J = 1 (Eq. 1), sector (Gamma, Sz=0, P=+1, then C6v A1; L=16 without the point-group stage), bound_type variational all agree.",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#14 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-4x4_48_P",
+      "method": "ViT (transformer) nl=8, h=12, d=72, time-reversal symmetric, C6v A1 projected",
+      "energy": -84.125952
+    },
+    "field": "energy_variance",
+    "to": 1.06752,
+    "reported_as": "L=4: energy per site -0.438156(4), variance per site 0.00139(1), V_even 0.00722(4)",
+    "location": "End Matter, Table 1, row L=4",
+    "version_read": "arXiv:2611.18840v1 (only version, 13 Nov 2026; no journal version), arXiv HTML parsed locally with node",
+    "conversion": "Variance per site is Var(H)/N in S.S units: V = v/e^2 = 0.00139/-0.438156^2 = 0.00724 reproduces the printed V-score 0.00722(4) (Var(H/N) would give N times that). Stored Pauli total: 16 x N x v = 16 x 48 x 0.00139 = 1.06752. Energy -0.438156 x 192 = -84.125952 and sigma 4e-6 x 192 = 0.000768 agree with the stored values.",
+    "checked_on": "2026-11-28",
+    "reason": "The variance is printed and its convention is fixed by the printed V-score; the row stores null (\"convention not verified\"). With it the row gets a V-score. Energy, sigma, torus (fully periodic L x L, N = 3L^2), H = J sum S.S with J = 1 (Eq. 1), sector (Gamma, Sz=0, P=+1, then C6v A1; L=16 without the point-group stage), bound_type variational all agree.",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#15 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-6x6_108_P",
+      "method": "ViT (transformer) nl=8, h=12, d=72, time-reversal symmetric, C6v A1 projected",
+      "energy": -188.692416
+    },
+    "field": "energy_variance",
+    "to": 4.63104,
+    "reported_as": "L=6: energy per site -0.436788(4), variance per site 0.00268(4), V_even 0.0141(2)",
+    "location": "End Matter, Table 1, row L=6",
+    "version_read": "arXiv:2611.18840v1 (only version, 13 Nov 2026; no journal version), arXiv HTML parsed locally with node",
+    "conversion": "Variance per site is Var(H)/N in S.S units: V = v/e^2 = 0.00268/-0.436788^2 = 0.01405 reproduces the printed V-score 0.0141(2) (Var(H/N) would give N times that). Stored Pauli total: 16 x N x v = 16 x 108 x 0.00268 = 4.63104. Energy -0.436788 x 432 = -188.692416 and sigma 4e-6 x 432 = 0.001728 agree with the stored values.",
+    "checked_on": "2026-11-28",
+    "reason": "The variance is printed and its convention is fixed by the printed V-score; the row stores null (\"convention not verified\"). With it the row gets a V-score. Energy, sigma, torus (fully periodic L x L, N = 3L^2), H = J sum S.S with J = 1 (Eq. 1), sector (Gamma, Sz=0, P=+1, then C6v A1; L=16 without the point-group stage), bound_type variational all agree.",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#16 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-8x8_192_P",
+      "method": "ViT (transformer) nl=8, h=12, d=72, time-reversal symmetric, C6v A1 projected",
+      "energy": -335.041536
+    },
+    "field": "energy_variance",
+    "to": 12.41088,
+    "reported_as": "L=8: energy per site -0.436252(3), variance per site 0.00404(2), V_even 0.0212(1)",
+    "location": "End Matter, Table 1, row L=8",
+    "version_read": "arXiv:2611.18840v1 (only version, 13 Nov 2026; no journal version), arXiv HTML parsed locally with node",
+    "conversion": "Variance per site is Var(H)/N in S.S units: V = v/e^2 = 0.00404/-0.436252^2 = 0.02123 reproduces the printed V-score 0.0212(1) (Var(H/N) would give N times that). Stored Pauli total: 16 x N x v = 16 x 192 x 0.00404 = 12.41088. Energy -0.436252 x 768 = -335.041536 and sigma 3e-6 x 768 = 0.002304 agree with the stored values.",
+    "checked_on": "2026-11-28",
+    "reason": "The variance is printed and its convention is fixed by the printed V-score; the row stores null (\"convention not verified\"). With it the row gets a V-score. Energy, sigma, torus (fully periodic L x L, N = 3L^2), H = J sum S.S with J = 1 (Eq. 1), sector (Gamma, Sz=0, P=+1, then C6v A1; L=16 without the point-group stage), bound_type variational all agree.",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#17 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "SR, ViT (depth 8, d=72, 12 heads, identity symmetry only)",
+      "energy": -127.64592
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-1.9944675 (endpoint energy per site, Pauli units)",
+    "location": "Figure 5(b) table, pair 1, column SR; Appendix C.4",
+    "version_read": "arXiv:2609.23334v1 (only version, 20 Sep 2026; no journal version found), arXiv HTML parsed locally with node",
+    "conversion": "-1.9944675 x 64 = -127.64592 (Pauli total; S.S per site -0.498616875); value confirmed, only peer_reviewed changes",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.23334 has one version (v1, 20 Sep 2026), no journal reference and no published version found (Crossref, 2026-11-28); OpenAlex lists a preprint. RULES.md 8.1. Instance checks: C.2 \"H = J1 sum sigma_i.sigma_j + J2 sum ..., J1=1, J2=0.5 ... Pauli vector\", \"fully periodic, with 128 bonds of each coupling type, and sampling is restricted to sum S^z = 0\"; C.4: ViT depth 8, d=72, 12 heads, identity symmetry only, endpoint from 8,388,608 fresh samples. No per-energy error bar is printed: the pair column +3.69 +- 1.09 (1e-5, Pauli per site) combines the two runs' Monte Carlo standard errors in quadrature, so each run's SE is below that value (about 7.5e-6 Pauli per site if equal; not printed, not proposed).",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#21 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "SR, ViT (depth 8, d=72, 12 heads, identity symmetry only)",
+      "energy": -127.64448
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-1.9944450 (endpoint energy per site, Pauli units)",
+    "location": "Figure 5(b) table, pair 2, column SR; Appendix C.4",
+    "version_read": "arXiv:2609.23334v1 (only version, 20 Sep 2026; no journal version found), arXiv HTML parsed locally with node",
+    "conversion": "-1.9944450 x 64 = -127.64448 (Pauli total; S.S per site -0.498611250); value confirmed, only peer_reviewed changes",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.23334 has one version (v1, 20 Sep 2026), no journal reference and no published version found (Crossref, 2026-11-28); OpenAlex lists a preprint. RULES.md 8.1. Instance checks: C.2 \"H = J1 sum sigma_i.sigma_j + J2 sum ..., J1=1, J2=0.5 ... Pauli vector\", \"fully periodic, with 128 bonds of each coupling type, and sampling is restricted to sum S^z = 0\"; C.4: ViT depth 8, d=72, 12 heads, identity symmetry only, endpoint from 8,388,608 fresh samples. No per-energy error bar is printed: the pair column -7.10 +- 1.07 (1e-5, Pauli per site) combines the two runs' Monte Carlo standard errors in quadrature, so each run's SE is below that value (about 7.5e-6 Pauli per site if equal; not printed, not proposed).",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#22 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "SR, ViT (depth 8, d=72, 12 heads, identity symmetry only)",
+      "energy": -127.6462912
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-1.9944733 (endpoint energy per site, Pauli units)",
+    "location": "Figure 5(b) table, pair 3, column SR; Appendix C.4",
+    "version_read": "arXiv:2609.23334v1 (only version, 20 Sep 2026; no journal version found), arXiv HTML parsed locally with node",
+    "conversion": "-1.9944733 x 64 = -127.6462912 (Pauli total; S.S per site -0.498618325); value confirmed, only peer_reviewed changes",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.23334 has one version (v1, 20 Sep 2026), no journal reference and no published version found (Crossref, 2026-11-28); OpenAlex lists a preprint. RULES.md 8.1. Instance checks: C.2 \"H = J1 sum sigma_i.sigma_j + J2 sum ..., J1=1, J2=0.5 ... Pauli vector\", \"fully periodic, with 128 bonds of each coupling type, and sampling is restricted to sum S^z = 0\"; C.4: ViT depth 8, d=72, 12 heads, identity symmetry only, endpoint from 8,388,608 fresh samples. No per-energy error bar is printed: the pair column +0.11 +- 1.11 (1e-5, Pauli per site) combines the two runs' Monte Carlo standard errors in quadrature, so each run's SE is below that value (about 7.5e-6 Pauli per site if equal; not printed, not proposed).",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#23 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "SR, ViT (depth 8, d=72, 12 heads, identity symmetry only)",
+      "energy": -127.6453952
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-1.9944593 (endpoint energy per site, Pauli units)",
+    "location": "Figure 5(b) table, pair 4, column SR; Appendix C.4",
+    "version_read": "arXiv:2609.23334v1 (only version, 20 Sep 2026; no journal version found), arXiv HTML parsed locally with node",
+    "conversion": "-1.9944593 x 64 = -127.6453952 (Pauli total; S.S per site -0.498614825); value confirmed, only peer_reviewed changes",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.23334 has one version (v1, 20 Sep 2026), no journal reference and no published version found (Crossref, 2026-11-28); OpenAlex lists a preprint. RULES.md 8.1. Instance checks: C.2 \"H = J1 sum sigma_i.sigma_j + J2 sum ..., J1=1, J2=0.5 ... Pauli vector\", \"fully periodic, with 128 bonds of each coupling type, and sampling is restricted to sum S^z = 0\"; C.4: ViT depth 8, d=72, 12 heads, identity symmetry only, endpoint from 8,388,608 fresh samples. No per-energy error bar is printed: the pair column -0.75 +- 1.04 (1e-5, Pauli per site) combines the two runs' Monte Carlo standard errors in quadrature, so each run's SE is below that value (about 7.5e-6 Pauli per site if equal; not printed, not proposed).",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#24 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "MS-SR, ViT (depth 8, d=72, 12 heads, identity symmetry only)",
+      "energy": -127.6435648
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-1.9944307 (endpoint energy per site, Pauli units)",
+    "location": "Figure 5(b) table, pair 1, column MS-SR; Appendix C.4",
+    "version_read": "arXiv:2609.23334v1 (only version, 20 Sep 2026; no journal version found), arXiv HTML parsed locally with node",
+    "conversion": "-1.9944307 x 64 = -127.6435648 (Pauli total; S.S per site -0.498607675); value confirmed, only peer_reviewed changes",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.23334 has one version (v1, 20 Sep 2026), no journal reference and no published version found (Crossref, 2026-11-28); OpenAlex lists a preprint. RULES.md 8.1. Instance checks: C.2 \"H = J1 sum sigma_i.sigma_j + J2 sum ..., J1=1, J2=0.5 ... Pauli vector\", \"fully periodic, with 128 bonds of each coupling type, and sampling is restricted to sum S^z = 0\"; C.4: ViT depth 8, d=72, 12 heads, identity symmetry only, endpoint from 8,388,608 fresh samples. No per-energy error bar is printed: the pair column +3.69 +- 1.09 (1e-5, Pauli per site) combines the two runs' Monte Carlo standard errors in quadrature, so each run's SE is below that value (about 7.5e-6 Pauli per site if equal; not printed, not proposed).",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#25 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "MS-SR, ViT (depth 8, d=72, 12 heads, identity symmetry only)",
+      "energy": -127.649024
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-1.9945160 (endpoint energy per site, Pauli units)",
+    "location": "Figure 5(b) table, pair 2, column MS-SR; Appendix C.4",
+    "version_read": "arXiv:2609.23334v1 (only version, 20 Sep 2026; no journal version found), arXiv HTML parsed locally with node",
+    "conversion": "-1.9945160 x 64 = -127.649024 (Pauli total; S.S per site -0.498629000); value confirmed, only peer_reviewed changes",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.23334 has one version (v1, 20 Sep 2026), no journal reference and no published version found (Crossref, 2026-11-28); OpenAlex lists a preprint. RULES.md 8.1. Instance checks: C.2 \"H = J1 sum sigma_i.sigma_j + J2 sum ..., J1=1, J2=0.5 ... Pauli vector\", \"fully periodic, with 128 bonds of each coupling type, and sampling is restricted to sum S^z = 0\"; C.4: ViT depth 8, d=72, 12 heads, identity symmetry only, endpoint from 8,388,608 fresh samples. No per-energy error bar is printed: the pair column -7.10 +- 1.07 (1e-5, Pauli per site) combines the two runs' Monte Carlo standard errors in quadrature, so each run's SE is below that value (about 7.5e-6 Pauli per site if equal; not printed, not proposed).",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#26 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "MS-SR, ViT (depth 8, d=72, 12 heads, identity symmetry only)",
+      "energy": -127.6462208
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-1.9944722 (endpoint energy per site, Pauli units)",
+    "location": "Figure 5(b) table, pair 3, column MS-SR; Appendix C.4",
+    "version_read": "arXiv:2609.23334v1 (only version, 20 Sep 2026; no journal version found), arXiv HTML parsed locally with node",
+    "conversion": "-1.9944722 x 64 = -127.6462208 (Pauli total; S.S per site -0.498618050); value confirmed, only peer_reviewed changes",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.23334 has one version (v1, 20 Sep 2026), no journal reference and no published version found (Crossref, 2026-11-28); OpenAlex lists a preprint. RULES.md 8.1. Instance checks: C.2 \"H = J1 sum sigma_i.sigma_j + J2 sum ..., J1=1, J2=0.5 ... Pauli vector\", \"fully periodic, with 128 bonds of each coupling type, and sampling is restricted to sum S^z = 0\"; C.4: ViT depth 8, d=72, 12 heads, identity symmetry only, endpoint from 8,388,608 fresh samples. No per-energy error bar is printed: the pair column +0.11 +- 1.11 (1e-5, Pauli per site) combines the two runs' Monte Carlo standard errors in quadrature, so each run's SE is below that value (about 7.5e-6 Pauli per site if equal; not printed, not proposed).",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#27 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "MS-SR, ViT (depth 8, d=72, 12 heads, identity symmetry only)",
+      "energy": -127.6458752
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-1.9944668 (endpoint energy per site, Pauli units)",
+    "location": "Figure 5(b) table, pair 4, column MS-SR; Appendix C.4",
+    "version_read": "arXiv:2609.23334v1 (only version, 20 Sep 2026; no journal version found), arXiv HTML parsed locally with node",
+    "conversion": "-1.9944668 x 64 = -127.6458752 (Pauli total; S.S per site -0.498616700); value confirmed, only peer_reviewed changes",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.23334 has one version (v1, 20 Sep 2026), no journal reference and no published version found (Crossref, 2026-11-28); OpenAlex lists a preprint. RULES.md 8.1. Instance checks: C.2 \"H = J1 sum sigma_i.sigma_j + J2 sum ..., J1=1, J2=0.5 ... Pauli vector\", \"fully periodic, with 128 bonds of each coupling type, and sampling is restricted to sum S^z = 0\"; C.4: ViT depth 8, d=72, 12 heads, identity symmetry only, endpoint from 8,388,608 fresh samples. No per-energy error bar is printed: the pair column -0.75 +- 1.04 (1e-5, Pauli per site) combines the two runs' Monte Carlo standard errors in quadrature, so each run's SE is below that value (about 7.5e-6 Pauli per site if equal; not printed, not proposed).",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#28 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_64_P_0.5",
+      "method": "MS-SR, ViT (depth 8, d=72, 12 heads, identity symmetry only)",
+      "energy": -127.6475776
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "-1.9944934 (endpoint energy per site, Pauli units)",
+    "location": "Figure 5(b) table, pair 5, column MS-SR; Appendix C.4",
+    "version_read": "arXiv:2609.23334v1 (only version, 20 Sep 2026; no journal version found), arXiv HTML parsed locally with node",
+    "conversion": "-1.9944934 x 64 = -127.6475776 (Pauli total; S.S per site -0.498623350); value confirmed, only peer_reviewed changes",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv:2609.23334 has one version (v1, 20 Sep 2026), no journal reference and no published version found (Crossref, 2026-11-28); OpenAlex lists a preprint. RULES.md 8.1. Instance checks: C.2 \"H = J1 sum sigma_i.sigma_j + J2 sum ..., J1=1, J2=0.5 ... Pauli vector\", \"fully periodic, with 128 bonds of each coupling type, and sampling is restricted to sum S^z = 0\"; C.4: ViT depth 8, d=72, 12 heads, identity symmetry only, endpoint from 8,388,608 fresh samples. No per-energy error bar is printed: the pair column -4.83 +- 1.02 (1e-5, Pauli per site) combines the two runs' Monte Carlo standard errors in quadrature, so each run's SE is below that value (about 7.5e-6 Pauli per site if equal; not printed, not proposed).",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#29 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_O_28_8",
+      "method": "Tensor-Backflow (E_p=1, one Lanczos step)",
+      "energy": -43.6544
+    },
+    "field": "reference",
+    "to": "X. Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "-0.6821 (per site, units of t)",
+    "location": "Table I (journal; Table 1 in arXiv v4), row n=0.875, U=8, 4 x 16, OBC, column E_{p=1}",
+    "version_read": "Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, publisher PDF fetched 2026-11-28 and extracted with pypdf (layout and plain; page 4 with a raised token budget); cross-checked against arXiv:2507.01856v4 HTML",
+    "conversion": "-0.6821 x 64 = -43.6544 (value confirmed in the journal and in arXiv v4; identical)",
+    "checked_on": "2026-11-28",
+    "reason": "The batch wrote the OpenAlex venue string; the 33 other rows from this paper cite \"Phys. Rev. B 113, 155121 (2026)\". Everything else checks: Eq. (9) is the standard Hubbard H with t=1, t'=0 for Table I (\"All cases are for t'=0\"); per site, since the relative errors printed against fPEPS D=20 GO (-0.6993, -0.6830) reproduce (1.6e-3, 1.3e-3); n=0.875 on 64 sites = 56 electrons, Nf = 28 per spin (N_up = N_dn not printed); OBC printed. The open question of the first reading is settled by the text: \"For the 8x8 and 4x16 lattices under OBC, the wave-function corresponds to all-site backflow\" (journal p. 4, arXiv v4 Sec. III.2), so method_detail could add \"all-site backflow\". No error bar printed (MC samples O(4.5e4)). bound_type variational agrees (p=1 is one Lanczos step on the variational state).",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#39 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/rectangular-4x16_64_O_28_8",
+      "method": "Tensor-Backflow (E_p=0, no Lanczos step)",
+      "energy": -43.5008
+    },
+    "field": "reference",
+    "to": "X. Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "-0.6797 (per site, units of t)",
+    "location": "Table I (journal; Table 1 in arXiv v4), row n=0.875, U=8, 4 x 16, OBC, column E_{p=0}",
+    "version_read": "Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, publisher PDF fetched 2026-11-28 and extracted with pypdf (layout and plain; page 4 with a raised token budget); cross-checked against arXiv:2507.01856v4 HTML",
+    "conversion": "-0.6797 x 64 = -43.5008 (value confirmed in the journal and in arXiv v4; identical)",
+    "checked_on": "2026-11-28",
+    "reason": "The batch wrote the OpenAlex venue string; the 33 other rows from this paper cite \"Phys. Rev. B 113, 155121 (2026)\". Everything else checks: Eq. (9) is the standard Hubbard H with t=1, t'=0 for Table I (\"All cases are for t'=0\"); per site, since the relative errors printed against fPEPS D=20 GO (-0.6993, -0.6830) reproduce (1.6e-3, 1.3e-3); n=0.875 on 64 sites = 56 electrons, Nf = 28 per spin (N_up = N_dn not printed); OBC printed. The open question of the first reading is settled by the text: \"For the 8x8 and 4x16 lattices under OBC, the wave-function corresponds to all-site backflow\" (journal p. 4, arXiv v4 Sec. III.2), so method_detail could add \"all-site backflow\". No error bar printed (MC samples O(4.5e4)). bound_type variational agrees (p=1 is one Lanczos step on the variational state).",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#40 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_O_28_8",
+      "method": "Tensor-Backflow (E_p=1, one Lanczos step)",
+      "energy": -44.6848
+    },
+    "field": "reference",
+    "to": "X. Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "-0.6982 (per site, units of t)",
+    "location": "Table I (journal; Table 1 in arXiv v4), row n=0.875, U=8, 8 x 8, OBC, column E_{p=1}",
+    "version_read": "Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, publisher PDF fetched 2026-11-28 and extracted with pypdf (layout and plain; page 4 with a raised token budget); cross-checked against arXiv:2507.01856v4 HTML",
+    "conversion": "-0.6982 x 64 = -44.6848 (value confirmed in the journal and in arXiv v4; identical)",
+    "checked_on": "2026-11-28",
+    "reason": "The batch wrote the OpenAlex venue string; the 33 other rows from this paper cite \"Phys. Rev. B 113, 155121 (2026)\". Everything else checks: Eq. (9) is the standard Hubbard H with t=1, t'=0 for Table I (\"All cases are for t'=0\"); per site, since the relative errors printed against fPEPS D=20 GO (-0.6993, -0.6830) reproduce (1.6e-3, 1.3e-3); n=0.875 on 64 sites = 56 electrons, Nf = 28 per spin (N_up = N_dn not printed); OBC printed. The open question of the first reading is settled by the text: \"For the 8x8 and 4x16 lattices under OBC, the wave-function corresponds to all-site backflow\" (journal p. 4, arXiv v4 Sec. III.2), so method_detail could add \"all-site backflow\". No error bar printed (MC samples O(4.5e4)). bound_type variational agrees (p=1 is one Lanczos step on the variational state).",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#41 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Hubbard/square_64_O_28_8",
+      "method": "Tensor-Backflow (E_p=0, no Lanczos step)",
+      "energy": -44.512
+    },
+    "field": "reference",
+    "to": "X. Liang, Investigating the Fermi-Hubbard model by the tensor-backflow method, Phys. Rev. B 113, 155121 (2026), arXiv:2507.01856",
+    "reported_as": "-0.6955 (per site, units of t)",
+    "location": "Table I (journal; Table 1 in arXiv v4), row n=0.875, U=8, 8 x 8, OBC, column E_{p=0}",
+    "version_read": "Phys. Rev. B 113, 155121 (2026), doi:10.1103/dqc7-zsvc, publisher PDF fetched 2026-11-28 and extracted with pypdf (layout and plain; page 4 with a raised token budget); cross-checked against arXiv:2507.01856v4 HTML",
+    "conversion": "-0.6955 x 64 = -44.512 (value confirmed in the journal and in arXiv v4; identical)",
+    "checked_on": "2026-11-28",
+    "reason": "The batch wrote the OpenAlex venue string; the 33 other rows from this paper cite \"Phys. Rev. B 113, 155121 (2026)\". Everything else checks: Eq. (9) is the standard Hubbard H with t=1, t'=0 for Table I (\"All cases are for t'=0\"); per site, since the relative errors printed against fPEPS D=20 GO (-0.6993, -0.6830) reproduce (1.6e-3, 1.3e-3); n=0.875 on 64 sites = 56 electrons, Nf = 28 per spin (N_up = N_dn not printed); OBC printed. The open question of the first reading is settled by the text: \"For the 8x8 and 4x16 lattices under OBC, the wave-function corresponds to all-site backflow\" (journal p. 4, arXiv v4 Sec. III.2), so method_detail could add \"all-site backflow\". No error bar printed (MC samples O(4.5e4)). bound_type variational agrees (p=1 is one Lanczos step on the variational state).",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#42 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_128_P_64_64_110",
+      "method": "MP-NQS",
+      "energy": -0.8985984
+    },
+    "field": "method",
+    "to": "MP-NQS (plane-wave orbitals)",
+    "reported_as": "-0.007 020 3(1) (journal); -0.0070203(1)(1) (arXiv v3)",
+    "location": "Table III, N=128 unpolarized, rs=110, column MP-NQS",
+    "version_read": "Phys. Rev. B 110, 035108 (2024), doi:10.1103/PhysRevB.110.035108, publisher PDF fetched 2026-11-28, pypdf layout mode, page 9 Tables I-V; cross-checked against arXiv:2305.07240v3 HTML Appendix G",
+    "conversion": "-0.0070203 Ha x 128 = -0.8985984; sigma 1e-7 x 128 = 1.28e-5 (value and sigma confirmed)",
+    "checked_on": "2026-11-28",
+    "reason": "Two MP-NQS rows of the same table sit on this instance: the column \"MP-NQS\" is the plane-wave reference state (Fig. 2 caption: \"the MP-NQS energy with plane-wave orbitals E_MPNN\"; Sec. III: \"Plane-wave orbitals are a natural ... choice to model the liquid\"), the other row is \"MP-NQS (Gaussian orbitals on bcc sites)\". The sibling rows from this paper on other instances are named \"MP-NQS (plane-wave orbitals)\". Version note: arXiv v3 prints \"-0.0070203(1)(1)\", the journal \"-0.007 020 3(1)\"; the journal text should replace reported_as. Caption: \"Total energy per particle in Hartree\"; Eq. (15) in Hartree with Ewald sum and background constant; cubic cell with PBC; N = 64 + 64 at Gamma (no twist mentioned).",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#43 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "HEG3D/sc_128_P_64_64_110",
+      "method": "MP-NQS",
+      "energy": -0.8985984
+    },
+    "field": "reference",
+    "to": "G. Pescia, J. Nys, J. Kim, A. Lovato & G. Carleo, Message-passing neural quantum states for the homogeneous electron gas, Phys. Rev. B 110, 035108 (2024), arXiv:2305.07240, doi:10.1103/PhysRevB.110.035108",
+    "reported_as": "-0.007 020 3(1)",
+    "location": "Table III, N=128, rs=110, column MP-NQS",
+    "version_read": "Phys. Rev. B 110, 035108 (2024), doi:10.1103/PhysRevB.110.035108, publisher PDF fetched 2026-11-28, pypdf layout mode, page 9 Tables I-V; cross-checked against arXiv:2305.07240v3 HTML Appendix G",
+    "conversion": "no change to the value",
+    "checked_on": "2026-11-28",
+    "reason": "The batch wrote the OpenAlex venue string; the 55 other rows from this paper carry the full citation with volume and DOI.",
+    "source_entry": "RP4-hubbard-heisenberg-j1j2-heg3d#44 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-2x3_18_P",
+      "method": "SOCP rounding (Algorithm 1)",
+      "energy": -41.35999968
+    },
+    "field": "energy",
+    "to": -10.34,
+    "reported_as": "-10.34 (Rounded Objective, scaled Hamiltonian sum (XX+YY+ZZ))",
+    "location": "Table 1, row 'kagome 18', column Rounded Objective",
+    "version_read": "arXiv:2411.04120v1 HTML (no journal version)",
+    "conversion": "Table 1 is already in the Pauli total (its VarBench column prints -32.1931 = the stored exact total); stored = -10.34. Loader eps should be -10.34/(4*18) = -0.143611111111; the pass wrote -0.57444444 = -10.34/18, which multiplies by 4 again",
+    "checked_on": "2026-11-28",
+    "reason": "Factor-4 error: the row is stored 4x too low and sits 9.2 below the exact energy -32.193, which is impossible for an upper bound; it currently holds the record. Corrected, it is far above exact (-10.34 vs -32.19) and is no record.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#0 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-2x3_18_P",
+      "method": "SOCP rounding (Algorithm 1)",
+      "energy": -41.35999968
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2411.04120v1, no journal_ref",
+    "location": "arXiv API and OpenAlex, 2026-11-28",
+    "version_read": "arXiv:2411.04120v1",
+    "conversion": null,
+    "checked_on": "2026-11-28",
+    "reason": "Only an arXiv preprint and an OSTI report exist; the row's own reference string says 'arXiv'.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#1 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-4x4_48_P",
+      "method": "SOCP rounding (Algorithm 1)",
+      "energy": -109.44
+    },
+    "field": "energy",
+    "to": -27.36,
+    "reported_as": "-27.36 (Rounded Objective, scaled Hamiltonian sum (XX+YY+ZZ))",
+    "location": "Table 1, row 'kagome 48', column Rounded Objective",
+    "version_read": "arXiv:2411.04120v1 HTML (no journal version)",
+    "conversion": "Table 1 is the Pauli total (VarBench column -84.2311 = stored exact); stored = -27.36; eps = -27.36/192 = -0.1425 (pass wrote -0.57 = -27.36/48)",
+    "checked_on": "2026-11-28",
+    "reason": "Factor-4 error; stored value is 25 below the exact -84.231 (impossible) and holds the record. Corrected it is no record.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#2 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/kagome-4x4_48_P",
+      "method": "SOCP rounding (Algorithm 1)",
+      "energy": -109.44
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2411.04120v1, no journal_ref",
+    "location": "arXiv API and OpenAlex, 2026-11-28",
+    "version_read": "arXiv:2411.04120v1",
+    "conversion": null,
+    "checked_on": "2026-11-28",
+    "reason": "preprint only",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#3 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/shuriken_24_P",
+      "method": "SOCP rounding (Algorithm 1)",
+      "energy": -54.88000128
+    },
+    "field": "energy",
+    "to": -13.72,
+    "reported_as": "-13.72 (Rounded Objective, scaled Hamiltonian sum (XX+YY+ZZ))",
+    "location": "Table 1, row 'shuriken 24', column Rounded Objective",
+    "version_read": "arXiv:2411.04120v1 HTML (no journal version)",
+    "conversion": "Pauli total as printed (VarBench column -43.0396 = stored exact); stored = -13.72; eps = -13.72/96 = -0.142916666667 (pass wrote -0.57166668 = -13.72/24)",
+    "checked_on": "2026-11-28",
+    "reason": "Factor-4 error; stored value is 11.8 below the exact -43.040 (impossible) and holds the record. Corrected it is no record.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#4 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/shuriken_24_P",
+      "method": "SOCP rounding (Algorithm 1)",
+      "energy": -54.88000128
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2411.04120v1, no journal_ref",
+    "location": "arXiv API and OpenAlex, 2026-11-28",
+    "version_read": "arXiv:2411.04120v1",
+    "conversion": null,
+    "checked_on": "2026-11-28",
+    "reason": "preprint only",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#5 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.4",
+      "method": "DMRG (TeNPy), chi=4096",
+      "energy": -76.2418024
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2609.33193v1, no journal_ref",
+    "location": "arXiv API (export.arxiv.org) and OpenAlex search, 2026-11-28",
+    "version_read": "arXiv:2609.33193v1",
+    "conversion": null,
+    "checked_on": "2026-11-28",
+    "reason": "arXiv preprint only; the reference string itself says arXiv. Value otherwise confirmed: Table 3 row 0.40, E_DMRG -19.0604506 (total, S.S units) x 4 = -76.2418024 = stored; relative gap to the paper's exact energy 5.4e-4 as printed; 6x6 torus, chi=4096, \"The DMRG energies are variational upper bounds\" (Appendix C); no other row on the instance carries this number.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#6 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.45",
+      "method": "DMRG (TeNPy), chi=4096",
+      "energy": -74.1987336
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2609.33193v1, no journal_ref",
+    "location": "arXiv API (export.arxiv.org) and OpenAlex search, 2026-11-28",
+    "version_read": "arXiv:2609.33193v1",
+    "conversion": null,
+    "checked_on": "2026-11-28",
+    "reason": "arXiv preprint only; the reference string itself says arXiv. Value otherwise confirmed: Table 3 row 0.45, E_DMRG -18.5496834 (total, S.S units) x 4 = -74.1987336 = stored; relative gap to the paper's exact energy 7.5e-4 as printed; 6x6 torus, chi=4096, \"The DMRG energies are variational upper bounds\" (Appendix C); no other row on the instance carries this number.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#7 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.5",
+      "method": "DMRG (TeNPy), chi=4096",
+      "energy": -72.4717168
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2609.33193v1, no journal_ref",
+    "location": "arXiv API (export.arxiv.org) and OpenAlex search, 2026-11-28",
+    "version_read": "arXiv:2609.33193v1",
+    "conversion": null,
+    "checked_on": "2026-11-28",
+    "reason": "arXiv preprint only; the reference string itself says arXiv. Value otherwise confirmed: Table 3 row 0.50, E_DMRG -18.1179292 (total, S.S units) x 4 = -72.4717168 = stored; relative gap to the paper's exact energy 10.6e-4 as printed; 6x6 torus, chi=4096, \"The DMRG energies are variational upper bounds\" (Appendix C); no other row on the instance carries this number.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#8 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.55",
+      "method": "DMRG (TeNPy), chi=4096",
+      "energy": -71.2002608001
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2609.33193v1, no journal_ref",
+    "location": "arXiv API (export.arxiv.org) and OpenAlex search, 2026-11-28",
+    "version_read": "arXiv:2609.33193v1",
+    "conversion": null,
+    "checked_on": "2026-11-28",
+    "reason": "arXiv preprint only; the reference string itself says arXiv. Value otherwise confirmed: Table 3 row 0.55, E_DMRG -17.8000652 (total, S.S units) x 4 = -71.2002608 = stored; relative gap to the paper's exact energy 14.8e-4 as printed; 6x6 torus, chi=4096, \"The DMRG energies are variational upper bounds\" (Appendix C); no other row on the instance carries this number.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#9 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.6",
+      "method": "DMRG (TeNPy), chi=4096",
+      "energy": -70.9614452
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2609.33193v1, no journal_ref",
+    "location": "arXiv API (export.arxiv.org) and OpenAlex search, 2026-11-28",
+    "version_read": "arXiv:2609.33193v1",
+    "conversion": null,
+    "checked_on": "2026-11-28",
+    "reason": "arXiv preprint only; the reference string itself says arXiv. Value otherwise confirmed: Table 3 row 0.60, E_DMRG -17.7403613 (total, S.S units) x 4 = -70.9614452 = stored; relative gap to the paper's exact energy 9.2e-4 as printed; 6x6 torus, chi=4096, \"The DMRG energies are variational upper bounds\" (Appendix C); no other row on the instance carries this number.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#10 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.65",
+      "method": "DMRG (TeNPy), chi=4096",
+      "energy": -72.947468
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2609.33193v1, no journal_ref",
+    "location": "arXiv API (export.arxiv.org) and OpenAlex search, 2026-11-28",
+    "version_read": "arXiv:2609.33193v1",
+    "conversion": null,
+    "checked_on": "2026-11-28",
+    "reason": "arXiv preprint only; the reference string itself says arXiv. Value otherwise confirmed: Table 3 row 0.65, E_DMRG -18.2368670 (total, S.S units) x 4 = -72.9474680 = stored; relative gap to the paper's exact energy 0.16e-4 as printed; 6x6 torus, chi=4096, \"The DMRG energies are variational upper bounds\" (Appendix C); no other row on the instance carries this number.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#11 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.7",
+      "method": "DMRG (TeNPy), chi=4096",
+      "energy": -76.3149176001
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2609.33193v1, no journal_ref",
+    "location": "arXiv API (export.arxiv.org) and OpenAlex search, 2026-11-28",
+    "version_read": "arXiv:2609.33193v1",
+    "conversion": null,
+    "checked_on": "2026-11-28",
+    "reason": "arXiv preprint only; the reference string itself says arXiv. Value otherwise confirmed: Table 3 row 0.70, E_DMRG -19.0787294 (total, S.S units) x 4 = -76.3149176 = stored; relative gap to the paper's exact energy 0.69e-4 as printed; 6x6 torus, chi=4096, \"The DMRG energies are variational upper bounds\" (Appendix C); no other row on the instance carries this number.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#12 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/chain_10_P_1",
+      "method": "DMRG (MPS)",
+      "energy": -12.78491
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2604.20961v2, no journal_ref",
+    "location": "arXiv API (export.arxiv.org) and OpenAlex search, 2026-11-28",
+    "version_read": "arXiv:2604.20961v2",
+    "conversion": null,
+    "checked_on": "2026-11-28",
+    "reason": "arXiv preprint only (arXiv API no journal_ref; OpenAlex lists only the arXiv record); the reference string itself says arXiv. Value otherwise confirmed: Table 4 row hx = 1.0, DMRG column -12.78491 (total), = stored; Pauli, Jz = -1, PBC, N = 10.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#15 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/chain_10_P_1",
+      "method": "VQE, HVA ansatz",
+      "energy": -12.7844
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2604.20961v2, no journal_ref",
+    "location": "arXiv API (export.arxiv.org) and OpenAlex search, 2026-11-28",
+    "version_read": "arXiv:2604.20961v2",
+    "conversion": null,
+    "checked_on": "2026-11-28",
+    "reason": "arXiv preprint only (arXiv API no journal_ref; OpenAlex lists only the arXiv record); the reference string itself says arXiv. Value otherwise confirmed: Table 4 row hx = 1.0, VQE column -12.78440 (total) = stored -12.7844; VQE of Table 4 is the HVA (Sec. 6.1), statevector mode (Sec. 5), so deterministic.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#16 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_64_O_3",
+      "method": "1d-eGRU-50-s50",
+      "energy": -200.679
+    },
+    "field": "sigma",
+    "to": 0.045,
+    "reported_as": "-200.6790 (0.0450) (mean E with the standard error printed below it, total energy)",
+    "location": "Table 4, column (Nx,Ny) = (8,8), row 1d-eGRU-50-s50",
+    "version_read": "arXiv:2505.22083v4 HTML (journal EPJ Plus 141:199 not reachable: Springer client challenge)",
+    "conversion": "TFIsing stores totals; sigma = 0.045; per-site for the pass file 0.045/64 = 0.000703125",
+    "checked_on": "2026-11-28",
+    "reason": "The source prints a standard error for this entry (Table 4 caption: 'the corresponding standard error directly below (in brackets)'); the row stores none. Energy otherwise confirmed: -200.6790 = stored, OBC 8x8, J = 1, B = 3.0, Pauli Eq. (52), 10000 inference samples.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#35 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_64_O_3",
+      "method": "1d-hGRU-50-s50",
+      "energy": -201.5419
+    },
+    "field": "sigma",
+    "to": 0.033,
+    "reported_as": "-201.5419 (0.0330) (mean E with the standard error printed below it, total energy)",
+    "location": "Table 4, column (Nx,Ny) = (8,8), row 1d-hGRU-50-s50",
+    "version_read": "arXiv:2505.22083v4 HTML (journal EPJ Plus 141:199 not reachable: Springer client challenge)",
+    "conversion": "TFIsing stores totals; sigma = 0.033; per-site for the pass file 0.033/64 = 0.000515625",
+    "checked_on": "2026-11-28",
+    "reason": "The source prints a standard error for this entry (Table 4 caption: 'the corresponding standard error directly below (in brackets)'); the row stores none. Energy otherwise confirmed: -201.5419 = stored, OBC 8x8, J = 1, B = 3.0, Pauli Eq. (52), 10000 inference samples.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#36 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_64_O_3",
+      "method": "2d-eRNN-50-s50",
+      "energy": -202.3941
+    },
+    "field": "sigma",
+    "to": 0.011,
+    "reported_as": "-202.3941 (0.0110) (mean E with the standard error printed below it, total energy)",
+    "location": "Table 4, column (Nx,Ny) = (8,8), row 2d-eRNN-50-s50",
+    "version_read": "arXiv:2505.22083v4 HTML (journal EPJ Plus 141:199 not reachable: Springer client challenge)",
+    "conversion": "TFIsing stores totals; sigma = 0.011; per-site for the pass file 0.011/64 = 0.000171875",
+    "checked_on": "2026-11-28",
+    "reason": "The source prints a standard error for this entry (Table 4 caption: 'the corresponding standard error directly below (in brackets)'); the row stores none. Energy otherwise confirmed: -202.3941 = stored, OBC 8x8, J = 1, B = 3.0, Pauli Eq. (52), 10000 inference samples.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#37 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_100_O_3",
+      "method": "RTT chi=2 (replica space + physical space, operators O_ZZ,HV and O_ZZ,DD')",
+      "energy": -316.82
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2604.22718v2, no journal_ref",
+    "location": "arXiv API (export.arxiv.org) and OpenAlex search, 2026-11-28",
+    "version_read": "arXiv:2604.22718v2",
+    "conversion": null,
+    "checked_on": "2026-11-28",
+    "reason": "arXiv preprint only; the reference string itself says arXiv.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#44 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_100_O_3",
+      "method": "RTT chi=2 (operators O_ZZ,HV and O_X)",
+      "energy": -316.3
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2604.22718v2, no journal_ref",
+    "location": "arXiv API (export.arxiv.org) and OpenAlex search, 2026-11-28",
+    "version_read": "arXiv:2604.22718v2",
+    "conversion": null,
+    "checked_on": "2026-11-28",
+    "reason": "arXiv preprint only; the reference string itself says arXiv.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#45 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_100_O_3",
+      "method": "RTT chi=2 (replica space + physical space, operators O_ZZ,HV and O_ZZ,DD')",
+      "energy": -316.82
+    },
+    "field": "energy_variance",
+    "to": 1.3048739,
+    "reported_as": "E/N -3.1682, N var/E^2 0.0013",
+    "location": "Table 1, row 1 (O_ZZ,HV x, O_ZZ,DD' x, O_X blank)",
+    "version_read": "arXiv:2604.22718v2 HTML",
+    "conversion": "V = N Var(H)/E^2 (V-score, Fig. 6 caption 'delta E/E ~ 0.2 N var[H]/E^2', Ref. [46]); the ratio is the same whether var and E are both totals or both per site. Var(H)/E^2 = 0.0013/100 = 0.000013; Var(H) = 0.000013 * (-316.82)^2 = 1.3048739 (total, Pauli units). Loader: add \"var_rel\": 0.000013 (scripts/add_allresults_rows.mjs varTot = var_rel * energy^2).",
+    "checked_on": "2026-11-28",
+    "reason": "The source prints a variance (as a V-score) for this entry; the row stores none. Energy otherwise confirmed (= stored); OBC is printed ('We use open boundary conditions'), h_x = 3, L = 10.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#46 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_100_O_3",
+      "method": "RTT chi=2 (operators O_ZZ,HV and O_X)",
+      "energy": -316.3
+    },
+    "field": "energy_variance",
+    "to": 5.0022845,
+    "reported_as": "E/N -3.163, N var/E^2 0.005",
+    "location": "Table 1, row 3 (O_ZZ,HV x, O_ZZ,DD' blank, O_X x)",
+    "version_read": "arXiv:2604.22718v2 HTML",
+    "conversion": "V = N Var(H)/E^2 (V-score, Fig. 6 caption 'delta E/E ~ 0.2 N var[H]/E^2', Ref. [46]); the ratio is the same whether var and E are both totals or both per site. Var(H)/E^2 = 0.005/100 = 0.00005; Var(H) = 0.00005 * (-316.3)^2 = 5.0022845 (total, Pauli units). Loader: add \"var_rel\": 0.00005 (scripts/add_allresults_rows.mjs varTot = var_rel * energy^2).",
+    "checked_on": "2026-11-28",
+    "reason": "The source prints a variance (as a V-score) for this entry; the row stores none. Energy otherwise confirmed (= stored); OBC is printed ('We use open boundary conditions'), h_x = 3, L = 10.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#47 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "Heisenberg/chain_16_P",
+      "method": "Dual Spin-Sector VQE, p=16",
+      "energy": -28.5288
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2610.10454v3, no journal_ref",
+    "location": "arXiv API (export.arxiv.org) and OpenAlex search, 2026-11-28",
+    "version_read": "arXiv:2610.10454v3",
+    "conversion": null,
+    "checked_on": "2026-11-28",
+    "reason": "arXiv preprint only; the reference string itself says arXiv. Value otherwise confirmed: Table 1 row J2/J1 = 0.00, Ground Singlet E^VQE -7.1322 (total, S.S units, L = 16 PBC, p = 16) x 4 = -28.5288 = stored; deterministic statevector energy, above ED -7.1423; no duplicate on Heisenberg/chain_16_P.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#48 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_100_P_0.5",
+      "method": "PWO, complex patch-autoregressive transformer (2x2 patches, depth 8, width 96), zero-magnetization sampling, no symmetries",
+      "energy": -195.6
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2607.02292v1, no journal_ref",
+    "location": "arXiv API (export.arxiv.org) and OpenAlex search, 2026-11-28",
+    "version_read": "arXiv:2607.02292v1",
+    "conversion": null,
+    "checked_on": "2026-11-28",
+    "reason": "arXiv preprint only; the reference string itself says arXiv.",
+    "source_entry": "RP5-heisenberg-j1j2-tfising-hubbard-heg3d#53 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.1",
+      "method": "ED",
+      "energy": -91.88568
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2606.04558 (v1 2026-06-03, v2 2026-09-15), no journal-ref",
+    "location": "arXiv abs page submission history; Crossref and OpenAlex (W7163506766: single location arXiv)",
+    "version_read": "arXiv:2606.04558v2",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "The source is an arXiv preprint with no journal version found (arXiv journal-ref empty, no DOI; Crossref title search and OpenAlex list only the arXiv record, 2026-11-28). The same paper's ViT row on this instance (sweep-allresults-2026-09-28) already carries peer_reviewed false. Value itself confirmed: v2 Appendix D Table 1 row 0.10, column '6x6, ED (this work)' prints -0.638095 (also v1); -0.638095 x 4 x 36 = -91.88568 = stored.",
+    "source_entry": "RP6-j1j2-tfising#0 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "J1J2/square_36_P_0.1",
+      "method": "ED",
+      "energy": -91.88568
+    },
+    "field": "verified.note",
+    "to": "Tab.1 App.D J2 row 0.10, col 6x6, ED (this work) | S.S Hamiltonian printed (Eq.6 in v2, Eq.4 in v1); periodic boundaries printed (Sec. III: 'on the square lattice with periodic boundary conditions and N=36,64 and 100 spins'); per site in S.S units, J1 = 1, fixed by the J2 = 0 cell -0.678872 (the printed 6x6 Heisenberg exact per site) and the J2 = 0.2 cell -0.599046 (Schulz et al.'s printed value)",
+    "reported_as": "-0.638095",
+    "location": "v2 Sec. III (PBC sentence); Appendix D Table 1 rows 0.00, 0.10, 0.20",
+    "version_read": "arXiv:2606.04558v2 HTML; v1 PDF text",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-28",
+    "reason": "The stored note says the boundary is not printed; v2 Sec. III prints periodic boundary conditions for N = 36, 64, 100. The per-site convention is not stated in words but is fixed by two printed cells against printed exact energies. Wording only; the number is unchanged.",
+    "source_entry": "RP6-j1j2-tfising#1 (qmbl-verify 2026-11-28)",
+    "from": "Tab.1 App.D J2 row 0.10, col 6x6, ED (this work) | S.S Hamiltonian printed (Eq.6); BC and per-site not printed, held"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_121_O_3",
+      "method": "cp-AFQMC-re-anchoring (rank-4 tensor-train trial wavefunction, TT-sketching)",
+      "energy": -383.82652
+    },
+    "field": "sigma",
+    "to": 0.00484,
+    "reported_as": "-3.17212\\pm 4\\times 10^{-5} (v2-v5); -3.17212(4) (v1), 'energy density'",
+    "location": "Sec. 5.1, 11x11 open, g = 3 (Fig. 7)",
+    "version_read": "arXiv:2411.07194v5 HTML; v1-v4 HTML compared, same value and bar",
+    "conversion": "4e-5 per site x 121 = 0.00484 (TFIsing stored as totals, E/N = energy/N)",
+    "checked_on": "2026-11-28",
+    "reason": "The source prints an energy error bar for this value in every version; the pass row stored sigma_per_site null. The bar is the statistical error of the AFQMC estimate (the text and Table 1 caption speak of 'statistical error'); how it was estimated (binning/blocking) is not described, which the row should state. Not a relative bar, so RULES (printed energy bars only) allows it.",
+    "source_entry": "RP6-j1j2-tfising#2 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_121_O_3",
+      "method": "cp-AFQMC-re-anchoring (rank-4 tensor-train trial wavefunction, TT-sketching)",
+      "energy": -383.82652
+    },
+    "field": "peer_reviewed",
+    "to": false,
+    "reported_as": "arXiv:2411.07194 v1 2024-11-11 ... v5 2026-02-16, no journal-ref",
+    "location": "arXiv abs submission history; Crossref; OpenAlex W4404391991 (single location arXiv)",
+    "version_read": "arXiv:2411.07194v5",
+    "conversion": "none",
+    "checked_on": "2026-11-28",
+    "reason": "arXiv preprint, five versions, no journal-ref or DOI; Crossref title search and OpenAlex find no journal version (2026-11-28).",
+    "source_entry": "RP6-j1j2-tfising#3 (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "TFIsing/square_121_O_3",
+      "method": "cp-AFQMC-re-anchoring (rank-4 tensor-train trial wavefunction, TT-sketching)",
+      "energy": -383.82652
+    },
+    "field": "verified.note",
+    "to": "Sec. 5.1: 'the energy estimated by our method is -3.17212±4×10-5' for the 11x11 lattice with open boundary at g=3 (Fig. 7) | 11x11 open and g=3 printed; Pauli H printed (Eq. 20), same form as the instance; per site: v1 and v2 print 'the energy density estimated by our method is -3.17212(4)', and the quoted reference -3.17210 (ref. [55], Lubasch et al.) is the per-site value carried on this instance. Sec. 5 states the TFI cp-AFQMC can be made sign-free; time step 0.01 and population size are not extrapolated (Sec. 5.1, App. D).",
+    "reported_as": "-3.17212(4) 'energy density' (v1)",
+    "location": "v1/v2 Sec. 5.1; v5 Sec. 5",
+    "version_read": "arXiv:2411.07194v1-v5 HTML",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-28",
+    "reason": "Two statements in the stored note are false against the source: the per-site normalisation is printed in v1 and v2 ('energy density'), and the source does say that TFI cp-AFQMC can be made free of the sign problem. Wording only; the number is unchanged.",
+    "source_entry": "RP6-j1j2-tfising#5 (qmbl-verify 2026-11-28)",
+    "from": "Sec. 5.1: 'the energy estimated by our method is -3.17212±4×10-5' for the 11x11 lattice with open boundary at g=3 (Fig. 7) | 11x11 open and g=3 printed; Pauli H printed (Eq. 20); per-site normalisation NOT printed (value magnitude only), so confidence low. TFI is sign-free, so the value may be exact within error (exact (stochastic)); the paper does not say."
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_144_P_J0.8_Jd1",
+      "method": "Z3000 + 2 Lanczos steps, zero-variance extrapolation (VMC)",
+      "energy": -258.79104
+    },
+    "field": "sigma",
+    "to": 0.12096,
+    "reported_as": "Table 9: -0.44929(21); Table 10: -0.44929(10)",
+    "location": "arXiv:2501.00096v3 Tables 9 and 10, L = 12 (same disagreement in v1 and v2)",
+    "version_read": "arXiv:2501.00096v3 HTML and PDF",
+    "conversion": "0.00021*576 = 0.12096",
+    "checked_on": "2026-11-28",
+    "reason": "The paper prints two error bars for the same L = 12 VMC-only zero-variance extrapolation. Until the authors settle it, the row carries the larger one, which cannot understate the uncertainty (ruled 2026-11-28).",
+    "source_entry": "RP1-arxiv-2501-00096 ambiguous (qmbl-verify 2026-11-28)"
+  },
+  {
+    "match": {
+      "instance": "ShastrySutherland/square_196_P_J0.8_Jd1",
+      "method": "Z3000 + 2 Lanczos steps, zero-variance extrapolation (VMC)",
+      "energy": -352.58048
+    },
+    "field": "verified.note",
+    "edit": [
+      "Table 9 Extrapolation and Table 10 VMC, L=14",
+      "Table 9 Extrapolation and Table 10 VMC, L=14; the authors call the VMC-only extrapolation less reliable for larger systems (Fig. 14 caption) and give VMC+ViT -0.44914(14) as their best value for this cluster (Table 10)"
+    ],
+    "reported_as": "none (text field)",
+    "location": "arXiv:2501.00096v3 Fig. 14 caption, Table 10",
+    "version_read": "arXiv:2501.00096v3",
+    "conversion": "none (text field)",
+    "checked_on": "2026-11-28",
+    "reason": "The row stays (every published number is a row); its note carries the authors own caveat (ruled 2026-11-28).",
+    "source_entry": "RP1-arxiv-2501-00096 ambiguous (qmbl-verify 2026-11-28)"
+  },
 ];
